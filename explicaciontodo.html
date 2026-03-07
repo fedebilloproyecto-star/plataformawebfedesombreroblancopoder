@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía Completa: Símbolos y Fórmulas Empresariales</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --info-color: #17a2b8;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark-color);
+            line-height: 1.6;
+            padding: 20px;
+                border-radius: 10px;
+  max-width: 900px;
+  margin: 90px auto;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .content {
+            padding: 40px 30px;
+        }
+        
+        .section {
+            margin-bottom: 50px;
+            padding: 30px;
+            background: var(--light-color);
+            border-radius: 8px;
+            border-left: 5px solid var(--secondary-color);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+        }
+        
+        .icon {
+            margin-right: 15px;
+            font-size: 1.8rem;
+        }
+        
+        .symbols-explanation {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+        }
+        
+        .symbol-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .symbol {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            margin-right: 10px;
+        }
+        
+        .formula-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .explanation {
+            margin: 20px 0;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+        
+        .variables {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .variable {
+            padding: 15px;
+            background: white;
+            border-radius: 6px;
+            border-left: 4px solid var(--success-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .var-name {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+        }
+        
+        .example {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 25px 0;
+            border-left: 5px solid var(--warning-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .example-title {
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .example-title .icon {
+            font-size: 1.4rem;
+            margin-right: 10px;
+        }
+        
+        .step-by-step {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+        
+        .step {
+            margin-bottom: 10px;
+            position: relative;
+        }
+        
+        .step:before {
+            content: "→";
+            position: absolute;
+            left: -20px;
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+        
+        .interpretation {
+            background: #e8f4fc;
+            padding: 20px;
+            border-radius: 6px;
+            margin-top: 20px;
+            border-left: 4px solid var(--info-color);
+        }
+        
+        .interpretation h4 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .key-points {
+            background: #fff9e6;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 20px 0;
+            border-left: 4px solid var(--warning-color);
+        }
+        
+        .key-points h4 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .key-points ul {
+            padding-left: 20px;
+        }
+        
+        .key-points li {
+            margin-bottom: 8px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: var(--primary-color);
+            color: white;
+            margin-top: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .variables {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+        /* Solo estilos para el botón "Volver atrás" - no hay reglas para body */
+.back-button {
+  display: inline-block;
+  padding: 10px 18px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 2px solid #333;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  user-select: none;
+}
+
+/* Efecto al pasar el ratón */
+.back-button:hover,
+.back-button:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+  text-decoration: none;
+  outline: none;
+}
+
+/* Efecto al hacer clic */
+.back-button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+
+/* Variante pequeña si quieres un botón más discreto */
+.back-button.small {
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 6px;
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="calculadoraempresa.html" class="back-button" aria-label="Volver atrás">Volver atrás</a>
+            <h1>Guía Completa de Símbolos y Fórmulas Empresariales</h1>
+            <p class="subtitle">Explicación detallada de todos los símbolos matemáticos y fórmulas financieras esenciales</p>
+        </header>
+        
+        <div class="content">
+            <!-- Explicación de Símbolos Matemáticos -->
+            <div class="section">
+                <h2><span class="icon">🔢</span> Explicación de Símbolos Matemáticos</h2>
+                
+                <div class="symbols-explanation">
+                    <h3>Símbolos Básicos de Aritmética</h3>
+                    
+                    <div class="symbol-item">
+                        <span class="symbol">+</span> 
+                        <strong>Suma/Adición:</strong> Representa la operación de agregar dos o más cantidades. En contextos empresariales, se usa para sumar ingresos, costos, etc.
+                    </div>
+                    
+                    <div class="symbol-item">
+                        <span class="symbol">-</span> 
+                        <strong>Resta/Sustracción:</strong> Indica la operación de quitar una cantidad de otra. Se utiliza para calcular diferencias, como precio menos costo.
+                    </div>
+                    
+                    <div class="symbol-item">
+                        <span class="symbol">× o *</span> 
+                        <strong>Multiplicación:</strong> Representa la operación de combinar cantidades iguales. Se usa para calcular totales (precio × cantidad).
+                    </div>
+                    
+                    <div class="symbol-item">
+                        <span class="symbol">÷ o /</span> 
+                        <strong>División:</strong> Indica la operación de repartir una cantidad en partes iguales. Se utiliza para calcular promedios, porcentajes, etc.
+                    </div>
+                    
+                    <div class="symbol-item">
+                        <span class="symbol">=</span> 
+                        <strong>Igualdad:</strong> Indica que dos expresiones tienen el mismo valor. En fórmulas, muestra la relación entre variables.
+                    </div>
+                    
+                    <div class="symbol-item">
+                        <span class="symbol">( )</span> 
+                        <strong>Paréntesis:</strong> Se usan para agrupar operaciones y establecer el orden de cálculo. Las operaciones dentro de paréntesis se realizan primero.
+                    </div>
+                </div>
+                
+                <div class="symbols-explanation">
+                    <h3>Símbolos Especiales en Fórmulas Empresariales</h3>
+                    
+                    <div class="symbol-item">
+                        <span class="symbol">%</span> 
+                        <strong>Porcentaje:</strong> Representa una parte de cien. Se calcula dividiendo el valor entre 100. Ejemplo: 25% = 25/100 = 0.25
+                    </div>
+                    
+                    <div class="symbol-item">
+                        <span class="symbol">$</span> 
+                        <strong>Símbolo de Dólar/Moneda:</strong> Indica valores monetarios. En contextos internacionales, puede representar cualquier moneda.
+                    </div>
+                    
+                    <div class="symbol-item">
+                        <span class="symbol">^</span> 
+                        <strong>Exponenciación/Potencia:</strong> Indica que un número se multiplica por sí mismo cierto número de veces. Ejemplo: 2^3 = 2 × 2 × 2 = 8
+                    </div>
+                    
+                    <div class="symbol-item">
+                        <span class="symbol">√</span> 
+                        <strong>Raíz Cuadrada:</strong> Representa el número que, multiplicado por sí mismo, da el valor original. Se usa en cálculos estadísticos.
+                    </div>
+                    
+                    <div class="symbol-item">
+                        <span class="symbol">[ ]</span> 
+                        <strong>Corchetes:</strong> Similar a los paréntesis, se usan para agrupar operaciones, especialmente cuando ya hay paréntesis en la fórmula.
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Margen de Beneficio -->
+            <div class="section">
+                <h2><span class="icon">💰</span> Margen de Beneficio - Explicación Completa</h2>
+                
+                <div class="formula-box">
+                    <strong>Fórmula del Margen de Beneficio:</strong><br>
+                    Margen = [(Precio de Venta - Costo Unitario) ÷ Precio de Venta] × 100
+                </div>
+                
+                <div class="explanation">
+                    <h3>Desglose de la Fórmula Símbolo por Símbolo:</h3>
+                    <div class="step-by-step">
+                        <div class="step"><strong>[ ]</strong> Los corchetes indican que las operaciones dentro deben realizarse primero</div>
+                        <div class="step"><strong>(Precio de Venta - Costo Unitario)</strong> Los paréntesis indican que esta resta debe hacerse antes que la división</div>
+                        <div class="step"><strong>-</strong> Símbolo de resta: calcula la diferencia entre precio y costo</div>
+                        <div class="step"><strong>÷</strong> Símbolo de división: divide el beneficio entre el precio de venta</div>
+                        <div class="step"><strong>× 100</strong> Multiplicación por 100: convierte el resultado decimal a porcentaje</div>
+                    </div>
+                </div>
+                
+                <div class="formula-box">
+                    <strong>Fórmula del Beneficio Total:</strong><br>
+                    Beneficio Total = (Precio de Venta - Costo Unitario) × Unidades Vendidas
+                </div>
+                
+                <div class="explanation">
+                    <h3>Desglose de la Segunda Fórmula:</h3>
+                    <div class="step-by-step">
+                        <div class="step"><strong>( )</strong> Paréntesis: indican que la resta debe realizarse primero</div>
+                        <div class="step"><strong>-</strong> Resta: calcula el beneficio por unidad</div>
+                        <div class="step"><strong>×</strong> Multiplicación: multiplica el beneficio unitario por la cantidad vendida</div>
+                    </div>
+                </div>
+                
+                <div class="variables">
+                    <div class="variable">
+                        <span class="var-name">Precio de Venta ($):</span> Valor monetario al que vendes el producto o servicio al cliente final. Representa los ingresos por unidad.
+                    </div>
+                    <div class="variable">
+                        <span class="var-name">Costo Unitario ($):</span> Valor monetario que te cuesta producir o adquirir una unidad del producto. Incluye materiales, mano de obra directa, etc.
+                    </div>
+                    <div class="variable">
+                        <span class="var-name">Unidades Vendidas:</span> Cantidad numérica de productos vendidos en un período determinado. No lleva símbolo de moneda.
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <div class="example-title"><span class="icon">📊</span> Ejemplo Práctico Paso a Paso</div>
+                    <p>Una empresa vende lámparas artesanales:</p>
+                    <div class="step-by-step">
+                        <div class="step">Costo de producción por lámpara: <strong>$35</strong> (esto incluye materiales y mano de obra)</div>
+                        <div class="step">Precio de venta por lámpara: <strong>$60</strong> (lo que paga el cliente)</div>
+                        <div class="step">Unidades vendidas en el mes: <strong>150</strong> lámparas</div>
+                    </div>
+                    
+                    <p><strong>Cálculo del margen de beneficio paso a paso:</strong></p>
+                    <div class="step-by-step">
+                        <div class="step">Primero, calculamos el beneficio por unidad: <strong>$60 - $35 = $25</strong></div>
+                        <div class="step">Luego, dividimos entre el precio de venta: <strong>$25 ÷ $60 = 0.4167</strong></div>
+                        <div class="step">Finalmente, multiplicamos por 100: <strong>0.4167 × 100 = 41.67%</strong></div>
+                    </div>
+                    
+                    <p><strong>Cálculo del beneficio total:</strong></p>
+                    <div class="step-by-step">
+                        <div class="step">Beneficio por unidad: <strong>$25</strong></div>
+                        <div class="step">Multiplicamos por unidades vendidas: <strong>$25 × 150 = $3,750</strong></div>
+                    </div>
+                    
+                    <div class="interpretation">
+                        <h4>Interpretación Completa del Resultado</h4>
+                        <p>El <strong>margen de beneficio del 41.67%</strong> significa que por cada $100 en ventas, la empresa obtiene $41.67 de beneficio bruto. El <strong>beneficio total de $3,750</strong> representa la ganancia bruta mensual antes de deducir gastos operativos como alquiler, marketing y salarios administrativos.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Punto de Equilibrio -->
+            <div class="section">
+                <h2><span class="icon">⚖️</span> Punto de Equilibrio - Explicación Completa</h2>
+                
+                <div class="formula-box">
+                    <strong>Fórmula del Punto de Equilibrio en Unidades:</strong><br>
+                    Punto de Equilibrio (unidades) = Costos Fijos ÷ (Precio de Venta - Costo Variable Unitario)
+                </div>
+                
+                <div class="explanation">
+                    <h3>Desglose Detallado de la Fórmula:</h3>
+                    <div class="step-by-step">
+                        <div class="step"><strong>=</strong> Indica que el punto de equilibrio se calcula mediante esta fórmula</div>
+                        <div class="step"><strong>Costos Fijos</strong> Son gastos que no cambian con el volumen de producción</div>
+                        <div class="step"><strong>÷</strong> División: los costos fijos se dividen entre el margen de contribución</div>
+                        <div class="step"><strong>( )</strong> Paréntesis: indican que la resta debe hacerse primero</div>
+                        <div class="step"><strong>Precio de Venta - Costo Variable Unitario</strong> Esto se llama "margen de contribución unitario"</div>
+                    </div>
+                </div>
+                
+                <div class="formula-box">
+                    <strong>Fórmula del Margen de Contribución:</strong><br>
+                    Margen de Contribución = Precio de Venta - Costo Variable Unitario
+                </div>
+                
+                <div class="explanation">
+                    <p>El <strong>margen de contribución</strong> representa cuánto contribuye cada unidad vendida a cubrir los costos fijos y generar utilidades.</p>
+                </div>
+                
+                <div class="variables">
+                    <div class="variable">
+                        <span class="var-name">Costos Fijos ($):</span> Gastos que permanecen constantes independientemente del volumen de producción (alquiler, salarios fijos, seguros).
+                    </div>
+                    <div class="variable">
+                        <span class="var-name">Precio de Venta ($):</span> Valor monetario por unidad al cliente.
+                    </div>
+                    <div class="variable">
+                        <span class="var-name">Costo Variable Unitario ($):</span> Gastos que varían directamente con cada unidad producida (materiales, comisiones).
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <div class="example-title"><span class="icon">📊</span> Ejemplo Práctico: Panadería</div>
+                    <p>Una panadería artesanal tiene los siguientes datos mensuales:</p>
+                    <div class="step-by-step">
+                        <div class="step">Costos fijos (alquiler, servicios, nómina fija): <strong>$3,800</strong></div>
+                        <div class="step">Costo variable por pastel (harina, huevos, decoración): <strong>$8</strong></div>
+                        <div class="step">Precio de venta por pastel: <strong>$22</strong></div>
+                    </div>
+                    
+                    <p><strong>Cálculo paso a paso del punto de equilibrio:</strong></p>
+                    <div class="step-by-step">
+                        <div class="step">Primero, calculamos el margen de contribución: <strong>$22 - $8 = $14</strong> por pastel</div>
+                        <div class="step">Luego, dividimos costos fijos entre el margen de contribución: <strong>$3,800 ÷ $14 = 271.43</strong></div>
+                        <div class="step">Redondeamos hacia arriba: <strong>272 pasteles</strong></div>
+                    </div>
+                    
+                    <p><strong>Verificación del cálculo:</strong></p>
+                    <div class="step-by-step">
+                        <div class="step">Ingresos en punto de equilibrio: <strong>272 pasteles × $22 = $5,984</strong></div>
+                        <div class="step">Costos variables: <strong>272 pasteles × $8 = $2,176</strong></div>
+                        <div class="step">Costos fijos: <strong>$3,800</strong></div>
+                        <div class="step">Total costos: <strong>$2,176 + $3,800 = $5,976</strong></div>
+                        <div class="step">Utilidad: <strong>$5,984 - $5,976 = $8</strong> (prácticamente cero, como debe ser)</div>
+                    </div>
+                    
+                    <div class="interpretation">
+                        <h4>Análisis del Resultado</h4>
+                        <p>La panadería necesita vender <strong>272 pasteles mensuales</strong> para cubrir todos sus costos. Por encima de esta cantidad, cada pastel adicional vendido genera <strong>$14 de beneficio</strong>. Si vende 400 pasteles, el beneficio sería de <strong>(400 - 272) × $14 = $1,792</strong>.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Retorno de Inversión (ROI) -->
+            <div class="section">
+                <h2><span class="icon">📈</span> Retorno de Inversión (ROI) - Explicación Completa</h2>
+                
+                <div class="formula-box">
+                    <strong>Fórmula del ROI:</strong><br>
+                    ROI = [(Beneficio Neto de la Inversión) ÷ Inversión] × 100
+                </div>
+                
+                <div class="explanation">
+                    <h3>Desglose de la Fórmula del ROI:</h3>
+                    <div class="step-by-step">
+                        <div class="step"><strong>[ ]</strong> Los corchetes agrupan el cálculo principal</div>
+                        <div class="step"><strong>(Beneficio Neto de la Inversión)</strong> Paréntesis para clarificar el numerador</div>
+                        <div class="step"><strong>÷</strong> División del beneficio entre la inversión</div>
+                        <div class="step"><strong>× 100</strong> Conversión a porcentaje</div>
+                    </div>
+                </div>
+                
+                <div class="formula-box">
+                    <strong>Fórmula del Período de Recuperación:</strong><br>
+                    Período de Recuperación = Inversión ÷ Beneficio Anual
+                </div>
+                
+                <div class="explanation">
+                    <p>El <strong>período de recuperación</strong> indica cuánto tiempo tomará recuperar la inversión inicial.</p>
+                </div>
+                
+                <div class="variables">
+                    <div class="variable">
+                        <span class="var-name">Inversión ($):</span> Cantidad total de dinero invertido en un proyecto o activo.
+                    </div>
+                    <div class="variable">
+                        <span class="var-name">Beneficio Neto ($):</span> Ganancia atribuible directamente a la inversión, después de todos los costos.
+                    </div>
+                    <div class="variable">
+                        <span class="var-name">Beneficio Anual ($):</span> Ganancia promedio por año generada por la inversión.
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <div class="example-title"><span class="icon">📊</span> Ejemplo Práctico: Inversión en Software</div>
+                    <p>Una empresa considera adquirir un software de gestión:</p>
+                    <div class="step-by-step">
+                        <div class="step">Costo del software: <strong>$12,000</strong></div>
+                        <div class="step">Ahorros anuales en eficiencia: <strong>$4,500</strong></div>
+                        <div class="step">Vida útil del software: <strong>4 años</strong></div>
+                    </div>
+                    
+                    <p><strong>Cálculo del ROI paso a paso:</strong></p>
+                    <div class="step-by-step">
+                        <div class="step">Beneficio neto total: <strong>$4,500 × 4 años = $18,000</strong></div>
+                        <div class="step">Beneficio neto de la inversión: <strong>$18,000 - $12,000 = $6,000</strong></div>
+                        <div class="step">ROI: <strong>($6,000 ÷ $12,000) = 0.5</strong></div>
+                        <div class="step">ROI en porcentaje: <strong>0.5 × 100 = 50%</strong></div>
+                    </div>
+                    
+                    <p><strong>Cálculo del período de recuperación:</strong></p>
+                    <div class="step-by-step">
+                        <div class="step">Período de recuperación: <strong>$12,000 ÷ $4,500 = 2.67 años</strong></div>
+                        <div class="step">Equivalente en meses: <strong>0.67 × 12 = 8 meses</strong></div>
+                        <div class="step">Total: <strong>2 años y 8 meses</strong></div>
+                    </div>
+                    
+                    <div class="interpretation">
+                        <h4>Interpretación Detallada</h4>
+                        <p>El <strong>ROI del 50%</strong> significa que por cada $100 invertidos, la empresa obtendrá $50 de beneficio neto durante la vida útil del software. El <strong>período de recuperación de 2 años y 8 meses</strong> indica que la inversión se recuperará en este tiempo, y los siguientes 1 año y 4 meses representarán ganancia neta.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Símbolos Adicionales -->
+            <div class="section">
+                <h2><span class="icon">🔍</span> Símbolos Adicionales y su Uso</h2>
+                
+                <div class="symbols-explanation">
+                    <h3>Símbolos de Comparación</h3>
+                    
+                    <div class="symbol-item">
+                        <span class="symbol"><</span> 
+                        <strong>Menor que:</strong> Indica que el valor de la izquierda es menor que el de la derecha. Se usa en análisis de umbrales.
+                    </div>
+                    
+                    <div class="symbol-item">
+                        <span class="symbol">></span> 
+                        <strong>Mayor que:</strong> Indica que el valor de la izquierda es mayor que el de la derecha. Útil para establecer metas.
+                    </div>
+                    
+                    <div class="symbol-item">
+                        <span class="symbol">≤</span> 
+                        <strong>Menor o igual que:</strong> Indica que el valor de la izquierda es menor o igual al de la derecha.
+                    </div>
+                    
+                    <div class="symbol-item">
+                        <span class="symbol">≥</span> 
+                        <strong>Mayor o igual que:</strong> Indica que el valor de la izquierda es mayor o igual al de la derecha.
+                    </div>
+                </div>
+                
+                <div class="symbols-explanation">
+                    <h3>Símbolos Estadísticos</h3>
+                    
+                    <div class="symbol-item">
+                        <span class="symbol">Σ</span> 
+                        <strong>Sumatoria:</strong> Representa la suma de una serie de valores. Se usa en cálculos de promedios y totales.
+                    </div>
+                    
+                    <div class="symbol-item">
+                        <span class="symbol">μ</span> 
+                        <strong>Promedio/Media:</strong> Representa el valor promedio de un conjunto de datos.
+                    </div>
+                    
+                    <div class="symbol-item">
+                        <span class="symbol">σ</span> 
+                        <strong>Desviación Estándar:</strong> Mide la dispersión de un conjunto de datos respecto a su media.
+                    </div>
+                </div>
+                
+                <div class="key-points">
+                    <h4>Reglas Importantes en el Uso de Símbolos</h4>
+                    <ul>
+                        <li>El orden de las operaciones sigue la regla PEMDAS: Paréntesis, Exponentes, Multiplicación/División, Adición/Sustracción</li>
+                        <li>En fórmulas complejas, usa paréntesis para clarificar el orden de cálculo</li>
+                        <li>Los símbolos monetarios ($, €, etc.) siempre van antes del número</li>
+                        <li>Los porcentajes siempre se representan con el símbolo % después del número</li>
+                        <li>En contextos internacionales, la coma (,) se usa como separador decimal y el punto (.) para miles</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+       
+    </div>
+</body>
+</html>

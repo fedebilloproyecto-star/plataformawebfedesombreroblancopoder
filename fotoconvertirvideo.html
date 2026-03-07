@@ -1,0 +1,3647 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Editor Pro: Imagen a Video (50+ Efectos Profesionales)</title>
+<style>
+    :root {
+      --panel-bg: #0f172a;
+      --accent: #06f;
+      --accent-light: #3b82f6;
+      --muted: #94a3b8;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --purple: #8b5cf6;
+      --pink: #ec4899;
+      --cyan: #06b6d4;
+      --orange: #f97316;
+      --green: #22c55e;
+    }
+    
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+      color: #e6eef8;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 1200px;
+      margin: 20px auto;
+    }
+    
+    .header {
+      background: linear-gradient(90deg, rgba(15, 23, 42, 0.95), rgba(30, 27, 75, 0.95));
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+      backdrop-filter: blur(10px);
+      border-radius: 10px 10px 0 0;
+    }
+    
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      background: linear-gradient(90deg, #3b82f6, #06b6d4, #8b5cf6, #ec4899);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: gradient-shift 3s ease infinite;
+      background-size: 200% 200%;
+    }
+    
+    @keyframes gradient-shift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    .main-content {
+      display: flex;
+      flex: 1;
+      gap: 16px;
+      padding: 16px;
+      overflow: hidden;
+    }
+    
+    .sidebar {
+      width: 440px;
+      background: rgba(15, 23, 42, 0.85);
+      padding: 20px;
+      border-radius: 16px;
+      overflow: auto;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    h2 {
+      margin: 0 0 16px 0;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #f1f5f9;
+    }
+    
+    h2 i {
+      color: var(--accent);
+    }
+    
+    label {
+      display: block;
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 12px;
+    }
+    
+    input[type=file] {
+      display: block;
+      margin-top: 8px;
+      width: 100%;
+      background: rgba(2, 16, 37, 0.7);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      border-radius: 8px;
+      padding: 10px;
+      color: #e6eef8;
+      transition: all 0.3s;
+    }
+    
+    input[type=file]:hover {
+      border-color: var(--accent);
+    }
+    
+    .control {
+      margin-top: 8px;
+    }
+    
+    .row {
+      display: flex;
+      gap: 8px;
+    }
+    
+    .btn {
+      background: linear-gradient(135deg, var(--accent), var(--accent-light));
+      border: none;
+      color: white;
+      padding: 12px 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+    }
+    
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+    }
+    
+    .btn:active {
+      transform: translateY(0);
+    }
+    
+    .btn.secondary {
+      background: linear-gradient(135deg, #374151, #4b5563);
+    }
+    
+    .btn.secondary:hover {
+      background: linear-gradient(135deg, #4b5563, #6b7280);
+    }
+    
+    .btn.success {
+      background: linear-gradient(135deg, var(--success), #34d399);
+    }
+    
+    .btn.success:hover {
+      background: linear-gradient(135deg, #059669, #10b981);
+    }
+    
+    .btn.warning {
+      background: linear-gradient(135deg, var(--warning), #fbbf24);
+    }
+    
+    .btn.warning:hover {
+      background: linear-gradient(135deg, #d97706, #f59e0b);
+    }
+    
+    .btn.danger {
+      background: linear-gradient(135deg, var(--danger), #f87171);
+    }
+    
+    .btn.danger:hover {
+      background: linear-gradient(135deg, #dc2626, #ef4444);
+    }
+    
+    .btn.purple {
+      background: linear-gradient(135deg, var(--purple), #a78bfa);
+    }
+    
+    .btn.purple:hover {
+      background: linear-gradient(135deg, #7c3aed, #8b5cf6);
+    }
+    
+    .btn.orange {
+      background: linear-gradient(135deg, var(--orange), #fb923c);
+    }
+    
+    .btn.orange:hover {
+      background: linear-gradient(135deg, #ea580c, #f97316);
+    }
+    
+    .preview {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .canvas-wrap {
+      background: linear-gradient(135deg, rgba(7, 20, 39, 0.9), rgba(30, 27, 75, 0.9));
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(59, 130, 246, 0.2);
+    }
+    
+    .canvas-wrap::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #3b82f6, #06b6d4, #8b5cf6, transparent);
+    }
+    
+    canvas {
+      background: transparent;
+      border-radius: 12px;
+      box-shadow: 0 12px 40px rgba(2, 6, 23, 0.8);
+      max-width: 100%;
+      max-height: 100%;
+      transition: transform 0.3s;
+    }
+    
+    canvas:hover {
+      transform: scale(1.01);
+    }
+    
+    .footer {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      padding: 12px 0;
+    }
+    
+    select, input, textarea {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      background: rgba(2, 16, 37, 0.7);
+      color: #e6eef8;
+      transition: all 0.3s;
+      font-size: 14px;
+    }
+    
+    select:focus, input:focus, textarea:focus {
+      border-color: var(--accent);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    }
+    
+    .small {
+      font-size: 13px;
+    }
+    
+    .preset-thumbs {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+    
+    .thumb {
+      width: 70px;
+      height: 50px;
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.3s;
+      position: relative;
+    }
+    
+    .thumb::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent, rgba(0, 0, 0, 0.3));
+    }
+    
+    .thumb:hover {
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    .thumb.selected {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3), 0 8px 20px rgba(59, 130, 246, 0.2);
+    }
+    
+    .controls-section {
+      background: rgba(255, 255, 255, 0.03);
+      padding: 18px;
+      border-radius: 12px;
+      margin-top: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .status {
+      font-size: 13px;
+      color: var(--muted);
+      padding: 10px 14px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 8px;
+      margin-top: 12px;
+      border-left: 3px solid var(--accent);
+    }
+    
+    .range {
+      width: 100%;
+      height: 6px;
+      -webkit-appearance: none;
+      background: rgba(2, 16, 37, 0.7);
+      border-radius: 3px;
+      outline: none;
+    }
+    
+    .range::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--accent);
+      cursor: pointer;
+      box-shadow: 0 2px 10px rgba(59, 130, 246, 0.4);
+    }
+    
+    .pos {
+      display: flex;
+      gap: 8px;
+    }
+    
+    .download-link {
+      color: var(--accent);
+      text-decoration: none;
+      cursor: pointer;
+      font-weight: 600;
+      padding: 10px 16px;
+      background: rgba(59, 130, 246, 0.1);
+      border-radius: 8px;
+      display: block;
+      text-align: center;
+      transition: all 0.3s;
+    }
+    
+    .download-link:hover {
+      background: rgba(59, 130, 246, 0.2);
+      transform: translateY(-2px);
+    }
+    
+    .muted {
+      color: var(--muted);
+    }
+    
+    .frame-scroll {
+      max-height: 150px;
+      overflow-y: auto;
+      padding: 10px;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      margin-top: 8px;
+    }
+    
+    .frame-option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      padding: 10px;
+      border-radius: 8px;
+      transition: all 0.3s;
+    }
+    
+    .frame-option:hover {
+      background: rgba(59, 130, 246, 0.1);
+      transform: translateX(5px);
+    }
+    
+    .frame-option.selected {
+      background: rgba(59, 130, 246, 0.2);
+      transform: translateX(10px);
+    }
+    
+    .frame-preview {
+      width: 50px;
+      height: 35px;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      flex-shrink: 0;
+    }
+    
+    .download-options {
+      margin-top: 12px;
+      display: flex;
+      gap: 10px;
+    }
+    
+    .download-option {
+      flex: 1;
+      text-align: center;
+      padding: 12px;
+      border-radius: 10px;
+      background: rgba(31, 41, 55, 0.7);
+      cursor: pointer;
+      transition: all 0.3s;
+      border: 1px solid transparent;
+    }
+    
+    .download-option:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+    }
+    
+    .tab-container {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      background: rgba(0, 0, 0, 0.2);
+      padding: 6px;
+      border-radius: 10px;
+    }
+    
+    .tab {
+      padding: 10px 16px;
+      border-radius: 8px;
+      background: transparent;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.3s;
+      white-space: nowrap;
+      flex: 1;
+      text-align: center;
+    }
+    
+    .tab.active {
+      background: var(--accent);
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+    
+    .tab-content {
+      display: none;
+    }
+    
+    .tab-content.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .slider-with-value {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .slider-value {
+      min-width: 50px;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 6px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    
+    .color-group {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .color-group input[type="color"] {
+      flex: 1;
+      height: 44px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+    }
+    
+    .icon {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      vertical-align: middle;
+    }
+    
+    .progress-bar {
+      height: 8px;
+      background: rgba(31, 41, 55, 0.7);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 12px;
+    }
+    
+    .progress {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--cyan));
+      width: 0%;
+      transition: width 0.3s;
+      border-radius: 4px;
+    }
+    
+    .tooltip {
+      position: relative;
+      cursor: help;
+    }
+    
+    .tooltip::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.9);
+      color: #fff;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+      z-index: 1000;
+    }
+    
+    .tooltip:hover::after {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .effects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 12px;
+      max-height: 220px;
+      overflow-y: auto;
+      padding: 12px;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+    }
+    
+    .effect-btn {
+      padding: 10px;
+      border-radius: 8px;
+      background: rgba(31, 41, 55, 0.7);
+      cursor: pointer;
+      text-align: center;
+      font-size: 12px;
+      transition: all 0.3s;
+      border: 1px solid transparent;
+    }
+    
+    .effect-btn:hover {
+      background: rgba(55, 65, 81, 0.7);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    
+    .effect-btn.active {
+      background: var(--accent);
+      border-color: var(--accent-light);
+      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+      transform: translateY(-2px);
+    }
+    
+    .effect-btn.purple {
+      background: rgba(139, 92, 246, 0.2);
+    }
+    
+    .effect-btn.purple.active {
+      background: var(--purple);
+    }
+    
+    .effect-btn.cyan {
+      background: rgba(6, 182, 212, 0.2);
+    }
+    
+    .effect-btn.cyan.active {
+      background: var(--cyan);
+    }
+    
+    .effect-btn.pink {
+      background: rgba(236, 72, 153, 0.2);
+    }
+    
+    .effect-btn.pink.active {
+      background: var(--pink);
+    }
+    
+    .effect-btn.orange {
+      background: rgba(249, 115, 22, 0.2);
+    }
+    
+    .effect-btn.orange.active {
+      background: var(--orange);
+    }
+    
+    .color-presets {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+    
+    .color-preset {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.3s;
+      position: relative;
+    }
+    
+    .color-preset:hover {
+      transform: scale(1.2);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+    
+    .color-preset.selected {
+      border-color: white;
+      box-shadow: 0 0 0 3px var(--accent), 0 4px 12px rgba(59, 130, 246, 0.4);
+      transform: scale(1.2);
+    }
+    
+    .advanced-controls {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .control-group {
+      margin-bottom: 16px;
+    }
+    
+    .landscape-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 12px;
+      max-height: 200px;
+      overflow-y: auto;
+      padding: 12px;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+    }
+    
+    .landscape-item {
+      aspect-ratio: 16/9;
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      background-size: cover;
+      background-position: center;
+      border: 2px solid transparent;
+      transition: all 0.3s;
+      position: relative;
+      background-color: #1e293b;
+    }
+    
+    .landscape-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(0,0,0,0.3), rgba(0,0,0,0.6));
+    }
+    
+    .landscape-item::after {
+      content: attr(data-name);
+      position: absolute;
+      bottom: 5px;
+      left: 5px;
+      right: 5px;
+      color: white;
+      font-size: 10px;
+      text-align: center;
+      background: rgba(0,0,0,0.5);
+      padding: 2px 5px;
+      border-radius: 3px;
+    }
+    
+    .landscape-item:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    .landscape-item.selected {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3), 0 8px 20px rgba(59, 130, 246, 0.2);
+    }
+    
+    .bg-preview {
+      width: 100%;
+      height: 80px;
+      border-radius: 8px;
+      margin-top: 10px;
+      background-size: cover;
+      background-position: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .enhancements-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 12px;
+    }
+    
+    .enhancement-btn {
+      padding: 12px;
+      border-radius: 8px;
+      background: rgba(31, 41, 55, 0.7);
+      cursor: pointer;
+      text-align: center;
+      font-size: 12px;
+      transition: all 0.3s;
+      border: 1px solid transparent;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .enhancement-btn:hover {
+      background: rgba(59, 130, 246, 0.2);
+      transform: translateY(-2px);
+    }
+    
+    .enhancement-btn.active {
+      background: rgba(59, 130, 246, 0.3);
+      border-color: var(--accent);
+    }
+    
+    .preset-card {
+      background: rgba(31, 41, 55, 0.7);
+      border-radius: 10px;
+      padding: 12px;
+      margin-top: 10px;
+      cursor: pointer;
+      transition: all 0.3s;
+      border: 1px solid transparent;
+    }
+    
+    .preset-card:hover {
+      background: rgba(59, 130, 246, 0.2);
+      transform: translateY(-2px);
+      border-color: var(--accent);
+    }
+    
+    .preset-card.selected {
+      background: rgba(59, 130, 246, 0.3);
+      border-color: var(--accent);
+    }
+    
+    .btn-volver {
+      display: inline-block;
+      background-color: #2c7be5;
+      color: white;
+      text-decoration: none;
+      padding: 10px 18px;
+      font-size: 16px;
+      border-radius: 8px;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+    
+    .btn-volver:hover {
+      background-color: #1a5fc2;
+      transform: scale(1.05);
+    }
+    
+    .btn-volver:active {
+      transform: scale(0.95);
+    }
+    
+    @media (max-width: 1200px) {
+      .main-content {
+        flex-direction: column;
+      }
+      
+      .sidebar {
+        width: 100%;
+      }
+      
+      .effects-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        text-align: center;
+        gap: 12px;
+      }
+      
+      .row {
+        flex-direction: column;
+      }
+      
+      .download-options {
+        flex-direction: column;
+      }
+      
+      .effects-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      
+      .tab-container {
+        overflow-x: auto;
+      }
+      
+      .landscape-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      body {
+        padding: 10px;
+        margin: 10px auto;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .effects-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .enhancements-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .tab {
+        padding: 8px 10px;
+        font-size: 12px;
+      }
+      
+      h2 {
+        font-size: 16px;
+      }
+      
+      .btn {
+        padding: 10px 14px;
+        font-size: 14px;
+      }
+    }
+</style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">🎬 Editor Pro: Imagen a Video (50+ Efectos Profesionales)</div>
+    <div class="muted small">Transforma imágenes en videos espectaculares con paisajes profesionales</div>
+  </div>
+
+  <div class="main-content">
+    <div class="sidebar">
+      <div class="tab-container">
+        <div class="tab active" data-tab="basic">Básico</div>
+        <div class="tab" data-tab="landscapes">Paisajes</div>
+        <div class="tab" data-tab="borders">Bordes</div>
+        <div class="tab" data-tab="text">Texto</div>
+        <div class="tab" data-tab="effects">Efectos (50+)</div>
+        <div class="tab" data-tab="enhancements">Mejoras</div>
+        <div class="tab" data-tab="advanced">Avanzado</div>
+        <div class="tab" data-tab="export">Exportar</div>
+             <button id="autoEnhanceBtn" class="btn success"><span class="icon">⚡</span> Mejorar Auto</button>
+                 <a href="presentacionfotoconvertiravideo.html" class="btn-volver">
+  ← Volver al inicio
+</a>
+      </div>
+
+      <div class="tab-content active" id="basic-tab">
+        <h2><span class="icon">🖼️</span> Cargar Imagen Principal</h2>
+        <input id="file" type="file" accept="image/*" />
+        <div class="control small muted">Arrastra la imagen sobre la vista previa para cargarla</div>
+
+        <div class="controls-section">
+          <label>Resolución Profesional</label>
+          <select id="resolution">
+            <option value="480p">480p (SD)</option>
+            <option value="720p" selected>720p (HD Ready)</option>
+            <option value="1080p">1080p (Full HD)</option>
+            <option value="1440p">1440p (2K QHD)</option>
+            <option value="2160p">2160p (4K UHD)</option>
+            <option value="instagram">Instagram (1080x1350)</option>
+            <option value="youtube">YouTube (1920x1080)</option>
+            <option value="tiktok">TikTok (1080x1920)</option>
+            <option value="custom">Personalizada</option>
+          </select>
+          
+          <div id="custom-resolution" style="display: none; margin-top: 12px;">
+            <div class="row">
+              <input type="number" id="customWidth" placeholder="Ancho" value="1280" min="100" max="7680" />
+              <input type="number" id="customHeight" placeholder="Alto" value="720" min="100" max="4320" />
+            </div>
+          </div>
+        </div>
+
+        <div class="controls-section">
+          <label>Fondo Profesional</label>
+          <div class="color-presets">
+            <div class="color-preset selected" style="background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);" data-color="gradient-space"></div>
+            <div class="color-preset" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);" data-color="gradient-night"></div>
+            <div class="color-preset" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);" data-color="gradient-purple"></div>
+            <div class="color-preset" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);" data-color="gradient-pink"></div>
+            <div class="color-preset" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);" data-color="gradient-blue"></div>
+            <div class="color-preset" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);" data-color="gradient-green"></div>
+            <div class="color-preset" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);" data-color="gradient-sunset"></div>
+            <div class="color-preset" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);" data-color="gradient-pastel"></div>
+            <div class="color-preset" style="background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);" data-color="gradient-warm"></div>
+            <div class="color-preset" style="background: linear-gradient(135deg, #a3bded 0%, #6991c7 100%);" data-color="gradient-cool"></div>
+          </div>
+          <div class="row" style="margin-top: 12px;">
+            <input id="bgColor" type="color" value="#0f172a" />
+            <input id="bgImage" type="file" accept="image/*" />
+          </div>
+          <select id="bgStyle">
+            <option value="cover">Cubrir (Profesional)</option>
+            <option value="contain">Contener</option>
+            <option value="blur">Desenfoque artístico</option>
+            <option value="gradient">Gradiente dinámico</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="tab-content" id="landscapes-tab">
+        <h2><span class="icon">🏞️</span> Fondos de Paisajes Profesionales</h2>
+        
+        <div class="controls-section">
+          <label>Paisajes Naturales</label>
+          <div class="landscape-grid" id="natural-landscapes">
+            <!-- Generado por JS -->
+          </div>
+        </div>
+
+        <div class="controls-section">
+          <label>Ciudades y Urbanos</label>
+          <div class="landscape-grid" id="urban-landscapes">
+            <!-- Generado por JS -->
+          </div>
+        </div>
+
+        <div class="controls-section">
+          <label>Abstractos y Artísticos</label>
+          <div class="landscape-grid" id="abstract-landscapes">
+            <!-- Generado por JS -->
+          </div>
+        </div>
+
+        <div class="controls-section">
+          <label>Efectos de Superposición</label>
+          <div class="enhancements-grid">
+            <div class="enhancement-btn" data-effect="blend-overlay">
+              <span>🎨</span>
+              <span>Superposición</span>
+            </div>
+            <div class="enhancement-btn" data-effect="blend-multiply">
+              <span>🌈</span>
+              <span>Multiplicar</span>
+            </div>
+            <div class="enhancement-btn" data-effect="blend-screen">
+              <span>💫</span>
+              <span>Pantalla</span>
+            </div>
+            <div class="enhancement-btn" data-effect="blend-overlay-light">
+              <span>✨</span>
+              <span>Superposición Luz</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="borders-tab">
+        <h2><span class="icon">🔲</span> Marcos y Bordes Profesionales</h2>
+        <label>Colección Premium (25+ tipos)</label>
+        <div class="frame-scroll" id="frames-list">
+          <!-- Los frames se generarán dinámicamente con JS -->
+        </div>
+
+        <div class="controls-section">
+          <label>Borde Personalizado</label>
+          <div class="slider-with-value">
+            <input id="borderSize" type="range" min="0" max="100" value="15" class="range" />
+            <span id="borderSizeValue" class="slider-value">15px</span>
+          </div>
+          
+          <div class="color-group" style="margin-top: 12px;">
+            <input id="borderColor" type="color" value="#ffffff" />
+            <select id="borderStyle">
+              <option value="solid">Sólido Premium</option>
+              <option value="double">Doble Línea</option>
+              <option value="dotted">Punteado Elegante</option>
+              <option value="dashed">Lineas Modernas</option>
+              <option value="groove">Surco 3D</option>
+              <option value="ridge">Relieve Premium</option>
+              <option value="inset">Inset Profundo</option>
+              <option value="outset">Outset Brillante</option>
+              <option value="glow">Brillo Neon</option>
+              <option value="gradient">Gradiente</option>
+              <option value="textured">Texturizado</option>
+            </select>
+          </div>
+          
+          <label>Radio de Esquina</label>
+          <div class="slider-with-value">
+            <input id="borderRadius" type="range" min="0" max="100" value="0" class="range" />
+            <span id="borderRadiusValue" class="slider-value">0px</span>
+          </div>
+          
+          <label>Efectos de Sombra</label>
+          <div class="slider-with-value">
+            <input id="shadowSize" type="range" min="0" max="80" value="0" class="range" />
+            <span id="shadowSizeValue" class="slider-value">0px</span>
+          </div>
+          <input id="shadowColor" type="color" value="#000000" style="margin-top: 12px;" />
+        </div>
+      </div>
+
+      <div class="tab-content" id="text-tab">
+        <h2><span class="icon">✏️</span> Texto y Marcas de Agua</h2>
+        <div class="controls-section">
+          <label>Texto Principal</label>
+          <input id="textValue" placeholder="Escribe tu texto aquí..." />
+          <div class="row" style="margin-top: 12px;">
+            <input id="textSize" type="number" min="10" max="120" value="32" style="width:40%" />
+            <select id="fontFamily" style="width:60%">
+              <option value="Arial">Arial</option>
+              <option value="Verdana">Verdana</option>
+              <option value="Montserrat">Montserrat (Moderno)</option>
+              <option value="Poppins">Poppins (Elegante)</option>
+              <option value="Roboto">Roboto (Profesional)</option>
+              <option value="Playfair Display">Playfair (Lujo)</option>
+              <option value="Raleway">Raleway (Minimalista)</option>
+              <option value="Open Sans">Open Sans (Legible)</option>
+              <option value="Lato">Lato (Web)</option>
+              <option value="Georgia">Georgia (Serif)</option>
+            </select>
+          </div>
+          
+          <div class="color-group" style="margin-top: 12px;">
+            <input id="textColor" type="color" value="#ffffff" />
+            <input id="textBgColor" type="color" value="#00000000" />
+          </div>
+          
+          <div class="row" style="margin-top: 12px;">
+            <select id="textPos">
+              <option value="top">Arriba</option>
+              <option value="center">Centro</option>
+              <option value="bottom">Abajo</option>
+              <option value="custom">Personalizado</option>
+            </select>
+            <select id="textAlign">
+              <option value="left">Izquierda</option>
+              <option value="center" selected>Centro</option>
+              <option value="right">Derecha</option>
+            </select>
+          </div>
+          
+          <div class="advanced-controls">
+            <label>Animaciones de Texto</label>
+            <select id="textAnimation">
+              <option value="none">Ninguna</option>
+              <option value="typewriter">Máquina de escribir</option>
+              <option value="fade">Desvanecer elegante</option>
+              <option value="slide">Deslizar suave</option>
+              <option value="bounce">Rebotar</option>
+              <option value="glitch">Glitch moderno</option>
+              <option value="neon">Neón brillante</option>
+              <option value="gradient">Gradiente animado</option>
+              <option value="wave">Efecto onda</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="controls-section">
+          <label>Marca de Agua Premium</label>
+          <input id="watermarkText" placeholder="Tu marca o logo" />
+          <div class="row" style="margin-top: 12px;">
+            <input id="watermarkSize" type="number" min="10" max="60" value="20" style="width:50%" />
+            <input id="watermarkOpacity" type="range" min="1" max="10" value="5" style="width:50%" />
+          </div>
+          
+          <div class="row" style="margin-top: 12px;">
+            <select id="watermarkPos">
+              <option value="top-left">Superior Izquierda</option>
+              <option value="top-right">Superior Derecha</option>
+              <option value="bottom-left">Inferior Izquierda</option>
+              <option value="bottom-right">Inferior Derecha</option>
+              <option value="center">Centro sutil</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="effects-tab">
+        <h2><span class="icon">✨</span> Efectos Profesionales (50+)</h2>
+        
+        <div class="controls-section">
+          <label>Transiciones Cinematográficas</label>
+          <div class="effects-grid" id="transition-effects">
+            <!-- Efectos generados por JS -->
+          </div>
+          
+          <label>Intensidad de Transición</label>
+          <div class="slider-with-value">
+            <input id="effectIntensity" type="range" min="1" max="10" value="5" class="range" />
+            <span id="effectIntensityValue" class="slider-value">5</span>
+          </div>
+        </div>
+
+        <div class="controls-section">
+          <label>Filtros Profesionales</label>
+          <div class="effects-grid" id="filter-effects">
+            <!-- Filtros generados por JS -->
+          </div>
+          
+          <label>Intensidad del Filtro</label>
+          <div class="slider-with-value">
+            <input id="filterIntensity" type="range" min="0" max="100" value="50" class="range" />
+            <span id="filterIntensityValue" class="slider-value">50%</span>
+          </div>
+        </div>
+
+        <div class="controls-section">
+          <label>Efectos Especiales Premium</label>
+          <div class="effects-grid" id="special-effects">
+            <!-- Efectos especiales generados por JS -->
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="enhancements-tab">
+        <h2><span class="icon">🚀</span> Mejoras Profesionales</h2>
+        
+        <div class="controls-section">
+          <label>Mejoras de Imagen</label>
+          <div class="enhancements-grid">
+            <div class="enhancement-btn" data-enhancement="sharpness">
+              <span>🔍</span>
+              <span>Nitidez</span>
+            </div>
+            <div class="enhancement-btn" data-enhancement="contrast">
+              <span>⚡</span>
+              <span>Contraste</span>
+            </div>
+            <div class="enhancement-btn" data-enhancement="vibrance">
+              <span>🎨</span>
+              <span>Vibrancia</span>
+            </div>
+            <div class="enhancement-btn" data-enhancement="clarity">
+              <span>✨</span>
+              <span>Claridad</span>
+            </div>
+            <div class="enhancement-btn" data-enhancement="exposure">
+              <span>☀️</span>
+              <span>Exposición</span>
+            </div>
+            <div class="enhancement-btn" data-enhancement="highlights">
+              <span>💡</span>
+              <span>Brillos</span>
+            </div>
+            <div class="enhancement-btn" data-enhancement="shadows">
+              <span>🌙</span>
+              <span>Sombras</span>
+            </div>
+            <div class="enhancement-btn" data-enhancement="temperature">
+              <span>🌡️</span>
+              <span>Temperatura</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="controls-section">
+          <label>Presets Profesionales</label>
+          <div id="professional-presets">
+            <div class="preset-card" data-preset="cinematic">
+              <strong>🎬 Cinematográfico</strong>
+              <div class="small muted">Efectos de película profesional</div>
+            </div>
+            <div class="preset-card" data-preset="instagram">
+              <strong>📱 Instagram</strong>
+              <div class="small muted">Optimizado para redes sociales</div>
+            </div>
+            <div class="preset-card" data-preset="vintage">
+              <strong>📼 Vintage</strong>
+              <div class="small muted">Estilo retro y nostálgico</div>
+            </div>
+            <div class="preset-card" data-preset="modern">
+              <strong>💼 Moderno</strong>
+              <div class="small muted">Look corporativo profesional</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="controls-section">
+          <label>Efectos de Cámara</label>
+          <div class="enhancements-grid">
+            <div class="enhancement-btn" data-effect="depth-of-field">
+              <span>🎯</span>
+              <span>Profundidad</span>
+            </div>
+            <div class="enhancement-btn" data-effect="motion-blur">
+              <span>🌀</span>
+              <span>Movimiento</span>
+            </div>
+            <div class="enhancement-btn" data-effect="lens-distortion">
+              <span>🔍</span>
+              <span>Distorsión</span>
+            </div>
+            <div class="enhancement-btn" data-effect="bokeh">
+              <span>✨</span>
+              <span>Bokeh</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="advanced-tab">
+        <h2><span class="icon">⚙️</span> Ajustes Avanzados</h2>
+        
+        <div class="controls-section">
+          <label>Capas y Superposiciones</label>
+          <select id="overlayType">
+            <option value="none">Ninguna</option>
+            <option value="light-leak">Light Leak</option>
+            <option value="grain">Granulado cinematográfico</option>
+            <option value="vignette">Viñeta profesional</option>
+            <option value="glitch">Glitch artístico</option>
+            <option value="scanlines">Scanlines retro</option>
+            <option value="dust">Polvo/rayas vintage</option>
+            <option value="rain">Gotas de lluvia</option>
+            <option value="snow">Nieve</option>
+            <option value="stars">Estrellas</option>
+          </select>
+          
+          <div class="slider-with-value" style="margin-top: 12px;">
+            <input id="overlayOpacity" type="range" min="0" max="100" value="30" class="range" />
+            <span id="overlayOpacityValue" class="slider-value">30%</span>
+          </div>
+          
+          <div class="color-group" style="margin-top: 12px;">
+            <input id="overlayColor1" type="color" value="#ff0000" />
+            <input id="overlayColor2" type="color" value="#00ff00" />
+          </div>
+        </div>
+
+        <div class="controls-section">
+          <label>Distorsiones Creativas</label>
+          <select id="distortionType">
+            <option value="none">Ninguna</option>
+            <option value="wave">Onda líquida</option>
+            <option value="ripple">Ripple</option>
+            <option value="bulge">Bulge</option>
+            <option value="pinch">Pinch</option>
+            <option value="swirl">Swirl</option>
+            <option value="fisheye">Ojo de pez</option>
+            <option value="kaleidoscope">Kaleidoscopio</option>
+          </select>
+          
+          <div class="slider-with-value" style="margin-top: 12px;">
+            <input id="distortionAmount" type="range" min="0" max="100" value="20" class="range" />
+            <span id="distortionAmountValue" class="slider-value">20%</span>
+          </div>
+        </div>
+
+        <div class="controls-section">
+          <label>Partículas y Efectos Visuales</label>
+          <select id="particlesType">
+            <option value="none">Ninguno</option>
+            <option value="snow">Nieve mágica</option>
+            <option value="rain">Lluvia realista</option>
+            <option value="confetti">Confetti festivo</option>
+            <option value="bubbles">Burbujas</option>
+            <option value="sparks">Chispas brillantes</option>
+            <option value="stars">Estrellas fugaces</option>
+            <option value="fireflies">Luciérnagas</option>
+            <option value="hearts">Corazones</option>
+            <option value="leaves">Hojas</option>
+          </select>
+          
+          <div class="slider-with-value" style="margin-top: 12px;">
+            <input id="particlesAmount" type="range" min="10" max="1000" value="100" class="range" />
+            <span id="particlesAmountValue" class="slider-value">100</span>
+          </div>
+        </div>
+
+        <div class="controls-section">
+          <label>Velocidad y Timing</label>
+          <div class="slider-with-value">
+            <input id="animationSpeed" type="range" min="50" max="200" value="100" class="range" />
+            <span id="animationSpeedValue" class="slider-value">100%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="export-tab">
+        <h2><span class="icon">📤</span> Exportar Video Profesional</h2>
+        <div class="controls-section">
+          <label>Configuración de Exportación</label>
+          <div class="row small">
+            <div style="flex:1">
+              <label class="small muted">Duración (seg)</label>
+              <input id="duration" type="number" min="1" max="60" value="6" />
+            </div>
+            <div style="width:90px">
+              <label class="small muted">FPS</label>
+              <input id="fps" type="number" min="10" max="60" value="30" />
+            </div>
+          </div>
+          
+          <label>Formato de Salida</label>
+          <select id="outputFormat">
+            <option value="webm">WebM (Recomendado)</option>
+            <option value="mp4">MP4 (Universal)</option>
+            <option value="gif">GIF Animado</option>
+            <option value="apng">APNG (Calidad)</option>
+            <option value="mov">MOV (Profesional)</option>
+          </select>
+          
+          <label>Calidad Profesional</label>
+          <select id="quality">
+            <option value="low">Baja (para web)</option>
+            <option value="medium" selected>Media (balanceada)</option>
+            <option value="high">Alta (HD)</option>
+            <option value="very-high">Muy Alta (Full HD)</option>
+            <option value="ultra">Ultra (4K)</option>
+          </select>
+        </div>
+
+        <div class="controls-section">
+          <div class="row">
+            <button id="startRecord" class="btn success"><span class="icon">🎬</span> Generar Video</button>
+            <button id="stopRecord" class="btn danger" disabled><span class="icon">⏹️</span> Detener</button>
+            <button id="previewBtn" class="btn purple"><span class="icon">👁️</span> Vista Previa</button>
+
+          </div>
+          
+          <div class="progress-bar">
+            <div class="progress" id="progressBar"></div>
+          </div>
+          
+          <div class="status" id="status">Estado: Listo para crear contenido profesional</div>
+          
+          <div class="download-options">
+            <div class="download-option" id="downloadMobile"><span class="icon">📱</span> Móvil (480p)</div>
+            <div class="download-option" id="downloadNotebook"><span class="icon">💻</span> Notebook (720p)</div>
+            <div class="download-option" id="downloadHD"><span class="icon">🖥️</span> HD (1080p)</div>
+            <div class="download-option" id="download4K"><span class="icon">🎬</span> 4K (2160p)</div>
+          </div>
+          
+          <a id="downloadA" class="download-link" style="display:none; margin-top: 12px; text-align: center;">Descargar video profesional</a>
+          
+          <div class="advanced-controls">
+            <button id="savePreset" class="btn secondary"><span class="icon">💾</span> Guardar Preset Pro</button>
+            <button id="loadPreset" class="btn secondary"><span class="icon">📂</span> Cargar Preset Pro</button>
+            <button id="shareBtn" class="btn orange"><span class="icon">📤</span> Compartir</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="preview">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <h2><span class="icon">👁️</span> Vista Previa en Tiempo Real</h2>
+        <div class="muted small">Resolución: <span id="resolutionLabel">1280×720</span> | Efectos: <span id="effectsCount">0</span> | Paisajes: <span id="landscapesCount">0</span></div>
+      </div>
+      <div class="canvas-wrap" id="dropzone">
+        <canvas id="preview" width="1280" height="720"></canvas>
+      </div>
+      <div class="footer">
+        <div class="muted small">Presiona ESPACIO para empezar/detener grabación | Ctrl+R: Efectos aleatorios | Ctrl+S: Guardar preset</div>
+        <div style="flex:1"></div>
+        <button id="resetBtn" class="btn secondary"><span class="icon">🔄</span> Reiniciar</button>
+        <button id="randomBtn" class="btn purple"><span class="icon">🎲</span> Aleatorio Pro</button>
+   
+      </div>
+    </div>
+  </div>
+   
+
+  <script>
+    // Variables y elementos ampliados
+    const fileInput = document.getElementById('file');
+    const previewCanvas = document.getElementById('preview');
+    const ctx = previewCanvas.getContext('2d');
+    const dropzone = document.getElementById('dropzone');
+    const framesList = document.getElementById('frames-list');
+    const borderSize = document.getElementById('borderSize');
+    const borderSizeValue = document.getElementById('borderSizeValue');
+    const borderColor = document.getElementById('borderColor');
+    const borderStyle = document.getElementById('borderStyle');
+    const borderRadius = document.getElementById('borderRadius');
+    const borderRadiusValue = document.getElementById('borderRadiusValue');
+    const shadowSize = document.getElementById('shadowSize');
+    const shadowSizeValue = document.getElementById('shadowSizeValue');
+    const shadowColor = document.getElementById('shadowColor');
+    const bgColor = document.getElementById('bgColor');
+    const bgImageInput = document.getElementById('bgImage');
+    const bgStyle = document.getElementById('bgStyle');
+    const textValue = document.getElementById('textValue');
+    const textSize = document.getElementById('textSize');
+    const textColor = document.getElementById('textColor');
+    const textBgColor = document.getElementById('textBgColor');
+    const textPos = document.getElementById('textPos');
+    const textAlign = document.getElementById('textAlign');
+    const fontFamily = document.getElementById('fontFamily');
+    const textAnimation = document.getElementById('textAnimation');
+    const watermarkText = document.getElementById('watermarkText');
+    const watermarkSize = document.getElementById('watermarkSize');
+    const watermarkOpacity = document.getElementById('watermarkOpacity');
+    const watermarkPos = document.getElementById('watermarkPos');
+    const durationInput = document.getElementById('duration');
+    const fpsInput = document.getElementById('fps');
+    const effectIntensity = document.getElementById('effectIntensity');
+    const effectIntensityValue = document.getElementById('effectIntensityValue');
+    const filterIntensity = document.getElementById('filterIntensity');
+    const filterIntensityValue = document.getElementById('filterIntensityValue');
+    const outputFormat = document.getElementById('outputFormat');
+    const quality = document.getElementById('quality');
+    const resolution = document.getElementById('resolution');
+    const customResolution = document.getElementById('custom-resolution');
+    const customWidth = document.getElementById('customWidth');
+    const customHeight = document.getElementById('customHeight');
+    const resolutionLabel = document.getElementById('resolutionLabel');
+    const effectsCount = document.getElementById('effectsCount');
+    const landscapesCount = document.getElementById('landscapesCount');
+    const startRecordBtn = document.getElementById('startRecord');
+    const stopRecordBtn = document.getElementById('stopRecord');
+    const previewBtn = document.getElementById('previewBtn');
+    const statusEl = document.getElementById('status');
+    const progressBar = document.getElementById('progressBar');
+    const downloadA = document.getElementById('downloadA');
+    const downloadMobile = document.getElementById('downloadMobile');
+    const downloadNotebook = document.getElementById('downloadNotebook');
+    const downloadHD = document.getElementById('downloadHD');
+    const download4K = document.getElementById('download4K');
+    const resetBtn = document.getElementById('resetBtn');
+    const randomBtn = document.getElementById('randomBtn');
+    const autoEnhanceBtn = document.getElementById('autoEnhanceBtn');
+    const savePresetBtn = document.getElementById('savePreset');
+    const loadPresetBtn = document.getElementById('loadPreset');
+    const shareBtn = document.getElementById('shareBtn');
+    const tabs = document.querySelectorAll('.tab');
+    const tabContents = document.querySelectorAll('.tab-content');
+    const overlayType = document.getElementById('overlayType');
+    const overlayOpacity = document.getElementById('overlayOpacity');
+    const overlayOpacityValue = document.getElementById('overlayOpacityValue');
+    const overlayColor1 = document.getElementById('overlayColor1');
+    const overlayColor2 = document.getElementById('overlayColor2');
+    const distortionType = document.getElementById('distortionType');
+    const distortionAmount = document.getElementById('distortionAmount');
+    const distortionAmountValue = document.getElementById('distortionAmountValue');
+    const particlesType = document.getElementById('particlesType');
+    const particlesAmount = document.getElementById('particlesAmount');
+    const particlesAmountValue = document.getElementById('particlesAmountValue');
+    const animationSpeed = document.getElementById('animationSpeed');
+    const animationSpeedValue = document.getElementById('animationSpeedValue');
+    const transitionEffects = document.getElementById('transition-effects');
+    const filterEffects = document.getElementById('filter-effects');
+    const specialEffects = document.getElementById('special-effects');
+    const colorPresets = document.querySelectorAll('.color-preset');
+    const naturalLandscapes = document.getElementById('natural-landscapes');
+    const urbanLandscapes = document.getElementById('urban-landscapes');
+    const abstractLandscapes = document.getElementById('abstract-landscapes');
+    const enhancementBtns = document.querySelectorAll('.enhancement-btn');
+    const presetCards = document.querySelectorAll('.preset-card');
+
+    // State ampliado
+    let mainImage = null;
+    let bgImage = null;
+    let activeFrame = null;
+    let mediaRecorder = null;
+    let recordedChunks = [];
+    let isRecording = false;
+    let isPreviewing = false;
+    let previewInterval = null;
+    let canvasWidth = 1280;
+    let canvasHeight = 720;
+    let currentTime = 0;
+    let selectedTransition = 'none';
+    let selectedFilter = 'none';
+    let selectedSpecialEffects = [];
+    let particles = [];
+    let selectedLandscape = null;
+    let selectedEnhancements = new Set();
+    let activeProfessionalPreset = null;
+    let blendMode = 'normal';
+    let imageLoaded = false;
+
+    // Paisajes con nombres y colores de fondo
+    const landscapes = {
+      natural: [
+        {name: 'Montañas', color: '#3b82f6', gradient: 'linear-gradient(135deg, #3b82f6 0%, #1e40af 100%)'},
+        {name: 'Bosque', color: '#10b981', gradient: 'linear-gradient(135deg, #10b981 0%, #065f46 100%)'},
+        {name: 'Playa', color: '#0ea5e9', gradient: 'linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%)'},
+        {name: 'Aurora', color: '#8b5cf6', gradient: 'linear-gradient(135deg, #8b5cf6 0%, #4c1d95 100%)'},
+        {name: 'Atardecer', color: '#f97316', gradient: 'linear-gradient(135deg, #f97316 0%, #9a3412 100%)'},
+        {name: 'Cascada', color: '#06b6d4', gradient: 'linear-gradient(135deg, #06b6d4 0%, #0e7490 100%)'},
+        {name: 'Desierto', color: '#f59e0b', gradient: 'linear-gradient(135deg, #f59e0b 0%, #b45309 100%)'}
+      ],
+      urban: [
+        {name: 'Ciudad Noche', color: '#1e293b', gradient: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)'},
+        {name: 'Rascacielos', color: '#475569', gradient: 'linear-gradient(135deg, #475569 0%, #334155 100%)'},
+        {name: 'Metrópolis', color: '#64748b', gradient: 'linear-gradient(135deg, #64748b 0%, #475569 100%)'},
+        {name: 'Calles', color: '#94a3b8', gradient: 'linear-gradient(135deg, #94a3b8 0%, #64748b 100%)'},
+        {name: 'Puente', color: '#cbd5e1', gradient: 'linear-gradient(135deg, #cbd5e1 0%, #94a3b8 100%)'}
+      ],
+      abstract: [
+        {name: 'Gradiente Azul', color: '#667eea', gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'},
+        {name: 'Gradiente Rosa', color: '#f093fb', gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'},
+        {name: 'Gradiente Verde', color: '#43e97b', gradient: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)'},
+        {name: 'Gradiente Fuego', color: '#fa709a', gradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)'}
+      ]
+    };
+
+    // 25 tipos de bordes/marcos predefinidos premium
+    const presetFrames = [
+      {id: 1, name: 'Marco Negro Premium', type: 'solid', color: '#000000', size: 20, secondaryColor: '#ffffff'},
+      {id: 2, name: 'Marco Blanco Elegante', type: 'solid', color: '#ffffff', size: 15, secondaryColor: '#000000'},
+      {id: 3, name: 'Marco Oro Cinematográfico', type: 'double', color: '#ffd700', size: 18, secondaryColor: '#000000'},
+      {id: 4, name: 'Marco Plata Moderno', type: 'dotted', color: '#c0c0c0', size: 12, secondaryColor: '#000000'},
+      {id: 5, name: 'Marco Gris Industrial', type: 'dashed', color: '#808080', size: 15, secondaryColor: '#ffffff'},
+      {id: 6, name: 'Marco Madera Vintage', type: 'groove', color: '#8b4513', size: 15, secondaryColor: '#000000'},
+      {id: 7, name: 'Marco Azul Profesional', type: 'ridge', color: '#4682b4', size: 15, secondaryColor: '#000000'},
+      {id: 8, name: 'Marco Verde Naturaleza', type: 'inset', color: '#2f4f4f', size: 15, secondaryColor: '#000000'},
+      {id: 9, name: 'Marco Rojo Pasión', type: 'outset', color: '#ff4500', size: 15, secondaryColor: '#000000'},
+      {id: 10, name: 'Marco Vintage Elegante', type: 'double', color: '#daa520', size: 12, secondaryColor: '#8b0000'},
+      {id: 11, name: 'Marco Azul Moderno', type: 'solid', color: '#1e90ff', size: 10, secondaryColor: '#00008b'},
+      {id: 12, name: 'Marco Minimalista Delgado', type: 'solid', color: '#f5f5f5', size: 8, secondaryColor: '#000000'},
+      {id: 13, name: 'Marco Impacto Negro', type: 'solid', color: '#000000', size: 25, secondaryColor: '#ff0000'},
+      {id: 14, name: 'Marco Rojo Decorativo', type: 'double', color: '#ff0000', size: 15, secondaryColor: '#ffffff'},
+      {id: 15, name: 'Marco Minimalista Gris', type: 'dashed', color: '#808080', size: 5, secondaryColor: '#ffffff'},
+      {id: 16, name: 'Marco Neon Azul', type: 'glow', color: '#00ffff', size: 10, secondaryColor: '#000000'},
+      {id: 17, name: 'Marco Neon Rosa', type: 'glow', color: '#ff00ff', size: 10, secondaryColor: '#000000'},
+      {id: 18, name: 'Marco Gradient Sunset', type: 'gradient', color: 'linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%)', size: 15, secondaryColor: '#000000'},
+      {id: 19, name: 'Marco Gradient Ocean', type: 'gradient', color: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)', size: 15, secondaryColor: '#000000'},
+      {id: 20, name: 'Marco Gradient Forest', type: 'gradient', color: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)', size: 15, secondaryColor: '#000000'},
+      {id: 21, name: 'Marco Madera Rustico', type: 'textured', color: '#8b4513', size: 15, secondaryColor: '#5d2906'},
+      {id: 22, name: 'Marco Metal Brushed', type: 'textured', color: '#708090', size: 15, secondaryColor: '#2f4f4f'},
+      {id: 23, name: 'Marco Marmol', type: 'textured', color: '#e6e6e6', size: 15, secondaryColor: '#808080'},
+      {id: 24, name: 'Marco Gold Leaf', type: 'double', color: '#ffd700', size: 20, secondaryColor: '#b8860b'},
+      {id: 25, name: 'Marco Platinum', type: 'solid', color: '#e5e4e2', size: 12, secondaryColor: '#c0c0c0'}
+    ];
+
+    // Efectos de transición ampliados (30+ efectos)
+    const transitionEffectsList = [
+      {id: 'zoom', name: 'Zoom', color: 'purple'},
+      {id: 'pan', name: 'Pan Horizontal', color: 'purple'},
+      {id: 'pan-vertical', name: 'Pan Vertical', color: 'purple'},
+      {id: 'fade', name: 'Fade In/Out', color: 'purple'},
+      {id: 'rotate', name: 'Rotación', color: 'purple'},
+      {id: 'bounce', name: 'Rebote', color: 'purple'},
+      {id: 'slide', name: 'Deslizar', color: 'purple'},
+      {id: 'ken-burns', name: 'Ken Burns', color: 'purple'},
+      {id: 'parallax', name: 'Parallax', color: 'purple'},
+      {id: 'zoom-rotate', name: 'Zoom + Rotación', color: 'purple'},
+      {id: 'pan-zoom', name: 'Pan + Zoom', color: 'purple'},
+      {id: 'fade-zoom', name: 'Fade + Zoom', color: 'purple'},
+      {id: 'slide-bounce', name: 'Slide + Bounce', color: 'purple'},
+      {id: 'float', name: 'Flotar', color: 'purple'},
+      {id: 'pulse', name: 'Pulso', color: 'purple'},
+      {id: 'shake', name: 'Temblar', color: 'purple'},
+      {id: 'spin', name: 'Girar', color: 'purple'},
+      {id: 'swing', name: 'Balancear', color: 'purple'},
+      {id: 'wobble', name: 'Tambalear', color: 'purple'},
+      {id: 'zoom-blur', name: 'Zoom + Blur', color: 'purple'},
+      {id: 'glitch-transition', name: 'Glitch', color: 'purple'},
+      {id: 'mosaic', name: 'Mosaico', color: 'purple'},
+      {id: 'pixelate', name: 'Pixelar', color: 'purple'},
+      {id: 'ripple-transition', name: 'Ripple', color: 'purple'},
+      {id: 'wave-transition', name: 'Onda', color: 'purple'}
+    ];
+
+    // Filtros profesionales ampliados (25+ efectos)
+    const filterEffectsList = [
+      {id: 'none', name: 'Ninguno', color: 'cyan'},
+      {id: 'grayscale', name: 'Escala de grises', color: 'cyan'},
+      {id: 'sepia', name: 'Sepia', color: 'cyan'},
+      {id: 'blur', name: 'Desenfoque', color: 'cyan'},
+      {id: 'brightness', name: 'Brillo', color: 'cyan'},
+      {id: 'contrast', name: 'Contraste', color: 'cyan'},
+      {id: 'hue-rotate', name: 'Rotación Tono', color: 'cyan'},
+      {id: 'invert', name: 'Invertir', color: 'cyan'},
+      {id: 'saturate', name: 'Saturación', color: 'cyan'},
+      {id: 'vintage', name: 'Vintage', color: 'cyan'},
+      {id: 'cold', name: 'Frío', color: 'cyan'},
+      {id: 'warm', name: 'Cálido', color: 'cyan'},
+      {id: 'dramatic', name: 'Dramático', color: 'cyan'},
+      {id: 'cinematic', name: 'Cinematográfico', color: 'cyan'},
+      {id: 'noir', name: 'Noir', color: 'cyan'},
+      {id: 'pop-art', name: 'Pop Art', color: 'cyan'},
+      {id: 'cyberpunk', name: 'Cyberpunk', color: 'cyan'},
+      {id: 'fantasy', name: 'Fantasy', color: 'cyan'},
+      {id: 'dreamy', name: 'Dreamy', color: 'cyan'}
+    ];
+
+    // Efectos especiales premium ampliados (20+ efectos)
+    const specialEffectsList = [
+      {id: 'glitch', name: 'Glitch', color: 'pink'},
+      {id: 'vignette', name: 'Viñeta', color: 'pink'},
+      {id: 'grain', name: 'Granulado', color: 'pink'},
+      {id: 'light-leak', name: 'Light Leak', color: 'pink'},
+      {id: 'chromatic', name: 'Aberración', color: 'pink'},
+      {id: 'bloom', name: 'Bloom', color: 'pink'},
+      {id: 'lens-flare', name: 'Lens Flare', color: 'pink'},
+      {id: 'rain-drops', name: 'Gotas de lluvia', color: 'pink'},
+      {id: 'film-scratches', name: 'Rayas de película', color: 'pink'},
+      {id: 'dust-particles', name: 'Partículas de polvo', color: 'pink'},
+      {id: 'scanlines', name: 'Scanlines', color: 'pink'},
+      {id: 'crtscreen', name: 'Pantalla CRT', color: 'pink'},
+      {id: 'double-exposure', name: 'Doble exposición', color: 'pink'},
+      {id: 'halftone', name: 'Medio tono', color: 'pink'},
+      {id: 'bokeh', name: 'Bokeh', color: 'pink'},
+      {id: 'moire', name: 'Moiré', color: 'pink'},
+      {id: 'rgb-split', name: 'Split RGB', color: 'pink'},
+      {id: 'vhs', name: 'VHS', color: 'pink'}
+    ];
+
+    // Clase para partículas mejorada
+    class Particle {
+      constructor(x, y, type) {
+        this.x = x;
+        this.y = y;
+        this.type = type;
+        this.size = Math.random() * 8 + 2;
+        this.speedX = Math.random() * 4 - 2;
+        this.speedY = Math.random() * 4 - 2;
+        this.color = this.getColor(type);
+        this.life = 100 + Math.random() * 50;
+        this.originalLife = this.life;
+        this.rotation = Math.random() * Math.PI * 2;
+        this.rotationSpeed = Math.random() * 0.1 - 0.05;
+      }
+      
+      getColor(type) {
+        const colors = {
+          snow: ['#ffffff', '#f0f0f0', '#e6e6e6', '#f8f8f8'],
+          rain: ['#6495ed', '#4169e1', '#1e90ff', '#87ceeb'],
+          confetti: ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff', '#ffa500', '#ff69b4'],
+          bubbles: ['#87ceeb', '#add8e6', '#b0e0e6', '#e6f7ff'],
+          sparks: ['#ffff00', '#ffd700', '#ffa500', '#ff8c00'],
+          stars: ['#ffffff', '#ffffe0', '#f0f8ff', '#f8f8ff'],
+          fireflies: ['#ffff00', '#ffeb3b', '#fff59d', '#fff176'],
+          hearts: ['#ff69b4', '#ff1493', '#ff6b9d', '#ff99cc'],
+          leaves: ['#228b22', '#32cd32', '#3cb371', '#2e8b57']
+        };
+        const arr = colors[type] || ['#ffffff'];
+        return arr[Math.floor(Math.random() * arr.length)];
+      }
+      
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        this.rotation += this.rotationSpeed;
+        this.life--;
+        
+        if (this.type === 'snow') {
+          this.speedY = Math.abs(this.speedY) * 0.3;
+          this.speedX = Math.sin(this.y * 0.01) * 0.5;
+        } else if (this.type === 'rain') {
+          this.speedY = Math.abs(this.speedY) * 3;
+        } else if (this.type === 'bubbles') {
+          this.speedY = -Math.abs(this.speedY) * 0.5;
+          this.size *= 1.001;
+        }
+        
+        return this.life > 0;
+      }
+      
+      draw(ctx) {
+        ctx.save();
+        ctx.globalAlpha = this.life / this.originalLife;
+        ctx.fillStyle = this.color;
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.rotation);
+        
+        if (this.type === 'snow' || this.type === 'bubbles') {
+          ctx.beginPath();
+          ctx.arc(0, 0, this.size, 0, Math.PI * 2);
+          ctx.fill();
+        } else if (this.type === 'rain') {
+          ctx.fillRect(-0.5, 0, 1, 15);
+        } else if (this.type === 'sparks') {
+          ctx.beginPath();
+          for (let i = 0; i < 8; i++) {
+            const angle = (Math.PI * 2 * i) / 8;
+            const x = Math.cos(angle) * this.size;
+            const y = Math.sin(angle) * this.size;
+            if (i === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+          }
+          ctx.closePath();
+          ctx.fill();
+        } else if (this.type === 'stars') {
+          ctx.beginPath();
+          for (let i = 0; i < 5; i++) {
+            const angle = (Math.PI * 2 * i) / 5;
+            const x = Math.cos(angle) * this.size;
+            const y = Math.sin(angle) * this.size;
+            if (i === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+          }
+          ctx.closePath();
+          ctx.fill();
+        } else if (this.type === 'hearts') {
+          ctx.beginPath();
+          for (let i = 0; i < 30; i++) {
+            const t = (i / 30) * Math.PI * 2;
+            const x = 16 * Math.pow(Math.sin(t), 3);
+            const y = -(13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t));
+            ctx.lineTo(x * this.size/16, y * this.size/16);
+          }
+          ctx.closePath();
+          ctx.fill();
+        } else { // confetti
+          ctx.fillRect(-this.size/2, -this.size/2, this.size, this.size);
+        }
+        
+        ctx.restore();
+      }
+    }
+
+    // Inicialización mejorada
+    function init() {
+      renderFrameOptions();
+      renderEffects();
+      renderLandscapes();
+      setupEventListeners();
+      updateResolutionLabel();
+      updateEffectsCount();
+      updateLandscapesCount();
+      
+      // Crear partículas iniciales
+      generateParticles();
+      
+      // Establecer valores por defecto profesionales
+      setProfessionalDefaults();
+      
+      // Dibujar vista previa inicial
+      drawPreview(0);
+    }
+
+    // Renderizar paisajes
+    function renderLandscapes() {
+      // Paisajes naturales
+      landscapes.natural.forEach((landscape, index) => {
+        const item = document.createElement('div');
+        item.className = 'landscape-item';
+        item.style.background = landscape.gradient;
+        item.dataset.name = landscape.name;
+        item.dataset.type = 'natural';
+        item.dataset.color = landscape.color;
+        item.dataset.gradient = landscape.gradient;
+        
+        item.addEventListener('click', () => {
+          document.querySelectorAll('.landscape-item').forEach(i => i.classList.remove('selected'));
+          item.classList.add('selected');
+          selectedLandscape = landscape;
+          updateLandscapesCount();
+          drawPreview(currentTime);
+        });
+        
+        naturalLandscapes.appendChild(item);
+      });
+      
+      // Paisajes urbanos
+      landscapes.urban.forEach((landscape, index) => {
+        const item = document.createElement('div');
+        item.className = 'landscape-item';
+        item.style.background = landscape.gradient;
+        item.dataset.name = landscape.name;
+        item.dataset.type = 'urban';
+        item.dataset.color = landscape.color;
+        item.dataset.gradient = landscape.gradient;
+        
+        item.addEventListener('click', () => {
+          document.querySelectorAll('.landscape-item').forEach(i => i.classList.remove('selected'));
+          item.classList.add('selected');
+          selectedLandscape = landscape;
+          updateLandscapesCount();
+          drawPreview(currentTime);
+        });
+        
+        urbanLandscapes.appendChild(item);
+      });
+      
+      // Abstractos
+      landscapes.abstract.forEach((landscape, index) => {
+        const item = document.createElement('div');
+        item.className = 'landscape-item';
+        item.style.background = landscape.gradient;
+        item.dataset.name = landscape.name;
+        item.dataset.type = 'abstract';
+        item.dataset.color = landscape.color;
+        item.dataset.gradient = landscape.gradient;
+        
+        item.addEventListener('click', () => {
+          document.querySelectorAll('.landscape-item').forEach(i => i.classList.remove('selected'));
+          item.classList.add('selected');
+          selectedLandscape = landscape;
+          updateLandscapesCount();
+          drawPreview(currentTime);
+        });
+        
+        abstractLandscapes.appendChild(item);
+      });
+    }
+
+    // Establecer valores profesionales por defecto
+    function setProfessionalDefaults() {
+      // Seleccionar primer paisaje por defecto
+      if (landscapes.natural[0]) {
+        selectedLandscape = landscapes.natural[0];
+        const firstLandscape = document.querySelector('.landscape-item');
+        if (firstLandscape) firstLandscape.classList.add('selected');
+      }
+      
+      // Aplicar algunos efectos profesionales por defecto
+      selectedSpecialEffects = ['vignette', 'grain'];
+      
+      // Actualizar contadores
+      updateEffectsCount();
+      updateLandscapesCount();
+    }
+
+    // Actualizar contador de paisajes
+    function updateLandscapesCount() {
+      const count = selectedLandscape ? 1 : 0;
+      landscapesCount.textContent = count;
+    }
+
+    // Renderizar efectos
+    function renderEffects() {
+      // Efectos de transición
+      transitionEffects.innerHTML = '';
+      transitionEffectsList.forEach(effect => {
+        const btn = document.createElement('div');
+        btn.className = `effect-btn ${effect.color}`;
+        btn.dataset.id = effect.id;
+        btn.textContent = effect.name;
+        
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('#transition-effects .effect-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          selectedTransition = effect.id;
+          updateEffectsCount();
+          drawPreview(currentTime);
+        });
+        
+        transitionEffects.appendChild(btn);
+      });
+      
+      // Filtros
+      filterEffects.innerHTML = '';
+      filterEffectsList.forEach(effect => {
+        const btn = document.createElement('div');
+        btn.className = `effect-btn ${effect.color}`;
+        btn.dataset.id = effect.id;
+        btn.textContent = effect.name;
+        
+        if (effect.id === 'none') btn.classList.add('active');
+        
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('#filter-effects .effect-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          selectedFilter = effect.id;
+          updateEffectsCount();
+          drawPreview(currentTime);
+        });
+        
+        filterEffects.appendChild(btn);
+      });
+      
+      // Efectos especiales (múltiple selección)
+      specialEffects.innerHTML = '';
+      specialEffectsList.forEach(effect => {
+        const btn = document.createElement('div');
+        btn.className = `effect-btn ${effect.color}`;
+        btn.dataset.id = effect.id;
+        btn.textContent = effect.name;
+        
+        if (effect.id === 'vignette' || effect.id === 'grain') {
+          btn.classList.add('active');
+        }
+        
+        btn.addEventListener('click', () => {
+          btn.classList.toggle('active');
+          const index = selectedSpecialEffects.indexOf(effect.id);
+          if (index > -1) {
+            selectedSpecialEffects.splice(index, 1);
+          } else {
+            selectedSpecialEffects.push(effect.id);
+          }
+          updateEffectsCount();
+          drawPreview(currentTime);
+        });
+        
+        specialEffects.appendChild(btn);
+      });
+    }
+
+    // Función para generar vista previa de los marcos
+    function createFramePreview(frame) {
+      const preview = document.createElement('div');
+      preview.className = 'frame-preview';
+      
+      if (frame.type === 'gradient' && frame.color.startsWith('linear-gradient')) {
+        preview.style.background = frame.color;
+      } else {
+        preview.style.backgroundColor = frame.color;
+      }
+      
+      if (frame.type === 'double') {
+        preview.style.border = `4px ${frame.type} ${frame.secondaryColor}`;
+      } else if (frame.type === 'dotted' || frame.type === 'dashed') {
+        preview.style.border = `3px ${frame.type} ${frame.secondaryColor}`;
+      } else {
+        preview.style.border = `3px ${frame.type} ${frame.secondaryColor}`;
+      }
+      
+      return preview;
+    }
+
+    // Renderizar opciones de marcos
+    function renderFrameOptions() {
+      framesList.innerHTML = '';
+      presetFrames.forEach(frame => {
+        const frameOption = document.createElement('div');
+        frameOption.className = 'frame-option';
+        frameOption.dataset.id = frame.id;
+        
+        const preview = createFramePreview(frame);
+        const name = document.createElement('span');
+        name.className = 'small';
+        name.textContent = frame.name;
+        
+        frameOption.appendChild(preview);
+        frameOption.appendChild(name);
+        
+        frameOption.addEventListener('click', () => {
+          document.querySelectorAll('.frame-option').forEach(opt => opt.classList.remove('selected'));
+          frameOption.classList.add('selected');
+          activeFrame = frame;
+          borderSize.value = frame.size;
+          borderSizeValue.textContent = `${frame.size}px`;
+          
+          if (frame.color.startsWith('linear-gradient')) {
+            if (frame.color.includes('#667eea')) borderColor.value = '#667eea';
+            else if (frame.color.includes('#f093fb')) borderColor.value = '#f093fb';
+            else if (frame.color.includes('#4facfe')) borderColor.value = '#4facfe';
+            else if (frame.color.includes('#43e97b')) borderColor.value = '#43e97b';
+            else borderColor.value = '#ffffff';
+          } else {
+            borderColor.value = frame.color;
+          }
+          
+          borderStyle.value = frame.type;
+          drawPreview(currentTime);
+        });
+        
+        framesList.appendChild(frameOption);
+      });
+    }
+
+    // Configurar event listeners
+    function setupEventListeners() {
+      // Tabs
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          const tabId = tab.dataset.tab;
+          
+          tabs.forEach(t => t.classList.remove('active'));
+          tabContents.forEach(tc => tc.classList.remove('active'));
+          
+          tab.classList.add('active');
+          document.getElementById(`${tabId}-tab`).classList.add('active');
+        });
+      });
+
+      // Cargar imagen principal - ¡CORREGIDO!
+      fileInput.addEventListener('change', handleFileSelect);
+      
+      // Background image
+      bgImageInput.addEventListener('change', handleBgImageSelect);
+      
+      // Drag & drop - ¡CORREGIDO!
+      setupDragAndDrop();
+      
+      // Controles básicos
+      const updateControls = [
+        borderSize, borderRadius, shadowSize, effectIntensity, filterIntensity,
+        overlayOpacity, distortionAmount, particlesAmount, animationSpeed,
+        watermarkOpacity, textValue, textSize, textColor, textBgColor, textPos,
+        textAlign, fontFamily, textAnimation, watermarkText, watermarkSize,
+        watermarkPos, borderColor, borderStyle, bgColor, bgStyle,
+        overlayType, overlayColor1, overlayColor2, distortionType, particlesType,
+        shadowColor, durationInput, fpsInput, outputFormat, quality, resolution,
+        customWidth, customHeight
+      ];
+      
+      updateControls.forEach(control => {
+        if (control) {
+          control.addEventListener('input', () => {
+            if (control.id === 'borderSize') updateBorderSize();
+            else if (control.id === 'borderRadius') updateBorderRadius();
+            else if (control.id === 'shadowSize') updateShadowSize();
+            else if (control.id === 'effectIntensity') updateEffectIntensity();
+            else if (control.id === 'filterIntensity') updateFilterIntensity();
+            else if (control.id === 'overlayOpacity') updateOverlayOpacity();
+            else if (control.id === 'distortionAmount') updateDistortionAmount();
+            else if (control.id === 'particlesAmount') updateParticlesAmount();
+            else if (control.id === 'animationSpeed') updateAnimationSpeed();
+            else {
+              drawPreview(currentTime);
+            }
+          });
+          
+          control.addEventListener('change', () => {
+            if (control.id === 'resolution') handleResolutionChange();
+            else {
+              drawPreview(currentTime);
+            }
+          });
+        }
+      });
+      
+      // Botones principales
+      startRecordBtn.addEventListener('click', startRecording);
+      stopRecordBtn.addEventListener('click', stopRecording);
+      previewBtn.addEventListener('click', togglePreview);
+      resetBtn.addEventListener('click', resetEditor);
+      randomBtn.addEventListener('click', applyRandomEffects);
+      autoEnhanceBtn.addEventListener('click', applyAutoEnhance);
+      savePresetBtn.addEventListener('click', savePreset);
+      loadPresetBtn.addEventListener('click', loadPreset);
+      shareBtn.addEventListener('click', shareProject);
+      
+      // Descargas
+      downloadMobile.addEventListener('click', () => downloadVideo('mobile'));
+      downloadNotebook.addEventListener('click', () => downloadVideo('notebook'));
+      downloadHD.addEventListener('click', () => downloadVideo('hd'));
+      download4K.addEventListener('click', () => downloadVideo('4k'));
+      
+      // Presets de color
+      colorPresets.forEach(preset => {
+        preset.addEventListener('click', () => {
+          const color = preset.dataset.color;
+          if (color.startsWith('gradient')) {
+            if (color === 'gradient-purple') bgColor.value = '#667eea';
+            else if (color === 'gradient-pink') bgColor.value = '#f093fb';
+            else if (color === 'gradient-blue') bgColor.value = '#4facfe';
+            else if (color === 'gradient-green') bgColor.value = '#43e97b';
+            else if (color === 'gradient-sunset') bgColor.value = '#fa709a';
+            else if (color === 'gradient-pastel') bgColor.value = '#a8edea';
+            else if (color === 'gradient-warm') bgColor.value = '#ff9a9e';
+            else if (color === 'gradient-cool') bgColor.value = '#a3bded';
+            else if (color === 'gradient-space') bgColor.value = '#0f172a';
+            else if (color === 'gradient-night') bgColor.value = '#1a1a2e';
+          } else {
+            bgColor.value = color;
+          }
+          colorPresets.forEach(p => p.classList.remove('selected'));
+          preset.classList.add('selected');
+          drawPreview(currentTime);
+        });
+      });
+      
+      // Botones de mejoras
+      enhancementBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const enhancement = btn.dataset.enhancement || btn.dataset.effect;
+          if (enhancement) {
+            btn.classList.toggle('active');
+            if (btn.classList.contains('active')) {
+              selectedEnhancements.add(enhancement);
+            } else {
+              selectedEnhancements.delete(enhancement);
+            }
+            drawPreview(currentTime);
+          }
+        });
+      });
+      
+      // Presets profesionales
+      presetCards.forEach(card => {
+        card.addEventListener('click', () => {
+          const preset = card.dataset.preset;
+          applyProfessionalPreset(preset);
+          presetCards.forEach(c => c.classList.remove('selected'));
+          card.classList.add('selected');
+        });
+      });
+    }
+
+    // Manejar selección de archivo - ¡CORREGIDO!
+    function handleFileSelect(e) {
+      const file = e.target.files[0]; 
+      if(!file) return;
+      
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        mainImage = new Image();
+        mainImage.onload = function() {
+          imageLoaded = true;
+          statusEl.textContent = `Imagen cargada: ${mainImage.width}x${mainImage.height}px`;
+          drawPreview(currentTime);
+        };
+        mainImage.onerror = function() {
+          statusEl.textContent = 'Error al cargar la imagen';
+          imageLoaded = false;
+        };
+        mainImage.src = event.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // Manejar selección de imagen de fondo
+    function handleBgImageSelect(e) {
+      const file = e.target.files[0]; 
+      if(!file) return;
+      
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        bgImage = new Image();
+        bgImage.onload = function() {
+          statusEl.textContent = 'Fondo personalizado cargado';
+          drawPreview(currentTime);
+        };
+        bgImage.src = event.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // Configurar drag and drop - ¡CORREGIDO!
+    function setupDragAndDrop() {
+      ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        dropzone.addEventListener(eventName, preventDefaults, false);
+      });
+
+      function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+
+      ['dragenter', 'dragover'].forEach(eventName => {
+        dropzone.addEventListener(eventName, highlight, false);
+      });
+
+      ['dragleave', 'drop'].forEach(eventName => {
+        dropzone.addEventListener(eventName, unhighlight, false);
+      });
+
+      function highlight() {
+        dropzone.style.outline = '2px dashed #0ea5e9';
+      }
+
+      function unhighlight() {
+        dropzone.style.outline = 'none';
+      }
+
+      dropzone.addEventListener('drop', handleDrop, false);
+
+      function handleDrop(e) {
+        const dt = e.dataTransfer;
+        const file = dt.files[0];
+        
+        if (file && file.type.startsWith('image/')) {
+          const reader = new FileReader();
+          reader.onload = function(event) {
+            mainImage = new Image();
+            mainImage.onload = function() {
+              imageLoaded = true;
+              statusEl.textContent = `Imagen cargada por drag & drop: ${mainImage.width}x${mainImage.height}px`;
+              drawPreview(currentTime);
+            };
+            mainImage.src = event.target.result;
+          };
+          reader.readAsDataURL(file);
+        }
+      }
+    }
+
+    // Actualizar controles
+    function updateBorderSize() {
+      borderSizeValue.textContent = `${borderSize.value}px`;
+      drawPreview(currentTime);
+    }
+
+    function updateBorderRadius() {
+      borderRadiusValue.textContent = `${borderRadius.value}px`;
+      drawPreview(currentTime);
+    }
+
+    function updateShadowSize() {
+      shadowSizeValue.textContent = `${shadowSize.value}px`;
+      drawPreview(currentTime);
+    }
+
+    function updateEffectIntensity() {
+      effectIntensityValue.textContent = effectIntensity.value;
+      drawPreview(currentTime);
+    }
+
+    function updateFilterIntensity() {
+      filterIntensityValue.textContent = `${filterIntensity.value}%`;
+      drawPreview(currentTime);
+    }
+
+    function updateOverlayOpacity() {
+      overlayOpacityValue.textContent = `${overlayOpacity.value}%`;
+      drawPreview(currentTime);
+    }
+
+    function updateDistortionAmount() {
+      distortionAmountValue.textContent = `${distortionAmount.value}%`;
+      drawPreview(currentTime);
+    }
+
+    function updateParticlesAmount() {
+      particlesAmountValue.textContent = particlesAmount.value;
+      generateParticles();
+      drawPreview(currentTime);
+    }
+
+    function updateAnimationSpeed() {
+      animationSpeedValue.textContent = `${animationSpeed.value}%`;
+    }
+
+    // Manejar cambio de resolución
+    function handleResolutionChange() {
+      if (resolution.value === 'custom') {
+        customResolution.style.display = 'block';
+      } else {
+        customResolution.style.display = 'none';
+        
+        switch(resolution.value) {
+          case '480p':
+            canvasWidth = 854;
+            canvasHeight = 480;
+            break;
+          case '720p':
+            canvasWidth = 1280;
+            canvasHeight = 720;
+            break;
+          case '1080p':
+            canvasWidth = 1920;
+            canvasHeight = 1080;
+            break;
+          case '1440p':
+            canvasWidth = 2560;
+            canvasHeight = 1440;
+            break;
+          case '2160p':
+            canvasWidth = 3840;
+            canvasHeight = 2160;
+            break;
+          case 'instagram':
+            canvasWidth = 1080;
+            canvasHeight = 1350;
+            break;
+          case 'youtube':
+            canvasWidth = 1920;
+            canvasHeight = 1080;
+            break;
+          case 'tiktok':
+            canvasWidth = 1080;
+            canvasHeight = 1920;
+            break;
+        }
+        
+        previewCanvas.width = canvasWidth;
+        previewCanvas.height = canvasHeight;
+        updateResolutionLabel();
+        drawPreview(currentTime);
+      }
+    }
+
+    // Actualizar etiqueta de resolución
+    function updateResolutionLabel() {
+      resolutionLabel.textContent = `${canvasWidth}×${canvasHeight}`;
+    }
+
+    // Actualizar contador de efectos
+    function updateEffectsCount() {
+      let count = 0;
+      if (selectedTransition !== 'none') count++;
+      if (selectedFilter !== 'none') count++;
+      count += selectedSpecialEffects.length;
+      if (overlayType.value !== 'none') count++;
+      if (distortionType.value !== 'none') count++;
+      if (particlesType.value !== 'none') count++;
+      count += selectedEnhancements.size;
+      effectsCount.textContent = count;
+    }
+
+    // Generar partículas
+    function generateParticles() {
+      particles = [];
+      const count = parseInt(particlesAmount.value);
+      const type = particlesType.value;
+      
+      if (type === 'none') return;
+      
+      for (let i = 0; i < count; i++) {
+        particles.push(new Particle(
+          Math.random() * canvasWidth,
+          Math.random() * canvasHeight,
+          type
+        ));
+      }
+    }
+
+    // Limpiar canvas
+    function clearCanvas() {
+      ctx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
+    }
+
+    // Aplicar filtro a la imagen - ¡MEJORADO!
+    function applyFilter() {
+      const intensity = parseInt(filterIntensity.value);
+      
+      switch(selectedFilter) {
+        case 'grayscale':
+          ctx.filter = `grayscale(${intensity}%)`;
+          break;
+        case 'sepia':
+          ctx.filter = `sepia(${intensity}%)`;
+          break;
+        case 'blur':
+          ctx.filter = `blur(${intensity/20}px)`;
+          break;
+        case 'brightness':
+          ctx.filter = `brightness(${intensity}%)`;
+          break;
+        case 'contrast':
+          ctx.filter = `contrast(${intensity}%)`;
+          break;
+        case 'hue-rotate':
+          ctx.filter = `hue-rotate(${intensity*3.6}deg)`;
+          break;
+        case 'invert':
+          ctx.filter = `invert(${intensity}%)`;
+          break;
+        case 'saturate':
+          ctx.filter = `saturate(${intensity}%)`;
+          break;
+        case 'vintage':
+          ctx.filter = `sepia(${intensity/2}%) brightness(${80 + intensity/5}%) contrast(${90 + intensity/10}%)`;
+          break;
+        case 'cold':
+          ctx.filter = `hue-rotate(180deg) brightness(${90 + intensity/10}%)`;
+          break;
+        case 'warm':
+          ctx.filter = `sepia(${intensity/3}%) hue-rotate(-20deg) brightness(${110}%)`;
+          break;
+        case 'dramatic':
+          ctx.filter = `contrast(${120 + intensity/2}%) brightness(${90}%) saturate(${130}%)`;
+          break;
+        case 'cinematic':
+          ctx.filter = `contrast(${110}%) brightness(${95}%) saturate(${120}%) sepia(${10}%)`;
+          break;
+        case 'noir':
+          ctx.filter = `grayscale(100%) contrast(${120}%) brightness(${90}%)`;
+          break;
+        case 'pop-art':
+          ctx.filter = `saturate(300%) contrast(150%) brightness(110%)`;
+          break;
+        case 'cyberpunk':
+          ctx.filter = `hue-rotate(270deg) saturate(300%) contrast(150%)`;
+          break;
+        case 'fantasy':
+          ctx.filter = `hue-rotate(90deg) saturate(200%) brightness(110%)`;
+          break;
+        case 'dreamy':
+          ctx.filter = `blur(1px) brightness(115%) saturate(180%)`;
+          break;
+        default:
+          ctx.filter = 'none';
+      }
+    }
+
+    // Dibujar vista previa - ¡COMPLETAMENTE REESCRITO!
+    function drawPreview(progress = 0) {
+      const W = previewCanvas.width;
+      const H = previewCanvas.height;
+      
+      // Limpiar canvas
+      clearCanvas();
+      
+      // Si no hay imagen cargada, mostrar placeholder
+      if (!imageLoaded || !mainImage) {
+        drawPlaceholder(W, H);
+        return;
+      }
+      
+      // Aplicar velocidad de animación
+      const speed = parseInt(animationSpeed.value) / 100;
+      const adjustedProgress = progress * speed;
+      
+      // 1. DIBUJAR FONDO
+      drawBackground(W, H);
+      
+      // 2. DIBUJAR IMAGEN PRINCIPAL CON EFECTOS
+      drawMainImage(W, H, adjustedProgress);
+      
+      // 3. APLICAR EFECTOS ESPECIALES
+      applySpecialEffects(W, H, adjustedProgress);
+      
+      // 4. APLICAR SUPERPOSICIONES
+      applyOverlays(W, H, adjustedProgress);
+      
+      // 5. DIBUJAR BORDES
+      drawBorders(W, H);
+      
+      // 6. DIBUJAR PARTÍCULAS
+      drawParticles();
+      
+      // 7. DIBUJAR TEXTO
+      drawText(W, H, adjustedProgress);
+      
+      // 8. DIBUJAR MARCA DE AGUA
+      drawWatermark(W, H);
+    }
+
+    // Dibujar placeholder cuando no hay imagen
+    function drawPlaceholder(W, H) {
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.5)';
+      ctx.fillRect(0, 0, W, H);
+      
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = 'bold 24px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('Arrastra una imagen aquí', W/2, H/2 - 40);
+      ctx.font = '16px sans-serif';
+      ctx.fillText('o haz clic en "Cargar Imagen"', W/2, H/2);
+      ctx.fillText('en la pestaña Básico', W/2, H/2 + 30);
+    }
+
+    // Dibujar fondo
+    function drawBackground(W, H) {
+      // Fondo de paisaje seleccionado
+      if (selectedLandscape && selectedLandscape.gradient) {
+        const gradient = ctx.createLinearGradient(0, 0, W, H);
+        
+        if (selectedLandscape.gradient.includes('#3b82f6')) {
+          gradient.addColorStop(0, '#3b82f6');
+          gradient.addColorStop(1, '#1e40af');
+        } else if (selectedLandscape.gradient.includes('#10b981')) {
+          gradient.addColorStop(0, '#10b981');
+          gradient.addColorStop(1, '#065f46');
+        } else if (selectedLandscape.gradient.includes('#0ea5e9')) {
+          gradient.addColorStop(0, '#0ea5e9');
+          gradient.addColorStop(1, '#0369a1');
+        } else if (selectedLandscape.gradient.includes('#8b5cf6')) {
+          gradient.addColorStop(0, '#8b5cf6');
+          gradient.addColorStop(1, '#4c1d95');
+        } else if (selectedLandscape.gradient.includes('#f97316')) {
+          gradient.addColorStop(0, '#f97316');
+          gradient.addColorStop(1, '#9a3412');
+        } else {
+          // Para gradientes complejos, usar color sólido
+          ctx.fillStyle = selectedLandscape.color || bgColor.value;
+          ctx.fillRect(0, 0, W, H);
+          return;
+        }
+        
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, W, H);
+      } else {
+        // Fondo simple
+        ctx.fillStyle = bgColor.value;
+        ctx.fillRect(0, 0, W, H);
+      }
+      
+      // Imagen de fondo personalizada
+      if (bgImage && bgImage.complete) {
+        const ar = bgImage.width / bgImage.height;
+        const car = W / H;
+        let dw, dh, dx, dy;
+        
+        switch(bgStyle.value) {
+          case 'cover':
+            if (ar > car) {
+              dh = H;
+              dw = dh * ar;
+              dx = (W - dw) / 2;
+              dy = 0;
+            } else {
+              dw = W;
+              dh = dw / ar;
+              dx = 0;
+              dy = (H - dh) / 2;
+            }
+            break;
+          case 'contain':
+            if (ar > car) {
+              dw = W;
+              dh = dw / ar;
+              dx = 0;
+              dy = (H - dh) / 2;
+            } else {
+              dh = H;
+              dw = dh * ar;
+              dx = (W - dw) / 2;
+              dy = 0;
+            }
+            break;
+          case 'blur':
+            ctx.save();
+            ctx.filter = 'blur(10px)';
+            if (ar > car) {
+              dh = H;
+              dw = dh * ar;
+              dx = (W - dw) / 2;
+              dy = 0;
+            } else {
+              dw = W;
+              dh = dw / ar;
+              dx = 0;
+              dy = (H - dh) / 2;
+            }
+            ctx.drawImage(bgImage, dx, dy, dw, dh);
+            ctx.restore();
+            return;
+        }
+        
+        ctx.drawImage(bgImage, dx, dy, dw, dh);
+      }
+    }
+
+    // Dibujar imagen principal con efectos
+    function drawMainImage(W, H, progress) {
+      if (!mainImage || !mainImage.complete) return;
+      
+      const imgWidth = mainImage.width;
+      const imgHeight = mainImage.height;
+      const imgAspect = imgWidth / imgHeight;
+      const canvasAspect = W / H;
+      
+      // Calcular dimensiones de la imagen
+      let drawWidth, drawHeight;
+      const border = parseInt(borderSize.value) || 0;
+      const padding = border * 2;
+      
+      if (imgAspect > canvasAspect) {
+        drawWidth = W - padding;
+        drawHeight = drawWidth / imgAspect;
+      } else {
+        drawHeight = H - padding;
+        drawWidth = drawHeight * imgAspect;
+      }
+      
+      let drawX = (W - drawWidth) / 2;
+      let drawY = (H - drawHeight) / 2;
+      
+      // Aplicar transiciones
+      const intensity = parseInt(effectIntensity.value) / 10;
+      
+      switch(selectedTransition) {
+        case 'zoom':
+          const scale = 1 + (0.2 * intensity) * progress;
+          drawWidth *= scale;
+          drawHeight *= scale;
+          drawX = (W - drawWidth) / 2;
+          drawY = (H - drawHeight) / 2;
+          break;
+          
+        case 'fade':
+          ctx.globalAlpha = Math.min(1, Math.max(0, progress < 0.5 ? (progress * 2) : (1 - (progress - 0.5) * 2)));
+          break;
+          
+        case 'rotate':
+          ctx.save();
+          ctx.translate(W/2, H/2);
+          const rotation = (progress - 0.5) * Math.PI * 2 * intensity * 0.1;
+          ctx.rotate(rotation);
+          drawX = -drawWidth/2;
+          drawY = -drawHeight/2;
+          break;
+          
+        case 'bounce':
+          const bounce = Math.sin(progress * Math.PI * 2) * 30 * intensity;
+          drawY += bounce;
+          break;
+          
+        case 'slide':
+          const slide = progress * W * intensity * 0.5;
+          drawX -= slide;
+          break;
+          
+        case 'shake':
+          const shakeX = Math.sin(progress * Math.PI * 20) * 15 * intensity;
+          const shakeY = Math.cos(progress * Math.PI * 15) * 10 * intensity;
+          drawX += shakeX;
+          drawY += shakeY;
+          break;
+      }
+      
+      // Guardar estado del contexto
+      ctx.save();
+      
+      // Aplicar filtro
+      if (selectedFilter !== 'none') {
+        applyFilter();
+      }
+      
+      // Dibujar imagen
+      ctx.drawImage(mainImage, drawX, drawY, drawWidth, drawHeight);
+      
+      // Restaurar estado
+      ctx.restore();
+      
+      // Restaurar opacidad si se usó fade
+      if (selectedTransition === 'fade') {
+        ctx.globalAlpha = 1;
+      }
+      
+      // Restaurar transformaciones si se usó rotate
+      if (selectedTransition === 'rotate') {
+        ctx.restore();
+      }
+    }
+
+    // Aplicar efectos especiales
+    function applySpecialEffects(W, H, progress) {
+      ctx.save();
+      
+      selectedSpecialEffects.forEach(effect => {
+        switch(effect) {
+          case 'vignette':
+            const vignette = ctx.createRadialGradient(
+              W/2, H/2, 0,
+              W/2, H/2, Math.max(W, H)/2
+            );
+            vignette.addColorStop(0, 'rgba(0,0,0,0)');
+            vignette.addColorStop(1, 'rgba(0,0,0,0.5)');
+            ctx.fillStyle = vignette;
+            ctx.fillRect(0, 0, W, H);
+            break;
+            
+          case 'grain':
+            ctx.fillStyle = `rgba(255,255,255,${0.02 + 0.01 * Math.sin(progress * Math.PI * 10)})`;
+            for(let i = 0; i < 200; i++) {
+              ctx.fillRect(
+                Math.random() * W,
+                Math.random() * H,
+                1, 1
+              );
+            }
+            break;
+            
+          case 'glitch':
+            const glitchAmount = 3 * Math.sin(progress * Math.PI * 20);
+            ctx.globalCompositeOperation = 'screen';
+            ctx.drawImage(previewCanvas, glitchAmount, 0);
+            ctx.drawImage(previewCanvas, -glitchAmount, 0);
+            ctx.globalCompositeOperation = 'source-over';
+            break;
+            
+          case 'chromatic':
+            ctx.globalCompositeOperation = 'screen';
+            ctx.fillStyle = 'rgba(255,0,0,0.1)';
+            ctx.fillRect(1, 0, W, H);
+            ctx.fillStyle = 'rgba(0,255,0,0.1)';
+            ctx.fillRect(-1, 0, W, H);
+            ctx.fillStyle = 'rgba(0,0,255,0.1)';
+            ctx.fillRect(0, 1, W, H);
+            ctx.globalCompositeOperation = 'source-over';
+            break;
+            
+          case 'bloom':
+            ctx.shadowColor = 'white';
+            ctx.shadowBlur = 15;
+            break;
+            
+          case 'scanlines':
+            ctx.strokeStyle = 'rgba(0,255,0,0.1)';
+            ctx.lineWidth = 1;
+            for(let y = 0; y < H; y += 3) {
+              ctx.beginPath();
+              ctx.moveTo(0, y + progress * 3);
+              ctx.lineTo(W, y + progress * 3);
+              ctx.stroke();
+            }
+            break;
+        }
+      });
+      
+      ctx.restore();
+    }
+
+    // Aplicar superposiciones
+    function applyOverlays(W, H, progress) {
+      if (overlayType.value === 'none') return;
+      
+      ctx.save();
+      ctx.globalAlpha = parseInt(overlayOpacity.value) / 100;
+      
+      switch(overlayType.value) {
+        case 'light-leak':
+          const gradient = ctx.createLinearGradient(0, 0, W, H);
+          gradient.addColorStop(0, overlayColor1.value);
+          gradient.addColorStop(1, overlayColor2.value);
+          ctx.fillStyle = gradient;
+          ctx.globalCompositeOperation = 'screen';
+          ctx.fillRect(0, 0, W, H);
+          break;
+          
+        case 'rain':
+          ctx.fillStyle = 'rgba(255,255,255,0.3)';
+          for(let i = 0; i < 80; i++) {
+            const x = Math.random() * W;
+            const y = (progress * H + Math.random() * 100) % H;
+            ctx.fillRect(x, y, 1, 10);
+          }
+          break;
+          
+        case 'snow':
+          ctx.fillStyle = 'rgba(255,255,255,0.8)';
+          for(let i = 0; i < 40; i++) {
+            const x = (Math.random() * W + progress * 30) % W;
+            const y = (Math.random() * H + progress * 20) % H;
+            ctx.beginPath();
+            ctx.arc(x, y, 2, 0, Math.PI * 2);
+            ctx.fill();
+          }
+          break;
+          
+        case 'stars':
+          ctx.fillStyle = 'rgba(255,255,255,0.9)';
+          for(let i = 0; i < 25; i++) {
+            const x = Math.random() * W;
+            const y = Math.random() * H;
+            const size = Math.random() * 2 + 1;
+            ctx.beginPath();
+            ctx.arc(x, y, size, 0, Math.PI * 2);
+            ctx.fill();
+          }
+          break;
+      }
+      
+      ctx.restore();
+    }
+
+    // Dibujar bordes
+    function drawBorders(W, H) {
+      const border = parseInt(borderSize.value);
+      if (border <= 0) return;
+      
+      const radius = parseInt(borderRadius.value);
+      const shadow = parseInt(shadowSize.value);
+      
+      ctx.save();
+      
+      // Sombra
+      if (shadow > 0) {
+        ctx.shadowColor = shadowColor.value;
+        ctx.shadowBlur = shadow;
+        ctx.shadowOffsetX = 0;
+        ctx.shadowOffsetY = 0;
+      }
+      
+      // Color y estilo del borde
+      ctx.strokeStyle = borderColor.value;
+      ctx.lineWidth = border;
+      
+      // Estilos especiales
+      if (borderStyle.value === 'glow') {
+        ctx.shadowColor = borderColor.value;
+        ctx.shadowBlur = 20;
+      } else if (borderStyle.value === 'dotted') {
+        ctx.setLineDash([2, 4]);
+      } else if (borderStyle.value === 'dashed') {
+        ctx.setLineDash([8, 8]);
+      } else if (borderStyle.value === 'double') {
+        // Dibujar borde doble
+        ctx.strokeRect(border/2, border/2, W - border, H - border);
+        ctx.lineWidth = Math.max(2, border/3);
+        ctx.strokeStyle = '#00000055';
+        ctx.strokeRect(border * 1.5, border * 1.5, W - border * 3, H - border * 3);
+        ctx.restore();
+        return;
+      }
+      
+      // Dibujar borde
+      if (radius > 0) {
+        ctx.beginPath();
+        ctx.roundRect(border/2, border/2, W - border, H - border, radius);
+        ctx.stroke();
+      } else {
+        ctx.strokeRect(border/2, border/2, W - border, H - border);
+      }
+      
+      ctx.restore();
+    }
+
+    // Dibujar partículas
+    function drawParticles() {
+      if (particlesType.value === 'none' || particles.length === 0) return;
+      
+      ctx.save();
+      
+      particles.forEach(particle => {
+        particle.update();
+        particle.draw(ctx);
+      });
+      
+      // Eliminar partículas muertas y agregar nuevas
+      particles = particles.filter(p => p.life > 0);
+      
+      if (particles.length < particlesAmount.value * 0.8 && Math.random() > 0.8) {
+        const type = particlesType.value;
+        particles.push(new Particle(
+          Math.random() * canvasWidth,
+          type === 'snow' || type === 'bubbles' ? canvasHeight : 0,
+          type
+        ));
+      }
+      
+      ctx.restore();
+    }
+
+    // Dibujar texto
+    function drawText(W, H, progress) {
+      if (!textValue.value.trim()) return;
+      
+      ctx.save();
+      
+      const fontSize = parseInt(textSize.value);
+      const font = `bold ${fontSize}px ${fontFamily.value}`;
+      ctx.font = font;
+      ctx.fillStyle = textColor.value;
+      ctx.textAlign = textAlign.value;
+      ctx.textBaseline = 'middle';
+      
+      // Posición del texto
+      let x, y;
+      
+      switch(textAlign.value) {
+        case 'left':
+          x = 40;
+          break;
+        case 'right':
+          x = W - 40;
+          break;
+        default:
+          x = W / 2;
+      }
+      
+      switch(textPos.value) {
+        case 'top':
+          y = fontSize + 40;
+          break;
+        case 'bottom':
+          y = H - fontSize - 40;
+          break;
+        default:
+          y = H / 2;
+      }
+      
+      // Animaciones
+      let displayText = textValue.value;
+      let currentX = x;
+      let currentY = y;
+      
+      if (textAnimation.value !== 'none') {
+        switch(textAnimation.value) {
+          case 'typewriter':
+            const chars = Math.floor(progress * textValue.value.length);
+            displayText = textValue.value.substring(0, chars);
+            break;
+            
+          case 'fade':
+            ctx.globalAlpha = Math.min(1, progress * 2);
+            break;
+            
+          case 'slide':
+            if (textAlign.value === 'left') {
+              currentX = 40 - (1 - progress) * 100;
+            } else if (textAlign.value === 'right') {
+              currentX = W - 40 + (1 - progress) * 100;
+            } else {
+              currentY = H/2 - (1 - progress) * 100;
+            }
+            break;
+            
+          case 'bounce':
+            currentY += Math.sin(progress * Math.PI * 2) * 20;
+            break;
+            
+          case 'glitch':
+            currentX += Math.sin(progress * Math.PI * 20) * 5;
+            break;
+            
+          case 'neon':
+            ctx.shadowColor = textColor.value;
+            ctx.shadowBlur = 15;
+            break;
+        }
+      }
+      
+      // Fondo del texto
+      if (textBgColor.value !== '#00000000') {
+        const textWidth = ctx.measureText(displayText).width;
+        const padding = 10;
+        
+        ctx.fillStyle = textBgColor.value;
+        ctx.fillRect(
+          currentX - (textAlign.value === 'center' ? textWidth/2 : 0) - padding,
+          currentY - fontSize/2 - padding/2,
+          textWidth + padding*2,
+          fontSize + padding
+        );
+        
+        ctx.fillStyle = textColor.value;
+      }
+      
+      // Sombra del texto
+      ctx.shadowColor = 'rgba(0,0,0,0.5)';
+      ctx.shadowBlur = 5;
+      ctx.shadowOffsetX = 2;
+      ctx.shadowOffsetY = 2;
+      
+      // Dibujar texto
+      ctx.fillText(displayText, currentX, currentY);
+      
+      ctx.restore();
+    }
+
+    // Dibujar marca de agua
+    function drawWatermark(W, H) {
+      if (!watermarkText.value.trim()) return;
+      
+      ctx.save();
+      
+      const fontSize = parseInt(watermarkSize.value);
+      const opacity = parseInt(watermarkOpacity.value) / 10;
+      
+      ctx.font = `${fontSize}px ${fontFamily.value}`;
+      ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'alphabetic';
+      
+      let x, y;
+      
+      switch(watermarkPos.value) {
+        case 'top-left':
+          x = 20;
+          y = fontSize + 20;
+          break;
+        case 'top-right':
+          x = W - 20;
+          y = fontSize + 20;
+          ctx.textAlign = 'right';
+          break;
+        case 'bottom-left':
+          x = 20;
+          y = H - 20;
+          break;
+        case 'bottom-right':
+          x = W - 20;
+          y = H - 20;
+          ctx.textAlign = 'right';
+          break;
+        case 'center':
+          x = W / 2;
+          y = H / 2;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          break;
+      }
+      
+      ctx.fillText(watermarkText.value, x, y);
+      
+      ctx.restore();
+    }
+
+    // Alternar vista previa animada
+    function togglePreview() {
+      if (isPreviewing) {
+        isPreviewing = false;
+        clearInterval(previewInterval);
+        previewBtn.textContent = '👁️ Vista Previa';
+        previewBtn.classList.remove('warning');
+        statusEl.textContent = 'Vista previa detenida';
+      } else {
+        if (!imageLoaded) {
+          alert('Por favor carga una imagen primero desde la pestaña Básico.');
+          return;
+        }
+        
+        isPreviewing = true;
+        currentTime = 0;
+        previewBtn.textContent = '⏸️ Detener Vista';
+        previewBtn.classList.add('warning');
+        
+        previewInterval = setInterval(() => {
+          currentTime += 0.016;
+          if (currentTime > 1) currentTime = 0;
+          drawPreview(currentTime);
+        }, 16);
+        
+        statusEl.textContent = 'Vista previa animada activada';
+      }
+    }
+
+    // Iniciar grabación
+    function startRecording() {
+      if (!imageLoaded) {
+        alert('Por favor carga una imagen primero desde la pestaña Básico.');
+        return;
+      }
+      
+      const duration = Math.max(1, Number(durationInput.value) || 6);
+      const fps = Math.max(8, Number(fpsInput.value) || 30);
+
+      try {
+        const stream = previewCanvas.captureStream(fps);
+        const mime = 'video/webm;codecs=vp9';
+        
+        recordedChunks = [];
+        
+        mediaRecorder = new MediaRecorder(stream, { mimeType: mime });
+
+        mediaRecorder.ondataavailable = e => {
+          if(e.data && e.data.size) recordedChunks.push(e.data);
+        };
+        
+        mediaRecorder.onstop = finishRecording;
+        mediaRecorder.start();
+        
+        isRecording = true;
+        startRecordBtn.disabled = true;
+        stopRecordBtn.disabled = false;
+        previewBtn.disabled = true;
+        statusEl.textContent = 'Grabando video...';
+        progressBar.style.width = '0%';
+
+        const totalFrames = Math.round(duration * fps);
+        let frame = 0;
+        
+        function step() {
+          const progress = frame / totalFrames;
+          drawPreview(progress);
+          
+          progressBar.style.width = `${progress * 100}%`;
+          
+          frame++;
+          
+          if(frame <= totalFrames && isRecording) {
+            setTimeout(() => requestAnimationFrame(step), 1000 / fps);
+          } else {
+            if(mediaRecorder && mediaRecorder.state === 'recording') mediaRecorder.stop();
+            isRecording = false;
+            startRecordBtn.disabled = false;
+            stopRecordBtn.disabled = true;
+            previewBtn.disabled = false;
+            statusEl.textContent = 'Procesando video...';
+          }
+        }
+        
+        step();
+      } catch(e) {
+        console.error('Error al grabar:', e);
+        alert('Error al iniciar la grabación. Usa Chrome o Firefox para mejor compatibilidad.');
+        isRecording = false;
+        startRecordBtn.disabled = false;
+        stopRecordBtn.disabled = true;
+        previewBtn.disabled = false;
+      }
+    }
+
+    // Detener grabación
+    function stopRecording() {
+      if(mediaRecorder && mediaRecorder.state === 'recording') {
+        mediaRecorder.stop();
+        isRecording = false;
+        startRecordBtn.disabled = false;
+        stopRecordBtn.disabled = true;
+        previewBtn.disabled = false;
+        statusEl.textContent = 'Grabación detenida, procesando...';
+      }
+    }
+
+    // Finalizar grabación
+    function finishRecording() {
+      try {
+        const blob = new Blob(recordedChunks, { type: 'video/webm' });
+        const url = URL.createObjectURL(blob);
+        
+        downloadA.href = url;
+        downloadA.download = `video_${Date.now()}.webm`;
+        downloadA.style.display = 'inline-block';
+        downloadA.textContent = 'Descargar video (WebM)';
+        statusEl.textContent = 'Video listo para descargar';
+        progressBar.style.width = '100%';
+      } catch(e) {
+        console.error('Error al finalizar grabación:', e);
+        statusEl.textContent = 'Error al generar el video';
+      }
+    }
+
+    // Descargar video
+    function downloadVideo(type) {
+      if (!downloadA.href) {
+        alert('Primero genera un video haciendo clic en "Generar Video".');
+        return;
+      }
+      
+      let filename = `video_${Date.now()}`;
+      
+      switch(type) {
+        case 'mobile': filename = `video_mobile_${Date.now()}`; break;
+        case 'notebook': filename = `video_notebook_${Date.now()}`; break;
+        case 'hd': filename = `video_hd_${Date.now()}`; break;
+        case '4k': filename = `video_4k_${Date.now()}`; break;
+      }
+      
+      const link = document.createElement('a');
+      link.href = downloadA.href;
+      link.download = `${filename}.webm`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // Aplicar efectos aleatorios
+    function applyRandomEffects() {
+      // Transición aleatoria
+      const randomTransition = transitionEffectsList[Math.floor(Math.random() * transitionEffectsList.length)].id;
+      document.querySelectorAll('#transition-effects .effect-btn').forEach(b => b.classList.remove('active'));
+      const transBtn = document.querySelector(`#transition-effects .effect-btn[data-id="${randomTransition}"]`);
+      if (transBtn) {
+        transBtn.classList.add('active');
+        selectedTransition = randomTransition;
+      }
+      
+      // Filtro aleatorio
+      const randomFilter = filterEffectsList[Math.floor(Math.random() * filterEffectsList.length)].id;
+      document.querySelectorAll('#filter-effects .effect-btn').forEach(b => b.classList.remove('active'));
+      const filterBtn = document.querySelector(`#filter-effects .effect-btn[data-id="${randomFilter}"]`);
+      if (filterBtn) {
+        filterBtn.classList.add('active');
+        selectedFilter = randomFilter;
+      }
+      
+      // Efectos especiales aleatorios
+      document.querySelectorAll('#special-effects .effect-btn').forEach(b => b.classList.remove('active'));
+      selectedSpecialEffects = [];
+      const numEffects = Math.floor(Math.random() * 4) + 1;
+      for (let i = 0; i < numEffects; i++) {
+        const randomEffect = specialEffectsList[Math.floor(Math.random() * specialEffectsList.length)].id;
+        if (!selectedSpecialEffects.includes(randomEffect)) {
+          selectedSpecialEffects.push(randomEffect);
+          const effectBtn = document.querySelector(`#special-effects .effect-btn[data-id="${randomEffect}"]`);
+          if (effectBtn) effectBtn.classList.add('active');
+        }
+      }
+      
+      // Paisaje aleatorio
+      const allLandscapes = [...landscapes.natural, ...landscapes.urban, ...landscapes.abstract];
+      const randomLandscape = allLandscapes[Math.floor(Math.random() * allLandscapes.length)];
+      document.querySelectorAll('.landscape-item').forEach(i => i.classList.remove('selected'));
+      selectedLandscape = randomLandscape;
+      
+      // Encontrar y seleccionar el paisaje correspondiente en la UI
+      const landscapeItems = document.querySelectorAll('.landscape-item');
+      landscapeItems.forEach(item => {
+        if (item.dataset.name === randomLandscape.name) {
+          item.classList.add('selected');
+        }
+      });
+      
+      // Marco aleatorio
+      const randomFrame = presetFrames[Math.floor(Math.random() * presetFrames.length)];
+      document.querySelectorAll('.frame-option').forEach(opt => opt.classList.remove('selected'));
+      const frameOption = document.querySelector(`.frame-option[data-id="${randomFrame.id}"]`);
+      if (frameOption) {
+        frameOption.classList.add('selected');
+        activeFrame = randomFrame;
+        borderSize.value = randomFrame.size;
+        borderSizeValue.textContent = `${randomFrame.size}px`;
+        borderColor.value = randomFrame.color.startsWith('#') ? randomFrame.color : '#ffffff';
+        borderStyle.value = randomFrame.type;
+      }
+      
+      // Colores aleatorios
+      const randomColor = `#${Math.floor(Math.random()*16777215).toString(16).padStart(6, '0')}`;
+      bgColor.value = randomColor;
+      textColor.value = `#${Math.floor(Math.random()*16777215).toString(16).padStart(6, '0')}`;
+      borderColor.value = `#${Math.floor(Math.random()*16777215).toString(16).padStart(6, '0')}`;
+      
+      // Valores aleatorios
+      borderSize.value = Math.floor(Math.random() * 30) + 5;
+      borderSizeValue.textContent = `${borderSize.value}px`;
+      borderRadius.value = Math.floor(Math.random() * 50);
+      borderRadiusValue.textContent = `${borderRadius.value}px`;
+      effectIntensity.value = Math.floor(Math.random() * 10) + 1;
+      effectIntensityValue.textContent = effectIntensity.value;
+      filterIntensity.value = Math.floor(Math.random() * 100);
+      filterIntensityValue.textContent = `${filterIntensity.value}%`;
+      
+      updateEffectsCount();
+      updateLandscapesCount();
+      drawPreview(currentTime);
+      
+      statusEl.textContent = 'Efectos aleatorios aplicados';
+    }
+
+    // Aplicar mejora automática
+    function applyAutoEnhance() {
+      if (!imageLoaded) {
+        alert('Carga una imagen primero para aplicar mejoras automáticas.');
+        return;
+      }
+      
+      // Aplicar ajustes automáticos
+      selectedFilter = 'cinematic';
+      document.querySelectorAll('#filter-effects .effect-btn').forEach(b => b.classList.remove('active'));
+      const cinematicBtn = document.querySelector('#filter-effects .effect-btn[data-id="cinematic"]');
+      if (cinematicBtn) cinematicBtn.classList.add('active');
+      
+      filterIntensity.value = 70;
+      filterIntensityValue.textContent = '70%';
+      
+      // Añadir efectos especiales
+      selectedSpecialEffects = ['vignette', 'grain', 'bloom'];
+      document.querySelectorAll('#special-effects .effect-btn').forEach(b => b.classList.remove('active'));
+      selectedSpecialEffects.forEach(effect => {
+        const effectBtn = document.querySelector(`#special-effects .effect-btn[data-id="${effect}"]`);
+        if (effectBtn) effectBtn.classList.add('active');
+      });
+      
+      // Ajustar bordes
+      borderSize.value = 10;
+      borderSizeValue.textContent = '10px';
+      borderRadius.value = 15;
+      borderRadiusValue.textContent = '15px';
+      borderColor.value = '#ffffff';
+      
+      // Ajustar texto si existe
+      if (!textValue.value.trim()) {
+        textValue.value = 'Foto Mejorada';
+        textColor.value = '#ffffff';
+        textSize.value = 36;
+      }
+      
+      updateEffectsCount();
+      drawPreview(currentTime);
+      
+      statusEl.textContent = 'Mejora automática aplicada: look cinematográfico';
+    }
+
+    // Aplicar preset profesional
+    function applyProfessionalPreset(preset) {
+      switch(preset) {
+        case 'cinematic':
+          selectedFilter = 'cinematic';
+          filterIntensity.value = 80;
+          selectedSpecialEffects = ['vignette', 'grain', 'chromatic'];
+          overlayType.value = 'light-leak';
+          overlayOpacity.value = 20;
+          borderSize.value = 15;
+          borderColor.value = '#000000';
+          break;
+          
+        case 'instagram':
+          selectedFilter = 'warm';
+          filterIntensity.value = 60;
+          selectedSpecialEffects = ['vignette'];
+          borderSize.value = 5;
+          borderRadius.value = 20;
+          borderColor.value = '#ffffff';
+          break;
+          
+        case 'vintage':
+          selectedFilter = 'sepia';
+          filterIntensity.value = 70;
+          selectedSpecialEffects = ['grain', 'film-scratches'];
+          overlayType.value = 'dust';
+          overlayOpacity.value = 40;
+          break;
+          
+        case 'modern':
+          selectedFilter = 'none';
+          selectedSpecialEffects = [];
+          borderSize.value = 2;
+          borderColor.value = '#ffffff';
+          borderRadius.value = 0;
+          break;
+      }
+      
+      // Actualizar UI
+      document.querySelectorAll('#filter-effects .effect-btn').forEach(b => b.classList.remove('active'));
+      const filterBtn = document.querySelector(`#filter-effects .effect-btn[data-id="${selectedFilter}"]`);
+      if (filterBtn) filterBtn.classList.add('active');
+      
+      document.querySelectorAll('#special-effects .effect-btn').forEach(b => b.classList.remove('active'));
+      selectedSpecialEffects.forEach(effect => {
+        const effectBtn = document.querySelector(`#special-effects .effect-btn[data-id="${effect}"]`);
+        if (effectBtn) effectBtn.classList.add('active');
+      });
+      
+      filterIntensityValue.textContent = `${filterIntensity.value}%`;
+      borderSizeValue.textContent = `${borderSize.value}px`;
+      borderRadiusValue.textContent = `${borderRadius.value}px`;
+      overlayOpacityValue.textContent = `${overlayOpacity.value}%`;
+      
+      updateEffectsCount();
+      drawPreview(currentTime);
+      
+      statusEl.textContent = `Preset "${preset}" aplicado`;
+    }
+
+    // Guardar preset
+    function savePreset() {
+      const preset = {
+        version: '2.0',
+        timestamp: Date.now(),
+        selectedTransition,
+        selectedFilter,
+        selectedSpecialEffects,
+        selectedLandscape,
+        borderSize: borderSize.value,
+        borderRadius: borderRadius.value,
+        borderColor: borderColor.value,
+        borderStyle: borderStyle.value,
+        bgColor: bgColor.value,
+        textValue: textValue.value,
+        textSize: textSize.value,
+        textColor: textColor.value,
+        textBgColor: textBgColor.value,
+        fontFamily: fontFamily.value,
+        effectIntensity: effectIntensity.value,
+        filterIntensity: filterIntensity.value,
+        overlayType: overlayType.value,
+        overlayOpacity: overlayOpacity.value,
+        distortionType: distortionType.value,
+        distortionAmount: distortionAmount.value,
+        particlesType: particlesType.value,
+        particlesAmount: particlesAmount.value
+      };
+      
+      const presetStr = JSON.stringify(preset, null, 2);
+      const blob = new Blob([presetStr], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `preset_${Date.now()}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      
+      statusEl.textContent = 'Preset guardado';
+    }
+
+    // Cargar preset
+    function loadPreset() {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = '.json';
+      
+      input.onchange = e => {
+        const file = e.target.files[0];
+        if (!file) return;
+        
+        const reader = new FileReader();
+        reader.onload = e => {
+          try {
+            const preset = JSON.parse(e.target.result);
+            
+            // Aplicar preset
+            if (preset.selectedTransition) selectedTransition = preset.selectedTransition;
+            if (preset.selectedFilter) selectedFilter = preset.selectedFilter;
+            if (preset.selectedSpecialEffects) selectedSpecialEffects = preset.selectedSpecialEffects;
+            if (preset.selectedLandscape) selectedLandscape = preset.selectedLandscape;
+            
+            // Actualizar controles
+            if (preset.borderSize) borderSize.value = preset.borderSize;
+            if (preset.borderRadius) borderRadius.value = preset.borderRadius;
+            if (preset.borderColor) borderColor.value = preset.borderColor;
+            if (preset.borderStyle) borderStyle.value = preset.borderStyle;
+            if (preset.bgColor) bgColor.value = preset.bgColor;
+            if (preset.textValue) textValue.value = preset.textValue;
+            if (preset.textSize) textSize.value = preset.textSize;
+            if (preset.textColor) textColor.value = preset.textColor;
+            if (preset.textBgColor) textBgColor.value = preset.textBgColor;
+            if (preset.fontFamily) fontFamily.value = preset.fontFamily;
+            if (preset.effectIntensity) effectIntensity.value = preset.effectIntensity;
+            if (preset.filterIntensity) filterIntensity.value = preset.filterIntensity;
+            if (preset.overlayType) overlayType.value = preset.overlayType;
+            if (preset.overlayOpacity) overlayOpacity.value = preset.overlayOpacity;
+            if (preset.distortionType) distortionType.value = preset.distortionType;
+            if (preset.distortionAmount) distortionAmount.value = preset.distortionAmount;
+            if (preset.particlesType) particlesType.value = preset.particlesType;
+            if (preset.particlesAmount) particlesAmount.value = preset.particlesAmount;
+            
+            // Actualizar UI
+            updateControlsUI(preset);
+            updateEffectsCount();
+            updateLandscapesCount();
+            drawPreview(currentTime);
+            
+            statusEl.textContent = 'Preset cargado';
+          } catch (err) {
+            alert('Error al cargar el preset: ' + err.message);
+          }
+        };
+        reader.readAsText(file);
+      };
+      
+      input.click();
+    }
+
+    // Actualizar UI de controles
+    function updateControlsUI(preset) {
+      // Actualizar valores visuales
+      borderSizeValue.textContent = `${borderSize.value}px`;
+      borderRadiusValue.textContent = `${borderRadius.value}px`;
+      effectIntensityValue.textContent = effectIntensity.value;
+      filterIntensityValue.textContent = `${filterIntensity.value}%`;
+      overlayOpacityValue.textContent = `${overlayOpacity.value}%`;
+      distortionAmountValue.textContent = `${distortionAmount.value}%`;
+      particlesAmountValue.textContent = particlesAmount.value;
+      
+      // Actualizar botones de efectos
+      document.querySelectorAll('#transition-effects .effect-btn').forEach(b => b.classList.remove('active'));
+      const transBtn = document.querySelector(`#transition-effects .effect-btn[data-id="${selectedTransition}"]`);
+      if (transBtn) transBtn.classList.add('active');
+      
+      document.querySelectorAll('#filter-effects .effect-btn').forEach(b => b.classList.remove('active'));
+      const filterBtn = document.querySelector(`#filter-effects .effect-btn[data-id="${selectedFilter}"]`);
+      if (filterBtn) filterBtn.classList.add('active');
+      
+      document.querySelectorAll('#special-effects .effect-btn').forEach(b => b.classList.remove('active'));
+      selectedSpecialEffects.forEach(effect => {
+        const effectBtn = document.querySelector(`#special-effects .effect-btn[data-id="${effect}"]`);
+        if (effectBtn) effectBtn.classList.add('active');
+      });
+    }
+
+    // Compartir proyecto
+    function shareProject() {
+      if (!imageLoaded) {
+        alert('Carga una imagen primero para compartir.');
+        return;
+      }
+      
+      // Para demo, mostramos un mensaje
+      const projectData = {
+        image: mainImage ? 'Imagen cargada' : 'Sin imagen',
+        effects: selectedSpecialEffects.length,
+        filter: selectedFilter,
+        transition: selectedTransition
+      };
+      
+      alert(`Compartir proyecto:\n\nEfectos aplicados: ${projectData.effects}\nFiltro: ${projectData.filter}\nTransición: ${projectData.transition}\n\nEn una aplicación real, esto generaría un enlace para compartir.`);
+      
+      statusEl.textContent = 'Preparando para compartir...';
+    }
+
+    // Reiniciar editor
+    function resetEditor() {
+      if (confirm('¿Reiniciar todo a valores predeterminados?')) {
+        // Resetear estado
+        mainImage = null;
+        bgImage = null;
+        imageLoaded = false;
+        selectedTransition = 'none';
+        selectedFilter = 'none';
+        selectedSpecialEffects = ['vignette', 'grain'];
+        selectedLandscape = landscapes.natural[0];
+        selectedEnhancements.clear();
+        currentTime = 0;
+        
+        // Resetear controles
+        fileInput.value = '';
+        bgImageInput.value = '';
+        textValue.value = '';
+        watermarkText.value = '';
+        
+        borderSize.value = 15;
+        borderRadius.value = 0;
+        shadowSize.value = 0;
+        borderColor.value = '#ffffff';
+        borderStyle.value = 'solid';
+        shadowColor.value = '#000000';
+        
+        bgColor.value = '#0f172a';
+        bgStyle.value = 'cover';
+        
+        textSize.value = 32;
+        textColor.value = '#ffffff';
+        textBgColor.value = '#00000000';
+        textPos.value = 'top';
+        textAlign.value = 'center';
+        fontFamily.value = 'Arial';
+        textAnimation.value = 'none';
+        
+        watermarkSize.value = 20;
+        watermarkOpacity.value = 5;
+        watermarkPos.value = 'top-left';
+        
+        durationInput.value = 6;
+        fpsInput.value = 30;
+        
+        effectIntensity.value = 5;
+        filterIntensity.value = 50;
+        
+        outputFormat.value = 'webm';
+        quality.value = 'medium';
+        
+        resolution.value = '720p';
+        customResolution.style.display = 'none';
+        
+        overlayType.value = 'none';
+        overlayOpacity.value = 30;
+        overlayColor1.value = '#ff0000';
+        overlayColor2.value = '#00ff00';
+        
+        distortionType.value = 'none';
+        distortionAmount.value = 20;
+        
+        particlesType.value = 'none';
+        particlesAmount.value = 100;
+        
+        animationSpeed.value = 100;
+        
+        // Resetear UI
+        borderSizeValue.textContent = '15px';
+        borderRadiusValue.textContent = '0px';
+        shadowSizeValue.textContent = '0px';
+        effectIntensityValue.textContent = '5';
+        filterIntensityValue.textContent = '50%';
+        overlayOpacityValue.textContent = '30%';
+        distortionAmountValue.textContent = '20%';
+        particlesAmountValue.textContent = '100';
+        animationSpeedValue.textContent = '100%';
+        
+        // Resetear selecciones
+        document.querySelectorAll('.effect-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.frame-option').forEach(opt => opt.classList.remove('selected'));
+        document.querySelectorAll('.color-preset').forEach(p => p.classList.remove('selected'));
+        document.querySelector('.color-preset[data-color="gradient-space"]').classList.add('selected');
+        document.querySelectorAll('.landscape-item').forEach(i => i.classList.remove('selected'));
+        if (naturalLandscapes.firstChild) naturalLandscapes.firstChild.classList.add('selected');
+        document.querySelectorAll('.enhancement-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.preset-card').forEach(c => c.classList.remove('selected'));
+        
+        // Reactivar efectos por defecto
+        const vignetteBtn = document.querySelector('#special-effects .effect-btn[data-id="vignette"]');
+        const grainBtn = document.querySelector('#special-effects .effect-btn[data-id="grain"]');
+        if (vignetteBtn) vignetteBtn.classList.add('active');
+        if (grainBtn) grainBtn.classList.add('active');
+        
+        // Resetear canvas
+        canvasWidth = 1280;
+        canvasHeight = 720;
+        previewCanvas.width = canvasWidth;
+        previewCanvas.height = canvasHeight;
+        updateResolutionLabel();
+        updateEffectsCount();
+        updateLandscapesCount();
+        
+        // Detener vista previa si está activa
+        if (isPreviewing) {
+          isPreviewing = false;
+          clearInterval(previewInterval);
+          previewBtn.textContent = '👁️ Vista Previa';
+          previewBtn.classList.remove('warning');
+        }
+        
+        // Generar partículas y dibujar
+        generateParticles();
+        drawPreview(0);
+        
+        statusEl.textContent = 'Editor reiniciado. Listo para crear.';
+        progressBar.style.width = '0%';
+        downloadA.style.display = 'none';
+      }
+    }
+
+    // Inicializar la aplicación
+    init();
+
+    // Atajos de teclado
+    window.addEventListener('keydown', e => {
+      // Espacio para grabar
+      if(e.key === ' ' && !e.repeat) {
+        e.preventDefault();
+        if(!isRecording) startRecording();
+        else stopRecording();
+      }
+      
+      // Ctrl+R para efectos aleatorios
+      if(e.ctrlKey && e.key === 'r') {
+        e.preventDefault();
+        applyRandomEffects();
+      }
+      
+      // Ctrl+S para guardar preset
+      if(e.ctrlKey && e.key === 's') {
+        e.preventDefault();
+        savePreset();
+      }
+      
+      // Ctrl+A para mejora automática
+      if(e.ctrlKey && e.key === 'a') {
+        e.preventDefault();
+        applyAutoEnhance();
+      }
+    });
+  </script>
+</body>
+</html>

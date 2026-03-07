@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gimnasio mental · texto arriba · fondo CSS</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 1.5rem;
+      background: #1b2a32;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* FONDO DIBUJADO: GIMNASIO CON PESAS (siempre detrás) */
+    .gimnasio-fondo {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      background: linear-gradient(145deg, #263b44 0%, #1b2d36 80%);
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .pared-fondo {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(45deg, rgba(70, 90, 100, 0.2) 0px, rgba(70, 90, 100, 0.2) 15px, rgba(50, 70, 80, 0.2) 15px, rgba(50, 70, 80, 0.2) 30px);
+    }
+
+    .pesa {
+      position: absolute;
+      background: #b0a28a;
+      border-radius: 40px;
+      box-shadow: 0 10px 0 #4a3f32, 0 15px 15px rgba(0,0,0,0.5);
+    }
+
+    .disco {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      background: #3a4a53;
+      border-radius: 50%;
+      border: 5px solid #6d7f8c;
+      box-shadow: 0 0 0 3px #2d3b42, 0 10px 0 #1f2c33;
+    }
+
+    .disco::after {
+      content: "";
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      background: #879ba8;
+      border-radius: 50%;
+      top: 16px;
+      left: 16px;
+      box-shadow: 0 2px 0 #4e5f6b;
+    }
+
+    .barra {
+      position: absolute;
+      width: 200px;
+      height: 18px;
+      background: #7c8b99;
+      border-radius: 20px;
+      box-shadow: 0 6px 0 #4a5b68;
+    }
+
+    .pesa-1 { top: 20%; left: 10%; transform: rotate(10deg); }
+    .pesa-1 .barra { width: 240px; }
+    .pesa-1 .disco-izq { top: -20px; left: -20px; }
+    .pesa-1 .disco-der { top: -20px; left: 180px; }
+
+    .pesa-2 { top: 60%; right: 5%; transform: rotate(-5deg); }
+    .pesa-2 .barra { width: 280px; background: #6d7e8f; }
+    .pesa-2 .disco-izq { top: -20px; left: -20px; width: 70px; height: 70px; }
+    .pesa-2 .disco-der { top: -20px; left: 220px; width: 70px; height: 70px; }
+
+    .mancuerna {
+      position: absolute;
+      display: flex;
+      gap: 5px;
+      align-items: center;
+    }
+    .mancuerna .barrita {
+      width: 80px;
+      height: 12px;
+      background: #8f9aa8;
+      border-radius: 20px;
+      box-shadow: 0 4px 0 #5e6c7c;
+    }
+    .mancuerna .tope {
+      width: 30px;
+      height: 30px;
+      background: #475f6b;
+      border-radius: 50%;
+      border: 3px solid #748690;
+      box-shadow: 0 5px 0 #2a3b45;
+    }
+
+    .mancu-1 { top: 35%; left: 70%; }
+    .mancu-2 { top: 75%; left: 20%; transform: rotate(15deg); }
+    .mancu-3 { top: 15%; right: 15%; }
+
+    .soporte {
+      position: absolute;
+      bottom: 10%;
+      left: 15%;
+      width: 150px;
+      height: 130px;
+      border-left: 15px solid #5d6f7c;
+      border-right: 15px solid #5d6f7c;
+      border-bottom: 15px solid #5d6f7c;
+      border-radius: 0 0 30px 30px;
+      opacity: 0.6;
+      transform: skewX(-5deg);
+    }
+    .soporte::before {
+      content: "";
+      position: absolute;
+      width: 180px;
+      height: 12px;
+      background: #778e9e;
+      top: -12px;
+      left: -30px;
+      border-radius: 10px;
+    }
+
+    .cinta {
+      position: absolute;
+      bottom: 5%;
+      right: 8%;
+      width: 200px;
+      height: 60px;
+      background: #3f535f;
+      border-radius: 40px;
+      border: 5px solid #627b8a;
+      box-shadow: inset 0 -8px 0 #2f414d;
+      opacity: 0.5;
+    }
+
+    /* CAPA DE TEXTO Y BOTONES ARRIBA */
+    .capa-texto-arriba {
+      position: relative;
+      z-index: 20;
+      max-width: 1000px;
+      width: 100%;
+      background: rgba(0, 15, 25, 0.8);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(220, 190, 140, 0.4);
+      border-radius: 3rem 1.8rem 3rem 1.8rem;
+      padding: 2.5rem 2.8rem 1.8rem;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.9), 0 0 0 1px rgba(200, 160, 100, 0.3) inset;
+      color: #f0f3f0;
+      margin-bottom: 2rem;
+    }
+
+    .titulo-pensamiento {
+      font-size: 2.5rem;
+      font-weight: 400;
+      text-align: center;
+      color: #fae2b1;
+      letter-spacing: 2px;
+      margin-bottom: 1.5rem;
+      text-shadow: 0 4px 12px black;
+      border-bottom: 2px dashed #b59b6b;
+      padding-bottom: 1rem;
+    }
+
+    .control-voz {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 0 0 2rem 0;
+    }
+
+    .btn-voz {
+      background: #1f3f4e;
+      border: 2px solid #bb9f73;
+      color: white;
+      padding: 14px 38px;
+      font-size: 1.4rem;
+      border-radius: 60px;
+      cursor: pointer;
+      transition: 0.2s;
+      font-weight: 600;
+      box-shadow: 0 8px 14px black;
+      backdrop-filter: blur(4px);
+      min-width: 160px;
+      letter-spacing: 1px;
+    }
+
+    .btn-voz:hover {
+      background: #356277;
+      border-color: #fad393;
+      transform: scale(1.02);
+    }
+
+    .btn-voz.reproducir { background: #1d5e3f; border-color: #a5d6a5; }
+    .btn-voz.reproducir:hover { background: #2b8a5c; }
+    .btn-voz.pausa { background: #8d6a3f; border-color: #ebc68e; }
+    .btn-voz.detener { background: #994d4d; border-color: #e6a2a2; }
+
+    .texto-cuerpo {
+      font-size: 1.18rem;
+      line-height: 1.65;
+      margin: 1.8rem 0 0.5rem;
+      text-align: left;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 1.2rem 1.8rem;
+      border-radius: 2rem 0.5rem 2rem 0.5rem;
+      border-left: 5px solid #b39765;
+      color: #f6f6f0;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.5);
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .texto-cuerpo p {
+      margin-bottom: 1.2rem;
+    }
+
+    /* Botón Volver atrás (enlace real a bienvenidos.html) */
+    .enlace-inicio {
+      display: inline-block;
+      margin: 1rem auto 0;
+      background: #3a5468;
+      color: #faeaca;
+      text-decoration: none;
+      padding: 12px 50px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1.2rem;
+      border: 1px solid #cfa668;
+      transition: 0.2s;
+      text-align: center;
+      z-index: 20;
+      position: relative;
+    }
+
+    .enlace-inicio:hover {
+      background: #52778f;
+      border-color: #fad19e;
+    }
+
+    .footer-peq {
+      margin-top: 20px;
+      font-size: 0.95rem;
+      color: #cdcfd5;
+      text-align: center;
+      z-index: 20;
+      position: relative;
+    }
+
+    @media (max-width: 700px) {
+      .capa-texto-arriba { padding: 1.8rem 1.5rem; }
+      .titulo-pensamiento { font-size: 2rem; }
+      .btn-voz { font-size: 1.2rem; padding: 12px 20px; min-width: 130px; }
+    }
+
+.boton {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 24px;
+  margin: 12px;
+  font-size: 18px;
+  text-decoration: none;
+  border: 3px solid #ff0000;
+  border-radius: 10px;
+  background-color: #ff4444;
+  color: white;
+  font-weight: bold;
+  box-shadow: 0 0 8px #ff4444;
+  transition: 0.3s;
+}
+
+.boton img{
+  width:160px;   /* imagen más grande */
+  height:160px;
+}
+
+
+.boton:hover {
+  background-color: white;
+  color: #ff0000;
+}
+  </style>
+</head>
+<body>
+
+  <!-- CAPA DE TEXTO Y BOTONES ARRIBA -->
+  <div class="capa-texto-arriba">
+<div class="titulo-pensamiento">   Te damos la bienvenida a la plataforma Sombrero Blanco.  </div>
+<a href="nohacenadapordenunciar.html" class="boton">
+<img src="iniciofotovictimapaisaje1sombreroblanco.png">
+Destacado hace click para iniciar informacion
+</a>
+
+<a href="declaracionvictima.html" class="boton">
+<img src="iniciofotovictimapaisaje2sombreroblanco.png">
+Destacado hace click para iniciar la informacion
+</a>
+    <!-- Botones de voz -->
+    <div class="control-voz">
+      <button class="btn-voz reproducir" id="btnReproducir">🔊 Reproducir texto</button>
+      <button class="btn-voz pausa" id="btnPausa">⏸️ Pausa</button>
+      <button class="btn-voz detener" id="btnDetener">⏹️ Detener</button>
+    </div>
+
+    <!-- Texto completo -->
+    <div class="texto-cuerpo" id="textoCompleto">
+      <p>El gimnasio fortalece el cuerpo, pero la mente se fortalece con conocimiento, estudio y aprendizaje. Ir al gimnasio puede mejorar la salud, especialmente la salud física, aunque no necesariamente cambia la mentalidad de una persona. Los conocimientos que una persona tiene no desaparecen por hacer ejercicio. Cada área del conocimiento requiere estudio y aprendizaje. Por lo tanto, ir al gimnasio no borra la mentalidad ni el conocimiento que una persona ha adquirido.</p>
+      <p>Muchas veces los padres o madres se preocupan por situaciones sin tener fundamentos claros. En algunos casos se ven muy influenciados por lo que dicen las noticias o los medios de comunicación. También hay periodistas, hombres y mujeres, que siguen rumores o chismes, y eso puede generar confusión entre las personas. En algunos casos, esa mentalidad puede crear problemas, como falsas denuncias o información que se difunde sin verdadero conocimiento o aprendizaje, lo que puede afectar la mentalidad de otras personas.</p>
+      <p>Por esa razón, algunos padres les dicen directamente a sus hijos que no publiquen ciertas cosas. Sin embargo, los hijos muchas veces saben lo que publican y dicen la verdad con sinceridad. Hoy en día existen muchos chismes en internet, especialmente cuando las personas no son profesionales o no tienen conocimientos suficientes sobre temas como la programación u otras áreas.</p>
+      <p>Además, en la sociedad muchas personas hablan sin tener suficiente conocimiento o aprendizaje sobre un tema. Esto puede ocurrir tanto en hombres como en mujeres, porque opinar sin información es algo común cuando no se investiga o no se estudia el tema.</p>
+      <p>También hay muchos hombres y mujeres adultos que escuchan chismes que circulan en plataformas web. Sin embargo, yo prefiero decir la verdad. Me considero una persona que defiende la verdad y la sinceridad. Creo que siempre hay que seguir adelante, porque la verdad debe conocerse, especialmente cuando se habla de tecnología.</p>
+      <p>Hay muchas personas que, cuando se contagian de chismes, los transmiten a los demás. Es como un virus. Ese virus puede destruir la vida de otras personas que son inocentes y que no tienen nada que ver con esos comentarios.</p>
+      <p>También hay personas que se ríen cuando alguien dice muchas verdades sobre la vida. Pero cuando una persona no cree en esas verdades, muchas veces significa que está rodeada de personas no profesionales que repiten chismes y comentan cosas sin fundamentos sobre la realidad de la sociedad.</p>
+      <p>Ahora voy a hablar sobre otro tema muy interesante: la inteligencia artificial. Muchas personas dicen que la inteligencia artificial va a dominar el mundo, pero no necesariamente es así. Se llama inteligencia artificial porque está relacionada con el área de la programación, que se estudia en tecnicaturas o en universidades. En esta área se utilizan matemáticas, lógica y símbolos para resolver problemas mediante sistemas informáticos.</p>
+      <p>Por ejemplo, algunos sistemas de inteligencia artificial pueden transformar imágenes, como cuando se sube una foto y el sistema la convierte en otra imagen con diferentes colores o estilos, como azul claro con bordes verdes claros. Pero detrás de todo esto está la programación. Para crear estas herramientas se necesitan muchos conocimientos, especialmente de matemáticas. Sin embargo, las matemáticas que se utilizan en programación no son las mismas que se enseñan en la escuela primaria o secundaria. Por eso, los docentes que trabajan en estas áreas suelen ser profesionales de la matemática.</p>
+      <p>Además, los programadores no solo saben sobre tecnología, sitios web o software. Muchos programadores también tienen conocimientos en otras áreas, como educación sexual, abogacía, psicología o contabilidad. Esto les permite entender mejor distintos problemas y desarrollar herramientas que puedan aplicarse en diferentes campos del conocimiento.</p>
+      <p>Sin embargo, también existen diferencias entre las personas. Hay programadores que buscan decir la verdad y actuar con honestidad, como yo soy el sombrero blanco que utiliza manera con la verdad sincero. Pero hay mala persona que son programadores que actúan con ignorancia, cobardía o hipocresía, e incluso pueden engañar a los demás difundiendo información falsa. Esto puede afectar a las personas, especialmente cuando se trata de temas sensibles como la salud o problemas que existen en la sociedad actual.</p>
+      <p>Muchas empresas tecnológicas crean sistemas de inteligencia artificial, como los sitios web de chat basados en IA como geminis, chat gpt y chat deepseek. Estos sistemas fueron desarrollados por profesionales que estudiaron programación. Por eso, aunque hoy se hable mucho de inteligencia artificial, en realidad se trata de conocimientos que provienen de la carrera o los estudios universitarios de programación.</p>
+      <p>Cuando un programador crea una página web o un software, siempre tiene que comprar un dominio o un hosting para que el proyecto funcione en internet. Luego las personas pueden acceder al sitio usando navegadores web como Google Chrome o Microsoft Edge. Estos programas se llaman navegadores web y también fueron creados mediante programación.</p>
+      <p>El programador no hace nada malo por el simple hecho de programar. Los profesionales de la programación conocen la importancia del respeto a la protección de los datos personales y trabajan en el desarrollo de tecnología. Muchas veces los programadores son personas honestas y trabajadoras. Incluso puede haber casos en los que ellos mismos sean víctimas de delitos, como fraudes, robos o amenazas. Por eso es importante entender que la mayoría de los programadores son personas inocentes que trabajan en el área de la tecnología y no cometen delitos.</p>
+      <p>Además, los programadores trabajan con sistemas operativos legales y respetan las normas de seguridad informática. Estos sistemas operativos incluyen protecciones para los datos de los usuarios. Por eso, el trabajo de los programadores también está relacionado con la seguridad y la protección de la información en el mundo digital.</p>
+    </div>
+  </div>
+
+  <!-- Botón "Volver atrás" (enlace real a bienvenidos.html) -->
+  <a href="bienvenidos.html" id="volverInicio" class="enlace-inicio">Volver atrás</a>
+
+ 
+
+  <!-- FONDO DE GIMNASIO DIBUJADO EN CSS (al final, pero por posición fija queda detrás) -->
+  <div class="gimnasio-fondo">
+    <div class="pared-fondo"></div>
+
+    <div class="pesa pesa-1">
+      <div class="barra"></div>
+      <div class="disco disco-izq" style="left: -20px; top: -20px;"></div>
+      <div class="disco disco-der" style="left: 180px; top: -20px;"></div>
+    </div>
+
+    <div class="pesa pesa-2">
+      <div class="barra" style="width:280px;"></div>
+      <div class="disco disco-izq" style="width:70px; height:70px; left:-30px; top:-25px;"></div>
+      <div class="disco disco-der" style="width:70px; height:70px; left:230px; top:-25px;"></div>
+    </div>
+
+    <div class="mancuerna mancu-1">
+      <div class="tope"></div><div class="barrita"></div><div class="tope"></div>
+    </div>
+    <div class="mancuerna mancu-2">
+      <div class="tope"></div><div class="barrita"></div><div class="tope"></div>
+    </div>
+    <div class="mancuerna mancu-3">
+      <div class="tope"></div><div class="barrita"></div><div class="tope"></div>
+    </div>
+
+    <div class="soporte"></div>
+    <div class="cinta"></div>
+
+    <div style="position:absolute; bottom:30%; left:45%; width:45px; height:45px; background:#506d7c; border-radius:50%; border:5px solid #6a899b; box-shadow:0 7px 0 #314a57;"></div>
+    <div style="position:absolute; top:45%; left:30%; width:35px; height:35px; background:#5d6f7c; border-radius:50%; border:4px solid #7b939f; box-shadow:0 5px 0 #3d4f5c;"></div>
+  </div>
+
+  <script>
+    (function() {
+      const synth = window.speechSynthesis;
+      let utterance = null;
+      const divTexto = document.getElementById('textoCompleto');
+      const textoCompleto = divTexto ? (divTexto.innerText || divTexto.textContent) : '';
+
+      const btnPlay = document.getElementById('btnReproducir');
+      const btnPausa = document.getElementById('btnPausa');
+      const btnDetener = document.getElementById('btnDetener');
+
+      function reproducirTexto() {
+        if (!textoCompleto) return alert('No hay texto');
+        if (synth.speaking) synth.cancel();
+        utterance = new SpeechSynthesisUtterance(textoCompleto);
+        utterance.lang = 'es-ES';
+        utterance.rate = 1.0;
+        utterance.pitch = 1.0;
+        utterance.volume = 1;
+        utterance.onerror = () => console.log('Error de voz');
+        synth.speak(utterance);
+      }
+
+      function pausaReanudar() {
+        if (synth.speaking && !synth.paused) synth.pause();
+        else if (synth.paused) synth.resume();
+        else alert('No hay reproducción activa');
+      }
+
+      function detenerTexto() {
+        if (synth.speaking) synth.cancel();
+      }
+
+      btnPlay.addEventListener('click', reproducirTexto);
+      btnPausa.addEventListener('click', pausaReanudar);
+      btnDetener.addEventListener('click', detenerTexto);
+
+      // El enlace ya navega a bienvenidos.html sin necesidad de JavaScript
+      // pero podemos detener el audio antes de salir (opcional)
+      document.getElementById('volverInicio').addEventListener('click', function(e) {
+        if (synth.speaking) synth.cancel();
+        // No prevenimos default para que navegue
+      });
+
+      window.addEventListener('beforeunload', () => {
+        if (synth.speaking) synth.cancel();
+      });
+    })();
+  </script>
+</body>
+</html>

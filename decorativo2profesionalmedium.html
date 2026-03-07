@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marco Profesional · Personalizable</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Helvetica Neue', 'Arial', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .master-frame {
+            max-width: 1200px;
+            width: 100%;
+            background: #faf7f2;
+            background-image: linear-gradient(135deg, #fff9f0 0%, #f0e9dd 100%);
+            box-shadow: 0 40px 70px -20px rgba(0,0,0,0.7), 0 0 0 3px #b8860b, 0 0 0 8px #2a2a2a;
+            padding: 30px;
+            border-radius: 30px 30px 50px 50px;
+            position: relative;
+        }
+
+        .master-frame::before {
+            content: "⚜️🎩⚜️";
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2.5rem;
+            background: #b8860b;
+            padding: 8px 40px;
+            border-radius: 50px;
+            color: white;
+            box-shadow: 0 8px 0 #6b4f0b;
+            letter-spacing: 8px;
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #b8860b;
+            padding-bottom: 15px;
+        }
+
+        .header-section h1 {
+            font-size: 2.5rem;
+            letter-spacing: 4px;
+            font-weight: 900;
+            color: #1e2a3a;
+            text-shadow: 3px 3px 0 #b8860b;
+            font-family: 'Times New Roman', serif;
+        }
+
+        .work-area {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 30px;
+            border: 3px solid #b8860b;
+            margin-bottom: 25px;
+            box-shadow: inset 0 2px 10px rgba(184,134,11,0.1), 0 20px 30px -10px rgba(0,0,0,0.3);
+        }
+
+        .left-panel {
+            flex: 2;
+            min-width: 300px;
+        }
+
+        .right-panel {
+            flex: 1;
+            min-width: 280px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .upload-btn-wrapper {
+            width: 100%;
+        }
+
+        .file-label {
+            background: linear-gradient(135deg, #1e2a3a 0%, #0f1a24 100%);
+            color: #ffffff;
+            padding: 20px;
+            font-size: 1.4rem;
+            font-weight: 700;
+            text-align: center;
+            border-radius: 60px;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            border: 3px solid #b8860b;
+            box-shadow: 0 12px 0 #6b4f0b;
+            transition: all 0.1s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .file-label:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 0 #6b4f0b;
+        }
+
+        .file-label:active {
+            transform: translateY(6px);
+            box-shadow: 0 6px 0 #6b4f0b;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        /* Panel de personalización profesional */
+        .custom-panel {
+            background: #1e2a3a;
+            padding: 20px;
+            border-radius: 30px;
+            border: 3px solid #b8860b;
+            color: white;
+            margin: 15px 0;
+        }
+
+        .custom-panel h3 {
+            color: #ffd700;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+
+        .control-group {
+            margin-bottom: 20px;
+        }
+
+        .control-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #b8860b;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+        }
+
+        .color-input-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .color-input-group input[type="color"] {
+            width: 60px;
+            height: 45px;
+            border: 3px solid #b8860b;
+            border-radius: 12px;
+            cursor: pointer;
+            background: transparent;
+        }
+
+        .color-input-group input[type="text"] {
+            flex: 1;
+            padding: 12px 15px;
+            border-radius: 30px;
+            border: 2px solid #b8860b;
+            background: #2c3e50;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .style-select-modern {
+            width: 100%;
+            padding: 15px 20px;
+            border-radius: 40px;
+            border: 3px solid #b8860b;
+            background: #2c3e50;
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            appearance: none;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%23b8860b" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 20px center;
+            background-size: 20px;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .radio-group label {
+            flex: 1;
+            background: #2c3e50;
+            padding: 12px 5px;
+            text-align: center;
+            border-radius: 40px;
+            border: 2px solid #b8860b;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #ffd700;
+            font-weight: 600;
+        }
+
+        .radio-group input[type="radio"] {
+            display: none;
+        }
+
+        .radio-group input[type="radio"]:checked + label {
+            background: #b8860b;
+            color: #1e2a3a;
+            border-color: #ffd700;
+            box-shadow: 0 0 15px gold;
+        }
+
+        .action-btn {
+            background: #ffffff;
+            border: none;
+            padding: 18px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 50px;
+            color: #1e2a3a;
+            border: 3px solid #b8860b;
+            box-shadow: 0 8px 0 #6b4f0b;
+            cursor: pointer;
+            transition: all 0.1s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            width: 100%;
+        }
+
+        .action-btn:hover {
+            transform: translateY(4px);
+            box-shadow: 0 4px 0 #6b4f0b;
+            background: #f8f4e8;
+        }
+
+        .download-btn {
+            background: #b8860b;
+            border: 3px solid #1e2a3a;
+            box-shadow: 0 8px 0 #6b4f0b;
+            color: #1e2a3a;
+            font-size: 1.3rem;
+        }
+
+        .canvas-container {
+            background: #1e2a3a;
+            padding: 25px;
+            border-radius: 40px;
+            border: 5px solid #b8860b;
+            box-shadow: inset 0 0 0 6px #ffffff, 0 25px 30px -10px #000;
+            display: flex;
+            justify-content: center;
+        }
+
+        canvas {
+            width: 100%;
+            height: auto;
+            display: block;
+            background: #ffffff;
+            border-radius: 20px;
+            border: 4px solid #b8860b;
+            box-shadow: 0 0 0 6px #ffffff, 0 15px 25px rgba(0,0,0,0.3);
+        }
+
+        .badge-mini {
+            background: #b8860b;
+            color: #1e2a3a;
+            padding: 10px;
+            border-radius: 30px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+            border: 2px solid #1e2a3a;
+            margin-top: 10px;
+        }
+        .volver {
+  background-color: #ff6b6b;   /* rojo suave */
+  color: white;
+  padding: 16px 35px;
+  border: 5px solid #c0392b;   /* borde más grueso */
+  border-radius: 15px;         /* bordes redondeados grandes */
+  font-size: 20px;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  text-decoration: none;
+  box-shadow: 4px 4px 10px rgba(0,0,0,0.3); /* sombra */
+  transition: 0.3s;
+}
+
+.volver:hover {
+  background-color: #c0392b;
+  transform: scale(1.05); /* efecto al pasar el mouse */
+}
+    </style>
+</head>
+<body>
+<div class="master-frame">
+    <div class="header-section">
+        <h1>🎩 MARCO PROFESIONAL 🎩</h1>
+    </div>
+
+    <div class="work-area">
+        <div class="left-panel">
+            <div class="upload-btn-wrapper">
+                <label for="file-upload" class="file-label">
+                    🖼️ SUBIR FOTO
+                </label>
+                <input type="file" id="file-upload" accept="image/*">
+            </div>
+            
+            <!-- Panel de personalización profesional -->
+            <div class="custom-panel">
+                <h3>PERSONALIZAR MARCO</h3>
+                
+                <div class="control-group">
+                    <label>🎨 COLOR PRINCIPAL</label>
+                    <div class="color-input-group">
+                        <input type="color" id="main-color" value="#b8860b">
+                        <input type="text" id="main-color-hex" value="#b8860b" placeholder="HEX">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label>✨ ESTILO DEL MARCO</label>
+                    <select id="frame-style" class="style-select-modern">
+                        <option value="classic">CLÁSICO DORADO</option>
+                        <option value="modern">MODERNO PLATEADO</option>
+                        <option value="ruby">RUBÍ PROFUNDO</option>
+                        <option value="sapphire">ZAFIRO AZUL</option>
+                        <option value="emerald">ESMERALDA</option>
+                        <option value="graphite">GRAFITO MATE</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label>🔘 ACABADO</label>
+                    <div class="radio-group">
+                        <input type="radio" name="finish" id="matte" value="matte" checked>
+                        <label for="matte">MATE</label>
+                        
+                        <input type="radio" name="finish" id="glossy" value="glossy">
+                        <label for="glossy">BRILLO</label>
+                        
+                        <input type="radio" name="finish" id="metallic" value="metallic">
+                        <label for="metallic">METÁLICO</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="badge-mini">
+                ⚜️ PERSONALIZA COLOR · ESTILO · ACABADO ⚜️
+            </div>
+        </div>
+        
+        <div class="right-panel">
+            <button id="random-style" class="action-btn">🎲 ESTILO ALEATORIO</button>
+            <button id="download-btn" class="action-btn download-btn">⬇️ DESCARGAR FOTO</button>
+            <a href="premiuminiciodecorativoinicio.html" class="volver">Volver a atras</a>
+        </div>
+    </div>
+
+    <div class="canvas-container">
+        <canvas id="mainCanvas" width="700" height="450"></canvas>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const canvas = document.getElementById('mainCanvas');
+        const ctx = canvas.getContext('2d');
+        const fileInput = document.getElementById('file-upload');
+        const mainColorInput = document.getElementById('main-color');
+        const mainColorHex = document.getElementById('main-color-hex');
+        const frameStyle = document.getElementById('frame-style');
+        const finishRadios = document.querySelectorAll('input[name="finish"]');
+        const randomBtn = document.getElementById('random-style');
+        const downloadBtn = document.getElementById('download-btn');
+
+        let userImage = null;
+
+        // ========== ANIMALES (internos, 8 con sombrero) ==========
+        const animals = ['🦁','🐯','🐘','🦒','🦊','🐺','🦝','🦉'];
+
+        // ========== IMAGEN POR DEFECTO ==========
+        function createDefaultImage() {
+            const offCanvas = new OffscreenCanvas(250, 250);
+            const offCtx = offCanvas.getContext('2d');
+            
+            offCtx.fillStyle = '#b8860b';
+            offCtx.fillRect(0, 0, 250, 250);
+            
+            offCtx.fillStyle = '#1e2a3a';
+            offCtx.font = 'bold 90px "Times New Roman", serif';
+            offCtx.textAlign = 'center';
+            offCtx.textBaseline = 'middle';
+            offCtx.fillText('📷', 125, 120);
+            
+            offCtx.font = 'bold 30px "Segoe UI"';
+            offCtx.fillStyle = '#ffffff';
+            offCtx.fillText('FOTO', 125, 190);
+            
+            return offCanvas.transferToImageBitmap();
+        }
+        let defaultImage = createDefaultImage();
+
+        // ========== SOMBRERO BLANCO ==========
+        function drawWhiteHat(ctx, x, y, size = 40) {
+            ctx.save();
+            ctx.shadowColor = 'rgba(0,0,0,0.4)';
+            ctx.shadowBlur = 10;
+            ctx.shadowOffsetX = 3;
+            ctx.shadowOffsetY = 3;
+            
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath();
+            ctx.rect(x - size/3, y - size, size*0.7, size*0.8);
+            ctx.fill();
+            
+            ctx.beginPath();
+            ctx.ellipse(x, y - size/1.6, size/1.5, size/5, 0, 0, Math.PI*2);
+            ctx.fill();
+            
+            ctx.fillStyle = '#b8860b';
+            ctx.fillRect(x - size/4, y - size/1.3, size/2, size/12);
+            
+            ctx.fillStyle = '#ffd700';
+            ctx.beginPath();
+            ctx.arc(x, y - size/1.3, size/15, 0, Math.PI*2);
+            ctx.fill();
+            
+            ctx.restore();
+        }
+
+        // ========== OBTENER COLORES SEGÚN ESTILO ==========
+        function getStyleColors(style, customColor) {
+            let primary, secondary, accent;
+            
+            switch(style) {
+                case 'classic':
+                    primary = '#b8860b';
+                    secondary = '#ffd700';
+                    accent = '#8b6914';
+                    break;
+                case 'modern':
+                    primary = '#c0c0c0';
+                    secondary = '#e8e8e8';
+                    accent = '#a0a0a0';
+                    break;
+                case 'ruby':
+                    primary = '#9b111e';
+                    secondary = '#e0115f';
+                    accent = '#660708';
+                    break;
+                case 'sapphire':
+                    primary = '#0f52ba';
+                    secondary = '#1e90ff';
+                    accent = '#00308f';
+                    break;
+                case 'emerald':
+                    primary = '#046307';
+                    secondary = '#50c878';
+                    accent = '#1b4d1b';
+                    break;
+                case 'graphite':
+                    primary = '#36454f';
+                    secondary = '#808080';
+                    accent = '#232b2b';
+                    break;
+                default:
+                    primary = '#b8860b';
+                    secondary = '#ffd700';
+                    accent = '#8b6914';
+            }
+            
+            // Si hay color personalizado, lo usamos como primary
+            if (customColor) {
+                primary = customColor;
+            }
+            
+            return { primary, secondary, accent };
+        }
+
+        // ========== APLICAR ACABADO ==========
+        function applyFinish(ctx, finish) {
+            if (finish === 'glossy') {
+                ctx.shadowColor = 'rgba(255,255,255,0.5)';
+                ctx.shadowBlur = 20;
+                ctx.shadowOffsetX = 0;
+                ctx.shadowOffsetY = 0;
+            } else if (finish === 'metallic') {
+                ctx.shadowColor = 'rgba(184,134,11,0.8)';
+                ctx.shadowBlur = 30;
+                ctx.shadowOffsetX = 2;
+                ctx.shadowOffsetY = 2;
+            } else {
+                // mate - sombra suave
+                ctx.shadowColor = 'rgba(0,0,0,0.3)';
+                ctx.shadowBlur = 15;
+                ctx.shadowOffsetX = 3;
+                ctx.shadowOffsetY = 3;
+            }
+        }
+
+        // ========== RENDER PRINCIPAL ==========
+        function render() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Obtener valores de personalización
+            const customColor = mainColorHex.value || '#b8860b';
+            const style = frameStyle.value;
+            const finish = Array.from(finishRadios).find(r => r.checked)?.value || 'matte';
+            
+            const colors = getStyleColors(style, customColor);
+            
+            // Fondo oscuro elegante
+            const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            gradient.addColorStop(0, '#1a1a2e');
+            gradient.addColorStop(1, '#16213e');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Patrón sutil de puntos
+            ctx.globalAlpha = 0.1;
+            ctx.fillStyle = colors.secondary;
+            for (let i = 0; i < 40; i++) {
+                ctx.beginPath();
+                ctx.arc(30 + i * 35, 40 + (i % 6) * 35, 3, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            ctx.globalAlpha = 1;
+
+            // Marcos exteriores con acabado
+            ctx.save();
+            applyFinish(ctx, finish);
+            
+            ctx.strokeStyle = colors.primary;
+            ctx.lineWidth = 10;
+            ctx.strokeRect(15, 15, canvas.width - 30, canvas.height - 30);
+            
+            ctx.strokeStyle = colors.secondary;
+            ctx.lineWidth = 4;
+            ctx.setLineDash([10, 10]);
+            ctx.strokeRect(35, 35, canvas.width - 70, canvas.height - 70);
+            ctx.setLineDash([]);
+            
+            ctx.restore();
+
+            // Título minimalista
+            ctx.font = 'bold 28px "Times New Roman", serif';
+            ctx.fillStyle = colors.secondary;
+            ctx.textAlign = 'center';
+            ctx.shadowColor = '#000';
+            ctx.shadowBlur = 8;
+            ctx.fillText('⚜️', canvas.width/2 - 40, 70);
+            ctx.fillText('⚜️', canvas.width/2 + 40, 70);
+            ctx.shadowBlur = 0;
+
+            // ===== 8 ANIMALES ALREDEDOR =====
+            const positions = [
+                {x:80,y:150},{x:canvas.width-80,y:150},
+                {x:80,y:300},{x:canvas.width-80,y:300},
+                {x:150,y:200},{x:canvas.width-150,y:200},
+                {x:150,y:350},{x:canvas.width-150,y:350}
+            ];
+            
+            ctx.font = '48px "Segoe UI Emoji", "Arial"';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            
+            positions.forEach((pos, i) => {
+                ctx.save();
+                ctx.shadowColor = 'rgba(0,0,0,0.5)';
+                ctx.shadowBlur = 10;
+                ctx.shadowOffsetX = 3;
+                ctx.shadowOffsetY = 3;
+                ctx.fillStyle = '#ffffff';
+                ctx.fillText(animals[i], pos.x, pos.y);
+                drawWhiteHat(ctx, pos.x, pos.y - 25, 35);
+                ctx.restore();
+            });
+
+            // ===== FOTO CENTRAL =====
+            const imgToDraw = userImage || defaultImage;
+            
+            if (imgToDraw) {
+                // Marco exterior del retrato
+                ctx.save();
+                applyFinish(ctx, finish);
+                
+                ctx.fillStyle = colors.primary;
+                ctx.beginPath();
+                ctx.ellipse(canvas.width/2, canvas.height/2, 130, 130, 0, 0, Math.PI*2);
+                ctx.fill();
+                
+                ctx.fillStyle = colors.accent;
+                ctx.beginPath();
+                ctx.ellipse(canvas.width/2, canvas.height/2, 120, 120, 0, 0, Math.PI*2);
+                ctx.fill();
+                
+                ctx.fillStyle = '#ffffff';
+                ctx.beginPath();
+                ctx.ellipse(canvas.width/2, canvas.height/2, 110, 110, 0, 0, Math.PI*2);
+                ctx.fill();
+                
+                ctx.restore();
+
+                // Imagen completa
+                ctx.save();
+                ctx.shadowColor = 'rgba(0,0,0,0.5)';
+                ctx.shadowBlur = 15;
+                ctx.shadowOffsetX = 4;
+                ctx.shadowOffsetY = 4;
+                
+                try {
+                    ctx.drawImage(imgToDraw, canvas.width/2 - 100, canvas.height/2 - 100, 200, 200);
+                } catch (e) {
+                    ctx.fillStyle = '#f0f0f0';
+                    ctx.fillRect(canvas.width/2 - 100, canvas.height/2 - 100, 200, 200);
+                }
+                
+                ctx.restore();
+
+                // Decoración sobre la imagen
+                ctx.save();
+                ctx.shadowColor = colors.primary;
+                ctx.shadowBlur = 10;
+                
+                ctx.strokeStyle = colors.secondary;
+                ctx.lineWidth = 4;
+                ctx.setLineDash([6, 6]);
+                ctx.beginPath();
+                ctx.ellipse(canvas.width/2, canvas.height/2, 105, 105, 0, 0, Math.PI*2);
+                ctx.stroke();
+                
+                ctx.setLineDash([]);
+                ctx.strokeStyle = colors.primary;
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.ellipse(canvas.width/2, canvas.height/2, 98, 98, 0, 0, Math.PI*2);
+                ctx.stroke();
+                
+                ctx.restore();
+
+                // Sombrero grande
+                drawWhiteHat(ctx, canvas.width/2, canvas.height/2 - 80, 75);
+            }
+
+            // Detalles inferiores
+            ctx.font = '24px "Segoe UI Emoji"';
+            ctx.fillStyle = colors.secondary;
+            ctx.fillText('⚜️', 50, canvas.height - 35);
+            ctx.fillText('⚜️', canvas.width - 70, canvas.height - 35);
+        }
+
+        // ========== CARGA DE IMAGEN ==========
+        function loadImage(file, callback) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => callback(img);
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // ========== EVENTOS ==========
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files && e.target.files[0]) {
+                loadImage(e.target.files[0], (img) => {
+                    userImage = img;
+                    render();
+                });
+            }
+            fileInput.value = '';
+        });
+
+        mainColorInput.addEventListener('input', (e) => {
+            mainColorHex.value = e.target.value;
+            render();
+        });
+
+        mainColorHex.addEventListener('input', (e) => {
+            let val = e.target.value;
+            if (/^#[0-9A-F]{6}$/i.test(val)) {
+                mainColorInput.value = val;
+            }
+            render();
+        });
+
+        frameStyle.addEventListener('change', render);
+        finishRadios.forEach(r => r.addEventListener('change', render));
+
+        randomBtn.addEventListener('click', () => {
+            const estilos = ['classic', 'modern', 'ruby', 'sapphire', 'emerald', 'graphite'];
+            const randomStyle = estilos[Math.floor(Math.random() * estilos.length)];
+            frameStyle.value = randomStyle;
+            
+            const colores = ['#b8860b', '#c0c0c0', '#9b111e', '#0f52ba', '#046307', '#36454f'];
+            const idx = estilos.indexOf(randomStyle);
+            mainColorInput.value = colores[idx];
+            mainColorHex.value = colores[idx];
+            
+            render();
+        });
+
+        downloadBtn.addEventListener('click', () => {
+            const link = document.createElement('a');
+            link.download = `marco-${Date.now()}.png`;
+            link.href = canvas.toDataURL('image/png', 1.0);
+            link.click();
+        });
+
+        // Inicializar
+        userImage = defaultImage;
+        render();
+    })();
+</script>
+</body>
+</html>

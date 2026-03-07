@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculadora de Costo</title>
+ <style>
+  :root {
+    --color-principal: #28a745;
+    --color-principal-hover: #218838;
+    --color-fondo: #f8f9fa;
+    --color-texto: #212529;
+    --color-borde: #ced4da;
+    --color-shadow: rgba(0, 0, 0, 0.1);
+  }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--color-fondo);
+    margin: 0;
+    padding: 20px;
+    color: var(--color-texto);
+    line-height: 1.6;
+    background-color: #ffc107;
+        border-radius: 10px;
+  max-width: 900px;
+  margin: 90px auto;
+  }
+
+  .container {
+    max-width: 720px;
+    margin: 40px auto;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px var(--color-shadow);
+    transition: transform 0.3s ease;
+  }
+
+  .container:hover {
+    transform: translateY(-3px);
+  }
+
+  h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2rem;
+  }
+
+  label {
+    display: block;
+    margin-top: 20px;
+    font-weight: 600;
+  }
+
+  input[type="number"] {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    border-radius: 6px;
+    border: 1px solid var(--color-borde);
+    font-size: 16px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+
+  input[type="number"]:focus {
+    border-color: var(--color-principal);
+    outline: none;
+    box-shadow: 0 0 5px rgba(40, 167, 69, 0.3);
+  }
+
+  button {
+    margin-top: 25px;
+    width: 100%;
+    padding: 14px;
+    background-color: var(--color-principal);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  button:hover {
+    background-color: var(--color-principal-hover);
+  }
+
+  .resultado {
+    margin-top: 25px;
+    background-color: #e9ecef;
+    padding: 18px;
+    border-radius: 6px;
+    font-size: 18px;
+    font-weight: 500;
+  }
+
+  .explicacion {
+    background-color: #fff3cd;
+    padding: 18px;
+    border-left: 6px solid #ffc107;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    font-size: 16px;
+  }
+
+  .ejemplo {
+    background-color: #f1f1f1;
+    padding: 16px;
+    margin-top: 12px;
+    border-left: 5px solid #007bff;
+    border-radius: 6px;
+    font-size: 15px;
+  }
+
+  .mensaje-usuario {
+    background-color: #d1ecf1;
+    padding: 16px;
+    border-left: 6px solid #17a2b8;
+    border-radius: 6px;
+    margin-top: 20px;
+    font-size: 16px;
+  }
+
+  @media (max-width: 600px) {
+    .container {
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 1.6rem;
+    }
+
+    button {
+      font-size: 16px;
+    }
+  }
+
+/* Solo estilos para el botón "Volver atrás" */
+.back-button {
+  display: inline-block;
+  padding: 10px 18px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 2px solid #333;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  user-select: none;
+}
+
+/* Efecto al pasar el ratón */
+.back-button:hover,
+.back-button:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+  text-decoration: none;
+  outline: none;
+}
+
+/* Efecto al hacer clic */
+.back-button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+
+
+</style>
+
+</head>
+<body>
+  <div class="container">
+     <a href="aprendeportalcontablidad.html" class="back-button" aria-label="Volver atrás">Volver atrás</a>
+    <h1>Calculadora de Costo</h1>
+
+    <div class="explicacion">
+      <p><strong>¿Qué es el costo de venta?</strong></p>
+      <p>El <strong>costo de venta</strong> es el valor que representa cuánto te costaron los productos que vendiste durante un período.</p>
+
+      <p><strong>Fórmula:</strong></p>
+      <code>Costo de venta = Inventario inicial + Compras - Inventario final</code>
+
+      <div class="ejemplo">
+        <p><strong>Ejemplo:</strong></p>
+        <ul>
+          <li><strong>Inventario inicial:</strong> $2,000<br>Productos que tenías en stock al comenzar el mes.</li>
+          <li><strong>Compras:</strong> $5,000<br>Productos que compraste durante el mes.</li>
+          <li><strong>Inventario final:</strong> $1,500<br>Productos que te quedaron sin vender al finalizar el mes.</li>
+        </ul>
+        <p><strong>Cálculo:</strong></p>
+        <p>2,000 + 5,000 - 1,500 = <strong>$5,500</strong></p>
+        <p>Por lo tanto, tu <strong>costo de venta</strong> es de <strong>$5,500</strong>. Es decir, eso te costaron los productos que efectivamente vendiste.</p>
+      </div>
+    </div>
+
+    <div class="mensaje-usuario">
+      <p><strong>¿Quieres calcular tu propio costo?</strong></p>
+      <p>Ingresa tus datos aquí y podrás obtener el total automáticamente:</p>
+    </div>
+
+    <label for="inicial">Inventario Inicial ($):</label>
+    <input type="number" id="inicial" placeholder="Ejemplo: 2000">
+
+    <label for="compras">Compras del periodo ($):</label>
+    <input type="number" id="compras" placeholder="Ejemplo: 5000">
+
+    <label for="final">Inventario Final ($):</label>
+    <input type="number" id="final" placeholder="Ejemplo: 1500">
+
+    <button onclick="calcularCosto()">Calcular Costo de Venta</button>
+
+    <div class="resultado" id="resultado">
+      Introduce los valores y presiona "Calcular".
+    </div>
+  </div>
+
+  <script>
+    function calcularCosto() {
+      const inicial = parseFloat(document.getElementById("inicial").value) || 0;
+      const compras = parseFloat(document.getElementById("compras").value) || 0;
+      const final = parseFloat(document.getElementById("final").value) || 0;
+
+      const costo = inicial + compras - final;
+
+      document.getElementById("resultado").innerHTML =
+        `<strong>Costo de Venta:</strong> $${costo.toFixed(2)}`;
+    }
+  </script>
+</body>
+</html>

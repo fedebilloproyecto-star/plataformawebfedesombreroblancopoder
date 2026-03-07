@@ -1,0 +1,2635 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galería Avanzada de 20 Paisajes con Cámara</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Raleway:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Variables CSS - Paleta extendida */
+        :root {
+            /* Colores base */
+            --sol: #FFD700;
+            --cielo-dia: #87CEEB;
+            --cielo-noche: #0F1B3D;
+            --montaña: #2E8B57;
+            --montaña-lejana: #3CB371;
+            --rio: #1E90FF;
+            --prado: #32CD32;
+            --flor: #FF69B4;
+            --árbol: #228B22;
+            --nube: #FFFFFF;
+            --luna: #F0F8FF;
+            --estrella: #FFFFFF;
+            --atardecer-1: #FF4500;
+            --atardecer-2: #FF8C00;
+            --atardecer-3: #FFD700;
+            
+            /* Nuevos colores */
+            --aurora-1: #00FF9D;
+            --aurora-2: #00B8FF;
+            --aurora-3: #9D00FF;
+            --volcán: #FF4500;
+            --lava: #FF8C00;
+            --nieve: #F0F8FF;
+            --hielo: #ADD8E6;
+            --selva: #006400;
+            --cascada: #00BFFF;
+            --pradera: #7CFC00;
+            --océano: #1E90FF;
+            --playa: #F4A460;
+            --glaciar: #B0E0E6;
+            --bosque-otoño: #D2691E;
+            --hoja-otoño: #FF8C00;
+            --ciudad-noche: #2F4F4F;
+            --ventana: #FFD700;
+            --lluvia: #4682B4;
+            --arcoiris-1: #FF0000;
+            --arcoiris-2: #FFA500;
+            --arcoiris-3: #FFFF00;
+            --arcoiris-4: #00FF00;
+            --arcoiris-5: #0000FF;
+            --arcoiris-6: #4B0082;
+            --arcoiris-7: #8A2BE2;
+            
+            /* Decoración */
+            --marco-oro: #D4AF37;
+            --marco-madera: #8B4513;
+            --marco-mármol: #E0E0E0;
+            --marco-moderno: #2C3E50;
+            --sombra: rgba(0, 0, 0, 0.2);
+            
+            /* Fondos */
+            --primary-bg: linear-gradient(135deg, #0a1929 0%, #1a1a2e 100%);
+            --secondary-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            
+            /* Texto */
+            --text-light: #FFFFFF;
+            --text-dark: #333333;
+            --text-gold: #FFD700;
+            --text-silver: #C0C0C0;
+        }
+
+        /* Reset y configuración general */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--primary-bg);
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-light);
+            overflow-x: hidden;
+            transition: background 1s ease;
+            
+   border-radius: 10px;
+  max-width: 1200px;
+  margin: 90px auto;
+        }
+
+        body.day-mode {
+            background: var(--secondary-bg);
+        }
+
+        /* Header avanzado */
+        .header {
+            text-align: center;
+            padding: 25px 20px;
+            background: rgba(15, 25, 40, 0.9);
+            backdrop-filter: blur(15px);
+            border-bottom: 3px solid var(--marco-oro);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header h1 {
+            font-family: 'Raleway', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 15px;
+            background: linear-gradient(90deg, var(--sol), var(--atardecer-2), var(--aurora-2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto 20px;
+        }
+
+        /* Filtros y búsqueda */
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            padding: 10px 20px;
+            border-radius: 25px;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-btn.active {
+            background: var(--marco-oro);
+            color: var(--text-dark);
+            border-color: var(--marco-oro);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+        }
+
+        .filter-btn:hover {
+            transform: translateY(-2px);
+            border-color: var(--marco-oro);
+        }
+
+        .search-box {
+            position: relative;
+            width: 300px;
+            margin: 0 auto;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 20px 12px 45px;
+            border-radius: 25px;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            border-color: var(--marco-oro);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--marco-oro);
+        }
+
+        /* Controles principales */
+        .main-controls {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .control-btn {
+            background: linear-gradient(135deg, var(--marco-oro), #FF8C00);
+            border: none;
+            padding: 14px 28px;
+            border-radius: 50px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            font-size: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .control-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: 0.5s;
+        }
+
+        .control-btn:hover::before {
+            left: 100%;
+        }
+
+        .control-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .control-btn:active {
+            transform: translateY(1px);
+        }
+
+        .control-btn i {
+            font-size: 1.2rem;
+        }
+
+        /* Botón de cámara específico */
+        .camera-btn {
+            background: linear-gradient(135deg, #9D00FF, #00B8FF);
+        }
+
+        /* Galería de paisajes */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Marcos personalizados para diferentes tipos */
+        .marco {
+            position: relative;
+            padding: 15px;
+            background: var(--marco-madera);
+            border-radius: 12px;
+            box-shadow: 
+                0 15px 35px var(--sombra),
+                inset 0 0 20px rgba(0, 0, 0, 0.3);
+            transform-style: preserve-3d;
+            transition: all 0.5s ease;
+            cursor: pointer;
+            perspective: 1000px;
+        }
+
+        .marco.marble {
+            background: linear-gradient(135deg, var(--marco-mármol), #C0C0C0);
+        }
+
+        .marco.modern {
+            background: var(--marco-moderno);
+            border: 2px solid var(--marco-oro);
+        }
+
+        .marco.gold {
+            background: linear-gradient(135deg, var(--marco-oro), #FF8C00);
+        }
+
+        .marco:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.4),
+                0 0 30px rgba(212, 175, 55, 0.3);
+        }
+
+        .marco.selected {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 
+                0 25px 50px rgba(212, 175, 55, 0.4),
+                0 0 30px rgba(212, 175, 55, 0.5);
+        }
+
+        .marco::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 3px solid var(--marco-oro);
+            border-radius: 8px;
+            box-shadow: 
+                inset 0 0 15px rgba(212, 175, 55, 0.5),
+                0 0 15px rgba(212, 175, 55, 0.3);
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .marco:hover::before {
+            border-color: var(--sol);
+            box-shadow: 
+                inset 0 0 20px rgba(255, 215, 0, 0.6),
+                0 0 20px rgba(255, 215, 0, 0.4);
+        }
+
+        /* Contenedor de paisaje */
+        .paisaje {
+            width: 100%;
+            height: 250px;
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+
+        /* Efecto de vidrio */
+        .paisaje::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.1) 0%,
+                rgba(255, 255, 255, 0) 50%,
+                rgba(255, 255, 255, 0.1) 100%
+            );
+            pointer-events: none;
+        }
+
+        /* Info del paisaje */
+        .paisaje-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            color: white;
+            padding: 15px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+
+        .marco:hover .paisaje-info {
+            transform: translateY(0);
+        }
+
+        .paisaje-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            color: var(--text-gold);
+        }
+
+        .paisaje-desc {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Botón de captura en cada paisaje */
+        .capture-btn {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--marco-oro);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 5;
+            transition: all 0.3s ease;
+            opacity: 0;
+        }
+
+        .marco:hover .capture-btn {
+            opacity: 1;
+        }
+
+        .capture-btn:hover {
+            background: var(--marco-oro);
+            color: var(--text-dark);
+            transform: scale(1.1);
+        }
+
+        /* Estrellas de calificación */
+        .rating {
+            display: flex;
+            justify-content: center;
+            gap: 3px;
+            margin-top: 8px;
+        }
+
+        .star {
+            color: var(--marco-oro);
+            font-size: 0.9rem;
+        }
+
+        /* Etiqueta de categoría */
+        .category-tag {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            z-index: 2;
+            border: 1px solid var(--marco-oro);
+        }
+
+        /* Soportes decorativos diferentes */
+        .soporte {
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 8px;
+            background: var(--marco-madera);
+            border-radius: 0 0 5px 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .marco.marble .soporte {
+            background: var(--marco-mármol);
+        }
+
+        .marco.modern .soporte {
+            background: var(--marco-moderno);
+        }
+
+        .marco.gold .soporte {
+            background: var(--marco-oro);
+        }
+
+        /* Efectos de luz dinámica */
+        .luz {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(
+                circle at var(--x, 50%) var(--y, 50%),
+                transparent 30%,
+                rgba(255, 255, 255, 0.1) 70%,
+                transparent 100%
+            );
+            pointer-events: none;
+            animation: mover-luz 15s linear infinite alternate;
+        }
+
+        /* ===== ESTILOS PARA LOS 20 PAISAJES ===== */
+
+        /* 1. Montañas con sol */
+        .paisaje-montaña {
+            background: linear-gradient(to bottom, 
+                var(--cielo-dia) 0%,
+                var(--cielo-dia) 40%,
+                var(--montaña-lejana) 40%,
+                var(--montaña) 70%,
+                var(--prado) 70%
+            );
+        }
+
+        .sol {
+            position: absolute;
+            top: 30px;
+            right: 50px;
+            width: 60px;
+            height: 60px;
+            background: var(--sol);
+            border-radius: 50%;
+            box-shadow: 
+                0 0 40px var(--sol),
+                0 0 80px rgba(255, 215, 0, 0.5);
+            animation: girar-sol 20s linear infinite;
+        }
+
+        .montaña {
+            position: absolute;
+            bottom: 30%;
+            width: 100%;
+            height: 40%;
+            background: var(--montaña);
+            clip-path: polygon(0% 100%, 20% 40%, 40% 70%, 60% 20%, 80% 60%, 100% 100%);
+        }
+
+        .montaña-lejana {
+            position: absolute;
+            bottom: 40%;
+            width: 100%;
+            height: 30%;
+            background: var(--montaña-lejana);
+            opacity: 0.8;
+            clip-path: polygon(0% 100%, 30% 50%, 50% 80%, 70% 30%, 100% 100%);
+        }
+
+        /* 2. Río con árboles */
+        .paisaje-rio {
+            background: linear-gradient(to bottom,
+                var(--cielo-dia) 0%,
+                var(--cielo-dia) 30%,
+                var(--rio) 30%,
+                var(--rio) 70%,
+                var(--prado) 70%
+            );
+        }
+
+        .rio {
+            position: absolute;
+            top: 30%;
+            width: 100%;
+            height: 40%;
+            background: linear-gradient(90deg, 
+                var(--rio) 0%,
+                #4682B4 50%,
+                var(--rio) 100%
+            );
+            background-size: 200% 100%;
+            animation: fluir 10s linear infinite;
+        }
+
+        .arbol {
+            position: absolute;
+            bottom: 30%;
+            width: 40px;
+            height: 80px;
+            background: var(--árbol);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        }
+
+        /* 3. Atardecer tropical */
+        .paisaje-atardecer {
+            background: linear-gradient(to bottom,
+                var(--atardecer-1) 0%,
+                var(--atardecer-2) 30%,
+                var(--atardecer-3) 60%,
+                #FF6347 100%
+            );
+        }
+
+        .sol-atardecer {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            background: var(--sol);
+            border-radius: 50%;
+            box-shadow: 
+                0 0 60px var(--atardecer-1),
+                0 0 120px rgba(255, 69, 0, 0.4);
+            animation: atardecer 10s ease-in-out infinite alternate;
+        }
+
+        /* 4. Noche estrellada */
+        .paisaje-noche {
+            background: linear-gradient(to bottom,
+                var(--cielo-noche) 0%,
+                #000428 50%,
+                #000 100%
+            );
+        }
+
+        .luna {
+            position: absolute;
+            top: 40px;
+            right: 60px;
+            width: 50px;
+            height: 50px;
+            background: var(--luna);
+            border-radius: 50%;
+            box-shadow: 
+                0 0 30px rgba(240, 248, 255, 0.8),
+                inset -10px -10px 20px rgba(0, 0, 0, 0.3);
+            animation: fase-lunar 30s linear infinite;
+        }
+
+        .estrella {
+            position: absolute;
+            background: var(--estrella);
+            border-radius: 50%;
+            animation: titilar 3s infinite alternate;
+        }
+
+        /* 5. Campo con flores */
+        .paisaje-campo {
+            background: linear-gradient(to bottom,
+                var(--cielo-dia) 0%,
+                var(--cielo-dia) 40%,
+                var(--prado) 40%
+            );
+        }
+
+        .flor {
+            position: absolute;
+            bottom: 30%;
+            width: 20px;
+            height: 40px;
+            background: #228B22;
+        }
+
+        .flor::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 25px;
+            height: 25px;
+            background: var(--flor);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            box-shadow: 0 0 10px rgba(255, 105, 180, 0.3);
+            animation: girar-flor 10s linear infinite;
+        }
+
+        /* 6. Desierto */
+        .paisaje-desierto {
+            background: linear-gradient(to bottom,
+                #FFDAB9 0%,
+                #F4A460 30%,
+                #D2691E 100%
+            );
+        }
+
+        .duna {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 50%;
+            background: #D2691E;
+            clip-path: polygon(0% 100%, 20% 60%, 40% 80%, 60% 40%, 80% 70%, 100% 100%);
+        }
+
+        /* 7. Aurora boreal */
+        .paisaje-aurora {
+            background: linear-gradient(to bottom,
+                #000428 0%,
+                #004e92 100%
+            );
+        }
+
+        .aurora {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60%;
+            background: linear-gradient(90deg,
+                transparent,
+                var(--aurora-1),
+                var(--aurora-2),
+                var(--aurora-3),
+                transparent
+            );
+            opacity: 0.7;
+            animation: ondular-aurora 15s ease-in-out infinite alternate;
+            mask-image: linear-gradient(to bottom, transparent 10%, black 40%);
+        }
+
+        /* 8. Volcán en erupción */
+        .paisaje-volcan {
+            background: linear-gradient(to bottom,
+                #4A0000 0%,
+                #8B0000 30%,
+                #FF4500 60%,
+                #000 100%
+            );
+        }
+
+        .volcan {
+            position: absolute;
+            bottom: 0;
+            left: 25%;
+            width: 50%;
+            height: 60%;
+            background: #2F4F4F;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        }
+
+        .lava {
+            position: absolute;
+            top: 40%;
+            left: 35%;
+            width: 30%;
+            height: 30%;
+            background: linear-gradient(to top, var(--lava), var(--volcán));
+            border-radius: 50%;
+            animation: erupcion 5s ease-in-out infinite;
+            filter: blur(2px);
+        }
+
+        /* 9. Glaciar */
+        .paisaje-glaciar {
+            background: linear-gradient(to bottom,
+                #87CEEB 0%,
+                #4682B4 30%,
+                var(--hielo) 70%,
+                var(--nieve) 100%
+            );
+        }
+
+        .iceberg {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 60%;
+            background: linear-gradient(90deg, var(--hielo), #B0E0E6, var(--hielo));
+            clip-path: polygon(0% 100%, 30% 40%, 50% 70%, 70% 30%, 100% 100%);
+            animation: flotar-hielo 20s ease-in-out infinite;
+        }
+
+        /* 10. Selva tropical */
+        .paisaje-selva {
+            background: linear-gradient(to bottom,
+                #87CEEB 0%,
+                #32CD32 40%,
+                var(--selva) 100%
+            );
+        }
+
+        .palmera {
+            position: absolute;
+            bottom: 0;
+            width: 30px;
+            height: 100px;
+            background: #8B4513;
+        }
+
+        .palmera::before {
+            content: '';
+            position: absolute;
+            top: -40px;
+            left: -30px;
+            width: 90px;
+            height: 50px;
+            background: var(--selva);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            transform: rotate(-30deg);
+        }
+
+        .palmera::after {
+            content: '';
+            position: absolute;
+            top: -40px;
+            left: -30px;
+            width: 90px;
+            height: 50px;
+            background: var(--selva);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            transform: rotate(30deg);
+        }
+
+        /* 11. Cascada */
+        .paisaje-cascada {
+            background: linear-gradient(to bottom,
+                var(--cielo-dia) 0%,
+                var(--montaña) 40%,
+                var(--cascada) 70%,
+                #32CD32 100%
+            );
+        }
+
+        .cascada {
+            position: absolute;
+            top: 40%;
+            left: 40%;
+            width: 20%;
+            height: 40%;
+            background: linear-gradient(to bottom, 
+                transparent,
+                var(--cascada) 30%,
+                #1E90FF 100%
+            );
+            animation: caer-agua 2s linear infinite;
+            filter: blur(1px);
+        }
+
+        /* 12. Pradera con animales */
+        .paisaje-pradera {
+            background: linear-gradient(to bottom,
+                var(--cielo-dia) 0%,
+                var(--cielo-dia) 40%,
+                var(--pradera) 40%
+            );
+        }
+
+        .animal {
+            position: absolute;
+            bottom: 30%;
+            width: 40px;
+            height: 25px;
+            background: #8B4513;
+            border-radius: 50%;
+            animation: moverse 20s linear infinite;
+        }
+
+        /* 13. Océano profundo */
+        .paisaje-oceano {
+            background: linear-gradient(to bottom,
+                #87CEEB 0%,
+                var(--océano) 30%,
+                #00008B 70%,
+                #000 100%
+            );
+        }
+
+        .ola {
+            position: absolute;
+            bottom: 30%;
+            width: 100%;
+            height: 30%;
+            background: linear-gradient(transparent, #1E90FF);
+            border-radius: 50% 50% 0 0;
+            animation: olas 5s ease-in-out infinite;
+        }
+
+        /* 14. Playa tropical */
+        .paisaje-playa {
+            background: linear-gradient(to bottom,
+                var(--cielo-dia) 0%,
+                var(--océano) 40%,
+                var(--playa) 40%
+            );
+        }
+
+        .coco {
+            position: absolute;
+            bottom: 40%;
+            width: 25px;
+            height: 35px;
+            background: #8B4513;
+            border-radius: 50%;
+        }
+
+        /* 15. Bosque otoñal */
+        .paisaje-otono {
+            background: linear-gradient(to bottom,
+                var(--cielo-dia) 0%,
+                var(--cielo-dia) 40%,
+                var(--bosque-otoño) 40%
+            );
+        }
+
+        .hoja {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: var(--hoja-otoño);
+            border-radius: 50% 0 50% 0;
+            animation: caer-hoja 10s linear infinite;
+        }
+
+        /* 16. Ciudad nocturna */
+        .paisaje-ciudad {
+            background: linear-gradient(to bottom,
+                var(--cielo-noche) 0%,
+                var(--ciudad-noche) 40%,
+                #000 100%
+            );
+        }
+
+        .edificio {
+            position: absolute;
+            bottom: 0;
+            width: 30px;
+            height: 100px;
+            background: #2F4F4F;
+            border-top: 2px solid var(--ventana);
+        }
+
+        .ventana {
+            position: absolute;
+            width: 8px;
+            height: 10px;
+            background: var(--ventana);
+            border-radius: 2px;
+            animation: parpadear 3s infinite alternate;
+        }
+
+        /* 17. Lluvia */
+        .paisaje-lluvia {
+            background: linear-gradient(to bottom,
+                var(--lluvia) 0%,
+                #4682B4 100%
+            );
+        }
+
+        .gotas {
+            position: absolute;
+            width: 2px;
+            height: 15px;
+            background: rgba(255, 255, 255, 0.7);
+            animation: llover 1s linear infinite;
+        }
+
+        /* 18. Arcoíris */
+        .paisaje-arcoiris {
+            background: linear-gradient(to bottom,
+                var(--cielo-dia) 0%,
+                #87CEEB 100%
+            );
+        }
+
+        .arco {
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 40%;
+            border-radius: 50%;
+            border: 15px solid transparent;
+            border-top-color: var(--arcoiris-1);
+            animation: rotar-arco 20s linear infinite;
+        }
+
+        .arco::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            right: -15px;
+            bottom: -15px;
+            border-radius: 50%;
+            border: 15px solid transparent;
+            border-top-color: var(--arcoiris-2);
+        }
+
+        /* 19. Amanecer */
+        .paisaje-amanecer {
+            background: linear-gradient(to bottom,
+                #FF1493 0%,
+                #FF8C00 30%,
+                #FFD700 60%,
+                #87CEEB 100%
+            );
+        }
+
+        .sol-amanecer {
+            position: absolute;
+            top: 70%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70px;
+            height: 70px;
+            background: var(--sol);
+            border-radius: 50%;
+            box-shadow: 
+                0 0 50px #FF4500,
+                0 0 100px rgba(255, 69, 0, 0.5);
+            animation: salir-sol 15s ease-in-out infinite;
+        }
+
+        /* 20. Neblina montañosa */
+        .paisaje-neblina {
+            background: linear-gradient(to bottom,
+                #E6E6FA 0%,
+                #D8BFD8 30%,
+                #B0C4DE 70%,
+                #778899 100%
+            );
+        }
+
+        .niebla {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.3);
+            animation: mover-niebla 30s linear infinite;
+            filter: blur(5px);
+        }
+
+        /* ===== ANIMACIONES ===== */
+        @keyframes titleGlow {
+            0% { text-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); }
+            100% { text-shadow: 0 5px 25px rgba(212, 175, 55, 0.4); }
+        }
+
+        @keyframes girar-sol {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes fluir {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        @keyframes atardecer {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+            100% { transform: translate(-50%, -20%) scale(0.8); opacity: 0.8; }
+        }
+
+        @keyframes fase-lunar {
+            0%, 100% { box-shadow: 0 0 30px rgba(240, 248, 255, 0.8); }
+            50% { box-shadow: 0 0 15px rgba(240, 248, 255, 0.4); }
+        }
+
+        @keyframes titilar {
+            0% { opacity: 0.3; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes girar-flor {
+            from { transform: translateX(-50%) rotate(0deg); }
+            to { transform: translateX(-50%) rotate(360deg); }
+        }
+
+        @keyframes mover-luz {
+            0% { --x: 30%; --y: 30%; }
+            100% { --x: 70%; --y: 70%; }
+        }
+
+        @keyframes ondular-aurora {
+            0% { transform: translateX(-20%) skewX(-10deg); }
+            100% { transform: translateX(20%) skewX(10deg); }
+        }
+
+        @keyframes erupcion {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.2); opacity: 1; }
+        }
+
+        @keyframes flotar-hielo {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes caer-agua {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+
+        @keyframes moverse {
+            0% { left: -40px; }
+            100% { left: calc(100% + 40px); }
+        }
+
+        @keyframes olas {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes caer-hoja {
+            0% { transform: translateY(-100px) rotate(0deg); }
+            100% { transform: translateY(250px) rotate(360deg); }
+        }
+
+        @keyframes parpadear {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes llover {
+            0% { transform: translateY(-100px); }
+            100% { transform: translateY(250px); }
+        }
+
+        @keyframes rotar-arco {
+            from { transform: translateX(-50%) rotate(0deg); }
+            to { transform: translateX(-50%) rotate(360deg); }
+        }
+
+        @keyframes salir-sol {
+            0%, 100% { top: 70%; opacity: 0.7; }
+            50% { top: 50%; opacity: 1; }
+        }
+
+        @keyframes mover-niebla {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Visor ampliado */
+        .viewer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .viewer.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .viewer-content {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+            box-shadow: 0 0 60px rgba(212, 175, 55, 0.7);
+            border: 3px solid var(--marco-oro);
+        }
+
+        .viewer-paisaje {
+            width: 700px;
+            height: 500px;
+            max-width: 85vw;
+            max-height: 60vh;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .close-viewer {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(212, 175, 55, 0.9);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2001;
+            transition: all 0.3s ease;
+        }
+
+        .close-viewer:hover {
+            background: rgba(212, 175, 55, 1);
+            transform: rotate(90deg) scale(1.1);
+        }
+
+        .viewer-info {
+            color: white;
+            text-align: center;
+            max-width: 700px;
+        }
+
+        .viewer-info h3 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--marco-oro);
+        }
+
+        .viewer-stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: var(--text-silver);
+        }
+
+        /* Modal de captura */
+        .capture-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .capture-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .capture-content {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+            box-shadow: 0 0 60px rgba(212, 175, 55, 0.7);
+            border: 3px solid var(--marco-oro);
+            text-align: center;
+        }
+
+        .capture-preview {
+            width: 600px;
+            height: 400px;
+            max-width: 80vw;
+            max-height: 50vh;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 0 auto 20px;
+            border: 2px solid var(--marco-oro);
+            background: white;
+        }
+
+        .capture-preview canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .capture-controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .capture-btn-modal {
+            background: linear-gradient(135deg, var(--marco-oro), #FF8C00);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .capture-btn-modal:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .capture-btn-modal.save {
+            background: linear-gradient(135deg, #00B8FF, #9D00FF);
+        }
+
+        .capture-btn-modal.close {
+            background: linear-gradient(135deg, #FF4500, #FF8C00);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 30px 20px;
+            background: rgba(15, 25, 40, 0.9);
+            margin-top: 50px;
+            border-top: 3px solid var(--marco-oro);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer p {
+            margin-bottom: 15px;
+            opacity: 0.8;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin: 25px 0;
+        }
+
+        .social-icons a {
+            color: var(--marco-oro);
+            font-size: 1.8rem;
+            transition: all 0.3s ease;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .social-icons a:hover {
+            color: var(--sol);
+            transform: translateY(-5px) scale(1.1);
+            background: rgba(212, 175, 55, 0.2);
+        }
+
+        /* Contador de paisajes */
+        .counter {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(212, 175, 55, 0.9);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 100;
+        }
+
+        /* Loading screen */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-bg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .spinner {
+            width: 80px;
+            height: 80px;
+            border: 8px solid rgba(212, 175, 55, 0.3);
+            border-top-color: var(--marco-oro);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Flash de cámara */
+        .flash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            opacity: 0;
+            z-index: 2500;
+            pointer-events: none;
+            transition: opacity 0.2s;
+        }
+
+        .flash.active {
+            opacity: 0.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 20px;
+                padding: 15px;
+            }
+            
+            .paisaje {
+                height: 220px;
+            }
+            
+            .viewer-paisaje {
+                width: 90vw;
+                height: 350px;
+            }
+            
+            .main-controls {
+                padding: 15px 10px;
+            }
+            
+            .control-btn {
+                padding: 12px 20px;
+                font-size: 0.9rem;
+            }
+            
+            .capture-preview {
+                width: 90vw;
+                height: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .gallery {
+                grid-template-columns: 1fr;
+                max-width: 350px;
+                margin: 0 auto;
+            }
+            
+            .paisaje {
+                height: 200px;
+            }
+            
+            .filters {
+                gap: 10px;
+            }
+            
+            .filter-btn {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .capture-content {
+                padding: 15px;
+            }
+            
+            .capture-controls {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+.btn-volver {
+    display: inline-block;
+    padding: 10px 18px;
+    border: 2px solid #000;      /* borde negro */
+    background-color: #fff;      /* fondo blanco */
+    color: #000;                 /* texto negro */
+    text-decoration: none;       /* sin subrayado */
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 4px;          /* bordes levemente redondeados */
+}
+
+/* hover sin cambiar colores */
+.btn-volver:hover {
+    background-color:aquamarine;
+    color: #000;
+    border-color: #000;
+}
+
+
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <h2>Cargando Ejemplos de Paisajes</h2>
+      
+    </div>
+
+    <!-- Flash de cámara -->
+    <div class="flash" id="flash"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+          
+          <h1>
+            Podra ver eso ejemplos y descargar esos paisajes lo que te guste.
+          </h1>
+            
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Buscar paisajes...">
+            </div>
+            
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">
+                    <i class="fas fa-layer-group"></i> Todos
+                </button>
+                <button class="filter-btn" data-filter="day">
+                    <i class="fas fa-sun"></i> Día
+                </button>
+                <button class="filter-btn" data-filter="night">
+                    <i class="fas fa-moon"></i> Noche
+                </button>
+                <button class="filter-btn" data-filter="water">
+                    <i class="fas fa-water"></i> Agua
+                </button>
+                <button class="filter-btn" data-filter="mountain">
+                    <i class="fas fa-mountain"></i> Montañas
+                </button>
+                <button class="filter-btn" data-filter="special">
+                    <i class="fas fa-star"></i> Especiales
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Controles principales -->
+    <div class="main-controls">
+        <button class="control-btn" id="toggleAnimations">
+            <i class="fas fa-play"></i> Alternar Animaciones
+        </button>
+        <button class="control-btn" id="nightMode">
+            <i class="fas fa-moon"></i> Modo Noche
+        </button>
+        <button class="control-btn" id="randomize">
+            <i class="fas fa-random"></i> Aleatorizar
+        </button>
+        <button class="control-btn" id="selectAll">
+            <i class="fas fa-check-square"></i> Seleccionar Todos
+        </button>
+        <button class="control-btn camera-btn" id="captureAll">
+            <i class="fas fa-camera"></i> Capturar Seleccionados
+        </button>
+        <button class="control-btn" id="slideshowBtn">
+            <i class="fas fa-play-circle"></i> Presentación
+        </button>
+        <a href="Permitecamaraconpaisajes.html" class="btn-volver">Volver atrás</a>
+
+    </div>
+
+    <!-- Galería de 20 paisajes -->
+    <main class="gallery" id="gallery">
+        <!-- Los 20 paisajes se generarán dinámicamente con JavaScript -->
+    </main>
+
+    <!-- Visor ampliado -->
+    <div class="viewer" id="viewer">
+        <button class="close-viewer" id="closeViewer">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="viewer-content">
+            <div class="viewer-paisaje" id="viewerPaisaje"></div>
+            <div class="viewer-info">
+                <h3 id="viewerTitle">Título del Paisaje</h3>
+                <p id="viewerDescription">Descripción del paisaje seleccionado</p>
+                <div class="viewer-stats">
+                    <span><i class="fas fa-eye"></i> <span id="viewCount">0</span> vistas</span>
+                    <span><i class="fas fa-heart"></i> <span id="likeCount">0</span> me gusta</span>
+                    <span><i class="fas fa-camera"></i> <span id="captureCount">0</span> capturas</span>
+                </div>
+                <button class="capture-btn-modal" id="captureFromViewer" style="margin-top: 20px;">
+                    <i class="fas fa-camera"></i> Capturar esta Vista
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de captura -->
+    <div class="capture-modal" id="captureModal">
+        <div class="capture-content">
+            <h2 style="color: var(--marco-oro); margin-bottom: 20px;">
+                <i class="fas fa-camera"></i> Captura de Paisaje
+            </h2>
+            <div class="capture-preview">
+                <canvas id="captureCanvas"></canvas>
+            </div>
+            <div class="capture-info">
+                <h3 id="captureTitle">Nombre del Paisaje</h3>
+                <p id="captureDescription">Descripción del paisaje capturado</p>
+                <p style="color: var(--text-silver); font-size: 0.9rem; margin-top: 10px;">
+                    <i class="fas fa-info-circle"></i> La imagen incluye efectos y animaciones
+                </p>
+            </div>
+            <div class="capture-controls">
+                <button class="capture-btn-modal save" id="saveCapture">
+                    <i class="fas fa-download"></i> Descargar Imagen
+                </button>
+                <button class="capture-btn-modal" id="newCapture">
+                    <i class="fas fa-camera"></i> Otra Captura
+                </button>
+                <button class="capture-btn-modal close" id="closeCapture">
+                    <i class="fas fa-times"></i> Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contador -->
+    <div class="counter" id="counter">
+        <span id="selectedCount">0</span> seleccionados de <span id="totalCount">20</span>
+    </div>
+
+  
+
+    <script>
+        // Datos de los 20 paisajes
+        const paisajesData = [
+            {
+                id: 1,
+                name: "Montañas con Sol",
+                description: "Paisaje montañoso con un sol brillante que gira en el cielo",
+                category: ["day", "mountain"],
+                rating: 5,
+                marcoType: "gold",
+                className: "paisaje-montaña",
+                captures: 0,
+                elements: `
+                    <div class="sol"></div>
+                    <div class="montaña-lejana"></div>
+                    <div class="montaña"></div>
+                    <div class="luz"></div>
+                `
+            },
+            {
+                id: 2,
+                name: "Río Serpenteante",
+                description: "Río que fluye entre árboles verdes y frondosos",
+                category: ["day", "water"],
+                rating: 4,
+                marcoType: "marble",
+                className: "paisaje-rio",
+                captures: 0,
+                elements: `
+                    <div class="rio"></div>
+                    <div class="arbol" style="left: 30px; height: 100px;"></div>
+                    <div class="arbol" style="left: 100px; height: 70px;"></div>
+                    <div class="arbol" style="right: 50px; height: 90px;"></div>
+                    <div class="luz"></div>
+                `
+            },
+            {
+                id: 3,
+                name: "Atardecer Tropical",
+                description: "Atardecer espectacular con tonos naranjas y rosas",
+                category: ["day", "special"],
+                rating: 5,
+                marcoType: "gold",
+                className: "paisaje-atardecer",
+                captures: 0,
+                elements: `
+                    <div class="sol-atardecer"></div>
+                    <div class="luz"></div>
+                `
+            },
+            {
+                id: 4,
+                name: "Noche Estrellada",
+                description: "Noche con luna brillante y estrellas que titilan",
+                category: ["night", "special"],
+                rating: 5,
+                marcoType: "modern",
+                className: "paisaje-noche",
+                captures: 0,
+                elements: `
+                    <div class="luna"></div>
+                    <div class="estrella" style="top: 30%; left: 20%; width: 2px; height: 2px; animation-delay: 0s;"></div>
+                    <div class="estrella" style="top: 20%; left: 50%; width: 3px; height: 3px; animation-delay: 0.5s;"></div>
+                    <div class="estrella" style="top: 40%; left: 70%; width: 2px; height: 2px; animation-delay: 1s;"></div>
+                    <div class="estrella" style="top: 60%; left: 30%; width: 2px; height: 2px; animation-delay: 1.5s;"></div>
+                    <div class="estrella" style="top: 25%; left: 80%; width: 3px; height: 3px; animation-delay: 2s;"></div>
+                    <div class="luz"></div>
+                `
+            },
+            {
+                id: 5,
+                name: "Campo de Flores",
+                description: "Campo colorido lleno de flores que se mecen con la brisa",
+                category: ["day"],
+                rating: 4,
+                marcoType: "marble",
+                className: "paisaje-campo",
+                captures: 0,
+                elements: `
+                    <div class="flor" style="left: 50px;"></div>
+                    <div class="flor" style="left: 120px; height: 35px;"></div>
+                    <div class="flor" style="left: 200px; height: 45px;"></div>
+                    <div class="flor" style="right: 80px; height: 30px;"></div>
+                    <div class="luz"></div>
+                `
+            },
+            {
+                id: 6,
+                name: "Desierto Infinito",
+                description: "Desierto extenso con dunas onduladas y cactus solitarios",
+                category: ["day"],
+                rating: 3,
+                marcoType: "modern",
+                className: "paisaje-desierto",
+                captures: 0,
+                elements: `
+                    <div class="duna"></div>
+                    <div class="luz"></div>
+                `
+            },
+            {
+                id: 7,
+                name: "Aurora Boreal",
+                description: "Luces del norte danzando en el cielo nocturno",
+                category: ["night", "special"],
+                rating: 5,
+                marcoType: "modern",
+                className: "paisaje-aurora",
+                captures: 0,
+                elements: `
+                    <div class="aurora"></div>
+                    <div class="luz"></div>
+                `
+            },
+            {
+                id: 8,
+                name: "Volcán en Erupción",
+                description: "Volcán activo con lava fluyendo por sus laderas",
+                category: ["special"],
+                rating: 4,
+                marcoType: "gold",
+                className: "paisaje-volcan",
+                captures: 0,
+                elements: `
+                    <div class="volcan"></div>
+                    <div class="lava"></div>
+                    <div class="luz"></div>
+                `
+            },
+            {
+                id: 9,
+                name: "Glaciar Antártico",
+                description: "Inmensos icebergs flotando en aguas glaciales",
+                category: ["water", "special"],
+                rating: 5,
+                marcoType: "marble",
+                className: "paisaje-glaciar",
+                captures: 0,
+                elements: `
+                    <div class="iceberg"></div>
+                    <div class="luz"></div>
+                `
+            },
+            {
+                id: 10,
+                name: "Selva Tropical",
+                description: "Selva exuberante con palmeras y vegetación densa",
+                category: ["day"],
+                rating: 4,
+                marcoType: "modern",
+                className: "paisaje-selva",
+                captures: 0,
+                elements: `
+                    <div class="palmera" style="left: 100px;"></div>
+                    <div class="palmera" style="right: 100px; height: 120px;"></div>
+                    <div class="luz"></div>
+                `
+            },
+            {
+                id: 11,
+                name: "Cascada Majestuosa",
+                description: "Cascada poderosa cayendo entre rocas musgosas",
+                category: ["water", "mountain"],
+                rating: 5,
+                marcoType: "gold",
+                className: "paisaje-cascada",
+                captures: 0,
+                elements: `
+                    <div class="cascada"></div>
+                    <div class="luz"></div>
+                `
+            },
+            {
+                id: 12,
+                name: "Pradera con Animales",
+                description: "Vastas praderas con vida silvestre en movimiento",
+                category: ["day"],
+                rating: 4,
+                marcoType: "marble",
+                className: "paisaje-pradera",
+                captures: 0,
+                elements: `
+                    <div class="animal" style="bottom: 35%; left: 20%;"></div>
+                    <div class="animal" style="bottom: 40%; left: 60%; width: 30px; height: 20px;"></div>
+                    <div class="luz"></div>
+                `
+            },
+            {
+                id: 13,
+                name: "Océano Profundo",
+                description: "Aguas profundas del océano con olas constantes",
+                category: ["water"],
+                rating: 4,
+                marcoType: "modern",
+                className: "paisaje-oceano",
+                captures: 0,
+                elements: `
+                    <div class="ola"></div>
+                    <div class="luz"></div>
+                `
+            },
+            {
+                id: 14,
+                name: "Playa Tropical",
+                description: "Arena blanca y aguas turquesas bajo el sol",
+                category: ["day", "water"],
+                rating: 5,
+                marcoType: "gold",
+                className: "paisaje-playa",
+                captures: 0,
+                elements: `
+                    <div class="coco" style="left: 80px;"></div>
+                    <div class="coco" style="right: 100px;"></div>
+                    <div class="luz"></div>
+                `
+            },
+            {
+                id: 15,
+                name: "Bosque Otoñal",
+                description: "Árboles con hojas doradas y naranjas en otoño",
+                category: ["day"],
+                rating: 4,
+                marcoType: "marble",
+                className: "paisaje-otono",
+                captures: 0,
+                elements: `
+                    <div class="hoja" style="top: 10%; left: 30%;"></div>
+                    <div class="hoja" style="top: 15%; left: 60%; animation-delay: 2s;"></div>
+                    <div class="hoja" style="top: 5%; left: 80%; animation-delay: 4s;"></div>
+                    <div class="luz"></div>
+                `
+            },
+            {
+                id: 16,
+                name: "Ciudad Nocturna",
+                description: "Rascacielos iluminados bajo un cielo estrellado",
+                category: ["night"],
+                rating: 4,
+                marcoType: "modern",
+                className: "paisaje-ciudad",
+                captures: 0,
+                elements: `
+                    <div class="edificio" style="left: 50px; height: 120px;"></div>
+                    <div class="edificio" style="left: 100px; height: 150px;"></div>
+                    <div class="edificio" style="right: 80px; height: 100px;"></div>
+                    <div class="ventana" style="top: 20px; left: 55px;"></div>
+                    <div class="ventana" style="top: 40px; left: 55px; animation-delay: 1s;"></div>
+                    <div class="luz"></div>
+                `
+            },
+            {
+                id: 17,
+                name: "Lluvia Primaveral",
+                description: "Lluvia suave cayendo sobre un paisaje verde",
+                category: ["water", "day"],
+                rating: 3,
+                marcoType: "marble",
+                className: "paisaje-lluvia",
+                captures: 0,
+                elements: `
+                    <div class="gotas" style="left: 20%; animation-delay: 0s;"></div>
+                    <div class="gotas" style="left: 40%; animation-delay: 0.2s;"></div>
+                    <div class="gotas" style="left: 60%; animation-delay: 0.4s;"></div>
+                    <div class="gotas" style="left: 80%; animation-delay: 0.6s;"></div>
+                    <div class="luz"></div>
+                `
+            },
+            {
+                id: 18,
+                name: "Arcoíris Completo",
+                description: "Arcoíris de siete colores después de la lluvia",
+                category: ["day", "special"],
+                rating: 5,
+                marcoType: "gold",
+                className: "paisaje-arcoiris",
+                captures: 0,
+                elements: `
+                    <div class="arco"></div>
+                    <div class="luz"></div>
+                `
+            },
+            {
+                id: 19,
+                name: "Amanecer Dorado",
+                description: "Primeros rayos del sol iluminando el horizonte",
+                category: ["day", "special"],
+                rating: 5,
+                marcoType: "gold",
+                className: "paisaje-amanecer",
+                captures: 0,
+                elements: `
+                    <div class="sol-amanecer"></div>
+                    <div class="luz"></div>
+                `
+            },
+            {
+                id: 20,
+                name: "Neblina Montañosa",
+                description: "Niebla misteriosa cubriendo las cumbres montañosas",
+                category: ["mountain", "special"],
+                rating: 4,
+                marcoType: "modern",
+                className: "paisaje-neblina",
+                captures: 0,
+                elements: `
+                    <div class="niebla"></div>
+                    <div class="luz"></div>
+                `
+            }
+        ];
+
+        // Estado de la aplicación
+        let estado = {
+            animacionesActivadas: true,
+            modoNoche: false,
+            paisajesSeleccionados: new Set(),
+            filtroActivo: 'all',
+            busqueda: '',
+            vistaPaisaje: null,
+            capturaPaisaje: null,
+            datosPaisajes: paisajesData.map(p => ({...p, vistas: 0, likes: 0, captures: 0}))
+        };
+
+        // Inicializar aplicación cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', function() {
+            // Ocultar loading screen después de 2 segundos
+            setTimeout(() => {
+                document.getElementById('loading').classList.add('hidden');
+                inicializarAplicacion();
+            }, 2000);
+        });
+
+        function inicializarAplicacion() {
+            // Generar galería
+            generarGaleria();
+            
+            // Inicializar controles
+            inicializarControles();
+            
+            // Inicializar eventos
+            inicializarEventos();
+            
+            // Actualizar contador
+            actualizarContador();
+            
+            // Efecto de entrada
+            animarEntradaGaleria();
+        }
+
+        function generarGaleria() {
+            const gallery = document.getElementById('gallery');
+            gallery.innerHTML = '';
+            
+            estado.datosPaisajes.forEach(paisaje => {
+                // Aplicar filtros
+                if (estado.filtroActivo !== 'all' && !paisaje.category.includes(estado.filtroActivo)) {
+                    return;
+                }
+                
+                // Aplicar búsqueda
+                if (estado.busqueda && !paisaje.name.toLowerCase().includes(estado.busqueda.toLowerCase())) {
+                    return;
+                }
+                
+                const marco = document.createElement('div');
+                marco.className = `marco ${paisaje.marcoType}`;
+                marco.dataset.id = paisaje.id;
+                marco.dataset.category = paisaje.category.join(' ');
+                
+                // Crear estrellas de rating
+                const estrellas = '★'.repeat(paisaje.rating) + '☆'.repeat(5 - paisaje.rating);
+                
+                marco.innerHTML = `
+                    <div class="paisaje ${paisaje.className}">
+                        ${paisaje.elements}
+                        <button class="capture-btn" title="Capturar este paisaje">
+                            <i class="fas fa-camera"></i>
+                        </button>
+                        <div class="paisaje-info">
+                            <div class="paisaje-title">${paisaje.name}</div>
+                            <div class="paisaje-desc">${paisaje.description}</div>
+                            <div class="rating">${estrellas}</div>
+                            <div style="font-size: 0.8rem; margin-top: 5px;">
+                                <i class="fas fa-camera"></i> ${paisaje.captures} capturas
+                            </div>
+                        </div>
+                        <div class="category-tag">${paisaje.category[0]}</div>
+                    </div>
+                    <div class="soporte"></div>
+                `;
+                
+                gallery.appendChild(marco);
+            });
+            
+            // Añadir eventos a los botones de captura
+            document.querySelectorAll('.capture-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const marco = this.closest('.marco');
+                    const id = parseInt(marco.dataset.id);
+                    capturarPaisaje(id);
+                });
+            });
+        }
+
+        function inicializarControles() {
+            // Botón de animaciones
+            document.getElementById('toggleAnimations').addEventListener('click', function() {
+                estado.animacionesActivadas = !estado.animacionesActivadas;
+                const elementosAnimados = document.querySelectorAll('.sol, .rio, .sol-atardecer, .estrella, .flor, .lava, .iceberg, .cascada, .animal, .ola, .hoja, .ventana, .gotas, .arco, .sol-amanecer, .niebla');
+                
+                elementosAnimados.forEach(el => {
+                    el.style.animationPlayState = estado.animacionesActivadas ? 'running' : 'paused';
+                });
+                
+                this.innerHTML = estado.animacionesActivadas ? 
+                    '<i class="fas fa-pause"></i> Pausar Animaciones' : 
+                    '<i class="fas fa-play"></i> Reanudar Animaciones';
+            });
+            
+            // Botón modo noche
+            document.getElementById('nightMode').addEventListener('click', function() {
+                estado.modoNoche = !estado.modoNoche;
+                document.body.classList.toggle('day-mode', !estado.modoNoche);
+                this.innerHTML = estado.modoNoche ? 
+                    '<i class="fas fa-sun"></i> Modo Día' : 
+                    '<i class="fas fa-moon"></i> Modo Noche';
+            });
+            
+            // Botón aleatorizar
+            document.getElementById('randomize').addEventListener('click', function() {
+                const gallery = document.getElementById('gallery');
+                const marcos = Array.from(gallery.children);
+                
+                // Mezclar aleatoriamente usando el algoritmo de Fisher-Yates
+                for (let i = marcos.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    gallery.appendChild(marcos[j]);
+                }
+                
+                // Efecto visual
+                this.innerHTML = '<i class="fas fa-check"></i> Aleatorizado!';
+                setTimeout(() => {
+                    this.innerHTML = '<i class="fas fa-random"></i> Aleatorizar';
+                }, 1000);
+            });
+            
+            // Botón seleccionar todos
+            document.getElementById('selectAll').addEventListener('click', function() {
+                const todosSeleccionados = estado.paisajesSeleccionados.size === estado.datosPaisajes.length;
+                
+                if (todosSeleccionados) {
+                    // Deseleccionar todos
+                    estado.paisajesSeleccionados.clear();
+                    document.querySelectorAll('.marco').forEach(m => m.classList.remove('selected'));
+                    this.innerHTML = '<i class="fas fa-check-square"></i> Seleccionar Todos';
+                } else {
+                    // Seleccionar todos
+                    estado.datosPaisajes.forEach(p => estado.paisajesSeleccionados.add(p.id));
+                    document.querySelectorAll('.marco').forEach(m => m.classList.add('selected'));
+                    this.innerHTML = '<i class="fas fa-times-circle"></i> Deseleccionar Todos';
+                }
+                
+                actualizarContador();
+            });
+            
+            // Botón capturar todos los seleccionados
+            document.getElementById('captureAll').addEventListener('click', function() {
+                if (estado.paisajesSeleccionados.size === 0) {
+                    alert('Por favor, selecciona al menos un paisaje para capturar.');
+                    return;
+                }
+                
+                // Capturar el primer paisaje seleccionado
+                const primerId = Array.from(estado.paisajesSeleccionados)[0];
+                capturarPaisaje(primerId);
+                
+                // Si hay más paisajes seleccionados, mostrar mensaje
+                if (estado.paisajesSeleccionados.size > 1) {
+                    setTimeout(() => {
+                        alert(`Paisaje capturado. Puedes capturar los otros ${estado.paisajesSeleccionados.size - 1} paisajes seleccionados uno por uno.`);
+                    }, 500);
+                }
+            });
+            
+            // Botón presentación
+            document.getElementById('slideshowBtn').addEventListener('click', function() {
+                iniciarPresentacion();
+            });
+            
+            // Filtros
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    estado.filtroActivo = this.dataset.filter;
+                    generarGaleria();
+                    actualizarContador();
+                });
+            });
+            
+            // Búsqueda
+            document.getElementById('searchInput').addEventListener('input', function(e) {
+                estado.busqueda = e.target.value;
+                generarGaleria();
+                actualizarContador();
+            });
+        }
+
+        function inicializarEventos() {
+            // Eventos para los marcos (delegación de eventos)
+            document.getElementById('gallery').addEventListener('click', function(e) {
+                const marco = e.target.closest('.marco');
+                if (!marco) return;
+                
+                if (e.ctrlKey || e.metaKey) {
+                    // Selección múltiple con Ctrl
+                    toggleSeleccionMarco(marco);
+                } else {
+                    // Abrir visor
+                    abrirVisor(marco);
+                }
+            });
+            
+            // Doble click para seleccionar
+            document.getElementById('gallery').addEventListener('dblclick', function(e) {
+                const marco = e.target.closest('.marco');
+                if (marco) {
+                    toggleSeleccionMarco(marco);
+                }
+            });
+            
+            // Cerrar visor
+            document.getElementById('closeViewer').addEventListener('click', cerrarVisor);
+            
+            // Capturar desde el visor
+            document.getElementById('captureFromViewer').addEventListener('click', function() {
+                if (estado.vistaPaisaje) {
+                    capturarPaisaje(estado.vistaPaisaje.id);
+                }
+            });
+            
+            // Cerrar visor con Escape
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    cerrarVisor();
+                    cerrarCapturaModal();
+                }
+                if (e.key === ' ' && document.getElementById('viewer').classList.contains('active')) {
+                    e.preventDefault();
+                    siguientePaisaje();
+                }
+            });
+            
+            // Evento para seguir el mouse con la luz
+            document.querySelectorAll('.marco').forEach(marco => {
+                const luz = marco.querySelector('.luz');
+                if (luz) {
+                    marco.addEventListener('mousemove', function(e) {
+                        const rect = this.getBoundingClientRect();
+                        const x = ((e.clientX - rect.left) / rect.width) * 100;
+                        const y = ((e.clientY - rect.top) / rect.height) * 100;
+                        luz.style.setProperty('--x', `${x}%`);
+                        luz.style.setProperty('--y', `${y}%`);
+                    });
+                }
+            });
+            
+            // Eventos para el modal de captura
+            document.getElementById('saveCapture').addEventListener('click', guardarCaptura);
+            document.getElementById('newCapture').addEventListener('click', function() {
+                if (estado.capturaPaisaje) {
+                    capturarPaisaje(estado.capturaPaisaje.id);
+                }
+            });
+            document.getElementById('closeCapture').addEventListener('click', cerrarCapturaModal);
+        }
+
+        function toggleSeleccionMarco(marco) {
+            const id = parseInt(marco.dataset.id);
+            
+            if (estado.paisajesSeleccionados.has(id)) {
+                estado.paisajesSeleccionados.delete(id);
+                marco.classList.remove('selected');
+            } else {
+                estado.paisajesSeleccionados.add(id);
+                marco.classList.add('selected');
+            }
+            
+            actualizarContador();
+            
+            // Actualizar botón de seleccionar todos
+            const selectAllBtn = document.getElementById('selectAll');
+            if (estado.paisajesSeleccionados.size === estado.datosPaisajes.length) {
+                selectAllBtn.innerHTML = '<i class="fas fa-times-circle"></i> Deseleccionar Todos';
+            } else {
+                selectAllBtn.innerHTML = '<i class="fas fa-check-square"></i> Seleccionar Todos';
+            }
+        }
+
+        function abrirVisor(marco) {
+            const id = parseInt(marco.dataset.id);
+            const paisaje = estado.datosPaisajes.find(p => p.id === id);
+            
+            if (!paisaje) return;
+            
+            // Incrementar vistas
+            paisaje.vistas++;
+            estado.vistaPaisaje = paisaje;
+            
+            // Actualizar visor
+            const viewer = document.getElementById('viewer');
+            const viewerPaisaje = document.getElementById('viewerPaisaje');
+            
+            viewerPaisaje.innerHTML = `
+                <div class="paisaje ${paisaje.className}" style="width:100%;height:100%;">
+                    ${paisaje.elements}
+                </div>
+            `;
+            
+            document.getElementById('viewerTitle').textContent = paisaje.name;
+            document.getElementById('viewerDescription').textContent = paisaje.description;
+            document.getElementById('viewCount').textContent = paisaje.vistas;
+            document.getElementById('likeCount').textContent = paisaje.likes;
+            document.getElementById('captureCount').textContent = paisaje.captures;
+            
+            // Mostrar visor
+            viewer.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // Añadir botones de navegación
+            const navHTML = `
+                <button class="nav-btn prev-btn" id="prevBtn">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="nav-btn next-btn" id="nextBtn">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                <button class="nav-btn like-btn" id="likeBtn">
+                    <i class="fas fa-heart"></i>
+                </button>
+            `;
+            
+            viewerPaisaje.insertAdjacentHTML('beforeend', navHTML);
+            
+            // Estilos para botones de navegación
+            const style = document.createElement('style');
+            style.textContent = `
+                .nav-btn {
+                    position: absolute;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    background: rgba(212, 175, 55, 0.8);
+                    border: none;
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 50%;
+                    color: white;
+                    font-size: 1.5rem;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    transition: all 0.3s ease;
+                    z-index: 10;
+                }
+                .nav-btn:hover {
+                    background: rgba(212, 175, 55, 1);
+                    transform: translateY(-50%) scale(1.1);
+                }
+                .prev-btn { left: 20px; }
+                .next-btn { right: 20px; }
+                .like-btn {
+                    top: 20px;
+                    right: 80px;
+                    transform: none;
+                    background: rgba(255, 105, 180, 0.8);
+                }
+                .like-btn:hover {
+                    background: rgba(255, 105, 180, 1);
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Eventos para botones de navegación
+            document.getElementById('prevBtn').addEventListener('click', paisajeAnterior);
+            document.getElementById('nextBtn').addEventListener('click', siguientePaisaje);
+            document.getElementById('likeBtn').addEventListener('click', function() {
+                paisaje.likes++;
+                document.getElementById('likeCount').textContent = paisaje.likes;
+                this.innerHTML = '<i class="fas fa-heart" style="color:#FF1493;"></i>';
+                this.style.animation = 'pulse 0.5s';
+                setTimeout(() => this.style.animation = '', 500);
+            });
+        }
+
+        function cerrarVisor() {
+            document.getElementById('viewer').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function paisajeAnterior() {
+            if (!estado.vistaPaisaje) return;
+            
+            const currentIndex = estado.datosPaisajes.findIndex(p => p.id === estado.vistaPaisaje.id);
+            const prevIndex = (currentIndex - 1 + estado.datosPaisajes.length) % estado.datosPaisajes.length;
+            const prevPaisaje = estado.datosPaisajes[prevIndex];
+            
+            // Simular clic en el marco correspondiente
+            const marco = document.querySelector(`.marco[data-id="${prevPaisaje.id}"]`);
+            if (marco) {
+                estado.vistaPaisaje = prevPaisaje;
+                abrirVisor(marco);
+            }
+        }
+
+        function siguientePaisaje() {
+            if (!estado.vistaPaisaje) return;
+            
+            const currentIndex = estado.datosPaisajes.findIndex(p => p.id === estado.vistaPaisaje.id);
+            const nextIndex = (currentIndex + 1) % estado.datosPaisajes.length;
+            const nextPaisaje = estado.datosPaisajes[nextIndex];
+            
+            // Simular clic en el marco correspondiente
+            const marco = document.querySelector(`.marco[data-id="${nextPaisaje.id}"]`);
+            if (marco) {
+                estado.vistaPaisaje = nextPaisaje;
+                abrirVisor(marco);
+            }
+        }
+
+        function capturarPaisaje(id) {
+            const paisaje = estado.datosPaisajes.find(p => p.id === id);
+            if (!paisaje) return;
+            
+            estado.capturaPaisaje = paisaje;
+            
+            // Efecto de flash
+            const flash = document.getElementById('flash');
+            flash.classList.add('active');
+            setTimeout(() => flash.classList.remove('active'), 200);
+            
+            // Incrementar contador de capturas
+            paisaje.captures++;
+            
+            // Actualizar contador en la galería
+            const marco = document.querySelector(`.marco[data-id="${id}"]`);
+            if (marco) {
+                const captureCount = marco.querySelector('.paisaje-info div:nth-child(4)');
+                if (captureCount) {
+                    captureCount.innerHTML = `<i class="fas fa-camera"></i> ${paisaje.captures} capturas`;
+                }
+            }
+            
+            // Crear canvas para captura
+            const canvas = document.getElementById('captureCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Tamaño de la imagen (alta resolución)
+            const width = 800;
+            const height = 600;
+            canvas.width = width;
+            canvas.height = height;
+            
+            // Crear un contenedor temporal para el paisaje
+            const tempContainer = document.createElement('div');
+            tempContainer.style.width = `${width}px`;
+            tempContainer.style.height = `${height}px`;
+            tempContainer.style.position = 'fixed';
+            tempContainer.style.top = '-9999px';
+            tempContainer.style.left = '-9999px';
+            tempContainer.style.overflow = 'hidden';
+            tempContainer.style.borderRadius = '10px';
+            tempContainer.style.backgroundColor = 'white';
+            
+            // Clonar el paisaje con sus elementos
+            const paisajeClone = document.createElement('div');
+            paisajeClone.className = `paisaje ${paisaje.className}`;
+            paisajeClone.style.width = '100%';
+            paisajeClone.style.height = '100%';
+            paisajeClone.style.position = 'relative';
+            
+            // Añadir los elementos del paisaje
+            paisajeClone.innerHTML = paisaje.elements;
+            
+            // Añadir título al fondo de la captura
+            const titleOverlay = document.createElement('div');
+            titleOverlay.style.position = 'absolute';
+            titleOverlay.style.bottom = '0';
+            titleOverlay.style.left = '0';
+            titleOverlay.style.right = '0';
+            titleOverlay.style.background = 'linear-gradient(transparent, rgba(0,0,0,0.7))';
+            titleOverlay.style.color = 'white';
+            titleOverlay.style.padding = '20px';
+            titleOverlay.style.fontFamily = "'Poppins', sans-serif";
+            titleOverlay.innerHTML = `
+                <h3 style="margin: 0 0 5px 0; color: #FFD700;">${paisaje.name}</h3>
+                <p style="margin: 0; font-size: 14px; opacity: 0.9;">${paisaje.description}</p>
+                <div style="margin-top: 10px; font-size: 12px; display: flex; gap: 15px;">
+                    <span><i class="fas fa-star"></i> Calificación: ${'★'.repeat(paisaje.rating)}${'☆'.repeat(5-paisaje.rating)}</span>
+                    <span><i class="fas fa-camera"></i> Capturas: ${paisaje.captures}</span>
+                </div>
+                <div style="margin-top: 5px; font-size: 11px; opacity: 0.7;">
+                    Galería de Paisajes Interactivos | Capturado el ${new Date().toLocaleDateString()}
+                </div>
+            `;
+            
+            paisajeClone.appendChild(titleOverlay);
+            tempContainer.appendChild(paisajeClone);
+            document.body.appendChild(tempContainer);
+            
+            // Usar html2canvas para capturar el contenido
+            setTimeout(() => {
+                html2canvas(tempContainer, {
+                    scale: 2,
+                    useCORS: true,
+                    backgroundColor: null,
+                    logging: false
+                }).then(captureCanvas => {
+                    // Dibujar en nuestro canvas
+                    ctx.drawImage(captureCanvas, 0, 0, width, height);
+                    
+                    // Añadir borde decorativo
+                    ctx.strokeStyle = '#D4AF37';
+                    ctx.lineWidth = 10;
+                    ctx.strokeRect(5, 5, width - 10, height - 10);
+                    
+                    // Añadir efecto de viñeta
+                    const gradient = ctx.createRadialGradient(
+                        width/2, height/2, 0,
+                        width/2, height/2, Math.sqrt(width*width + height*height)/2
+                    );
+                    gradient.addColorStop(0, 'rgba(0,0,0,0)');
+                    gradient.addColorStop(1, 'rgba(0,0,0,0.2)');
+                    ctx.fillStyle = gradient;
+                    ctx.fillRect(0, 0, width, height);
+                    
+                    // Limpiar contenedor temporal
+                    document.body.removeChild(tempContainer);
+                    
+                    // Mostrar modal de captura
+                    mostrarCapturaModal();
+                }).catch(err => {
+                    console.error('Error capturando el paisaje:', err);
+                    // Fallback: dibujar un fondo simple
+                    ctx.fillStyle = getComputedStyle(document.querySelector(`.${paisaje.className}`)).background;
+                    ctx.fillRect(0, 0, width, height);
+                    
+                    // Añadir texto
+                    ctx.fillStyle = 'white';
+                    ctx.font = 'bold 30px Poppins';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(paisaje.name, width/2, height/2);
+                    
+                    ctx.font = '20px Poppins';
+                    ctx.fillText(paisaje.description, width/2, height/2 + 40);
+                    
+                    // Mostrar modal de captura
+                    mostrarCapturaModal();
+                    
+                    document.body.removeChild(tempContainer);
+                });
+            }, 300);
+        }
+
+        function mostrarCapturaModal() {
+            const modal = document.getElementById('captureModal');
+            const paisaje = estado.capturaPaisaje;
+            
+            if (!paisaje) return;
+            
+            document.getElementById('captureTitle').textContent = paisaje.name;
+            document.getElementById('captureDescription').textContent = paisaje.description;
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function cerrarCapturaModal() {
+            document.getElementById('captureModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function guardarCaptura() {
+            const canvas = document.getElementById('captureCanvas');
+            const paisaje = estado.capturaPaisaje;
+            
+            if (!canvas || !paisaje) return;
+            
+            // Crear enlace de descarga
+            const link = document.createElement('a');
+            const fileName = `paisaje-${paisaje.name.toLowerCase().replace(/\s+/g, '-')}-${Date.now()}.png`;
+            
+            link.download = fileName;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+            
+            // Mensaje de confirmación
+            const saveBtn = document.getElementById('saveCapture');
+            const originalText = saveBtn.innerHTML;
+            saveBtn.innerHTML = '<i class="fas fa-check"></i> ¡Descargado!';
+            saveBtn.style.background = 'linear-gradient(135deg, #32CD32, #228B22)';
+            
+            setTimeout(() => {
+                saveBtn.innerHTML = originalText;
+                saveBtn.style.background = 'linear-gradient(135deg, #00B8FF, #9D00FF)';
+            }, 1500);
+        }
+
+        function actualizarContador() {
+            const totalVisible = document.querySelectorAll('.marco').length;
+            document.getElementById('selectedCount').textContent = estado.paisajesSeleccionados.size;
+            document.getElementById('totalCount').textContent = totalVisible;
+        }
+
+        function animarEntradaGaleria() {
+            const marcos = document.querySelectorAll('.marco');
+            marcos.forEach((marco, index) => {
+                marco.style.opacity = '0';
+                marco.style.transform = 'translateY(50px)';
+                
+                setTimeout(() => {
+                    marco.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    marco.style.opacity = '1';
+                    marco.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        }
+
+        function iniciarPresentacion() {
+            if (estado.paisajesSeleccionados.size === 0) {
+                alert('Por favor, selecciona al menos un paisaje para la presentación.');
+                return;
+            }
+            
+            const paisajesSeleccionados = Array.from(estado.paisajesSeleccionados)
+                .map(id => estado.datosPaisajes.find(p => p.id === id));
+            
+            let index = 0;
+            
+            function mostrarSiguiente() {
+                if (index >= paisajesSeleccionados.length) {
+                    cerrarVisor();
+                    alert('Presentación finalizada');
+                    return;
+                }
+                
+                const paisaje = paisajesSeleccionados[index];
+                const marco = document.querySelector(`.marco[data-id="${paisaje.id}"]`);
+                
+                if (marco) {
+                    if (index === 0) {
+                        abrirVisor(marco);
+                    } else {
+                        estado.vistaPaisaje = paisaje;
+                        const viewerPaisaje = document.getElementById('viewerPaisaje');
+                        viewerPaisaje.innerHTML = `
+                            <div class="paisaje ${paisaje.className}" style="width:100%;height:100%;">
+                                ${paisaje.elements}
+                            </div>
+                        `;
+                        document.getElementById('viewerTitle').textContent = paisaje.name;
+                        document.getElementById('viewerDescription').textContent = paisaje.description;
+                    }
+                    
+                    index++;
+                    setTimeout(mostrarSiguiente, 3000); // Cambiar cada 3 segundos
+                }
+            }
+            
+            mostrarSiguiente();
+        }
+
+        // Añadir animación de pulso para el corazón
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes pulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.3); }
+                100% { transform: scale(1); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Consola de bienvenida
+        console.log('%c📷 Galería de 20 Paisajes con Cámara 📷', 'font-size: 20px; color: #FFD700; font-weight: bold;');
+        console.log('%c✨ 20 paisajes únicos con función de captura', 'color: #87CEEB;');
+        console.log('%c🎮 Controles:', 'color: #32CD32; font-weight: bold;');
+        console.log('- Click: Abrir visor ampliado');
+        console.log('- Botón cámara: Capturar paisaje');
+        console.log('- Ctrl+Click: Seleccionar múltiples paisajes');
+        console.log('- Escape: Cerrar visor/modal');
+        console.log('- Espacio: Siguiente paisaje (en visor)');
+    </script>
+    
+    <!-- Biblioteca html2canvas para capturar elementos HTML como imágenes -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+</body>
+</html>

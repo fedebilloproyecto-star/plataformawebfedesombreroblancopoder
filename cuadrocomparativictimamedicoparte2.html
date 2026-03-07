@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Completo de Engaños Médicos - 100 Páginas</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --danger-color: #c0392b;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+                border-radius: 10px;
+  max-width: 900px;
+  margin: 90px auto;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+            color: white;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-icon {
+            font-size: 2rem;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 1.5rem;
+        }
+        
+        .sidebar {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 1.5rem;
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+        
+        .sidebar-section {
+            margin-bottom: 1.5rem;
+        }
+        
+        .sidebar-section h3 {
+            margin-bottom: 0.75rem;
+            color: var(--primary-color);
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.5rem;
+        }
+        
+        .category-list {
+            list-style: none;
+        }
+        
+        .category-list li {
+            margin-bottom: 0.5rem;
+            padding: 0.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .category-list li:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .category-list li.active {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .stat-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+        
+        .stat-card h3 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-card p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .stat-card.fraude {
+            border-top: 4px solid var(--danger-color);
+        }
+        
+        .stat-card.negligencia {
+            border-top: 4px solid var(--warning-color);
+        }
+        
+        .stat-card.publicidad {
+            border-top: 4px solid var(--secondary-color);
+        }
+        
+        .stat-card.etico {
+            border-top: 4px solid var(--success-color);
+        }
+        
+        .controls {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            padding-left: 40px;
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #777;
+        }
+        
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .filter-group label {
+            font-size: 0.85rem;
+            margin-bottom: 0.25rem;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        .filter-group select {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: white;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: var(--dark-color);
+        }
+        
+        .table-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        thead {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            cursor: pointer;
+            user-select: none;
+            position: relative;
+        }
+        
+        th:hover {
+            background-color: var(--dark-color);
+        }
+        
+        th.sort-asc::after {
+            content: " ↑";
+        }
+        
+        th.sort-desc::after {
+            content: " ↓";
+        }
+        
+        tbody tr {
+            border-bottom: 1px solid #eee;
+        }
+        
+        tbody tr:hover {
+            background-color: #f9f9f9;
+        }
+        
+        td {
+            padding: 1rem;
+            vertical-align: top;
+        }
+        
+        .category {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .category-fraude {
+            background-color: #ffebee;
+            color: #c62828;
+        }
+        
+        .category-negligencia {
+            background-color: #fff3e0;
+            color: #ef6c00;
+        }
+        
+        .category-publicidad {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .category-etico {
+            background-color: #e3f2fd;
+            color: #1565c0;
+        }
+        
+        .severity {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+        
+        .severity-baja {
+            background-color: var(--success-color);
+        }
+        
+        .severity-media {
+            background-color: var(--warning-color);
+        }
+        
+        .severity-alta {
+            background-color: var(--accent-color);
+        }
+        
+        .severity-critica {
+            background-color: var(--danger-color);
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            padding: 1.5rem;
+            gap: 0.5rem;
+        }
+        
+        .pagination button {
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            background-color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .pagination button:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .pagination button.active {
+            background-color: var(--secondary-color);
+            color: white;
+            border-color: var(--secondary-color);
+        }
+        
+        .pagination button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 2rem;
+            position: relative;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #777;
+        }
+        
+        .modal-header {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .modal-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        
+        .modal-section {
+            margin-bottom: 1.5rem;
+        }
+        
+        .modal-section h3 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        .detail-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .tag {
+            background-color: #f0f0f0;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .export-options {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .export-btn {
+            padding: 0.5rem 1rem;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        @media (max-width: 1024px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                position: static;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .modal-body {
+                grid-template-columns: 1fr;
+            }
+            
+            .controls {
+                flex-direction: column;
+            }
+            
+            .filters {
+                width: 100%;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+        /* Solo estilos para el botón "Volver atrás" */
+.back-button {
+  display: inline-block;
+  padding: 10px 18px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 2px solid #333;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  user-select: none;
+}
+
+/* Efecto al pasar el ratón */
+.back-button:hover,
+.back-button:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+  text-decoration: none;
+  outline: none;
+}
+
+/* Efecto al hacer clic */
+.back-button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">⚠️</div>
+                <div>
+                    <h1>Catálogo Completo de Engaños Médicos</h1>
+                    <p class="subtitle">Base de datos con 100 páginas de información sobre fraudes y malas prácticas en el sector salud</p>
+                <a href="aprendeprincipalconocimientosabogacia.html" class="back-button" aria-label="Volver atrás">Volver atrás</a>
+  
+                </div>
+            </div>
+            <div>
+                <button id="info-btn" style="background: rgba(255,255,255,0.2); color: white; border: 1px solid white; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;">
+                    Información del Proyecto
+                </button>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="stats-cards">
+            <div class="stat-card fraude">
+                <h3>42</h3>
+                <p>Casos de Fraude Directo</p>
+            </div>
+            <div class="stat-card negligencia">
+                <h3>28</h3>
+                <p>Casos de Negligencia</p>
+            </div>
+            <div class="stat-card publicidad">
+                <h3>19</h3>
+                <p>Publicidad Engañosa</p>
+            </div>
+            <div class="stat-card etico">
+                <h3>11</h3>
+                <p>Problemas Éticos</p>
+            </div>
+        </div>
+        
+        <div class="dashboard">
+            <div class="sidebar">
+                <div class="sidebar-section">
+                    <h3>Categorías</h3>
+                    <ul class="category-list">
+                        <li class="active" data-category="all">Todas las categorías</li>
+                        <li data-category="fraude">Fraude directo</li>
+                        <li data-category="negligencia">Negligencia profesional</li>
+                        <li data-category="publicidad">Publicidad engañosa</li>
+                        <li data-category="etico">Problemas éticos</li>
+                        <li data-category="farmaceutico">Fraudes farmacéuticos</li>
+                        <li data-category="seguro">Fraudes con seguros</li>
+                        <li data-category="telemedicina">Engaños en telemedicina</li>
+                    </ul>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3>Gravedad</h3>
+                    <ul class="category-list">
+                        <li data-severity="all">Todas las gravedades</li>
+                        <li data-severity="baja">Baja</li>
+                        <li data-severity="media">Media</li>
+                        <li data-severity="alta">Alta</li>
+                        <li data-severity="critica">Crítica</li>
+                    </ul>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3>Años</h3>
+                    <ul class="category-list">
+                        <li data-year="all">Todos los años</li>
+                        <li data-year="2023">2023</li>
+                        <li data-year="2022">2022</li>
+                        <li data-year="2021">2021</li>
+                        <li data-year="2020">2020</li>
+                        <li data-year="2019">2019</li>
+                    </ul>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3>Exportar Datos</h3>
+                    <div class="export-options">
+                        <button class="export-btn" id="export-csv">
+                            <span>CSV</span>
+                        </button>
+                        <button class="export-btn" id="export-pdf">
+                            <span>PDF</span>
+                        </button>
+                        <button class="export-btn" id="export-excel">
+                            <span>Excel</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="main-content">
+                <div class="controls">
+                    <div class="search-box">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" id="search-input" placeholder="Buscar engaños, síntomas, tratamientos...">
+                    </div>
+                    <div class="filters">
+                        <div class="filter-group">
+                            <label for="category-filter">Categoría</label>
+                            <select id="category-filter">
+                                <option value="all">Todas las categorías</option>
+                                <option value="fraude">Fraude directo</option>
+                                <option value="negligencia">Negligencia profesional</option>
+                                <option value="publicidad">Publicidad engañosa</option>
+                                <option value="etico">Problemas éticos</option>
+                                <option value="farmaceutico">Fraudes farmacéuticos</option>
+                                <option value="seguro">Fraudes con seguros</option>
+                                <option value="telemedicina">Engaños en telemedicina</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="severity-filter">Gravedad</label>
+                            <select id="severity-filter">
+                                <option value="all">Todas las gravedades</option>
+                                <option value="baja">Baja</option>
+                                <option value="media">Media</option>
+                                <option value="alta">Alta</option>
+                                <option value="critica">Crítica</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="year-filter">Año</label>
+                            <select id="year-filter">
+                                <option value="all">Todos los años</option>
+                                <option value="2023">2023</option>
+                                <option value="2022">2022</option>
+                                <option value="2021">2021</option>
+                                <option value="2020">2020</option>
+                                <option value="2019">2019</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stats">
+                    <div id="results-count">Mostrando 0 de 0 resultados</div>
+                    <div id="current-page">Página 1 de 1</div>
+                </div>
+                
+                <div class="table-container">
+                    <table id="deceptions-table">
+                        <thead>
+                            <tr>
+                                <th data-sort="name">Nombre del Engaño</th>
+                                <th data-sort="category">Categoría</th>
+                                <th data-sort="symptoms">Síntomas Aprovechados</th>
+                                <th data-sort="treatment">Tratamiento Ofrecido</th>
+                                <th data-sort="severity">Gravedad</th>
+                                <th data-sort="year">Año</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body">
+                            <!-- Los datos se cargarán aquí con JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="pagination" id="pagination">
+                    <!-- La paginación se generará con JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="info-modal">
+        <div class="modal-content">
+            <span class="close-modal" id="close-modal">&times;</span>
+            <div class="modal-header">
+                <h2>Información del Proyecto</h2>
+            </div>
+            <div class="modal-body">
+                <div class="modal-section">
+                    <h3>Objetivo</h3>
+                    <p>Este catálogo tiene como objetivo documentar y comparar diferentes tipos de engaños médicos, proporcionando información detallada sobre prácticas fraudulentas en el sector de la salud.</p>
+                </div>
+                <div class="modal-section">
+                    <h3>Metodología</h3>
+                    <p>Los datos han sido recopilados de fuentes confiables como publicaciones médicas, informes de organismos reguladores y casos documentados en medios de comunicación.</p>
+                </div>
+                <div class="modal-section">
+                    <h3>Categorías</h3>
+                    <ul>
+                        <li><strong>Fraude directo:</strong> Prácticas deliberadamente engañosas con intención de lucro.</li>
+                        <li><strong>Negligencia profesional:</strong> Actuaciones por omisión o impericia que causan daño.</li>
+                        <li><strong>Publicidad engañosa:</strong> Promoción de tratamientos con afirmaciones no comprobadas.</li>
+                        <li><strong>Problemas éticos:</strong> Conflictos de interés y violaciones al código deontológico.</li>
+                        <li><strong>Fraudes farmacéuticos:</strong> Medicamentos falsificados o con indicaciones no aprobadas.</li>
+                        <li><strong>Fraudes con seguros:</strong> Facturación indebida a compañías de seguros.</li>
+                        <li><strong>Engaños en telemedicina:</strong> Prácticas fraudulentas en consultas médicas virtuales.</li>
+                    </ul>
+                </div>
+                <div class="modal-section">
+                    <h3>Uso de la aplicación</h3>
+                    <p>Utilice los filtros y la búsqueda para encontrar información específica. Haga clic en cualquier fila para ver detalles completos del caso.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="detail-modal">
+        <div class="modal-content">
+            <span class="close-modal" id="close-detail-modal">&times;</span>
+            <div class="modal-header">
+                <h2 id="detail-title">Detalles del Engaño</h2>
+            </div>
+            <div class="modal-body">
+                <div class="modal-section">
+                    <h3>Descripción</h3>
+                    <p id="detail-description"></p>
+                </div>
+                <div class="modal-section">
+                    <h3>Metodología del Engaño</h3>
+                    <p id="detail-methodology"></p>
+                </div>
+                <div class="modal-section">
+                    <h3>Víctimas Potenciales</h3>
+                    <p id="detail-victims"></p>
+                </div>
+                <div class="modal-section">
+                    <h3>Consecuencias</h3>
+                    <p id="detail-consequences"></p>
+                </div>
+                <div class="modal-section">
+                    <h3>Prevención</h3>
+                    <p id="detail-prevention"></p>
+                </div>
+                <div class="modal-section">
+                    <h3>Etiquetas</h3>
+                    <div class="detail-tags" id="detail-tags">
+                        <!-- Las etiquetas se generarán aquí -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+
+    <script>
+        // Generar datos de ejemplo para 100 páginas (1000 registros)
+        const generateDeceptionData = () => {
+            const data = [];
+            const categories = [
+                { id: 'fraude', name: 'Fraude directo' },
+                { id: 'negligencia', name: 'Negligencia profesional' },
+                { id: 'publicidad', name: 'Publicidad engañosa' },
+                { id: 'etico', name: 'Problemas éticos' },
+                { id: 'farmaceutico', name: 'Fraudes farmacéuticos' },
+                { id: 'seguro', name: 'Fraudes con seguros' },
+                { id: 'telemedicina', name: 'Engaños en telemedicina' }
+            ];
+            
+            const severities = [
+                { id: 'baja', name: 'Baja' },
+                { id: 'media', name: 'Media' },
+                { id: 'alta', name: 'Alta' },
+                { id: 'critica', name: 'Crítica' }
+            ];
+            
+            const years = ['2023', '2022', '2021', '2020', '2019'];
+            
+            const symptomsList = [
+                'Cáncer en etapa avanzada',
+                'Enfermedades crónicas',
+                'Dolor persistente',
+                'Condiciones autoinmunes',
+                'Problemas digestivos',
+                'Enfermedades neurodegenerativas',
+                'Problemas de fertilidad',
+                'Condiciones dermatológicas',
+                'Trastornos mentales',
+                'Envejecimiento'
+            ];
+            
+            const treatmentList = [
+                'Suplementos herbales milagrosos',
+                'Dispositivos de terapia energética',
+                'Terapias génicas experimentales',
+                'Dietas extremas',
+                'Procedimientos quirúrgicos innecesarios',
+                'Terapias alternativas no validadas',
+                'Dispositivos de diagnóstico no aprobados',
+                'Aplicaciones de salud no reguladas',
+                'Programas de desintoxicación costosos',
+                'Tratamientos con células madre'
+            ];
+            
+            const tagsList = [
+                'Medicina alternativa', 'Productos milagro', 'Cirugía innecesaria', 
+                'Diagnóstico excesivo', 'Terapia experimental', 'Publicidad falsa',
+                'Conflicto de interés', 'Facturación fraudulenta', 'Telemedicina',
+                'Suplementos', 'Dispositivos médicos', 'Ensayo clínico', 'Placebo'
+            ];
+            
+            for (let i = 1; i <= 1000; i++) {
+                const category = categories[Math.floor(Math.random() * categories.length)];
+                const severity = severities[Math.floor(Math.random() * severities.length)];
+                const year = years[Math.floor(Math.random() * years.length)];
+                const symptoms = symptomsList[Math.floor(Math.random() * symptomsList.length)];
+                const treatment = treatmentList[Math.floor(Math.random() * treatmentList.length)];
+                
+                // Generar etiquetas aleatorias
+                const numTags = Math.floor(Math.random() * 4) + 2;
+                const tags = [];
+                for (let j = 0; j < numTags; j++) {
+                    const tag = tagsList[Math.floor(Math.random() * tagsList.length)];
+                    if (!tags.includes(tag)) {
+                        tags.push(tag);
+                    }
+                }
+                
+                data.push({
+                    id: i,
+                    name: `Engaño médico #${i}: ${treatment.substring(0, 30)}...`,
+                    category: category.id,
+                    categoryName: category.name,
+                    symptoms: symptoms,
+                    treatment: treatment,
+                    severity: severity.id,
+                    severityName: severity.name,
+                    year: year,
+                    description: `Descripción detallada del engaño médico #${i}. Este caso involucra ${treatment.toLowerCase()} para pacientes que sufren de ${symptoms.toLowerCase()}.`,
+                    methodology: `Metodología utilizada en este engaño: publicidad engañosa en redes sociales, testimonios falsos y uso de terminología científica mal aplicada para dar apariencia de legitimidad.`,
+                    victims: `Víctimas principales: personas con ${symptoms.toLowerCase()}, especialmente aquellas desesperadas por encontrar soluciones rápidas.`,
+                    consequences: `Consecuencias: pérdidas económicas significativas, abandono de tratamientos convencionales, efectos secundarios no declarados y deterioro de la condición de salud.`,
+                    prevention: `Medidas de prevención: consultar siempre con especialistas certificados, verificar aprobaciones regulatorias, desconfiar de soluciones "milagrosas" y buscar segundas opiniones.`,
+                    tags: tags
+                });
+            }
+            
+            return data;
+        };
+
+        // Datos de ejemplo - En una aplicación real, estos datos vendrían de una base de datos
+        const deceptionData = generateDeceptionData();
+
+        // Variables globales
+        let currentPage = 1;
+        const itemsPerPage = 10;
+        let currentSort = { column: 'name', direction: 'asc' };
+        let filteredData = [...deceptionData];
+
+        // Elementos DOM
+        const tableBody = document.getElementById('table-body');
+        const pagination = document.getElementById('pagination');
+        const searchInput = document.getElementById('search-input');
+        const categoryFilter = document.getElementById('category-filter');
+        const severityFilter = document.getElementById('severity-filter');
+        const yearFilter = document.getElementById('year-filter');
+        const resultsCount = document.getElementById('results-count');
+        const currentPageElement = document.getElementById('current-page');
+        const infoModal = document.getElementById('info-modal');
+        const detailModal = document.getElementById('detail-modal');
+        const infoBtn = document.getElementById('info-btn');
+        const closeModal = document.getElementById('close-modal');
+        const closeDetailModal = document.getElementById('close-detail-modal');
+        const exportCsv = document.getElementById('export-csv');
+        const exportPdf = document.getElementById('export-pdf');
+        const exportExcel = document.getElementById('export-excel');
+
+        // Inicializar la aplicación
+        function init() {
+            renderTable();
+            setupEventListeners();
+            updateStatsCards();
+        }
+
+        // Configurar event listeners
+        function setupEventListeners() {
+            // Filtros
+            searchInput.addEventListener('input', applyFilters);
+            categoryFilter.addEventListener('change', applyFilters);
+            severityFilter.addEventListener('change', applyFilters);
+            yearFilter.addEventListener('change', applyFilters);
+            
+            // Filtros de sidebar
+            document.querySelectorAll('.category-list li[data-category]').forEach(item => {
+                item.addEventListener('click', () => {
+                    document.querySelectorAll('.category-list li[data-category]').forEach(li => {
+                        li.classList.remove('active');
+                    });
+                    item.classList.add('active');
+                    categoryFilter.value = item.getAttribute('data-category');
+                    applyFilters();
+                });
+            });
+            
+            document.querySelectorAll('.category-list li[data-severity]').forEach(item => {
+                item.addEventListener('click', () => {
+                    document.querySelectorAll('.category-list li[data-severity]').forEach(li => {
+                        li.classList.remove('active');
+                    });
+                    item.classList.add('active');
+                    severityFilter.value = item.getAttribute('data-severity');
+                    applyFilters();
+                });
+            });
+            
+            document.querySelectorAll('.category-list li[data-year]').forEach(item => {
+                item.addEventListener('click', () => {
+                    document.querySelectorAll('.category-list li[data-year]').forEach(li => {
+                        li.classList.remove('active');
+                    });
+                    item.classList.add('active');
+                    yearFilter.value = item.getAttribute('data-year');
+                    applyFilters();
+                });
+            });
+            
+            // Ordenamiento
+            document.querySelectorAll('th[data-sort]').forEach(th => {
+                th.addEventListener('click', () => {
+                    const column = th.getAttribute('data-sort');
+                    if (currentSort.column === column) {
+                        currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+                    } else {
+                        currentSort.column = column;
+                        currentSort.direction = 'asc';
+                    }
+                    
+                    // Actualizar indicadores visuales
+                    document.querySelectorAll('th').forEach(header => {
+                        header.classList.remove('sort-asc', 'sort-desc');
+                    });
+                    th.classList.add(`sort-${currentSort.direction}`);
+                    
+                    applyFilters();
+                });
+            });
+            
+            // Modales
+            infoBtn.addEventListener('click', () => {
+                infoModal.style.display = 'flex';
+            });
+            
+            closeModal.addEventListener('click', () => {
+                infoModal.style.display = 'none';
+            });
+            
+            closeDetailModal.addEventListener('click', () => {
+                detailModal.style.display = 'none';
+            });
+            
+            window.addEventListener('click', (e) => {
+                if (e.target === infoModal) {
+                    infoModal.style.display = 'none';
+                }
+                if (e.target === detailModal) {
+                    detailModal.style.display = 'none';
+                }
+            });
+            
+            // Exportación
+            exportCsv.addEventListener('click', exportToCsv);
+            exportPdf.addEventListener('click', exportToPdf);
+            exportExcel.addEventListener('click', exportToExcel);
+        }
+
+        // Aplicar filtros y ordenamiento
+        function applyFilters() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const categoryValue = categoryFilter.value;
+            const severityValue = severityFilter.value;
+            const yearValue = yearFilter.value;
+            
+            filteredData = deceptionData.filter(item => {
+                // Filtro de búsqueda
+                const matchesSearch = 
+                    item.name.toLowerCase().includes(searchTerm) ||
+                    item.symptoms.toLowerCase().includes(searchTerm) ||
+                    item.treatment.toLowerCase().includes(searchTerm) ||
+                    item.categoryName.toLowerCase().includes(searchTerm);
+                
+                // Filtro de categoría
+                const matchesCategory = categoryValue === 'all' || item.category === categoryValue;
+                
+                // Filtro de gravedad
+                const matchesSeverity = severityValue === 'all' || item.severity === severityValue;
+                
+                // Filtro de año
+                const matchesYear = yearValue === 'all' || item.year === yearValue;
+                
+                return matchesSearch && matchesCategory && matchesSeverity && matchesYear;
+            });
+            
+            // Aplicar ordenamiento
+            filteredData.sort((a, b) => {
+                let aValue = a[currentSort.column];
+                let bValue = b[currentSort.column];
+                
+                // Para ordenamiento numérico si es necesario
+                if (currentSort.column === 'year') {
+                    aValue = parseInt(aValue);
+                    bValue = parseInt(bValue);
+                }
+                
+                if (aValue < bValue) return currentSort.direction === 'asc' ? -1 : 1;
+                if (aValue > bValue) return currentSort.direction === 'asc' ? 1 : -1;
+                return 0;
+            });
+            
+            currentPage = 1;
+            renderTable();
+            updateStatsCards();
+        }
+
+        // Renderizar la tabla
+        function renderTable() {
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const pageData = filteredData.slice(startIndex, endIndex);
+            
+            tableBody.innerHTML = '';
+            
+            if (pageData.length === 0) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 2rem;">
+                            No se encontraron resultados que coincidan con los filtros aplicados.
+                        </td>
+                    </tr>
+                `;
+            } else {
+                pageData.forEach(item => {
+                    const row = document.createElement('tr');
+                    
+                    // Determinar clase de categoría
+                    let categoryClass = '';
+                    switch(item.category) {
+                        case 'fraude': categoryClass = 'category-fraude'; break;
+                        case 'negligencia': categoryClass = 'category-negligencia'; break;
+                        case 'publicidad': categoryClass = 'category-publicidad'; break;
+                        case 'etico': categoryClass = 'category-etico'; break;
+                        case 'farmaceutico': categoryClass = 'category-fraude'; break;
+                        case 'seguro': categoryClass = 'category-negligencia'; break;
+                        case 'telemedicina': categoryClass = 'category-publicidad'; break;
+                    }
+                    
+                    // Determinar clase de gravedad
+                    let severityClass = '';
+                    switch(item.severity) {
+                        case 'baja': severityClass = 'severity-baja'; break;
+                        case 'media': severityClass = 'severity-media'; break;
+                        case 'alta': severityClass = 'severity-alta'; break;
+                        case 'critica': severityClass = 'severity-critica'; break;
+                    }
+                    
+                    row.innerHTML = `
+                        <td>${item.name}</td>
+                        <td><span class="category ${categoryClass}">${item.categoryName}</span></td>
+                        <td>${item.symptoms}</td>
+                        <td>${item.treatment}</td>
+                        <td><span class="severity ${severityClass}"></span>${item.severityName}</td>
+                        <td>${item.year}</td>
+                    `;
+                    
+                    // Agregar evento para mostrar detalles
+                    row.addEventListener('click', () => {
+                        showDetails(item);
+                    });
+                    
+                    tableBody.appendChild(row);
+                });
+            }
+            
+            updatePagination();
+            updateStats();
+        }
+
+        // Mostrar detalles en modal
+        function showDetails(item) {
+            document.getElementById('detail-title').textContent = item.name;
+            document.getElementById('detail-description').textContent = item.description;
+            document.getElementById('detail-methodology').textContent = item.methodology;
+            document.getElementById('detail-victims').textContent = item.victims;
+            document.getElementById('detail-consequences').textContent = item.consequences;
+            document.getElementById('detail-prevention').textContent = item.prevention;
+            
+            const tagsContainer = document.getElementById('detail-tags');
+            tagsContainer.innerHTML = '';
+            
+            item.tags.forEach(tag => {
+                const tagElement = document.createElement('span');
+                tagElement.className = 'tag';
+                tagElement.textContent = tag;
+                tagsContainer.appendChild(tagElement);
+            });
+            
+            detailModal.style.display = 'flex';
+        }
+
+        // Actualizar paginación
+        function updatePagination() {
+            const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+            
+            pagination.innerHTML = '';
+            
+            // Botón anterior
+            const prevButton = document.createElement('button');
+            prevButton.textContent = 'Anterior';
+            prevButton.disabled = currentPage === 1;
+            prevButton.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderTable();
+                }
+            });
+            pagination.appendChild(prevButton);
+            
+            // Números de página
+            const maxVisiblePages = 5;
+            let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+            let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+            
+            if (endPage - startPage + 1 < maxVisiblePages) {
+                startPage = Math.max(1, endPage - maxVisiblePages + 1);
+            }
+            
+            for (let i = startPage; i <= endPage; i++) {
+                const pageButton = document.createElement('button');
+                pageButton.textContent = i;
+                if (i === currentPage) {
+                    pageButton.classList.add('active');
+                }
+                pageButton.addEventListener('click', () => {
+                    currentPage = i;
+                    renderTable();
+                });
+                pagination.appendChild(pageButton);
+            }
+            
+            // Botón siguiente
+            const nextButton = document.createElement('button');
+            nextButton.textContent = 'Siguiente';
+            nextButton.disabled = currentPage === totalPages;
+            nextButton.addEventListener('click', () => {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    renderTable();
+                }
+            });
+            pagination.appendChild(nextButton);
+        }
+
+        // Actualizar estadísticas
+        function updateStats() {
+            const totalResults = filteredData.length;
+            const startResult = totalResults === 0 ? 0 : (currentPage - 1) * itemsPerPage + 1;
+            const endResult = Math.min(currentPage * itemsPerPage, totalResults);
+            const totalPages = Math.ceil(totalResults / itemsPerPage);
+            
+            resultsCount.textContent = `Mostrando ${startResult}-${endResult} de ${totalResults} resultados`;
+            currentPageElement.textContent = `Página ${currentPage} de ${totalPages}`;
+        }
+
+        // Actualizar tarjetas de estadísticas
+        function updateStatsCards() {
+            const fraudCount = deceptionData.filter(item => item.category === 'fraude').length;
+            const negligenceCount = deceptionData.filter(item => item.category === 'negligencia').length;
+            const advertisingCount = deceptionData.filter(item => item.category === 'publicidad').length;
+            const ethicalCount = deceptionData.filter(item => item.category === 'etico').length;
+            
+            document.querySelector('.stat-card.fraude h3').textContent = fraudCount;
+            document.querySelector('.stat-card.negligencia h3').textContent = negligenceCount;
+            document.querySelector('.stat-card.publicidad h3').textContent = advertisingCount;
+            document.querySelector('.stat-card.etico h3').textContent = ethicalCount;
+        }
+
+        // Funciones de exportación
+        function exportToCsv() {
+            alert('Función de exportación a CSV - En una aplicación real, esto generaría un archivo CSV descargable');
+        }
+        
+        function exportToPdf() {
+            alert('Función de exportación a PDF - En una aplicación real, esto generaría un archivo PDF descargable');
+        }
+        
+        function exportToExcel() {
+            alert('Función de exportación a Excel - En una aplicación real, esto generaría un archivo Excel descargable');
+        }
+
+        // Inicializar la aplicación cuando se carga la página
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

@@ -1,0 +1,3195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super Generador de Marcos AI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #6a5acd;
+            --secondary-color: #9370db;
+            --accent-color: #00ff9d;
+            --dark-color: #2c3e50;
+            --light-color: #f5f7fa;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-color);
+            color: #333;
+            line-height: 1.6;
+               border-radius: 10px;
+  max-width: 1200px;
+  margin: 90px auto;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1, h2, h3 {
+            color: var(--dark-color);
+            margin-bottom: 15px;
+        }
+        
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+        
+        .ai-suggest-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .ai-suggest-btn:hover {
+            background-color: #5a4abc;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(106, 90, 205, 0.3);
+        }
+        
+        /* Filtros */
+        .filters {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            background-color: #e0e0e0;
+            color: #555;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .filter-btn:hover {
+            background-color: #d0d0d0;
+        }
+        
+        .filter-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .filter-btn i {
+            font-size: 0.9rem;
+        }
+        
+        /* Grid de marcos */
+        .frames-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .frame {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .frame:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .frame-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--accent-color);
+            color: #111;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            z-index: 2;
+        }
+        
+        .frame-content {
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 220px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .frame-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: inherit;
+            font-size: 1.2rem;
+            z-index: 2;
+        }
+        
+        .frame-desc {
+            font-size: 0.9rem;
+            color: inherit;
+            margin-bottom: 15px;
+            opacity: 0.8;
+            z-index: 2;
+        }
+        
+        .frame-actions {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-top: 1px solid #eee;
+        }
+        
+        .preview-btn, .download-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .preview-btn:hover, .download-btn:hover {
+            background-color: #5a4abc;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 15px;
+            width: 95%;
+            max-width: 1000px;
+            max-height: 90vh;
+            overflow: auto;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            animation: modalFadeIn 0.4s ease;
+        }
+        
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .modal-header {
+            padding: 20px 25px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background-color: white;
+            z-index: 10;
+        }
+        
+        .modal-title {
+            font-size: 1.5rem;
+            color: var(--dark-color);
+        }
+        
+        .modal-subtitle {
+            font-size: 1rem;
+            color: #7f8c8d;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #7f8c8d;
+            transition: color 0.3s ease;
+            padding: 5px;
+        }
+        
+        .close-btn:hover {
+            color: #e74c3c;
+        }
+        
+        .modal-body {
+            display: flex;
+            flex-direction: column;
+            padding: 25px;
+        }
+        
+        .preview-container {
+            width: 100%;
+            height: 400px;
+            border: 2px dashed #ddd;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            overflow: auto;
+            position: relative;
+        }
+        
+        .customization {
+            margin-bottom: 25px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+        
+        input[type="text"], 
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        .color-picker {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        input[type="color"] {
+            width: 60px;
+            height: 40px;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            cursor: pointer;
+            padding: 3px;
+            background: white;
+        }
+        
+        .color-value {
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+        
+        .apply-btn {
+            background-color: var(--accent-color);
+            color: #111;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+        
+        .apply-btn:hover {
+            background-color: #00e68a;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 157, 0.3);
+        }
+        
+        .ai-suggest-colors {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .ai-color-option {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease;
+        }
+        
+        .ai-color-option:hover {
+            transform: scale(1.1);
+        }
+        
+        .download-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid #eee;
+        }
+        
+        .download-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+        
+        .download-btn:hover {
+            background-color: #5a4abc;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(106, 90, 205, 0.3);
+        }
+        
+        .download-btn.premium {
+            background-color: #f39c12;
+        }
+        
+        .download-btn.premium:hover {
+            background-color: #e67e22;
+        }
+        
+        /* Notificación */
+        .notification {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background-color: var(--accent-color);
+            color: #111;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.4s ease;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            max-width: 400px;
+        }
+        
+        .notification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .notification.error {
+            background-color: #e74c3c;
+            color: white;
+        }
+        
+        .notification i {
+            font-size: 1.5rem;
+        }
+        
+        /* Marcos de ejemplo */
+        .frame-gradient {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 15px;
+        }
+        
+        .frame-neon {
+            border: 2px solid var(--accent-color);
+            box-shadow: 0 0 15px var(--accent-color), inset 0 0 10px var(--accent-color);
+            color: var(--accent-color);
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        
+        .frame-striped {
+            background: repeating-linear-gradient(
+                45deg,
+                #ff9a9e,
+                #ff9a9e 10px,
+                #fad0c4 10px,
+                #fad0c4 20px
+            );
+            color: white;
+        }
+        
+        .frame-minimal {
+            border: 2px solid #ddd;
+            background-color: white;
+            color: #333;
+        }
+        
+        .frame-rounded {
+            border-radius: 50px;
+            background-color: #ff6b6b;
+            color: white;
+        }
+        
+        .frame-glass {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+        }
+        
+        .frame-3d {
+            background-color: #6a5acd;
+            color: white;
+            box-shadow: 
+                10px 10px 0px rgba(106, 90, 205, 0.3),
+                20px 20px 0px rgba(106, 90, 205, 0.2);
+            transform: perspective(500px) rotateX(5deg);
+        }
+        
+        .frame-3d:hover {
+            transform: perspective(500px) rotateX(5deg) translateY(-5px);
+        }
+        
+        .frame-gold {
+            background: linear-gradient(135deg, #ffd700, #daa520);
+            color: #333;
+            border: 2px solid #daa520;
+        }
+        
+        .frame-pattern {
+            background-color: #6a5acd;
+            background-image: radial-gradient(circle at 10% 20%, rgba(255,255,255,0.2) 0%, transparent 20%);
+            color: white;
+        }
+        
+        .frame-animated {
+            background: linear-gradient(135deg, #6a5acd, #9370db);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .frame-animated::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255,255,255,0) 0%,
+                rgba(255,255,255,0) 50%,
+                rgba(255,255,255,0.2) 50%,
+                rgba(255,255,255,0.2) 100%
+            );
+            transform: rotate(30deg);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: rotate(30deg) translate(-30%, -30%); }
+            100% { transform: rotate(30deg) translate(30%, 30%); }
+        }
+        
+        .frame-dark {
+            background-color: #2c3e50;
+            color: white;
+            border: 2px solid #34495e;
+        }
+        
+        .frame-pastel {
+            background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+            color: #333;
+        }
+        
+        .frame-metalic {
+            background: linear-gradient(135deg, #bdc3c7, #2c3e50);
+            color: white;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .frames-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .modal-body {
+                padding: 15px;
+            }
+            
+            .preview-container {
+                height: 300px;
+            }
+            
+            .download-options {
+                flex-direction: column;
+            }
+            
+            .download-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+        /* Estilos para el botón */
+        .btn-back {
+            display: inline-block;
+            padding: 18px 36px;
+            font-size: 22px;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+            background: linear-gradient(45deg, #FF5722, #FF9800);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        /* Efecto al pasar el mouse */
+        .btn-back:hover {
+            background: linear-gradient(45deg, #E64A19, #F57C00);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        }
+
+        /* Efecto al hacer clic */
+        .btn-back:active {
+            transform: translateY(1px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        } 
+    </style>
+</head>
+<body>
+    <!-- Botón que lleva a otro.html -->
+    <a href="principalmarcoejemplo.html">
+       <button class="btn-back"> Volver atrás</button>
+    </a>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <i class="fas fa-border-style"></i>
+                <h1>Super Generador de Marcos AI</h1>
+            </div>
+            <button class="ai-suggest-btn" id="aiSuggestBtn">
+                <i class="fas fa-robot"></i> Sugerencia AI
+            </button>
+        </div>
+        
+        <p>Explora y personaliza entre más de 50 estilos de marcos diferentes</p>
+        
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">
+                <i class="fas fa-border-all"></i> Todos
+            </button>
+            <button class="filter-btn" data-filter="gradient">
+                <i class="fas fa-fill-drip"></i> Degradados
+            </button>
+            <button class="filter-btn" data-filter="neon">
+                <i class="fas fa-lightbulb"></i> Neón
+            </button>
+            <button class="filter-btn" data-filter="minimal">
+                <i class="fas fa-minus"></i> Minimalistas
+            </button>
+            <button class="filter-btn" data-filter="3d">
+                <i class="fas fa-cube"></i> 3D
+            </button>
+            <button class="filter-btn" data-filter="special">
+                <i class="fas fa-star"></i> Especiales
+            </button>
+            <button class="filter-btn" data-filter="animated">
+                <i class="fas fa-play"></i> Animados
+            </button>
+        </div>
+        
+        <div class="frames-grid">
+            <!-- Marco 1 -->
+            <div class="frame frame-gradient" data-id="1" data-category="gradient special">
+                <div class="frame-badge">Popular</div>
+                <div class="frame-content">
+                    <h3 class="frame-title">Marco Degradado</h3>
+                    <p class="frame-desc">Elegante marco con degradado de morados con esquinas redondeadas</p>
+                </div>
+                <div class="frame-actions">
+                    <button class="preview-btn">
+                        <i class="fas fa-eye"></i> Vista previa
+                    </button>
+                    <button class="download-btn">
+                        <i class="fas fa-download"></i> Descargar
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Marco 2 -->
+            <div class="frame frame-neon" data-id="2" data-category="neon special">
+                <div class="frame-content">
+                    <h3 class="frame-title">Marco Neón</h3>
+                    <p class="frame-desc">Marco con efecto neón verde brillante</p>
+                </div>
+                <div class="frame-actions">
+                    <button class="preview-btn">
+                        <i class="fas fa-eye"></i> Vista previa
+                    </button>
+                    <button class="download-btn">
+                        <i class="fas fa-download"></i> Descargar
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Marco 3 -->
+            <div class="frame frame-striped" data-id="3" data-category="gradient">
+                <div class="frame-content">
+                    <h3 class="frame-title">Marco Rayado</h3>
+                    <p class="frame-desc">Diseño con rayas diagonales en tonos pastel</p>
+                </div>
+                <div class="frame-actions">
+                    <button class="preview-btn">
+                        <i class="fas fa-eye"></i> Vista previa
+                    </button>
+                    <button class="download-btn">
+                        <i class="fas fa-download"></i> Descargar
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Marco 4 -->
+            <div class="frame frame-minimal" data-id="4" data-category="minimal">
+                <div class="frame-content">
+                    <h3 class="frame-title">Marco Minimalista</h3>
+                    <p class="frame-desc">Diseño limpio con borde delgado</p>
+                </div>
+                <div class="frame-actions">
+                    <button class="preview-btn">
+                        <i class="fas fa-eye"></i> Vista previa
+                    </button>
+                    <button class="download-btn">
+                        <i class="fas fa-download"></i> Descargar
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Marco 5 -->
+            <div class="frame frame-rounded" data-id="5" data-category="special">
+                <div class="frame-content">
+                    <h3 class="frame-title">Marco Redondeado</h3>
+                    <p class="frame-desc">Esquinas completamente redondeadas en color sólido</p>
+                </div>
+                <div class="frame-actions">
+                    <button class="preview-btn">
+                        <i class="fas fa-eye"></i> Vista previa
+                    </button>
+                    <button class="download-btn">
+                        <i class="fas fa-download"></i> Descargar
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Marco 6 -->
+            <div class="frame frame-glass" data-id="6" data-category="special">
+                <div class="frame-badge">Nuevo</div>
+                <div class="frame-content">
+                    <h3 class="frame-title">Marco Cristal</h3>
+                    <p class="frame-desc">Efecto vidrio esmerilado con blur</p>
+                </div>
+                <div class="frame-actions">
+                    <button class="preview-btn">
+                        <i class="fas fa-eye"></i> Vista previa
+                    </button>
+                    <button class="download-btn">
+                        <i class="fas fa-download"></i> Descargar
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Marco 7 -->
+            <div class="frame frame-3d" data-id="7" data-category="3d special">
+                <div class="frame-content">
+                    <h3 class="frame-title">Marco 3D</h3>
+                    <p class="frame-desc">Efecto tridimensional con perspectiva</p>
+                </div>
+                <div class="frame-actions">
+                    <button class="preview-btn">
+                        <i class="fas fa-eye"></i> Vista previa
+                    </button>
+                    <button class="download-btn">
+                        <i class="fas fa-download"></i> Descargar
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Marco 8 -->
+            <div class="frame frame-gold" data-id="8" data-category="special">
+                <div class="frame-content">
+                    <h3 class="frame-title">Marco Dorado</h3>
+                    <p class="frame-desc">Degradado dorado para un look premium</p>
+                </div>
+                <div class="frame-actions">
+                    <button class="preview-btn">
+                        <i class="fas fa-eye"></i> Vista previa
+                    </button>
+                    <button class="download-btn">
+                        <i class="fas fa-download"></i> Descargar
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Marco 9 -->
+            <div class="frame frame-pattern" data-id="9" data-category="gradient">
+                <div class="frame-content">
+                    <h3 class="frame-title">Marco con Patrón</h3>
+                    <p class="frame-desc">Diseño con patrón de puntos radiales</p>
+                </div>
+                <div class="frame-actions">
+                    <button class="preview-btn">
+                        <i class="fas fa-eye"></i> Vista previa
+                    </button>
+                    <button class="download-btn">
+                        <i class="fas fa-download"></i> Descargar
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Marco 10 -->
+            <div class="frame frame-animated" data-id="10" data-category="animated special">
+                <div class="frame-badge">Animado</div>
+                <div class="frame-content">
+                    <h3 class="frame-title">Marco Brillante</h3>
+                    <p class="frame-desc">Efecto de brillo animado</p>
+                </div>
+                <div class="frame-actions">
+                    <button class="preview-btn">
+                        <i class="fas fa-eye"></i> Vista previa
+                    </button>
+                    <button class="download-btn">
+                        <i class="fas fa-download"></i> Descargar
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Marco 11 -->
+            <div class="frame frame-dark" data-id="11" data-category="minimal">
+                <div class="frame-content">
+                    <h3 class="frame-title">Marco Oscuro</h3>
+                    <p class="frame-desc">Diseño oscuro moderno</p>
+                </div>
+                <div class="frame-actions">
+                    <button class="preview-btn">
+                        <i class="fas fa-eye"></i> Vista previa
+                    </button>
+                    <button class="download-btn">
+                        <i class="fas fa-download"></i> Descargar
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Marco 12 -->
+            <div class="frame frame-pastel" data-id="12" data-category="gradient">
+                <div class="frame-content">
+                    <h3 class="frame-title">Marco Pastel</h3>
+                    <p class="frame-desc">Suaves tonos pastel azules</p>
+                </div>
+                <div class="frame-actions">
+                    <button class="preview-btn">
+                        <i class="fas fa-eye"></i> Vista previa
+                    </button>
+                    <button class="download-btn">
+                        <i class="fas fa-download"></i> Descargar
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Marco 13 -->
+            <div class="frame frame-metalic" data-id="13" data-category="gradient">
+                <div class="frame-content">
+                    <h3 class="frame-title">Marco Metálico</h3>
+                    <p class="frame-desc">Acabado metálico plateado</p>
+                </div>
+                <div class="frame-actions">
+                    <button class="preview-btn">
+                        <i class="fas fa-eye"></i> Vista previa
+                    </button>
+                    <button class="download-btn">
+                        <i class="fas fa-download"></i> Descargar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal de vista previa -->
+    <div id="previewModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h2 id="modalTitle">Título del Marco</h2>
+                    <p id="modalSubtitle">Descripción del marco seleccionado</p>
+                </div>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="preview-container" id="framePreview">
+                    <!-- Aquí se cargará la vista previa del marco -->
+                </div>
+                
+                <div class="customization">
+                    <div>
+                        <h3>Personalización</h3>
+                        <div class="form-group">
+                            <label for="frameWidth">Ancho (px)</label>
+                            <input type="number" id="frameWidth" value="300" min="100" max="1200">
+                        </div>
+                        <div class="form-group">
+                            <label for="frameHeight">Alto (px)</label>
+                            <input type="number" id="frameHeight" value="200" min="100" max="1200">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="form-group">
+                            <label for="frameText">Texto del marco</label>
+                            <input type="text" id="frameText" value="Tu contenido aquí">
+                        </div>
+                        <div class="form-group">
+                            <label for="frameColor">Color principal</label>
+                            <div class="color-picker">
+                                <input type="color" id="frameColor" value="#6a5acd">
+                                <span class="color-value" id="colorValue">#6a5acd</span>
+                            </div>
+                            <div class="ai-suggest-colors" id="aiColorSuggestions">
+                                <!-- Colores sugeridos por AI -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="form-group">
+                            <label for="frameStyle">Estilo de borde</label>
+                            <select id="frameStyle">
+                                <option value="solid">Sólido</option>
+                                <option value="dashed">Discontinuo</option>
+                                <option value="dotted">Punteado</option>
+                                <option value="double">Doble</option>
+                                <option value="groove">Groove</option>
+                            </select>
+                        </div>
+                        <button class="apply-btn" id="applyCustomization">
+                            <i class="fas fa-magic"></i> Aplicar cambios
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="download-options">
+                    <button class="download-btn" id="downloadHtml">
+                        <i class="fas fa-file-code"></i> Descargar HTML
+                    </button>
+                    <button class="download-btn" id="downloadAll">
+                        <i class="fas fa-file-archive"></i> Descargar todo (ZIP)
+                    </button>
+                    <button class="download-btn premium" id="downloadPremium">
+                        <i class="fas fa-crown"></i> Versión Premium
+                    </button>
+                    <button class="download-btn" id="downloadJpg">
+                        <i class="fas fa-file-image"></i> Descargar JPG
+                    </button>
+                    <button class="download-btn" id="downloadPng">
+                        <i class="fas fa-file-image"></i> Descargar PNG
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Notificación -->
+    <div id="notification" class="notification">
+        <i class="fas fa-check-circle"></i>
+        <div>
+            <div>Mensaje de notificación</div>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Elementos del DOM
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const frames = document.querySelectorAll('.frame');
+        const previewBtns = document.querySelectorAll('.preview-btn');
+        const downloadBtns = document.querySelectorAll('.download-btn');
+        const modal = document.getElementById('previewModal');
+        const closeBtn = document.querySelector('.close-btn');
+        const framePreview = document.getElementById('framePreview');
+        const downloadHtmlBtn = document.getElementById('downloadHtml');
+        const downloadAllBtn = document.getElementById('downloadAll');
+        const downloadPremiumBtn = document.getElementById('downloadPremium');
+        const downloadJpgBtn = document.getElementById('downloadJpg');
+        const downloadPngBtn = document.getElementById('downloadPng');
+        const notification = document.getElementById('notification');
+        const applyCustomBtn = document.getElementById('applyCustomization');
+        const frameColor = document.getElementById('frameColor');
+        const colorValue = document.getElementById('colorValue');
+        const aiSuggestBtn = document.getElementById('aiSuggestBtn');
+        const aiColorSuggestions = document.getElementById('aiColorSuggestions');
+        const frameStyle = document.getElementById('frameStyle');
+        
+        // Actualizar valor del color
+        frameColor.addEventListener('input', function() {
+            colorValue.textContent = this.value;
+        });
+        
+        // Datos completos de los marcos
+        const framesData = {
+            1: {
+                name: "Marco Degradado",
+                description: "Elegante marco con degradado de morados con esquinas redondeadas",
+                html: `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marco Degradado</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+        
+        .frame {
+            width: 300px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, #6a5acd, #9370db);
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            color: white;
+            font-weight: bold;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="frame">
+        Tu contenido aquí
+    </div>
+</body>
+</html>`,
+                css: `.frame {
+    width: 300px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: linear-gradient(135deg, #6a5acd, #9370db);
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    color: white;
+    font-weight: bold;
+    padding: 20px;
+}`,
+                premium: `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marco Degradado Premium</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+        }
+        
+        .frame {
+            width: 300px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, #6a5acd, #9370db);
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2), 
+                        inset 0 0 30px rgba(255,255,255,0.3);
+            color: white;
+            font-weight: bold;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .frame::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255,255,255,0) 0%,
+                rgba(255,255,255,0) 50%,
+                rgba(255,255,255,0.2) 50%,
+                rgba(255,255,255,0.2) 100%
+            );
+            transform: rotate(30deg);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: rotate(30deg) translate(-30%, -30%); }
+            100% { transform: rotate(30deg) translate(30%, 30%); }
+        }
+    </style>
+</head>
+<body>
+    <div class="frame">
+        Tu contenido aquí
+    </div>
+</body>
+</html>`
+            },
+            2: {
+                name: "Marco Neón",
+                description: "Marco con efecto neón verde brillante",
+                html: `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marco Neón</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+        
+        .frame {
+            width: 300px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border: 2px solid #00ff9d;
+            box-shadow: 0 0 10px #00ff9d, inset 0 0 10px #00ff9d;
+            color: #00ff9d;
+            background-color: rgba(0, 0, 0, 0.7);
+            font-weight: bold;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="frame">
+        Tu contenido aquí
+    </div>
+</body>
+</html>`,
+                css: `.frame {
+    width: 300px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border: 2px solid #00ff9d;
+    box-shadow: 0 0 10px #00ff9d, inset 0 0 10px #00ff9d;
+    color: #00ff9d;
+    background-color: rgba(0, 0, 0, 0.7);
+    font-weight: bold;
+    padding: 20px;
+}`,
+                premium: `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marco Neón Premium</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+        }
+        
+        .frame {
+            width: 300px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border: 2px solid #00ff9d;
+            box-shadow: 0 0 20px #00ff9d, 
+                        inset 0 0 20px #00ff9d,
+                        0 0 40px rgba(0, 255, 157, 0.5);
+            color: #00ff9d;
+            background-color: rgba(0, 0, 0, 0.7);
+            font-weight: bold;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            animation: neonPulse 2s infinite alternate;
+        }
+        
+        @keyframes neonPulse {
+            from {
+                box-shadow: 0 0 10px #00ff9d, 
+                            inset 0 0 10px #00ff9d,
+                            0 0 20px rgba(0, 255, 157, 0.5);
+            }
+            to {
+                box-shadow: 0 0 20px #00ff9d, 
+                            inset 0 0 20px #00ff9d,
+                            0 0 40px rgba(0, 255, 157, 0.8);
+            }
+        }
+        
+        .frame::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(0, 255, 157, 0) 0%,
+                rgba(0, 255, 157, 0) 50%,
+                rgba(0, 255, 157, 0.1) 50%,
+                rgba(0, 255, 157, 0.1) 100%
+            );
+            transform: rotate(30deg);
+            animation: shine 3s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="frame">
+        Tu contenido aquí
+    </div>
+</body>
+</html>`
+            },
+            3: {
+                name: "Marco Rayado",
+                description: "Diseño con rayas diagonales en tonos pastel",
+                html: `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marco Rayado</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+        
+        .frame {
+            width: 300px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: repeating-linear-gradient(
+                45deg,
+                #ff9a9e,
+                #ff9a9e 10px,
+                #fad0c4 10px,
+                #fad0c4 20px
+            );
+            color: white;
+            font-weight: bold;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="frame">
+        Tu contenido aquí
+    </div>
+</body>
+</html>`,
+                css: `.frame {
+    width: 300px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: repeating-linear-gradient(
+        45deg,
+        #ff9a9e,
+        #ff9a9e 10px,
+        #fad0c4 10px,
+        #fad0c4 20px
+    );
+    color: white;
+    font-weight: bold;
+    padding: 20px;
+}`,
+                premium: `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marco Rayado Premium</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+        }
+        
+        .frame {
+            width: 300px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: repeating-linear-gradient(
+                45deg,
+                #ff9a9e,
+                #ff9a9e 10px,
+                #fad0c4 10px,
+                #fad0c4 20px
+            );
+            color: white;
+            font-weight: bold;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .frame::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0.3) 0%,
+                rgba(255,255,255,0) 50%,
+                rgba(255,255,255,0.3) 100%
+            );
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+    </style>
+</head>
+<body>
+    <div class="frame">
+        Tu contenido aquí
+    </div>
+</body>
+</html>`
+            },
+            4: {
+                name: "Marco Minimalista",
+                description: "Diseño limpio con borde delgado",
+                html: `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marco Minimalista</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+        
+        .frame {
+            width: 300px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border: 1px solid #ddd;
+            background-color: white;
+            color: #333;
+            font-weight: bold;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="frame">
+        Tu contenido aquí
+    </div>
+</body>
+</html>`,
+                css: `.frame {
+    width: 300px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border: 1px solid #ddd;
+    background-color: white;
+    color: #333;
+    font-weight: bold;
+    padding: 20px;
+}`,
+                premium: `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marco Minimalista Premium</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+        }
+        
+        .frame {
+            width: 300px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border: 1px solid #ddd;
+            background-color: white;
+            color: #333;
+            font-weight: bold;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .frame::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 1px solid rgba(0,0,0,0.1);
+            animation: borderPulse 3s infinite;
+        }
+        
+        @keyframes borderPulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.02); opacity: 0.5; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="frame">
+        Tu contenido aquí
+    </div>
+</body>
+</html>`
+            },
+            5: {
+                name: "Marco Redondeado",
+                description: "Esquinas completamente redondeadas en color sólido",
+                html: `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marco Redondeado</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+        
+        .frame {
+            width: 300px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background-color: #ff6b6b;
+            border-radius: 50px;
+            color: white;
+            font-weight: bold;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="frame">
+        Tu contenido aquí
+    </div>
+</body>
+</html>`,
+                css: `.frame {
+    width: 300px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: #ff6b6b;
+    border-radius: 50px;
+    color: white;
+    font-weight: bold;
+    padding: 20px;
+}`,
+                premium: `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marco Redondeado Premium</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+        }
+        
+        .frame {
+            width: 300px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background-color: #ff6b6b;
+            border-radius: 50px;
+            color: white;
+            font-weight: bold;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .frame::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border-radius: 60px;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e, #ff6b6b);
+            z-index: -1;
+            animation: gradientBG 3s ease infinite;
+            background-size: 200% 200%;
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="frame">
+        Tu contenido aquí
+    </div>
+</body>
+</html>`
+            },
+            6: {
+                name: "Marco Cristal",
+                description: "Efecto vidrio esmerilado con blur",
+                html: `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marco Cristal</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+        
+        .frame {
+            width: 300px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            font-weight: bold;
+            padding: 20px;
+            border-radius: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="frame">
+        Tu contenido aquí
+    </div>
+</body>
+</html>`,
+                css: `.frame {
+    width: 300px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    font-weight: bold;
+    padding: 20px;
+    border-radius: 15px;
+}`,
+                premium: `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marco Cristal Premium</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+        }
+        
+        .frame {
+            width: 300px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: white;
+            font-weight: bold;
+            padding: 20px;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .frame::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                45deg,
+                rgba(255,255,255,0.1) 0%,
+                rgba(255,255,255,0) 50%,
+                rgba(255,255,255,0.1) 100%
+            );
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+    </style>
+</head>
+<body>
+    <div class="frame">
+        Tu contenido aquí
+    </div>
+</body>
+</html>`
+            },
+            7: {
+                name: "Marco 3D",
+                description: "Efecto tridimensional con perspectiva",
+                html: `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marco 3D</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+        
+        .frame {
+            width: 300px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background-color: #6a5acd;
+            color: white;
+            font-weight: bold;
+            padding: 20px;
+            box-shadow: 
+                10px 10px 0px rgba(106, 90, 205, 0.3),
+                20px 20px 0px rgba(106, 90, 205, 0.2);
+            transform: perspective(500px) rotateX(5deg);
+        }
+    </style>
+</head>
+<body>
+    <div class="frame">
+        Tu contenido aquí
+    </div>
+</body>
+</html>`,
+                css: `.frame {
+    width: 300px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: #6a5acd;
+    color: white;
+    font-weight: bold;
+    padding: 20px;
+    box-shadow: 
+        10px 10px 0px rgba(106, 90, 205, 0.3),
+        20px 20px 0px rgba(106, 90, 205, 0.2);
+    transform: perspective(500px) rotateX(5deg);
+}`,
+                premium: `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marco 3D Premium</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+        }
+        
+        .frame {
+            width: 300px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background-color: #6a5acd;
+            color: white;
+            font-weight: bold;
+            padding: 20px;
+            box-shadow: 
+                10px 10px 0px rgba(106, 90, 205, 0.3),
+                20px 20px 0px rgba(106, 90, 205, 0.2),
+                inset 0 0 30px rgba(255,255,255,0.2);
+            transform: perspective(500px) rotateX(5deg);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .frame:hover {
+            transform: perspective(500px) rotateX(10deg) translateY(-10px);
+            box-shadow: 
+                15px 15px 0px rgba(106, 90, 205, 0.3),
+                30px 30px 0px rgba(106, 90, 205, 0.2),
+                inset 0 0 40px rgba(255,255,255,0.3);
+        }
+        
+        .frame::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255,255,255,0) 0%,
+                rgba(255,255,255,0) 50%,
+                rgba(255,255,255,0.1) 50%,
+                rgba(255,255,255,0.1) 100%
+            );
+            transform: rotate(30deg);
+            animation: shine 3s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="frame">
+        Tu contenido aquí
+    </div>
+</body>
+</html>`
+            },
+            8: {
+                name: "Marco Dorado",
+                description: "Degradado dorado para un look premium",
+                html: `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marco Dorado</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+        
+        .frame {
+            width: 300px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, #ffd700, #daa520);
+            color: #333;
+            font-weight: bold;
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid #daa520;
+        }
+    </style>
+</head>
+<body>
+    <div class="frame">
+        Tu contenido aquí
+    </div>
+</body>
+</html>`,
+                css: `.frame {
+    width: 300px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: linear-gradient(135deg, #ffd700, #daa520);
+    color: #333;
+    font-weight: bold;
+    padding: 20px;
+    border-radius: 15px;
+    border: 2px solid #daa520;
+}`,
+                premium: `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marco Dorado Premium</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+        }
+        
+        .frame {
+            width: 300px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, #ffd700, #daa520);
+            color: #333;
+            font-weight: bold;
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid #daa520;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(218, 165, 32, 0.3);
+        }
+        
+        .frame::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255,255,255,0) 0%,
+                rgba(255,255,255,0) 50%,
+                rgba(255,255,255,0.3) 50%,
+                rgba(255,255,255,0.3) 100%
+            );
+            transform: rotate(30deg);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: rotate(30deg) translate(-30%, -30%); }
+            100% { transform: rotate(30deg) translate(30%, 30%); }
+        }
+    </style>
+</head>
+<body>
+    <div class="frame">
+        Tu contenido aquí
+    </div>
+</body>
+</html>`
+            },
+            9: {
+                name: "Marco con Patrón",
+                description: "Diseño con patrón de puntos radiales",
+                html: `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marco con Patrón</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+        
+        .frame {
+            width: 300px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background-color: #6a5acd;
+            background-image: radial-gradient(circle at 10% 20%, rgba(255,255,255,0.2) 0%, transparent 20%);
+            color: white;
+            font-weight: bold;
+            padding: 20px;
+            border-radius: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="frame">
+        Tu contenido aquí
+    </div>
+</body>
+</html>`,
+                css: `.frame {
+    width: 300px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: #6a5acd;
+    background-image: radial-gradient(circle at 10% 20%, rgba(255,255,255,0.2) 0%, transparent 20%);
+    color: white;
+    font-weight: bold;
+    padding: 20px;
+    border-radius: 15px;
+}`,
+                premium: `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marco con Patrón Premium</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+        }
+        
+        .frame {
+            width: 300px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background-color: #6a5acd;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(255,255,255,0.3) 0%, transparent 25%),
+                radial-gradient(circle at 80% 70%, rgba(255,255,255,0.3) 0%, transparent 25%);
+            color: white;
+            font-weight: bold;
+            padding: 20px;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(106, 90, 205, 0.3);
+            animation: pulse 4s infinite alternate;
+        }
+        
+        @keyframes pulse {
+            0% { 
+                background-image: 
+                    radial-gradient(circle at 20% 30%, rgba(255,255,255,0.3) 0%, transparent 25%),
+                    radial-gradient(circle at 80% 70%, rgba(255,255,255,0.3) 0%, transparent 25%);
+            }
+            100% { 
+                background-image: 
+                    radial-gradient(circle at 30% 40%, rgba(255,255,255,0.4) 0%, transparent 30%),
+                    radial-gradient(circle at 70% 60%, rgba(255,255,255,0.4) 0%, transparent 30%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="frame">
+        Tu contenido aquí
+    </div>
+</body>
+</html>`
+            },
+            10: {
+                name: "Marco Brillante",
+                description: "Efecto de brillo animado",
+                html: `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marco Brillante</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+        
+        .frame {
+            width: 300px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, #6a5acd, #9370db);
+            color: white;
+            font-weight: bold;
+            padding: 20px;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .frame::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255,255,255,0) 0%,
+                rgba(255,255,255,0) 50%,
+                rgba(255,255,255,0.2) 50%,
+                rgba(255,255,255,0.2) 100%
+            );
+            transform: rotate(30deg);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: rotate(30deg) translate(-30%, -30%); }
+            100% { transform: rotate(30deg) translate(30%, 30%); }
+        }
+    </style>
+</head>
+<body>
+    <div class="frame">
+        Tu contenido aquí
+    </div>
+</body>
+</html>`,
+                css: `.frame {
+    width: 300px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: linear-gradient(135deg, #6a5acd, #9370db);
+    color: white;
+    font-weight: bold;
+    padding: 20px;
+    border-radius: 15px;
+    position: relative;
+    overflow: hidden;
+}
+
+.frame::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        to bottom right,
+        rgba(255,255,255,0) 0%,
+        rgba(255,255,255,0) 50%,
+        rgba(255,255,255,0.2) 50%,
+        rgba(255,255,255,0.2) 100%
+    );
+    transform: rotate(30deg);
+    animation: shine 3s infinite;
+}
+
+@keyframes shine {
+    0% { transform: rotate(30deg) translate(-30%, -30%); }
+    100% { transform: rotate(30deg) translate(30%, 30%); }
+}`,
+                premium: `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marco Brillante Premium</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+        }
+        
+        .frame {
+            width: 300px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, #6a5acd, #9370db);
+            color: white;
+            font-weight: bold;
+            padding: 20px;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(106, 90, 205, 0.4);
+        }
+        
+        .frame::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255,255,255,0) 0%,
+                rgba(255,255,255,0) 50%,
+                rgba(255,255,255,0.3) 50%,
+                rgba(255,255,255,0.3) 100%
+            );
+            transform: rotate(30deg);
+            animation: shine 3s infinite;
+        }
+        
+        .frame::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 2s infinite alternate;
+        }
+        
+        @keyframes shine {
+            0% { transform: rotate(30deg) translate(-40%, -40%); }
+            100% { transform: rotate(30deg) translate(40%, 40%); }
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="frame">
+        Tu contenido aquí
+    </div>
+</body>
+</html>`
+            },
+            11: {
+                name: "Marco Oscuro",
+                description: "Diseño oscuro moderno",
+                html: `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marco Oscuro</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+        
+        .frame {
+            width: 300px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background-color: #2c3e50;
+            color: white;
+            font-weight: bold;
+            padding: 20px;
+            border: 2px solid #34495e;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="frame">
+        Tu contenido aquí
+    </div>
+</body>
+</html>`,
+                css: `.frame {
+    width: 300px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: #2c3e50;
+    color: white;
+    font-weight: bold;
+    padding: 20px;
+    border: 2px solid #34495e;
+    border-radius: 10px;
+}`,
+                premium: `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marco Oscuro Premium</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+        }
+        
+        .frame {
+            width: 300px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background-color: #2c3e50;
+            color: white;
+            font-weight: bold;
+            padding: 20px;
+            border: 2px solid #34495e;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .frame::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                135deg,
+                rgba(52, 152, 219, 0.1) 0%,
+                rgba(52, 152, 219, 0) 50%,
+                rgba(52, 152, 219, 0.1) 100%
+            );
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%); }
+            100% { transform: translateX(100%) translateY(100%); }
+        }
+    </style>
+</head>
+<body>
+    <div class="frame">
+        Tu contenido aquí
+    </div>
+</body>
+</html>`
+            },
+            12: {
+                name: "Marco Pastel",
+                description: "Suaves tonos pastel azules",
+                html: `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marco Pastel</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+        
+        .frame {
+            width: 300px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+            color: #333;
+            font-weight: bold;
+            padding: 20px;
+            border-radius: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="frame">
+        Tu contenido aquí
+    </div>
+</body>
+</html>`,
+                css: `.frame {
+    width: 300px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+    color: #333;
+    font-weight: bold;
+    padding: 20px;
+    border-radius: 15px;
+}`,
+                premium: `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marco Pastel Premium</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+        }
+        
+        .frame {
+            width: 300px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+            color: #333;
+            font-weight: bold;
+            padding: 20px;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(161, 196, 253, 0.3);
+        }
+        
+        .frame::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0.3) 0%,
+                rgba(255,255,255,0) 50%,
+                rgba(255,255,255,0.3) 100%
+            );
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+    </style>
+</head>
+<body>
+    <div class="frame">
+        Tu contenido aquí
+    </div>
+</body>
+</html>`
+            },
+            13: {
+                name: "Marco Metálico",
+                description: "Acabado metálico plateado",
+                html: `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marco Metálico</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+        
+        .frame {
+            width: 300px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, #bdc3c7, #2c3e50);
+            color: white;
+            font-weight: bold;
+            padding: 20px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="frame">
+        Tu contenido aquí
+    </div>
+</body>
+</html>`,
+                css: `.frame {
+    width: 300px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: linear-gradient(135deg, #bdc3c7, #2c3e50);
+    color: white;
+    font-weight: bold;
+    padding: 20px;
+    border-radius: 10px;
+}`,
+                premium: `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marco Metálico Premium</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+        }
+        
+        .frame {
+            width: 300px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, #bdc3c7, #2c3e50);
+            color: white;
+            font-weight: bold;
+            padding: 20px;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .frame::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255,255,255,0) 0%,
+                rgba(255,255,255,0) 50%,
+                rgba(255,255,255,0.1) 50%,
+                rgba(255,255,255,0.1) 100%
+            );
+            transform: rotate(30deg);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: rotate(30deg) translate(-30%, -30%); }
+            100% { transform: rotate(30deg) translate(30%, 30%); }
+        }
+    </style>
+</head>
+<body>
+    <div class="frame">
+        Tu contenido aquí
+    </div>
+</body>
+</html>`
+            }
+        };
+        
+        // Configurar datos para todos los marcos
+        frames.forEach(frame => {
+            const id = frame.dataset.id;
+            framesData[id] = framesData[id] || {
+                name: frame.querySelector('.frame-title').textContent,
+                description: frame.querySelector('.frame-desc').textContent,
+                html: generateFrameHtml(frame, id),
+                css: generateFrameCss(frame, id),
+                premium: generatePremiumFrameHtml(frame, id)
+            };
+        });
+        
+        // Filtrado de marcos
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Quitar active de todos los botones
+                filterBtns.forEach(b => b.classList.remove('active'));
+                // Añadir active al botón clickeado
+                this.classList.add('active');
+                
+                const filter = this.dataset.filter;
+                
+                frames.forEach(frame => {
+                    const categories = frame.dataset.category.split(' ');
+                    if (filter === 'all' || categories.includes(filter)) {
+                        frame.style.display = 'block';
+                    } else {
+                        frame.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        // Variable para guardar el marco actual
+        let currentFrameId = null;
+        
+        // Vista previa de marcos
+        previewBtns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const frame = this.closest('.frame');
+                const frameId = frame.dataset.id;
+                const frameData = framesData[frameId];
+                currentFrameId = frameId;
+                
+                // Actualizar modal
+                document.getElementById('modalTitle').textContent = frameData.name;
+                document.getElementById('modalSubtitle').textContent = frameData.description;
+                framePreview.innerHTML = '';
+                
+                // Clonar el marco para la vista previa
+                const clone = frame.cloneNode(true);
+                clone.style.width = '100%';
+                clone.style.height = '100%';
+                clone.style.margin = '0';
+                clone.style.transform = 'none';
+                clone.querySelector('.frame-actions').remove();
+                
+                framePreview.appendChild(clone);
+                
+                // Restablecer valores de personalización
+                document.getElementById('frameWidth').value = '300';
+                document.getElementById('frameHeight').value = '200';
+                document.getElementById('frameText').value = 'Tu contenido aquí';
+                document.getElementById('frameColor').value = '#6a5acd';
+                colorValue.textContent = '#6a5acd';
+                document.getElementById('frameStyle').value = 'solid';
+                
+                // Generar sugerencias de colores AI
+                generateAIColorSuggestions(frameId);
+                
+                // Mostrar modal
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+                
+                // Configurar botones de descarga
+                setupDownloadButtons(frameId);
+            });
+        });
+        
+        // Generar sugerencias de colores AI
+        function generateAIColorSuggestions(frameId) {
+            aiColorSuggestions.innerHTML = '';
+            
+            // Paletas de colores basadas en el tipo de marco
+            let colorPalettes = [];
+            const frame = framesData[frameId];
+            
+            if (frame.name.includes('Degradado') || frame.name.includes('Pastel')) {
+                colorPalettes = [
+                    ['#6a5acd', '#9370db'], // Morado
+                    ['#ff9a9e', '#fad0c4'], // Rosa pastel
+                    ['#a1c4fd', '#c2e9fb'], // Azul pastel
+                    ['#84fab0', '#8fd3f4'], // Verde/azul
+                    ['#ffecd2', '#fcb69f']  // Naranja pastel
+                ];
+            } else if (frame.name.includes('Neón')) {
+                colorPalettes = [
+                    ['#00ff9d', '#00b36b'], // Verde neón
+                    ['#ff00ff', '#cc00cc'], // Rosa neón
+                    ['#00ffff', '#00cccc'], // Cian neón
+                    ['#ffff00', '#cccc00'], // Amarillo neón
+                    ['#ff0000', '#cc0000']  // Rojo neón
+                ];
+            } else if (frame.name.includes('Oscuro')) {
+                colorPalettes = [
+                    ['#2c3e50', '#34495e'], // Azul oscuro
+                    ['#1a1a2e', '#16213e'], // Azul noche
+                    ['#3a1c71', '#d76d77'], // Morado/rosa
+                    ['#0f2027', '#203a43'], // Verde oscuro
+                    ['#200122', '#6f0000']  // Rojo oscuro
+                ];
+            } else {
+                // Paleta general
+                colorPalettes = [
+                    ['#6a5acd', '#9370db'], // Morado
+                    ['#ff6b6b', '#ff8e8e'], // Rojo
+                    ['#4ecdc4', '#88dac7'], // Verde agua
+                    ['#ffd166', '#ffdd82'], // Amarillo
+                    ['#06d6a0', '#48bf84']  // Verde
+                ];
+            }
+            
+            // Seleccionar una paleta aleatoria
+            const palette = colorPalettes[Math.floor(Math.random() * colorPalettes.length)];
+            
+            // Mostrar colores sugeridos
+            palette.forEach(color => {
+                const colorOption = document.createElement('div');
+                colorOption.className = 'ai-color-option';
+                colorOption.style.backgroundColor = color;
+                colorOption.title = color;
+                colorOption.addEventListener('click', () => {
+                    frameColor.value = color;
+                    colorValue.textContent = color;
+                });
+                aiColorSuggestions.appendChild(colorOption);
+            });
+        }
+        
+        // Botón de sugerencia AI
+        aiSuggestBtn.addEventListener('click', function() {
+            if (currentFrameId) {
+                generateAIColorSuggestions(currentFrameId);
+                showNotification('success', 'Sugerencias de colores generadas');
+            } else {
+                showNotification('error', 'Primero selecciona un marco');
+            }
+        });
+        
+        // Configurar botones de descarga
+        function setupDownloadButtons(frameId) {
+            // Configurar botones de descarga
+            downloadHtmlBtn.onclick = () => downloadFrameHtml(frameId);
+            downloadAllBtn.onclick = () => downloadFrameAll(frameId);
+            downloadPremiumBtn.onclick = () => downloadPremiumFrame(frameId);
+            downloadJpgBtn.onclick = () => downloadFrameAsImage('jpg');
+            downloadPngBtn.onclick = () => downloadFrameAsImage('png');
+        }
+        
+        // Descarga directa desde el botón en el marco
+        downloadBtns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const frameId = this.closest('.frame').dataset.id;
+                downloadFrameHtml(frameId);
+            });
+        });
+        
+        // Cerrar modal
+        closeBtn.addEventListener('click', closeModal);
+        window.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+        
+        function closeModal() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Función para descargar HTML del marco
+        function downloadFrameHtml(frameId) {
+            const frameData = framesData[frameId];
+            let htmlContent = frameData.html;
+            
+            const customText = document.getElementById('frameText')?.value;
+            if (customText) {
+                htmlContent = htmlContent.replace(/Tu contenido aquí/g, customText);
+            }
+            
+            const blob = new Blob([htmlContent], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `marco-${frameId}-${frameData.name.toLowerCase().replace(/\s+/g, '-')}.html`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showNotification('success', 'HTML descargado correctamente');
+        }
+        
+        // Función para descargar HTML + CSS
+        function downloadFrameAll(frameId) {
+            const frameData = framesData[frameId];
+            const zip = new JSZip();
+            
+            let htmlContent = frameData.html;
+            const customText = document.getElementById('frameText')?.value;
+            if (customText) {
+                htmlContent = htmlContent.replace(/Tu contenido aquí/g, customText);
+            }
+            
+            zip.file(`marco-${frameId}.html`, htmlContent);
+            zip.file(`marco-${frameId}.css`, frameData.css);
+            
+            zip.generateAsync({ type: 'blob' }).then(function(content) {
+                saveAs(content, `marco-${frameId}-${frameData.name.toLowerCase().replace(/\s+/g, '-')}.zip`);
+                showNotification('success', 'Paquete descargado correctamente');
+            });
+        }
+        
+        // Función para descargar versión premium
+        function downloadPremiumFrame(frameId) {
+            const frameData = framesData[frameId];
+            if (!frameData.premium) {
+                showNotification('error', 'Versión premium no disponible para este marco');
+                return;
+            }
+            
+            let htmlContent = frameData.premium;
+            const customText = document.getElementById('frameText')?.value;
+            if (customText) {
+                htmlContent = htmlContent.replace(/Tu contenido aquí/g, customText);
+            }
+            
+            const blob = new Blob([htmlContent], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `marco-premium-${frameId}-${frameData.name.toLowerCase().replace(/\s+/g, '-')}.html`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showNotification('success', 'Versión premium descargada');
+        }
+        
+        // Función para descargar el marco como imagen
+        function downloadFrameAsImage(format) {
+            if (!currentFrameId) return;
+            
+            const frameElement = framePreview.querySelector('.frame');
+            const frameData = framesData[currentFrameId];
+            
+            const options = {
+                backgroundColor: null,
+                scale: 2,
+                logging: false,
+                useCORS: true,
+                allowTaint: true
+            };
+            
+            html2canvas(frameElement, options).then(canvas => {
+                const fileName = `marco-${currentFrameId}-${frameData.name.toLowerCase().replace(/\s+/g, '-')}.${format}`;
+                
+                if (format === 'jpg' || format === 'jpeg') {
+                    const context = canvas.getContext('2d');
+                    context.globalCompositeOperation = 'destination-over';
+                    context.fillStyle = 'white';
+                    context.fillRect(0, 0, canvas.width, canvas.height);
+                    
+                    const imageData = canvas.toDataURL('image/jpeg', 0.9);
+                    downloadImage(imageData, fileName);
+                } else {
+                    const imageData = canvas.toDataURL('image/png');
+                    downloadImage(imageData, fileName);
+                }
+                
+                showNotification('success', `Imagen ${format.toUpperCase()} descargada`);
+            }).catch(err => {
+                console.error('Error al generar imagen:', err);
+                showNotification('error', 'Error al generar la imagen');
+            });
+        }
+        
+        // Función auxiliar para descargar la imagen
+        function downloadImage(dataUrl, fileName) {
+            const link = document.createElement('a');
+            link.download = fileName;
+            link.href = dataUrl;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+        
+        // Mostrar notificación
+        function showNotification(type, message) {
+            notification.className = `notification ${type}`;
+            notification.querySelector('div div').textContent = message;
+            
+            // Cambiar icono según el tipo
+            const icon = notification.querySelector('i');
+            if (type === 'success') {
+                icon.className = 'fas fa-check-circle';
+            } else {
+                icon.className = 'fas fa-exclamation-circle';
+            }
+            
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Personalización
+        applyCustomBtn.addEventListener('click', function() {
+            if (!currentFrameId) return;
+            
+            const width = document.getElementById('frameWidth').value + 'px';
+            const height = document.getElementById('frameHeight').value + 'px';
+            const text = document.getElementById('frameText').value;
+            const color = document.getElementById('frameColor').value;
+            const borderStyle = document.getElementById('frameStyle').value;
+            
+            const frame = framePreview.querySelector('.frame');
+            const content = frame.querySelector('.frame-content');
+            
+            frame.style.width = width;
+            frame.style.height = height;
+            
+            if (content.querySelector('.frame-title')) {
+                content.querySelector('.frame-title').textContent = text;
+            }
+            
+            // Aplicar estilos según el tipo de marco
+            if (frame.classList.contains('frame-gradient')) {
+                frame.style.background = `linear-gradient(135deg, ${color}, ${lightenColor(color, 20)})`;
+            } else if (frame.classList.contains('frame-neon')) {
+                frame.style.borderColor = color;
+                frame.style.boxShadow = `0 0 10px ${color}, inset 0 0 10px ${color}`;
+                frame.style.color = color;
+            } else if (frame.classList.contains('frame-striped')) {
+                frame.style.background = `repeating-linear-gradient(
+                    45deg,
+                    ${color},
+                    ${color} 10px,
+                    ${lightenColor(color, 20)} 10px,
+                    ${lightenColor(color, 20)} 20px
+                )`;
+            } else if (frame.classList.contains('frame-minimal')) {
+                frame.style.borderColor = color;
+                frame.style.borderStyle = borderStyle;
+            } else if (frame.classList.contains('frame-rounded')) {
+                frame.style.backgroundColor = color;
+            } else if (frame.classList.contains('frame-glass')) {
+                frame.style.borderColor = `rgba(${hexToRgb(color)}, 0.5)`;
+            } else if (frame.classList.contains('frame-3d')) {
+                frame.style.backgroundColor = color;
+                frame.style.boxShadow = 
+                    `10px 10px 0px rgba(${hexToRgb(color)}, 0.3),
+                    20px 20px 0px rgba(${hexToRgb(color)}, 0.2)`;
+            } else if (frame.classList.contains('frame-dark')) {
+                frame.style.backgroundColor = color;
+                frame.style.borderColor = lightenColor(color, 10);
+            } else {
+                // Estilo por defecto
+                frame.style.backgroundColor = color;
+            }
+            
+            showNotification('success', 'Cambios aplicados correctamente');
+        });
+        
+        // Funciones auxiliares para generar código
+        function generateFrameHtml(frame, id) {
+            const title = frame.querySelector('.frame-title').textContent;
+            const classes = frame.className.split(' ').filter(c => c.startsWith('frame-') || c === 'frame').join(' ');
+            
+            return `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${title}</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+        
+        .frame {
+            width: 300px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #333;
+            font-weight: bold;
+            padding: 20px;
+        }
+        
+        ${generateFrameCss(frame, id)}
+    </style>
+</head>
+<body>
+    <div class="${classes}">
+        Tu contenido aquí
+    </div>
+</body>
+</html>`;
+        }
+        
+        function generateFrameCss(frame, id) {
+            // Esta función generaría el CSS específico para cada marco
+            // En una implementación real, analizarías las clases del marco
+            // y generarías el CSS correspondiente
+            return `.frame-${id} {
+    /* Estilos específicos para este marco */
+    background: linear-gradient(135deg, #6a5acd, #9370db);
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    color: white;
+}`;
+        }
+        
+        function generatePremiumFrameHtml(frame, id) {
+            const title = frame.querySelector('.frame-title').textContent + " (Premium)";
+            
+            return `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${title}</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+        }
+        
+        .frame {
+            width: 300px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, #6a5acd, #9370db);
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2), 
+                        inset 0 0 30px rgba(255,255,255,0.3);
+            color: white;
+            font-weight: bold;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .frame::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255,255,255,0) 0%,
+                rgba(255,255,255,0) 50%,
+                rgba(255,255,255,0.2) 50%,
+                rgba(255,255,255,0.2) 100%
+            );
+            transform: rotate(30deg);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: rotate(30deg) translate(-30%, -30%); }
+            100% { transform: rotate(30deg) translate(30%, 30%); }
+        }
+    </style>
+</head>
+<body>
+    <div class="frame">
+        Tu contenido aquí
+    </div>
+</body>
+</html>`;
+        }
+        
+        // Función para aclarar un color
+        function lightenColor(color, percent) {
+            const num = parseInt(color.replace("#", ""), 16);
+            const amt = Math.round(2.55 * percent);
+            const R = (num >> 16) + amt;
+            const G = (num >> 8 & 0x00FF) + amt;
+            const B = (num & 0x0000FF) + amt;
+            
+            return "#" + (
+                0x1000000 +
+                (R < 255 ? (R < 1 ? 0 : R) : 255) * 0x10000 +
+                (G < 255 ? (G < 1 ? 0 : G) : 255) * 0x100 +
+                (B < 255 ? (B < 1 ? 0 : B) : 255)
+            ).toString(16).slice(1);
+        }
+        
+        // Función para convertir hex a rgb
+        function hexToRgb(hex) {
+            // Eliminar el # si está presente
+            hex = hex.replace('#', '');
+            
+            // Convertir a valores r, g, b
+            const r = parseInt(hex.substring(0, 2), 16);
+            const g = parseInt(hex.substring(2, 4), 16);
+            const b = parseInt(hex.substring(4, 6), 16);
+            
+            return `${r}, ${g}, ${b}`;
+        }
+    });
+    </script>
+</body>
+</html>

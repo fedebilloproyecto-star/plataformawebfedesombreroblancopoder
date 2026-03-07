@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArtStudio Pro - Suite Creativa de Imágenes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            --dark-bg: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.9);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --neon-blue: #00ffff;
+            --neon-pink: #ff00ff;
+            --neon-green: #00ff00;
+            --accent-gold: #ffd700;
+            --text-light: #f8fafc;
+            --text-gray: #cbd5e1;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: var(--dark-bg);
+            color: var(--text-light);
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(106, 17, 203, 0.15) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(37, 117, 252, 0.15) 0%, transparent 20%);
+            overflow-x: hidden;
+          border-radius: 10px;
+  max-width: 1300px;
+  margin: 90px auto;
+       
+        }
+        
+        /* Fondo animado */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        /* Contenedor principal */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Header minimalista */
+        .hero-header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            position: relative;
+        }
+        
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 1px;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-gray);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+        
+        /* Grid de herramientas */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        /* Tarjetas mejoradas */
+        .tool-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            height: 100%;
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--neon-blue);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .tool-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 6px 15px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            z-index: 2;
+            border: 1px solid;
+        }
+        
+        .tool-image {
+            width: 100%;
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .tool-content {
+            padding: 25px;
+        }
+        
+        .tool-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .tool-icon {
+            font-size: 1.8rem;
+        }
+        
+        .tool-description {
+            color: var(--text-gray);
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+        
+        /* Botones principales */
+        .tool-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .action-btn {
+            flex: 1;
+            padding: 14px 20px;
+            border-radius: 12px;
+            border: none;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+        
+        .primary-btn {
+            background: linear-gradient(45deg, var(--neon-blue), #0099cc);
+            color: white;
+        }
+        
+        .primary-btn:hover {
+            background: linear-gradient(45deg, #00cccc, var(--neon-blue));
+            transform: translateY(-2px);
+        }
+        
+        /* Footer minimalista */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 40px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-title {
+                font-size: 2.8rem;
+            }
+            
+            .tool-actions {
+                flex-direction: column;
+            }
+        }
+        
+        /* Animación de entrada */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .tool-card {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+        
+        .tool-card:nth-child(1) { animation-delay: 0.1s; }
+        .tool-card:nth-child(2) { animation-delay: 0.2s; }
+        .tool-card:nth-child(3) { animation-delay: 0.3s; }
+        
+        /* Efecto de brillo sutil */
+        .glow-effect {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--neon-blue) 0%, transparent 70%);
+            opacity: 0.05;
+            filter: blur(30px);
+            z-index: 0;
+        }
+        .btn-volver {
+    display: inline-block;
+    text-decoration: none;
+    background-color: #f1c40f; /* amarillo */
+    color: #000;
+    border: 2px solid #d4ac0d;
+    padding: 12px 24px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-volver:hover {
+    background-color: #000;
+    color: #f1c40f;
+    border-color: #000;
+}
+
+    </style>
+</head>
+<body>
+    <!-- Fondo de partículas -->
+    <div id="particles-js"></div>
+    
+    <!-- Efectos de brillo sutiles -->
+    <div class="glow-effect" style="top: 10%; left: 5%;"></div>
+    <div class="glow-effect" style="top: 60%; right: 10%; background: radial-gradient(circle, var(--neon-pink) 0%, transparent 70%);"></div>
+    
+    <div class="container">
+        <!-- Header -->
+        <header class="hero-header">
+            <h1 class="hero-title">
+                <i class="fas fa-palette"></i> ArtStudio Pro
+            </h1>
+            <p class="hero-subtitle">
+                Tres herramientas especializadas para transformar tus imágenes
+            </p>
+        </header>
+        
+        <!-- Grid de herramientas -->
+        <div class="tools-grid">
+            <!-- Herramienta 1 -->
+            <div class="tool-card">
+                <div class="tool-badge" style="border-color: var(--neon-blue); color: var(--neon-blue);">
+                    <i class="fas fa-star"></i> SIMPLE
+                </div>
+                <div class="tool-image" style="background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);">
+                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+                        <i class="fas fa-pencil-alt" style="font-size: 3.5rem; color: white; opacity: 0.9;"></i>
+                    </div>
+                </div>
+                <div class="tool-content">
+                    <h2 class="tool-title">
+                        <i class="fas fa-magic tool-icon" style="color: var(--neon-blue);"></i>
+                        Conversor Básico
+                    </h2>
+                    <p class="tool-description">
+                        Transforma fotos en dibujos con controles sencillos. Perfecto para resultados rápidos y directos.
+                    </p>
+                    
+                    <div class="tool-actions">
+                        <a href="dibujoia2.html" class="action-btn primary-btn">
+                            <i class="fas fa-rocket"></i> Abrir
+                        </a>
+                         <a href="herramientaselementosdearte.html" class="btn-volver">⬅ Volver</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Herramienta 2 -->
+            <div class="tool-card">
+                <div class="tool-badge" style="border-color: var(--neon-pink); color: var(--neon-pink);">
+                    <i class="fas fa-crown"></i> AVANZADO
+                </div>
+                <div class="tool-image" style="background: linear-gradient(135deg, #9d00ff 0%, #ff00ff 100%);">
+                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+                        <i class="fas fa-cogs" style="font-size: 3.5rem; color: white; opacity: 0.9;"></i>
+                    </div>
+                </div>
+                <div class="tool-content">
+                    <h2 class="tool-title">
+                        <i class="fas fa-robot tool-icon" style="color: var(--neon-pink);"></i>
+                        Editor Profesional
+                    </h2>
+                    <p class="tool-description">
+                        80 efectos únicos en anime, cubismo y arte digital con implementaciones algorítmicas diferentes.
+                    </p>
+                    
+                    <div class="tool-actions">
+                        <a href="dibujosmedium.html" class="action-btn primary-btn">
+                            <i class="fas fa-rocket"></i> Abrir
+                        </a>
+                         <a href="herramientaselementosdearte.html" class="btn-volver">⬅ Volver</a>
+                    </div>
+                </div>
+            </div>
+            
+           
+      
+    
+    <!-- Script de partículas -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Configurar partículas simples
+        particlesJS("particles-js", {
+            particles: {
+                number: { value: 40, density: { enable: true, value_area: 800 } },
+                color: { value: "#00ffff" },
+                shape: { type: "circle" },
+                opacity: { value: 0.2, random: true },
+                size: { value: 2, random: true },
+                line_linked: { enable: false },
+                move: {
+                    enable: true,
+                    speed: 1,
+                    direction: "none",
+                    random: true,
+                    straight: false,
+                    out_mode: "out"
+                }
+            },
+            interactivity: { detect_on: "canvas", events: { onhover: { enable: false } } }
+        });
+        
+        // Efecto hover mejorado para tarjetas
+        document.querySelectorAll('.tool-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                const badge = this.querySelector('.tool-badge');
+                if (badge) {
+                    badge.style.transform = 'scale(1.05)';
+                    badge.style.transition = 'transform 0.3s';
+                }
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                const badge = this.querySelector('.tool-badge');
+                if (badge) {
+                    badge.style.transform = 'scale(1)';
+                }
+            });
+        });
+        
+        // Animación suave al cargar
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s';
+            
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>

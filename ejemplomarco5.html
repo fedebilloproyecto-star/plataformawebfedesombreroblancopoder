@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Explora y personaliza un universo interactivo con diferentes fondos galácticos, estrellas, lunas y planetas. Descarga tus creaciones como imágenes." />
+<title>Universo Interactivo - Crea y Descarga Escenas Galácticas</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #111;
+    color: #eee;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: space-between;
+       border-radius: 10px;
+  max-width: 1200px;
+  margin: 90px auto;
+  }
+  header {
+    text-align: center;
+    padding: 20px;
+    background: linear-gradient(to right, #1a0033, #330066);
+    width: 100%;
+    box-shadow: 0 0 15px #440066;
+    border-bottom: 2px solid #bb33ff;
+  }
+  header h1 {
+    margin-bottom: 5px;
+    font-size: 2.8rem;
+    letter-spacing: 2px;
+    color: #bb33ff;
+    text-shadow: 0 0 10px #dd99ff;
+  }
+  header h2 {
+    margin-top: 0;
+    font-weight: 300;
+    color: #dd99ff;
+    font-size: 1.5rem;
+  }
+  header p.description {
+    margin: 15px auto;
+    max-width: 800px;
+    font-size: 1.2rem;
+    color: #ccc;
+    line-height: 1.6;
+  }
+
+  .content-section {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 20px;
+    background: rgba(30, 30, 30, 0.7);
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(187, 51, 255, 0.3);
+  }
+  
+  .section-title {
+    color: #bb33ff;
+    border-bottom: 1px solid #bb33ff;
+    padding-bottom: 10px;
+    margin-top: 0;
+  }
+  
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    margin: 30px 0;
+  }
+  
+  .feature-card {
+    background: rgba(40, 40, 40, 0.7);
+    padding: 15px;
+    border-radius: 10px;
+    border-left: 3px solid #bb33ff;
+    transition: transform 0.3s ease;
+  }
+  
+  .feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(187, 51, 255, 0.2);
+  }
+  
+  .feature-card h3 {
+    color: #dd99ff;
+    margin-top: 0;
+  }
+
+  #frame {
+    position: relative;
+    width: 800px;
+    height: 500px;
+    margin: 20px 0;
+    border: 10px solid #bb33ff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 0 50px #bb33ff;
+    background: linear-gradient(120deg, #7b2ff7, #f107a3);
+    user-select: none;
+  }
+
+  /* Fondos */
+  .fondo1 {
+    animation: fondoColores1 60s ease-in-out infinite;
+  }
+  .fondo2 {
+    animation: fondoColores2 80s ease-in-out infinite;
+  }
+  .fondo3 {
+    animation: fondoColores3 100s ease-in-out infinite;
+  }
+  .fondo4 {
+    animation: fondoColores4 70s ease-in-out infinite;
+  }
+  .fondo5 {
+    animation: fondoColores5 90s ease-in-out infinite;
+  }
+
+  @keyframes fondoColores1 {
+    0% { background: linear-gradient(120deg, #7b2ff7, #f107a3); }
+    25% { background: linear-gradient(120deg, #ff6ec4, #7873f5); }
+    50% { background: linear-gradient(120deg, #42e695, #3bb2b8); }
+    75% { background: linear-gradient(120deg, #ff9a8b, #ff6a88); }
+    100% { background: linear-gradient(120deg, #7b2ff7, #f107a3); }
+  }
+  @keyframes fondoColores2 {
+    0% { background: radial-gradient(circle at 40% 40%, #30002c, #6a008a); }
+    50% { background: radial-gradient(circle at 70% 70%, #8e44ad, #2c003b); }
+    100% { background: radial-gradient(circle at 40% 40%, #30002c, #6a008a); }
+  }
+  @keyframes fondoColores3 {
+    0% { background: radial-gradient(circle at 30% 70%, #006666, #003333); }
+    50% { background: radial-gradient(circle at 60% 40%, #00cc99, #004d40); }
+    100% { background: radial-gradient(circle at 30% 70%, #006666, #003333); }
+  }
+  @keyframes fondoColores4 {
+    0% { background: linear-gradient(135deg, #000428, #004e92); }
+    50% { background: linear-gradient(135deg, #004e92, #000428); }
+    100% { background: linear-gradient(135deg, #000428, #004e92); }
+  }
+  @keyframes fondoColores5 {
+    0% { background: linear-gradient(to right, #ff416c, #ff4b2b); }
+    50% { background: linear-gradient(to right, #ff4b2b, #ff416c); }
+    100% { background: linear-gradient(to right, #ff416c, #ff4b2b); }
+  }
+
+  /* Estrellas */
+  .star {
+    position: absolute;
+    border-radius: 50%;
+    background: white;
+    opacity: 0.6;
+    z-index: 10;
+    animation: twinkle 5s ease-in-out infinite;
+  }
+
+  .star1 {
+    background: white;
+  }
+  .star2 {
+    background: #aad0ff;
+  }
+  .star3 {
+    background: #ffd1dc;
+  }
+  .star4 {
+    background: #ffeeaa;
+  }
+  .star5 {
+    background: #ff9999;
+  }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.2); }
+  }
+
+  /* Cometas */
+  .comet {
+    position: absolute;
+    width: 6px;
+    height: 2px;
+    background: linear-gradient(to right, rgba(255,255,255,0.8), transparent);
+    border-radius: 50%;
+    z-index: 15;
+    animation: cometa 15s linear infinite;
+  }
+  
+  @keyframes cometa {
+    0% { transform: translateX(-100px) translateY(0); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateX(900px) translateY(100px); opacity: 0; }
+  }
+
+  /* Luna */
+  .moon {
+    position: absolute;
+    top: 50px;
+    right: 70px;
+    border-radius: 50%;
+    box-shadow: 0 0 25px #fff;
+    animation: flotarLuna 6s ease-in-out infinite;
+    z-index: 20;
+  }
+  .moon1 {
+    width: 90px;
+    height: 90px;
+    background: radial-gradient(circle at 30% 30%, #f0f0f0, #bbbbbb);
+  }
+  .moon2 {
+    width: 120px;
+    height: 120px;
+    background: radial-gradient(circle at 50% 50%, #ffeedd, #ccbb99);
+  }
+  .moon3 {
+    width: 70px;
+    height: 70px;
+    background: radial-gradient(circle at 40% 40%, #aaddff, #6699cc);
+  }
+  .moon4 {
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle at 40% 40%, #ffccaa, #cc8866);
+  }
+
+  @keyframes flotarLuna {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  /* Planeta */
+  .planet {
+    position: absolute;
+    bottom: 60px;
+    left: 80px;
+    border-radius: 50%;
+    box-shadow: 0 0 30px #d38aff;
+    animation: girarPlaneta 40s linear infinite;
+    z-index: 20;
+  }
+  .planet1 {
+    width: 120px;
+    height: 120px;
+    background: radial-gradient(circle at 40% 40%, #aa00ff, #5500aa);
+  }
+  .planet2 {
+    width: 90px;
+    height: 90px;
+    background: radial-gradient(circle at 40% 40%, #44ccff, #0077aa);
+  }
+  .planet3 {
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle at 40% 40%, #ffaa33, #cc7700);
+  }
+  .planet4 {
+    width: 110px;
+    height: 110px;
+    background: radial-gradient(circle at 40% 40%, #ff3366, #990033);
+  }
+  .planet5 {
+    width: 130px;
+    height: 130px;
+    background: radial-gradient(circle at 40% 40%, #66ff99, #009933);
+  }
+
+  @keyframes girarPlaneta {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  /* Nave espacial */
+  .spaceship {
+    position: absolute;
+    width: 60px;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.8);
+    clip-path: polygon(0% 50%, 20% 0%, 100% 0%, 100% 100%, 20% 100%);
+    z-index: 25;
+    animation: volarNave 25s linear infinite;
+  }
+  
+  @keyframes volarNave {
+    0% { transform: translateX(-100px) translateY(100px) rotate(0deg); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateX(900px) translateY(50px) rotate(-5deg); opacity: 0; }
+  }
+
+  /* Controles */
+  #controls {
+    margin: 10px 0 40px 0;
+    background: #222;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 0 30px #bb33ffaa;
+    width: 820px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    justify-content: center;
+    color: #ddd;
+    border: 1px solid #444;
+  }
+  
+  .control-group {
+    display: flex;
+    flex-direction: column;
+    min-width: 180px;
+  }
+  
+  .control-group label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #bb99ff;
+  }
+  
+  select {
+    border-radius: 8px;
+    border: 1px solid #555;
+    padding: 8px 12px;
+    font-size: 1rem;
+    background: #333;
+    color: #eee;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  select:hover {
+    border-color: #bb33ff;
+    box-shadow: 0 0 8px rgba(187, 51, 255, 0.5);
+  }
+
+  button#downloadBtn {
+    background: linear-gradient(to right, #bb33ff, #8800cc);
+    border: none;
+    padding: 12px 25px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: white;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 0 15px #bb33ff;
+    transition: all 0.3s ease;
+    margin-top: 15px;
+    width: 100%;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  button#downloadBtn:hover {
+    background: linear-gradient(to right, #dd66ff, #aa33ff);
+    transform: translateY(-2px);
+    box-shadow: 0 0 25px #dd66ff;
+  }
+  
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    margin: 30px 0;
+  }
+  
+  .gallery-item {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 15px rgba(187, 51, 255, 0.3);
+    transition: transform 0.3s ease;
+  }
+  
+  .gallery-item:hover {
+    transform: scale(1.05);
+  }
+  
+  .gallery-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  footer {
+    margin-top: auto;
+    background: linear-gradient(to right, #1a0033, #330066);
+    width: 100%;
+    padding: 25px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #aaa;
+    box-shadow: inset 0 1px 4px #440066aa;
+    border-top: 1px solid #bb33ff;
+  }
+  
+  footer p {
+    margin: 5px 0;
+  }
+  
+  .social-links {
+    margin: 15px 0;
+  }
+  
+  .social-links a {
+    color: #bb99ff;
+    margin: 0 10px;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .social-links a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+  }
+  .boton-atras {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007BFF;  /* Azul */
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.boton-atras:hover {
+    background-color: #0056b3;  /* Azul más oscuro al pasar el mouse */
+}
+ /* Estilos para el botón */
+        .btn-back {
+            display: inline-block;
+            padding: 18px 36px;
+            font-size: 22px;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+            background: linear-gradient(45deg, #FF5722, #FF9800);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        /* Efecto al pasar el mouse */
+        .btn-back:hover {
+            background: linear-gradient(45deg, #E64A19, #F57C00);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        }
+
+        /* Efecto al hacer clic */
+        .btn-back:active {
+            transform: translateY(1px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+</style>
+</head>
+<body>
+    <!-- Botón que lleva a otro.html -->
+    <a href="principalmarcoejemplo.html">
+      <button class="btn-back"> Volver atrás</button>
+    </a> 
+<header>
+  <h1>Universo Interactivo</h1>
+  <h2>Crea y Personaliza Tu Propio Espacio Galáctico</h2>
+  <p class="description">Explora un universo de posibilidades con nuestro generador interactivo. Personaliza fondos galácticos, estrellas, lunas y planetas para crear escenas cósmicas únicas. Captura y descarga tus creaciones para usarlas como fondos de pantalla o inspiración artística.</p>
+</header>
+
+<div class="content-section">
+  <h2 class="section-title">Características Principales</h2>
+  <div class="features-grid">
+    <div class="feature-card">
+      <h3>Fondos Dinámicos</h3>
+      <p>5 opciones de fondos galácticos con animaciones fluidas y transiciones de color hipnóticas.</p>
+    </div>
+    <div class="feature-card">
+      <h3>Sistema Estelar</h3>
+      <p>Elige entre 5 tipos de estrellas con diferentes colores y patrones de brillo.</p>
+    </div>
+    <div class="feature-card">
+      <h3>Cuerpos Celestes</h3>
+      <p>Personaliza lunas y planetas con diferentes tamaños, colores y texturas.</p>
+    </div>
+    <div class="feature-card">
+      <h3>Elementos Especiales</h3>
+      <p>Cometas y naves espaciales que cruzan tu universo creado.</p>
+    </div>
+  </div>
+</div>
+
+<div id="frame" class="fondo1">
+  <!-- Las estrellas, luna, planeta y otros elementos se crean por JS -->
+</div>
+
+<div id="controls">
+  <div class="control-group">
+    <label for="fondoSelect">Fondo Galáctico</label>
+    <select id="fondoSelect">
+      <option value="fondo1">Nebulosa Rosa-Púrpura</option>
+      <option value="fondo2">Galaxia Morada</option>
+      <option value="fondo3">Nebulosa Verde-Azul</option>
+      <option value="fondo4">Espacio Profundo</option>
+      <option value="fondo5">Nebulosa Roja</option>
+    </select>
+  </div>
+  <div class="control-group">
+    <label for="starSelect">Tipo de Estrellas</label>
+    <select id="starSelect">
+      <option value="star1">Blancas Clásicas</option>
+      <option value="star2">Azules Frías</option>
+      <option value="star3">Rosadas Cálidas</option>
+      <option value="star4">Amarillas Brillantes</option>
+      <option value="star5">Rojas Gigantes</option>
+    </select>
+  </div>
+  <div class="control-group">
+    <label for="moonSelect">Luna</label>
+    <select id="moonSelect">
+      <option value="moon1">Gris Clásico</option>
+      <option value="moon2">Amarillenta</option>
+      <option value="moon3">Azulada</option>
+      <option value="moon4">Anaranjada</option>
+    </select>
+  </div>
+  <div class="control-group">
+    <label for="planetSelect">Planeta</label>
+    <select id="planetSelect">
+      <option value="planet1">Púrpura Místico</option>
+      <option value="planet2">Azul Oceánico</option>
+      <option value="planet3">Naranja Ardiente</option>
+      <option value="planet4">Rojo Sangre</option>
+      <option value="planet5">Verde Esmeralda</option>
+    </select>
+  </div>
+  <button id="downloadBtn">Descargar Imagen del Universo</button>
+</div>
+
+<div class="content-section">
+  <h2 class="section-title">Galería de Inspiración</h2>
+  <p>Aquí tienes algunas combinaciones populares creadas por otros usuarios:</p>
+  
+  <div class="gallery">
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=500&auto=format" alt="Galaxia púrpura con estrellas azules">
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?w=500&auto=format" alt="Nebulosa roja con planeta naranja">
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1464802686167-b939a6910659?w=500&auto=format" alt="Espacio profundo con luna gris">
+    </div>
+  </div>
+  
+  <h3 class="section-title">Cómo Usar el Universo Interactivo</h3>
+  <ol>
+    <li>Selecciona un fondo galáctico de las opciones disponibles</li>
+    <li>Elige el tipo de estrellas que prefieras</li>
+    <li>Personaliza la luna y el planeta según tus gustos</li>
+    <li>Observa cómo los elementos interactúan en tiempo real</li>
+    <li>Cuando estés satisfecho con tu creación, haz clic en "Descargar Imagen"</li>
+  </ol>
+</div>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+  const frame = document.getElementById('frame');
+  const fondoSelect = document.getElementById('fondoSelect');
+  const starSelect = document.getElementById('starSelect');
+  const moonSelect = document.getElementById('moonSelect');
+  const planetSelect = document.getElementById('planetSelect');
+  const downloadBtn = document.getElementById('downloadBtn');
+
+  let stars = [];
+  let moon, planet, comets = [], spaceships = [];
+
+  function crearEstrellas(colorClase) {
+    stars.forEach(s => s.remove());
+    stars = [];
+    const cantidad = 150;
+    for (let i = 0; i < cantidad; i++) {
+      const star = document.createElement('div');
+      const size = Math.random() * 3 + 1;
+      const delay = Math.random() * 5;
+      const duration = Math.random() * 4 + 2;
+
+      star.className = `star ${colorClase}`;
+      star.style.width = `${size}px`;
+      star.style.height = `${size}px`;
+      star.style.top = `${Math.random() * frame.clientHeight}px`;
+      star.style.left = `${Math.random() * frame.clientWidth}px`;
+      star.style.animation = `twinkle ${duration}s ease-in-out ${delay}s infinite`;
+
+      frame.appendChild(star);
+      stars.push(star);
+    }
+  }
+
+  function crearCometas() {
+    comets.forEach(c => c.remove());
+    comets = [];
+    
+    const cantidad = 3;
+    for (let i = 0; i < cantidad; i++) {
+      const comet = document.createElement('div');
+      comet.className = 'comet';
+      comet.style.top = `${Math.random() * frame.clientHeight}px`;
+      comet.style.left = `${Math.random() * frame.clientWidth}px`;
+      comet.style.animation = `cometa ${15 + Math.random() * 10}s linear ${Math.random() * 10}s infinite`;
+      
+      frame.appendChild(comet);
+      comets.push(comet);
+    }
+  }
+
+  function crearNaves() {
+    spaceships.forEach(s => s.remove());
+    spaceships = [];
+    
+    const cantidad = 2;
+    for (let i = 0; i < cantidad; i++) {
+      const ship = document.createElement('div');
+      ship.className = 'spaceship';
+      ship.style.top = `${50 + Math.random() * (frame.clientHeight - 100)}px`;
+      ship.style.left = `${Math.random() * frame.clientWidth}px`;
+      ship.style.animation = `volarNave ${20 + Math.random() * 15}s linear ${Math.random() * 15}s infinite`;
+      
+      frame.appendChild(ship);
+      spaceships.push(ship);
+    }
+  }
+
+  function crearLuna(clase) {
+    if (moon) moon.remove();
+    moon = document.createElement('div');
+    moon.className = `moon ${clase}`;
+    frame.appendChild(moon);
+  }
+
+  function crearPlaneta(clase) {
+    if (planet) planet.remove();
+    planet = document.createElement('div');
+    planet.className = `planet ${clase}`;
+    frame.appendChild(planet);
+  }
+
+  function actualizarFondo(clase) {
+    frame.classList.remove('fondo1', 'fondo2', 'fondo3', 'fondo4', 'fondo5');
+    frame.classList.add(clase);
+  }
+
+  function init() {
+    actualizarFondo(fondoSelect.value);
+    crearEstrellas(starSelect.value);
+    crearLuna(moonSelect.value);
+    crearPlaneta(planetSelect.value);
+    crearCometas();
+    crearNaves();
+  }
+
+  fondoSelect.addEventListener('change', e => {
+    actualizarFondo(e.target.value);
+  });
+  starSelect.addEventListener('change', e => {
+    crearEstrellas(e.target.value);
+  });
+  moonSelect.addEventListener('change', e => {
+    crearLuna(e.target.value);
+  });
+  planetSelect.addEventListener('change', e => {
+    crearPlaneta(e.target.value);
+  });
+
+  downloadBtn.addEventListener('click', () => {
+    // Pausar animaciones para mejor captura
+    frame.style.animationPlayState = 'paused';
+    stars.forEach(s => s.style.animationPlayState = 'paused');
+    comets.forEach(c => c.style.animationPlayState = 'paused');
+    spaceships.forEach(s => s.style.animationPlayState = 'paused');
+    if (moon) moon.style.animationPlayState = 'paused';
+    if (planet) planet.style.animationPlayState = 'paused';
+
+    html2canvas(frame, {
+      backgroundColor: null,
+      scale: 2,
+      logging: false,
+      useCORS: true
+    }).then(canvas => {
+      const link = document.createElement('a');
+      link.download = `universo-${new Date().toISOString().slice(0,10)}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+
+      // Reanudar animaciones
+      frame.style.animationPlayState = 'running';
+      stars.forEach(s => s.style.animationPlayState = 'running');
+      comets.forEach(c => c.style.animationPlayState = 'running');
+      spaceships.forEach(s => s.style.animationPlayState = 'running');
+      if (moon) moon.style.animationPlayState = 'running';
+      if (planet) planet.style.animationPlayState = 'running';
+    }).catch(err => {
+      console.error('Error al generar la imagen:', err);
+      // Reanudar animaciones incluso si hay error
+      frame.style.animationPlayState = 'running';
+      stars.forEach(s => s.style.animationPlayState = 'running');
+      comets.forEach(c => c.style.animationPlayState = 'running');
+      spaceships.forEach(s => s.style.animationPlayState = 'running');
+      if (moon) moon.style.animationPlayState = 'running';
+      if (planet) planet.style.animationPlayState = 'running';
+    });
+  });
+
+  // Inicializar con un pequeño retraso para asegurar que todo esté cargado
+  setTimeout(init, 100);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,2658 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marco Geométrico Premium</title>
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --frame-color: #e0c9a6;
+            --frame-pattern-color: #d4a373;
+            --text-color: #333;
+            --light-color: #fff;
+            --shadow: 0 15px 30px rgba(0,0,0,0.2);
+            --frame-width: 20px;
+            --frame-padding: 15px;
+            --frame-radius: 0px;
+            --photo-radius: 0px;
+            --frame-opacity: 1;
+            --pattern-opacity: 1;
+            --photo-brightness: 100%;
+            --photo-contrast: 100%;
+            --photo-saturation: 100%;
+            --photo-sepia: 0%;
+            --photo-hue: 0deg;
+            --photo-blur: 0px;
+            --photo-grayscale: 0%;
+            --photo-invert: 0%;
+            --logo-opacity: 0;
+            --logo-size: 100px;
+            --logo-position: bottom right;
+            --logo-url: none;
+            --text-content: '';
+            --text-color: #ffffff;
+            --text-size: 24px;
+            --text-font: 'Arial';
+            --text-position: center;
+            --text-opacity: 1;
+            --text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #d4a373 0%, #c3cfe2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+.container {
+    text-align: center;
+    max-width: 1400px;
+    width: 100%;
+    padding: 40px;
+    background: linear-gradient(135deg, rgba(245, 247, 250, 0.95) 0%, rgba(230, 240, 255, 0.95) 100%);
+    border-radius: 25px;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.15);
+    position: relative;
+    overflow: hidden;
+  border-radius: clamp(8px, 2vw, 12px); /* Radio adaptable */
+  max-width: min(1200px, 95vw);
+  margin: clamp(60px, 10vh, 90px) auto;
+  width: 100%;
+  box-sizing: border-box;
+    /* Borde con colores fuertes */
+    border: 8px solid transparent;
+    border-image: linear-gradient(45deg, #0066ff, #8e2de2) 1;
+
+}
+
+
+        .container::before {
+          
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        }
+
+        h1 {
+            color: var(--text-color);
+            margin-bottom: 30px;
+            font-size: 2.8rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            position: relative;
+            padding-bottom: 20px;
+            margin-top: 10px;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        h1::after {
+           
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 3px;
+        }
+
+        .app-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .frame-section {
+            flex: 1;
+            min-width: 400px;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .controls-section {
+            flex: 1;
+            min-width: 400px;
+            max-width: 700px;
+        }
+
+        .photo-frame-container {
+            perspective: 1000px;
+            margin-bottom: 30px;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .photo-frame {
+            position: relative;
+            width: 100%;
+            height: 600px;
+            margin: 0 auto;
+            padding: 30px;
+            background: var(--light-color);
+            border-radius: calc(var(--frame-radius) + 15px);
+            box-shadow: var(--shadow);
+            transition: all 0.5s ease;
+            z-index: 1;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .frame-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border: var(--frame-width) solid rgba(var(--frame-color-rgb), var(--frame-opacity));
+            padding: var(--frame-padding);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background-color: #f8f1e5;
+            border-radius: var(--frame-radius);
+        }
+
+        /* Estilos geométricos del marco */
+        .frame-inner.geometric-circle {
+            border-image: radial-gradient(circle, rgba(var(--frame-color-rgb), var(--frame-opacity)), rgba(var(--frame-pattern-color-rgb), var(--pattern-opacity))) 1;
+            border-width: var(--frame-width);
+            border-style: solid;
+        }
+
+        .frame-inner.geometric-triangles {
+            background-image: 
+                linear-gradient(45deg, rgba(var(--frame-pattern-color-rgb), var(--pattern-opacity)) 25%, transparent 25%),
+                linear-gradient(-45deg, rgba(var(--frame-pattern-color-rgb), var(--pattern-opacity)) 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, rgba(var(--frame-pattern-color-rgb), var(--pattern-opacity)) 75%),
+                linear-gradient(-45deg, transparent 75%, rgba(var(--frame-pattern-color-rgb), var(--pattern-opacity)) 75%);
+            background-size: 40px 40px;
+            background-position: 0 0, 0 20px, 20px -20px, -20px 0px;
+            border: calc(var(--frame-width)/2) solid rgba(var(--frame-color-rgb), var(--frame-opacity));
+        }
+
+        .frame-inner.geometric-hexagons {
+            background-image: 
+                linear-gradient(30deg, rgba(var(--frame-pattern-color-rgb), var(--pattern-opacity)) 12%, transparent 12.5%, transparent 87%, rgba(var(--frame-pattern-color-rgb), var(--pattern-opacity)) 87.5%, rgba(var(--frame-pattern-color-rgb), var(--pattern-opacity))),
+                linear-gradient(150deg, rgba(var(--frame-pattern-color-rgb), var(--pattern-opacity)) 12%, transparent 12.5%, transparent 87%, rgba(var(--frame-pattern-color-rgb), var(--pattern-opacity)) 87.5%, rgba(var(--frame-pattern-color-rgb), var(--pattern-opacity))),
+                linear-gradient(270deg, rgba(var(--frame-pattern-color-rgb), var(--pattern-opacity)) 12%, transparent 12.5%, transparent 87%, rgba(var(--frame-pattern-color-rgb), var(--pattern-opacity)) 87.5%, rgba(var(--frame-pattern-color-rgb), var(--pattern-opacity)));
+            background-size: 40px 70px;
+            border: calc(var(--frame-width)/2) solid rgba(var(--frame-color-rgb), var(--frame-opacity));
+        }
+
+        .frame-inner.geometric-diamonds {
+            background-image: 
+                linear-gradient(45deg, rgba(var(--frame-pattern-color-rgb), var(--pattern-opacity)) 25%, transparent 25%),
+                linear-gradient(-45deg, rgba(var(--frame-pattern-color-rgb), var(--pattern-opacity)) 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, rgba(var(--frame-pattern-color-rgb), var(--pattern-opacity)) 75%),
+                linear-gradient(-45deg, transparent 75%, rgba(var(--frame-pattern-color-rgb), var(--pattern-opacity)) 75%);
+            background-size: 40px 40px;
+            background-position: 0 0, 0 20px, 20px -20px, -20px 0px;
+            border: calc(var(--frame-width)/2) double rgba(var(--frame-color-rgb), var(--frame-opacity));
+        }
+
+        .frame-inner.geometric-wave {
+            border: calc(var(--frame-width)*0.75) solid transparent;
+            border-image: 
+                repeating-linear-gradient(45deg, 
+                    rgba(var(--frame-color-rgb), var(--frame-opacity)) 0px, 
+                    rgba(var(--frame-color-rgb), var(--frame-opacity)) 10px, 
+                    rgba(var(--frame-pattern-color-rgb), var(--pattern-opacity)) 10px, 
+                    rgba(var(--frame-pattern-color-rgb), var(--pattern-opacity)) 20px) 10;
+        }
+
+        .frame-inner.geometric-polygon {
+            clip-path: polygon(
+                0% 15%, 15% 15%, 15% 0%, 85% 0%, 85% 15%, 
+                100% 15%, 100% 85%, 85% 85%, 85% 100%, 
+                15% 100%, 15% 85%, 0% 85%
+            );
+            border: none;
+            background: linear-gradient(45deg, rgba(var(--frame-color-rgb), var(--frame-opacity)), rgba(var(--frame-pattern-color-rgb), var(--pattern-opacity)));
+        }
+
+        .frame-inner.geometric-maze {
+            background-image: 
+                linear-gradient(rgba(var(--frame-pattern-color-rgb), var(--pattern-opacity)) 50%, transparent 50%),
+                linear-gradient(90deg, rgba(var(--frame-pattern-color-rgb), var(--pattern-opacity)) 50%, transparent 50%);
+            background-size: 20px 20px;
+            border: calc(var(--frame-width)/2) solid rgba(var(--frame-color-rgb), var(--frame-opacity));
+        }
+
+        .frame-inner.geometric-stripes {
+            background: repeating-linear-gradient(
+                45deg,
+                rgba(var(--frame-color-rgb), var(--frame-opacity)),
+                rgba(var(--frame-color-rgb), var(--frame-opacity)) 10px,
+                rgba(var(--frame-pattern-color-rgb), var(--pattern-opacity)) 10px,
+                rgba(var(--frame-pattern-color-rgb), var(--pattern-opacity)) 20px
+            );
+            border: calc(var(--frame-width)/2) solid rgba(var(--frame-color-rgb), var(--frame-opacity));
+        }
+
+        .frame-inner.geometric-checker {
+            background-image: 
+                linear-gradient(45deg, rgba(var(--frame-color-rgb), var(--frame-opacity)) 25%, transparent 25%),
+                linear-gradient(-45deg, rgba(var(--frame-color-rgb), var(--frame-opacity)) 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, rgba(var(--frame-color-rgb), var(--frame-opacity)) 75%),
+                linear-gradient(-45deg, transparent 75%, rgba(var(--frame-color-rgb), var(--frame-opacity)) 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -20px, -20px 0px;
+            border: calc(var(--frame-width)/2) solid rgba(var(--frame-pattern-color-rgb), var(--pattern-opacity));
+        }
+
+        .frame-inner.geometric-dots {
+            background-image: radial-gradient(
+                circle,
+                rgba(var(--frame-pattern-color-rgb), var(--pattern-opacity)) 2px,
+                transparent 2px
+            );
+            background-size: 20px 20px;
+            border: var(--frame-width) solid rgba(var(--frame-color-rgb), var(--frame-opacity));
+        }
+
+        .frame-inner.geometric-lines {
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(var(--frame-color-rgb), var(--frame-opacity)),
+                rgba(var(--frame-color-rgb), var(--frame-opacity)) 2px,
+                rgba(var(--frame-pattern-color-rgb), var(--pattern-opacity)) 2px,
+                rgba(var(--frame-pattern-color-rgb), var(--pattern-opacity)) 4px
+            );
+            border: calc(var(--frame-width)/2) solid rgba(var(--frame-pattern-color-rgb), var(--pattern-opacity));
+        }
+
+        .frame-inner.geometric-abstract {
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(var(--frame-color-rgb), var(--frame-opacity)) 0%, transparent 30%),
+                radial-gradient(circle at 80% 70%, rgba(var(--frame-pattern-color-rgb), var(--pattern-opacity)) 0%, transparent 30%),
+                radial-gradient(circle at 40% 60%, rgba(var(--frame-color-rgb), var(--frame-opacity)) 0%, transparent 40%),
+                radial-gradient(circle at 60% 40%, rgba(var(--frame-pattern-color-rgb), var(--pattern-opacity)) 0%, transparent 40%);
+            border: calc(var(--frame-width)/2) solid rgba(var(--frame-color-rgb), var(--frame-opacity));
+        }
+
+        .frame-inner.geometric-bubbles {
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(var(--frame-pattern-color-rgb), var(--pattern-opacity)) 0%, transparent 25%),
+                radial-gradient(circle at 70% 80%, rgba(var(--frame-pattern-color-rgb), var(--pattern-opacity)) 0%, transparent 25%),
+                radial-gradient(circle at 40% 60%, rgba(var(--frame-pattern-color-rgb), var(--pattern-opacity)) 0%, transparent 25%),
+                radial-gradient(circle at 60% 20%, rgba(var(--frame-pattern-color-rgb), var(--pattern-opacity)) 0%, transparent 25%);
+            background-color: rgba(var(--frame-color-rgb), var(--frame-opacity));
+            border: calc(var(--frame-width)/2) solid rgba(var(--frame-pattern-color-rgb), var(--pattern-opacity));
+        }
+
+        .frame-inner.geometric-cross {
+            background-image: 
+                linear-gradient(rgba(var(--frame-color-rgb), var(--frame-opacity)) 50%, transparent 50%),
+                linear-gradient(90deg, rgba(var(--frame-color-rgb), var(--frame-opacity)) 50%, transparent 50%),
+                linear-gradient(45deg, rgba(var(--frame-pattern-color-rgb), var(--pattern-opacity)) 50%, transparent 50%),
+                linear-gradient(-45deg, rgba(var(--frame-pattern-color-rgb), var(--pattern-opacity)) 50%, transparent 50%);
+            background-size: 20px 20px;
+            border: calc(var(--frame-width)/2) solid rgba(var(--frame-pattern-color-rgb), var(--pattern-opacity));
+        }
+
+        .frame-inner.geometric-pixels {
+            background-image: 
+                linear-gradient(rgba(var(--frame-color-rgb), var(--frame-opacity)) 50%, transparent 50%),
+                linear-gradient(90deg, rgba(var(--frame-color-rgb), var(--frame-opacity)) 50%, transparent 50%);
+            background-size: 10px 10px;
+            border: calc(var(--frame-width)/2) solid rgba(var(--frame-pattern-color-rgb), var(--pattern-opacity));
+        }
+
+        .frame-inner.geometric-spiral {
+            background: 
+                radial-gradient(circle, transparent 20%, rgba(var(--frame-color-rgb), var(--frame-opacity)) 20%, 
+                rgba(var(--frame-color-rgb), var(--frame-opacity)) 40%, transparent 40%, 
+                transparent 60%, rgba(var(--frame-pattern-color-rgb), var(--pattern-opacity)) 60%, 
+                rgba(var(--frame-pattern-color-rgb), var(--pattern-opacity)) 80%, transparent 80%);
+            background-size: 50px 50px;
+            border: calc(var(--frame-width)/2) solid rgba(var(--frame-color-rgb), var(--frame-opacity));
+        }
+
+        .photo-container {
+            width: 100%;
+            height: 100%;
+            border-radius: var(--photo-radius);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s ease;
+            cursor: grab;
+            filter: 
+                brightness(var(--photo-brightness)) 
+                contrast(var(--photo-contrast)) 
+                saturate(var(--photo-saturation))
+                sepia(var(--photo-sepia))
+                hue-rotate(var(--photo-hue))
+                blur(var(--photo-blur))
+                grayscale(var(--photo-grayscale))
+                invert(var(--photo-invert));
+        }
+
+        .photo:active {
+            cursor: grabbing;
+        }
+
+        .photo-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--overlay-color);
+            mix-blend-mode: var(--blend-mode);
+            opacity: var(--overlay-opacity);
+            pointer-events: none;
+        }
+
+        .frame-logo {
+            position: absolute;
+            width: var(--logo-size);
+            height: var(--logo-size);
+            background-image: var(--logo-url);
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            opacity: var(--logo-opacity);
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .frame-logo.bottom-right {
+            bottom: 20px;
+            right: 20px;
+        }
+
+        .frame-logo.bottom-left {
+            bottom: 20px;
+            left: 20px;
+        }
+
+        .frame-logo.top-right {
+            top: 20px;
+            right: 20px;
+        }
+
+        .frame-logo.top-left {
+            top: 20px;
+            left: 20px;
+        }
+
+        .frame-logo.center {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .frame-text {
+            position: absolute;
+            color: var(--text-color);
+            font-size: var(--text-size);
+            font-family: var(--text-font);
+            opacity: var(--text-opacity);
+            text-shadow: var(--text-shadow);
+            pointer-events: none;
+            z-index: 10;
+            width: 80%;
+            text-align: var(--text-position);
+            word-wrap: break-word;
+        }
+
+        .frame-text.bottom {
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .frame-text.top {
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .frame-text.left {
+            left: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            text-align: left;
+            width: auto;
+        }
+
+        .frame-text.right {
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            text-align: right;
+            width: auto;
+        }
+
+        .frame-text.center {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+        }
+
+        .controls {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 15px;
+        }
+
+        button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        button:hover::after {
+            opacity: 1;
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+        }
+
+        .upload-container {
+            margin-top: 30px;
+            position: relative;
+        }
+
+        .file-label {
+            display: inline-block;
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .file-label::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .file-label:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .file-label:hover::after {
+            opacity: 1;
+        }
+
+        #file-input, #logo-input {
+            display: none;
+        }
+
+        .color-pickers {
+            margin: 30px 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .color-picker-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 10px;
+        }
+
+        .color-picker-label {
+            margin-bottom: 8px;
+            font-weight: bold;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .color-picker {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid white;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .color-picker:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .geometric-styles {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            max-height: 200px;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        .geometric-btn {
+            padding: 10px 15px;
+            border-radius: 8px;
+            background: rgba(0,0,0,0.05);
+            border: 2px solid rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            color: #555;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .geometric-btn:hover {
+            background: rgba(0,0,0,0.1);
+            color: #333;
+        }
+
+        .geometric-btn.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-color: transparent;
+        }
+
+        .preset-frames {
+            margin: 30px 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .preset-btn {
+            padding: 8px 12px;
+            border-radius: 8px;
+            background: rgba(0,0,0,0.05);
+            border: 2px solid rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            color: #555;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .preset-btn:hover {
+            background: rgba(0,0,0,0.1);
+        }
+
+        .preset-btn i {
+            font-size: 18px;
+        }
+
+        .frame-size-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .size-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.05);
+            border: 2px solid rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .size-btn:hover {
+            background: rgba(0,0,0,0.1);
+        }
+
+        .size-btn.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-color: transparent;
+        }
+
+        .advanced-controls {
+            margin-top: 30px;
+            background: rgba(255,255,255,0.98);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: none;
+            animation: fadeIn 0.5s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .advanced-controls h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .toggle-advanced {
+            margin-top: 20px;
+            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+        }
+
+        .slider-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .slider-container label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #555;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .slider-container label span {
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        .slider {
+            width: 100%;
+            max-width: 400px;
+            height: 8px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: #ddd;
+            outline: none;
+            border-radius: 10px;
+            margin: 0 auto;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        .controls-group {
+            background: rgba(0,0,0,0.03);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .controls-group h4 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.1rem;
+        }
+
+        .tab-buttons {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .tab-btn {
+            padding: 8px 20px;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-weight: bold;
+            color: #666;
+            transition: all 0.3s;
+            font-size: 15px;
+        }
+
+        .tab-btn.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .overlay-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .overlay-color-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid white;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: all 0.2s;
+        }
+
+        .overlay-color-btn.active {
+            transform: scale(1.2);
+            box-shadow: 0 0 0 2px var(--primary-color);
+        }
+
+        .blend-mode-select, .text-font-select, .text-position-select, .logo-position-select {
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            background: white;
+            width: 100%;
+            max-width: 200px;
+            margin-bottom: 10px;
+        }
+
+        .save-load-controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .save-preset-btn {
+            background: linear-gradient(135deg, #ffb347, #ffcc33);
+        }
+
+        .load-preset-btn {
+            background: linear-gradient(135deg, #4CAF50, #8BC34A);
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+            font-family: inherit;
+        }
+
+        .logo-upload-container {
+            margin: 15px 0;
+        }
+
+        .logo-preview {
+            width: 100px;
+            height: 100px;
+            border: 1px dashed #ccc;
+            margin: 10px auto;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            display: none;
+        }
+
+        @media (max-width: 1200px) {
+            .app-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .frame-section, .controls-section {
+                min-width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .photo-frame {
+                height: 500px;
+                padding: 20px;
+            }
+            
+            .geometric-styles {
+                max-height: 150px;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            button, .file-label {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+                padding-bottom: 15px;
+            }
+            
+            .photo-frame {
+                height: 400px;
+                padding: 15px;
+            }
+            
+            .color-picker {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .geometric-btn, .preset-btn {
+                padding: 8px 12px;
+                font-size: 14px;
+            }
+            
+            .advanced-controls {
+                padding: 15px;
+            }
+        }
+
+        /* Animaciones */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Scrollbar personalizada */
+        .geometric-styles::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        .geometric-styles::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05);
+            border-radius: 10px;
+        }
+
+        .geometric-styles::-webkit-scrollbar-thumb {
+            background: rgba(0,0,0,0.2);
+            border-radius: 10px;
+        }
+
+        .geometric-styles::-webkit-scrollbar-thumb:hover {
+            background: rgba(0,0,0,0.3);
+        }
+        .btn-volver {
+    display: inline-block;
+    text-decoration: none;
+    background-color: #f1c40f; /* amarillo */
+    color: #000;
+    border: 2px solid #d4ac0d;
+    padding: 12px 24px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-volver:hover {
+    background-color: #000;
+    color: #f1c40f;
+    border-color: #000;
+}
+
+    </style>
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@400;700&family=Poppins:wght@400;700&family=Dancing+Script:wght@700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+    
+       
+        <div class="container">
+    <h1>Crea tu marco personalizado con</h1>
+    <h1> FED&SDAS BILLOR
+    </h1>
+    <h1>SABIDURIA DIGITAL,ARTE SOLITARIO
+    </h1>
+    <img src="marcoweb.png" alt="Logo" style="max-width: 600px; height: 300px;">
+
+
+        <div class="app-container">
+            <div class="frame-section">
+                <div class="photo-frame-container">
+                    <div class="photo-frame" id="photo-frame">
+                        <div class="frame-inner geometric-circle" id="frame-inner">
+                            <div class="photo-container" id="photo-container">
+                                <img id="photo" class="photo" src="https://source.unsplash.com/random/800x1000/?portrait" alt="Foto">
+                                <div class="photo-overlay" id="photo-overlay"></div>
+                            </div>
+                        </div>
+                        <div class="frame-logo bottom-right" id="frame-logo"></div>
+                        <div class="frame-text bottom" id="frame-text"></div>
+                    </div>
+                </div>
+                
+                <div class="controls">
+                    <button id="download-btn" class="download-btn">
+                        <i class="fas fa-download"></i> Descargar Foto
+                    </button>
+                    <button id="random-btn">
+                        <i class="fas fa-random"></i> Aleatorio
+                    </button>
+                </div>
+                
+                <div class="upload-container">
+                    <label for="file-input" class="file-label">
+                        <i class="fas fa-upload"></i> Subir tu propia foto
+                    </label>
+                    <input type="file" id="file-input" accept="image/*">
+                </div>
+            </div>
+            
+            <div class="controls-section">
+                <div class="tab-buttons">
+                    <button class="tab-btn active" data-tab="frame-tab">
+                        <i class="fas fa-border-style"></i> Marco
+                    </button>
+                    <button class="tab-btn" data-tab="photo-tab">
+                        <i class="fas fa-image"></i> Foto
+                    </button>
+                    <button class="tab-btn" data-tab="effects-tab">
+                        <i class="fas fa-magic"></i> Efectos
+                    </button>
+                    <button class="tab-btn" data-tab="branding-tab">
+                        <i class="fas fa-tag"></i> Branding
+                    </button>
+                </div>
+                
+                <div class="tab-content active" id="frame-tab">
+                    <div class="color-pickers">
+                        <div class="color-picker-group">
+                            <span class="color-picker-label">Color Marco</span>
+                            <input type="color" class="color-picker" id="frame-color" value="#e0c9a6" oninput="changeFrameColor(this.value)">
+                        </div>
+                        
+                        <div class="color-picker-group">
+                            <span class="color-picker-label">Color Patrón</span>
+                            <input type="color" class="color-picker" id="frame-pattern-color" value="#d4a373" oninput="changeFramePatternColor(this.value)">
+                        </div>
+                        
+                        <div class="color-picker-group">
+                            <span class="color-picker-label">Fondo</span>
+                            <input type="color" class="color-picker" id="bg-color" value="#f8f1e5" oninput="changeBgColor(this.value)">
+                        </div>
+                    </div>
+                    
+                    <div class="slider-container">
+                        <label for="frame-width-slider">
+                            Ancho del Marco
+                            <span id="frame-width-value">20px</span>
+                        </label>
+                        <input type="range" min="5" max="50" value="20" class="slider" id="frame-width-slider" oninput="changeFrameWidth(this.value)">
+                    </div>
+                    
+                    <div class="slider-container">
+                        <label for="frame-opacity-slider">
+                            Opacidad Marco
+                            <span id="frame-opacity-value">100%</span>
+                        </label>
+                        <input type="range" min="0" max="100" value="100" class="slider" id="frame-opacity-slider" oninput="changeFrameOpacity(this.value)">
+                    </div>
+                    
+                    <div class="slider-container">
+                        <label for="pattern-opacity-slider">
+                            Opacidad Patrón
+                            <span id="pattern-opacity-value">100%</span>
+                        </label>
+                        <input type="range" min="0" max="100" value="100" class="slider" id="pattern-opacity-slider" oninput="changePatternOpacity(this.value)">
+                    </div>
+                    
+                    <div class="frame-size-controls">
+                        <div class="size-btn active" data-size="small"><i class="fas fa-border-none"></i></div>
+                        <div class="size-btn" data-size="medium"><i class="fas fa-border-all"></i></div>
+                        <div class="size-btn" data-size="large"><i class="fas fa-square"></i></div>
+                    </div>
+                    
+                    <div class="slider-container">
+                        <label for="frame-radius-slider">
+                            Bordes Marco
+                            <span id="frame-radius-value">0px</span>
+                        </label>
+                        <input type="range" min="0" max="100" value="0" class="slider" id="frame-radius-slider" oninput="changeFrameRadius(this.value)">
+                    </div>
+                    
+                    <div class="slider-container">
+                        <label for="photo-radius-slider">
+                            Bordes Foto
+                            <span id="photo-radius-value">0px</span>
+                        </label>
+                        <input type="range" min="0" max="100" value="0" class="slider" id="photo-radius-slider" oninput="changePhotoRadius(this.value)">
+                    </div>
+                    
+                    <h4><i class="fas fa-shapes"></i> Estilos Geométricos</h4>
+                    <div class="geometric-styles">
+                        <div class="geometric-btn active" data-style="geometric-circle"><i class="fas fa-circle"></i> Círculos</div>
+                        <div class="geometric-btn" data-style="geometric-triangles"><i class="fas fa-play"></i> Triángulos</div>
+                        <div class="geometric-btn" data-style="geometric-hexagons"><i class="fas fa-hexagon"></i> Hexágonos</div>
+                        <div class="geometric-btn" data-style="geometric-diamonds"><i class="fas fa-gem"></i> Diamantes</div>
+                        <div class="geometric-btn" data-style="geometric-wave"><i class="fas fa-wave-square"></i> Ondas</div>
+                        <div class="geometric-btn" data-style="geometric-polygon"><i class="fas fa-shapes"></i> Polígono</div>
+                        <div class="geometric-btn" data-style="geometric-maze"><i class="fas fa-project-diagram"></i> Laberinto</div>
+                        <div class="geometric-btn" data-style="geometric-stripes"><i class="fas fa-grip-lines"></i> Rayas</div>
+                        <div class="geometric-btn" data-style="geometric-checker"><i class="fas fa-th-large"></i> Cuadrícula</div>
+                        <div class="geometric-btn" data-style="geometric-dots"><i class="fas fa-circle-notch"></i> Puntos</div>
+                        <div class="geometric-btn" data-style="geometric-lines"><i class="fas fa-slash"></i> Líneas</div>
+                        <div class="geometric-btn" data-style="geometric-abstract"><i class="fas fa-paint-brush"></i> Abstracto</div>
+                        <div class="geometric-btn" data-style="geometric-bubbles"><i class="fas fa-bubbles"></i> Burbujas</div>
+                        <div class="geometric-btn" data-style="geometric-cross"><i class="fas fa-times"></i> Cruz</div>
+                        <div class="geometric-btn" data-style="geometric-pixels"><i class="fas fa-border-none"></i> Píxeles</div>
+                        <div class="geometric-btn" data-style="geometric-spiral"><i class="fas fa-redo"></i> Espiral</div>
+                    </div>
+                    
+                    <h4><i class="fas fa-star"></i> Presets Predefinidos</h4>
+                    <div class="preset-frames">
+                        <div class="preset-btn" data-preset="vintage"><i class="fas fa-camera-retro"></i> Vintage</div>
+                        <div class="preset-btn" data-preset="modern"><i class="fas fa-cube"></i> Moderno</div>
+                        <div class="preset-btn" data-preset="elegant"><i class="fas fa-crown"></i> Elegante</div>
+                        <div class="preset-btn" data-preset="fun"><i class="fas fa-palette"></i> Divertido</div>
+                        <div class="preset-btn" data-preset="minimal"><i class="fas fa-minus"></i> Minimalista</div>
+                        <div class="preset-btn" data-preset="gold"><i class="fas fa-coins"></i> Dorado</div>
+                        <div class="preset-btn" data-preset="silver"><i class="fas fa-ring"></i> Plateado</div>
+                        <div class="preset-btn" data-preset="nature"><i class="fas fa-leaf"></i> Naturaleza</div>
+                        <div class="preset-btn" data-preset="corporate"><i class="fas fa-building"></i> Corporativo</div>
+                        <div class="preset-btn" data-preset="romantic"><i class="fas fa-heart"></i> Romántico</div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="photo-tab">
+                    <div class="controls-group">
+                        <h4><i class="fas fa-sliders-h"></i> Ajustes Básicos</h4>
+                        <div class="slider-container">
+                            <label for="brightness-slider">
+                                Brillo
+                                <span id="brightness-value">100%</span>
+                            </label>
+                            <input type="range" min="0" max="200" value="100" class="slider" id="brightness-slider" oninput="changeBrightness(this.value)">
+                        </div>
+                        
+                        <div class="slider-container">
+                            <label for="contrast-slider">
+                                Contraste
+                                <span id="contrast-value">100%</span>
+                            </label>
+                            <input type="range" min="0" max="200" value="100" class="slider" id="contrast-slider" oninput="changeContrast(this.value)">
+                        </div>
+                        
+                        <div class="slider-container">
+                            <label for="saturation-slider">
+                                Saturación
+                                <span id="saturation-value">100%</span>
+                            </label>
+                            <input type="range" min="0" max="200" value="100" class="slider" id="saturation-slider" oninput="changeSaturation(this.value)">
+                        </div>
+                    </div>
+                    
+                    <div class="controls-group">
+                        <h4><i class="fas fa-adjust"></i> Efectos Avanzados</h4>
+                        <div class="slider-container">
+                            <label for="hue-slider">
+                                Tono (Hue)
+                                <span id="hue-value">0°</span>
+                            </label>
+                            <input type="range" min="0" max="360" value="0" class="slider" id="hue-slider" oninput="changeHue(this.value)">
+                        </div>
+                        
+                        <div class="slider-container">
+                            <label for="sepia-slider">
+                                Sepia
+                                <span id="sepia-value">0%</span>
+                            </label>
+                            <input type="range" min="0" max="100" value="0" class="slider" id="sepia-slider" oninput="changeSepia(this.value)">
+                        </div>
+                        
+                        <div class="slider-container">
+                            <label for="blur-slider">
+                                Desenfoque
+                                <span id="blur-value">0px</span>
+                            </label>
+                            <input type="range" min="0" max="10" value="0" class="slider" id="blur-slider" oninput="changeBlur(this.value)">
+                        </div>
+                        
+                        <div class="slider-container">
+                            <label for="grayscale-slider">
+                                Escala de Grises
+                                <span id="grayscale-value">0%</span>
+                            </label>
+                            <input type="range" min="0" max="100" value="0" class="slider" id="grayscale-slider" oninput="changeGrayscale(this.value)">
+                        </div>
+                        
+                        <div class="slider-container">
+                            <label for="invert-slider">
+                                Invertir Colores
+                                <span id="invert-value">0%</span>
+                            </label>
+                            <input type="range" min="0" max="100" value="0" class="slider" id="invert-slider" oninput="changeInvert(this.value)">
+                        </div>
+                    </div>
+                    
+                    <div class="controls">
+                        <button id="rotate-btn"><i class="fas fa-redo"></i> Rotar Foto</button>
+                        <button id="zoom-in-btn"><i class="fas fa-search-plus"></i> Zoom In</button>
+                        <button id="zoom-out-btn"><i class="fas fa-search-minus"></i> Zoom Out</button>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="effects-tab">
+                    <div class="controls-group">
+                        <h4><i class="fas fa-layer-group"></i> Superposición de Color</h4>
+                        <div class="slider-container">
+                            <label for="overlay-opacity-slider">
+                                Opacidad
+                                <span id="overlay-opacity-value">0%</span>
+                            </label>
+                            <input type="range" min="0" max="100" value="0" class="slider" id="overlay-opacity-slider" oninput="changeOverlayOpacity(this.value)">
+                        </div>
+                        
+                        <div class="color-picker-group">
+                            <span class="color-picker-label">Color de Superposición</span>
+                            <input type="color" class="color-picker" id="overlay-color" value="#ff0000" oninput="changeOverlayColor(this.value)">
+                        </div>
+                        
+                        <label for="blend-mode-select">Modo de Mezcla:</label>
+                        <select id="blend-mode-select" class="blend-mode-select" onchange="changeBlendMode(this.value)">
+                            <option value="normal">Normal</option>
+                            <option value="multiply">Multiplicar</option>
+                            <option value="screen">Pantalla</option>
+                            <option value="overlay">Superponer</option>
+                            <option value="darken">Oscurecer</option>
+                            <option value="lighten">Aclarar</option>
+                            <option value="color-dodge">Enfoque de color</option>
+                            <option value="color-burn">Quemar color</option>
+                            <option value="hard-light">Luz fuerte</option>
+                            <option value="soft-light">Luz suave</option>
+                            <option value="difference">Diferencia</option>
+                            <option value="exclusion">Exclusión</option>
+                            <option value="hue">Tono</option>
+                            <option value="saturation">Saturación</option>
+                            <option value="color">Color</option>
+                            <option value="luminosity">Luminosidad</option>
+                        </select>
+                        
+                        <h5>Colores Rápidos:</h5>
+                        <div class="overlay-controls">
+                            <div class="overlay-color-btn active" style="background: #ff0000;" data-color="#ff0000"></div>
+                            <div class="overlay-color-btn" style="background: #00ff00;" data-color="#00ff00"></div>
+                            <div class="overlay-color-btn" style="background: #0000ff;" data-color="#0000ff"></div>
+                            <div class="overlay-color-btn" style="background: #ffff00;" data-color="#ffff00"></div>
+                            <div class="overlay-color-btn" style="background: #ff00ff;" data-color="#ff00ff"></div>
+                            <div class="overlay-color-btn" style="background: #00ffff;" data-color="#00ffff"></div>
+                            <div class="overlay-color-btn" style="background: #ffffff;" data-color="#ffffff"></div>
+                            <div class="overlay-color-btn" style="background: #000000;" data-color="#000000"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="controls-group">
+                        <h4><i class="fas fa-magic"></i> Efectos Especiales</h4>
+                        <div class="controls">
+                            <button id="shake-btn"><i class="fas fa-bolt"></i> Efecto Sacudida</button>
+                            <button id="vintage-effect"><i class="fas fa-old-republic"></i> Vintage</button>
+                            <button id="blur-effect"><i class="fas fa-cloud"></i> Desenfocar</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="branding-tab">
+                    <div class="controls-group">
+                        <h4><i class="fas fa-image"></i> Logo/Marca de Agua</h4>
+                        
+                        <div class="logo-upload-container">
+                            <label for="logo-input" class="file-label">
+                                <i class="fas fa-upload"></i> Subir Logo
+                            </label>
+                            <input type="file" id="logo-input" accept="image/*">
+                            <div class="logo-preview" id="logo-preview"></div>
+                        </div>
+                        
+                        <div class="slider-container">
+                            <label for="logo-opacity-slider">
+                                Opacidad Logo
+                                <span id="logo-opacity-value">0%</span>
+                            </label>
+                            <input type="range" min="0" max="100" value="0" class="slider" id="logo-opacity-slider" oninput="changeLogoOpacity(this.value)">
+                        </div>
+                        
+                        <div class="slider-container">
+                            <label for="logo-size-slider">
+                                Tamaño Logo
+                                <span id="logo-size-value">100px</span>
+                            </label>
+                            <input type="range" min="20" max="200" value="100" class="slider" id="logo-size-slider" oninput="changeLogoSize(this.value)">
+                        </div>
+                        
+                        <label for="logo-position-select">Posición del Logo:</label>
+                        <select id="logo-position-select" class="logo-position-select" onchange="changeLogoPosition(this.value)">
+                            <option value="bottom right">Inferior Derecha</option>
+                            <option value="bottom left">Inferior Izquierda</option>
+                            <option value="top right">Superior Derecha</option>
+                            <option value="top left">Superior Izquierda</option>
+                            <option value="center">Centro</option>
+                        </select>
+                    </div>
+                    
+                    <div class="controls-group">
+                        <h4><i class="fas fa-font"></i> Texto Personalizado</h4>
+                        
+                        <input type="text" class="text-input" id="text-content-input" placeholder="Ingresa tu texto aquí" oninput="changeTextContent(this.value)">
+                        
+                        <div class="color-picker-group">
+                            <span class="color-picker-label">Color del Texto</span>
+                            <input type="color" class="color-picker" id="text-color-picker" value="#ffffff" oninput="changeTextColor(this.value)">
+                        </div>
+                        
+                        <div class="slider-container">
+                            <label for="text-size-slider">
+                                Tamaño del Texto
+                                <span id="text-size-value">24px</span>
+                            </label>
+                            <input type="range" min="10" max="72" value="24" class="slider" id="text-size-slider" oninput="changeTextSize(this.value)">
+                        </div>
+                        
+                        <div class="slider-container">
+                            <label for="text-opacity-slider">
+                                Opacidad del Texto
+                                <span id="text-opacity-value">100%</span>
+                            </label>
+                            <input type="range" min="0" max="100" value="100" class="slider" id="text-opacity-slider" oninput="changeTextOpacity(this.value)">
+                        </div>
+                        
+                        <label for="text-font-select">Fuente del Texto:</label>
+                        <select id="text-font-select" class="text-font-select" onchange="changeTextFont(this.value)">
+                            <option value="'Arial', sans-serif">Arial</option>
+                            <option value="'Roboto', sans-serif">Roboto</option>
+                            <option value="'Montserrat', sans-serif">Montserrat</option>
+                            <option value="'Poppins', sans-serif">Poppins</option>
+                            <option value="'Dancing Script', cursive">Dancing Script</option>
+                            <option value="'Playfair Display', serif">Playfair Display</option>
+                        </select>
+                        
+                        <label for="text-position-select">Posición del Texto:</label>
+                        <select id="text-position-select" class="text-position-select" onchange="changeTextPosition(this.value)">
+                            <option value="bottom">Inferior</option>
+                            <option value="top">Superior</option>
+                            <option value="left">Izquierda</option>
+                            <option value="right">Derecha</option>
+                            <option value="center">Centro</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="controls-group">
+                    <h4><i class="fas fa-save"></i> Guardar/Cargar Presets</h4>
+                    <div class="save-load-controls">
+                        <button id="save-preset" class="save-preset-btn">
+                            <i class="fas fa-save"></i> Guardar Preset
+                        </button>
+                        <button id="load-preset" class="load-preset-btn">
+                            <i class="fas fa-folder-open"></i> Cargar Preset
+                        </button>
+                       
+<a href="principalmarcoejemplo.html" class="btn-volver">Ejemplos </a>
+ <a href="webincialmarcopricipal.html" class="btn-volver">⬅ Volver a atras </a>
+                    </div>
+                </div>
+                
+                <div class="controls">
+                    <button id="reset-btn"><i class="fas fa-undo"></i> Reiniciar Todo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elementos del DOM
+            const photo = document.getElementById('photo');
+            const photoContainer = document.getElementById('photo-container');
+            const photoOverlay = document.getElementById('photo-overlay');
+            const downloadBtn = document.getElementById('download-btn');
+            const randomBtn = document.getElementById('random-btn');
+            const fileInput = document.getElementById('file-input');
+            const logoInput = document.getElementById('logo-input');
+            const logoPreview = document.getElementById('logo-preview');
+            const frameInner = document.getElementById('frame-inner');
+            const photoFrame = document.getElementById('photo-frame');
+            const frameLogo = document.getElementById('frame-logo');
+            const frameText = document.getElementById('frame-text');
+            const rotateBtn = document.getElementById('rotate-btn');
+            const zoomInBtn = document.getElementById('zoom-in-btn');
+            const zoomOutBtn = document.getElementById('zoom-out-btn');
+            const shakeBtn = document.getElementById('shake-btn');
+            const resetBtn = document.getElementById('reset-btn');
+            const geometricBtns = document.querySelectorAll('.geometric-btn');
+            const presetBtns = document.querySelectorAll('.preset-btn');
+            const sizeBtns = document.querySelectorAll('.size-btn');
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+            const overlayColorBtns = document.querySelectorAll('.overlay-color-btn');
+            const vintageEffectBtn = document.getElementById('vintage-effect');
+            const blurEffectBtn = document.getElementById('blur-effect');
+            const savePresetBtn = document.getElementById('save-preset');
+            const loadPresetBtn = document.getElementById('load-preset');
+            
+            // Sliders
+            const frameWidthSlider = document.getElementById('frame-width-slider');
+            const frameOpacitySlider = document.getElementById('frame-opacity-slider');
+            const patternOpacitySlider = document.getElementById('pattern-opacity-slider');
+            const frameRadiusSlider = document.getElementById('frame-radius-slider');
+            const photoRadiusSlider = document.getElementById('photo-radius-slider');
+            const brightnessSlider = document.getElementById('brightness-slider');
+            const contrastSlider = document.getElementById('contrast-slider');
+            const saturationSlider = document.getElementById('saturation-slider');
+            const hueSlider = document.getElementById('hue-slider');
+            const sepiaSlider = document.getElementById('sepia-slider');
+            const blurSlider = document.getElementById('blur-slider');
+            const grayscaleSlider = document.getElementById('grayscale-slider');
+            const invertSlider = document.getElementById('invert-slider');
+            const overlayOpacitySlider = document.getElementById('overlay-opacity-slider');
+            const logoOpacitySlider = document.getElementById('logo-opacity-slider');
+            const logoSizeSlider = document.getElementById('logo-size-slider');
+            const textSizeSlider = document.getElementById('text-size-slider');
+            const textOpacitySlider = document.getElementById('text-opacity-slider');
+            
+            // Selectores
+            const blendModeSelect = document.getElementById('blend-mode-select');
+            const logoPositionSelect = document.getElementById('logo-position-select');
+            const textFontSelect = document.getElementById('text-font-select');
+            const textPositionSelect = document.getElementById('text-position-select');
+            
+            // Inputs de texto
+            const textContentInput = document.getElementById('text-content-input');
+            
+            // Variables de estado
+            let rotation = 0;
+            let scale = 1;
+            let posX = 0, posY = 0;
+            let isDragging = false;
+            let startX, startY;
+            let currentStyle = 'geometric-circle';
+            let currentSize = 'medium';
+            
+            // Convertir colores hex a RGB para manejar opacidad
+            function hexToRgb(hex) {
+                const r = parseInt(hex.slice(1, 3), 16);
+                const g = parseInt(hex.slice(3, 5), 16);
+                const b = parseInt(hex.slice(5, 7), 16);
+                return `${r}, ${g}, ${b}`;
+            }
+            
+            // Inicializar estilos
+            const frameColor = '#e0c9a6';
+            const framePatternColor = '#d4a373';
+            const bgColor = '#f8f1e5';
+            
+            document.documentElement.style.setProperty('--frame-color', frameColor);
+            document.documentElement.style.setProperty('--frame-pattern-color', framePatternColor);
+            document.documentElement.style.setProperty('--frame-color-rgb', hexToRgb(frameColor));
+            document.documentElement.style.setProperty('--frame-pattern-color-rgb', hexToRgb(framePatternColor));
+            document.documentElement.style.setProperty('--bg-color', bgColor);
+            
+            // Actualizar valores mostrados en los sliders
+            function updateSliderValues() {
+                document.getElementById('frame-width-value').textContent = `${frameWidthSlider.value}px`;
+                document.getElementById('frame-opacity-value').textContent = `${frameOpacitySlider.value}%`;
+                document.getElementById('pattern-opacity-value').textContent = `${patternOpacitySlider.value}%`;
+                document.getElementById('frame-radius-value').textContent = `${frameRadiusSlider.value}px`;
+                document.getElementById('photo-radius-value').textContent = `${photoRadiusSlider.value}px`;
+                document.getElementById('brightness-value').textContent = `${brightnessSlider.value}%`;
+                document.getElementById('contrast-value').textContent = `${contrastSlider.value}%`;
+                document.getElementById('saturation-value').textContent = `${saturationSlider.value}%`;
+                document.getElementById('hue-value').textContent = `${hueSlider.value}°`;
+                document.getElementById('sepia-value').textContent = `${sepiaSlider.value}%`;
+                document.getElementById('blur-value').textContent = `${blurSlider.value}px`;
+                document.getElementById('grayscale-value').textContent = `${grayscaleSlider.value}%`;
+                document.getElementById('invert-value').textContent = `${invertSlider.value}%`;
+                document.getElementById('overlay-opacity-value').textContent = `${overlayOpacitySlider.value}%`;
+                document.getElementById('logo-opacity-value').textContent = `${logoOpacitySlider.value}%`;
+                document.getElementById('logo-size-value').textContent = `${logoSizeSlider.value}px`;
+                document.getElementById('text-size-value').textContent = `${textSizeSlider.value}px`;
+                document.getElementById('text-opacity-value').textContent = `${textOpacitySlider.value}%`;
+            }
+            
+            // Cambiar entre pestañas
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const tabId = this.dataset.tab;
+                    
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    
+                    this.classList.add('active');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+            
+            // Subir foto propia
+            fileInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        photo.src = event.target.result;
+                        resetPhoto();
+                        resetFilters();
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+            
+            // Subir logo
+            logoInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        logoPreview.style.backgroundImage = `url(${event.target.result})`;
+                        logoPreview.style.display = 'block';
+                        document.documentElement.style.setProperty('--logo-url', `url(${event.target.result})`);
+                        frameLogo.style.backgroundImage = `url(${event.target.result})`;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+            
+            // Descargar foto con marco completo
+            downloadBtn.addEventListener('click', function() {
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
+                this.disabled = true;
+                
+                // Ocultar controles temporalmente para la captura
+                const tabButtons = document.querySelector('.tab-buttons');
+                const originalDisplay = tabButtons.style.display;
+                tabButtons.style.display = 'none';
+                
+                html2canvas(photoFrame, {
+                    scale: 2,
+                    logging: false,
+                    useCORS: true,
+                    allowTaint: true,
+                    backgroundColor: null
+                }).then(canvas => {
+                    const link = document.createElement('a');
+                    link.download = `marco-premium-${new Date().getTime()}.png`;
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                    
+                    this.innerHTML = '<i class="fas fa-download"></i> Descargar Foto';
+                    this.disabled = false;
+                    tabButtons.style.display = originalDisplay;
+                }).catch(err => {
+                    console.error('Error al generar la imagen:', err);
+                    this.innerHTML = '<i class="fas fa-download"></i> Descargar Foto';
+                    this.disabled = false;
+                    tabButtons.style.display = originalDisplay;
+                    alert('Ocurrió un error al generar la imagen. Por favor intenta nuevamente.');
+                });
+            });
+            
+            // Generar un diseño aleatorio
+            randomBtn.addEventListener('click', function() {
+                const styles = Array.from(geometricBtns).map(btn => btn.dataset.style);
+                const randomStyle = styles[Math.floor(Math.random() * styles.length)];
+                
+                // Cambiar estilo geométrico
+                geometricBtns.forEach(b => b.classList.remove('active'));
+                document.querySelector(`.geometric-btn[data-style="${randomStyle}"]`).classList.add('active');
+                currentStyle = randomStyle;
+                changeGeometricStyle(currentStyle);
+                
+                // Colores aleatorios
+                const randomColor1 = `#${Math.floor(Math.random()*16777215).toString(16)}`;
+                const randomColor2 = `#${Math.floor(Math.random()*16777215).toString(16)}`;
+                
+                changeFrameColor(randomColor1);
+                changeFramePatternColor(randomColor2);
+                document.getElementById('frame-color').value = randomColor1;
+                document.getElementById('frame-pattern-color').value = randomColor2;
+                
+                // Tamaño aleatorio
+                const sizes = ['small', 'medium', 'large'];
+                const randomSize = sizes[Math.floor(Math.random() * sizes.length)];
+                
+                sizeBtns.forEach(b => b.classList.remove('active'));
+                document.querySelector(`.size-btn[data-size="${randomSize}"]`).classList.add('active');
+                currentSize = randomSize;
+                changeFrameSize(currentSize);
+                
+                // Ancho aleatorio del marco
+                const randomWidth = Math.floor(Math.random() * 46) + 5;
+                frameWidthSlider.value = randomWidth;
+                changeFrameWidth(randomWidth);
+                
+                // Opacidad aleatoria
+                const randomFrameOpacity = Math.floor(Math.random() * 101);
+                frameOpacitySlider.value = randomFrameOpacity;
+                changeFrameOpacity(randomFrameOpacity);
+                
+                const randomPatternOpacity = Math.floor(Math.random() * 101);
+                patternOpacitySlider.value = randomPatternOpacity;
+                changePatternOpacity(randomPatternOpacity);
+                
+                // Radio de borde aleatorio
+                const randomFrameRadius = Math.floor(Math.random() * 101);
+                frameRadiusSlider.value = randomFrameRadius;
+                changeFrameRadius(randomFrameRadius);
+                
+                const randomPhotoRadius = Math.floor(Math.random() * 101);
+                photoRadiusSlider.value = randomPhotoRadius;
+                changePhotoRadius(randomPhotoRadius);
+                
+                // Filtros aleatorios para la foto
+                const randomBrightness = Math.floor(Math.random() * 101) + 50;
+                brightnessSlider.value = randomBrightness;
+                changeBrightness(randomBrightness);
+                
+                const randomContrast = Math.floor(Math.random() * 101) + 50;
+                contrastSlider.value = randomContrast;
+                changeContrast(randomContrast);
+                
+                const randomSaturation = Math.floor(Math.random() * 201);
+                saturationSlider.value = randomSaturation;
+                changeSaturation(randomSaturation);
+                
+                const randomHue = Math.floor(Math.random() * 361);
+                hueSlider.value = randomHue;
+                changeHue(randomHue);
+                
+                const randomSepia = Math.floor(Math.random() * 101);
+                sepiaSlider.value = randomSepia;
+                changeSepia(randomSepia);
+                
+                // Logo aleatorio
+                const randomLogoOpacity = Math.floor(Math.random() * 101);
+                logoOpacitySlider.value = randomLogoOpacity;
+                changeLogoOpacity(randomLogoOpacity);
+                
+                const randomLogoSize = Math.floor(Math.random() * 181) + 20;
+                logoSizeSlider.value = randomLogoSize;
+                changeLogoSize(randomLogoSize);
+                
+                const logoPositions = ['bottom right', 'bottom left', 'top right', 'top left', 'center'];
+                const randomLogoPosition = logoPositions[Math.floor(Math.random() * logoPositions.length)];
+                logoPositionSelect.value = randomLogoPosition;
+                changeLogoPosition(randomLogoPosition);
+                
+                // Texto aleatorio
+                const texts = ['¡Felicidades!', 'Recuerdo Especial', 'Momentos Únicos', 'Familia', 'Amigos', 'Vacaciones 2023', 'Fotografía Profesional'];
+                const randomText = texts[Math.floor(Math.random() * texts.length)];
+                textContentInput.value = randomText;
+                changeTextContent(randomText);
+                
+                const randomTextColor = `#${Math.floor(Math.random()*16777215).toString(16)}`;
+                document.getElementById('text-color-picker').value = randomTextColor;
+                changeTextColor(randomTextColor);
+                
+                const randomTextSize = Math.floor(Math.random() * 63) + 10;
+                textSizeSlider.value = randomTextSize;
+                changeTextSize(randomTextSize);
+                
+                const randomTextOpacity = Math.floor(Math.random() * 101);
+                textOpacitySlider.value = randomTextOpacity;
+                changeTextOpacity(randomTextOpacity);
+                
+                const textFonts = ["'Arial', sans-serif", "'Roboto', sans-serif", "'Montserrat', sans-serif", "'Poppins', sans-serif", "'Dancing Script', cursive", "'Playfair Display', serif"];
+                const randomTextFont = textFonts[Math.floor(Math.random() * textFonts.length)];
+                textFontSelect.value = randomTextFont;
+                changeTextFont(randomTextFont);
+                
+                const textPositions = ['bottom', 'top', 'left', 'right', 'center'];
+                const randomTextPosition = textPositions[Math.floor(Math.random() * textPositions.length)];
+                textPositionSelect.value = randomTextPosition;
+                changeTextPosition(randomTextPosition);
+                
+                // Actualizar valores mostrados
+                updateSliderValues();
+            });
+            
+            // Rotar foto
+            rotateBtn.addEventListener('click', function() {
+                rotation += 90;
+                updatePhotoTransform();
+            });
+            
+            // Zoom in
+            zoomInBtn.addEventListener('click', function() {
+                scale += 0.1;
+                updatePhotoTransform();
+            });
+            
+            // Zoom out
+            zoomOutBtn.addEventListener('click', function() {
+                if (scale > 0.3) {
+                    scale -= 0.1;
+                    updatePhotoTransform();
+                }
+            });
+            
+            // Efecto sacudida
+            shakeBtn.addEventListener('click', function() {
+                photoFrame.style.animation = 'shake 0.5s';
+                setTimeout(() => {
+                    photoFrame.style.animation = '';
+                }, 500);
+            });
+            
+            // Efecto vintage
+            vintageEffectBtn.addEventListener('click', function() {
+                brightnessSlider.value = 90;
+                contrastSlider.value = 110;
+                saturationSlider.value = 70;
+                sepiaSlider.value = 30;
+                hueSlider.value = 10;
+                
+                changeBrightness(90);
+                changeContrast(110);
+                changeSaturation(70);
+                changeSepia(30);
+                changeHue(10);
+                
+                updateSliderValues();
+            });
+            
+            // Efecto desenfoque
+            blurEffectBtn.addEventListener('click', function() {
+                blurSlider.value = 3;
+                changeBlur(3);
+                updateSliderValues();
+            });
+            
+            // Reiniciar todo
+            resetBtn.addEventListener('click', resetAll);
+            
+            // Cambiar estilos geométricos
+            geometricBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    geometricBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentStyle = this.dataset.style;
+                    changeGeometricStyle(currentStyle);
+                });
+            });
+            
+            // Presets predefinidos
+            presetBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const preset = this.dataset.preset;
+                    applyPreset(preset);
+                });
+            });
+            
+            // Tamaños de marco
+            sizeBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    sizeBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentSize = this.dataset.size;
+                    changeFrameSize(currentSize);
+                });
+            });
+            
+            // Colores rápidos de superposición
+            overlayColorBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    overlayColorBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    const color = this.dataset.color;
+                    changeOverlayColor(color);
+                    document.getElementById('overlay-color').value = color;
+                });
+            });
+            
+            // Guardar preset
+            savePresetBtn.addEventListener('click', function() {
+                const presetName = prompt("Ingresa un nombre para tu preset:");
+                if (presetName) {
+                    const preset = {
+                        frameColor: document.getElementById('frame-color').value,
+                        framePatternColor: document.getElementById('frame-pattern-color').value,
+                        bgColor: document.getElementById('bg-color').value,
+                        frameWidth: frameWidthSlider.value,
+                        frameOpacity: frameOpacitySlider.value,
+                        patternOpacity: patternOpacitySlider.value,
+                        frameRadius: frameRadiusSlider.value,
+                        photoRadius: photoRadiusSlider.value,
+                        style: currentStyle,
+                        size: currentSize,
+                        brightness: brightnessSlider.value,
+                        contrast: contrastSlider.value,
+                        saturation: saturationSlider.value,
+                        hue: hueSlider.value,
+                        sepia: sepiaSlider.value,
+                        blur: blurSlider.value,
+                        grayscale: grayscaleSlider.value,
+                        invert: invertSlider.value,
+                        overlayColor: document.getElementById('overlay-color').value,
+                        overlayOpacity: overlayOpacitySlider.value,
+                        blendMode: blendModeSelect.value,
+                        logoUrl: logoPreview.style.backgroundImage,
+                        logoOpacity: logoOpacitySlider.value,
+                        logoSize: logoSizeSlider.value,
+                        logoPosition: logoPositionSelect.value,
+                        textContent: textContentInput.value,
+                        textColor: document.getElementById('text-color-picker').value,
+                        textSize: textSizeSlider.value,
+                        textFont: textFontSelect.value,
+                        textPosition: textPositionSelect.value,
+                        textOpacity: textOpacitySlider.value
+                    };
+                    
+                    localStorage.setItem(`framePreset_${presetName}`, JSON.stringify(preset));
+                    alert(`Preset "${presetName}" guardado correctamente!`);
+                }
+            });
+            
+            // Cargar preset
+            loadPresetBtn.addEventListener('click', function() {
+                const presetNames = Object.keys(localStorage)
+                    .filter(key => key.startsWith('framePreset_'))
+                    .map(key => key.replace('framePreset_', ''));
+                
+                if (presetNames.length === 0) {
+                    alert("No hay presets guardados.");
+                    return;
+                }
+                
+                const selectedPreset = prompt(`Presets disponibles:\n${presetNames.join('\n')}\n\nIngresa el nombre del preset a cargar:`);
+                
+                if (selectedPreset && presetNames.includes(selectedPreset)) {
+                    const preset = JSON.parse(localStorage.getItem(`framePreset_${selectedPreset}`));
+                    
+                    // Aplicar el preset
+                    document.getElementById('frame-color').value = preset.frameColor;
+                    changeFrameColor(preset.frameColor);
+                    
+                    document.getElementById('frame-pattern-color').value = preset.framePatternColor;
+                    changeFramePatternColor(preset.framePatternColor);
+                    
+                    document.getElementById('bg-color').value = preset.bgColor;
+                    changeBgColor(preset.bgColor);
+                    
+                    frameWidthSlider.value = preset.frameWidth;
+                    changeFrameWidth(preset.frameWidth);
+                    
+                    frameOpacitySlider.value = preset.frameOpacity;
+                    changeFrameOpacity(preset.frameOpacity);
+                    
+                    patternOpacitySlider.value = preset.patternOpacity;
+                    changePatternOpacity(preset.patternOpacity);
+                    
+                    frameRadiusSlider.value = preset.frameRadius;
+                    changeFrameRadius(preset.frameRadius);
+                    
+                    photoRadiusSlider.value = preset.photoRadius;
+                    changePhotoRadius(preset.photoRadius);
+                    
+                    geometricBtns.forEach(b => b.classList.remove('active'));
+                    document.querySelector(`.geometric-btn[data-style="${preset.style}"]`).classList.add('active');
+                    currentStyle = preset.style;
+                    changeGeometricStyle(currentStyle);
+                    
+                    sizeBtns.forEach(b => b.classList.remove('active'));
+                    document.querySelector(`.size-btn[data-size="${preset.size}"]`).classList.add('active');
+                    currentSize = preset.size;
+                    changeFrameSize(currentSize);
+                    
+                    brightnessSlider.value = preset.brightness;
+                    changeBrightness(preset.brightness);
+                    
+                    contrastSlider.value = preset.contrast;
+                    changeContrast(preset.contrast);
+                    
+                    saturationSlider.value = preset.saturation;
+                    changeSaturation(preset.saturation);
+                    
+                    hueSlider.value = preset.hue;
+                    changeHue(preset.hue);
+                    
+                    sepiaSlider.value = preset.sepia;
+                    changeSepia(preset.sepia);
+                    
+                    blurSlider.value = preset.blur;
+                    changeBlur(preset.blur);
+                    
+                    grayscaleSlider.value = preset.grayscale;
+                    changeGrayscale(preset.grayscale);
+                    
+                    invertSlider.value = preset.invert;
+                    changeInvert(preset.invert);
+                    
+                    document.getElementById('overlay-color').value = preset.overlayColor;
+                    changeOverlayColor(preset.overlayColor);
+                    
+                    overlayOpacitySlider.value = preset.overlayOpacity;
+                    changeOverlayOpacity(preset.overlayOpacity);
+                    
+                    blendModeSelect.value = preset.blendMode;
+                    changeBlendMode(preset.blendMode);
+                    
+                    // Logo
+                    if (preset.logoUrl && preset.logoUrl !== 'none') {
+                        logoPreview.style.backgroundImage = preset.logoUrl;
+                        logoPreview.style.display = 'block';
+                        document.documentElement.style.setProperty('--logo-url', preset.logoUrl);
+                        frameLogo.style.backgroundImage = preset.logoUrl;
+                    }
+                    
+                    logoOpacitySlider.value = preset.logoOpacity;
+                    changeLogoOpacity(preset.logoOpacity);
+                    
+                    logoSizeSlider.value = preset.logoSize;
+                    changeLogoSize(preset.logoSize);
+                    
+                    logoPositionSelect.value = preset.logoPosition;
+                    changeLogoPosition(preset.logoPosition);
+                    
+                    // Texto
+                    textContentInput.value = preset.textContent;
+                    changeTextContent(preset.textContent);
+                    
+                    document.getElementById('text-color-picker').value = preset.textColor;
+                    changeTextColor(preset.textColor);
+                    
+                    textSizeSlider.value = preset.textSize;
+                    changeTextSize(preset.textSize);
+                    
+                    textFontSelect.value = preset.textFont;
+                    changeTextFont(preset.textFont);
+                    
+                    textPositionSelect.value = preset.textPosition;
+                    changeTextPosition(preset.textPosition);
+                    
+                    textOpacitySlider.value = preset.textOpacity;
+                    changeTextOpacity(preset.textOpacity);
+                    
+                    updateSliderValues();
+                    alert(`Preset "${selectedPreset}" cargado correctamente!`);
+                } else if (selectedPreset) {
+                    alert(`No se encontró el preset "${selectedPreset}".`);
+                }
+            });
+            
+            // Eventos de arrastre
+            photo.addEventListener('mousedown', startDrag);
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('mouseup', endDrag);
+            
+            photo.addEventListener('touchstart', touchStart, {passive: false});
+            document.addEventListener('touchmove', touchMove, {passive: false});
+            document.addEventListener('touchend', touchEnd);
+            
+            // Zoom con rueda del mouse
+            photoFrame.addEventListener('wheel', function(e) {
+                e.preventDefault();
+                if (e.deltaY < 0) {
+                    scale += 0.1;
+                } else {
+                    if (scale > 0.3) scale -= 0.1;
+                }
+                updatePhotoTransform();
+            });
+            
+            // Actualizar valores iniciales
+            updateSliderValues();
+            
+            // Funciones
+            function startDrag(e) {
+                isDragging = true;
+                startX = e.clientX || e.touches[0].clientX;
+                startY = e.clientY || e.touches[0].clientY;
+                photo.style.cursor = 'grabbing';
+                e.preventDefault();
+            }
+            
+            function touchStart(e) {
+                if (e.touches.length === 1) {
+                    startDrag(e);
+                }
+            }
+            
+            function drag(e) {
+                if (!isDragging) return;
+                const x = e.clientX || e.touches[0].clientX;
+                const y = e.clientY || e.touches[0].clientY;
+                posX += (x - startX) / scale;
+                posY += (y - startY) / scale;
+                startX = x;
+                startY = y;
+                updatePhotoTransform();
+                e.preventDefault();
+            }
+            
+            function touchMove(e) {
+                if (e.touches.length === 1) {
+                    drag(e);
+                }
+            }
+            
+            function endDrag() {
+                isDragging = false;
+                photo.style.cursor = 'grab';
+            }
+            
+            function touchEnd() {
+                endDrag();
+            }
+            
+            function updatePhotoTransform() {
+                photo.style.transform = `translate(${posX}px, ${posY}px) rotate(${rotation}deg) scale(${scale})`;
+            }
+            
+            function resetPhoto() {
+                rotation = 0;
+                scale = 1;
+                posX = 0;
+                posY = 0;
+                updatePhotoTransform();
+            }
+            
+            function resetFilters() {
+                brightnessSlider.value = 100;
+                contrastSlider.value = 100;
+                saturationSlider.value = 100;
+                hueSlider.value = 0;
+                sepiaSlider.value = 0;
+                blurSlider.value = 0;
+                grayscaleSlider.value = 0;
+                invertSlider.value = 0;
+                overlayOpacitySlider.value = 0;
+                
+                document.documentElement.style.setProperty('--photo-brightness', '100%');
+                document.documentElement.style.setProperty('--photo-contrast', '100%');
+                document.documentElement.style.setProperty('--photo-saturation', '100%');
+                document.documentElement.style.setProperty('--photo-hue', '0deg');
+                document.documentElement.style.setProperty('--photo-sepia', '0%');
+                document.documentElement.style.setProperty('--photo-blur', '0px');
+                document.documentElement.style.setProperty('--photo-grayscale', '0%');
+                document.documentElement.style.setProperty('--photo-invert', '0%');
+                document.documentElement.style.setProperty('--overlay-opacity', '0');
+                
+                updateSliderValues();
+            }
+            
+            function resetBranding() {
+                logoPreview.style.backgroundImage = 'none';
+                logoPreview.style.display = 'none';
+                document.documentElement.style.setProperty('--logo-url', 'none');
+                frameLogo.style.backgroundImage = 'none';
+                
+                logoOpacitySlider.value = 0;
+                document.documentElement.style.setProperty('--logo-opacity', '0');
+                
+                logoSizeSlider.value = 100;
+                document.documentElement.style.setProperty('--logo-size', '100px');
+                
+                logoPositionSelect.value = 'bottom right';
+                frameLogo.className = 'frame-logo bottom-right';
+                
+                textContentInput.value = '';
+                document.documentElement.style.setProperty('--text-content', '""');
+                frameText.textContent = '';
+                
+                document.getElementById('text-color-picker').value = '#ffffff';
+                document.documentElement.style.setProperty('--text-color', '#ffffff');
+                
+                textSizeSlider.value = 24;
+                document.documentElement.style.setProperty('--text-size', '24px');
+                
+                textFontSelect.value = "'Arial', sans-serif";
+                document.documentElement.style.setProperty('--text-font', 'Arial');
+                
+                textPositionSelect.value = 'bottom';
+                frameText.className = 'frame-text bottom';
+                
+                textOpacitySlider.value = 100;
+                document.documentElement.style.setProperty('--text-opacity', '1');
+                
+                updateSliderValues();
+            }
+            
+            function resetAll() {
+                resetPhoto();
+                resetFilters();
+                resetBranding();
+                
+                // Resetear colores
+                changeFrameColor('#e0c9a6');
+                changeFramePatternColor('#d4a373');
+                changeBgColor('#f8f1e5');
+                document.getElementById('frame-color').value = '#e0c9a6';
+                document.getElementById('frame-pattern-color').value = '#d4a373';
+                document.getElementById('bg-color').value = '#f8f1e5';
+                
+                // Resetear sliders
+                frameWidthSlider.value = 20;
+                document.documentElement.style.setProperty('--frame-width', '20px');
+                
+                frameOpacitySlider.value = 100;
+                document.documentElement.style.setProperty('--frame-opacity', '1');
+                
+                patternOpacitySlider.value = 100;
+                document.documentElement.style.setProperty('--pattern-opacity', '1');
+                
+                frameRadiusSlider.value = 0;
+                document.documentElement.style.setProperty('--frame-radius', '0px');
+                
+                photoRadiusSlider.value = 0;
+                document.documentElement.style.setProperty('--photo-radius', '0px');
+                
+                // Resetear estilos geométricos
+                geometricBtns.forEach(b => b.classList.remove('active'));
+                document.querySelector('.geometric-btn[data-style="geometric-circle"]').classList.add('active');
+                changeGeometricStyle('geometric-circle');
+                
+                // Resetear tamaño
+                sizeBtns.forEach(b => b.classList.remove('active'));
+                document.querySelector('.size-btn[data-size="medium"]').classList.add('active');
+                currentSize = 'medium';
+                changeFrameSize('medium');
+                
+                // Resetear superposición
+                document.getElementById('overlay-color').value = '#ff0000';
+                document.documentElement.style.setProperty('--overlay-color', '#ff0000');
+                
+                blendModeSelect.value = 'normal';
+                document.documentElement.style.setProperty('--blend-mode', 'normal');
+                
+                overlayColorBtns.forEach(btn => btn.classList.remove('active'));
+                document.querySelector('.overlay-color-btn[data-color="#ff0000"]').classList.add('active');
+                
+                // Actualizar valores mostrados
+                updateSliderValues();
+            }
+            
+            function applyPreset(preset) {
+                switch(preset) {
+                    case 'vintage':
+                        changeFrameColor('#d4b483');
+                        changeFramePatternColor('#a67c52');
+                        document.getElementById('frame-color').value = '#d4b483';
+                        document.getElementById('frame-pattern-color').value = '#a67c52';
+                        changeGeometricStyle('geometric-wave');
+                        geometricBtns.forEach(b => b.classList.remove('active'));
+                        document.querySelector('.geometric-btn[data-style="geometric-wave"]').classList.add('active');
+                        currentStyle = 'geometric-wave';
+                        
+                        // Aplicar filtros vintage
+                        brightnessSlider.value = 90;
+                        contrastSlider.value = 110;
+                        saturationSlider.value = 70;
+                        sepiaSlider.value = 30;
+                        hueSlider.value = 10;
+                        
+                        changeBrightness(90);
+                        changeContrast(110);
+                        changeSaturation(70);
+                        changeSepia(30);
+                        changeHue(10);
+                        break;
+                        
+                    case 'modern':
+                        changeFrameColor('#2c3e50');
+                        changeFramePatternColor('#7f8c8d');
+                        document.getElementById('frame-color').value = '#2c3e50';
+                        document.getElementById('frame-pattern-color').value = '#7f8c8d';
+                        changeGeometricStyle('geometric-triangles');
+                        geometricBtns.forEach(b => b.classList.remove('active'));
+                        document.querySelector('.geometric-btn[data-style="geometric-triangles"]').classList.add('active');
+                        currentStyle = 'geometric-triangles';
+                        
+                        // Ajustes modernos
+                        frameWidthSlider.value = 10;
+                        changeFrameWidth(10);
+                        
+                        frameRadiusSlider.value = 20;
+                        changeFrameRadius(20);
+                        
+                        // Texto moderno
+                        textContentInput.value = 'MODERNO';
+                        changeTextContent('MODERNO');
+                        textFontSelect.value = "'Montserrat', sans-serif";
+                        changeTextFont("'Montserrat', sans-serif");
+                        textPositionSelect.value = 'bottom';
+                        changeTextPosition('bottom');
+                        break;
+                        
+                    case 'elegant':
+                        changeFrameColor('#b8a9c9');
+                        changeFramePatternColor('#5d5179');
+                        document.getElementById('frame-color').value = '#b8a9c9';
+                        document.getElementById('frame-pattern-color').value = '#5d5179';
+                        changeGeometricStyle('geometric-diamonds');
+                        geometricBtns.forEach(b => b.classList.remove('active'));
+                        document.querySelector('.geometric-btn[data-style="geometric-diamonds"]').classList.add('active');
+                        currentStyle = 'geometric-diamonds';
+                        
+                        // Ajustes elegantes
+                        frameWidthSlider.value = 15;
+                        changeFrameWidth(15);
+                        
+                        grayscaleSlider.value = 20;
+                        changeGrayscale(20);
+                        
+                        // Texto elegante
+                        textContentInput.value = 'Elegante';
+                        changeTextContent('Elegante');
+                        textFontSelect.value = "'Playfair Display', serif";
+                        changeTextFont("'Playfair Display', serif");
+                        textPositionSelect.value = 'bottom';
+                        changeTextPosition('bottom');
+                        break;
+                        
+                    case 'fun':
+                        changeFrameColor('#ff9ff3');
+                        changeFramePatternColor('#feca57');
+                        document.getElementById('frame-color').value = '#ff9ff3';
+                        document.getElementById('frame-pattern-color').value = '#feca57';
+                        changeGeometricStyle('geometric-dots');
+                        geometricBtns.forEach(b => b.classList.remove('active'));
+                        document.querySelector('.geometric-btn[data-style="geometric-dots"]').classList.add('active');
+                        currentStyle = 'geometric-dots';
+                        
+                        // Ajustes divertidos
+                        saturationSlider.value = 150;
+                        changeSaturation(150);
+                        break;
+                        
+                    case 'minimal':
+                        changeFrameColor('#f1f1f1');
+                        changeFramePatternColor('#d1d1d1');
+                        document.getElementById('frame-color').value = '#f1f1f1';
+                        document.getElementById('frame-pattern-color').value = '#d1d1d1';
+                        changeGeometricStyle('geometric-lines');
+                        geometricBtns.forEach(b => b.classList.remove('active'));
+                        document.querySelector('.geometric-btn[data-style="geometric-lines"]').classList.add('active');
+                        currentStyle = 'geometric-lines';
+                        
+                        // Ajustes minimalistas
+                        frameWidthSlider.value = 5;
+                        changeFrameWidth(5);
+                        
+                        grayscaleSlider.value = 80;
+                        changeGrayscale(80);
+                        break;
+                        
+                    case 'gold':
+                        changeFrameColor('#FFD700');
+                        changeFramePatternColor('#D4AF37');
+                        document.getElementById('frame-color').value = '#FFD700';
+                        document.getElementById('frame-pattern-color').value = '#D4AF37';
+                        changeGeometricStyle('geometric-polygon');
+                        geometricBtns.forEach(b => b.classList.remove('active'));
+                        document.querySelector('.geometric-btn[data-style="geometric-polygon"]').classList.add('active');
+                        currentStyle = 'geometric-polygon';
+                        
+                        // Ajustes dorados
+                        sepiaSlider.value = 20;
+                        changeSepia(20);
+                        break;
+                        
+                    case 'silver':
+                        changeFrameColor('#C0C0C0');
+                        changeFramePatternColor('#A8A8A8');
+                        document.getElementById('frame-color').value = '#C0C0C0';
+                        document.getElementById('frame-pattern-color').value = '#A8A8A8';
+                        changeGeometricStyle('geometric-hexagons');
+                        geometricBtns.forEach(b => b.classList.remove('active'));
+                        document.querySelector('.geometric-btn[data-style="geometric-hexagons"]').classList.add('active');
+                        currentStyle = 'geometric-hexagons';
+                        
+                        // Ajustes plateados
+                        grayscaleSlider.value = 50;
+                        changeGrayscale(50);
+                        break;
+                        
+                    case 'nature':
+                        changeFrameColor('#2E8B57');
+                        changeFramePatternColor('#3CB371');
+                        document.getElementById('frame-color').value = '#2E8B57';
+                        document.getElementById('frame-pattern-color').value = '#3CB371';
+                        changeGeometricStyle('geometric-abstract');
+                        geometricBtns.forEach(b => b.classList.remove('active'));
+                        document.querySelector('.geometric-btn[data-style="geometric-abstract"]').classList.add('active');
+                        currentStyle = 'geometric-abstract';
+                        
+                        // Ajustes naturaleza
+                        hueSlider.value = 90;
+                        changeHue(90);
+                        break;
+                        
+                    case 'corporate':
+                        changeFrameColor('#1E3A8A');
+                        changeFramePatternColor('#3B82F6');
+                        document.getElementById('frame-color').value = '#1E3A8A';
+                        document.getElementById('frame-pattern-color').value = '#3B82F6';
+                        changeGeometricStyle('geometric-checker');
+                        geometricBtns.forEach(b => b.classList.remove('active'));
+                        document.querySelector('.geometric-btn[data-style="geometric-checker"]').classList.add('active');
+                        currentStyle = 'geometric-checker';
+                        
+                        // Texto corporativo
+                        textContentInput.value = 'CORPORATE';
+                        changeTextContent('CORPORATE');
+                        textFontSelect.value = "'Roboto', sans-serif";
+                        changeTextFont("'Roboto', sans-serif");
+                        textPositionSelect.value = 'bottom';
+                        changeTextPosition('bottom');
+                        break;
+                        
+                    case 'romantic':
+                        changeFrameColor('#F9A8D4');
+                        changeFramePatternColor('#F472B6');
+                        document.getElementById('frame-color').value = '#F9A8D4';
+                        document.getElementById('frame-pattern-color').value = '#F472B6';
+                        changeGeometricStyle('geometric-bubbles');
+                        geometricBtns.forEach(b => b.classList.remove('active'));
+                        document.querySelector('.geometric-btn[data-style="geometric-bubbles"]').classList.add('active');
+                        currentStyle = 'geometric-bubbles';
+                        
+                        // Texto romántico
+                        textContentInput.value = 'Amor';
+                        changeTextContent('Amor');
+                        textFontSelect.value = "'Dancing Script', cursive";
+                        changeTextFont("'Dancing Script', cursive");
+                        textPositionSelect.value = 'bottom';
+                        changeTextPosition('bottom');
+                        break;
+                }
+                
+                updateSliderValues();
+            }
+            
+            function changeFrameSize(size) {
+                switch(size) {
+                    case 'small':
+                        document.documentElement.style.setProperty('--frame-width', '10px');
+                        document.documentElement.style.setProperty('--frame-padding', '20px');
+                        break;
+                    case 'medium':
+                        document.documentElement.style.setProperty('--frame-width', '20px');
+                        document.documentElement.style.setProperty('--frame-padding', '15px');
+                        break;
+                    case 'large':
+                        document.documentElement.style.setProperty('--frame-width', '30px');
+                        document.documentElement.style.setProperty('--frame-padding', '10px');
+                        break;
+                }
+                updateGeometricStyle();
+            }
+        });
+        
+        // Cambiar color del marco
+        function changeFrameColor(color) {
+            document.documentElement.style.setProperty('--frame-color', color);
+            document.documentElement.style.setProperty('--frame-color-rgb', hexToRgb(color));
+            updateGeometricStyle();
+        }
+        
+        // Cambiar color del patrón
+        function changeFramePatternColor(color) {
+            document.documentElement.style.setProperty('--frame-pattern-color', color);
+            document.documentElement.style.setProperty('--frame-pattern-color-rgb', hexToRgb(color));
+            updateGeometricStyle();
+        }
+        
+        // Cambiar color de fondo
+        function changeBgColor(color) {
+            document.documentElement.style.setProperty('--bg-color', color);
+            const frameInner = document.getElementById('frame-inner');
+            frameInner.style.backgroundColor = color;
+        }
+        
+        // Convertir hex a RGB
+        function hexToRgb(hex) {
+            const r = parseInt(hex.slice(1, 3), 16);
+            const g = parseInt(hex.slice(3, 5), 16);
+            const b = parseInt(hex.slice(5, 7), 16);
+            return `${r}, ${g}, ${b}`;
+        }
+        
+        // Cambiar ancho del marco
+        function changeFrameWidth(width) {
+            document.documentElement.style.setProperty('--frame-width', `${width}px`);
+            document.getElementById('frame-width-value').textContent = `${width}px`;
+            updateGeometricStyle();
+        }
+        
+        // Cambiar opacidad del marco
+        function changeFrameOpacity(value) {
+            const opacity = value / 100;
+            document.documentElement.style.setProperty('--frame-opacity', opacity);
+            document.getElementById('frame-opacity-value').textContent = `${value}%`;
+            updateGeometricStyle();
+        }
+        
+        // Cambiar opacidad del patrón
+        function changePatternOpacity(value) {
+            const opacity = value / 100;
+            document.documentElement.style.setProperty('--pattern-opacity', opacity);
+            document.getElementById('pattern-opacity-value').textContent = `${value}%`;
+            updateGeometricStyle();
+        }
+        
+        // Cambiar radio del marco
+        function changeFrameRadius(value) {
+            document.documentElement.style.setProperty('--frame-radius', `${value}px`);
+            document.getElementById('frame-radius-value').textContent = `${value}px`;
+        }
+        
+        // Cambiar radio de la foto
+        function changePhotoRadius(value) {
+            document.documentElement.style.setProperty('--photo-radius', `${value}px`);
+            document.getElementById('photo-radius-value').textContent = `${value}px`;
+        }
+        
+        // Cambiar brillo
+        function changeBrightness(value) {
+            document.documentElement.style.setProperty('--photo-brightness', `${value}%`);
+            document.getElementById('brightness-value').textContent = `${value}%`;
+        }
+        
+        // Cambiar contraste
+        function changeContrast(value) {
+            document.documentElement.style.setProperty('--photo-contrast', `${value}%`);
+            document.getElementById('contrast-value').textContent = `${value}%`;
+        }
+        
+        // Cambiar saturación
+        function changeSaturation(value) {
+            document.documentElement.style.setProperty('--photo-saturation', `${value}%`);
+            document.getElementById('saturation-value').textContent = `${value}%`;
+        }
+        
+        // Cambiar tono (hue)
+        function changeHue(value) {
+            document.documentElement.style.setProperty('--photo-hue', `${value}deg`);
+            document.getElementById('hue-value').textContent = `${value}°`;
+        }
+        
+        // Cambiar sepia
+        function changeSepia(value) {
+            document.documentElement.style.setProperty('--photo-sepia', `${value}%`);
+            document.getElementById('sepia-value').textContent = `${value}%`;
+        }
+        
+        // Cambiar desenfoque
+        function changeBlur(value) {
+            document.documentElement.style.setProperty('--photo-blur', `${value}px`);
+            document.getElementById('blur-value').textContent = `${value}px`;
+        }
+        
+        // Cambiar escala de grises
+        function changeGrayscale(value) {
+            document.documentElement.style.setProperty('--photo-grayscale', `${value}%`);
+            document.getElementById('grayscale-value').textContent = `${value}%`;
+        }
+        
+        // Cambiar invertir colores
+        function changeInvert(value) {
+            document.documentElement.style.setProperty('--photo-invert', `${value}%`);
+            document.getElementById('invert-value').textContent = `${value}%`;
+        }
+        
+        // Cambiar color de superposición
+        function changeOverlayColor(color) {
+            document.documentElement.style.setProperty('--overlay-color', color);
+        }
+        
+        // Cambiar opacidad de superposición
+        function changeOverlayOpacity(value) {
+            const opacity = value / 100;
+            document.documentElement.style.setProperty('--overlay-opacity', opacity);
+            document.getElementById('overlay-opacity-value').textContent = `${value}%`;
+        }
+        
+        // Cambiar modo de mezcla
+        function changeBlendMode(mode) {
+            document.documentElement.style.setProperty('--blend-mode', mode);
+        }
+        
+        // Cambiar opacidad del logo
+        function changeLogoOpacity(value) {
+            const opacity = value / 100;
+            document.documentElement.style.setProperty('--logo-opacity', opacity);
+            document.getElementById('logo-opacity-value').textContent = `${value}%`;
+            document.getElementById('frame-logo').style.opacity = opacity;
+        }
+        
+        // Cambiar tamaño del logo
+        function changeLogoSize(value) {
+            document.documentElement.style.setProperty('--logo-size', `${value}px`);
+            document.getElementById('logo-size-value').textContent = `${value}px`;
+            document.getElementById('frame-logo').style.width = `${value}px`;
+            document.getElementById('frame-logo').style.height = `${value}px`;
+        }
+        
+        // Cambiar posición del logo
+        function changeLogoPosition(position) {
+            const frameLogo = document.getElementById('frame-logo');
+            frameLogo.className = 'frame-logo';
+            
+            switch(position) {
+                case 'bottom right':
+                    frameLogo.classList.add('bottom-right');
+                    break;
+                case 'bottom left':
+                    frameLogo.classList.add('bottom-left');
+                    break;
+                case 'top right':
+                    frameLogo.classList.add('top-right');
+                    break;
+                case 'top left':
+                    frameLogo.classList.add('top-left');
+                    break;
+                case 'center':
+                    frameLogo.classList.add('center');
+                    break;
+            }
+        }
+        
+        // Cambiar contenido del texto
+        function changeTextContent(text) {
+            document.documentElement.style.setProperty('--text-content', `"${text}"`);
+            document.getElementById('frame-text').textContent = text;
+        }
+        
+        // Cambiar color del texto
+        function changeTextColor(color) {
+            document.documentElement.style.setProperty('--text-color', color);
+            document.getElementById('frame-text').style.color = color;
+        }
+        
+        // Cambiar tamaño del texto
+        function changeTextSize(value) {
+            document.documentElement.style.setProperty('--text-size', `${value}px`);
+            document.getElementById('text-size-value').textContent = `${value}px`;
+            document.getElementById('frame-text').style.fontSize = `${value}px`;
+        }
+        
+        // Cambiar fuente del texto
+        function changeTextFont(font) {
+            document.documentElement.style.setProperty('--text-font', font);
+            document.getElementById('frame-text').style.fontFamily = font;
+        }
+        
+        // Cambiar posición del texto
+        function changeTextPosition(position) {
+            const frameText = document.getElementById('frame-text');
+            frameText.className = 'frame-text';
+            
+            switch(position) {
+                case 'bottom':
+                    frameText.classList.add('bottom');
+                    frameText.style.textAlign = 'center';
+                    break;
+                case 'top':
+                    frameText.classList.add('top');
+                    frameText.style.textAlign = 'center';
+                    break;
+                case 'left':
+                    frameText.classList.add('left');
+                    frameText.style.textAlign = 'left';
+                    break;
+                case 'right':
+                    frameText.classList.add('right');
+                    frameText.style.textAlign = 'right';
+                    break;
+                case 'center':
+                    frameText.classList.add('center');
+                    frameText.style.textAlign = 'center';
+                    break;
+            }
+        }
+        
+        // Cambiar opacidad del texto
+        function changeTextOpacity(value) {
+            const opacity = value / 100;
+            document.documentElement.style.setProperty('--text-opacity', opacity);
+            document.getElementById('text-opacity-value').textContent = `${value}%`;
+            document.getElementById('frame-text').style.opacity = opacity;
+        }
+        
+        // Cambiar estilo geométrico
+        function changeGeometricStyle(style) {
+            const frameInner = document.getElementById('frame-inner');
+            
+            // Remover todas las clases de estilo
+            frameInner.className = 'frame-inner';
+            
+            // Añadir la clase seleccionada
+            frameInner.classList.add(style);
+        }
+        
+        // Actualizar el estilo geométrico (para cuando cambian los colores o tamaño)
+        function updateGeometricStyle() {
+            changeGeometricStyle(currentStyle);
+        }
+    </script>
+    
+    <!-- Biblioteca para capturar el marco -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+</body>
+</html>

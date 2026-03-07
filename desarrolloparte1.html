@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tecnología Urbana - Velocidad Digital en la Ciudad</title>
+<style>
+  /* RESET Y VARIABLES PROFESIONALES */
+  :root {
+    /* Paleta de colores minimalista urbana */
+    --urban-black: #000000;
+    --urban-dark: #111111;
+    --urban-gray-dark: #222222;
+    --urban-gray: #333333;
+    --urban-gray-medium: #555555;
+    --urban-gray-light: #777777;
+    --urban-silver: #aaaaaa;
+    --urban-white: #ffffff;
+    --urban-offwhite: #f8f8f8;
+    --urban-concrete: #e0e0e0;
+    --urban-steel: #cccccc;
+    
+    /* Acents minimalistas */
+    --accent-neon: #ffffff;
+    --accent-glow: rgba(255, 255, 255, 0.8);
+    --accent-highlight: rgba(255, 255, 255, 0.1);
+    --accent-line: rgba(255, 255, 255, 0.2);
+    
+    /* Sombras monocromáticas */
+    --shadow-subtle: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-large: 0 10px 15px rgba(0, 0, 0, 0.15);
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.2);
+    --shadow-hover: 0 25px 50px rgba(0, 0, 0, 0.25);
+    --shadow-glow: 0 0 20px rgba(255, 255, 255, 0.3);
+    
+    /* Bordes y radios */
+    --radius-sm: 2px;
+    --radius-md: 4px;
+    --radius-lg: 8px;
+    --radius-xl: 12px;
+    
+    /* Transiciones */
+    --transition-fast: all 0.15s ease;
+    --transition-normal: all 0.3s ease;
+    --transition-slow: all 0.5s ease;
+    
+    /* Espaciado */
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.25rem;
+    --space-6: 1.5rem;
+    --space-8: 2rem;
+    --space-10: 2.5rem;
+    --space-12: 3rem;
+    --space-16: 4rem;
+    --space-20: 5rem;
+    
+    /* Tipografía */
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.25rem;
+    --font-size-2xl: 1.5rem;
+    --font-size-3xl: 1.875rem;
+    --font-size-4xl: 2.25rem;
+    --font-size-5xl: 3rem;
+    --font-size-6xl: 3.75rem;
+    
+    --font-mono: 'Courier New', 'SF Mono', monospace;
+    --font-sans: 'Arial', 'Helvetica', sans-serif;
+    --font-urban: 'Arial Black', 'Impact', sans-serif;
+  }
+  
+  /* RESET */
+  *, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    height: 100%;
+  }
+  body{
+    
+   border-radius: 10px;
+  max-width: 900px;
+  margin: 90px auto;
+  } /* FONDO URBANO BLANCO/NEGRO - ESTILO REVISTA DE LUJO */
+  body {
+    font-family: var(--font-sans);
+    min-height: 100vh;
+    background: 
+      /* Fondo principal blanco puro */
+      #ffffff,
+      
+      /* Líneas de cuadrícula sutiles (como papel milimetrado urbano) */
+      linear-gradient(
+          90deg, 
+          rgba(0, 0, 0, 0.03) 1px, 
+          transparent 1px
+        ) 0 0 / 20px 20px,
+      linear-gradient(
+          0deg, 
+          rgba(0, 0, 0, 0.03) 1px, 
+          transparent 1px
+        ) 0 0 / 20px 20px,
+      
+      /* Líneas diagonales más sutiles */
+      repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 100px,
+        rgba(0, 0, 0, 0.02) 100px,
+        rgba(0, 0, 0, 0.02) 102px
+      ),
+      
+      /* Marco exterior oscuro */
+      linear-gradient(
+        to bottom,
+        #000000 0%,
+        #000000 5px,
+        transparent 5px,
+        transparent calc(100% - 5px),
+        #000000 calc(100% - 5px),
+        #000000 100%
+      ),
+      linear-gradient(
+        to right,
+        #000000 0%,
+        #000000 5px,
+        transparent 5px,
+        transparent calc(100% - 5px),
+        #000000 calc(100% - 5px),
+        #000000 100%
+      );
+    
+    background-color: #ffffff;
+    background-attachment: fixed;
+    color: #000000;
+    line-height: 1.6;
+    position: relative;
+    overflow-x: hidden;
+    padding: var(--space-8);
+    border-radius: 0;
+    max-width: 1200px;
+    margin: 40px auto;
+    box-shadow: 
+      var(--shadow-xl),
+      0 0 0 1px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* ELEMENTOS DECORATIVOS URBANOS MINIMALISTAS */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      /* Líneas de carretera horizontales sutiles */
+      linear-gradient(
+        to bottom,
+        transparent 88%,
+        rgba(0, 0, 0, 0.05) 88%,
+        rgba(0, 0, 0, 0.05) 92%,
+        transparent 92%
+      ),
+      linear-gradient(
+        to bottom,
+        transparent 93%,
+        rgba(0, 0, 0, 0.03) 93%,
+        rgba(0, 0, 0, 0.03) 94%,
+        transparent 94%
+      ),
+      
+      /* Líneas discontinuas de carretera */
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 40px,
+        rgba(0, 0, 0, 0.1) 40px,
+        rgba(0, 0, 0, 0.1) 50px
+      ) 0 90% / 100% 2px,
+      
+      /* Siluetas de edificios en el horizonte */
+      linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.02) 0%,
+        rgba(0, 0, 0, 0.02) 100%
+      ),
+      
+      /* Puntos de grilla para planos urbanos */
+      radial-gradient(
+        circle at 20% 30%,
+        rgba(0, 0, 0, 0.01) 1px,
+        transparent 1px
+      ),
+      radial-gradient(
+        circle at 80% 70%,
+        rgba(0, 0, 0, 0.01) 1px,
+        transparent 1px
+      );
+    
+    pointer-events: none;
+    z-index: -1;
+  }
+  
+  /* Líneas decorativas de borde */
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #000000, #ffffff, #000000);
+    z-index: 1000;
+  }
+  
+  /* CONTENEDOR PRINCIPAL */
+  .main-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: var(--space-8);
+    position: relative;
+    z-index: 1;
+  }
+  
+  /* ANIMACIONES SUTILES */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes lineScan {
+    0% {
+      background-position: -100% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+  
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+  
+  /* HEADER URBANO MINIMALISTA */
+  .newspaper-header {
+    background: var(--urban-white);
+    border-radius: 0;
+    padding: var(--space-16) var(--space-12);
+    margin-bottom: var(--space-16);
+    text-align: center;
+    box-shadow: var(--shadow-subtle);
+    position: relative;
+    animation: fadeInUp 0.8s ease-out;
+    border: 2px solid var(--urban-black);
+    border-top: 5px solid var(--urban-black);
+    overflow: hidden;
+  }
+  
+  .newspaper-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 10px,
+      var(--urban-black) 10px,
+      var(--urban-black) 20px
+    );
+  }
+  
+  .newspaper-title {
+    font-family: var(--font-urban);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 900;
+    color: var(--urban-black);
+    margin: var(--space-4) 0;
+    letter-spacing: -0.5px;
+    text-transform: uppercase;
+    position: relative;
+    line-height: 1.1;
+  }
+  
+  .newspaper-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 150px;
+    height: 2px;
+    background: var(--urban-black);
+  }
+  
+  .newspaper-subtitle {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xl);
+    color: var(--urban-gray);
+    font-weight: 400;
+    margin-bottom: var(--space-4);
+    padding: var(--space-2) 0;
+    display: block;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border-top: 1px solid var(--urban-gray);
+    border-bottom: 1px solid var(--urban-gray);
+  }
+  
+  .newspaper-date {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--urban-gray-light);
+    padding: var(--space-2) var(--space-4);
+    background: var(--urban-offwhite);
+    display: inline-block;
+    border: 1px solid var(--urban-concrete);
+    letter-spacing: 1px;
+    margin-top: var(--space-4);
+  }
+  
+  /* SECCIÓN PRINCIPAL - ESTILO REVISTA URBANA */
+  .sociedad-section {
+    background: var(--urban-white);
+    border-radius: 0;
+    padding: var(--space-16) var(--space-12);
+    margin-bottom: var(--space-16);
+    position: relative;
+    animation: fadeInUp 1s ease-out 0.3s both;
+    border: 2px solid var(--urban-black);
+    box-shadow: var(--shadow-medium);
+  }
+  
+  .sociedad-section::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: 20px;
+    right: 20px;
+    height: 1px;
+    background: repeating-linear-gradient(
+      90deg,
+      var(--urban-black),
+      var(--urban-black) 5px,
+      transparent 5px,
+      transparent 10px
+    );
+  }
+  
+  .section-title {
+    font-family: var(--font-urban);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 900;
+    color: var(--urban-black);
+    margin-bottom: var(--space-8);
+    position: relative;
+    padding-bottom: var(--space-4);
+    line-height: 1.2;
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+  }
+  
+  .section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100px;
+    height: 3px;
+    background: var(--urban-black);
+  }
+  
+  .section-subtitle {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-base);
+    color: var(--urban-gray);
+    margin-bottom: var(--space-8);
+    padding: var(--space-3) var(--space-4);
+    background: var(--urban-offwhite);
+    border-left: 3px solid var(--urban-black);
+    font-weight: 400;
+    letter-spacing: 1px;
+  }
+  
+  /* CONTENEDOR DE CONTENIDO */
+  .content-wrapper {
+    background: var(--urban-white);
+    padding: var(--space-8) 0;
+    position: relative;
+  }
+  
+  /* PÁRRAFOS - ESTILO TIPOGRAFÍA URBANA */
+  .article-paragraph {
+    margin-bottom: var(--space-6);
+    font-size: var(--font-size-lg);
+    line-height: 1.8;
+    text-align: justify;
+    color: var(--urban-gray-dark);
+    position: relative;
+    font-weight: 300;
+    padding-left: var(--space-4);
+    border-left: 1px solid var(--urban-concrete);
+  }
+  
+  .article-paragraph:first-of-type {
+    font-size: var(--font-size-xl);
+    font-weight: 400;
+    border-left: 3px solid var(--urban-black);
+    padding-left: var(--space-6);
+  }
+  
+  .article-paragraph:first-of-type::first-letter {
+    initial-letter: 3;
+    font-weight: 900;
+    font-size: 5rem;
+    margin-right: var(--space-2);
+    line-height: 0.8;
+    float: left;
+    color: var(--urban-black);
+    font-family: var(--font-urban);
+  }
+  
+  /* LÍNEAS SEPARADORAS URBANAS */
+  .separator {
+    height: 1px;
+    margin: var(--space-8) 0;
+    position: relative;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--urban-gray-light) 20%,
+      var(--urban-gray-light) 80%,
+      transparent
+    );
+  }
+  
+  .separator::before {
+    content: '●';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--urban-black);
+    background: var(--urban-white);
+    padding: 0 var(--space-2);
+    font-size: var(--space-2);
+  }
+  
+  /* CITAS DESTACADAS */
+  .highlight {
+    background: var(--urban-offwhite);
+    padding: var(--space-6);
+    margin: var(--space-8) 0;
+    border-left: 4px solid var(--urban-black);
+    font-style: normal;
+    color: var(--urban-gray-dark);
+    position: relative;
+    font-family: var(--font-mono);
+    font-size: var(--font-size-base);
+    letter-spacing: 0.5px;
+  }
+  
+  .highlight::before {
+    content: '"';
+    position: absolute;
+    top: -10px;
+    left: -15px;
+    font-size: 3rem;
+    color: var(--urban-black);
+    font-family: var(--font-urban);
+  }
+  
+  /* FOOTER URBANO MINIMALISTA */
+  .newspaper-footer {
+    background: var(--urban-black);
+    color: var(--urban-white);
+    padding: var(--space-12);
+    margin-top: var(--space-16);
+    text-align: center;
+    border-radius: 0;
+    position: relative;
+    animation: fadeInUp 1s ease-out 0.6s both;
+    border: 2px solid var(--urban-black);
+  }
+  
+  .footer-content {
+    position: relative;
+    z-index: 1;
+  }
+  
+  .footer-logo {
+    font-family: var(--font-urban);
+    font-size: var(--font-size-2xl);
+    font-weight: 900;
+    margin-bottom: var(--space-4);
+    color: var(--urban-white);
+    line-height: 1.2;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  
+  .footer-logo::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 1px;
+    background: var(--urban-white);
+    margin: var(--space-3) auto;
+  }
+  
+  .copyright {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--space-4);
+    color: var(--urban-silver);
+    letter-spacing: 1px;
+  }
+  
+  .disclaimer {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-sm);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+    color: var(--urban-silver);
+    padding: var(--space-4);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  /* ELEMENTOS DECORATIVOS URBANOS */
+  .urban-decoration {
+    position: absolute;
+    pointer-events: none;
+    z-index: 0;
+  }
+  
+  .grid-line-vertical {
+    position: fixed;
+    top: 0;
+    width: 1px;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.05);
+  }
+  
+  .grid-line-horizontal {
+    position: fixed;
+    left: 0;
+    height: 1px;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.05);
+  }
+  
+  /* RESPONSIVE DESIGN */
+  @media (max-width: 1024px) {
+    body {
+      padding: var(--space-6);
+      margin: 20px auto;
+    }
+    
+    .main-container {
+      padding: var(--space-6);
+    }
+    
+    .newspaper-header,
+    .sociedad-section {
+      padding: var(--space-12) var(--space-8);
+    }
+    
+    .article-paragraph {
+      font-size: var(--font-size-base);
+    }
+    
+    .article-paragraph:first-of-type::first-letter {
+      font-size: 4rem;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    body {
+      padding: var(--space-4);
+      margin: 10px auto;
+      background-size: 30px 30px;
+    }
+    
+    .newspaper-title {
+      font-size: clamp(2rem, 6vw, 2.5rem);
+    }
+    
+    .section-title {
+      font-size: clamp(1.5rem, 5vw, 2rem);
+    }
+    
+    .newspaper-subtitle {
+      font-size: var(--font-size-lg);
+    }
+    
+    .newspaper-date {
+      font-size: var(--font-size-xs);
+    }
+    
+    .footer-logo {
+      font-size: var(--font-size-xl);
+    }
+  }
+  
+  @media (max-width: 480px) {
+    :root {
+      --space-8: 1rem;
+      --space-12: 1.5rem;
+      --space-16: 2rem;
+    }
+    
+    body {
+      padding: var(--space-2);
+      margin: 5px auto;
+    }
+    
+    .newspaper-header,
+    .sociedad-section,
+    .newspaper-footer {
+      padding: var(--space-8);
+      border-width: 1px;
+    }
+    
+    .article-paragraph {
+      font-size: var(--font-size-base);
+      padding-left: var(--space-3);
+      text-align: left;
+    }
+    
+    .article-paragraph:first-of-type::first-letter {
+      initial-letter: 2;
+      font-size: 3rem;
+    }
+    
+    .section-subtitle {
+      font-size: var(--font-size-sm);
+    }
+  }
+
+
+/* RESET */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+/* ESCENA CON MARCO */
+.scene{
+  width:100%;
+  max-width:900px;
+  height:460px;
+  margin:auto;
+  position:relative;
+  overflow:hidden;
+
+  background:linear-gradient(#4facfe,#c2e9fb);
+
+  border:10px solid;
+  border-image:linear-gradient(
+    red,orange,yellow,lime,cyan,blue,violet,red
+  ) 1;
+  border-radius:20px;
+
+  animation:borderColorShift 6s linear infinite;
+
+  box-shadow:
+    0 0 0 6px #000,
+    0 25px 50px rgba(0,0,0,.6);
+}
+
+/* MARCOS INTERNOS */
+.scene::before,
+.scene::after{
+  content:"";
+  position:absolute;
+  pointer-events:none;
+  border-radius:14px;
+}
+.scene::before{
+  inset:6px;
+  border:4px dashed;
+  border-image:linear-gradient(
+    magenta,cyan,lime,yellow,orange,magenta
+  ) 1;
+  animation:dashedMove 4s linear infinite;
+}
+.scene::after{
+  inset:14px;
+  border:2px solid rgba(255,255,255,.6);
+}
+
+/* SOL */
+.sun{
+  width:80px;
+  height:80px;
+  background:#ffcc00;
+  border-radius:50%;
+  position:absolute;
+  top:40px;
+  left:60px;
+  box-shadow:0 0 50px #ffd966;
+}
+
+/* NUBES */
+.cloud{
+  position:absolute;
+  top:90px;
+  width:130px;
+  height:45px;
+  background:#fff;
+  border-radius:25px;
+  animation:cloudMove 30s linear infinite;
+}
+.cloud::before,
+.cloud::after{
+  content:"";
+  position:absolute;
+  background:#fff;
+  border-radius:50%;
+}
+.cloud::before{
+  width:55px;height:55px;top:-25px;left:20px;
+}
+.cloud::after{
+  width:65px;height:65px;top:-35px;left:55px;
+}
+.c2{
+  top:140px;
+  animation-duration:40s;
+  opacity:.7;
+}
+
+/* MONTAÑAS */
+.mountain{
+  position:absolute;
+  bottom:120px;
+  width:0;height:0;
+  border-left:230px solid transparent;
+  border-right:230px solid transparent;
+  border-bottom:280px solid #5d7c4b;
+}
+.m2{
+  left:260px;
+  border-bottom-color:#4b6b3a;
+}
+.m3{
+  left:520px;
+  border-bottom-color:#3f5c33;
+}
+
+/* CIUDAD */
+.city{
+  position:absolute;
+  bottom:120px;
+  width:100%;
+  display:flex;
+  gap:22px;
+  padding:0 70px;
+}
+.building{
+  width:85px;
+  background:linear-gradient(#2b2b2b,#111);
+  border-radius:4px 4px 0 0;
+}
+.b1{height:110px;}
+.b2{height:145px;}
+.b3{height:100px;}
+
+.window{
+  width:10px;
+  height:14px;
+  background:#ffd966;
+  margin:6px;
+  float:left;
+  box-shadow:0 0 6px rgba(255,214,102,.8);
+}
+
+/* RÍO */
+.river{
+  position:absolute;
+  bottom:60px;
+  width:100%;
+  height:80px;
+  background:linear-gradient(#4facfe,#005fa3);
+}
+
+/* SUELO */
+.ground{
+  position:absolute;
+  bottom:0;
+  width:100%;
+  height:60px;
+  background:linear-gradient(#3fa34d,#2f7d32);
+}
+
+/* ANIMACIONES */
+@keyframes cloudMove{
+  from{left:-160px;}
+  to{left:100%;}
+}
+@keyframes dashedMove{
+  from{filter:hue-rotate(0deg);}
+  to{filter:hue-rotate(360deg);}
+}
+@keyframes borderColorShift{
+  0%{filter:hue-rotate(0deg);}
+  100%{filter:hue-rotate(360deg);}
+}
+
+  .volver {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-family: Arial, sans-serif;
+        }
+
+        .volver:hover {
+            background-color: #2980b9;
+        }
+</style>
+</head>
+<body>
+
+<!-- Líneas de cuadrícula decorativas -->
+<div class="grid-line-vertical" style="left: 20%;"></div>
+<div class="grid-line-vertical" style="left: 50%;"></div>
+<div class="grid-line-vertical" style="left: 80%;"></div>
+<div class="grid-line-horizontal" style="top: 30%;"></div>
+<div class="grid-line-horizontal" style="top: 70%;"></div>
+
+<div class="scene">
+  <div class="sun"></div>
+
+  <div class="cloud"></div>
+  <div class="cloud c2"></div>
+
+  <div class="mountain"></div>
+  <div class="mountain m2"></div>
+  <div class="mountain m3"></div>
+
+  <div class="city">
+    <div class="building b1">
+      <div class="window"></div><div class="window"></div>
+    </div>
+    <div class="building b2">
+      <div class="window"></div><div class="window"></div>
+      <div class="window"></div>
+    </div>
+    <div class="building b3">
+      <div class="window"></div><div class="window"></div>
+    </div>
+  </div>
+
+  <div class="river"></div>
+  <div class="ground"></div>
+</div>
+
+<div class="main-container">
+  <!-- ENCABEZADO -->
+    <div class="newspaper-subtitle">
+   <a href="aprendeprincipalconocimientosabogacia.html" class="volver">Volver atrás</a>
+<h1> La verdad por adelantes</div> </h1> 
+    
+    <div class="newspaper-date"> 
+      <h1>
+        Me llamo sombrero blanco (El unico revelador de la verdad)
+    
+    </div>  </h1>
+  </header>
+  
+  <!-- SECCIÓN PRINCIPAL -->
+  <section class="sociedad-section">
+   
+  
+    
+    <div class="content-wrapper">
+      <p class="article-paragraph">Me llamo el sombrero blanco porque digo la verdad con sinceridad. Esta investigación jamás será expuesta de manera pública. Nadie va a salir a mostrar lo que verdaderamente ocurre en el mundo digital y tecnológico, ni mucho menos aparecerá en la televisión.
+No va a salir en la televisión: ni en Clarín, Crónica, C5N, TNT, La Nación, TNT Chaco TV ni en otros canales. Tampoco va a aparecer en ningún sitio web.
+
+Nadie va a mostrar lo que realmente está pasando, porque a muchos les conviene que esto no se haga público. La verdad no se difunde cuando incomoda: se oculta y se silencia. Tampoco será fácil de encontrar en cualquier página web, porque hay personas a las que les interesa que la verdad permanezca escondida. Esa es la realidad, aunque a muchos les moleste aceptarla.
+
+Por eso, a quienes hablan sin saber, dicen estupideces o repiten pelotudeces, les digo una sola cosa: sigan escuchando a los cobardes que esconden la verdad o a los chismes sin fundamentos. Esos rumores no hacen más que propagar mentiras dentro de la sociedad.
+   </p>
+      
+      <div class="separator"></div>
+      
+      <p class="article-paragraph">
+
+Kali Linux es un sistema operativo que suele asociarse a acciones ilegales debido a que incluye numerosas herramientas diseñadas para el espionaje y los ataques informáticos.
+Este sistema puede permitir el acceso no autorizado a una notebook o computadora, posibilitando el robo de información privada como archivos, documentos, fotografías, videos y datos personales. Asimismo, podría utilizarse para monitorear y rastrear la navegación web de una persona sin su consentimiento. Además, Kali Linux puede afectar a dispositivos móviles, facilitando el espionaje de aplicaciones de mensajería como WhatsApp o Telegram, el acceso no autorizado a cuentas en la nube como OneDrive o Google Drive y la intrusión en redes sociales como Facebook, Instagram o Twitter. A través de estas acciones, sería posible obtener información personal, credenciales y datos sensibles sin autorización, lo cual constituiría un delito y una grave violación a la privacidad.También se sostiene que podrían haberse utilizado sistemas virtuales falsos, routers falsos y técnicas de suplantación de direcciones IP, permitiendo simular ubicaciones correspondientes a distintos países del mundo. Todo esto, junto con la manipulación del tráfico de red, habría tenido como objetivo ocultar la ubicación real de los responsables. Asimismo, se afirma que se habrían empleado técnicas avanzadas de cifrado y suplantación de identidad digital para dificultar el rastreo de las actividades, incluyendo la manipulación de información y la ocultación de evidencias.
+Con estas herramientas, se podría extraer información de toda la notebook, incluyendo discos duros locales como las unidades C y D, accediendo a carpetas como Descargas, Escritorio, Documentos, Imágenes, Música, Videos y Bibliotecas, así como a unidades externas como discos duros o memorias USB, obteniendo contenidos personales sin autorización. Del mismo modo, en dispositivos móviles como celulares o tablets, se podría controlar y acceder a todos los archivos almacenados, incluyendo información personal, aplicaciones instaladas y datos sensibles, lo que representaría una grave violación a la privacidad.
+
+  </p>
+      
+      <div class="highlight">Kali NetHunter, una plataforma basada en Kali Linux, en manos de ciberdelincuentes, podría ser utilizada para espiar aplicaciones como WhatsApp y Telegram, así como redes sociales como Facebook, Instagram y Twitter. También permitiría acceder a información del dispositivo, como el historial de navegación, páginas visitadas, fechas y horarios de conexión, encendido y apagado del equipo, así como a datos ingresados en navegadores como Google Chrome o Microsoft Edge. En plataformas educativas o campus virtuales, podría accederse a documentos como archivos PDF, Word, PowerPoint y videos almacenados. En aplicaciones de mensajería, se podrían capturar conversaciones completas, grupos, contactos, estados, publicaciones, fotos y videos, lo que incluso podría permitir extender el acceso a otros dispositivos vinculados a esos contactos. Se sostiene además que este tipo de prácticas podría utilizarse para el espionaje de comunicaciones privadas entre familiares y personas cercanas, incluyendo conversaciones dentro del hogar, con posibles métodos de vigilancia que permitirían conocer rutinas y movimientos, representando una intromisión grave en la vida privada. El sitio web oficial desde donde se distribuye este sistema operativo es <a href="https://www.kali.org/"> Sitio web Kali Linux oficial</a>. 
+
+    </div>
+      
+      <p class="article-paragraph">Se afirma que algunos usuarios lo descargan y utilizan para realizar actividades ilegales como estafas, engaños o robo de datos personales. Todo lo descripto constituye, según estas afirmaciones, un riesgo significativo para la seguridad, porque podría apagar la luz de la población y provocar que no haya más electricidad en casas, hogares o empresas. Asimismo, se sostiene la preocupación de que, mediante el uso indebido de herramientas informáticas avanzadas, podrían realizarse ataques a infraestructuras críticas, lo que eventualmente podría provocar interrupciones de servicios esenciales como el suministro eléctrico en ciudades, hogares o poblaciones enteras.Se considera que este tipo de amenazas representa una situación grave y que la falta de medidas adecuadas por parte de las autoridades judiciales y de control podría incrementar los riesgos para la seguridad pública, manteniendo expuesta a la sociedad frente a posibles abusos derivados del uso de este sistema operativo. Ya sea, como siempre, la policía, el cibercrimen, jueces, juezas, políticos o el poder, quienes tendrían que eliminar el sistema operativo Kali Linux, considerado ilegal; sin embargo, siempre les encanta destruir la sociedad y la población, y por esta razón no van a hacer nada.
+  </p>
+      
+      <div class="separator"></div>
+      
+      <p class="article-paragraph">
+<h2>
+¿Cómo se organizan en el ámbito tecnológico y digital toda la policía del país?
+</h2>
+Toda la policía de cibercrimen, como en Estados Unidos las agencias CIA, FBI y DEA, así como también en Argentina, Colombia, Venezuela y en todos los países, utilizan el sistema operativo Kali Linux para realizar sus investigaciones, con el fin de obtener información que no estaba en las cámaras de seguridad o para acceder a otras cámaras que no se investigaron en el ámbito presencial de un local, empresa o ciudad.También se utiliza para obtener información sobre los grupos narcotraficantes; todo eso se monitorea mediante el espionaje, utilizando el sistema operativo Kali Linux. La policía de cibercrimen analiza notebooks, celulares y tablets, es decir, dispositivos que están siendo vigilados. Sin embargo, esa policía muchas veces se confunde, porque en realidad algunos actúan de forma obsesiva por el dinero.Por esa razón, jueces y juezas les creen a la policía de cibercrimen, aun cuando se ha mentido y se ha acusado a personas inocentes que no cometieron ningún delito digital. Esto da a entender que existe manipulación de evidencias ocultas y que también se cometen violaciones a la privacidad de las personas.Por esta razón, cuando la policía de cibercrimen analiza todos los movimientos y ubicaciones para llegar a una conclusión, lo que hace es infiltrarse en la casa del hombre o la mujer que están investigando. Aunque esas personas dicen que no saben nada, todo eso termina siendo un engaño. La policía puede infiltrarse en centros, gimnasios o en distintos grupos, ya que un grupo de policías puede infiltrarse en cualquier lugar solo enviando un mensaje simple como hola. Muchas personas no se dan cuenta y responden más mensajes cara a cara o por medios digitales, lo que le da ventaja a la policía para infiltrarse y sacar sus conclusiones. Luego, cuando llega el momento de la intervención de jueces y juezas, a veces se culpa a personas inocentes que eran hombres.
+
+
+
+      </p>
+<h2>
+
+¿Cómo afectan las denuncias falsas y la obsesión por el dinero a la justicia y a la vida, la salud física y no material? 
+</h2>
+
+Hay casos en los que algunas mujeres presentan denuncias falsas contra hombres, motivadas por venganza o con intención de manipular. Aunque no se debe generalizar, es una realidad que en ciertas situaciones se realizan acusaciones sin pruebas ni evidencia. En el ámbito médico, especialmente en especialidades delicadas como la ginecología, también pueden surgir malentendidos o acusaciones infundadas. Muchas personas no comprenden bien el trabajo de un ginecólogo, cuyo rol es velar por la salud del sistema reproductor femenino. Este profesional diagnostica, trata y previene enfermedades que afectan órganos como los ovarios, el útero, la vagina y las mamas. Atiende casos de infecciones, trastornos hormonales e incluso enfermedades graves como el cáncer, siempre priorizando el bienestar de la paciente.A veces, nos enfocamos demasiado en lo que dicen los libros, los artículos y las leyes, olvidando que la vida real no se escribe en papel. Una hoja se puede romper, se puede reemplazar por otra, pero la vida de una persona no. La salud, especialmente la de una mujer, no debería quedar en segundo plano por interpretaciones o decisiones tomadas sin comprender lo que realmente importa. Lo esencial es que esa paciente se cure, que viva, que tenga bienestar. La salud es lo más valioso que tenemos, y nadie debería temer ni ser juzgado por dedicarse a cuidarla.  Mujeres que hacen falsas denuncias contra hombres por violencia de género No había evidencia de violencia de género porque algunas mujeres se lastiman a sí mismas o practican deportes donde pueden recibir golpes entre mujeres. Sin embargo, en estos casos se culpa al hombre, aunque él no haya cometido ningún delito. Se sabe que algunas mujeres realizan denuncias falsas para impedir que el padre tenga derecho a cuidar a sus hijos. Esto es muy grave, ya que implica que esas mujeres manipulan la situación en el hogar y al hombre.
+Por ejemplo, hay casos en los que esas mujeres obligan al hombre a no salir al patio o a la Plaza de Mayo, y le prohíben hablar con otras personas. Estas mujeres lo tratan como un esclavo u objeto al hombre. Las mujeres obligan al hombre a que no estudie ni aprenda cosas como programación, medicina u otros cursos o carreras. Además, las mujeres no quieren que publique nada en redes sociales o plataformas web, porque lo ven solo como un objeto o esclavo al hombre. Muchas mujeres utilizan el engaño y la manipulación mientras predican que los hombres deben madurar o que cada uno hace su vida sin meterse con el otro; sin embargo, en la práctica, algunas actúan en contra de sus propias palabras. En el caso, la mujer exigió favores íntimos y sexuales a través de mensajes en WhatsApp y Telegram. Cuando el hombre no le mandó cosas íntimas desnudas a la mujer, lo amenazó con hacer una denuncia falsa. También esa mujer lo amenazó con un cuchillo e incluso con un arma de fuego, obligándolo a enviarle imágenes y videos íntimos. Además, bajo coacción y sin su consentimiento, el hombre fue forzado a situaciones sexuales que no deseaba. Cuando un menor de edad (persona menor de 18 años) comete un delito digital, como el sexting o la difusión de fotos y videos íntimos con contenido sexual, incluso entre compañeros de escuela, también debe ser considerado responsable de sus actos. No es justo que las leyes siempre lo protejan sin evaluar la complejidad de cada caso. En muchas situaciones, son los propios menores quienes inician o comparten este tipo de contenido, ya sea por enojo, venganza o falta de responsabilidad. Por ello, es necesario revisar las leyes actuales, porque no siempre los adultos son los responsables de lo que hacen los menores que difunden imágenes o videos íntimos. A veces, los menores ocultan lo sucedido por miedo, vergüenza o para evitar consecuencias, o protegen a su compañero o compañera que grabó y difundió fotos y videos íntimos. Sin embargo, la justicia suele protegerlos automáticamente, incluso cuando han cometido un delito. Esto no siempre es culpa de los adultos En contextos como la escuela secundaria, existe una fuerte presión social entre pares para demostrar la sexualidad o la personalidad. Quienes se niegan pueden ser insultados o tratados como débiles, tanto hombres como mujeres, y pueden recibir burlas con términos ofensivos, como lesbiana. La ley brinda protección especial a los menores de edad, y autoridades como la policía o los jueces actúan bajo ese principio. Sin embargo, esa protección no es absoluta ni eterna. Un menor que no fue sancionado en su momento podría enfrentar consecuencias años después, ya como adulto, por hechos cometidos durante su adolescencia. En algunos casos, se llega a juicio siendo mayor de edad por delitos cometidos siendo menor. Además, algunos menores logran evadir cualquier tipo de castigo al destruir pruebas: cambian el chip del celular, formatean dispositivos o destruyen hardware como teléfonos, notebooks, discos rígidos o memorias RAM. Al no dejar rastro, evitan una posible condena. Aclaración: si cometiste un delito cuando eras menor de edad, entonces cuando seas adulto necesitarás un abogado o abogada para enfrentar un juicio ante jueces y juezas de la justicia.
+
+      </p>
+
+
+    </div>
+  </section>
+  
+
+ 
+</div>
+
+</body>
+</html>

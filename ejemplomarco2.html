@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador Profesional de Diseño Gráfico</title>
+    <style>
+        :root {
+            --primary: #4dabf7;
+            --secondary: #ff8787;
+            --accent: #51cf66;
+            --dark: #343a40;
+            --light: #f8f9fa;
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        body {
+            margin: 0;
+            background: #f0f2f5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+            color: #333;
+            
+   border-radius: 10px;
+  max-width: 1200px;
+  margin: 90px auto;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path fill="rgba(255,255,255,0.05)" d="M0,0 L100,0 L100,100 L0,100 Z" /><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2"/></svg>');
+            opacity: 0.3;
+            pointer-events: none;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        button, select {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            background: var(--primary);
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 2px 10px rgba(77, 171, 247, 0.3);
+            min-width: 150px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1rem;
+            padding-right: 2.5rem;
+        }
+        
+        button:hover, select:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(77, 171, 247, 0.4);
+        }
+        
+        button.secondary {
+            background: var(--secondary);
+            box-shadow: 0 2px 10px rgba(255, 135, 135, 0.3);
+        }
+        
+        button.secondary:hover {
+            box-shadow: 0 5px 15px rgba(255, 135, 135, 0.4);
+        }
+        
+        .artboard-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+        
+        .artboard {
+            position: relative;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            aspect-ratio: 1/1;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .artboard:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+        
+        /* Elementos de diseño gráfico */
+        .shape {
+            position: absolute;
+            opacity: 0.9;
+            mix-blend-mode: multiply;
+            transition: all 0.5s ease-out;
+            will-change: transform;
+        }
+        
+        .text-element {
+            position: absolute;
+            font-weight: bold;
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+            mix-blend-mode: overlay;
+            font-family: 'Montserrat', 'Segoe UI', sans-serif;
+            white-space: nowrap;
+        }
+        
+        .line {
+            position: absolute;
+            background: currentColor;
+        }
+        
+        .grid {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(currentColor 1px, transparent 1px),
+                              linear-gradient(90deg, currentColor 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.1;
+        }
+        
+        .gradient-overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.1));
+            mix-blend-mode: multiply;
+        }
+        
+        .noise {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.05"/></svg>');
+            pointer-events: none;
+        }
+        
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255,255,255,0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        
+        .loading.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(77, 171, 247, 0.2);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        /* Nuevos estilos para la selección de elementos */
+        .element-selector {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        .element-selector.active {
+            display: flex;
+        }
+        
+        .element-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            max-width: 800px;
+            max-height: 70vh;
+            overflow-y: auto;
+            padding: 1rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+        }
+        
+        .element-item {
+            background: rgba(255,255,255,0.1);
+            border-radius: 5px;
+            padding: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .element-item:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .element-item.selected {
+            background: var(--accent);
+        }
+        
+        .element-preview {
+            width: 30px;
+            height: 30px;
+            border-radius: 4px;
+            background: white;
+        }
+        
+        .selector-actions {
+            margin-top: 1rem;
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .selector-actions button {
+            min-width: 120px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
+            .artboard-container {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            button, select {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .element-list {
+                grid-template-columns: 1fr;
+                width: 90%;
+            }
+        }
+ 
+ /* Estilos para el botón */
+        .btn-back {
+            display: inline-block;
+            padding: 18px 36px;
+            font-size: 22px;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+            background: linear-gradient(45deg, #FF5722, #FF9800);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        /* Efecto al pasar el mouse */
+        .btn-back:hover {
+            background: linear-gradient(45deg, #E64A19, #F57C00);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        }
+
+        /* Efecto al hacer clic */
+        .btn-back:active {
+            transform: translateY(1px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+     <!-- Botón que lleva a otro.html -->
+    <a href="principalmarcoejemplo.html">
+        <button class="btn-back"> Volver atrás</button>
+    </a>
+    <div class="header">
+        <h1>Generador Profesional de Diseño Gráfico</h1>
+        <p>Crea composiciones únicas con más de 70 elementos personalizables</p>
+    </div>
+    
+    <div class="controls">
+        <button id="generate-btn">Generar Nuevo Diseño</button>
+        <select id="style-select">
+            <option value="modern">Moderno</option>
+            <option value="minimal">Minimalista</option>
+            <option value="abstract">Abstracto</option>
+            <option value="retro">Retro</option>
+            <option value="futuristic">Futurista</option>
+            <option value="geometric">Geométrico</option>
+            <option value="organic">Orgánico</option>
+        </select>
+        <select id="color-scheme">
+            <option value="vibrant">Vibrante</option>
+            <option value="pastel">Pastel</option>
+            <option value="monochrome">Monocromático</option>
+            <option value="dark">Oscuro</option>
+            <option value="earth">Tierra</option>
+            <option value="ocean">Océano</option>
+            <option value="sunset">Atardecer</option>
+        </select>
+        <button id="download-all-btn" class="secondary">Descargar Todos</button>
+        <button id="select-elements-btn" class="secondary">Seleccionar Elementos</button>
+    </div>
+    
+    <div class="artboard-container" id="artboards"></div>
+    
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+    </div>
+    
+    <!-- Selector de elementos para descargar -->
+    <div class="element-selector" id="element-selector">
+        <h2>Selecciona los elementos que deseas descargar</h2>
+        <div class="element-list" id="element-list"></div>
+        <div class="selector-actions">
+            <button id="download-selected-btn">Descargar Seleccionados</button>
+            <button id="cancel-select-btn" class="secondary">Cancelar</button>
+        </div>
+    </div>
+
+    <script>
+        // Configuración
+        const artboardsContainer = document.getElementById('artboards');
+        const generateBtn = document.getElementById('generate-btn');
+        const styleSelect = document.getElementById('style-select');
+        const colorScheme = document.getElementById('color-scheme');
+        const downloadAllBtn = document.getElementById('download-all-btn');
+        const selectElementsBtn = document.getElementById('select-elements-btn');
+        const loading = document.getElementById('loading');
+        const elementSelector = document.getElementById('element-selector');
+        const elementList = document.getElementById('element-list');
+        const downloadSelectedBtn = document.getElementById('download-selected-btn');
+        const cancelSelectBtn = document.getElementById('cancel-select-btn');
+        
+        // Variables para almacenar elementos seleccionados
+        let currentArtboard = null;
+        let selectedElements = [];
+        
+        // Paletas de colores profesionales ampliadas
+        const colorPalettes = {
+            vibrant: ['#4dabf7', '#ff8787', '#51cf66', '#fcc419', '#9775fa', '#e64980', '#20c997', '#fd7e14'],
+            pastel: ['#a5d8ff', '#ffc9c9', '#b2f2bb', '#ffec99', '#d0bfff', '#ffdeeb', '#96f2d7', '#ffd8a8'],
+            monochrome: ['#343a40', '#495057', '#868e96', '#adb5bd', '#ced4da', '#dee2e6', '#e9ecef', '#f8f9fa'],
+            dark: ['#212529', '#343a40', '#495057', '#6c757d', '#adb5bd', '#ced4da', '#e9ecef', '#f8f9fa'],
+            earth: ['#5c6b3d', '#8a9a5b', '#b8b42d', '#d9c5a0', '#6e4a3f', '#9c6b5d', '#d4a59a', '#edd9c0'],
+            ocean: ['#0a2463', '#3e92cc', '#d8315b', '#1e1b18', '#ffffff', '#7a9cc6', '#b5bad0', '#e2e2e2'],
+            sunset: ['#ff7e5f', '#feb47b', '#ff6b6b', '#ffa3a3', '#ffd3b6', '#d4a5a5', '#ffaaa5', '#ff8c94']
+        };
+        
+        // Más de 70 elementos de diseño gráfico
+        const shapeTypes = [
+            'circle', 'triangle', 'rectangle', 'polygon', 'blob',
+            'wave', 'stripes', 'grid', 'lines', 'splatter',
+            'half-circle', 'quarter-circle', 'donut', 'oval', 'diamond',
+            'hexagon', 'octagon', 'star', 'cross', 'heart',
+            'zigzag', 'dots', 'checkerboard', 'spiral', 'rays',
+            'bubbles', 'cloud', 'burst', 'mosaic', 'crescent'
+        ];
+        
+        // Textos para elementos tipográficos
+        const designTexts = [
+            "DESIGN", "CREATIVO", "INSPIRACIÓN", "MINIMAL", "ESTILO",
+            "ARTE", "COLOR", "FORMA", "TIPO", "GRÁFICO",
+            "IDEAS", "VISIÓN", "CONCEPTO", "DISEÑO", "CREAR",
+            "INNOVAR", "EXPRESAR", "COMUNICAR", "MODERNO", "CLÁSICO",
+            "FUTURO", "EQUILIBRIO", "ARMONÍA", "CONTRASTE", "RITMO",
+            "ESPACIO", "TEXTURA", "TIPOGRAFÍA", "PALETA", "COMPOSICIÓN"
+        ];
+        
+        // Fuentes para elementos de texto
+        const fontStyles = [
+            "'Montserrat', sans-serif",
+            "'Arial Black', sans-serif",
+            "'Georgia', serif",
+            "'Courier New', monospace",
+            "'Impact', sans-serif",
+            "'Palatino', serif",
+            "'Trebuchet MS', sans-serif",
+            "'Verdana', sans-serif"
+        ];
+        
+        // Estilos de diseño ampliados
+        const designStyles = {
+            modern: { elements: 120, complexity: 3, spacing: 'balanced', textures: true },
+            minimal: { elements: 50, complexity: 1, spacing: 'sparse', textures: false },
+            abstract: { elements: 200, complexity: 5, spacing: 'random', textures: true },
+            retro: { elements: 150, complexity: 4, spacing: 'grid', textures: true },
+            futuristic: { elements: 180, complexity: 4, spacing: 'angular', textures: true },
+            geometric: { elements: 160, complexity: 4, spacing: 'grid', textures: false },
+            organic: { elements: 140, complexity: 3, spacing: 'flow', textures: true }
+        };
+        
+        // Generar diseño
+        async function generateDesign() {
+            loading.classList.add('active');
+            
+            // Pequeño retraso para permitir que la animación de carga se muestre
+            await new Promise(resolve => setTimeout(resolve, 50));
+            
+            artboardsContainer.innerHTML = '';
+            
+            // Configuración actual
+            const style = styleSelect.value;
+            const palette = colorPalettes[colorScheme.value];
+            const config = designStyles[style];
+            
+            // Crear 4 artboards
+            for (let i = 0; i < 4; i++) {
+                const artboard = document.createElement('div');
+                artboard.className = 'artboard';
+                artboard.id = `artboard-${i}`;
+                
+                // Fondo del artboard con más variedad
+                const bgType = Math.random();
+                if (bgType > 0.7) {
+                    // Gradiente complejo
+                    const angle = Math.random() * 360;
+                    const stops = 2 + Math.floor(Math.random() * 3);
+                    let gradient = `linear-gradient(${angle}deg`;
+                    
+                    for (let j = 0; j < stops; j++) {
+                        gradient += `, ${getRandomColor(palette)} ${j * (100 / stops)}%`;
+                    }
+                    gradient += ')';
+                    
+                    artboard.style.background = gradient;
+                } else if (bgType > 0.4) {
+                    // Color sólido
+                    artboard.style.background = getRandomColor(palette);
+                } else if (bgType > 0.2) {
+                    // Patrón simple
+                    artboard.style.background = `repeating-linear-gradient(
+                        45deg,
+                        ${getRandomColor(palette)},
+                        ${getRandomColor(palette)} 10px,
+                        ${getRandomColor(palette)} 10px,
+                        ${getRandomColor(palette)} 20px
+                    )`;
+                } else {
+                    // Blanco con textura
+                    artboard.style.background = 'white';
+                }
+                
+                // Agregar elementos
+                const elementCount = Math.floor(config.elements * (0.8 + Math.random() * 0.4));
+                let elementsCreated = 0;
+                
+                // Texturas de fondo (opcional)
+                if (config.textures && Math.random() > 0.3) {
+                    if (Math.random() > 0.5) {
+                        const noise = document.createElement('div');
+                        noise.className = 'noise';
+                        artboard.appendChild(noise);
+                        elementsCreated++;
+                    }
+                    
+                    if (Math.random() > 0.5) {
+                        const gradientOverlay = document.createElement('div');
+                        gradientOverlay.className = 'gradient-overlay';
+                        artboard.appendChild(gradientOverlay);
+                        elementsCreated++;
+                    }
+                }
+                
+                // Grid (opcional)
+                if (Math.random() > 0.5 && style !== 'minimal') {
+                    const grid = document.createElement('div');
+                    grid.className = 'grid';
+                    grid.style.color = getRandomColor(palette);
+                    artboard.appendChild(grid);
+                    elementsCreated++;
+                }
+                
+                // Crear elementos
+                for (let j = 0; j < elementCount; j++) {
+                    if (Math.random() > 0.9 && elementsCreated < 350) {
+                        // 10% de probabilidad de crear un elemento extra
+                        j--;
+                    }
+                    
+                    createGraphicElement(artboard, palette, config, style);
+                    elementsCreated++;
+                }
+                
+                // Texto (opcional)
+                if (Math.random() > 0.3 && style !== 'minimal') {
+                    const textCount = Math.floor(Math.random() * 3) + 1;
+                    for (let t = 0; t < textCount; t++) {
+                        createTextElement(artboard, palette);
+                        elementsCreated++;
+                    }
+                }
+                
+                artboardsContainer.appendChild(artboard);
+            }
+            
+            loading.classList.remove('active');
+        }
+        
+        function createGraphicElement(artboard, palette, config, style) {
+            const element = document.createElement('div');
+            element.className = 'shape';
+            
+            // Tamaño y posición
+            const sizeBase = Math.floor(Math.random() * 150) + 30;
+            const sizeVariation = 0.5 + Math.random();
+            const size = sizeBase * sizeVariation;
+            const posX = Math.random() * 100;
+            const posY = Math.random() * 100;
+            
+            // Color con variaciones de opacidad
+            const color = getRandomColor(palette);
+            element.style.color = color;
+            element.style.opacity = 0.7 + Math.random() * 0.3;
+            
+            // Tipo de forma (de nuestra lista ampliada)
+            const shapeType = shapeTypes[Math.floor(Math.random() * shapeTypes.length)];
+            
+            // Configuración específica por tipo de forma
+            switch(shapeType) {
+                case 'circle':
+                    element.style.width = `${size}px`;
+                    element.style.height = `${size}px`;
+                    element.style.borderRadius = '50%';
+                    element.style.background = color;
+                    break;
+                    
+                case 'triangle':
+                    element.style.width = `${size}px`;
+                    element.style.height = `${size}px`;
+                    element.style.background = 'transparent';
+                    element.style.clipPath = 'polygon(50% 0%, 0% 100%, 100% 100%)';
+                    element.style.backgroundColor = color;
+                    break;
+                    
+                case 'rectangle':
+                    element.style.width = `${size}px`;
+                    element.style.height = `${size * (0.3 + Math.random() * 0.7)}px`;
+                    element.style.transform = `rotate(${Math.random() * 360}deg)`;
+                    element.style.background = color;
+                    break;
+                    
+                case 'polygon':
+                    element.style.width = `${size}px`;
+                    element.style.height = `${size}px`;
+                    element.style.clipPath = generatePolygon();
+                    element.style.background = color;
+                    break;
+                    
+                case 'blob':
+                    element.style.width = `${size}px`;
+                    element.style.height = `${size}px`;
+                    element.style.borderRadius = generateBlobRadius();
+                    element.style.background = color;
+                    break;
+                    
+                case 'wave':
+                    element.style.width = `${size * 2}px`;
+                    element.style.height = `${size / 2}px`;
+                    element.style.borderRadius = '50%';
+                    element.style.background = color;
+                    element.style.opacity = '0.6';
+                    break;
+                    
+                case 'stripes':
+                    element.style.width = `${size}px`;
+                    element.style.height = `${size * 3}px`;
+                    element.style.background = generateStripes(color, palette);
+                    break;
+                    
+                case 'lines':
+                    element.className = 'line';
+                    element.style.width = `${Math.random() * 300 + 50}px`;
+                    element.style.height = `${Math.max(1, Math.random() * 5)}px`;
+                    element.style.transform = `rotate(${Math.random() * 360}deg)`;
+                    element.style.background = color;
+                    break;
+                    
+                case 'half-circle':
+                    element.style.width = `${size}px`;
+                    element.style.height = `${size / 2}px`;
+                    element.style.borderRadius = `${size / 2}px ${size / 2}px 0 0`;
+                    element.style.background = color;
+                    break;
+                    
+                case 'donut':
+                    element.style.width = `${size}px`;
+                    element.style.height = `${size}px`;
+                    element.style.borderRadius = '50%';
+                    element.style.background = 'transparent';
+                    element.style.border = `${size / 5}px solid ${color}`;
+                    break;
+                    
+                case 'diamond':
+                    element.style.width = `${size}px`;
+                    element.style.height = `${size}px`;
+                    element.style.transform = 'rotate(45deg)';
+                    element.style.background = color;
+                    break;
+                    
+                case 'hexagon':
+                    element.style.width = `${size}px`;
+                    element.style.height = `${size * 0.866}px`; // Relación para hexágono regular
+                    element.style.clipPath = 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)';
+                    element.style.background = color;
+                    break;
+                    
+                case 'star':
+                    element.style.width = `${size}px`;
+                    element.style.height = `${size}px`;
+                    element.style.clipPath = generateStarPath();
+                    element.style.background = color;
+                    break;
+                    
+                case 'cross':
+                    element.style.width = `${size}px`;
+                    element.style.height = `${size}px`;
+                    element.style.background = `linear-gradient(to bottom, transparent 45%, ${color} 45%, ${color} 55%, transparent 55%),
+                                              linear-gradient(to right, transparent 45%, ${color} 45%, ${color} 55%, transparent 55%)`;
+                    break;
+                    
+                case 'dots':
+                    const dotSize = Math.max(2, size / 10);
+                    element.style.width = `${size}px`;
+                    element.style.height = `${size}px`;
+                    element.style.background = `radial-gradient(circle at center, ${color} ${dotSize}px, transparent ${dotSize}px)`;
+                    element.style.backgroundSize = `${dotSize * 3}px ${dotSize * 3}px`;
+                    break;
+                    
+                case 'burst':
+                    element.style.width = `${size}px`;
+                    element.style.height = `${size}px`;
+                    element.style.background = generateBurst(color, size);
+                    break;
+                    
+                default:
+                    // Forma por defecto (círculo)
+                    element.style.width = `${size}px`;
+                    element.style.height = `${size}px`;
+                    element.style.borderRadius = '50%';
+                    element.style.background = color;
+            }
+            
+            // Posicionamiento según el estilo
+            positionElement(element, posX, posY, config.spacing);
+            
+            // Efectos especiales
+            applySpecialEffects(element, color, style);
+            
+            // Añadir atributo de tipo para selección
+            element.setAttribute('data-type', shapeType);
+            
+            artboard.appendChild(element);
+        }
+        
+        function positionElement(element, posX, posY, spacingType) {
+            switch(spacingType) {
+                case 'balanced':
+                    element.style.left = `${Math.min(90, Math.max(10, posX))}%`;
+                    element.style.top = `${Math.min(90, Math.max(10, posY))}%`;
+                    break;
+                case 'grid':
+                    element.style.left = `${Math.floor(posX / 20) * 20}%`;
+                    element.style.top = `${Math.floor(posY / 20) * 20}%`;
+                    break;
+                case 'angular':
+                    const angle = Math.floor(Math.random() * 8) * 45;
+                    const distance = Math.min(90, Math.max(10, posX));
+                    element.style.left = `${50 + distance * Math.cos(angle * Math.PI / 180)}%`;
+                    element.style.top = `${50 + distance * Math.sin(angle * Math.PI / 180)}%`;
+                    break;
+                case 'flow':
+                    const flowX = posX + Math.sin(posY / 20) * 10;
+                    const flowY = posY + Math.cos(posX / 20) * 10;
+                    element.style.left = `${Math.min(95, Math.max(5, flowX))}%`;
+                    element.style.top = `${Math.min(95, Math.max(5, flowY))}%`;
+                    break;
+                default: // random
+                    element.style.left = `${posX}%`;
+                    element.style.top = `${posY}%`;
+            }
+        }
+        
+        function applySpecialEffects(element, color, style) {
+            // Sombra
+            if (Math.random() > 0.6) {
+                const blur = Math.random() * 15 + 5;
+                const spread = Math.random() * 5;
+                element.style.boxShadow = `0 0 ${blur}px ${spread}px ${color}`;
+            }
+            
+            // Desenfoque
+            if (Math.random() > 0.7) {
+                element.style.filter = `blur(${Math.random() * 3}px)`;
+            }
+            
+            // Modo de mezcla
+            if (Math.random() > 0.5) {
+                const blendModes = ['multiply', 'screen', 'overlay', 'soft-light', 'hard-light'];
+                element.style.mixBlendMode = blendModes[Math.floor(Math.random() * blendModes.length)];
+            }
+            
+            // Efectos especiales por estilo
+            if (style === 'retro' && Math.random() > 0.7) {
+                element.style.border = `2px solid ${darkenColor(color, 30)}`;
+            }
+            
+            if (style === 'futuristic' && Math.random() > 0.6) {
+                element.style.filter = `brightness(${1 + Math.random() * 0.5}) contrast(${1 + Math.random() * 0.5})`;
+            }
+        }
+        
+        function createTextElement(artboard, palette) {
+            const textElement = document.createElement('div');
+            textElement.className = 'text-element';
+            
+            // Seleccionar texto aleatorio
+            textElement.textContent = designTexts[Math.floor(Math.random() * designTexts.length)];
+            
+            // Estilo del texto
+            textElement.style.fontSize = `${Math.floor(Math.random() * 30) + 15}px`;
+            textElement.style.color = getRandomColor(palette);
+            textElement.style.left = `${Math.random() * 70 + 10}%`;
+            textElement.style.top = `${Math.random() * 70 + 10}%`;
+            textElement.style.transform = `rotate(${Math.random() * 15 - 7.5}deg)`;
+            textElement.style.fontFamily = fontStyles[Math.floor(Math.random() * fontStyles.length)];
+            
+            // Añadir atributo de tipo para selección
+            textElement.setAttribute('data-type', 'text');
+            
+            // Efectos de texto
+            if (Math.random() > 0.5) {
+                textElement.style.fontWeight = '900';
+            }
+            
+            if (Math.random() > 0.7) {
+                textElement.style.textShadow = `2px 2px 0 ${darkenColor(textElement.style.color, 30)}, 4px 4px 0 rgba(0,0,0,0.1)`;
+            }
+            
+            if (Math.random() > 0.8) {
+                textElement.style.letterSpacing = `${Math.random() * 5}px`;
+            }
+            
+            artboard.appendChild(textElement);
+        }
+        
+        // Funciones auxiliares para generar formas complejas
+        function generatePolygon() {
+            const sides = Math.floor(Math.random() * 5) + 3; // 3-7 lados
+            let polygon = 'polygon(';
+            
+            for (let i = 0; i < sides; i++) {
+                const angle = (i / sides) * 2 * Math.PI;
+                const radiusVariation = 0.7 + Math.random() * 0.3;
+                const x = 50 + 50 * Math.cos(angle) * radiusVariation;
+                const y = 50 + 50 * Math.sin(angle) * radiusVariation;
+                polygon += `${x}% ${y}%, `;
+            }
+            
+            return polygon.slice(0, -2) + ')';
+        }
+        
+        function generateBlobRadius() {
+            return `${Math.random() * 50}% ${Math.random() * 50}% ${Math.random() * 50}% ${Math.random() * 50}% / 
+                    ${Math.random() * 50}% ${Math.random() * 50}% ${Math.random() * 50}% ${Math.random() * 50}%`;
+        }
+        
+        function generateStarPath() {
+            const points = 5 + Math.floor(Math.random() * 3); // 5-7 puntas
+            let star = 'polygon(';
+            const outerRadius = 50;
+            const innerRadius = outerRadius * (0.3 + Math.random() * 0.2);
+            
+            for (let i = 0; i < points * 2; i++) {
+                const angle = (i / (points * 2)) * 2 * Math.PI;
+                const radius = i % 2 === 0 ? outerRadius : innerRadius;
+                const x = 50 + radius * Math.cos(angle);
+                const y = 50 + radius * Math.sin(angle);
+                star += `${x}% ${y}%, `;
+            }
+            
+            return star.slice(0, -2) + ')';
+        }
+        
+        function generateStripes(baseColor, palette) {
+            const stripeType = Math.floor(Math.random() * 3);
+            const secondColor = getRandomColor(palette);
+            
+            switch(stripeType) {
+                case 0: // Horizontales
+                    return `repeating-linear-gradient(
+                        0deg,
+                        ${baseColor},
+                        ${baseColor} 10px,
+                        ${secondColor} 10px,
+                        ${secondColor} 20px
+                    )`;
+                case 1: // Verticales
+                    return `repeating-linear-gradient(
+                        90deg,
+                        ${baseColor},
+                        ${baseColor} 10px,
+                        ${secondColor} 10px,
+                        ${secondColor} 20px
+                    )`;
+                case 2: // Diagonales
+                    return `repeating-linear-gradient(
+                        45deg,
+                        ${baseColor},
+                        ${baseColor} 10px,
+                        ${secondColor} 10px,
+                        ${secondColor} 20px
+                    )`;
+            }
+        }
+        
+        function generateBurst(color, size) {
+            const rays = 8 + Math.floor(Math.random() * 8); // 8-15 rayos
+            let burst = `conic-gradient(from 0deg at 50% 50%, ${color} 0deg`;
+            
+            const angleStep = 360 / rays;
+            for (let i = 0; i < rays; i++) {
+                const startAngle = i * angleStep;
+                const midAngle = startAngle + angleStep * 0.3;
+                const endAngle = startAngle + angleStep;
+                
+                burst += `, transparent ${startAngle + angleStep * 0.1}deg`;
+                burst += `, ${color} ${midAngle - angleStep * 0.1}deg`;
+                burst += `, ${color} ${midAngle + angleStep * 0.1}deg`;
+                burst += `, transparent ${endAngle - angleStep * 0.1}deg`;
+            }
+            
+            burst += ')';
+            return burst;
+        }
+        
+        function getRandomColor(palette) {
+            return palette[Math.floor(Math.random() * palette.length)];
+        }
+        
+        function darkenColor(color, percent) {
+            // Simplificación para el ejemplo - en una aplicación real usaría una librería de color
+            return color;
+        }
+        
+        // Descargar diseños
+        async function downloadArtboards(all = false) {
+            loading.classList.add('active');
+            
+            try {
+                // Esperar a que html2canvas esté cargado
+                if (typeof html2canvas === 'undefined') {
+                    await new Promise((resolve) => {
+                        const check = setInterval(() => {
+                            if (typeof html2canvas !== 'undefined') {
+                                clearInterval(check);
+                                resolve();
+                            }
+                        }, 100);
+                    });
+                }
+                
+                const artboards = document.querySelectorAll('.artboard');
+                const toDownload = all ? artboards : [artboards[0]];
+                
+                for (let i = 0; i < toDownload.length; i++) {
+                    const artboard = toDownload[i];
+                    const canvas = await html2canvas(artboard, {
+                        scale: 2,
+                        logging: false,
+                        useCORS: true,
+                        allowTaint: true
+                    });
+                    
+                    const link = document.createElement('a');
+                    link.download = `diseño-profesional-${i+1}.png`;
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                    
+                    // Pequeña pausa entre descargas para evitar bloqueos del navegador
+                    await new Promise(resolve => setTimeout(resolve, 300));
+                }
+            } catch (error) {
+                console.error('Error al generar la imagen:', error);
+                alert('Ocurrió un error al generar la imagen. Por favor intenta nuevamente.');
+            } finally {
+                loading.classList.remove('active');
+            }
+        }
+        
+        // Función para mostrar el selector de elementos
+        function showElementSelector() {
+            currentArtboard = document.querySelector('.artboard');
+            if (!currentArtboard) {
+                alert('Primero genera un diseño');
+                return;
+            }
+            
+            elementList.innerHTML = '';
+            selectedElements = [];
+            
+            // Obtener todos los elementos del artboard
+            const elements = currentArtboard.querySelectorAll('.shape, .text-element, .line, .grid, .gradient-overlay, .noise');
+            
+            // Crear elementos en la lista de selección
+            elements.forEach((element, index) => {
+                const elementItem = document.createElement('div');
+                elementItem.className = 'element-item';
+                elementItem.dataset.index = index;
+                
+                // Vista previa del elemento
+                const preview = document.createElement('div');
+                preview.className = 'element-preview';
+                preview.style.background = element.style.background || element.style.color || '#ccc';
+                
+                // Tipo de elemento
+                const type = document.createElement('span');
+                type.textContent = element.getAttribute('data-type') || element.className;
+                
+                elementItem.appendChild(preview);
+                elementItem.appendChild(type);
+                
+                // Manejar selección
+                elementItem.addEventListener('click', () => {
+                    elementItem.classList.toggle('selected');
+                    if (elementItem.classList.contains('selected')) {
+                        selectedElements.push(element);
+                    } else {
+                        selectedElements = selectedElements.filter(el => el !== element);
+                    }
+                });
+                
+                elementList.appendChild(elementItem);
+            });
+            
+            elementSelector.classList.add('active');
+        }
+        
+        // Función para descargar elementos seleccionados
+        async function downloadSelectedElements() {
+            if (selectedElements.length === 0) {
+                alert('Selecciona al menos un elemento para descargar');
+                return;
+            }
+            
+            loading.classList.add('active');
+            elementSelector.classList.remove('active');
+            
+            try {
+                // Crear un contenedor temporal para los elementos seleccionados
+                const tempContainer = document.createElement('div');
+                tempContainer.className = 'artboard';
+                tempContainer.style.width = currentArtboard.offsetWidth + 'px';
+                tempContainer.style.height = currentArtboard.offsetHeight + 'px';
+                tempContainer.style.position = 'absolute';
+                tempContainer.style.left = '-9999px';
+                tempContainer.style.background = currentArtboard.style.background;
+                
+                // Clonar los elementos seleccionados
+                selectedElements.forEach(element => {
+                    const clone = element.cloneNode(true);
+                    tempContainer.appendChild(clone);
+                });
+                
+                document.body.appendChild(tempContainer);
+                
+                // Esperar a que html2canvas esté cargado
+                if (typeof html2canvas === 'undefined') {
+                    await new Promise((resolve) => {
+                        const check = setInterval(() => {
+                            if (typeof html2canvas !== 'undefined') {
+                                clearInterval(check);
+                                resolve();
+                            }
+                        }, 100);
+                    });
+                }
+                
+                // Generar la imagen
+                const canvas = await html2canvas(tempContainer, {
+                    scale: 2,
+                    logging: false,
+                    useCORS: true,
+                    allowTaint: true
+                });
+                
+                // Descargar la imagen
+                const link = document.createElement('a');
+                link.download = `elementos-seleccionados.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+                
+                // Limpiar
+                document.body.removeChild(tempContainer);
+                
+            } catch (error) {
+                console.error('Error al generar la imagen:', error);
+                alert('Ocurrió un error al generar la imagen. Por favor intenta nuevamente.');
+            } finally {
+                loading.classList.remove('active');
+            }
+        }
+        
+        // Event listeners
+        generateBtn.addEventListener('click', generateDesign);
+        downloadAllBtn.addEventListener('click', () => downloadArtboards(true));
+        selectElementsBtn.addEventListener('click', showElementSelector);
+        downloadSelectedBtn.addEventListener('click', downloadSelectedElements);
+        cancelSelectBtn.addEventListener('click', () => {
+            elementSelector.classList.remove('active');
+        });
+        
+        // Inicializar
+        generateDesign();
+        
+        // Cargar html2canvas para descargas
+        const script = document.createElement('script');
+        script.src = 'https://html2canvas.hertzen.com/dist/html2canvas.min.js';
+        document.head.appendChild(script);
+    </script>
+</body>
+</html>

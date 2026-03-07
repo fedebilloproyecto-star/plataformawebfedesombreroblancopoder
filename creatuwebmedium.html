@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FiestaDIY - Decoraciones para Fiestas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+    /* Variables CSS para personalización */
+    :root {
+        --primary: #FF4081;
+        --secondary: #3F51B5;
+        --accent: #FFC107;
+        --light: #F5F5F5;
+        --dark: #212121;
+        --text-color: #212121;
+        --background-color: #F5F5F5;
+        --header-bg: #ffffff;
+        --footer-bg: #212121;
+        --card-bg: #ffffff;
+        --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        --facebook-color: #3b5998;
+        --instagram-color: #e4405f;
+        --twitter-color: #1da1f2;
+        --whatsapp-color: #25d366;
+    }
+
+    /* RESET COMPLETO - TODO CUADRADO */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: var(--font-family);
+        border-radius: 0 !important;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        background-color: var(--background-color);
+        color: var(--text-color);
+        line-height: 1.5;
+        min-height: 100vh;
+        overflow-x: hidden;
+        font-size: 16px;
+        
+   border-radius: 10px;
+  max-width: 900px;
+  margin: 90px auto;
+    }
+
+    /* CONTENEDOR PRINCIPAL */
+    .container {
+        width: 100%;
+        max-width: 100%;
+        margin: 0 auto;
+        padding: 0 15px;
+    }
+
+    /* HEADER 100% CUADRADO */
+    header {
+        background-color: var(--header-bg);
+        border-bottom: 3px solid var(--dark);
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        padding: 10px 0;
+        box-shadow: 0 2px 0 var(--dark);
+    }
+
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 10px;
+    }
+
+    .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: var(--primary);
+        text-decoration: none;
+        padding: 5px 10px;
+        border: 2px solid var(--dark);
+        background: white;
+    }
+
+    /* MENÚ HAMBURGUESA - CUADRADO */
+    .menu-toggle {
+        display: flex;
+        flex-direction: column;
+        cursor: pointer;
+        z-index: 1001;
+        padding: 8px;
+        border: 2px solid var(--dark);
+        background: white;
+    }
+
+    .menu-toggle .bar {
+        width: 22px;
+        height: 3px;
+        background-color: var(--text-color);
+        margin: 3px 0;
+        transition: all 0.3s ease-in-out;
+    }
+
+    /* NAV LINKS - OCULTO POR DEFECTO EN MÓVIL */
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: var(--header-bg);
+        border: 2px solid var(--dark);
+        border-top: none;
+        z-index: 999;
+    }
+
+    .nav-links.active {
+        display: block;
+    }
+
+    .nav-links ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .nav-links li {
+        border-bottom: 1px solid #ddd;
+    }
+
+    .nav-links li:last-child {
+        border-bottom: none;
+    }
+
+    .nav-links a {
+        display: block;
+        padding: 12px 15px;
+        color: var(--text-color);
+        text-decoration: none;
+        font-weight: 500;
+        border-left: 3px solid transparent;
+        transition: all 0.3s;
+    }
+
+    .nav-links a:hover {
+        background-color: var(--primary);
+        color: white;
+        border-left: 3px solid var(--dark);
+    }
+
+    /* HERO SECTION - CUADRADO Y RESPONSIVE */
+    .hero {
+        background: var(--dark);
+        color: white;
+        padding: 100px 15px 60px;
+        text-align: center;
+        margin-top: 50px;
+        border-bottom: 3px solid var(--dark);
+    }
+
+    .hero-content {
+        max-width: 100%;
+        margin: 0 auto;
+        padding: 20px;
+        border: 2px solid white;
+        background: rgba(0, 0, 0, 0.3);
+    }
+
+    .hero h1 {
+        font-size: 2rem;
+        margin-bottom: 15px;
+        padding: 10px;
+        border: 2px solid white;
+        line-height: 1.2;
+        font-weight: 700;
+    }
+
+    .hero p {
+        font-size: 1rem;
+        margin-bottom: 25px;
+        padding: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        line-height: 1.4;
+    }
+
+    /* BOTONES CUADRADOS */
+    .btn {
+        display: inline-block;
+        background-color: var(--primary);
+        color: white;
+        padding: 14px 28px;
+        border: 3px solid var(--dark);
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 1rem;
+        cursor: pointer;
+        box-shadow: 3px 3px 0 var(--dark);
+        transition: all 0.3s;
+        text-align: center;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .btn:hover {
+        background-color: var(--secondary);
+        transform: translateY(-2px);
+        box-shadow: 5px 5px 0 var(--dark);
+    }
+
+    /* CATEGORÍAS - CUADRADAS */
+    .section-title {
+        text-align: center;
+        margin: 30px 0 20px;
+        font-size: 1.6rem;
+        color: var(--secondary);
+        padding: 10px;
+        border: 2px solid var(--dark);
+        background: white;
+    }
+
+    .categories {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 15px;
+        margin-bottom: 30px;
+        padding: 0 5px;
+    }
+
+    .category-card {
+        background-color: var(--card-bg);
+        border: 2px solid var(--dark);
+        overflow: hidden;
+        box-shadow: 3px 3px 0 var(--dark);
+        transition: all 0.3s;
+        cursor: pointer;
+    }
+
+    .category-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 5px 5px 0 var(--dark);
+    }
+
+    .category-img {
+        height: 160px;
+        background-size: cover;
+        background-position: center;
+        border-bottom: 2px solid var(--dark);
+        background-color: #e0e0e0;
+    }
+
+    .category-info {
+        padding: 15px;
+        text-align: center;
+    }
+
+    .category-info h3 {
+        font-size: 1.2rem;
+        margin-bottom: 8px;
+        padding: 5px;
+        border-left: 3px solid var(--primary);
+    }
+
+    /* FOOTER CUADRADO */
+    footer {
+        background-color: var(--footer-bg);
+        color: white;
+        padding: 30px 15px 15px;
+        border-top: 3px solid white;
+    }
+
+    .footer-content {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+
+    .footer-section {
+        padding: 15px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .footer-section h3 {
+        margin-bottom: 12px;
+        font-size: 1.1rem;
+        padding-bottom: 8px;
+        border-bottom: 2px solid var(--primary);
+    }
+
+    .footer-section ul {
+        list-style: none;
+    }
+
+    .footer-section ul li {
+        margin-bottom: 8px;
+        padding: 5px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-section a {
+        color: #ddd;
+        text-decoration: none;
+        transition: color 0.3s;
+        display: block;
+        padding: 3px 0;
+    }
+
+    .footer-section a:hover {
+        color: var(--primary);
+        padding-left: 5px;
+    }
+
+    /* ICONOS SOCIALES CUADRADOS */
+    .social-icons {
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+        flex-wrap: wrap;
+    }
+
+    .social-icons a {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        background-color: #333;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: all 0.3s;
+        border: 1px solid white;
+    }
+
+    .social-icons a:hover {
+        background-color: var(--primary);
+        transform: translateY(-2px);
+    }
+
+    .copyright {
+        text-align: center;
+        padding-top: 15px;
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        font-size: 0.85rem;
+        color: #aaa;
+    }
+
+    /* PANEL DE PERSONALIZACIÓN - CUADRADO */
+    .customization-panel {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100vh;
+        background-color: white;
+        border-right: 3px solid var(--dark);
+        transition: left 0.3s ease;
+        z-index: 1002;
+        padding: 20px 15px;
+        overflow-y: auto;
+    }
+
+    .customization-panel.open {
+        left: 0;
+    }
+
+    .customization-toggle {
+        position: fixed;
+        top: 80px;
+        left: 0;
+        background-color: var(--primary);
+        color: white;
+        padding: 10px 12px;
+        border: 2px solid var(--dark);
+        cursor: pointer;
+        z-index: 1001;
+        box-shadow: 2px 2px 0 var(--dark);
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
+        height: 120px;
+    }
+
+    .panel-close-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: none;
+        border: 2px solid var(--dark);
+        width: 40px;
+        height: 40px;
+        font-size: 1.5rem;
+        color: var(--dark);
+        cursor: pointer;
+        line-height: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .panel-close-btn:hover {
+        background-color: var(--dark);
+        color: white;
+    }
+
+    .panel-section {
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid #eee;
+    }
+
+    .panel-section h3 {
+        margin-bottom: 15px;
+        color: var(--secondary);
+        padding: 8px;
+        border-left: 4px solid var(--primary);
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 500;
+        font-size: 0.95rem;
+    }
+
+    .form-group input, .form-group select, .form-group textarea {
+        width: 100%;
+        padding: 10px 12px;
+        border: 2px solid var(--dark);
+        background: white;
+        font-size: 1rem;
+    }
+
+    .form-group textarea {
+        min-height: 80px;
+        resize: vertical;
+    }
+
+    .color-picker {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .color-picker input {
+        flex: 1;
+    }
+
+    .color-preview {
+        width: 35px;
+        height: 35px;
+        border: 2px solid var(--dark);
+    }
+
+    .reset-btn, .save-btn, .preview-btn {
+        border: 2px solid var(--dark);
+        padding: 12px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 1rem;
+        width: 100%;
+        margin-top: 8px;
+        transition: all 0.3s;
+        box-shadow: 2px 2px 0 var(--dark);
+    }
+
+    .reset-btn {
+        background-color: #f44336;
+        color: white;
+    }
+
+    .save-btn {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .preview-btn {
+        background-color: #2196F3;
+        color: white;
+    }
+
+    .reset-btn:hover, .save-btn:hover, .preview-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 4px 4px 0 var(--dark);
+    }
+
+    /* RESPONSIVE ADICIONAL PARA MÓVILES PEQUEÑOS */
+    @media (max-width: 360px) {
+        .hero h1 {
+            font-size: 1.7rem;
+        }
+        
+        .section-title {
+            font-size: 1.4rem;
+        }
+        
+        .btn {
+            padding: 12px 20px;
+            font-size: 0.95rem;
+        }
+        
+        .category-img {
+            height: 140px;
+        }
+        
+        .footer-section {
+            padding: 12px;
+        }
+    }
+
+    /* TABLET (768px en adelante) */
+    @media (min-width: 768px) {
+        .container {
+            max-width: 750px;
+            margin: 0 auto;
+        }
+        
+        .categories {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        .hero {
+            padding: 120px 20px 80px;
+            margin-top: 60px;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+        }
+        
+        .hero p {
+            font-size: 1.1rem;
+        }
+        
+        .btn {
+            width: auto;
+            margin: 0 5px 10px;
+        }
+        
+        .footer-content {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        
+        .customization-panel {
+            width: 350px;
+            left: -350px;
+        }
+        
+        .customization-toggle {
+            writing-mode: horizontal-tb;
+            height: auto;
+            width: auto;
+            padding: 10px 15px;
+        }
+    }
+
+    /* PC (1024px en adelante) */
+    @media (min-width: 1024px) {
+        .container {
+            max-width: 1000px;
+        }
+        
+        .menu-toggle {
+            display: none;
+        }
+        
+        .nav-links {
+            display: flex !important;
+            position: static;
+            width: auto;
+            background: none;
+            border: none;
+        }
+        
+        .nav-links ul {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .nav-links li {
+            border: none;
+        }
+        
+        .nav-links a {
+            border: 2px solid transparent;
+            padding: 8px 16px;
+        }
+        
+        .nav-links a:hover {
+            border: 2px solid var(--dark);
+            background: var(--primary);
+        }
+        
+        .categories {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        
+        .footer-content {
+            grid-template-columns: repeat(4, 1fr);
+        }
+        
+        .customization-panel {
+            width: 400px;
+            left: -400px;
+        }
+    }
+
+    /* UTILIDADES */
+    .text-center { text-align: center; }
+    .text-left { text-align: left; }
+    .text-right { text-align: right; }
+    .mt-10 { margin-top: 10px; }
+    .mt-20 { margin-top: 20px; }
+    .mb-10 { margin-bottom: 10px; }
+    .mb-20 { margin-bottom: 20px; }
+    .p-10 { padding: 10px; }
+    .p-15 { padding: 15px; }
+    .w-100 { width: 100%; }
+    .d-block { display: block; }
+    .d-none { display: none; }
+    .d-flex { display: flex; }
+    .align-center { align-items: center; }
+    .justify-center { justify-content: center; }
+    .justify-between { justify-content: space-between; }
+    
+    /* ESPACIOS */
+    .space-y-10 > * + * {
+        margin-top: 10px;
+    }
+    
+    .space-y-15 > * + * {
+        margin-top: 15px;
+    }
+    
+    .space-y-20 > * + * {
+        margin-top: 20px;
+    }
+ .btn-volver {
+    display: inline-block;
+    text-decoration: none;
+    background-color: #f1c40f;
+    color: #000;
+    border: 2px solid #d4ac0d;
+    padding: 12px 24px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+
+    /* separación */
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+
+</style>
+</head>
+<body>
+    <div class="customization-toggle" id="customizationToggle">🎨 Personalizar</div>
+    <div class="customization-panel" id="customizationPanel">
+        <button class="panel-close-btn" id="panelCloseBtn">✖</button>
+        <h2>Personalizar Tienda</h2>
+        
+        <div class="panel-section">
+            <h3>Colores</h3>
+            <div class="form-group">
+                <label>Color Primario</label>
+                <div class="color-picker">
+                    <input type="color" id="primaryColor" value="#FF4081">
+                    <div class="color-preview" id="primaryPreview" style="background-color: #FF4081"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Color Secundario</label>
+                <div class="color-picker">
+                    <input type="color" id="secondaryColor" value="#3F51B5">
+                    <div class="color-preview" id="secondaryPreview" style="background-color: #3F51B5"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Color de Acento</label>
+                <div class="color-picker">
+                    <input type="color" id="accentColor" value="#FFC107">
+                    <div class="color-preview" id="accentPreview" style="background-color: #FFC107"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Color de Texto</label>
+                <div class="color-picker">
+                    <input type="color" id="textColor" value="#212121">
+                    <div class="color-preview" id="textPreview" style="background-color: #212121"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Color de Fondo</label>
+                <div class="color-picker">
+                    <input type="color" id="backgroundColor" value="#F5F5F5">
+                    <div class="color-preview" id="backgroundPreview" style="background-color: #F5F5F5"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Fondo del Encabezado</label>
+                <div class="color-picker">
+                    <input type="color" id="headerBackground" value="#ffffff">
+                    <div class="color-preview" id="headerBackgroundPreview" style="background-color: #ffffff"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Fondo del Pie de Página</label>
+                <div class="color-picker">
+                    <input type="color" id="footerBackground" value="#212121">
+                    <div class="color-preview" id="footerBackgroundPreview" style="background-color: #212121"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-section">
+            <h3>Navegación</h3>
+            <div class="form-group">
+                <label>Texto del Logo</label>
+                <input type="text" id="logoText" value="FiestaDIY">
+            </div>
+        </div>
+        
+        <div class="panel-section">
+            <h3>Redes Sociales</h3>
+            <div class="form-group">
+                <label>Facebook URL</label>
+                <input type="text" id="facebookUrl" value="https://facebook.com/tu-pagina">
+            </div>
+            <div class="form-group">
+                <label>Instagram URL</label>
+                <input type="text" id="instagramUrl" value="https://instagram.com/tu-cuenta">
+            </div>
+            <div class="form-group">
+                <label>Twitter URL</label>
+                <input type="text" id="twitterUrl" value="https://twitter.com/tu-cuenta">
+            </div>
+            <div class="form-group">
+                <label>WhatsApp Número</label>
+                <input type="text" id="whatsappNumber" value="+5491100000000">
+            </div>
+        </div>
+
+        <div class="panel-section">
+            <h3>Hero Section</h3>
+            <div class="form-group">
+                <label>Título Principal</label>
+                <input type="text" id="heroTitle" value="Decora tu fiesta con estilo DIY">
+            </div>
+            <div class="form-group">
+                <label>Descripción</label>
+                <textarea id="heroDescription">Encuentra todo lo que necesitas para crear decoraciones únicas y memorables para tus celebraciones</textarea>
+            </div>
+            <div class="form-group">
+                <label>Texto del Botón</label>
+                <input type="text" id="heroButtonText" value="Explorar Productos">
+            </div>
+            <div class="form-group">
+                <label>Imagen de Fondo</label>
+                <input type="file" id="heroBackground" accept="image/*">
+            </div>
+        </div>
+
+        <div class="panel-section">
+            <h3>Categorías</h3>
+            <div class="form-group">
+                <label>Título de Sección</label>
+                <input type="text" id="categoriesTitle" value="Categorías Populares">
+            </div>
+            <div class="form-group">
+                <label>Categoría 1 - Nombre</label>
+                <input type="text" id="category1Name" value="Fiestas Infantiles">
+            </div>
+            <div class="form-group">
+                <label>Categoría 1 - Descripción</label>
+                <input type="text" id="category1Desc" value="Decoraciones coloridas y divertidas">
+            </div>
+            <div class="form-group">
+                <label>Categoría 1 - Imagen</label>
+                <input type="file" id="category1Img" accept="image/*">
+            </div>
+            
+            <div class="form-group">
+                <label>Categoría 2 - Nombre</label>
+                <input type="text" id="category2Name" value="Bodas">
+            </div>
+            <div class="form-group">
+                <label>Categoría 2 - Descripción</label>
+                <input type="text" id="category2Desc" value="Elegancia y romanticismo para tu día especial">
+            </div>
+            <div class="form-group">
+                <label>Categoría 2 - Imagen</label>
+                <input type="file" id="category2Img" accept="image/*">
+            </div>
+            
+            <div class="form-group">
+                <label>Categoría 3 - Nombre</label>
+                <input type="text" id="category3Name" value="Cumpleaños">
+            </div>
+            <div class="form-group">
+                <label>Categoría 3 - Descripción</label>
+                <input type="text" id="category3Desc" value="Celebra de forma única y personalizada">
+            </div>
+            <div class="form-group">
+                <label>Categoría 3 - Imagen</label>
+                <input type="file" id="category3Img" accept="image/*">
+            </div>
+            
+            <div class="form-group">
+                <label>Categoría 4 - Nombre</label>
+                <input type="text" id="category4Name" value="Fiestas Temáticas">
+            </div>
+            <div class="form-group">
+                <label>Categoría 4 - Descripción</label>
+                <input type="text" id="category4Desc" value="Sumérgete en mundos fantásticos">
+            </div>
+            <div class="form-group">
+                <label>Categoría 4 - Imagen</label>
+                <input type="file" id="category4Img" accept="image/*">
+            </div>
+        </div>
+        
+        <div class="panel-section">
+            <h3>Pie de Página</h3>
+            <div class="form-group">
+                <label>Texto de Descripción</label>
+                <textarea id="footerDesc">Tu tienda de confianza para decoraciones de fiesta y materiales DIY.</textarea>
+            </div>
+            <div class="form-group">
+                <label>Texto de Copyright</label>
+                <input type="text" id="copyrightText" value="&copy; 2023 FiestaDIY - Todos los derechos reservados">
+            </div>
+        </div>
+        
+        <button class="preview-btn" id="previewCustomization">Vista Previa</button>
+        <button class="save-btn" id="saveCustomization">Guardar y Descargar</button>
+        <button class="reset-btn" id="resetCustomization">Restablecer Valores Predeterminados</button>
+   <a href="webcrearprincipal.html" class="btn-volver">⬅ Volver</a>
+
+
+    </div>
+
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo" id="logoElement">FiestaDIY</a>
+                <div class="menu-toggle" id="menuToggle">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </div>
+                <ul class="nav-links" id="navLinks">
+                    
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero" id="heroSection">
+        <div class="hero-content">
+            <h1 id="heroTitleElement">Decora tu fiesta con estilo DIY</h1>
+            <p id="heroDescriptionElement">Encuentra todo lo que necesitas para crear decoraciones únicas y memorables para tus celebraciones</p>
+            <a href="#" class="btn" id="heroButtonElement">Explorar Productos</a>
+        </div>
+    </section>
+
+    <section class="container">
+        <h2 class="section-title" id="categoriesTitleElement">Categorías Populares</h2>
+        <div class="categories">
+            <div class="category-card">
+                <div class="category-img" id="category1ImgElement" style="background-image: url('https://images.unsplash.com/photo-1532117182044-031e7cd916ee?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="category-info">
+                    <h3 id="category1NameElement">Fiestas Infantiles</h3>
+                    <p id="category1DescElement">Decoraciones coloridas y divertidas</p>
+                </div>
+            </div>
+            <div class="category-card">
+                <div class="category-img" id="category2ImgElement" style="background-image: url('https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="category-info">
+                    <h3 id="category2NameElement">Bodas</h3>
+                    <p id="category2DescElement">Elegancia y romanticismo para tu día especial</p>
+                </div>
+            </div>
+            <div class="category-card">
+                <div class="category-img" id="category3ImgElement" style="background-image: url('https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="category-info">
+                    <h3 id="category3NameElement">Cumpleaños</h3>
+                    <p id="category3DescElement">Celebra de forma única y personalizada</p>
+                </div>
+            </div>
+            <div class="category-card">
+                <div class="category-img" id="category4ImgElement" style="background-image: url('https://images.unsplash.com/photo-1544724107-8ca336d15653?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="category-info">
+                    <h3 id="category4NameElement">Fiestas Temáticas</h3>
+                    <p id="category4DescElement">Sumérgete en mundos fantásticos</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-section about">
+                <h3 id="footerTitleElement">FiestaDIY</h3>
+                <p id="footerDescElement">Tu tienda de confianza para decoraciones de fiesta y materiales DIY.</p>
+                <div class="social-icons">
+                    <a href="https://facebook.com/tu-pagina" id="facebookLink" target="_blank" style="background-color: var(--facebook-color)"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://instagram.com/tu-cuenta" id="instagramLink" target="_blank" style="background-color: var(--instagram-color)"><i class="fab fa-instagram"></i></a>
+                    <a href="https://twitter.com/tu-cuenta" id="twitterLink" target="_blank" style="background-color: var(--twitter-color)"><i class="fab fa-twitter"></i></a>
+                    <a href="https://wa.me/+5491100000000" id="whatsappLink" target="_blank" style="background-color: var(--whatsapp-color)"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p id="copyrightElement">&copy; 2023 FiestaDIY - Todos los derechos reservados</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const customizationToggle = document.getElementById('customizationToggle');
+            const customizationPanel = document.getElementById('customizationPanel');
+            const panelCloseBtn = document.getElementById('panelCloseBtn');
+            const previewBtn = document.getElementById('previewCustomization');
+            const saveBtn = document.getElementById('saveCustomization');
+            const resetBtn = document.getElementById('resetCustomization');
+            const heroBackgroundInput = document.getElementById('heroBackground');
+            const category1ImgInput = document.getElementById('category1Img');
+            const category2ImgInput = document.getElementById('category2Img');
+            const category3ImgInput = document.getElementById('category3Img');
+            const category4ImgInput = document.getElementById('category4Img');
+            
+            // Elementos HTML que se van a actualizar
+            const logoElement = document.getElementById('logoElement');
+            const heroTitleElement = document.getElementById('heroTitleElement');
+            const heroDescriptionElement = document.getElementById('heroDescriptionElement');
+            const heroButtonElement = document.getElementById('heroButtonElement');
+            const heroSectionElement = document.getElementById('heroSection');
+            const categoriesTitleElement = document.getElementById('categoriesTitleElement');
+            const category1NameElement = document.getElementById('category1NameElement');
+            const category1DescElement = document.getElementById('category1DescElement');
+            const category1ImgElement = document.getElementById('category1ImgElement');
+            const category2NameElement = document.getElementById('category2NameElement');
+            const category2DescElement = document.getElementById('category2DescElement');
+            const category2ImgElement = document.getElementById('category2ImgElement');
+            const category3NameElement = document.getElementById('category3NameElement');
+            const category3DescElement = document.getElementById('category3DescElement');
+            const category3ImgElement = document.getElementById('category3ImgElement');
+            const category4NameElement = document.getElementById('category4NameElement');
+            const category4DescElement = document.getElementById('category4DescElement');
+            const category4ImgElement = document.getElementById('category4ImgElement');
+            const footerDescElement = document.getElementById('footerDescElement');
+            const copyrightElement = document.getElementById('copyrightElement');
+            const facebookLink = document.getElementById('facebookLink');
+            const instagramLink = document.getElementById('instagramLink');
+            const twitterLink = document.getElementById('twitterLink');
+            const whatsappLink = document.getElementById('whatsappLink');
+
+            // Toggle panel de personalización
+            customizationToggle.addEventListener('click', () => {
+                customizationPanel.classList.toggle('open');
+            });
+
+            panelCloseBtn.addEventListener('click', () => {
+                customizationPanel.classList.remove('open');
+            });
+            
+            // Función para aplicar cambios en tiempo real
+            function applyChanges() {
+                // Colores
+                document.documentElement.style.setProperty('--primary', document.getElementById('primaryColor').value);
+                document.documentElement.style.setProperty('--secondary', document.getElementById('secondaryColor').value);
+                document.documentElement.style.setProperty('--accent', document.getElementById('accentColor').value);
+                document.documentElement.style.setProperty('--text-color', document.getElementById('textColor').value);
+                document.documentElement.style.setProperty('--background-color', document.getElementById('backgroundColor').value);
+                document.documentElement.style.setProperty('--header-bg', document.getElementById('headerBackground').value);
+                document.documentElement.style.setProperty('--footer-bg', document.getElementById('footerBackground').value);
+                
+                // Vistas previas de color
+                document.getElementById('primaryPreview').style.backgroundColor = document.getElementById('primaryColor').value;
+                document.getElementById('secondaryPreview').style.backgroundColor = document.getElementById('secondaryColor').value;
+                document.getElementById('accentPreview').style.backgroundColor = document.getElementById('accentColor').value;
+                document.getElementById('textPreview').style.backgroundColor = document.getElementById('textColor').value;
+                document.getElementById('backgroundPreview').style.backgroundColor = document.getElementById('backgroundColor').value;
+                document.getElementById('headerBackgroundPreview').style.backgroundColor = document.getElementById('headerBackground').value;
+                document.getElementById('footerBackgroundPreview').style.backgroundColor = document.getElementById('footerBackground').value;
+
+                // Contenido
+                logoElement.textContent = document.getElementById('logoText').value;
+                heroTitleElement.textContent = document.getElementById('heroTitle').value;
+                heroDescriptionElement.textContent = document.getElementById('heroDescription').value;
+                heroButtonElement.textContent = document.getElementById('heroButtonText').value;
+                categoriesTitleElement.textContent = document.getElementById('categoriesTitle').value;
+                category1NameElement.textContent = document.getElementById('category1Name').value;
+                category1DescElement.textContent = document.getElementById('category1Desc').value;
+                category2NameElement.textContent = document.getElementById('category2Name').value;
+                category2DescElement.textContent = document.getElementById('category2Desc').value;
+                category3NameElement.textContent = document.getElementById('category3Name').value;
+                category3DescElement.textContent = document.getElementById('category3Desc').value;
+                category4NameElement.textContent = document.getElementById('category4Name').value;
+                category4DescElement.textContent = document.getElementById('category4Desc').value;
+                footerDescElement.textContent = document.getElementById('footerDesc').value;
+                copyrightElement.textContent = document.getElementById('copyrightText').value;
+                
+                // URLs de redes sociales
+                facebookLink.href = document.getElementById('facebookUrl').value;
+                instagramLink.href = document.getElementById('instagramUrl').value;
+                twitterLink.href = document.getElementById('twitterUrl').value;
+                whatsappLink.href = 'https://wa.me/' + document.getElementById('whatsappNumber').value.replace(/\D/g, ''); // Limpiar el número
+            }
+
+            // Evento para vista previa
+            previewBtn.addEventListener('click', applyChanges);
+
+            // Evento para guardar y descargar
+            saveBtn.addEventListener('click', () => {
+                applyChanges(); // Aplicar los últimos cambios antes de descargar
+                let htmlContent = document.documentElement.outerHTML;
+
+                // Modificar el HTML para que no incluya el panel de personalización y los scripts
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = htmlContent;
+                tempDiv.querySelector('#customizationToggle').remove();
+                tempDiv.querySelector('#customizationPanel').remove();
+                tempDiv.querySelector('script').remove();
+
+                const finalHtml = '<!DOCTYPE html>\n' + tempDiv.innerHTML;
+
+                const blob = new Blob([finalHtml], { type: 'text/html' });
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = 'fiestadiy_personalizada.html';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            });
+
+            // Función para restablecer los valores predeterminados
+            function resetCustomization() {
+                // Restaurar colores
+                document.getElementById('primaryColor').value = '#FF4081';
+                document.getElementById('secondaryColor').value = '#3F51B5';
+                document.getElementById('accentColor').value = '#FFC107';
+                document.getElementById('textColor').value = '#212121';
+                document.getElementById('backgroundColor').value = '#F5F5F5';
+                document.getElementById('headerBackground').value = '#ffffff';
+                document.getElementById('footerBackground').value = '#212121';
+                
+                // Restaurar textos
+                document.getElementById('logoText').value = 'FiestaDIY';
+                document.getElementById('heroTitle').value = 'Decora tu fiesta con estilo DIY';
+                document.getElementById('heroDescription').value = 'Encuentra todo lo que necesitas para crear decoraciones únicas y memorables para tus celebraciones';
+                document.getElementById('heroButtonText').value = 'Explorar Productos';
+                document.getElementById('categoriesTitle').value = 'Categorías Populares';
+                document.getElementById('category1Name').value = 'Fiestas Infantiles';
+                document.getElementById('category1Desc').value = 'Decoraciones coloridas y divertidas';
+                document.getElementById('category2Name').value = 'Bodas';
+                document.getElementById('category2Desc').value = 'Elegancia y romanticismo para tu día especial';
+                document.getElementById('category3Name').value = 'Cumpleaños';
+                document.getElementById('category3Desc').value = 'Celebra de forma única y personalizada';
+                document.getElementById('category4Name').value = 'Fiestas Temáticas';
+                document.getElementById('category4Desc').value = 'Sumérgete en mundos fantásticos';
+                document.getElementById('footerDesc').value = 'Tu tienda de confianza para decoraciones de fiesta y materiales DIY.';
+                document.getElementById('copyrightText').value = '&copy; 2023 FiestaDIY - Todos los derechos reservados';
+                
+                // Restaurar URLs de redes sociales
+                document.getElementById('facebookUrl').value = 'https://facebook.com/tu-pagina';
+                document.getElementById('instagramUrl').value = 'https://instagram.com/tu-cuenta';
+                document.getElementById('twitterUrl').value = 'https://twitter.com/tu-cuenta';
+                document.getElementById('whatsappNumber').value = '+5491100000000';
+
+                // Restaurar imágenes (opcional, requiere lógica más compleja si se suben archivos)
+                heroSectionElement.style.backgroundImage = 'linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(\'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80\')';
+                category1ImgElement.style.backgroundImage = 'url(\'https://images.unsplash.com/photo-1532117182044-031e7cd916ee?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80\')';
+                category2ImgElement.style.backgroundImage = 'url(\'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80\')';
+                category3ImgElement.style.backgroundImage = 'url(\'https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80\')';
+                category4ImgElement.style.backgroundImage = 'url(\'https://images.unsplash.com/photo-1544724107-8ca336d15653?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80\')';
+
+                applyChanges(); // Aplicar los valores restaurados en la vista previa
+            }
+
+            resetBtn.addEventListener('click', resetCustomization);
+
+            // Funcionalidad para la subida de imágenes
+            function handleImageUpload(inputElement, targetElement) {
+                inputElement.addEventListener('change', (e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = (event) => {
+                            if (targetElement === heroSectionElement) {
+                                targetElement.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('${event.target.result}')`;
+                            } else {
+                                targetElement.style.backgroundImage = `url('${event.target.result}')`;
+                            }
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+
+            handleImageUpload(heroBackgroundInput, heroSectionElement);
+            handleImageUpload(category1ImgInput, category1ImgElement);
+            handleImageUpload(category2ImgInput, category2ImgElement);
+            handleImageUpload(category3ImgInput, category3ImgElement);
+            handleImageUpload(category4ImgInput, category4ImgElement);
+            
+            // Inicializar vista previa al cargar la página
+            applyChanges();
+        });
+    </script>
+</body>
+</html>

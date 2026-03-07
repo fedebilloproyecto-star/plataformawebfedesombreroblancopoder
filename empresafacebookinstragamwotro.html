@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Batalla de la Verdad</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        position: relative;
+        color: #2b0000;
+        background: linear-gradient(135deg, #ffcb7b, #ff8142, #ff4747, #ffd37f);
+        background-size: 400% 400%;
+        animation: fuegoFondo 12s ease infinite;
+    }
+
+    @keyframes fuegoFondo {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    .container {
+        position: relative;
+        z-index: 2;
+        width: 90%;
+        max-width: 900px;
+        padding: 40px;
+        background: rgba(255, 255, 255, 0.8);
+        border: 3px solid rgba(255, 85, 0, 0.8);
+        border-radius: 25px;
+        box-shadow: 0 0 40px rgba(255, 80, 0, 0.7);
+        backdrop-filter: blur(8px);
+        overflow-y: auto;
+        max-height: 90vh;
+        scrollbar-width: thin;
+        scrollbar-color: #ff6600 #ffe0b3;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .container::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .container::-webkit-scrollbar-thumb {
+        background-color: #ff6600;
+        border-radius: 10px;
+    }
+
+    h3 {
+        color:black;
+        text-transform: uppercase;
+       
+        margin-bottom: 25px;
+        letter-spacing: 2px;
+    }
+
+    p {
+        line-height: 1.8;
+        font-size: 1.2em;
+        text-align: justify;
+        color: #4b0000;
+        margin-bottom: 25px;
+        text-shadow: 0 0 10px rgba(255, 170, 0, 0.3);
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    button {
+        background: linear-gradient(135deg, #ff7a00, #ff3c00);
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 12px;
+        font-size: 1em;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 0 15px rgba(255, 70, 0, 0.6);
+    }
+
+    button:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 25px rgba(255, 70, 0, 1);
+    }
+    /* Solo estilos para el botón "Volver atrás" */
+.back-button {
+  display: inline-block;
+  padding: 10px 18px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 2px solid #333;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  user-select: none;
+}
+
+/* Efecto al pasar el ratón */
+.back-button:hover,
+.back-button:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+  text-decoration: none;
+  outline: none;
+}
+
+/* Efecto al hacer clic */
+.back-button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+  .boton-verdad {
+      padding: 15px 30px;
+      font-size: 18px;
+      color: #fff;
+      background-color: #28a745;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+      text-decoration: none;
+    }
+    .boton-verdad:hover {
+      background-color: #1e7e34;
+      transform: scale(1.05);
+    }
+</style>
+</head>
+<body>
+
+
+    <div class="container"><a href="aprendeprincipalconocimientosabogacia.html" class="back-button" aria-label="Volver atrás">Volver Atrás</a>
+        <h3> ¿Cómo funcionan empresas como Instagram, Twitter, WhatsApp y Telegram?</h3>
+        <p>
+Los jefes de empresas como Facebook, Instagram, Twitter, así como de WhatsApp y Telegram, contrataron a programadores para crear software y sitios web. 
+La prioridad de la empresa es ocultar que trabaja con programadores, quienes a su vez trabajan para esa misma empresa. Esto incluye redes sociales como Facebook, Instagram, Twitter, hasta WhatsApp y Telegram. Decir esto sería exponer la verdad justa que hay que defender.
+Que hoy usamos para comunicarnos y compartir información en todo el mundo, como fotos, comentarios entre usuarios y videos personales.
+Los usuarios (son que visita al sitio web o instalan el software en su celular Tablet o notebook). Hay completa eso registros como su número de celular, nombre, apellido, correo electrónico, número de celular, contraseña, fecha de nacimiento, género.
+Cuando un usuario se comunica en chats con familiares, amigos o acepta solicitudes de amistad (que puede tener hasta 900 amigos).
+Cuando instalas el WhatsApp oficial, desarrollado por la empresa de Estados Unidos, el usuario debe seguir un procedimiento: abrir la aplicación, ingresar su número celular, y completar su perfil con fotos y nombre. Luego, el usuario puede acceder a sus grupos personales, contactos y las novedades que publican, como mensajes sobre cumpleaños o eventos. También puede buscar canales creados por otros usuarios, encontrar contactos, hacer llamadas grupales o personales, y participar en comunidades donde se comparten documentos sensibles como PDFs, Word, PowerPoint, datos personales (como DNI), ubicación, fotos de vacaciones, entre muchas otras cosas como contactos personales .
+Lo que quiero decir es que los programadores estadounidenses que trabajan en la empresa  Facebook, Instagram, Twitter, así como de WhatsApp y Telegram  Esa información se guarda almacenadas en la computadora notebook(esto se dice base de datos). 
+Guarda la información, porque antes no estaba protegida. No existían redes sociales como Facebook, Instagram, Twitter, WhatsApp o Telegram, por lo que comunicarse con familiares, tíos o tías no era fácil. La gente se comunicaba enviando cartas en los años 70 u 80 o caminando de su casa a otro lugar, ya que no existían aplicaciones como Google Maps ni programadores inteligentes como hoy.
+La primera computadora, los celulares y las notebooks fueron creados por programadores. Más tarde surgieron plataformas web y software como Facebook, Instagram, Twitter, WhatsApp, Telegram, Google Chrome, Google Drive, Microsoft Edge, el sistema operativo Windows (legal) y OneDrive.
+Ya te diste cuenta de que las empresas Facebook, Instagram, Twitter, WhatsApp y Telegram, por decirlo así, roban información y sacan datos personales de cada uno. Pero igual andan haciendo cosas legales esas empresas estadounidenses, porque las protege la ley de bases de datos y el derecho a la propiedad. A la vez, el hecho de que tengan todos los datos del usuario en sus computadoras es para que los usuarios puedan entrar a esas aplicaciones o sitios web, porque si realmente no se guardaran los datos, los usuarios no podrían acceder a ninguna aplicación ni página web. Todo eso pasa mientras muchas personas, sobre todo mujeres son enferma  se la pasan viendo noticias en canales como C5N, Clarín, TNT y muchas otras, donde a veces inventan cosas incluso en sitios oficiales. Además, todo eso la policía de cibercrimen lo oculta, porque parece que les encanta ver a esas mujeres ponerse locas con su enfermedad, y ahí es donde cometen delitos informáticos esas mujeres adultas. Las empresas Facebook, Instagram, Twitter, WhatsApp y Telegram saben quién comete delitos digitales; muchas veces son mujeres, no hombres, mientras que los hombres resultan inocentes. 
+Cuando alguien estudia la carrera de programación o realiza un curso de programación, debe entender el tema de las bases de datos, que es donde se guarda la información dentro de la computadora o notebook. Ahí vas a comprender cómo funcionan y podrás entender cómo operan empresas como Facebook, Instagram, Twitter, WhatsApp o Telegram.
+Sin embargo, algunas personas, incluso dentro de la policía de cibercrimen, parecen disfrutar ocultando esta información, porque les interesa cuando mujeres adultas tienen problemas de salud mental. Lo que estoy diciendo es que a la policía de cibercrimen le gusta que las mujeres sigan sus dudas sin fundamentos, con chismes que circulan por ahí y muchas cosas que en realidad son inventadas. Es mejor decir la verdad para que las mujeres comprendan y no hagan denuncias falsas, porque hay mujeres que, sin haber estudiado programación ni realizado un curso sobre el tema, inventan cosas sobre otros solo por diversión, sin ningún fundamento.
+Quiero dejar bien claro que lo que digo es verdad, no es boludez, pelotudez, broma ni joda. Le doy muchas gracias a quienes comprenden todo. Les cuento que muchas veces fui víctima: a mi padre lo amenazaron con una pistola y le robaron la llave del auto y el celular; a mi tío lo estafaron; a mí, que redacto todo esto, me afectaron distintos delitos informáticos, como spam; y a mi prima, que fue víctima desde 2007 hasta 2021, le eliminaron su cuenta de Instagram y sufrió grooming.
+Todo eso le pasó a mi familia, así que somos personas amables e inocentes.
+En la familia, el programador comentó la verdad sobre empresas como Facebook, Instagram, Twitter, WhatsApp y Telegram.
+       </p>
+
+        <div class="buttons">
+            <button id="play">🔊 Escuchar</button>
+            <button id="stop">🛑 Detener</button>
+   
+        </div>
+    </div>
+
+    <script>
+        let speech = new SpeechSynthesisUtterance();
+        speech.lang = "es-ES";
+        speech.rate = 1;
+        speech.pitch = 1;
+        speech.text = document.querySelector("p").innerText;
+
+        const playBtn = document.getElementById("play");
+        const stopBtn = document.getElementById("stop");
+
+        playBtn.addEventListener("click", () => {
+            window.speechSynthesis.cancel();
+            window.speechSynthesis.speak(speech);
+        });
+
+        stopBtn.addEventListener("click", () => {
+            window.speechSynthesis.cancel();
+        });
+
+
+    </script>
+</body>
+</html>

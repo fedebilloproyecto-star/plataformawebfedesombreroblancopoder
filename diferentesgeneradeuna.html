@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generador de Patrones Profesionales</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  :root {
+    --primary-color: #4a6fa5;
+    --secondary-color: #6b8cbc;
+    --accent-color: #ff7e5f;
+    --light-color: #f5f7fa;
+    --dark-color: #333;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--dark-color);
+    background-color: #f0f2f5;
+    padding: 20px;
+      border-radius: 10px;
+  max-width: 1200px;
+  margin: 90px auto;
+  }
+  
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  
+  header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 25px 20px;
+    text-align: center;
+  }
+  
+  header h1 {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+  }
+  
+  header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+  }
+  
+  .content {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+  }
+  
+  .controls {
+    flex: 1;
+    min-width: 300px;
+    padding: 20px;
+    background-color: var(--light-color);
+    border-radius: 8px;
+    margin-right: 20px;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  
+  .preview {
+    flex: 2;
+    min-width: 500px;
+    padding: 20px;
+  }
+  
+  .control-group {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .control-group:last-child {
+    border-bottom: none;
+  }
+  
+  .control-group h3 {
+    margin-bottom: 15px;
+    color: var(--primary-color);
+    font-size: 1.2rem;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  
+  input[type="number"], input[type="color"], select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 15px;
+  }
+  
+  input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    border: 2px dashed #ccc;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    background-color: #f9f9f9;
+  }
+  
+  .button-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  button {
+    flex: 1;
+    min-width: 150px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+  
+  #generateBtn {
+    background-color: var(--primary-color);
+    color: white;
+  }
+  
+  #generateBtn:hover {
+    background-color: var(--secondary-color);
+  }
+  
+  .download-btn {
+    background-color: var(--accent-color);
+    color: white;
+  }
+  
+  .download-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+  }
+  
+  canvas {
+    width: 100%;
+    max-width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: var(--shadow);
+  }
+  
+  .preview-info {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: var(--light-color);
+    border-radius: 4px;
+    font-size: 0.9rem;
+  }
+  
+  .pattern-presets {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 5px;
+  }
+  
+  .pattern-preset {
+    aspect-ratio: 1;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .pattern-preset:hover {
+    border-color: var(--primary-color);
+    transform: scale(1.05);
+  }
+  
+  .pattern-preset.selected {
+    border-color: var(--accent-color);
+    border-width: 3px;
+  }
+  
+  .color-palette {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  
+  .color-option {
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
+  }
+  
+  .color-option:hover {
+    transform: scale(1.1);
+  }
+  
+  .color-option.selected {
+    border-color: var(--dark-color);
+  }
+  
+  .preset-category {
+    margin-top: 15px;
+  }
+  
+  .preset-category h4 {
+    margin-bottom: 10px;
+    color: var(--secondary-color);
+  }
+  
+  .fixed-settings {
+    background-color: #f0f8ff;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+    border-left: 4px solid var(--primary-color);
+  }
+  
+  .fixed-settings p {
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+  }
+  
+  @media (max-width: 768px) {
+    .content {
+      flex-direction: column;
+    }
+    
+    .controls {
+      margin-right: 0;
+      margin-bottom: 20px;
+    }
+  }
+  .btn-volver {
+    display: inline-block;
+    text-decoration: none;
+    background-color: #f1c40f; /* amarillo */
+    color: #000;
+    border: 2px solid #d4ac0d;
+    padding: 12px 24px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-volver:hover {
+    background-color: #000;
+    color: #f1c40f;
+    border-color: #000;
+}
+
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Generador de Patrones Profesionales</h1>
+    <p>Crea patrones personalizados con tu logo o imagen favorita</p>
+  </header>
+   <a href="herramientaselementosdearte.html" class="btn-volver">⬅ Volver</a>
+  <div class="content">
+    <div class="controls">
+      <div class="control-group">
+        <h3>Imagen de Entrada</h3>
+        <input type="file" id="imageInput" accept="image/*">
+        <div class="button-group">
+          <button id="clearImage">Eliminar Imagen</button>
+        </div>
+      </div>
+      
+      <div class="control-group">
+        <h3>Configuración del Patrón</h3>
+        <label>Filas: <input type="number" id="rows" value="8" min="1" max="20"></label>
+        <label>Columnas: <input type="number" id="cols" value="8" min="1" max="20"></label>
+        
+        <div class="fixed-settings">
+          <p><strong>Configuración fija optimizada:</strong></p>
+          <p>Tamaño de celda: 120 px</p>
+          <p>Espacio entre celdas: 15 px</p>
+          <p>Rotación de imagen: 0°</p>
+        </div>
+      </div>
+      
+      <div class="control-group">
+        <h3>Estilo del Patrón</h3>
+        <label>Color de fondo: <input type="color" id="bgColor" value="#ffffff"></label>
+        <label>Color del borde: <input type="color" id="borderColor" value="#cccccc"></label>
+        <label>Grosor del borde (px): <input type="number" id="borderWidth" value="0" min="0" max="10"></label>
+        <label>Opacidad de la imagen (%): <input type="number" id="opacity" value="100" min="10" max="100"></label>
+        
+        <h4>Paleta de colores</h4>
+        <div class="color-palette" id="colorPalette">
+          <!-- Los colores se generarán con JavaScript -->
+        </div>
+      </div>
+      
+      <div class="control-group">
+        <h3>Patrones Predefinidos</h3>
+        <div class="preset-category">
+          <h4>Patrones Sólidos</h4>
+          <div class="pattern-presets" id="solidPatterns">
+            <!-- Los patrones sólidos se generarán con JavaScript -->
+          </div>
+        </div>
+        
+        <div class="preset-category">
+          <h4>Patrones de Gradiente</h4>
+          <div class="pattern-presets" id="gradientPatterns">
+            <!-- Los patrones de gradiente se generarán con JavaScript -->
+          </div>
+        </div>
+        
+        <div class="preset-category">
+          <h4>Patrones de Textura</h4>
+          <div class="pattern-presets" id="texturePatterns">
+            <!-- Los patrones de textura se generarán con JavaScript -->
+          </div>
+        </div>
+      </div>
+      
+      <div class="control-group">
+        <h3>Generar Patrón</h3>
+        <div class="button-group">
+          <button id="generateBtn">Generar Patrón</button>
+          <button id="randomizeBtn">Aleatorizar</button>
+        </div>
+      </div>
+      
+      <div class="control-group">
+        <h3>Descargar Patrón</h3>
+        <div class="button-group">
+          <button id="downloadPNG" class="download-btn">Descargar PNG</button>
+          <button id="downloadJPG" class="download-btn">Descargar JPG</button>
+          <button id="downloadWebP" class="download-btn">Descargar WebP</button>
+          <button id="downloadPDF" class="download-btn">Descargar PDF</button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="preview">
+      <h3>Vista Previa</h3>
+      <canvas id="canvas"></canvas>
+      <div class="preview-info">
+        <p id="canvasInfo">Tamaño del patrón: 0 x 0 px</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const { jsPDF } = window.jspdf;
+const imageInput = document.getElementById('imageInput');
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+const colorPaletteContainer = document.getElementById('colorPalette');
+const randomizeBtn = document.getElementById('randomizeBtn');
+
+let img = new Image();
+
+// Configuración fija
+const FIXED_CELL_SIZE = 120;
+const FIXED_GAP = 15;
+const FIXED_ROTATION = 0;
+
+// Paleta de colores para los patrones
+const colorPalette = [
+  '#4a6fa5', '#6b8cbc', '#ff7e5f', '#feb47b', '#2e8b57',
+  '#8a2be2', '#da70d6', '#20b2aa', '#ff6347', '#ffd700',
+  '#32cd32', '#1e90ff', '#ff69b4', '#8b4513', '#2f4f4f',
+  '#800000', '#9acd32', '#4682b4', '#d2691e', '#5f9ea0',
+  '#dc143c', '#00ced1', '#9400d3', '#ff1493', '#00bfff',
+  '#696969', '#556b2f', '#cd5c5c', '#483d8b', '#2e8b57',
+  '#8b008b', '#b22222', '#daa520', '#9932cc', '#8fbc8f',
+  '#ff4500', '#ff8c00', '#7cfc00', '#00fa9a', '#191970',
+  '#f08080', '#ffb6c1', '#ffffe0', '#f0fff0', '#f5f5dc'
+];
+
+// Definir los patrones predefinidos
+const patternDefinitions = {
+  solid: [
+    { type: 'solid', color: colorPalette[0] },
+    { type: 'solid', color: colorPalette[1] },
+    { type: 'solid', color: colorPalette[2] },
+    { type: 'solid', color: colorPalette[3] },
+    { type: 'solid', color: colorPalette[4] },
+    { type: 'solid', color: colorPalette[5] },
+    { type: 'solid', color: colorPalette[6] },
+    { type: 'solid', color: colorPalette[7] },
+    { type: 'solid', color: colorPalette[8] },
+    { type: 'solid', color: colorPalette[9] }
+  ],
+  gradient: [
+    { type: 'linear', colors: [colorPalette[10], colorPalette[11]], angle: 45 },
+    { type: 'linear', colors: [colorPalette[12], colorPalette[13]], angle: 90 },
+    { type: 'linear', colors: [colorPalette[14], colorPalette[15]], angle: 135 },
+    { type: 'linear', colors: [colorPalette[16], colorPalette[17]], angle: 180 },
+    { type: 'linear', colors: [colorPalette[18], colorPalette[19]], angle: 225 },
+    { type: 'linear', colors: [colorPalette[20], colorPalette[21]], angle: 270 },
+    { type: 'linear', colors: [colorPalette[22], colorPalette[23]], angle: 315 },
+    { type: 'linear', colors: [colorPalette[24], colorPalette[25], colorPalette[26]], angle: 45 },
+    { type: 'radial', colors: [colorPalette[27], colorPalette[28]] },
+    { type: 'radial', colors: [colorPalette[29], colorPalette[30], colorPalette[31]] }
+  ],
+  texture: [
+    { type: 'stripes', colors: [colorPalette[32], colorPalette[33]], size: 10 },
+    { type: 'stripes', colors: [colorPalette[34], colorPalette[35]], size: 15 },
+    { type: 'stripes', colors: [colorPalette[36], colorPalette[37]], size: 20 },
+    { type: 'checker', colors: [colorPalette[38], colorPalette[39]], size: 15 },
+    { type: 'checker', colors: [colorPalette[40], colorPalette[41]], size: 20 },
+    { type: 'checker', colors: [colorPalette[42], colorPalette[43]], size: 25 },
+    { type: 'dots', colors: [colorPalette[44], colorPalette[0]], size: 10 },
+    { type: 'dots', colors: [colorPalette[1], colorPalette[2]], size: 15 },
+    { type: 'dots', colors: [colorPalette[3], colorPalette[4]], size: 20 },
+    { type: 'zigzag', colors: [colorPalette[5], colorPalette[6]], size: 15 },
+    { type: 'zigzag', colors: [colorPalette[7], colorPalette[8]], size: 20 },
+    { type: 'waves', colors: [colorPalette[9], colorPalette[10]], size: 15 },
+    { type: 'waves', colors: [colorPalette[11], colorPalette[12]], size: 20 },
+    { type: 'diamonds', colors: [colorPalette[13], colorPalette[14]], size: 15 },
+    { type: 'diamonds', colors: [colorPalette[15], colorPalette[16]], size: 20 }
+  ]
+};
+
+// Generar la paleta de colores
+function generateColorPalette() {
+  colorPalette.forEach(color => {
+    const colorOption = document.createElement('div');
+    colorOption.className = 'color-option';
+    colorOption.style.backgroundColor = color;
+    colorOption.dataset.color = color;
+    
+    colorOption.addEventListener('click', () => {
+      document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('selected'));
+      colorOption.classList.add('selected');
+      document.getElementById('bgColor').value = color;
+      generatePattern();
+    });
+    
+    colorPaletteContainer.appendChild(colorOption);
+  });
+}
+
+// Generar los elementos de patrones predefinidos
+function generatePatternPresets() {
+  // Patrones sólidos
+  patternDefinitions.solid.forEach((pattern, index) => {
+    const preset = document.createElement('div');
+    preset.className = 'pattern-preset';
+    preset.dataset.type = 'solid';
+    preset.dataset.index = index;
+    preset.style.background = pattern.color;
+    
+    preset.addEventListener('click', () => {
+      selectPatternPreset(preset, pattern);
+    });
+    
+    document.getElementById('solidPatterns').appendChild(preset);
+  });
+  
+  // Patrones de gradiente
+  patternDefinitions.gradient.forEach((pattern, index) => {
+    const preset = document.createElement('div');
+    preset.className = 'pattern-preset';
+    preset.dataset.type = 'gradient';
+    preset.dataset.index = index;
+    
+    let backgroundStyle = '';
+    if (pattern.type === 'linear') {
+      backgroundStyle = `linear-gradient(${pattern.angle}deg, ${pattern.colors.join(', ')})`;
+    } else if (pattern.type === 'radial') {
+      backgroundStyle = `radial-gradient(circle, ${pattern.colors.join(', ')})`;
+    }
+    
+    preset.style.background = backgroundStyle;
+    
+    preset.addEventListener('click', () => {
+      selectPatternPreset(preset, pattern);
+    });
+    
+    document.getElementById('gradientPatterns').appendChild(preset);
+  });
+  
+  // Patrones de textura
+  patternDefinitions.texture.forEach((pattern, index) => {
+    const preset = document.createElement('div');
+    preset.className = 'pattern-preset';
+    preset.dataset.type = 'texture';
+    preset.dataset.index = index;
+    
+    let backgroundStyle = '';
+    switch(pattern.type) {
+      case 'stripes':
+        backgroundStyle = `repeating-linear-gradient(45deg, ${pattern.colors[0]}, ${pattern.colors[0]} ${pattern.size}px, ${pattern.colors[1]} ${pattern.size}px, ${pattern.colors[1]} ${pattern.size * 2}px)`;
+        break;
+      case 'checker':
+        backgroundStyle = `repeating-conic-gradient(${pattern.colors[0]} 0% 25%, ${pattern.colors[1]} 25% 50%) ${pattern.size}px`;
+        break;
+      case 'dots':
+        backgroundStyle = `radial-gradient(circle, ${pattern.colors[0]} ${pattern.size/2}px, ${pattern.colors[1]} ${pattern.size/2}px) ${pattern.size}px ${pattern.size}px`;
+        break;
+      case 'zigzag':
+        backgroundStyle = `repeating-linear-gradient(45deg, ${pattern.colors[0]}, ${pattern.colors[0]} ${pattern.size}px, ${pattern.colors[1]} ${pattern.size}px, ${pattern.colors[1]} ${pattern.size * 2}px)`;
+        break;
+      case 'waves':
+        backgroundStyle = `repeating-radial-gradient(circle, ${pattern.colors[0]}, ${pattern.colors[0]} ${pattern.size}px, ${pattern.colors[1]} ${pattern.size}px, ${pattern.colors[1]} ${pattern.size * 2}px)`;
+        break;
+      case 'diamonds':
+        backgroundStyle = `repeating-linear-gradient(45deg, ${pattern.colors[0]} 0px, ${pattern.colors[0]} ${pattern.size}px, ${pattern.colors[1]} ${pattern.size}px, ${pattern.colors[1]} ${pattern.size * 2}px)`;
+        break;
+    }
+    
+    preset.style.background = backgroundStyle;
+    
+    preset.addEventListener('click', () => {
+      selectPatternPreset(preset, pattern);
+    });
+    
+    document.getElementById('texturePatterns').appendChild(preset);
+  });
+}
+
+// Función para seleccionar un patrón predefinido
+function selectPatternPreset(preset, pattern) {
+  // Quitar selección anterior
+  document.querySelectorAll('.pattern-preset').forEach(p => p.classList.remove('selected'));
+  // Aplicar selección actual
+  preset.classList.add('selected');
+  
+  // Aplicar el color principal del patrón como color de fondo
+  let mainColor;
+  if (pattern.type === 'solid') {
+    mainColor = pattern.color;
+  } else {
+    mainColor = pattern.colors ? pattern.colors[0] : colorPalette[0];
+  }
+  
+  document.getElementById('bgColor').value = mainColor;
+  
+  // Configuraciones específicas para algunos patrones
+  if (pattern.type === 'linear' || pattern.type === 'radial') {
+    document.getElementById('rows').value = 6;
+    document.getElementById('cols').value = 6;
+  } else if (pattern.type === 'stripes' || pattern.type === 'checker' || 
+             pattern.type === 'dots' || pattern.type === 'zigzag' || 
+             pattern.type === 'waves' || pattern.type === 'diamonds') {
+    document.getElementById('rows').value = 8;
+    document.getElementById('cols').value = 8;
+  } else { // Patrones sólidos
+    document.getElementById('rows').value = 8;
+    document.getElementById('cols').value = 8;
+  }
+  
+  generatePattern();
+}
+
+// Inicializar con una imagen de ejemplo
+img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0MCIgZmlsbD0iIzRhNmZhNSIvPjx0ZXh0IHg9IjUwIiB5PSI1NSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSI+TE9HTzwvdGV4dD48L3N2Zz4=';
+
+// Cargar imagen del usuario
+imageInput.addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  
+  const reader = new FileReader();
+  reader.onload = (event) => {
+    img.src = event.target.result;
+    img.onload = () => {
+      generatePattern();
+    };
+  };
+  reader.readAsDataURL(file);
+});
+
+// Limpiar imagen
+document.getElementById('clearImage').addEventListener('click', () => {
+  img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0MCIgZmlsbD0iIzRhNmZhNSIvPjx0ZXh0IHg9IjUwIiB5PSI1NSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSI+TE9HTzwvdGV4dD48L3N2Zz4=';
+  imageInput.value = '';
+  generatePattern();
+});
+
+function generatePattern() {
+  const rows = parseInt(document.getElementById('rows').value);
+  const cols = parseInt(document.getElementById('cols').value);
+  const bgColor = document.getElementById('bgColor').value;
+  const borderColor = document.getElementById('borderColor').value;
+  const borderWidth = parseInt(document.getElementById('borderWidth').value);
+  const opacity = parseInt(document.getElementById('opacity').value) / 100;
+
+  if (!img.src) return alert('Sube una imagen primero');
+
+  img.onload = () => {
+    // Usar valores fijos
+    const squareSize = FIXED_CELL_SIZE;
+    const gap = FIXED_GAP;
+    const rotation = FIXED_ROTATION;
+    
+    canvas.width = cols * squareSize + (cols - 1) * gap;
+    canvas.height = rows * squareSize + (rows - 1) * gap;
+
+    // Actualizar información del canvas
+    document.getElementById('canvasInfo').textContent = 
+      `Tamaño del patrón: ${canvas.width} x ${canvas.height} px`;
+
+    // Limpiar canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Dibujar fondo
+    ctx.fillStyle = bgColor;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Dibujar patrones
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const x = c * (squareSize + gap);
+        const y = r * (squareSize + gap);
+        
+        // Dibujar borde si está configurado
+        if (borderWidth > 0) {
+          ctx.fillStyle = borderColor;
+          ctx.fillRect(x, y, squareSize, squareSize);
+        }
+        
+        // Dibujar área de imagen
+        const imgAreaX = x + borderWidth;
+        const imgAreaY = y + borderWidth;
+        const imgAreaSize = squareSize - (borderWidth * 2);
+        
+        ctx.fillStyle = bgColor;
+        ctx.fillRect(imgAreaX, imgAreaY, imgAreaSize, imgAreaSize);
+        
+        // Dibujar imagen
+        ctx.save();
+        ctx.globalAlpha = opacity;
+        
+        const scale = Math.min(imgAreaSize / img.width, imgAreaSize / img.height);
+        const imgWidth = img.width * scale;
+        const imgHeight = img.height * scale;
+        
+        const centerX = imgAreaX + imgAreaSize / 2;
+        const centerY = imgAreaY + imgAreaSize / 2;
+        
+        ctx.translate(centerX, centerY);
+        ctx.rotate(rotation * Math.PI / 180);
+        
+        ctx.drawImage(
+          img, 
+          -imgWidth / 2, 
+          -imgHeight / 2, 
+          imgWidth, 
+          imgHeight
+        );
+        
+        ctx.restore();
+      }
+    }
+    
+    currentPattern = canvas.toDataURL();
+  }
+  
+  if (img.complete) img.onload();
+}
+
+// Generar los patrones predefinidos al cargar la página
+window.addEventListener('load', () => {
+  generateColorPalette();
+  generatePatternPresets();
+  generatePattern();
+});
+
+// Aleatorizar configuración
+randomizeBtn.addEventListener('click', () => {
+  document.getElementById('rows').value = Math.floor(Math.random() * 10) + 3;
+  document.getElementById('cols').value = Math.floor(Math.random() * 10) + 3;
+  document.getElementById('bgColor').value = colorPalette[Math.floor(Math.random() * colorPalette.length)];
+  document.getElementById('borderWidth').value = Math.floor(Math.random() * 5);
+  document.getElementById('opacity').value = Math.floor(Math.random() * 70) + 30;
+  
+  generatePattern();
+});
+
+// Generar patrón cuando cambian los controles
+document.getElementById('generateBtn').addEventListener('click', generatePattern);
+document.getElementById('rows').addEventListener('change', generatePattern);
+document.getElementById('cols').addEventListener('change', generatePattern);
+document.getElementById('bgColor').addEventListener('change', generatePattern);
+document.getElementById('borderColor').addEventListener('change', generatePattern);
+document.getElementById('borderWidth').addEventListener('change', generatePattern);
+document.getElementById('opacity').addEventListener('change', generatePattern);
+
+// Funciones de descarga
+function downloadImage(type) {
+  const link = document.createElement('a');
+  let mime = 'image/png';
+  if(type==='jpg') mime = 'image/jpeg';
+  if(type==='webp') mime = 'image/webp';
+  link.download = `patron-personalizado.${type}`;
+  link.href = canvas.toDataURL(mime);
+  link.click();
+}
+
+document.getElementById('downloadPNG').addEventListener('click', () => downloadImage('png'));
+document.getElementById('downloadJPG').addEventListener('click', () => downloadImage('jpg'));
+document.getElementById('downloadWebP').addEventListener('click', () => downloadImage('webp'));
+
+document.getElementById('downloadPDF').addEventListener('click', () => {
+  const pdf = new jsPDF({
+    orientation: canvas.width > canvas.height ? 'l' : 'p',
+    unit: 'px',
+    format: [canvas.width, canvas.height]
+  });
+  pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, canvas.width, canvas.height);
+  pdf.save('patron-personalizado.pdf');
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soy el Sombrero Blanco · La Verdad</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            
+            /* Fondo claro con gradiente alegre */
+            background: linear-gradient(145deg, #ffdde1 0%, #fff0d4 40%, #d4f0ff 100%);
+            position: relative;
+        }
+
+        /* Partículas decorativas suaves */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: 
+                radial-gradient(3px 3px at 25% 15%, #ff9a9e, transparent 70%),
+                radial-gradient(4px 4px at 75% 30%, #fad0c4, transparent 80%),
+                radial-gradient(5px 5px at 15% 80%, #fad0c4, transparent 80%),
+                radial-gradient(3px 3px at 90% 65%, #ffd1ff, transparent 70%),
+                radial-gradient(6px 6px at 45% 45%, #a1c4fd, transparent 80%),
+                radial-gradient(4px 4px at 60% 85%, #c2e9fb, transparent 75%);
+            opacity: 0.6;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* tarjeta principal */
+        .card {
+            position: relative;
+            z-index: 10;
+            max-width: 1000px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 60px;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.15);
+            padding: 30px 30px 50px;
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            box-shadow: 0 35px 60px rgba(0, 0, 0, 0.2);
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.85);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: #000000;
+            text-shadow: 2px 2px 4px rgba(255,255,255,0.8);
+            margin-bottom: 8px;
+            line-height: 1.2;
+        }
+
+        header h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #000000;
+            padding: 8px 25px;
+            border-radius: 50px;
+            display: inline-block;
+            border: 2px solid rgba(0, 0, 0, 0.2);
+            background-color: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(4px);
+            margin-top: 10px;
+        }
+
+        /* Reproductor de música */
+        .music-player {
+            margin: 30px 0 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        audio {
+            width: 90%;
+            max-width: 600px;
+            height: 55px;
+            border-radius: 40px;
+            background: #fff;
+            border: 3px solid #000000;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+            outline: none;
+        }
+
+        audio::-webkit-media-controls-panel {
+            background: #ffffff;
+            border-radius: 40px;
+        }
+
+        /* caja de historia */
+        .story {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 35px 45px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50px;
+            border: 2px solid rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.2);
+            text-align: left;
+            color: #000000;
+            font-size: 1.3rem;
+            line-height: 1.7;
+        }
+
+        .story h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #000000;
+            margin-bottom: 20px;
+            border-left: 8px solid #000000;
+            padding-left: 25px;
+        }
+
+        .story p {
+            font-weight: 500;
+            color: #000000;
+        }
+
+        /* bloque de imagen */
+        .image-container {
+            margin: 40px 0 30px;
+            padding: 25px 20px 25px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 60px;
+            border: 2px solid #000000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+
+        .image-container h2 {
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: #000000;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .image-container p {
+            color: #000000;
+            font-size: 1.6rem;
+            font-weight: 700;
+            font-style: italic;
+            border-bottom: 4px dashed #000000;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .image-container img {
+            max-width: 300px;
+            width: 100%;
+            border-radius: 40px;
+            box-shadow: 0 25px 40px -10px rgba(0,0,0,0.3), 0 0 0 5px #ffffff, 0 0 0 8px #000000;
+            transition: transform 0.4s ease, opacity 0.2s;
+            filter: brightness(1.05) contrast(1.1);
+            background: white;
+            cursor: pointer;
+        }
+
+        .image-container img:hover {
+            transform: scale(1.03) rotate(1deg);
+            box-shadow: 0 30px 50px -8px rgba(0,0,0,0.4), 0 0 0 5px #fff, 0 0 0 10px #333333;
+            opacity: 0.9;
+        }
+
+        .image-container img:active {
+            transform: scale(0.98);
+        }
+
+        /* autor + enlace */
+        .author-credit {
+            margin: 45px auto 20px;
+            padding: 25px 30px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 100px;
+            max-width: 750px;
+            border: 3px solid #000000;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            backdrop-filter: blur(5px);
+            text-align: center;
+        }
+
+        .author-credit a {
+            font-size: 2.2rem;
+            font-weight: 900;
+            text-decoration: none;
+            color: #000000;
+            display: inline-block;
+            transition: 0.2s;
+            border-bottom: 3px dotted #000000;
+            padding-bottom: 5px;
+        }
+
+        .author-credit a:hover {
+            transform: scale(1.05);
+            color: #333333;
+            border-bottom: 3px solid #000000;
+        }
+
+        /* enlace volver atrás */
+        .author-credit a:last-child {
+            display: block;
+            margin-top: 20px;
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #000000;
+            border: 2px solid #000000;
+            padding: 10px 25px;
+            border-radius: 50px;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: rgba(255,255,255,0.3);
+            backdrop-filter: blur(4px);
+            border-bottom: 2px solid #000000;
+        }
+
+        .author-credit a:last-child:hover {
+            background: #ffffff;
+            color: #000000;
+            border-color: #000000;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+            transform: scale(1.02);
+        }
+
+        /* mensaje oculto */
+        .hidden-message {
+            opacity: 0;
+            height: 0;
+        }
+
+        /* responsive */
+        @media (max-width: 600px) {
+            header h1 { font-size: 2.5rem; }
+            .story { padding: 20px; }
+            .author-credit a { font-size: 1.6rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <header>
+            <h1>🎩 SOY EL SOMBRERO BLANCO</h1>
+            <h2>⚡ la verdad brilla con luz propia ⚡</h2>
+        </header>
+
+        <div class="music-player">
+            <audio controls loop>
+                <source src="musicaverdad.mp3" type="audio/mpeg">
+                Tu navegador no soporta el elemento de audio.
+            </audio>
+        </div>
+
+        <div class="story">
+            <h2>📜 La Historia del Sombrero Blanco</h2>
+            <p>
+                El Sombrero Blanco es un símbolo de la verdad y la transparencia. Desde tiempos antiguos, se ha usado para representar a quienes buscan la honestidad y la claridad en todas sus acciones. Esta es la forma mejor de mostrar integridad.  
+                <br><br>
+                En la escuela secundaria, entre sombras y silencios, hay quienes eligen llevar el sombrero blanco. Ser testigo de la verdad y defenderla, incluso cuando es más fácil mirar hacia otro lado. La verdad siempre encuentra la luz.
+            </p>
+        </div>
+
+        <div class="image-container">
+            <h2>👑 EL GUARDIÁN DE LA VERDAD</h2>
+            <p>〰️ el que no calla 〰️</p>
+            <a href="verdadhistoria.jpg" target="_blank">
+                <img src="verdadhistoria.jpg" alt="Sombrero Blanco brillante, representación de la verdad">
+            </a>
+        </div>
+
+        <div class="author-credit">
+            <a href="part2victima.html">
+                ✦ HAZ CLICK PARA CONOCER MI HISTORIA ✦
+            </a>
+            <a href="aprendeprincipalconocimientosabogacia.html">← volver al inicio</a>
+        </div>
+    </div>
+
+    <div class="hidden-message"></div>
+    <script>
+        console.log("🎩『 SOMBRERO BLANCO 』— la verdad en negro sobre blanco ✨");
+        console.log("%c⚫ Todo en negro, claro y directo ⚫", "background: #000; color: #fff; font-size: 16px; padding: 8px; border-radius: 20px; font-weight: bold;");
+        
+        // Mensaje adicional cuando hacen click en la imagen
+        document.querySelector('.image-container img').addEventListener('click', function() {
+            console.log("📸 Hiciste click en la imagen - abriendo foto en nueva pestaña");
+        });
+    </script>
+</body>
+</html>

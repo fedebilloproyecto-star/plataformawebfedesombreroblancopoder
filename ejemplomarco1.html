@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Diseños</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: aqua;
+            padding: 20px;
+            
+   border-radius: 10px;
+  max-width: 1200px;
+  margin: 90px auto;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #343a40;
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .boards-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .board {
+            flex: 1;
+            min-width: 300px;
+            height: 400px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #architecture {
+            background-color: #f1f3f5;
+        }
+        
+        #graphic-design {
+            background: linear-gradient(45deg, #4361ee, #7209b7);
+        }
+        
+        .building {
+            position: absolute;
+            bottom: 0;
+            background: linear-gradient(135deg, #e9ecef, #f8f9fa);
+            border: 2px solid rgba(233, 236, 239, 0.8);
+            border-radius: 5px 5px 0 0;
+        }
+        
+        .window {
+            position: absolute;
+            background: #a5d8ff;
+            border: 2px solid #339af0;
+            border-radius: 3px;
+        }
+        
+        .roof {
+            position: absolute;
+            background: #495057;
+        }
+        
+        .door {
+            position: absolute;
+            bottom: 0;
+            background: #5c3a21;
+            border-radius: 3px 3px 0 0;
+        }
+        
+        .balcony {
+            position: absolute;
+            background: #ced4da;
+            border-radius: 5px 5px 0 0;
+        }
+        
+        .shape {
+            position: absolute;
+            opacity: 0.8;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 10px 20px;
+            background-color: #4dabf7;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        button:hover {
+            background-color: #339af0;
+            transform: translateY(-2px);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .loading {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255,255,255,0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            z-index: 10;
+        }
+        
+        .loading.active {
+            opacity: 1;
+        }
+        
+        .loading::after {
+            content: "";
+            width: 30px;
+            height: 30px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
+            .boards-container {
+                flex-direction: column;
+            }
+            
+            .board {
+                width: 100%;
+            }
+        }
+ 
+        .siguiente-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50; /* Color verde */
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            float: right; /* Cambiado a right para alinear a la derecha */
+            margin: 10px 0;
+        }
+
+        .siguiente-btn:hover {
+            background-color: #45a049;
+        }
+
+        /* Limpiar el float */
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+    /* Estilos para el botón */
+        .btn-back {
+            display: inline-block;
+            padding: 18px 36px;
+            font-size: 22px;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+            background: linear-gradient(45deg, #FF5722, #FF9800);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        /* Efecto al pasar el mouse */
+        .btn-back:hover {
+            background: linear-gradient(45deg, #E64A19, #F57C00);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        }
+
+        /* Efecto al hacer clic */
+        .btn-back:active {
+            transform: translateY(1px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+    </style>
+</head>
+<body>
+   <!-- Botón que lleva a otro.html -->
+    <a href="principalmarcoejemplo.html">
+       <button class="btn-back"> Volver atrás</button>
+    </a>
+    <div class="container">
+        <h1>Generador de Diseños Creativos</h1>
+        
+        <div class="boards-container">
+            <div class="board" id="architecture">
+                <div class="loading" id="arch-loading"></div>
+            </div>
+            <div class="board" id="graphic-design">
+                <div class="loading" id="design-loading"></div>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button id="generate-btn">
+                <span>Generar Nuevos Diseños</span>
+            </button>
+            <button id="download-arch">
+                <span>Descargar Arquitectura</span>
+            </button>
+            <button id="download-design">
+                <span>Descargar Diseño Gráfico</span>
+            </button>
+        </div>
+    </div>
+
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script>
+        // Elementos del DOM
+        const archBoard = document.getElementById('architecture');
+        const designBoard = document.getElementById('graphic-design');
+        const generateBtn = document.getElementById('generate-btn');
+        const downloadArchBtn = document.getElementById('download-arch');
+        const downloadDesignBtn = document.getElementById('download-design');
+        const archLoading = document.getElementById('arch-loading');
+        const designLoading = document.getElementById('design-loading');
+        
+        // Paletas de colores
+        const archColors = [
+            ['#e9ecef', '#f8f9fa'], 
+            ['#dee2e6', '#e9ecef'],
+            ['#dbe4ff', '#edf2ff'],
+            ['#fff3bf', '#ffec99'],
+            ['#d3f9d8', '#ebfbee']
+        ];
+        
+        const designColors = [
+            '#4361ee', '#3a0ca3', '#7209b7', 
+            '#f72585', '#4cc9f0', '#4895ef',
+            '#3f37c9', '#560bad', '#b5179e',
+            '#f15bb5', '#2ec4b6', '#2b9348',
+            '#80b918', '#ff9e00', '#ff9100'
+        ];
+        
+        // Mostrar carga
+        function showLoading(element) {
+            element.classList.add('active');
+            setTimeout(() => element.classList.remove('active'), 800);
+        }
+        
+        // Generar diseño arquitectónico
+        function generateArchitecture() {
+            showLoading(archLoading);
+            archBoard.innerHTML = '';
+            
+            // Configuración del edificio
+            const buildingHeight = Math.floor(Math.random() * 200) + 180;
+            const buildingWidth = Math.floor(Math.random() * 30) + 60;
+            const buildingPos = (100 - buildingWidth) / 2;
+            
+            // Crear edificio principal
+            const building = document.createElement('div');
+            building.className = 'building';
+            building.style.height = `${buildingHeight}px`;
+            building.style.width = `${buildingWidth}%`;
+            building.style.left = `${buildingPos}%`;
+            
+            // Color del edificio
+            const buildingColor = archColors[Math.floor(Math.random() * archColors.length)];
+            building.style.background = `linear-gradient(135deg, ${buildingColor[0]}, ${buildingColor[1]})`;
+            building.style.border = `2px solid ${buildingColor[0].replace(')', ', 0.8)')}`;
+            
+            archBoard.appendChild(building);
+            
+            // Ventanas
+            const windowRows = Math.floor(buildingHeight / 45);
+            const windowCols = Math.floor(Math.random() * 5) + 3;
+            const windowStyle = Math.floor(Math.random() * 4);
+            
+            for (let row = 0; row < windowRows; row++) {
+                for (let col = 0; col < windowCols; col++) {
+                    const window = document.createElement('div');
+                    window.className = 'window';
+                    window.style.width = `${Math.floor(Math.random() * 15) + 15}px`;
+                    window.style.height = `${Math.floor(Math.random() * 15) + 15}px`;
+                    window.style.left = `${10 + (col * (80 / (windowCols + 1)))}%`;
+                    window.style.bottom = `${20 + (row * 45)}px`;
+                    
+                    // Estilos de ventana aleatorios
+                    switch(windowStyle) {
+                        case 0: // Rectangular
+                            break;
+                        case 1: // Circular
+                            window.style.borderRadius = '50%';
+                            break;
+                        case 2: // Arqueada
+                            window.style.borderRadius = '8px 8px 0 0';
+                            break;
+                        case 3: // Cuadrada con división
+                            window.style.background = 'linear-gradient(135deg, #a5d8ff, #74c0fc)';
+                            window.style.border = '2px solid #339af0';
+                            window.style.boxShadow = 'inset 0 0 0 2px white';
+                            break;
+                    }
+                    
+                    // Algunas ventanas con reflejos
+                    if (Math.random() > 0.7) {
+                        window.style.background = 'linear-gradient(135deg, rgba(165,216,255,0.9), rgba(51,154,240,0.9))';
+                    }
+                    
+                    building.appendChild(window);
+                }
+            }
+            
+            // Techo
+            const roof = document.createElement('div');
+            roof.className = 'roof';
+            roof.style.width = `${Math.floor(Math.random() * 25) + 75}%`;
+            roof.style.height = `${Math.floor(Math.random() * 40) + 30}px`;
+            roof.style.bottom = `${buildingHeight}px`;
+            roof.style.left = `${(100 - parseFloat(roof.style.width)) / 2}%`;
+            
+            // Tipo de techo
+            const roofType = Math.floor(Math.random() * 5);
+            const roofColors = ['#495057', '#343a40', '#212529', '#5f3dc4', '#e67700'];
+            
+            switch(roofType) {
+                case 0: // Triangular clásico
+                    roof.style.clipPath = 'polygon(0% 100%, 50% 0%, 100% 100%)';
+                    break;
+                case 1: // Techado plano
+                    roof.style.clipPath = 'none';
+                    roof.style.height = '25px';
+                    roof.style.borderRadius = '5px 5px 0 0';
+                    break;
+                case 2: // Techado curvo
+                    roof.style.clipPath = 'ellipse(50% 70% at 50% 0%)';
+                    break;
+                case 3: // Techado escalonado
+                    roof.style.clipPath = 'polygon(0% 100%, 0% 50%, 25% 50%, 25% 25%, 50% 25%, 50% 0%, 75% 0%, 75% 25%, 100% 25%, 100% 100%)';
+                    break;
+                case 4: // Techado inclinado
+                    roof.style.clipPath = 'polygon(0% 100%, 0% 30%, 100% 0%, 100% 70%)';
+                    break;
+            }
+            
+            roof.style.background = roofColors[Math.floor(Math.random() * roofColors.length)];
+            archBoard.appendChild(roof);
+            
+            // Puerta
+            if (Math.random() > 0.3) {
+                const door = document.createElement('div');
+                door.className = 'door';
+                door.style.width = `${Math.floor(Math.random() * 15) + 20}px`;
+                door.style.height = `${Math.floor(Math.random() * 25) + 35}px`;
+                door.style.left = `${50 - parseFloat(door.style.width)/2}%`;
+                door.style.bottom = '0';
+                archBoard.appendChild(door);
+                
+                // Perilla de la puerta
+                if (Math.random() > 0.5) {
+                    const knob = document.createElement('div');
+                    knob.style.position = 'absolute';
+                    knob.style.width = '8px';
+                    knob.style.height = '8px';
+                    knob.style.background = '#ffd43b';
+                    knob.style.borderRadius = '50%';
+                    knob.style.right = '6px';
+                    knob.style.top = '50%';
+                    knob.style.transform = 'translateY(-50%)';
+                    knob.style.boxShadow = '0 0 0 2px rgba(0,0,0,0.2)';
+                    door.appendChild(knob);
+                }
+            }
+            
+            // Balcón
+            if (Math.random() > 0.5) {
+                const balcony = document.createElement('div');
+                balcony.className = 'balcony';
+                balcony.style.width = `${Math.floor(Math.random() * 30) + 25}%`;
+                balcony.style.height = '20px';
+                balcony.style.bottom = `${buildingHeight * 0.6}px`;
+                balcony.style.left = `${(100 - parseFloat(balcony.style.width)) / 2}%`;
+                archBoard.appendChild(balcony);
+                
+                // Barandas
+                const railingCount = Math.floor(parseFloat(balcony.style.width) / 15) + 1;
+                for (let i = 0; i < railingCount; i++) {
+                    const railing = document.createElement('div');
+                    railing.style.position = 'absolute';
+                    railing.style.width = '4px';
+                    railing.style.height = '12px';
+                    railing.style.background = '#868e96';
+                    railing.style.bottom = '20px';
+                    railing.style.left = `${(i * parseFloat(balcony.style.width)) / (railingCount - 1)}%`;
+                    balcony.appendChild(railing);
+                }
+            }
+            
+            // Chimenea
+            if (Math.random() > 0.4) {
+                const chimney = document.createElement('div');
+                chimney.style.position = 'absolute';
+                chimney.style.width = '18px';
+                chimney.style.height = `${Math.floor(Math.random() * 40) + 40}px`;
+                chimney.style.background = '#343a40';
+                chimney.style.bottom = `${buildingHeight + parseFloat(roof.style.height) - 10}px`;
+                chimney.style.left = `${Math.floor(Math.random() * 30) + 60}%`;
+                chimney.style.borderRadius = '3px 3px 0 0';
+                archBoard.appendChild(chimney);
+            }
+            
+            // Árboles/vegetación
+            if (Math.random() > 0.6) {
+                const treeCount = Math.floor(Math.random() * 3) + 1;
+                for (let i = 0; i < treeCount; i++) {
+                    const tree = document.createElement('div');
+                    tree.style.position = 'absolute';
+                    tree.style.width = `${Math.floor(Math.random() * 30) + 20}px`;
+                    tree.style.height = `${Math.floor(Math.random() * 60) + 40}px`;
+                    tree.style.bottom = '0';
+                    tree.style.left = `${Math.floor(Math.random() * 20) + (i * 20)}%`;
+                    
+                    // Tronco
+                    const trunk = document.createElement('div');
+                    trunk.style.position = 'absolute';
+                    trunk.style.width = '30%';
+                    trunk.style.height = '100%';
+                    trunk.style.left = '35%';
+                    trunk.style.bottom = '0';
+                    trunk.style.background = '#5c3a21';
+                    trunk.style.borderRadius = '3px';
+                    tree.appendChild(trunk);
+                    
+                    // Copa del árbol
+                    const crown = document.createElement('div');
+                    crown.style.position = 'absolute';
+                    crown.style.width = '120%';
+                    crown.style.height = '70%';
+                    crown.style.left = '-10%';
+                    crown.style.bottom = '40%';
+                    crown.style.background = '#2b8a3e';
+                    crown.style.borderRadius = '50%';
+                    tree.appendChild(crown);
+                    
+                    archBoard.appendChild(tree);
+                }
+            }
+        }
+        
+        // Generar diseño gráfico
+        function generateGraphicDesign() {
+            showLoading(designLoading);
+            designBoard.innerHTML = '';
+            
+            // Fondo
+            const bgType = Math.floor(Math.random() * 4);
+            let color1 = designColors[Math.floor(Math.random() * designColors.length)];
+            let color2 = designColors[Math.floor(Math.random() * designColors.length)];
+            
+            // Asegurarnos de que los colores sean diferentes
+            while (color2 === color1) {
+                color2 = designColors[Math.floor(Math.random() * designColors.length)];
+            }
+            
+            switch(bgType) {
+                case 0: // Linear gradient
+                    designBoard.style.background = `linear-gradient(45deg, ${color1}, ${color2})`;
+                    break;
+                case 1: // Radial gradient
+                    designBoard.style.background = `radial-gradient(circle, ${color1}, ${color2})`;
+                    break;
+                case 2: // Conic gradient
+                    designBoard.style.background = `conic-gradient(from 45deg, ${color1}, ${color2})`;
+                    break;
+                case 3: // Degradado con múltiples colores
+                    const color3 = designColors[Math.floor(Math.random() * designColors.length)];
+                    designBoard.style.background = `linear-gradient(45deg, ${color1}, ${color2}, ${color3})`;
+                    break;
+            }
+            
+            // Formas abstractas
+            const shapeCount = Math.floor(Math.random() * 8) + 4;
+            
+            for (let i = 0; i < shapeCount; i++) {
+                const shape = document.createElement('div');
+                shape.className = 'shape';
+                shape.style.background = designColors[Math.floor(Math.random() * designColors.length)];
+                shape.style.width = `${Math.floor(Math.random() * 200) + 100}px`;
+                shape.style.height = `${Math.floor(Math.random() * 200) + 100}px`;
+                shape.style.left = `${Math.floor(Math.random() * 200)}px`;
+                shape.style.top = `${Math.floor(Math.random() * 200)}px`;
+                
+                // Tipo de forma
+                const shapeType = Math.floor(Math.random() * 7);
+                
+                switch(shapeType) {
+                    case 0: // Círculo
+                        shape.style.borderRadius = '50%';
+                        break;
+                    case 1: // Triángulo
+                        shape.style.clipPath = 'polygon(50% 0%, 0% 100%, 100% 100%)';
+                        break;
+                    case 2: // Estrella
+                        shape.style.clipPath = 'polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)';
+                        break;
+                    case 3: // Rombo
+                        shape.style.clipPath = 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)';
+                        break;
+                    case 4: // Hexágono
+                        shape.style.clipPath = 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)';
+                        break;
+                    case 5: // Forma orgánica
+                        shape.style.borderRadius = '30% 70% 70% 30% / 30% 30% 70% 70%';
+                        break;
+                    case 6: // Cruz
+                        shape.style.clipPath = 'polygon(20% 0%, 80% 0%, 80% 20%, 100% 20%, 100% 80%, 80% 80%, 80% 100%, 20% 100%, 20% 80%, 0% 80%, 0% 20%, 20% 20%)';
+                        break;
+                }
+                
+                // Efectos adicionales
+                if (Math.random() > 0.5) {
+                    shape.style.boxShadow = `0 0 ${Math.random() * 30 + 10}px ${shape.style.background}`;
+                }
+                
+                if (Math.random() > 0.6) {
+                    shape.style.mixBlendMode = ['screen', 'overlay', 'multiply'][Math.floor(Math.random() * 3)];
+                }
+                
+                if (Math.random() > 0.7) {
+                    shape.style.opacity = Math.random() * 0.5 + 0.3;
+                }
+                
+                designBoard.appendChild(shape);
+            }
+            
+            // Líneas decorativas
+            if (Math.random() > 0.4) {
+                const lineCount = Math.floor(Math.random() * 4) + 1;
+                
+                for (let i = 0; i < lineCount; i++) {
+                    const line = document.createElement('div');
+                    line.style.position = 'absolute';
+                    line.style.background = 'rgba(255,255,255,0.3)';
+                    
+                    if (Math.random() > 0.5) {
+                        // Línea horizontal
+                        line.style.width = '100%';
+                        line.style.height = `${Math.random() * 4 + 1}px`;
+                        line.style.left = '0';
+                        line.style.top = `${Math.random() * 400}px`;
+                    } else {
+                        // Línea vertical
+                        line.style.width = `${Math.random() * 4 + 1}px`;
+                        line.style.height = '100%';
+                        line.style.left = `${Math.random() * 400}px`;
+                        line.style.top = '0';
+                    }
+                    
+                    designBoard.appendChild(line);
+                }
+            }
+            
+            // Texto abstracto
+            if (Math.random() > 0.5) {
+                const text = document.createElement('div');
+                text.style.position = 'absolute';
+                text.style.fontFamily = "'Poppins', sans-serif";
+                text.style.fontWeight = 'bold';
+                text.style.fontSize = `${Math.floor(Math.random() * 40) + 30}px`;
+                text.style.color = 'rgba(255,255,255,0.8)';
+                text.style.top = `${Math.floor(Math.random() * 200) + 50}px`;
+                text.style.left = `${Math.floor(Math.random() * 150) + 50}px`;
+                text.style.transform = `rotate(${Math.floor(Math.random() * 30) - 15}deg)`;
+                text.style.mixBlendMode = 'overlay';
+                text.style.textShadow = '2px 2px 4px rgba(0,0,0,0.3)';
+                
+                const texts = ['DESIGN', 'CREATE', 'ART', 'INSPIRE', 'VISION', 'STUDIO', 'IMAGINE', 'DREAM'];
+                text.textContent = texts[Math.floor(Math.random() * texts.length)];
+                designBoard.appendChild(text);
+            }
+        }
+        
+        // Descargar como imagen
+        async function downloadAsImage(element, fileName) {
+            const loading = element.id === 'architecture' ? archLoading : designLoading;
+            loading.classList.add('active');
+            
+            try {
+                // Configuración de html2canvas
+                const canvas = await html2canvas(element, {
+                    scale: 2,
+                    logging: false,
+                    useCORS: true,
+                    allowTaint: true,
+                    backgroundColor: null
+                });
+                
+                // Crear enlace de descarga
+                const link = document.createElement('a');
+                link.download = `${fileName}-${new Date().toISOString().slice(0,10)}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            } catch (error) {
+                console.error('Error al generar la imagen:', error);
+                alert('Hubo un error al generar la imagen. Por favor intenta nuevamente.');
+            } finally {
+                loading.classList.remove('active');
+            }
+        }
+        
+        // Event listeners
+        generateBtn.addEventListener('click', () => {
+            generateArchitecture();
+            generateGraphicDesign();
+        });
+        
+        downloadArchBtn.addEventListener('click', () => {
+            downloadAsImage(archBoard, 'diseño-arquitectonico');
+        });
+        
+        downloadDesignBtn.addEventListener('click', () => {
+            downloadAsImage(designBoard, 'diseño-grafico');
+        });
+        
+        // Generar diseños iniciales
+        generateArchitecture();
+        generateGraphicDesign();
+    </script>
+</body>
+</html>
