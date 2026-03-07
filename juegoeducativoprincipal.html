@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Acceso - El Sombrero Blanco</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #e94560;
+            --primary-dark: #c11f3a;
+            --secondary: #533483;
+            --secondary-light: #7a4db8;
+            --bg: #0f3460;
+            --bg-dark: #1a1a2e;
+            --accent: #f8b500;
+            --accent-dark: #d49c00;
+            --success: #4caf50;
+            --success-dark: #3d8b40;
+            --danger: #ff6b81;
+            --danger-dark: #d64b5e;
+            --gray: #94a3b8;
+            --text: #f8fafc;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--bg), var(--bg-dark));
+            color: var(--text);
+            font-family: 'Segoe UI', 'Roboto', system-ui, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 2px solid var(--primary);
+            border-radius: 24px;
+            padding: 40px 35px;
+            max-width: 680px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(233, 69, 96, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+
+        h1 { 
+            color: var(--accent); 
+            margin-bottom: 5px; 
+            font-size: 2.2rem;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .subtitle {
+            color: var(--gray);
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+
+        .educational-message {
+            background: linear-gradient(135deg, rgba(83, 52, 131, 0.3), rgba(233, 69, 96, 0.2));
+            border-left: 5px solid var(--accent);
+            border-radius: 12px;
+            padding: 18px 20px;
+            margin: 20px 0 25px;
+            text-align: left;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .educational-message p {
+            font-size: 1.2rem;
+            line-height: 1.5;
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .educational-message i {
+            color: var(--accent);
+            font-style: normal;
+            font-weight: 700;
+        }
+
+        .quote-icon {
+            font-size: 2rem;
+            color: var(--accent);
+            opacity: 0.5;
+            margin-right: 10px;
+            float: left;
+        }
+
+        .clock-container {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 50px;
+            padding: 15px 20px;
+            margin: 15px 0 20px;
+            border: 1px solid var(--secondary);
+            display: inline-block;
+            width: auto;
+        }
+
+        #clock {
+            font-size: 3rem;
+            font-weight: 700;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 4px;
+            color: var(--accent);
+            text-shadow: 0 0 10px rgba(248, 180, 0, 0.5);
+        }
+
+        #date {
+            font-size: 1rem;
+            color: var(--gray);
+            margin-top: 5px;
+        }
+        
+        .status-banner {
+            padding: 16px 20px;
+            border-radius: 50px;
+            margin: 20px 0 25px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .locked { 
+            background: linear-gradient(135deg, rgba(233, 69, 96, 0.25), rgba(198, 40, 40, 0.25)); 
+            border: 2px solid var(--danger);
+            color: var(--danger);
+            box-shadow: 0 0 15px rgba(255, 107, 129, 0.3);
+        }
+        
+        .unlocked { 
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.25), rgba(46, 125, 50, 0.25)); 
+            border: 2px solid var(--success);
+            color: var(--success);
+            box-shadow: 0 0 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .admin-active {
+            /* Mismo estilo que unlocked para que pase desapercibido */
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.25), rgba(46, 125, 50, 0.25)); 
+            border: 2px solid var(--success);
+            color: var(--success);
+            box-shadow: 0 0 15px rgba(76, 175, 80, 0.3);
+        }
+
+        table {
+            width: 100%;
+            margin: 25px 0 20px;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        th, td {
+            padding: 14px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        th { 
+            background: var(--secondary); 
+            color: var(--accent);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        td {
+            color: var(--text);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .status-badge {
+            background: rgba(76, 175, 80, 0.3);
+            padding: 5px 12px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: inline-block;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            padding: 16px 35px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            box-shadow: 0 5px 15px rgba(233, 69, 96, 0.4);
+            margin-top: 10px;
+        }
+
+        .btn:hover:not(:disabled) { 
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            box-shadow: 0 8px 20px rgba(233, 69, 96, 0.6);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .back-btn {
+            background: transparent;
+            border: 2px solid var(--gray);
+            color: var(--gray);
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 15px;
+        }
+
+        .back-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .admin-section {
+            margin-top: 35px;
+            padding-top: 25px;
+            border-top: 2px dashed rgba(255, 255, 255, 0.15);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .admin-label {
+            font-size: 0.9rem;
+            color: var(--gray);
+            letter-spacing: 1px;
+        }
+
+        .admin-controls {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        input[type="password"] {
+            padding: 14px 18px;
+            border-radius: 50px;
+            border: 2px solid var(--secondary);
+            background: rgba(26, 26, 46, 0.8);
+            color: white;
+            font-size: 1rem;
+            width: 250px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        input[type="password"]:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 10px rgba(248, 180, 0, 0.5);
+        }
+
+        .admin-btn {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            padding: 12px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .admin-btn:hover {
+            background: var(--accent);
+            color: var(--bg-dark);
+            transform: scale(1.02);
+        }
+
+        .admin-active-badge {
+            color: var(--accent);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(248, 180, 0, 0.15);
+            padding: 8px 15px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+        }
+
+        .footer-note {
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h1>🎩 El Sombrero Blanco</h1>
+    <div class="subtitle">Plataforma de Juegos Educativos e Inteligencia</div>
+
+    <!-- Mensaje educativo destacado -->
+    <div class="educational-message">
+        <span class="quote-icon">🧠</span>
+        <p>
+            <i>✨ El juego educativo te ayuda a crecer</i><br>
+            <strong>la inteligencia emocional y la mentalidad verbal</strong>
+        </p>
+    </div>
+
+    <div class="clock-container">
+        <div id="clock">--:--:--</div>
+        <div id="date"></div>
+    </div>
+
+    <div id="status-box" class="status-banner locked">
+        ⏰ Acceso Denegado: Fuera de Horario
+    </div>
+
+    <h3>📅 Horarios de Acceso</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Día</th>
+                <th>Horario</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Lunes a Viernes</td>
+                <td>⏱️ 18:00 - 21:00</td>
+                <td><span id="table-status" class="status-badge" style="background: rgba(255, 107, 129, 0.3); color: var(--danger);">Cerrado</span></td>
+            </tr>
+            <tr>
+                <td>Sábados y Domingos</td>
+                <td>🎉 16:00 - 22:00</td>
+                <td><span id="weekend-status" class="status-badge" style="background: rgba(255, 107, 129, 0.3); color: var(--danger);">Cerrado</span></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button id="enter-btn" class="btn" disabled>🚪 INGRESAR A LOS JUEGOS</button>
+    
+    <!-- Botón para volver atrás -->
+    <button id="back-btn" class="back-btn">⬅️ VOLVER ATRÁS</button>
+
+    <div class="admin-section">
+        <div class="admin-label">🔑 Acceso de Administrador</div>
+        <div class="admin-controls">
+            <input type="password" id="admin-pass" placeholder="Clave maestra" maxlength="20">
+            <button onclick="checkAdmin()" class="admin-btn">Validar</button>
+        </div>
+        <div id="admin-indicator" class="admin-active-badge" style="display: none;">
+            👑 Modo Administrador Activo
+        </div>
+    </div>
+
+    <div class="footer-note">
+        <span id="weekday-message"></span>
+    </div>
+</div>
+
+<script>
+    const statusBox = document.getElementById('status-box');
+    const clockEl = document.getElementById('clock');
+    const dateEl = document.getElementById('date');
+    const tableStatus = document.getElementById('table-status');
+    const weekendStatus = document.getElementById('weekend-status');
+    const enterBtn = document.getElementById('enter-btn');
+    const backBtn = document.getElementById('back-btn');
+    const adminIndicator = document.getElementById('admin-indicator');
+    const weekdayMessage = document.getElementById('weekday-message');
+    
+    let isAdmin = false;
+    const ADMIN_PASSWORD = "motiva2026"; // Clave maestra
+
+    // Función para volver atrás
+    backBtn.addEventListener('click', () => {
+        window.location.href = 'index.html';
+    });
+
+    // Función para actualizar fecha y hora
+    function updateDateTime() {
+        const now = new Date();
+        
+        // Formato de hora
+        clockEl.textContent = now.toLocaleTimeString('es-ES', { 
+            hour12: false,
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+        });
+
+        // Formato de fecha
+        const options = { 
+            weekday: 'long', 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+        };
+        dateEl.textContent = now.toLocaleDateString('es-ES', options)
+            .replace(/^\w/, (c) => c.toUpperCase());
+
+        const dayOfWeek = now.getDay(); // 0 = Domingo, 1 = Lunes, ..., 6 = Sábado
+        const hours = now.getHours();
+        const minutes = now.getMinutes();
+        const currentMinutes = hours * 60 + minutes;
+
+        // Definir horarios
+        let isOpen = false;
+        let openMessage = "";
+
+        // Lunes a Viernes (1-5): 18:00 (1080 min) a 21:00 (1260 min)
+        const weekStart = 18 * 60; // 1080
+        const weekEnd = 21 * 60;    // 1260
+
+        // Fin de semana (0,6): 16:00 (960 min) a 22:00 (1320 min)
+        const weekendStart = 16 * 60; // 960
+        const weekendEnd = 22 * 60;    // 1320
+
+        if (dayOfWeek >= 1 && dayOfWeek <= 5) { // Lunes a Viernes
+            isOpen = currentMinutes >= weekStart && currentMinutes < weekEnd;
+            openMessage = isOpen ? "🟢 Horario hábil (Lun-Vie)" : "🔴 Fuera de horario laboral (Lun-Vie)";
+            weekendStatus.textContent = isOpen ? "Abierto" : "Cerrado";
+            weekendStatus.style.background = isOpen ? "rgba(76, 175, 80, 0.3)" : "rgba(255, 107, 129, 0.3)";
+            weekendStatus.style.color = isOpen ? "var(--success)" : "var(--danger)";
+        } else { // Sábado o Domingo
+            isOpen = currentMinutes >= weekendStart && currentMinutes < weekendEnd;
+            openMessage = isOpen ? "🟢 Horario de fin de semana" : "🔴 Fuera de horario (Fin de semana)";
+            weekendStatus.textContent = isOpen ? "Abierto" : "Cerrado";
+            weekendStatus.style.background = isOpen ? "rgba(76, 175, 80, 0.3)" : "rgba(255, 107, 129, 0.3)";
+            weekendStatus.style.color = isOpen ? "var(--success)" : "var(--danger)";
+        }
+
+        // Actualizar estado general (considerando admin)
+        updateAccessStatus(isOpen, openMessage);
+    }
+
+    function updateAccessStatus(isOpen, message) {
+        const now = new Date();
+        const dayOfWeek = now.getDay();
+        const hours = now.getHours();
+        const minutes = now.getMinutes();
+        const currentMinutes = hours * 60 + minutes;
+
+        // Determinar si está en horario normal
+        let isTime = false;
+        if (dayOfWeek >= 1 && dayOfWeek <= 5) {
+            isTime = currentMinutes >= 18*60 && currentMinutes < 21*60;
+        } else {
+            isTime = currentMinutes >= 16*60 && currentMinutes < 22*60;
+        }
+
+        // SIEMPRE mostrar la interfaz como si solo existiera el horario normal
+        // El admin puede entrar aunque la interfaz diga que está cerrado
+        
+        if (isTime) {
+            // Horario normal - Todo visible como permitido
+            statusBox.textContent = "✅ ACCESO PERMITIDO - Disfruta los juegos";
+            statusBox.className = "status-banner unlocked";
+            tableStatus.textContent = "ABIERTO";
+            tableStatus.style.background = "rgba(76, 175, 80, 0.3)";
+            tableStatus.style.color = "var(--success)";
+            enterBtn.disabled = false;
+            enterBtn.style.opacity = "1";
+            weekdayMessage.textContent = "✨ Horario de atención activo";
+            
+            // El indicador admin SOLO se muestra si es admin Y está en horario
+            if (isAdmin) {
+                adminIndicator.style.display = "flex";
+            } else {
+                adminIndicator.style.display = "none";
+            }
+        } else {
+            // Fuera de horario normal - Todo visible como denegado
+            statusBox.textContent = "⏰ ACCESO DENEGADO - Regresa en horario permitido";
+            statusBox.className = "status-banner locked";
+            tableStatus.textContent = "Cerrado";
+            tableStatus.style.background = "rgba(255, 107, 129, 0.3)";
+            tableStatus.style.color = "var(--danger)";
+            
+            // El botón se habilita SOLO para admin (aunque la interfaz diga que está cerrado)
+            if (isAdmin) {
+                enterBtn.disabled = false;
+                enterBtn.style.opacity = "1";
+                adminIndicator.style.display = "flex";
+                // No cambiamos el mensaje de estado para que siga viéndose como "Denegado"
+            } else {
+                enterBtn.disabled = true;
+                enterBtn.style.opacity = "0.5";
+                adminIndicator.style.display = "none";
+            }
+            
+            if (dayOfWeek >= 1 && dayOfWeek <= 5) {
+                weekdayMessage.textContent = "🕒 Horario: Lunes a Viernes 18:00 - 21:00";
+            } else {
+                weekdayMessage.textContent = "🎉 Fin de semana: 16:00 - 22:00";
+            }
+        }
+    }
+
+    function checkAdmin() {
+        const pass = document.getElementById('admin-pass').value;
+        if (pass === ADMIN_PASSWORD) {
+            isAdmin = true;
+            alert("✅ Acceso maestro concedido.");
+            document.getElementById('admin-pass').value = '';
+            updateDateTime();
+            
+            // El indicador se mostrará según la función updateAccessStatus
+        } else {
+            alert("❌ Contraseña incorrecta. Intenta nuevamente.");
+            document.getElementById('admin-pass').value = '';
+        }
+    }
+
+    // Función para cerrar sesión admin (opcional)
+    function logoutAdmin() {
+        isAdmin = false;
+        adminIndicator.style.display = "none";
+        updateDateTime();
+    }
+
+    enterBtn.addEventListener('click', () => {
+        const now = new Date();
+        const dayOfWeek = now.getDay();
+        const hours = now.getHours();
+        const minutes = now.getMinutes();
+        const currentMinutes = hours * 60 + minutes;
+
+        let canEnter = false;
+        
+        // El admin SIEMPRE puede entrar, independientemente del horario
+        if (isAdmin) {
+            canEnter = true;
+        } else {
+            // Usuario normal solo en horario permitido
+            if (dayOfWeek >= 1 && dayOfWeek <= 5) {
+                canEnter = currentMinutes >= 18*60 && currentMinutes < 21*60;
+            } else {
+                canEnter = currentMinutes >= 16*60 && currentMinutes < 22*60;
+            }
+        }
+
+        if (canEnter) {
+            // Mensaje motivador antes de entrar
+            alert("🧠 ¡Prepárate para crecer! Desarrollarás tu inteligencia emocional y mentalidad verbal.");
+            // Aquí puedes redirigir a la plataforma de juegos
+            window.location.href = "inicioeljuegoeducativo.html"; // Cambia por tu URL real
+        } else {
+            alert("🚫 Acceso no autorizado. El sistema está bloqueado fuera del horario permitido.");
+        }
+    });
+
+    // Actualizar cada segundo
+    setInterval(updateDateTime, 1000);
+    updateDateTime();
+
+    // Opcional: Cerrar sesión admin después de un tiempo (ejemplo: 30 minutos)
+    // setTimeout(logoutAdmin, 30 * 60 * 1000);
+</script>
+
+</body>
+</html>

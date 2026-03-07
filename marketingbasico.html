@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Multi-Enlaces · Card QR Pro</title>
+    <!-- Fuentes e iconos mejorados -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f0f3f8;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            border-radius: 10px;
+            max-width: 1500px;
+            margin: 20px auto;
+            box-shadow: 0 30px 50px rgba(0,0,0,0.1);
+        }
+
+        /* ===== SIDEBAR REFINADA ===== */
+        .sidebar {
+            width: 440px;
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 20px 0 40px -10px rgba(0,20,40,0.1);
+        }
+
+        .sidebar-content {
+            padding: 16px 16px;
+            overflow-y: auto;
+            flex: 1;
+            scrollbar-width: thin;
+        }
+
+        .header-title {
+            font-weight: 900;
+            font-size: 1.3rem;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #1e2b3c, #2d3f5e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .header-title i {
+            background: #2563eb;
+            padding: 10px;
+            border-radius: 16px;
+            color: white;
+            font-size: 1.2rem;
+            -webkit-text-fill-color: white;
+            box-shadow: 0 10px 20px #2563eb40;
+        }
+
+        .section-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #5e6f8d;
+            margin: 20px 0 8px 0;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .section-label i {
+            font-size: 0.8rem;
+            color: #2563eb;
+        }
+
+        .input-group {
+            margin-bottom: 8px;
+        }
+        .input-group input {
+            width: 100%;
+            border: 1.5px solid #e5e9f0;
+            background: white;
+            padding: 10px 14px;
+            border-radius: 18px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+        .input-group input:focus {
+            border-color: #2563eb;
+            outline: none;
+            box-shadow: 0 6px 14px #2563eb20;
+        }
+
+        .config-card-modern {
+            background: white;
+            border-radius: 26px;
+            padding: 18px;
+            margin: 12px 0;
+            border: 1px solid #eef2f6;
+            box-shadow: 0 6px 12px -6px rgba(0,0,0,0.05);
+        }
+
+        .dual-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        .dual-row label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #1e293b;
+        }
+        .dual-row input[type="color"] {
+            width: 48px;
+            height: 48px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+        }
+        .dual-row input[type="color"]::-webkit-color-swatch {
+            border-radius: 16px;
+            border: 3px solid white;
+            box-shadow: 0 8px 12px rgba(0,0,0,0.1);
+        }
+
+        .slider-zone {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .slider-zone span {
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: #334155;
+        }
+        input[type=range] {
+            width: 100%;
+            height: 7px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            -webkit-appearance: none;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            background: #2563eb;
+            border-radius: 50%;
+            box-shadow: 0 4px 8px #2563eb;
+            cursor: pointer;
+            border: 3px solid white;
+        }
+
+        /* Zona MULTI-ENLACES (hasta 5) */
+        .multi-links {
+            background: #ffffffcc;
+            border-radius: 24px;
+            padding: 16px;
+            margin: 10px 0 8px;
+            border: 1px solid #d9e2ef;
+        }
+        .links-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            color: #0b1e33;
+            margin-bottom: 12px;
+        }
+        .links-header i {
+            color: #2563eb;
+            font-size: 1.3rem;
+        }
+        .link-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            background: #f6f9ff;
+            padding: 5px 12px;
+            border-radius: 40px;
+            border: 1px solid #ccd9ec;
+        }
+        .link-item i {
+            color: #2563eb;
+            font-size: 0.9rem;
+            width: 20px;
+        }
+        .link-item input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            outline: none;
+        }
+        .link-item input::placeholder {
+            color: #95a9c5;
+            font-weight: 400;
+        }
+        .link-item .remove-link {
+            color: #c00;
+            cursor: pointer;
+            font-size: 1rem;
+            opacity: 0.7;
+        }
+        .link-item .remove-link:hover { opacity: 1; }
+        .add-link-btn {
+            background: white;
+            border: 1.5px dashed #2563eb;
+            border-radius: 40px;
+            padding: 10px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: #2563eb;
+            cursor: pointer;
+            margin-top: 12px;
+            transition: 0.15s;
+        }
+        .add-link-btn i { margin-right: 6px; }
+        .add-link-btn:hover {
+            background: #e3edff;
+        }
+
+        .photo-upload {
+            background: #f1f5f9;
+            border-radius: 20px;
+            padding: 12px 16px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border: 1px dashed #a0b8d4;
+            cursor: pointer;
+            transition: 0.2s;
+            margin: 15px 0 10px;
+        }
+        .photo-upload i {
+            color: #2563eb;
+            margin-right: 8px;
+        }
+        .photo-upload:hover {
+            background: #e6edf8;
+            border-color: #2563eb;
+        }
+
+        /* GRID de 25 ESTILOS */
+        .style-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+            margin-bottom: 20px;
+        }
+        .style-btn {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 9px 2px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.15s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+        .style-btn:hover {
+            border-color: #2563eb;
+            background: #f5f9ff;
+            transform: scale(0.98);
+        }
+        .style-btn.active {
+            background: #2563eb;
+            border-color: #2563eb;
+            color: white;
+            box-shadow: 0 10px 18px -8px #1d4ed1;
+        }
+
+        .btn-export {
+            background: #0f1829;
+            border: none;
+            border-radius: 100px;
+            padding: 18px 20px;
+            color: white;
+            font-weight: 700;
+            font-size: 1rem;
+            margin: 5px 18px 18px;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            box-shadow: 0 15px 30px -5px #0f182980;
+        }
+        .btn-export:hover {
+            background: #1f2a41;
+            transform: translateY(-4px);
+        }
+
+        /* ===== WORKSPACE ===== */
+        .work-area {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            background: radial-gradient(circle at 30% 50%, #ffffff80, #e9edf4);
+        }
+
+        #capture-box {
+            width: 500px;
+            transition: 0.3s;
+        }
+
+        .card {
+            width: 100%;
+            min-height: 700px;
+            background: white;
+            border-radius: 70px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 45px 25px 30px;
+            position: relative;
+            box-shadow: 0 45px 120px -20px rgba(0,20,50,0.25);
+            border: 1px solid rgba(255,255,255,0.5);
+            background-size: cover !important;
+            background-position: center !important;
+            transition: background 0.4s;
+        }
+
+        .profile-img {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid white;
+            box-shadow: 0 25px 40px -10px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+            transition: width 0.1s, height 0.1s;
+        }
+
+        .name-txt {
+            font-size: 2.4rem;
+            font-weight: 900;
+            letter-spacing: -2px;
+            line-height: 1.1;
+            text-align: center;
+            margin-bottom: 4px;
+        }
+
+        .job-txt {
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        .info-glass {
+            width: 100%;
+            background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-radius: 40px;
+            padding: 20px 20px;
+            border: 1px solid rgba(255,255,255,0.6);
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            box-shadow: 0 15px 30px -10px rgba(0,0,0,0.05);
+        }
+
+        .info-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .info-row i {
+            width: 20px;
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        /* NUEVO: contenedor de enlaces múltiples dentro de la tarjeta */
+        .links-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            width: 100%;
+            margin-top: 8px;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            padding-top: 12px;
+        }
+        .link-chip {
+            background: rgba(255,255,255,0.6);
+            backdrop-filter: blur(4px);
+            border-radius: 60px;
+            padding: 8px 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border: 1px solid rgba(255,255,255,0.8);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+        }
+        .link-chip i {
+            color: #2563eb;
+            font-size: 0.9rem;
+            width: 18px;
+        }
+        .link-chip span {
+            flex: 1;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .foot-txt {
+            margin-top: 10px;
+            font-weight: 800;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .boton-volver {
+            display: inline-block;
+            padding: 12px 15px;
+            font-size: 17px;
+            font-weight: bold;
+            text-decoration: none;
+            color: black;
+            border-radius: 12px;
+            border-width: 6px;
+            border-style: solid;
+            border-color: red orange yellow green;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            text-align: center;
+            margin-bottom: 8px;
+            width: 100%;
+        }
+        .boton-volver:hover {
+            transform: scale(1.02);
+            border-color: green yellow orange red;
+        }
+
+        @media (max-width: 900px) {
+            body { flex-direction: column; height: auto; overflow: auto; margin: 8px; }
+            .sidebar { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <div class="sidebar-content">
+        <!-- Botón con el enlace específico que solicitaste: inicioprincipalmarketingpremium.html -->
+        <a href="inicioprincipalmarketingpremium.html" class="boton-volver" id="fakeBackBtn">
+            <i class="fa-regular fa-hand-point-left"></i> Volver atrás
+        </a> 
+        <div class="header-title">
+            <i class="fa-solid fa-link"></i> 
+            <h2>MultiEnlaces · QR</h2>
+        </div>
+
+        <span class="section-label"><i class="fa-regular fa-id-card"></i> PERFIL</span>
+        <div class="input-group"><input type="text" id="inN" value="MARCO ANTONIO" placeholder="Nombre"></div>
+        <div class="input-group"><input type="text" id="inJ" value="CHIEF STRATEGY OFFICER" placeholder="Cargo"></div>
+        <div class="input-group"><input type="text" id="inT" value="+51 987 654 321" placeholder="Teléfono"></div>
+        <div class="input-group"><input type="text" id="inE" value="contacto@empresa.pro" placeholder="Email"></div>
+        <div class="input-group"><input type="text" id="inF" value="INNOVACIÓN & LIDERAZGO" placeholder="Lema"></div>
+
+        <!-- ===== NUEVA SECCIÓN MÚLTIPLES ENLACES (máx 5) ===== -->
+        <div class="multi-links" id="multiLinksSection">
+            <div class="links-header"><i class="fa-solid fa-arrow-pointer"></i> ENLACES PERSONALIZADOS (hasta 5)</div>
+            <div id="links-list">
+                <!-- Se llenará con js : por defecto 2 ejemplos -->
+            </div>
+            <div class="add-link-btn" id="addLinkBtn"><i class="fa-regular fa-plus"></i> Agregar otro enlace</div>
+        </div>
+
+        <div class="config-card-modern">
+            <div class="dual-row">
+                <label><i class="fa-regular fa-pen-to-square"></i> Tono texto</label>
+                <input type="color" id="colorSync" value="#1e293b">
+            </div>
+            <div class="slider-zone">
+                <span><i class="fa-regular fa-image"></i> ZOOM FOTO</span>
+                <input type="range" id="zoom" min="120" max="280" value="160">
+            </div>
+        </div>
+
+        <label for="file" class="photo-upload"><i class="fa-regular fa-circle-user"></i> SUBIR FOTO</label>
+        <input type="file" id="file" accept="image/*" style="display: none;">
+
+        <span class="section-label"><i class="fa-regular fa-star"></i> 25 ESTILOS</span>
+        <div class="style-grid" id="grid"></div>
+    </div>
+
+    <button class="btn-export" onclick="saveCard()"><i class="fa-regular fa-camera"></i> DESCARGAR TARJETA</button>
+</div>
+
+<div class="work-area">
+    <div id="capture-box">
+        <div class="card" id="mainCard">
+            <img src="https://ui-avatars.com/api/?name=Marco+Antonio&background=2563eb&color=fff&size=400&bold=true&length=2" id="pic" class="profile-img" alt="profile">
+
+            <h1 class="name-txt dyn-txt" id="oN">MARCO ANTONIO</h1>
+            <p class="job-txt dyn-txt" id="oJ">CHIEF STRATEGY OFFICER</p>
+
+            <div class="info-glass" id="glass">
+                <div class="info-row dyn-txt"><i class="fa-solid fa-phone"></i> <span id="oT">+51 987 654 321</span></div>
+                <div class="info-row dyn-txt"><i class="fa-solid fa-envelope"></i> <span id="oE">contacto@empresa.pro</span></div>
+                
+                <!-- Aquí se inyectarán los chips de enlaces múltiples -->
+                <div id="cardLinksContainer" class="links-container"></div>
+            </div>
+
+            <div class="foot-txt dyn-txt" id="oF">INNOVACIÓN & LIDERAZGO</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const mainCard = document.getElementById('mainCard');
+        const colorPicker = document.getElementById('colorSync');
+        const dynTexts = document.querySelectorAll('.dyn-txt');
+        const pic = document.getElementById('pic');
+
+        // ===== MULTI-ENLACES: hasta 5 =====
+        const linksListDiv = document.getElementById('links-list');
+        const cardLinksContainer = document.getElementById('cardLinksContainer');
+        const addBtn = document.getElementById('addLinkBtn');
+
+        let linkCount = 0;
+        const MAX_LINKS = 5;
+
+        function renderLinkInputs() {
+            // Se espera que existan .link-item en linksListDiv
+            // actualizar linkCount
+            const items = linksListDiv.querySelectorAll('.link-item');
+            linkCount = items.length;
+
+            // Reconstruir vista en tarjeta
+            const links = [];
+            items.forEach(item => {
+                const inp = item.querySelector('input');
+                if (inp && inp.value.trim() !== '') {
+                    links.push(inp.value.trim());
+                }
+            });
+
+            // Limpiar container y llenar chips (max 5)
+            cardLinksContainer.innerHTML = '';
+            links.slice(0,5).forEach((url, idx) => {
+                const chip = document.createElement('div');
+                chip.className = 'link-chip dyn-txt'; // hereda color texto
+                // extraer dominio simple
+                let displayUrl = url.replace(/^https?:\/\//,'').substring(0,22);
+                if (displayUrl.length >= 22) displayUrl = displayUrl.substring(0,19)+'...';
+                chip.innerHTML = `<i class="fa-regular fa-link"></i><span title="${url}">${displayUrl}</span>`;
+                cardLinksContainer.appendChild(chip);
+            });
+        }
+
+        function createLinkInput(value = '', placeholder = 'https://...') {
+            const div = document.createElement('div');
+            div.className = 'link-item';
+            div.innerHTML = `
+                <i class="fa-regular fa-link"></i>
+                <input type="url" placeholder="${placeholder}" value="${value.replace(/"/g, '&quot;')}">
+                <span class="remove-link"><i class="fa-regular fa-circle-xmark"></i></span>
+            `;
+            const removeSpan = div.querySelector('.remove-link');
+            removeSpan.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (linksListDiv.children.length > 0) {
+                    div.remove();
+                    renderLinkInputs();
+                }
+            });
+            const inp = div.querySelector('input');
+            inp.addEventListener('input', renderLinkInputs);
+            return div;
+        }
+
+        // Inicializar con 2 enlaces de ejemplo
+        linksListDiv.appendChild(createLinkInput('https://linkedin.com/in/marco', 'LinkedIn'));
+        linksListDiv.appendChild(createLinkInput('https://miportafolio.co', 'Portafolio'));
+
+        addBtn.addEventListener('click', () => {
+            if (linksListDiv.children.length < MAX_LINKS) {
+                linksListDiv.appendChild(createLinkInput('', 'Nuevo enlace'));
+                renderLinkInputs();
+            } else {
+                alert('Máximo 5 enlaces permitidos');
+            }
+        });
+
+        // Escuchar cambios en todos los inputs existentes y futuros (delegación)
+        linksListDiv.addEventListener('input', (e) => {
+            if (e.target.tagName === 'INPUT') renderLinkInputs();
+        });
+
+        // Llamar una vez para construir chips iniciales
+        renderLinkInputs();
+
+        // ===== SINCRONIZACIÓN DE TEXTO =====
+        function syncColor(color) {
+            dynTexts.forEach(el => {
+                el.style.color = color;
+                const icon = el.querySelector('i');
+                if (icon) icon.style.color = color;
+            });
+        }
+        colorPicker.addEventListener('input', (e) => syncColor(e.target.value));
+
+        // ===== INPUTS NOMBRE, CARGO, ETC =====
+        const inputs = {
+            inN: 'oN',
+            inJ: 'oJ',
+            inT: 'oT',
+            inE: 'oE',
+            inF: 'oF'
+        };
+        for (let [inId, outId] of Object.entries(inputs)) {
+            document.getElementById(inId).addEventListener('input', function(e) {
+                let val = e.target.value;
+                if (inId !== 'inT' && inId !== 'inE') val = val.toUpperCase();
+                document.getElementById(outId).innerText = val || (inId==='inF' ? 'LEMA' : ' ');
+            });
+        }
+
+        // ===== ZOOM FOTO =====
+        document.getElementById('zoom').addEventListener('input', (e) => {
+            let size = e.target.value + 'px';
+            pic.style.width = size;
+            pic.style.height = size;
+        });
+
+        // ===== SUBIR FOTO =====
+        document.getElementById('file').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = ev => pic.src = ev.target.result;
+            reader.readAsDataURL(file);
+        });
+
+        // ===== 25 ESTILOS (igual que antes, pero sin QR) =====
+        const styleNames = [
+            'Titanio', 'Perla', 'Zafiro', 'Nieve', 'Duna', 'Oro Rosa', 'Mármol', 'Bosque', 'Ejecutivo', 'Hielo',
+            'Cobre', 'Lino', 'Océano', 'Mineral', 'Grafito', 'Marfil', 'Vino', 'Esmeralda', 'Cristal', 'Lino Azul',
+            'Platino', 'Acero', 'Pergamino', 'Roca', 'Alba'
+        ];
+        const styleMap = {
+            'titanio': 'linear-gradient(145deg, #b8c5d6, #a1b0c4)',
+            'perla': 'radial-gradient(circle at 20% 30%, #ffffff, #f0f4fa)',
+            'zafiro': '#1e3a5f', 'nieve': '#f8fdff', 'duna': '#f5e9da',
+            'oro rosa': 'linear-gradient(145deg, #fde1df, #fcc8c5)',
+            'mármol': "url('https://www.transparenttextures.com/patterns/mirrored-squares.png'), #f1f3f4",
+            'bosque': '#1b4d3e', 'ejecutivo': 'linear-gradient(135deg, #cfddee, #b6c7db)',
+            'hielo': '#e2ecf7', 'cobre': '#cb6e4e', 'lino': '#f3ead8', 'océano': '#155e75',
+            'mineral': '#8a9aa7', 'grafito': '#3e4a5a', 'marfil': '#fef7e4', 'vino': '#722b3f',
+            'esmeralda': '#0b4f3a', 'cristal': 'linear-gradient(145deg, #dbeafe, #edf2fd)',
+            'lino azul': '#e0e9f5', 'platino': '#b7c2cf', 'acero': '#8497b0',
+            'pergamino': '#fcf3e1', 'roca': '#7f8c9b', 'alba': '#fcfcfd'
+        };
+        const grid = document.getElementById('grid');
+        styleNames.forEach((label) => {
+            const btn = document.createElement('div');
+            btn.className = 'style-btn';
+            btn.innerText = label;
+            const key = label.toLowerCase();
+            btn.onclick = () => {
+                mainCard.className = 'card';
+                mainCard.style.background = ''; mainCard.style.border = ''; mainCard.style.borderLeft = ''; 
+                const bg = styleMap[key];
+                if (bg) {
+                    if (bg.startsWith('linear')||bg.startsWith('radial')||bg.startsWith('url')) mainCard.style.background = bg;
+                    else mainCard.style.backgroundColor = bg;
+                }
+                if (key === 'mármol') mainCard.style.backgroundSize = '200px, cover';
+                if (key === 'oro rosa') mainCard.style.border = '2px solid #d87777';
+                if (key === 'ejecutivo') mainCard.style.borderLeft = '18px solid #3065b5';
+                if (key === 'platino') mainCard.style.border = '4px double #a1aec0';
+                if (key === 'alba') mainCard.style.border = '10px solid #f2f6fc';
+                const darkBg = ['zafiro','bosque','océano','vino','esmeralda','grafito','roca'];
+                if (darkBg.includes(key)) { colorPicker.value = '#ffffff'; syncColor('#ffffff'); } 
+                else { colorPicker.value = '#1e293b'; syncColor('#1e293b'); }
+                document.querySelectorAll('.style-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            };
+            grid.appendChild(btn);
+        });
+
+        window.addEventListener('load', () => {
+            document.querySelector('.style-btn:nth-child(2)')?.click(); // perla
+        });
+
+        // ===== EXPORTACIÓN =====
+        window.saveCard = function() {
+            html2canvas(document.querySelector("#capture-box"), { 
+                scale: 3.5, 
+                backgroundColor: null,
+                allowTaint: false,
+                useCORS: true,
+                logging: false
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'Tarjeta_MultiEnlaces.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            }).catch(err => alert('Error al exportar: ' + err));
+        };
+
+        // El botón ahora tiene un enlace real, pero también podemos mantener un efecto visual
+        // No se interfiere con el funcionamiento del enlace HTML.
+        setTimeout(() => colorPicker.dispatchEvent(new Event('input')), 150);
+    })();
+</script>
+</body>
+</html>

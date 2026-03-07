@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bienvenido premium · paisaje profesional</title>
+  <!-- Fuente elegante e iconos -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,500;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      background: #0f1b28;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* PAISAJE DE FONDO (mejorado, más decorativo) */
+    .landscape {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .sky {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(145deg, #0e3345 0%, #2b6279 40%, #9bb7c4 75%, #f5dbbc 100%);
+      z-index: 1;
+    }
+
+    .sun-haze {
+      position: absolute;
+      top: 10%;
+      right: 15%;
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle, rgba(255,210,130,0.5) 0%, transparent 75%);
+      border-radius: 50%;
+      filter: blur(70px);
+      z-index: 2;
+    }
+
+    .mountains-front {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 42%;
+      background: #1a404e;
+      clip-path: polygon(0% 100%, 3% 35%, 9% 55%, 16% 20%, 24% 48%, 32% 18%, 41% 45%, 50% 15%, 60% 40%, 70% 10%, 80% 35%, 90% 8%, 97% 28%, 100% 40%, 100% 100%);
+      z-index: 4;
+      opacity: 0.85;
+      box-shadow: inset 0 12px 25px #00000077;
+    }
+
+    .mountains-back {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 60%;
+      background: #0f3645;
+      clip-path: polygon(0% 100%, 6% 55%, 15% 70%, 25% 45%, 35% 68%, 45% 38%, 55% 60%, 65% 28%, 75% 52%, 85% 18%, 95% 42%, 100% 30%, 100% 100%);
+      z-index: 3;
+      opacity: 0.45;
+    }
+
+    .meadow {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 20%;
+      background: linear-gradient(to top, #14494e, #25676f, transparent);
+      z-index: 5;
+      opacity: 0.65;
+      backdrop-filter: blur(3px);
+    }
+
+    .tree-line {
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 50px;
+      background: repeating-linear-gradient(90deg, transparent, transparent 35px, #346f5a 35px, #479e82 45px);
+      mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+      z-index: 6;
+      opacity: 0.4;
+    }
+
+    #stars-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      opacity: 0.7;
+    }
+
+    .cloud {
+      position: absolute;
+      background: rgba(255,250,240,0.2);
+      border-radius: 150px;
+      filter: blur(40px);
+      z-index: 3;
+    }
+    .cloud1 { width: 500px; height: 120px; top: 12%; left: -80px; }
+    .cloud2 { width: 600px; height: 150px; bottom: 20%; right: -40px; background: rgba(200,220,240,0.18); }
+
+    /* TARJETA PRINCIPAL (efecto vidrio) - MODIFICADA CON LOS NUEVOS ESTILOS */
+    .welcome-card {
+      position: relative;
+      z-index: 30;
+      max-width: 900px; /* Cambiado a 900px */
+      width: 90%;
+      margin: 90px auto; /* Añadido margin 90px auto */
+      background: rgba(8, 22, 36, 0.4);
+      backdrop-filter: blur(18px) saturate(200%);
+      -webkit-backdrop-filter: blur(18px) saturate(200%);
+      border: 1px solid rgba(255, 235, 170, 0.3);
+      border-radius: 10px; /* Cambiado a 10px */
+      padding: 3.5rem 3rem;
+      box-shadow: 0 50px 80px -20px #000, 0 0 0 1px rgba(250,220,150,0.2) inset;
+      color: #f0f2f5;
+      animation: levitate 8s infinite alternate;
+    }
+
+    @keyframes levitate {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-8px); }
+    }
+
+    .welcome-title {
+      font-size: clamp(2.4rem, 10vw, 5.6rem);
+      font-weight: 800;
+      line-height: 1.1;
+      background: linear-gradient(135deg, #fff2d4, #ffdba5, #fff0ce);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 0 45px #ffcf8e80;
+    }
+
+    /* DOS ELEMENTOS DESTACADOS: AHORA SON CLICABLES Y REDIRIGEN A INDEX.HTML */
+    .crea-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin: 2.8rem 0 2rem;
+      justify-content: center;
+    }
+
+    .crea-card {
+      flex: 1 1 260px;
+      background: rgba(15, 42, 54, 0.5);
+      backdrop-filter: blur(8px);
+      border-radius: 60px;
+      padding: 2rem 2rem;
+      border: 2px solid rgba(250, 210, 130, 0.3);
+      text-align: center;
+      transition: 0.3s;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .crea-card:hover {
+      border-color: #f5cf91;
+      background: rgba(25, 60, 75, 0.6);
+      transform: scale(1.02);
+      box-shadow: 0 0 25px rgba(255, 215, 140, 0.5);
+    }
+
+    .crea-card i {
+      font-size: 3.2rem;
+      background: linear-gradient(145deg, #fce3b1, #f5bc6c);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 0.7rem;
+    }
+
+    .crea-card .crea-title {
+      font-size: 2rem;
+      font-weight: 800;
+      line-height: 1.2;
+      background: linear-gradient(145deg, #ffffff, #ffeac2);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin: 0.5rem 0 0.3rem;
+    }
+
+    .crea-card .crea-desc {
+      font-weight: 300;
+      font-size: 1rem;
+      color: #cbdbe9;
+    }
+
+    /* TABLA DE INSTRUCCIONES */
+    .instructions-section {
+      margin-top: 2.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .instructions-title {
+      font-size: 2rem;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 1.8rem;
+      color: #fff2d4;
+      letter-spacing: 1px;
+    }
+
+    .instructions-title i {
+      color: #f7cf8c;
+      margin: 0 10px;
+    }
+
+    .steps-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(10, 30, 42, 0.6);
+      backdrop-filter: blur(8px);
+      border-radius: 40px;
+      overflow: hidden;
+      box-shadow: 0 20px 30px -10px rgba(0,0,0,0.7);
+      border: 1px solid rgba(255, 215, 140, 0.3);
+    }
+
+    .steps-table th {
+      background: rgba(196, 156, 84, 0.3);
+      font-size: 1.3rem;
+      font-weight: 600;
+      padding: 1.2rem 0.5rem;
+      color: #ffeac2;
+      border-bottom: 2px solid #dbb05c;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .steps-table td {
+      padding: 1.2rem 1rem;
+      border-bottom: 1px solid rgba(255, 210, 130, 0.15);
+      color: #e0edff;
+      font-size: 1.1rem;
+      vertical-align: middle;
+    }
+
+    .steps-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(145deg, #f5bc6c, #d99f4c);
+      border-radius: 50%;
+      color: #0f1b28;
+      font-weight: 800;
+      font-size: 1.2rem;
+      margin-right: 12px;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.5);
+    }
+
+    .step-icon {
+      font-size: 2rem;
+      width: 60px;
+      text-align: center;
+      color: #fad39c;
+    }
+
+    .step-text {
+      font-weight: 400;
+      color: #ffffff;
+      line-height: 1.5;
+    }
+
+    /* NUEVO BOTÓN VOLVER ATRÁS */
+    .back-button-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: linear-gradient(145deg, #5a7d9c, #2c4b68);
+      color: white;
+      border: 2px solid rgba(255, 215, 140, 0.6);
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      text-decoration: none;
+      letter-spacing: 1px;
+      box-shadow: 0 10px 20px -5px rgba(0,0,0,0.6);
+      transition: all 0.3s ease;
+      backdrop-filter: blur(5px);
+    }
+
+    .btn-back i {
+      font-size: 1.3rem;
+      color: #fad39c;
+      transition: transform 0.3s;
+    }
+
+    .btn-back:hover {
+      background: linear-gradient(145deg, #6a8fb0, #3a5f80);
+      transform: scale(1.05);
+      border-color: #f5cf91;
+      box-shadow: 0 15px 30px -5px #000, 0 0 20px #a7c8e9;
+    }
+
+    .btn-back:hover i {
+      transform: translateX(-5px);
+    }
+
+    /* FOOTER: solo "todo es decorativo" */
+    .footer-note {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px dashed #578197;
+      color: #c5deee;
+      font-weight: 300;
+      font-size: 1.3rem;
+      gap: 12px;
+    }
+
+    .footer-note i {
+      color: #f7cf8c;
+      margin: 0 8px;
+    }
+
+    .footer-note span {
+      background: rgba(255,215,140,0.1);
+      padding: 0.5rem 2rem;
+      border-radius: 60px;
+      border: 1px solid #dbb05c55;
+      letter-spacing: 1px;
+    }
+
+    @media (max-width: 700px) {
+      .welcome-card { 
+        padding: 2rem 1.5rem; 
+        margin: 60px auto; /* Ajuste responsive */
+      }
+      .welcome-title { font-size: 3rem; }
+      .crea-card .crea-title { font-size: 1.8rem; }
+      .footer-note { font-size: 1.1rem; }
+      .steps-table td { font-size: 0.95rem; padding: 1rem 0.8rem; }
+      .step-number { width: 28px; height: 28px; font-size: 1rem; margin-right: 6px; }
+      .step-icon { width: 40px; font-size: 1.5rem; }
+      .btn-back { padding: 0.8rem 1.8rem; font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- fondo paisaje ultra decorativo -->
+  <div class="landscape">
+    <div class="sky"></div>
+    <canvas id="stars-canvas"></canvas>
+    <div class="sun-haze"></div>
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
+    <div class="mountains-back"></div>
+    <div class="mountains-front"></div>
+    <div class="meadow"></div>
+    <div class="tree-line"></div>
+    <div style="position:absolute; bottom:8%; left:0; width:100%; height:25%; background:linear-gradient(to top, #0d3945, transparent); z-index:7; opacity:0.4; filter:blur(20px);"></div>
+  </div>
+
+  <!-- TARJETA PRINCIPAL con nuevos estilos aplicados -->
+  <main class="welcome-card">
+
+    <!-- BIENVENIDA PRINCIPAL -->
+    <div class="welcome-title">
+      BIENVENIDOS <br> A PREMIUM
+    </div>
+
+    <!-- ELEMENTOS "crea tu decorativo medium" y "crea tu decorativo premium" - ENLACES A INDEX -->
+    <div class="crea-row">
+      <a href="decorativo2profesionalmedium.html" class="crea-card">
+        <i class="fas fa-palette"></i>
+        <div class="crea-title">crea tu<br>decorativo medium</div>
+        <div class="crea-desc">textura suave · estilo natural</div>
+      </a>
+      <a href="decortaivo1profesionalpremium.html" class="crea-card">
+        <i class="fas fa-gem"></i>
+        <div class="crea-title">crea tu<br>decorativo premium</div>
+        <div class="crea-desc">acabado exclusivo · capas doradas</div>
+      </a>
+    </div>
+
+    <!-- SECCIÓN: TABLA CON INSTRUCCIONES -->
+    <div class="instructions-section">
+      <div class="instructions-title">
+        <i class="fas fa-magic"></i>  pasos para crear  <i class="fas fa-magic"></i>
+      </div>
+      
+      <table class="steps-table">
+        <thead>
+          <tr>
+            <th colspan="3">✨ instrucciones paso a paso ✨</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="step-icon"><i class="fas fa-upload"></i></td>
+            <td><span class="step-number">1</span></td>
+            <td class="step-text">Sube tu foto.</td>
+          </tr>
+          <tr>
+            <td class="step-icon"><i class="fas fa-paint-brush"></i></td>
+            <td><span class="step-number">2</span></td>
+            <td class="step-text">Personaliza los colores o el fondo a tu gusto.</td>
+          </tr>
+          <tr>
+            <td class="step-icon"><i class="fas fa-sliders-h"></i></td>
+            <td><span class="step-number">3</span></td>
+            <td class="step-text">Ajusta la decoración según prefieras.</td>
+          </tr>
+          <tr>
+            <td class="step-icon"><i class="fas fa-download"></i></td>
+            <td><span class="step-number">4</span></td>
+            <td class="step-text">Descarga tu foto con la decoración creada.</td>
+          </tr>
+          <tr>
+            <td class="step-icon"><i class="fas fa-share-alt"></i></td>
+            <td><span class="step-number">5</span></td>
+            <td class="step-text">Comparte la imagen con tus amigos o familiares.</td>
+          </tr>
+          <tr>
+            <td class="step-icon"><i class="fas fa-heart"></i></td>
+            <td><span class="step-number">6</span></td>
+            <td class="step-text">Envíala a cualquier persona que quieras.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- NUEVO BOTÓN VOLVER ATRÁS (enlaza a otro index.html) -->
+    <div class="back-button-container">
+      <a href="bievenidospremium.html" class="btn-back">
+        <i class="fas fa-arrow-left"></i> volver atrás
+      </a>
+    </div>
+
+    <!-- FOOTER: solo "todo es decorativo" -->
+    <div class="footer-note">
+      <i class="fas fa-feather"></i>
+      <span>todo es decorativo</span>
+      <i class="fas fa-droplet"></i>
+    </div>
+
+  </main>
+
+  <!-- SCRIPT DE ESTRELLAS (mejora paisaje) -->
+  <script>
+    (function() {
+      const canvas = document.getElementById('stars-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let width, height;
+      let stars = [];
+
+      function resize() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width;
+        canvas.height = height;
+        generateStars();
+      }
+
+      function generateStars() {
+        const count = Math.floor((width * height) / 3800);
+        stars = [];
+        for (let i = 0; i < count; i++) {
+          stars.push({
+            x: Math.random() * width,
+            y: Math.random() * height * 0.7,
+            radius: Math.random() * 2.5 + 0.5,
+            baseAlpha: Math.random() * 0.5 + 0.2,
+            speed: 0.005 + Math.random() * 0.02,
+            phase: Math.random() * 2 * Math.PI
+          });
+        }
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, width, height);
+        stars.forEach(s => {
+          const twinkle = Math.sin(Date.now() * s.speed + s.phase) * 0.2 + 0.8;
+          const alpha = Math.min(s.baseAlpha * twinkle, 0.9);
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.radius, 0, 2 * Math.PI);
+          ctx.fillStyle = `rgba(255, 245, 210, ${alpha})`;
+          ctx.shadowColor = 'rgba(255, 235, 170, 0.9)';
+          ctx.shadowBlur = 12;
+          ctx.fill();
+
+          if (s.radius > 1.8) {
+            ctx.shadowBlur = 22;
+            ctx.fillStyle = `rgba(255, 250, 200, 0.1)`;
+            ctx.beginPath();
+            ctx.arc(s.x, s.y, s.radius * 3.5, 0, 2 * Math.PI);
+            ctx.fill();
+          }
+        });
+        ctx.shadowBlur = 0;
+        requestAnimationFrame(draw);
+      }
+
+      window.addEventListener('resize', resize);
+      resize();
+      draw();
+    })();
+  </script>
+
+  <!-- pequeño script de ambiente -->
+  <script>
+    (function() {
+      console.log('✨ Paisaje decorativo · instrucciones actualizadas · botón volver atrás');
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contabilidad Limpia: Fórmulas Claras y Directas</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Roboto+Mono:wght@500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Variables Globales y Reset */
+        :root {
+            --color-principal: #004d99; /* Azul Profundo */
+            --color-accent: #ff9900; /* Naranja para destacar */
+            --color-fondo: #f4f7f6;
+            --color-texto: #1c2e4a;
+            --sombra-card: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--color-fondo);
+            color: var(--color-texto);
+            line-height: 1.6;
+                border-radius: 10px;
+  max-width: 900px;
+  margin: 90px auto;
+        }
+
+        /* Estilos de Encabezado */
+        header {
+            background-color: var(--color-principal);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin: 0;
+        }
+
+        /* Estructura Principal con CSS Grid */
+        .grid-container {
+            display: grid;
+            grid-template-columns: 3fr 1fr; /* Contenido 75% | Barra Lateral 25% */
+            gap: 30px;
+            width: 90%;
+            max-width: 1400px;
+            margin: 40px auto;
+        }
+
+        .main-content {
+            padding: 20px;
+        }
+
+        .sidebar {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: var(--sombra-card);
+            height: fit-content;
+            position: sticky;
+            top: 30px;
+        }
+
+        /* Títulos y Separadores */
+        h2 {
+            color: var(--color-principal);
+            border-bottom: 4px solid var(--color-accent);
+            padding-bottom: 10px;
+            margin-bottom: 35px;
+            font-size: 2em;
+        }
+
+        h3 {
+            color: #333;
+            font-size: 1.5em;
+            margin-top: 25px;
+        }
+        
+        /* Contenedor de Conceptos (Cards) */
+        .concepto-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--sombra-card);
+            border-left: 6px solid;
+            transition: all 0.3s ease;
+        }
+
+        .concepto-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .concepto-card h4 {
+            color: var(--color-principal);
+            font-size: 1.2em; /* Reducido al no tener íconos */
+            cursor: pointer; 
+            padding: 5px 0;
+        }
+        
+        /* Colores por Rol (Solo Bordes) */
+        .activo-style { border-left-color: #4CAF50; } 
+        .pasivo-style { border-left-color: #F44336; } 
+        .patrimonio-style { border-left-color: #FFC107; } 
+        .ingresos-style { border-left-color: #03A9F4; } 
+        .gastos-style { border-left-color: #607D8B; } 
+        .resultado-style { border-left-color: #9C27B0; } 
+        
+        /* Acordeón (Contenido Ocultable) */
+        .acordeon-contenido {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out; 
+            padding: 0 20px;
+            background-color: #fcfcfc;
+            border-radius: 0 0 10px 10px;
+        }
+        
+        .acordeon-contenido.mostrar {
+            max-height: 600px; 
+            padding: 15px 20px 20px 20px;
+            margin-top: 10px;
+            border-top: 1px dashed #ddd;
+        }
+        
+        /* ESTILO PROFESIONAL DE FÓRMULAS */
+        .formula-box {
+            font-family: 'Roboto Mono', monospace;
+            text-align: center;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-size: 1.5em;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 96, 100, 0.2);
+        }
+        
+        .formula-box .termino-formula {
+            color: #1c2e4a;
+            font-weight: 700;
+        }
+
+        .formula-box .operador {
+            color: #00bcd4;
+            margin: 0 10px;
+        }
+        
+        /* Estilos específicos de las 3 fórmulas */
+        .formula-ecuacion-fundamental { background-color: #e0f7fa; border: 3px solid #00bcd4; color: #006064; }
+        .formula-patrimonio-neto { background-color: #fff3e0; border: 3px solid #ffb74d; color: #e65100; }
+        .formula-resultado-economico { background-color: #fce4ec; border: 3px solid #ec407a; color: #880e4f; }
+
+
+        /* Estilos para la explicación Positivo/Negativo */
+        .resultado-explicacion {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .resultado-explicacion > div {
+            flex: 1;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .ganancia-box {
+            background-color: #e8f5e9;
+            border: 1px solid #4CAF50;
+        }
+        
+        .perdida-box {
+            background-color: #ffebee;
+            border: 1px solid #F44336;
+        }
+
+        /* Módulo de Cálculo (JS) */
+        #calculadora-contable {
+            margin-top: 40px;
+            padding: 30px;
+            background-color: #e8eaf6; 
+            border-radius: 12px;
+            box-shadow: var(--sombra-card);
+        }
+        
+        #calculadora-contable label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+            color: var(--color-principal);
+        }
+        
+        #calculadora-contable input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        
+        #calculadora-contable button {
+            background-color: var(--color-accent);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-size: 1.1em;
+            transition: background-color 0.3s;
+        }
+        
+        #calculadora-contable button:hover {
+            background-color: #cc7a00;
+        }
+
+        #resultados {
+            margin-top: 25px;
+            padding: 15px;
+            border: 2px dashed var(--color-principal);
+            border-radius: 8px;
+            font-size: 1.1em;
+            background-color: #ffffff;
+        }
+        
+        /* Responsivo (Móviles) */
+        @media (max-width: 900px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                position: static;
+            }
+            .resultado-explicacion {
+                flex-direction: column;
+            }
+        }
+        /* Solo estilos para el botón "Volver atrás" */
+.back-button {
+  display: inline-block;
+  padding: 10px 18px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 2px solid #333;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  user-select: none;
+}
+
+/* Efecto al pasar el ratón */
+.back-button:hover,
+.back-button:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+  text-decoration: none;
+  outline: none;
+}
+
+/* Efecto al hacer clic */
+.back-button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+
+  /* Estilo de la tabla */
+  table {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse; /* Quita espacios entre bordes */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+
+  /* Estilo de los encabezados de la tabla */
+  th {
+    background-color: #3498db; /* azul */
+    color: white;
+    padding: 10px;
+    text-align: left;
+    font-size: 16px;
+  }
+
+  /* Estilo de las celdas */
+  td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+
+  /* Color alterno en filas */
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  tr:hover {
+    background-color: #d1ecf1;
+  }
+
+  /* Estilo de lista */
+  ul {
+    width: 80%;
+    margin: 20px auto;
+    padding: 0;
+    list-style-type: square; /* o circle, disc, etc. */
+  }
+
+  </style>
+</head>
+<body>
+
+    <header>
+        <h1>Aprende la Contabilidad</h1>
+      
+            <a href="aprendeportalcontablidad.html" class="back-button" aria-label="Volver atrás">Volver atrás</a>
+    </header>
+
+    <div class="grid-container">
+        
+        <main class="main-content">
+
+            <section id="seccion-ecuacion">
+                <h2> Concepto Contablidad </h2>
+                <p>
+La contabilidad es una parte del sistema de información de un ente que proporciona ciertos datos sobre su patrimonio y la evolución del mismo, para facilitar la toma de decisiones tanto de los administradores del ente como de los terceros que interactúan con él.
+Un tercero, en contabilidad y administración, es cualquier persona u organización que no forma parte del ente (empresa, institución u organización) pero que tiene algún tipo de relación con él.
+<table>
+    <th><td>
+<ul>
+    Un banco: que le presta dinero a la empresa.</ul><ul>    Un proveedor: que le vende productos o servicios.
+
+    </ul>
+
+<ul>
+  Un cliente: que compra productos o servicios.
+</ul><ul>
+
+    El Estado o instituciones gubernamentales: que reciben información para impuestos.
+</ul>
+<ul>
+  Un inversor: que quiere conocer la situación económica de la empresa antes de invertir.
+</ul>
+    </td></th>
+</table>
+                </p>
+
+                <article class="concepto-card activo-style">
+                    <h4 data-target="info-activo">A. Activo (A) </h4>
+                   
+                        <p><strong>Concepto:</strong> Los activos son todos aquellos recursos (bienes o derechos) que tienen un valor económico y pueden ser propiedad de una persona, una empresa o incluso un país. Estos recursos pueden ser tangibles, como un automóvil o una casa, o intangibles, como una marca comercial o una patente. </p>
+                        <p><strong>Tipos activos</strong> Activos Tangibles,Financieros y Intangibles </p>
+                        <ul>
+                            <li> 1 Activos Tangibles:<ul>
+                                Son recursos físicos que pueden ser vistos o tocados. </ul>
+                                <ul>
+                                    Ejemplos incluyen bienes raíces, maquinaria, vehículos, equipo de oficina y existencias. </ul>
+                                    <ul> Estos activos son importantes para las operaciones diarias de una empresa y su producción
+de bienes o servicios.  
+                     </ul><ul>
+                        ¿Qué es un servicio?
+                     </ul>
+                     <ul>
+                        Un servicio es una actividad o trabajo que una persona o empresa realiza para satisfacer una necesidad o un deseo de otra persona, sin que se produzca un objeto físico. Los servicios no se pueden tocar ni almacenar, sino que se consumen al mismo tiempo que se producen.
+                     </ul>
+                     <ul>
+                        Ejemplo: Un corte de cabello, la atención médica, clases de inglés, o el transporte en taxi.
+                     </ul>
+                     <ul>
+                        ¿Qué son los bienes?
+                     </ul>
+                     <ul>
+                     es un objeto tangible que se puede producir, comprar, vender o almacenar. Los bienes son materiales y se pueden usar varias veces según su naturaleza.
+                     </ul>
+                     <ul>
+Ejemplo: Una computadora, un automóvil, ropa, o alimentos.
+                     </ul>
+ </li>
+ <li>
+    2 Activos Financieros
+    <ul>
+        Representan derechos sobre flujos de efectivo
+    </ul>
+    <ul>
+¿Qué es el flujo de efectivo?
+    </ul>
+    <ul>
+        El flujo de efectivo (también llamado cash flow) es el movimiento de dinero que entra y sale de una empresa durante un período de tiempo determinado. Permite conocer si la empresa tiene suficiente dinero para cubrir sus gastos, invertir o pagar deudas.
+    </ul>
+    <ul>
+        Ejemplos incluyen acciones, bonos, cuentas bancarias, certificados de depósito y fondos de
+inversión.
+    </ul>
+    <ul>
+        Los activos financieros son clave para la inversión y la generación de ingresos a través de
+intereses, dividendos o ganancias de capital.
+    </ul>
+    <ul>
+        Todo lo que se refiere a capital significa patrimonio neto, no la capital de nuestra provincia(no se confundan).
+    </ul>
+ </li>
+                            <li>Activos Intangibles </li>
+                            <ul>
+                                Son recursos que no tienen una forma física pero poseen valor económico
+                            </ul>
+                            <ul>
+                                Incluyen marcas comerciales, patentes, derechos de autor, conocimientos
+técnicos y reputación de marca
+                            </ul>
+                            <ul>
+                               Incluye todos los derechos legales de un sitio web o software, como aquellos que enseñan conocimientos; si un usuario se registra y realiza el pago correspondiente, su protección estará garantizada.
+                 Al sitio oficial que dice Dirección Nacional del Derecho de Autor (DNDA).
+                            </ul>
+                        </ul>
+                    </div>
+                </article>
+
+                <article class="concepto-card pasivo-style">
+                    <h4 data-target="info-pasivo">B. Pasivo (P) </h4>
+                    <div class="acordeon-contenido" id="info-pasivo">
+                        <p><strong>Concepto:</strong> 
+                
+                    El pasivo es el conjunto de deudas y obligaciones que una empresa tiene con terceros, como proveedores, bancos o empleados. Representa lo que la empresa debe pagar en el presente o en el futuro.
+                   </p>
+                   <p>
+
+Tiene que entender que el  pasivo se refiere a todas las deudas que tiene una organización, empresa, servicio o persona, como no pagar la luz, el agua o el gas.
+                </p>
+                        <ul>
+                            <li>Ejemplos</li>
+                            <li>
+                                Deudas con proveedores por bienes o servicios recibidos.
+                            </li>
+                            <li>
+                            Préstamos bancarios que deben ser devueltos.
+                            </li>
+                            <li>
+                                No le pago al sitio web o software que eran legal o la organizacion de esa empresa
+                            </li>
+                            
+                        </ul>
+                    </div>
+                </article>
+
+                <article class="concepto-card patrimonio-style">
+                    <h4 data-target="info-patrimonio">C. Patrimonio Neto (PN) </h4>
+                    <div class="acordeon-contenido" id="info-patrimonio">
+                        <p><strong>Concepto:</strong> El patrimonio neto de una empresa proviene de las inversiones realizadas por sus propietarios o socios, así como de la acumulación de ganancias a lo largo del tiempo. También se puede entender como el derecho que tienen los propietarios sobre los activos de la empresa, lo que representa el valor de los recursos que teóricamente serían devueltos a los propietarios si la empresa se liquidara después de saldar todas sus deudas. </p>
+                        <p><strong>En el termino sencillos</strong> </p>
+                        <ul>
+                            <li> El patrimonio neto es como el saldo que queda en la alcancía de una empresa después de pagar todas sus deudas. Tenes $100 en tu alcancía y debes $20 a la empresa.  Entonces el activo $100 resta a $20 de la deuda seria el patrimonio neto quedaría $80 </li>
+                        </ul>
+                    </div>
+                </article>
+                
+        
+               
+
+                <div class="formula-box formula-ecuacion-fundamental">
+                    <span class="termino-formula">ACTIVO</span> 
+                    <span class="operador">-</span> 
+                    <span class="termino-formula">PASIVO</span> 
+                    <span class="operador">=</span> 
+                    <span class="termino-formula">PATRIMONIO NETO</span>
+                </div>
+
+             
+              
+            </section>
+            
+       
+          
+                </article>
+            </section>
+        </main>
+        
+        <aside class="sidebar">
+            <h3>Calculadora Contable Interactiva</h3>
+            <p>Usa esta herramienta para comprobar las fórmulas con tus propios valores. ¡Prueba la Ecuación Contable y el Resultado Económico!</p>
+
+            <div id="calculadora-contable">
+                <p><strong>Ecuación Contable:</strong></p>
+                <label for="input-activo">Activo:</label>
+                <input type="number" id="input-activo" value="100000">
+
+                <label for="input-pasivo">Pasivo:</label>
+                <input type="number" id="input-pasivo" value="30000">
+
+                <hr style="margin: 20px 0;">
+
+                <p><strong>Resultado Económico:</strong></p>
+                <label for="input-ingresos">Ingresos:</label>
+                <input type="number" id="input-ingresos" value="70000">
+                
+                <label for="input-gastos">Gastos:</label>
+                <input type="number" id="input-gastos" value="55000">
+                
+                <button onclick="calcularYMostrar()">Calcular Resultados</button>
+
+                <div id="resultados">
+                    <strong>Resultados:</strong><br>
+                    <span id="res-pn">Patrimonio Neto: </span><br>
+                    <span id="res-r">Resultado (G/P): </span>
+                </div>
+            </div>
+            
+            <hr style="margin: 25px 0;">
+
+            <h3>Glosario Rápido</h3>
+            <ul>
+<p>
+    Ingresos: dinero que entra por ventas o servicios.
+</p>
+<p>
+    Gastos: dinero que se gasta para operar, como sueldos, luz, alquiler.
+</p>
+<li>
+    formula<p>
+        Resultado=Ingresos−Gastos
+    </p>
+</li>
+<ul>
+    Ingresos (dinero que entra):
+    <li>
+        Vender productos: una tienda vende ropa y recibe $500.
+
+
+    </li>
+    <li>
+        Cobrar por un servicio: un profesor da clases de inglés y recibe $200. </li>
+    <li>
+        Alquileres: alquilar un local y recibir $300.
+    </li>
+    <li>
+        Gastos (dinero que sale):
+
+
+
+
+    </li>
+    <li>
+        Sueldos: pagar a los empleados $400.
+    </li>
+    <li>
+        Servicios: pagar luz, agua o internet $100.
+
+    </li>
+    <li>
+        
+Materiales: comprar productos para vender $150.
+    </li>
+</ul>
+<ul>
+    Ingresos−Gastos=Resultado
+    <li>
+        Ejemplo:
+
+    </li>
+    <li>
+        Ingresos = $500
+
+    </li>
+    <li>
+        Gastos = $400
+    </li>
+   <li>
+    500−400=100
+   </li>
+   <li>
+    <p>
+        La empresa ganó $100.
+    </p>
+   </li>
+</ul>
+
+
+
+
+</ul>
+      </ul>
+    
+           
+        </aside>
+
+    </div>
+    
+    <footer>
+        <p>Solución Final y Limpia | Fundamentos Contables Pro | &copy; 2025</p>
+    </footer>
+
+    <script>
+        // 1. FUNCIÓN PARA EL ACORDEÓN (Mostrar/Ocultar Contenido)
+        function toggleAcordeon(event) {
+            const h4 = event.currentTarget; 
+            const targetId = h4.getAttribute('data-target'); 
+            const targetContent = document.getElementById(targetId); 
+            
+            // Alterna la clase 'mostrar' para la animación CSS
+            targetContent.classList.toggle('mostrar');
+        }
+
+        // 2. Asignar la función de clic a todos los títulos <h4>
+        document.querySelectorAll('.concepto-card h4').forEach(titulo => {
+            titulo.addEventListener('click', toggleAcordeon);
+        });
+
+
+        // 3. FUNCIÓN PARA LA CALCULADORA CONTABLE (Lógica del negocio)
+        function calcularYMostrar() {
+            // Obtener valores de la Ecuación Contable
+            const A = parseFloat(document.getElementById('input-activo').value) || 0;
+            const P = parseFloat(document.getElementById('input-pasivo').value) || 0;
+
+            // Obtener valores del Resultado Económico
+            const I = parseFloat(document.getElementById('input-ingresos').value) || 0;
+            const G = parseFloat(document.getElementById('input-gastos').value) || 0;
+            
+            // Cálculos
+            const PN = A - P; // Patrimonio Neto
+            const R = I - G;  // Resultado del Período
+
+            // Formato de Moneda (sin el símbolo de dólar)
+            const formatoMoneda = (numero) => {
+                const signo = numero >= 0 ? '+' : '';
+                // Formato simple de miles
+                return `${signo}${Math.abs(numero).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
+            };
+
+            // Mostrar el Patrimonio Neto
+            const resPnElement = document.getElementById('res-pn');
+            resPnElement.textContent = `Patrimonio Neto (A-P): ${formatoMoneda(PN)}`;
+            if (PN < 0) {
+                resPnElement.style.color = '#F44336'; // Rojo si es negativo
+            } else {
+                resPnElement.style.color = '#004d99'; // Azul si es positivo
+            }
+
+
+            // Mostrar el Resultado
+            const resRElement = document.getElementById('res-r');
+            let tipoResultado = R >= 0 ? 'Ganancia' : 'Pérdida';
+            
+            resRElement.textContent = `Resultado del Período (I-G): ${tipoResultado} ${formatoMoneda(R)}`;
+            
+            if (R < 0) {
+                resRElement.style.color = '#F44336'; // Rojo para pérdida
+            } else {
+                resRElement.style.color = '#4CAF50'; // Verde para ganancia
+            }
+        }
+        
+        // Ejecutar el cálculo inicial al cargar la página
+        window.onload = calcularYMostrar;
+
+        console.log('Sistema Contable Final cargado y listo para la perfección.');
+    </script>
+</body>
+</html>

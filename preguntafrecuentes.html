@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma Educativa - Preguntas Frecuentes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset y variables CSS */
+        :root {
+            --primary-color: #4e54c8;
+            --primary-dark: #3a3f9e;
+            --primary-light: #8f94fb;
+            --secondary-color: #38ef7d;
+            --accent-color: #ff6b6b;
+            --text-dark: #2d3748;
+            --text-light: #718096;
+            --background-light: #f7fafc;
+            --white: #ffffff;
+            --gray-light: #edf2f7;
+            --shadow: 0 10px 25px rgba(0,0,0,0.05);
+            --shadow-hover: 0 15px 35px rgba(0,0,0,0.1);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --border-radius: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            color: var(--text-dark);
+            line-height: 1.7;
+            min-height: 100vh;
+            position: relative;
+            
+   border-radius: 10px;
+  max-width: 1200px;
+  margin: 90px auto;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(143, 148, 251, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(56, 239, 125, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 50% 50%, rgba(255, 107, 107, 0.05) 0%, transparent 30%);
+            z-index: -1;
+ }
+
+        /* Header mejorado */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: var(--white);
+            padding: 25px 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+        }
+
+        .back-container {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            backdrop-filter: blur(5px);
+            font-size: 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+        }
+
+        .hero-section {
+            text-align: center;
+            padding: 60px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-section h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary-dark), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-section p {
+            font-size: 1.3rem;
+            color: var(--text-light);
+            margin-bottom: 30px;
+        }
+
+        /* Contenido principal */
+        main {
+            max-width: 1100px;
+            margin: 0 auto 60px;
+            padding: 0 20px;
+        }
+
+        .faq-intro {
+            text-align: center;
+            margin-bottom: 50px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .faq-intro h2 {
+            color: var(--primary-dark);
+            margin-bottom: 15px;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        .faq-intro p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        /* Tarjetas FAQ mejoradas */
+        .faq-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+            gap: 25px;
+        }
+
+        .faq-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            border-top: 4px solid var(--primary-color);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .faq-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .faq-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(78, 84, 200, 0.03) 0%, rgba(143, 148, 251, 0.03) 100%);
+            z-index: 0;
+        }
+
+        .faq-header {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .faq-icon {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-right: 15px;
+            flex-shrink: 0;
+            margin-top: 3px;
+            background: rgba(78, 84, 200, 0.1);
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .faq-title {
+            color: var(--primary-dark);
+            margin-bottom: 0;
+            font-size: 1.4rem;
+            font-weight: 600;
+            line-height: 1.4;
+            flex: 1;
+        }
+
+        .faq-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .faq-content p {
+            font-size: 1.05rem;
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        .highlight {
+            background-color: rgba(78, 84, 200, 0.1);
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-weight: 500;
+            color: var(--primary-dark);
+        }
+
+        /* Botón de volver arriba */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            opacity: 0;
+            visibility: hidden;
+            z-index: 1000;
+            border: none;
+            cursor: pointer;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(78, 84, 200, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .copyright {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Efectos de partículas */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(78, 84, 200, 0.1);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .faq-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-section h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .back-container {
+                position: relative;
+                top: auto;
+                left: auto;
+                margin-bottom: 15px;
+            }
+            
+            .hero-section {
+                padding: 40px 20px;
+            }
+            
+            .hero-section h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero-section p {
+                font-size: 1.1rem;
+            }
+            
+            .faq-card {
+                padding: 25px 20px;
+            }
+            
+            .faq-header {
+                flex-direction: column;
+            }
+            
+            .faq-icon {
+                margin-bottom: 15px;
+            }
+            
+            .faq-title {
+                font-size: 1.3rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-content {
+                padding: 15px;
+            }
+            
+            .hero-section {
+                padding: 30px 15px;
+            }
+            
+            .hero-section h1 {
+                font-size: 1.8rem;
+            }
+            
+            .back-btn {
+                padding: 10px 20px;
+                font-size: 0.95rem;
+            }
+            
+            main {
+                margin: 0 auto 40px;
+            }
+            
+            .faq-card {
+                padding: 20px 15px;
+            }
+        }
+/* ===== HEADER (por si es fijo) ===== */
+header {
+    position: fixed;       /* quita esto si tu header NO es fijo */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;          /* altura del header */
+    background-color: #222;
+    z-index: 1000;
+}
+
+/* ===== BOTÓN VOLVER ===== */
+.back-btn {
+    display: inline-block;
+    margin-top: 120px;     /* 🔥 separación grande del header */
+    margin-left: 20px;
+    padding: 12px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+/* Ícono */
+.back-btn i {
+    margin-right: 8px;
+}
+
+/* Hover */
+.back-btn:hover {
+    background-color: #43a047;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .back-btn {
+        margin-top: 100px;
+        font-size: 15px;
+        padding: 10px 16px;
+    }
+}
+
+
+    </style>
+</head>
+<body>
+    <!-- Efecto de partículas -->
+    <div class="particles" id="particles"></div>
+    
+    <header>
+     
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>  La web del Sombrero Blanco</span>
+            </div>
+        </div>
+    </header>
+  
+    <div class="hero-section">   <div class="back-container">
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                Volver Atrás
+            </a>
+        </div>
+        <h1>Preguntas Frecuentes</h1>
+        <p>Encuentra respuestas rápidas a todas tus dudas sobre nuestra plataforma educativa</p>
+    </div>
+    
+    <main>
+        <section class="faq-intro">
+            <h2>¿Cómo podemos ayudarte?</h2>
+            <p>Hemos recopilado las preguntas más comunes para resolver tus inquietudes de forma rápida y sencilla.</p>
+        </section>
+        
+        <section class="faq-container">
+            <div class="faq-card">
+                <div class="faq-header">
+                    <div class="faq-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <h2 class="faq-title">¿Cuál es el propósito central de esta plataforma y a quién está dirigida?</h2>
+                </div>
+                <div class="faq-content">
+                    <p>
+                        Nuestra plataforma tiene como misión principal ofrecer un espacio educativo estructurado que contribuya positivamente a la sociedad mediante herramientas digitales accesibles para todos. Desarrollada por <span class="highlight">Sombrero blanco </span> y su equipo, está diseñada para que <span class="highlight">programadores, analistas de sistemas y público en general</span> puedan utilizarla de manera sencilla y productiva, fomentando el aprendizaje continuo y el desarrollo de habilidades digitales.
+                    </p>
+                </div>
+            </div>
+
+            <div class="faq-card">
+                <div class="faq-header">
+                    <div class="faq-icon">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <h2 class="faq-title">¿En qué horario están disponibles los juegos educativos?</h2>
+                </div>
+                <div class="faq-content">
+                    <p>
+                        Los juegos educativos están disponibles exclusivamente entre las <span class="highlight">18:00  hasta las 21:00 horas</span>. Este horario limitado ha sido establecido para promover un uso responsable del tiempo frente a las pantallas, protegiendo la salud mental tanto de menores como de adultos y fomentando un equilibrio entre el aprendizaje digital y otras actividades.
+                    </p>
+                </div>
+            </div>
+
+            <div class="faq-card">
+                <div class="faq-header">
+                    <div class="faq-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <h2 class="faq-title">¿La web es completamente gratuita?</h2>
+                </div>
+                <div class="faq-content">
+                    <p>
+                        Sí, nuestra plataforma es <span class="highlight">Acceso gratuito y versión premium: paga para desbloquear la experiencia más avanzada de la web. Una vez realizado el pago mediante Mercado Pago, el administrador te enviará una contraseña única para acceder a la versión premium.  </span>. Este proyecto fue desarrollado por programadores comprometidos con la educación y la accesibilidad digital, quienes priorizan el impacto social sobre los beneficios económicos. Creemos firmemente en el acceso libre al conocimiento y en construir una comunidad educativa inclusiva.
+                    Dice una frase No es importante el dinero y es importante ser solidario con la sabiduria(ayudar en todo a lo de mas persona).
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+
+    
+    <button class="back-to-top" id="backToTop">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+<script src="scriptpreguntafrecuentes.js"></script>
+    <script>
+        // Funcionalidad para el botón de volver arriba
+        const backToTopButton = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Crear efecto de partículas
+        const particlesContainer = document.getElementById('particles');
+        const particleCount = 20;
+        
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            
+            // Tamaño aleatorio
+            const size = Math.random() * 60 + 10;
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            
+            // Posición inicial aleatoria
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.top = `${Math.random() * 100}%`;
+            
+            // Retraso de animación aleatorio
+            particle.style.animationDelay = `${Math.random() * 15}s`;
+            
+            // Opacidad aleatoria
+            particle.style.opacity = Math.random() * 0.3 + 0.1;
+            
+            particlesContainer.appendChild(particle);
+        }
+
+        // Efecto de aparición suave para las tarjetas FAQ
+        const faqCards = document.querySelectorAll('.faq-card');
+        
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        faqCards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>

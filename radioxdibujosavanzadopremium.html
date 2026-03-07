@@ -1,0 +1,1528 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+<title>⚕️ RADIO X PRO STUDIO • 30 ESTILOS MÉDICOS + DESCARGA</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #030614;
+    color: #fff;
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    min-height: 100vh;
+    padding: 15px;
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(0,255,255,0.15) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(255,0,255,0.15) 0%, transparent 40%),
+        repeating-linear-gradient(45deg, rgba(0,255,255,0.02) 0px, rgba(0,255,255,0.02) 2px, transparent 2px, transparent 8px);
+
+   border-radius: 10px;
+  max-width: 1000px;
+  margin: 90px auto;
+
+    }
+
+/* Efecto de escáner médico */
+.scanner-line {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #00ffff, #ff00ff, #00ffff, transparent);
+    animation: scan 4s linear infinite;
+    z-index: 9999;
+    opacity: 0.5;
+}
+
+@keyframes scan {
+    0% { transform: translateY(-10px); }
+    100% { transform: translateY(100vh); }
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 10px;
+    position: relative;
+    border-radius: 20px;
+    background: rgba(0,10,20,0.3);
+    backdrop-filter: blur(5px);
+}
+
+/* Header estilo hospital de última generación */
+.medical-header {
+    background: linear-gradient(135deg, #001c2b, #002b3f);
+    border: 2px solid #00ffff;
+    border-radius: 30px;
+    padding: 20px;
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0,255,255,0.2), inset 0 0 50px rgba(0,255,255,0.1);
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+
+.medical-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(from 0deg, transparent, rgba(0,255,255,0.2), transparent, rgba(255,0,255,0.2), transparent);
+    animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+h1 {
+    font-size: 2.5em;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    background: linear-gradient(135deg, #00ffff, #ff00ff, #00ffff, #ff00ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 300% 300%;
+    animation: gradient 6s ease infinite;
+    margin-bottom: 15px;
+    text-shadow: 0 0 30px cyan;
+    position: relative;
+    line-height: 1.2;
+}
+
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.subtitle {
+    font-size: 1em;
+    color: #aaffff;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.badge {
+    background: rgba(0,255,255,0.1);
+    border: 2px solid #00ffff;
+    padding: 8px 15px;
+    border-radius: 30px;
+    backdrop-filter: blur(5px);
+    font-weight: 600;
+    letter-spacing: 1px;
+    font-size: 0.9em;
+    box-shadow: 0 0 20px rgba(0,255,255,0.2);
+}
+
+/* Barra de herramientas profesionales */
+.toolbar {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin: 30px 0;
+    flex-wrap: wrap;
+}
+
+.tool-btn {
+    background: rgba(0,20,40,0.8);
+    border: 2px solid #00ffff;
+    color: #00ffff;
+    padding: 12px 20px;
+    border-radius: 40px;
+    font-size: 0.95em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    flex: 0 1 auto;
+}
+
+.tool-btn:hover {
+    background: #00ffff;
+    color: #000;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px cyan;
+}
+
+.tool-btn.download {
+    background: linear-gradient(135deg, #00ffff, #ff00ff);
+    color: #000;
+    border-color: #fff;
+    font-weight: 700;
+}
+
+/* Upload mejorado */
+.upload-section {
+    text-align: center;
+    margin: 30px 0;
+}
+
+.upload-label {
+    background: linear-gradient(135deg, #00ffff, #0066ff, #9900ff);
+    color: #000;
+    padding: 15px 40px;
+    border-radius: 50px;
+    font-size: 1.3em;
+    font-weight: 800;
+    cursor: pointer;
+    display: inline-block;
+    border: 3px solid #fff;
+    box-shadow: 0 0 50px cyan, 0 0 0 2px rgba(255,255,255,0.3) inset;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: 0.4s;
+    position: relative;
+    overflow: hidden;
+    width: auto;
+    max-width: 90%;
+}
+
+.upload-label::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(from 0deg, transparent, rgba(255,255,255,0.3), transparent);
+    animation: rotate 3s linear infinite;
+}
+
+.upload-label:hover {
+    transform: scale(1.05) translateY(-3px);
+    box-shadow: 0 30px 60px cyan, 0 0 0 3px #fff inset;
+}
+
+#upload {
+    display: none;
+}
+
+/* Grid principal */
+.main-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+    margin: 30px 0;
+}
+
+@media (min-width: 900px) {
+    .main-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+    }
+    
+    h1 {
+        font-size: 3.5em;
+    }
+}
+
+.medical-screen {
+    background: rgba(0,10,25,0.85);
+    border: 3px solid #00ffff;
+    border-radius: 30px;
+    padding: 20px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 20px 40px rgba(0,255,255,0.15), inset 0 0 40px rgba(0,255,255,0.1);
+    transition: 0.3s;
+}
+
+.medical-screen:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 30px 60px rgba(0,255,255,0.2);
+}
+
+.screen-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #00ffff;
+    flex-wrap: wrap;
+}
+
+.screen-header h2 {
+    font-size: 1.3em;
+    background: linear-gradient(135deg, #00ffff, #88ffff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+@media (min-width: 768px) {
+    .screen-header h2 {
+        font-size: 1.8em;
+    }
+}
+
+.style-count {
+    background: #00ffff;
+    color: #000;
+    padding: 5px 15px;
+    border-radius: 30px;
+    font-weight: 800;
+    margin-left: auto;
+    font-size: 1em;
+    box-shadow: 0 0 20px cyan;
+}
+
+.main-viewer {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 2px solid #00ffff;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.main-viewer:hover {
+    border-color: #ff00ff;
+    box-shadow: 0 0 40px magenta;
+}
+
+.main-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+    background: #000;
+}
+
+.viewer-info {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(10px);
+    padding: 8px 15px;
+    border-radius: 30px;
+    border: 2px solid #00ffff;
+    color: #00ffff;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.85em;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+
+@media (min-width: 768px) {
+    .viewer-info {
+        padding: 10px 20px;
+        font-size: 1em;
+    }
+}
+
+.viewer-controls {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 8px;
+}
+
+.viewer-btn {
+    background: rgba(0,0,0,0.7);
+    border: 2px solid #00ffff;
+    color: #00ffff;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.3s;
+    backdrop-filter: blur(5px);
+    font-size: 1em;
+}
+
+@media (min-width: 768px) {
+    .viewer-btn {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+.viewer-btn:hover {
+    background: #00ffff;
+    color: #000;
+    transform: scale(1.1);
+    box-shadow: 0 0 20px cyan;
+}
+
+/* Thumbnails mejorados */
+.thumbnail-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    margin: 20px 0;
+}
+
+@media (min-width: 768px) {
+    .thumbnail-grid {
+        gap: 12px;
+    }
+}
+
+.thumb {
+    aspect-ratio: 1;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid #00ffff;
+    transition: 0.3s;
+    position: relative;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+}
+
+.thumb:hover {
+    transform: scale(1.05) translateY(-3px);
+    border-color: #ff00ff;
+    box-shadow: 0 15px 30px magenta;
+    z-index: 10;
+}
+
+.thumb.active {
+    border-color: #ff00ff;
+    box-shadow: 0 0 30px magenta, 0 0 0 2px white;
+}
+
+.thumb canvas {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.thumb-number {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    background: #00ffff;
+    color: #000;
+    padding: 2px 6px;
+    border-radius: 12px;
+    font-size: 0.6em;
+    font-weight: 800;
+    z-index: 10;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.3);
+}
+
+.thumb-style {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,0.8);
+    color: #00ffff;
+    padding: 4px;
+    font-size: 0.55em;
+    text-align: center;
+    border-top: 1px solid #00ffff;
+    backdrop-filter: blur(3px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media (min-width: 768px) {
+    .thumb-style {
+        font-size: 0.7em;
+        padding: 6px;
+    }
+}
+
+/* Stats profesionales */
+.stats-panel {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(0,20,40,0.6);
+    border: 2px solid #00ffff;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+}
+
+.stat {
+    text-align: center;
+    padding: 5px;
+    background: rgba(0,255,255,0.05);
+    border-radius: 15px;
+}
+
+.stat-label {
+    color: #88ffff;
+    font-size: 0.7em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 3px;
+}
+
+.stat-value {
+    font-size: 1.1em;
+    font-weight: 800;
+    background: linear-gradient(135deg, #00ffff, #ff00ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 10px rgba(0,255,255,0.3);
+}
+
+@media (min-width: 768px) {
+    .stat-value {
+        font-size: 1.6em;
+    }
+}
+
+/* Control panel ultra profesional */
+.control-panel {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin: 30px 0;
+    padding: 20px;
+    background: rgba(0,20,35,0.9);
+    border: 2px solid #00ffff;
+    border-radius: 30px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 15px 40px rgba(0,255,255,0.15);
+}
+
+@media (min-width: 768px) {
+    .control-panel {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 25px;
+        padding: 30px;
+    }
+}
+
+.control {
+    text-align: center;
+}
+
+.control label {
+    color: #00ffff;
+    font-size: 0.9em;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 0 0 5px cyan;
+}
+
+.control input[type="range"] {
+    width: 100%;
+    height: 8px;
+    background: linear-gradient(90deg, #00ffff, #ff00ff);
+    border-radius: 10px;
+    -webkit-appearance: none;
+    box-shadow: 0 0 15px rgba(0,255,255,0.3);
+}
+
+.control input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    border-radius: 50%;
+    border: 3px solid #00ffff;
+    box-shadow: 0 0 20px cyan, 0 0 0 2px rgba(255,255,255,0.5);
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.control input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+}
+
+.control-value {
+    background: rgba(0,255,255,0.15);
+    color: #00ffff;
+    padding: 5px 10px;
+    border-radius: 30px;
+    border: 2px solid #00ffff;
+    margin-top: 8px;
+    font-weight: 600;
+    font-size: 0.9em;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+}
+
+/* Panel de información flotante */
+.info-panel {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    background: rgba(0,10,20,0.95);
+    backdrop-filter: blur(20px);
+    padding: 15px 20px;
+    border-radius: 50px;
+    border: 2px solid #00ffff;
+    color: #00ffff;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    z-index: 1000;
+    box-shadow: 0 20px 40px rgba(0,255,255,0.3), inset 0 0 20px rgba(0,255,255,0.2);
+    animation: pulse 3s infinite;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+@media (min-width: 768px) {
+    .info-panel {
+        bottom: 30px;
+        left: 30px;
+        right: auto;
+        padding: 20px 40px;
+    }
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 20px 40px rgba(0,255,255,0.3); }
+    50% { box-shadow: 0 30px 60px rgba(255,0,255,0.4); }
+    100% { box-shadow: 0 20px 40px rgba(0,255,255,0.3); }
+}
+
+.info-icon {
+    font-size: 2em;
+    filter: drop-shadow(0 0 15px cyan);
+}
+
+.info-text {
+    font-size: 1em;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-align: center;
+}
+
+.info-badge {
+    background: #00ffff;
+    color: #000;
+    padding: 8px 20px;
+    border-radius: 40px;
+    font-size: 1em;
+    font-weight: 800;
+    box-shadow: 0 0 20px cyan;
+}
+
+/* Modal de zoom */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.95);
+    backdrop-filter: blur(20px);
+    z-index: 10000;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    max-width: 100%;
+    max-height: 90%;
+    border: 3px solid #00ffff;
+    border-radius: 20px;
+    box-shadow: 0 0 80px cyan;
+}
+
+.modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(255,0,0,0.8);
+    color: white;
+    border: 2px solid white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em;
+    cursor: pointer;
+    transition: 0.3s;
+    z-index: 10001;
+}
+
+.modal-close:hover {
+    background: red;
+    transform: scale(1.1);
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    margin-top: 60px;
+    padding: 20px;
+    border-top: 2px solid #00ffff;
+    color: #88ffff;
+    font-size: 0.9em;
+    letter-spacing: 1px;
+    position: relative;
+    line-height: 1.5;
+}
+
+.footer span {
+    color: #00ffff;
+    font-weight: 600;
+    margin: 0 5px;
+} 
+
+
+/* Estilo del botón */
+.button-volver {
+    padding: 0.7rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    background: linear-gradient(135deg, #ff7e5f, #feb47b);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.button-volver:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    background: linear-gradient(135deg, #ff6a5c, #ffb37b);
+}
+
+</style>
+</head>
+<body>
+<div class="scanner-line"></div>
+
+<div class="container">
+    <div class="medical-header">
+        <h1>⚕️ RADIO X PRO STUDIO ⚕️</h1>
+        <div class="subtitle">
+            <span class="badge">📸 1 ORIGINAL + 14 TÉCNICAS</span>
+            <span class="badge">🤖 15 ESTILOS IA</span>
+            <span class="badge">💾 DESCARGA 8K</span>
+           
+        </div>
+    </div>
+
+    <div class="toolbar">
+        <button class="tool-btn" onclick="resetToOriginal()">
+            <span>🔄</span> ORIGINAL
+        </button>
+        <button class="tool-btn" onclick="randomizeStyles()">
+            <span>🎲</span> ALEATORIO
+        </button>
+        <button class="tool-btn download" onclick="downloadAll()">
+            <span>💾</span> DESCARGAR
+        </button>
+      
+<button class="button-volver" onclick="window.location.href='iniciopremiumdibujosprincipal.html'">
+    Volver a Atras
+</button>
+    </div>
+
+    <div class="upload-section">
+        <label for="upload" class="upload-label">
+            📤 SUBIR IMAGEN
+        </label>
+        <input type="file" id="upload" accept="image/*">
+    </div>
+
+    <div class="main-grid">
+        <!-- Sin IA - 1 ORIGINAL + 14 ESTILOS REALES -->
+        <div class="medical-screen">
+            <div class="screen-header">
+                <h2>📸 SIN IA • REAL</h2>
+                <div class="style-count" id="normalCount">01/15</div>
+            </div>
+            <div class="main-viewer" onclick="openModal('normal')">
+                <canvas id="mainNormal" class="main-canvas"></canvas>
+                <div class="viewer-info">
+                    <span id="normalStyleName">FOTO ORIGINAL</span>
+                    <span id="normalIndex">1/15</span>
+                </div>
+                <div class="viewer-controls">
+                    <div class="viewer-btn" onclick="event.stopPropagation(); downloadImage('normal')" title="Descargar">💾</div>
+                    <div class="viewer-btn" onclick="event.stopPropagation(); copyToClipboard('normal')" title="Copiar">📋</div>
+                </div>
+            </div>
+            <div class="thumbnail-grid" id="thumbnailsNormal"></div>
+            <div class="stats-panel">
+                <div class="stat">
+                    <div class="stat-label">ESTILO</div>
+                    <div class="stat-value" id="normalTech">Original</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">MODO</div>
+                    <div class="stat-value" id="normalMode">Sin IA</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">TIPO</div>
+                    <div class="stat-value" id="normalType">Fotografía</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">TONO</div>
+                    <div class="stat-value" id="normalTone">Color</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Con IA -->
+        <div class="medical-screen">
+            <div class="screen-header">
+                <h2>🤖 CON IA • AVANZADO</h2>
+                <div class="style-count" id="iaCount">01/15</div>
+            </div>
+            <div class="main-viewer" onclick="openModal('ia')">
+                <canvas id="mainIA" class="main-canvas"></canvas>
+                <div class="viewer-info">
+                    <span id="iaStyleName">IA MÉDICA</span>
+                    <span id="iaIndex">1/15</span>
+                </div>
+                <div class="viewer-controls">
+                    <div class="viewer-btn" onclick="event.stopPropagation(); downloadImage('ia')" title="Descargar">💾</div>
+                    <div class="viewer-btn" onclick="event.stopPropagation(); copyToClipboard('ia')" title="Copiar">📋</div>
+                </div>
+            </div>
+            <div class="thumbnail-grid" id="thumbnailsIA"></div>
+            <div class="stats-panel">
+                <div class="stat">
+                    <div class="stat-label">TÉCNICA</div>
+                    <div class="stat-value" id="iaTech">Rayos X</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">CONTRASTE</div>
+                    <div class="stat-value" id="iaContrast">2.4</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">TONO</div>
+                    <div class="stat-value" id="iaTone">Azul</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">PRECISIÓN</div>
+                    <div class="stat-value" id="iaLevel">99%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="control-panel">
+        <div class="control">
+            <label>⚡ INTENSIDAD</label>
+            <input type="range" id="intensity" min="0" max="100" value="70">
+            <div class="control-value" id="intensityValue">70%</div>
+        </div>
+        <div class="control">
+            <label>🌓 CONTRASTE</label>
+            <input type="range" id="contrast" min="0" max="200" value="100">
+            <div class="control-value" id="contrastValue">100%</div>
+        </div>
+        <div class="control">
+            <label>🔍 DETALLE</label>
+            <input type="range" id="detail" min="0" max="100" value="50">
+            <div class="control-value" id="detailValue">50%</div>
+        </div>
+        <div class="control">
+            <label>📊 BRILLO</label>
+            <input type="range" id="brightness" min="0" max="200" value="100">
+            <div class="control-value" id="brightnessValue">100%</div>
+        </div>
+    </div>
+
+ 
+
+  
+</div>
+
+<!-- Modal para zoom -->
+<div class="modal" id="modal" onclick="closeModal()">
+    <div class="modal-close" onclick="closeModal()">✕</div>
+    <img id="modalImage" class="modal-content">
+</div>
+
+<script>
+// 15 ESTILOS SIN IA - EL PRIMERO ES LA FOTO ORIGINAL, LOS OTROS 14 SON TÉCNICAS REALES
+const normalStyles = [
+    // 1. ORIGINAL - SIN NINGÚN FILTRO
+    { name: '📸 FOTO ORIGINAL', tech: 'Original', mode: 'Sin IA', type: 'Fotografía', tone: 'Color', filter: 'none' },
+    
+    // 14 TÉCNICAS MÉDICAS REALES - TODAS DIFERENTES
+    { name: '📋 ECOGRAFÍA', tech: 'Ultrasonido', mode: 'Tiempo real', type: 'Ecografía', tone: 'Gris', filter: 'ultrasound' },
+    { name: '🩻 RADIOGRAFÍA TÓRAX', tech: 'Rayos X', mode: 'Estándar', type: 'Radiografía', tone: 'Azul/Gris', filter: 'chest' },
+    { name: '🦴 DENSITOMETRÍA ÓSEA', tech: 'DEXA', mode: 'Densidad', type: 'Ósea', tone: 'Verde', filter: 'bone' },
+    { name: '🧠 RESONANCIA MAGNÉTICA', tech: 'MRI', mode: 'Corte axial', type: 'Resonancia', tone: 'Gris', filter: 'mri' },
+    { name: '💉 TOMOGRAFÍA', tech: 'TAC', mode: '3D', type: 'Tomografía', tone: 'Blanco/Negro', filter: 'ct' },
+    { name: '🔬 MAMOGRAFÍA', tech: 'Mammo', mode: 'Alta resolución', type: 'Mama', tone: 'Ámbar', filter: 'mammo' },
+    { name: '🫀 FLUOROSCOPIA', tech: 'Fluoro', mode: 'Video', type: 'Digestivo', tone: 'Verde', filter: 'fluoro' },
+    { name: '🦷 RADIOGRAFÍA DENTAL', tech: 'Periapical', mode: 'Intraoral', type: 'Dental', tone: 'Azul', filter: 'dental' },
+    { name: '🩺 ANGIOGRAFÍA', tech: 'Contraste', mode: 'Vascular', type: 'Arterias', tone: 'Rojo', filter: 'angio' },
+    { name: '🧪 GAMMAGRAFÍA', tech: 'Nuclear', mode: 'Medicina nuclear', type: 'Gamma', tone: 'Naranja', filter: 'gamma' },
+    { name: '🔦 TERMOGRAFÍA', tech: 'Infrarrojo', mode: 'Temperatura', type: 'Calor', tone: 'Arcoíris', filter: 'thermal' },
+    { name: '🦴 RADIOGRAFÍA DE MANO', tech: 'Extremidad', mode: 'Alta definición', type: 'Manos', tone: 'Sepia', filter: 'hand' },
+    { name: '🩻 RADIOGRAFÍA PEDIÁTRICA', tech: 'Baja dosis', mode: 'Infantil', type: 'Niños', tone: 'Azul suave', filter: 'pediatric' },
+    { name: '🔬 MICROSCOPÍA RX', tech: 'Micro-CT', mode: 'Investigación', type: 'Científico', tone: 'Púrpura', filter: 'micro' }
+];
+
+// 15 ESTILOS CON IA - TODOS DIFERENTES (técnicas avanzadas)
+const iaStyles = [
+    { name: '🤖 IA RADIÓLOGA', tech: 'Deep Learning', contrast: 2.8, tone: 'Azul profundo', level: 99, filter: 'ai_radio' },
+    { name: '🧠 IA NEUROLOGÍA', tech: 'CNN', contrast: 3.2, tone: 'Verde médica', level: 98, filter: 'ai_brain' },
+    { name: '🫁 IA TÓRAX', tech: 'ResNet', contrast: 2.5, tone: 'Gris', level: 97, filter: 'ai_chest' },
+    { name: '🦴 IA ÓSEA', tech: 'U-Net', contrast: 3.5, tone: 'Ámbar', level: 99, filter: 'ai_bone' },
+    { name: '❤️ IA CARDÍACA', tech: 'GAN', contrast: 2.9, tone: 'Rojo', level: 96, filter: 'ai_heart' },
+    { name: '🔬 IA MICROSCOPÍA', tech: 'Vision Transformer', contrast: 3.0, tone: 'Púrpura', level: 98, filter: 'ai_micro' },
+    { name: '🩻 IA MAMOGRAFÍA', tech: 'EfficientNet', contrast: 3.8, tone: 'Naranja', level: 99, filter: 'ai_mammo' },
+    { name: '🧪 IA LABORATORIO', tech: 'YOLO', contrast: 2.2, tone: 'Verde/azul', level: 97, filter: 'ai_lab' },
+    { name: '🦷 IA DENTAL', tech: 'Mask R-CNN', contrast: 2.7, tone: 'Azul', level: 98, filter: 'ai_dental' },
+    { name: '🩺 IA URGENCIAS', tech: 'Rápida', contrast: 3.3, tone: 'Rojo/ámbar', level: 95, filter: 'ai_emergency' },
+    { name: '🔍 IA DETECCIÓN', tech: 'Faster R-CNN', contrast: 3.1, tone: 'Verde', level: 99, filter: 'ai_detection' },
+    { name: '📊 IA CUANTITATIVA', tech: 'Regresión', contrast: 2.4, tone: 'Cian', level: 97, filter: 'ai_quant' },
+    { name: '🔄 IA 3D', tech: 'Volumétrica', contrast: 2.6, tone: 'Púrpura/azul', level: 98, filter: 'ai_3d' },
+    { name: '⚡ IA CONTRASTE', tech: 'Adaptativo', contrast: 3.4, tone: 'Ámbar/rojo', level: 96, filter: 'ai_contrast' },
+    { name: '🎯 IA PRECISIÓN', tech: 'Quirúrgica', contrast: 3.9, tone: 'Azul/blanco', level: 99, filter: 'ai_precision' }
+];
+
+// Elementos DOM
+const upload = document.getElementById('upload');
+const canvasNormal = document.getElementById('mainNormal');
+const canvasIA = document.getElementById('mainIA');
+const ctxN = canvasNormal.getContext('2d');
+const ctxIA = canvasIA.getContext('2d');
+
+let originalImage = null;
+let currentNormalIndex = 0;
+let currentIAIndex = 0;
+let thumbnailsNormal = [];
+let thumbnailsIA = [];
+
+// Controles
+const intensity = document.getElementById('intensity');
+const contrast = document.getElementById('contrast');
+const detail = document.getElementById('detail');
+const brightness = document.getElementById('brightness');
+
+intensity.addEventListener('input', (e) => {
+    document.getElementById('intensityValue').textContent = e.target.value + '%';
+    if (originalImage) processAllImages();
+});
+
+contrast.addEventListener('input', (e) => {
+    document.getElementById('contrastValue').textContent = e.target.value + '%';
+    if (originalImage) processAllImages();
+});
+
+detail.addEventListener('input', (e) => {
+    document.getElementById('detailValue').textContent = e.target.value + '%';
+    if (originalImage) processAllImages();
+});
+
+brightness.addEventListener('input', (e) => {
+    document.getElementById('brightnessValue').textContent = e.target.value + '%';
+    if (originalImage) processAllImages();
+});
+
+// Funciones de utilidad
+function resetToOriginal() {
+    currentNormalIndex = 0;
+    updateNormalDisplay();
+    showNotification('✅ Restaurado a foto original');
+}
+
+function randomizeStyles() {
+    currentNormalIndex = Math.floor(Math.random() * 15);
+    currentIAIndex = Math.floor(Math.random() * 15);
+    updateNormalDisplay();
+    updateIADisplay();
+    showNotification('🎲 Estilos aleatorios aplicados');
+}
+
+function showNotification(msg) {
+    const info = document.getElementById('currentFullStyle');
+    const original = info.textContent;
+    info.textContent = msg;
+    setTimeout(() => {
+        info.textContent = original;
+    }, 2000);
+}
+
+// Funciones de descarga
+function downloadImage(type) {
+    const canvas = type === 'normal' ? canvasNormal : canvasIA;
+    const link = document.createElement('a');
+    link.download = `radiografia_${type}_${Date.now()}.png`;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+    showNotification(`📥 Imagen ${type} descargada`);
+}
+
+function downloadAll() {
+    downloadImage('normal');
+    setTimeout(() => downloadImage('ia'), 500);
+}
+
+function copyToClipboard(type) {
+    const canvas = type === 'normal' ? canvasNormal : canvasIA;
+    canvas.toBlob((blob) => {
+        const item = new ClipboardItem({ 'image/png': blob });
+        navigator.clipboard.write([item]);
+        showNotification(`📋 Imagen ${type} copiada`);
+    });
+}
+
+// Modal functions
+function openModal(type) {
+    const canvas = type === 'normal' ? canvasNormal : canvasIA;
+    const modal = document.getElementById('modal');
+    const modalImg = document.getElementById('modalImage');
+    modalImg.src = canvas.toDataURL('image/png');
+    modal.classList.add('active');
+}
+
+function closeModal() {
+    document.getElementById('modal').classList.remove('active');
+}
+
+// APLICAR FILTROS SEGÚN EL ESTILO
+function applyFilter(imageData, style, withAI = false) {
+    const d = imageData.data;
+    const inten = intensity.value / 100;
+    const cont = contrast.value / 100;
+    const det = detail.value / 100;
+    const bright = brightness.value / 100;
+    
+    for (let i = 0; i < d.length; i += 4) {
+        let r = d[i];
+        let g = d[i+1];
+        let b = d[i+2];
+        
+        // SI ES SIN IA Y ES EL PRIMER ESTILO (FOTO ORIGINAL) - NO APLICAR NINGÚN FILTRO
+        if (!withAI && style.filter === 'none') {
+            // Mantener colores originales
+            d[i] = r;
+            d[i+1] = g;
+            d[i+2] = b;
+            continue;
+        }
+        
+        // Luminancia base
+        let lum = 0.299 * r + 0.587 * g + 0.114 * b;
+        
+        if (!withAI) {
+            // APLICAR TÉCNICAS MÉDICAS REALES
+            switch(style.filter) {
+                case 'ultrasound': // ECOGRAFÍA - efecto de ultrasonido
+                    r = lum * 0.5 + Math.sin(lum * 0.1) * 30;
+                    g = lum * 0.5 + Math.cos(lum * 0.1) * 30;
+                    b = lum * 0.6;
+                    break;
+                    
+                case 'chest': // RADIOGRAFÍA TÓRAX - azul médico
+                    let chest = 255 - lum;
+                    r = chest * 0.1;
+                    g = chest * 0.3;
+                    b = chest * 1.1;
+                    break;
+                    
+                case 'bone': // DENSITOMETRÍA - verde para huesos
+                    let bone = lum * 1.3;
+                    r = bone * 0.2;
+                    g = bone * 1.1;
+                    b = bone * 0.3;
+                    break;
+                    
+                case 'mri': // RESONANCIA MAGNÉTICA - escala de grises
+                    let mri = lum * 1.1;
+                    r = mri;
+                    g = mri;
+                    b = mri;
+                    break;
+                    
+                case 'ct': // TOMOGRAFÍA - alto contraste
+                    let ct = lum > 128 ? 255 : 0;
+                    r = ct;
+                    g = ct;
+                    b = ct;
+                    break;
+                    
+                case 'mammo': // MAMOGRAFÍA - tono ámbar
+                    let mammo = 255 - lum * 0.8;
+                    r = mammo * 1.2;
+                    g = mammo * 0.6;
+                    b = mammo * 0.2;
+                    break;
+                    
+                case 'fluoro': // FLUOROSCOPIA - verde
+                    let fluoro = 255 - lum * 0.7;
+                    r = fluoro * 0.2;
+                    g = fluoro * 1.1;
+                    b = fluoro * 0.2;
+                    break;
+                    
+                case 'dental': // DENTAL - azul dental
+                    let dental = Math.pow(lum/255, 1.2) * 255;
+                    r = dental * 0.2;
+                    g = dental * 0.4;
+                    b = dental * 1.0;
+                    break;
+                    
+                case 'angio': // ANGIOGRAFÍA - rojo para vasos
+                    let angio = lum * 1.2;
+                    r = angio * 1.3;
+                    g = angio * 0.3;
+                    b = angio * 0.2;
+                    break;
+                    
+                case 'gamma': // GAMMAGRAFÍA - naranja nuclear
+                    let gamma = Math.pow(lum/255, 0.9) * 255;
+                    r = gamma * 1.1;
+                    g = gamma * 0.5;
+                    b = gamma * 0.1;
+                    break;
+                    
+                case 'thermal': // TERMOGRAFÍA - colores de calor
+                    if (lum < 85) {
+                        r = 0; g = 0; b = lum * 3;
+                    } else if (lum < 170) {
+                        r = 0; g = (lum-85)*3; b = 255 - (lum-85)*3;
+                    } else {
+                        r = (lum-170)*3; g = 255 - (lum-170)*3; b = 0;
+                    }
+                    break;
+                    
+                case 'hand': // RADIOGRAFÍA DE MANO - sepia
+                    let hand = 255 - lum * 0.9;
+                    r = hand * 1.1;
+                    g = hand * 0.8;
+                    b = hand * 0.5;
+                    break;
+                    
+                case 'pediatric': // PEDIÁTRICA - azul suave
+                    let ped = lum * 1.1;
+                    r = ped * 0.3;
+                    g = ped * 0.5;
+                    b = ped * 1.0;
+                    break;
+                    
+                case 'micro': // MICROSCOPÍA RX - púrpura
+                    let micro = lum * 0.9;
+                    r = micro * 0.8;
+                    g = micro * 0.2;
+                    b = micro * 1.2;
+                    break;
+            }
+            
+        } else {
+            // APLICAR ESTILOS IA
+            const iaStyle = iaStyles[currentIAIndex];
+            
+            switch(iaStyle.filter) {
+                case 'ai_radio':
+                    // IA radióloga - azul profundo con detección de bordes
+                    let edge = Math.abs(r - g) + Math.abs(g - b);
+                    r = (255 - lum) * 0.1 + edge * 0.2;
+                    g = (255 - lum) * 0.3 + edge * 0.3;
+                    b = (255 - lum) * 1.2 + edge * 0.1;
+                    break;
+                    
+                case 'ai_brain':
+                    // IA neurología - verde médica
+                    let brain = lum * 1.2;
+                    r = brain * 0.2;
+                    g = brain * 1.1;
+                    b = brain * 0.3;
+                    break;
+                    
+                case 'ai_chest':
+                    // IA tórax - gris con realce
+                    let chestAI = 255 - lum;
+                    r = chestAI * 0.4;
+                    g = chestAI * 0.5;
+                    b = chestAI * 0.6;
+                    break;
+                    
+                case 'ai_bone':
+                    // IA ósea - ámbar
+                    let boneAI = Math.pow(lum/255, 1.3) * 255;
+                    r = boneAI * 1.2;
+                    g = boneAI * 0.7;
+                    b = boneAI * 0.2;
+                    break;
+                    
+                case 'ai_heart':
+                    // IA cardíaca - rojo
+                    let heart = lum * 1.1;
+                    r = heart * 1.3;
+                    g = heart * 0.3;
+                    b = heart * 0.2;
+                    break;
+                    
+                case 'ai_micro':
+                    // IA microscopía - púrpura
+                    let microAI = lum * 0.8;
+                    r = microAI * 0.7;
+                    g = microAI * 0.2;
+                    b = microAI * 1.3;
+                    break;
+                    
+                case 'ai_mammo':
+                    // IA mamografía - naranja
+                    let mammoAI = 255 - lum * 0.7;
+                    r = mammoAI * 1.3;
+                    g = mammoAI * 0.6;
+                    b = mammoAI * 0.2;
+                    break;
+                    
+                case 'ai_lab':
+                    // IA laboratorio - verde/azul
+                    let lab = lum * 1.0;
+                    r = lab * 0.2;
+                    g = lab * 0.9;
+                    b = lab * 0.8;
+                    break;
+                    
+                case 'ai_dental':
+                    // IA dental - azul
+                    let dentalAI = Math.pow(lum/255, 1.1) * 255;
+                    r = dentalAI * 0.2;
+                    g = dentalAI * 0.4;
+                    b = dentalAI * 1.1;
+                    break;
+                    
+                case 'ai_emergency':
+                    // IA urgencias - rojo/ámbar rápido
+                    let emergency = 255 - lum * 0.8;
+                    r = emergency * 1.3;
+                    g = emergency * 0.5;
+                    b = emergency * 0.2;
+                    break;
+                    
+                case 'ai_detection':
+                    // IA detección - verde
+                    let detect = lum * 1.2;
+                    r = detect * 0.2;
+                    g = detect * 1.2;
+                    b = detect * 0.3;
+                    break;
+                    
+                case 'ai_quant':
+                    // IA cuantitativa - cian
+                    let quant = lum * 1.1;
+                    r = quant * 0.2;
+                    g = quant * 1.1;
+                    b = quant * 1.1;
+                    break;
+                    
+                case 'ai_3d':
+                    // IA 3D - púrpura/azul volumétrico
+                    let vol = Math.sin(lum * 0.02) * 50 + lum * 0.9;
+                    r = vol * 0.4;
+                    g = vol * 0.3;
+                    b = vol * 1.1;
+                    break;
+                    
+                case 'ai_contrast':
+                    // IA contraste adaptativo
+                    let adapt = lum > 128 ? lum * 1.3 : lum * 0.7;
+                    r = adapt * 0.8;
+                    g = adapt * 0.5;
+                    b = adapt * 0.3;
+                    break;
+                    
+                case 'ai_precision':
+                    // IA precisión quirúrgica - azul/blanco
+                    let precise = Math.pow(lum/255, 1.4) * 255;
+                    r = precise * 0.3;
+                    g = precise * 0.5;
+                    b = precise * 1.2;
+                    break;
+            }
+        }
+        
+        // Aplicar controles globales
+        d[i] = Math.max(0, Math.min(255, r * bright * cont));
+        d[i+1] = Math.max(0, Math.min(255, g * bright * cont));
+        d[i+2] = Math.max(0, Math.min(255, b * bright * cont));
+    }
+    
+    return imageData;
+}
+
+function processNormalImage() {
+    if (!originalImage) return;
+    
+    ctxN.drawImage(originalImage, 0, 0, canvasNormal.width, canvasNormal.height);
+    let imageData = ctxN.getImageData(0, 0, canvasNormal.width, canvasNormal.height);
+    imageData = applyFilter(imageData, normalStyles[currentNormalIndex], false);
+    ctxN.putImageData(imageData, 0, 0);
+    
+    const style = normalStyles[currentNormalIndex];
+    document.getElementById('normalStyleName').textContent = style.name;
+    document.getElementById('normalTech').textContent = style.tech;
+    document.getElementById('normalMode').textContent = style.mode;
+    document.getElementById('normalType').textContent = style.type;
+    document.getElementById('normalTone').textContent = style.tone;
+}
+
+function processIAImage() {
+    if (!originalImage) return;
+    
+    ctxIA.drawImage(originalImage, 0, 0, canvasIA.width, canvasIA.height);
+    let imageData = ctxIA.getImageData(0, 0, canvasIA.width, canvasIA.height);
+    imageData = applyFilter(imageData, iaStyles[currentIAIndex], true);
+    ctxIA.putImageData(imageData, 0, 0);
+    
+    const style = iaStyles[currentIAIndex];
+    document.getElementById('iaStyleName').textContent = style.name;
+    document.getElementById('iaTech').textContent = style.tech;
+    document.getElementById('iaContrast').textContent = style.contrast.toFixed(1);
+    document.getElementById('iaTone').textContent = style.tone;
+    document.getElementById('iaLevel').textContent = style.level + '%';
+}
+
+// Generar thumbnails
+function generateThumbnails() {
+    const thumbN = document.getElementById('thumbnailsNormal');
+    const thumbIA = document.getElementById('thumbnailsIA');
+    thumbN.innerHTML = '';
+    thumbIA.innerHTML = '';
+    
+    thumbnailsNormal = [];
+    thumbnailsIA = [];
+    
+    for (let i = 0; i < 15; i++) {
+        // Thumbnail sin IA
+        const thumbNEl = document.createElement('div');
+        thumbNEl.className = 'thumb' + (i === currentNormalIndex ? ' active' : '');
+        thumbNEl.innerHTML = `
+            <span class="thumb-number">${i+1}</span>
+            <span class="thumb-style">${normalStyles[i].name.substring(0, 12)}</span>
+            <canvas id="thumbN${i}"></canvas>
+        `;
+        thumbNEl.onclick = () => {
+            document.querySelectorAll('#thumbnailsNormal .thumb').forEach(t => t.classList.remove('active'));
+            thumbNEl.classList.add('active');
+            currentNormalIndex = i;
+            updateNormalDisplay();
+        };
+        thumbN.appendChild(thumbNEl);
+        
+        // Thumbnail con IA
+        const thumbIAEl = document.createElement('div');
+        thumbIAEl.className = 'thumb' + (i === currentIAIndex ? ' active' : '');
+        thumbIAEl.innerHTML = `
+            <span class="thumb-number">${i+1}</span>
+            <span class="thumb-style">${iaStyles[i].name.substring(0, 12)}</span>
+            <canvas id="thumbIA${i}"></canvas>
+        `;
+        thumbIAEl.onclick = () => {
+            document.querySelectorAll('#thumbnailsIA .thumb').forEach(t => t.classList.remove('active'));
+            thumbIAEl.classList.add('active');
+            currentIAIndex = i;
+            updateIADisplay();
+        };
+        thumbIA.appendChild(thumbIAEl);
+        
+        const canvasTN = document.getElementById(`thumbN${i}`);
+        const canvasTIA = document.getElementById(`thumbIA${i}`);
+        
+        if (originalImage) {
+            canvasTN.width = canvasTIA.width = 100;
+            canvasTN.height = canvasTIA.height = 100;
+        }
+        
+        thumbnailsNormal.push(canvasTN);
+        thumbnailsIA.push(canvasTIA);
+    }
+}
+
+// Procesar thumbnails
+function processThumbnails() {
+    if (!originalImage) return;
+    
+    thumbnailsNormal.forEach((canvas, index) => {
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(originalImage, 0, 0, canvas.width, canvas.height);
+        let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        imageData = applyFilter(imageData, normalStyles[index], false);
+        ctx.putImageData(imageData, 0, 0);
+    });
+    
+    thumbnailsIA.forEach((canvas, index) => {
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(originalImage, 0, 0, canvas.width, canvas.height);
+        let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        imageData = applyFilter(imageData, iaStyles[index], true);
+        ctx.putImageData(imageData, 0, 0);
+    });
+}
+
+function updateNormalDisplay() {
+    document.getElementById('normalIndex').textContent = (currentNormalIndex + 1) + '/15';
+    document.getElementById('normalCount').textContent = 
+        (currentNormalIndex + 1).toString().padStart(2, '0') + '/15';
+    processNormalImage();
+    
+    document.querySelectorAll('#thumbnailsNormal .thumb').forEach((t, i) => {
+        if (i === currentNormalIndex) t.classList.add('active');
+        else t.classList.remove('active');
+    });
+}
+
+function updateIADisplay() {
+    document.getElementById('iaIndex').textContent = (currentIAIndex + 1) + '/15';
+    document.getElementById('iaCount').textContent = 
+        (currentIAIndex + 1).toString().padStart(2, '0') + '/15';
+    processIAImage();
+    
+    document.querySelectorAll('#thumbnailsIA .thumb').forEach((t, i) => {
+        if (i === currentIAIndex) t.classList.add('active');
+        else t.classList.remove('active');
+    });
+}
+
+function processAllImages() {
+    processNormalImage();
+    processIAImage();
+    processThumbnails();
+    
+    document.getElementById('currentFullStyle').textContent = 
+        normalStyles[currentNormalIndex].name + ' + ' + iaStyles[currentIAIndex].name;
+    document.getElementById('totalStyles').textContent = '30 ESTILOS';
+}
+
+// Cargar imagen
+upload.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+        const img = new Image();
+        img.onload = () => {
+            originalImage = img;
+            
+            const maxWidth = 800;
+            const maxHeight = 450;
+            let width = img.width;
+            let height = img.height;
+            
+            if (width > maxWidth) {
+                height = (maxWidth / width) * height;
+                width = maxWidth;
+            }
+            if (height > maxHeight) {
+                width = (maxHeight / height) * width;
+                height = maxHeight;
+            }
+            
+            canvasNormal.width = canvasIA.width = width;
+            canvasNormal.height = canvasIA.height = height;
+            
+            thumbnailsNormal.forEach(canvas => {
+                canvas.width = 100;
+                canvas.height = 100;
+            });
+            thumbnailsIA.forEach(canvas => {
+                canvas.width = 100;
+                canvas.height = 100;
+            });
+            
+            processAllImages();
+            showNotification('✅ Imagen cargada exitosamente');
+        };
+        img.src = ev.target.result;
+    };
+    reader.readAsDataURL(file);
+});
+
+// Imagen de prueba (la que me enviaste en base64)
+function loadTestImage() {
+    const img = new Image();
+    img.onload = () => {
+        originalImage = img;
+        canvasNormal.width = canvasIA.width = 500;
+        canvasNormal.height = canvasIA.height = 300;
+        
+        thumbnailsNormal.forEach(canvas => {
+            canvas.width = 100;
+            canvas.height = 100;
+        });
+        thumbnailsIA.forEach(canvas => {
+            canvas.width = 100;
+            canvas.height = 100;
+        });
+        
+        processAllImages();
+        showNotification('🖼️ Imagen de prueba cargada');
+    };
+    img.src = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxMSEhUTEhMWFRUXFxUYFxcYFhoYGBUYFRcWFhcVGBgYHSggGBolHRUVITEhJSkrLi4uFx8zODMtNygtLisBCgoKDg0NFRAPFSsdFRktNy0rKy03KysrLTE3KysrKysrKy0zLTAtLS0tKystNzcrKysrOCs3LS0rLS0rOC03K//AABEIALcBEwMBIgACEQEDEQH/xAAbAAABBQEBAAAAAAAAAAAAAAAFAAECAwQGB//EAEMQAAEDAgMFBQUGBAUDBQEAAAEAAhEDIQQSMQVBUWGBIjJxkaEGE7HB4RRCYpLR8FRyguEVIzOi8SQlsjNzs8JEVMLH/xAAbAQEBAQEBAQEBAAAAAAAAAAAAAQIDBAUGB//EAC8RAAIBAgQEBQQCAwEAAAAAAAABAgMRBBIhMRNBUfAFYXGRsSJCgaEUMmIjUsH/2gAMAwEAAhEDEQA/APDUXpYCqKQqmlUFOLVPduyXMDtxGttUIXs+PxP/AKYpM/DS/wD0gqweVpykY6/v6pFAykkkEJUyE6ZBOgZJJJAkkkkCSSSQJJJJAkkkkCSSSQEkkk6CEEk6SgMkkkgSSSSBkkkkCSSSQJJJJAkkkkCSSSQJJJJAkkkkCSSSQJJJJAkkkkCSSSQJJJJAkkkkCSSSQJJJJAkkkkCSSSQJJJJAkkkkDJJJIEkkkgSSSSBJJJIEkkkgSSSSBJJJIEkkkgSSSSBJJJIEkkkgSSSSBJJJIEkkkgSSSSBJJJIEkkkgSSSSBJJJIEkkkgSSSSBJJJIEkkkgSSSSB//Z';
+}
+loadTestImage();
+
+// Inicializar
+generateThumbnails();
+
+// Navegación con teclado mejorada
+document.addEventListener('keydown', (e) => {
+    if (!originalImage) return;
+    
+    if (e.key === 'ArrowLeft') {
+        if (e.altKey) {
+            currentIAIndex = (currentIAIndex - 1 + 15) % 15;
+            updateIADisplay();
+        } else if (e.ctrlKey) {
+            currentNormalIndex = (currentNormalIndex - 1 + 15) % 15;
+            updateNormalDisplay();
+        }
+    } else if (e.key === 'ArrowRight') {
+        if (e.altKey) {
+            currentIAIndex = (currentIAIndex + 1) % 15;
+            updateIADisplay();
+        } else if (e.ctrlKey) {
+            currentNormalIndex = (currentNormalIndex + 1) % 15;
+            updateNormalDisplay();
+        }
+    } else if (e.key === 'd' && e.ctrlKey) {
+        e.preventDefault();
+        downloadAll();
+    } else if (e.key === 'Escape') {
+        closeModal();
+    }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,1993 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Damas del Conocimiento - Control de Acceso</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0c2461;
+            --secondary: #1e3799;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+            --danger: #e74c3c;
+            --success: #2ecc71;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(to right, var(--dark), #34495e);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+            position: relative;
+            transition: background 0.5s ease;
+            
+   border-radius: 10px;
+  max-width: 900px;
+  margin: 90px auto;
+        }
+        
+        body.game-active {
+            background: linear-gradient(135deg, #0c2461 0%, #1e3799 50%, #0c2461 100%);
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            color: #ff6b6b;
+        }
+        
+        .access-denied {
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .access-denied h2 {
+            font-size: 2rem;
+            color: #ff6b6b;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .access-denied p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            color: #ecf0f1;
+        }
+        
+        .clock-container {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: center;
+            border: 2px solid #3498db;
+        }
+        
+        .current-time {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: #3498db;
+            font-family: 'Courier New', monospace;
+            text-shadow: 0 0 10px rgba(52, 152, 219, 0.5);
+            margin-bottom: 1rem;
+        }
+        
+        .access-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .info-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border-left: 4px solid #3498db;
+        }
+        
+        .info-card h3 {
+            color: #3498db;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .info-card p {
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+        
+        .access-form {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+            border: 2px solid #9b59b6;
+        }
+        
+        .access-form h3 {
+            text-align: center;
+            color: #9b59b6;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .password-input {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.2rem;
+            border: 2px solid #9b59b6;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-align: center;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+        
+        .password-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .access-button {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            background: linear-gradient(to right, #9b59b6, #e74c3c);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .access-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(155, 89, 182, 0.4);
+        }
+        
+        .attempts-counter {
+            text-align: center;
+            margin-top: 1rem;
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .warning {
+            background: rgba(231, 76, 60, 0.2);
+            border: 2px solid #e74c3c;
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
+            text-align: center;
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .security-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(231, 76, 60, 0.2);
+            border: 1px solid #e74c3c;
+            border-radius: 8px;
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            color: #e74c3c;
+        }
+        
+        .game-container {
+            width: 100%;
+            max-width: 1400px;
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background: rgba(52, 152, 219, 0.8);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .back-button:hover {
+            background: rgba(41, 128, 185, 0.9);
+            transform: translateX(-3px);
+        }
+        
+        .admin-log {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.3);
+            font-family: monospace;
+        }
+        
+        /* ESTILOS DEL JUEGO DE DAMAS */
+        .game-header {
+            text-align: center;
+            margin-bottom: 30px;
+            width: 100%;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            border: 2px solid #3498db;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        .game-header h1 {
+            font-size: 3.2rem;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #ff9a9e, #fad0c4, #a1c4fd);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #a0a0c0;
+            margin-bottom: 10px;
+        }
+        
+        .difficulty {
+            display: inline-block;
+            background: linear-gradient(to right, #e74c3c, #c0392b);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-top: 10px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+        }
+        
+        .game-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            width: 100%;
+            margin-bottom: 30px;
+        }
+        
+        .game-board {
+            background-color: rgba(15, 52, 96, 0.9);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            border: 3px solid #2980b9;
+        }
+        
+        .board {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            grid-template-rows: repeat(8, 1fr);
+            width: 560px;
+            height: 560px;
+            border: 4px solid #1a5276;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        
+        .cell {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        
+        .dark {
+            background-color: #5d4037;
+        }
+        
+        .light {
+            background-color: #d7ccc8;
+        }
+        
+        .piece {
+            width: 85%;
+            height: 85%;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .piece:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+        
+        .piece.selected {
+            box-shadow: 0 0 0 4px #f1c40f, 0 0 20px #f1c40f;
+            transform: scale(1.05);
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 4px #f1c40f, 0 0 20px #f1c40f; }
+            50% { box-shadow: 0 0 0 6px #f1c40f, 0 0 30px #f1c40f; }
+            100% { box-shadow: 0 0 0 4px #f1c40f, 0 0 20px #f1c40f; }
+        }
+        
+        .piece.player1 {
+            background: radial-gradient(circle at 30% 30%, #e74c3c, #c0392b);
+            border: 2px solid #ff8a80;
+        }
+        
+        .piece.player2 {
+            background: radial-gradient(circle at 30% 30%, #3498db, #2980b9);
+            border: 2px solid #82b1ff;
+        }
+        
+        .piece.king::after {
+            content: "♔";
+            font-size: 32px;
+            color: #ffd700;
+            text-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
+        }
+        
+        .piece.player1.king {
+            background: radial-gradient(circle at 30% 30%, #ff5252, #d32f2f);
+        }
+        
+        .piece.player2.king {
+            background: radial-gradient(circle at 30% 30%, #42a5f5, #1565c0);
+        }
+        
+        .valid-move-indicator {
+            width: 30%;
+            height: 30%;
+            border-radius: 50%;
+            background-color: rgba(76, 175, 80, 0.7);
+            position: absolute;
+            z-index: 1;
+        }
+        
+        .game-info {
+            background-color: rgba(15, 52, 96, 0.9);
+            border-radius: 12px;
+            padding: 25px;
+            width: 320px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            border: 3px solid #2980b9;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .player-turn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: rgba(0, 0, 0, 0.3);
+            margin-bottom: 10px;
+            border: 2px solid #3498db;
+        }
+        
+        .turn-indicator {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            font-size: 1.3rem;
+        }
+        
+        .player-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+        }
+        
+        .player1-icon {
+            background: radial-gradient(circle at 30% 30%, #e74c3c, #c0392b);
+        }
+        
+        .player2-icon {
+            background: radial-gradient(circle at 30% 30%, #3498db, #2980b9);
+        }
+        
+        .score {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        
+        .score-item {
+            text-align: center;
+            padding: 12px;
+            border-radius: 8px;
+            background-color: rgba(0, 0, 0, 0.3);
+            width: 48%;
+            border: 2px solid;
+        }
+        
+        .player1-score {
+            border-color: #e74c3c;
+        }
+        
+        .player2-score {
+            border-color: #3498db;
+        }
+        
+        .score-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+        
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .game-btn {
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(to right, #3498db, #2980b9);
+            color: white;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .game-btn:hover {
+            background: linear-gradient(to right, #2980b9, #1f618d);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .game-btn:active {
+            transform: translateY(0);
+        }
+        
+        .lock-btn {
+            background: linear-gradient(to right, #e74c3c, #c0392b) !important;
+        }
+        
+        .challenge-container {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 10px;
+            border: 2px solid #9b59b6;
+            display: none;
+        }
+        
+        .challenge-container.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .challenge-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            color: #9b59b6;
+            font-size: 1.3rem;
+        }
+        
+        .category-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        
+        .biology-tag {
+            background-color: #27ae60;
+            color: white;
+        }
+        
+        .chemistry-tag {
+            background-color: #8e44ad;
+            color: white;
+        }
+        
+        .physics-tag {
+            background-color: #16a085;
+            color: white;
+        }
+        
+        .programming-tag {
+            background-color: #d35400;
+            color: white;
+        }
+        
+        .medicine-tag {
+            background-color: #c0392b;
+            color: white;
+        }
+        
+        .math-tag {
+            background-color: #2c3e50;
+            color: white;
+        }
+        
+        .question-text {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            line-height: 1.5;
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .option {
+            padding: 14px;
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .option:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-color: #3498db;
+            transform: translateX(5px);
+        }
+        
+        .option.correct {
+            background-color: rgba(46, 204, 113, 0.3);
+            border-color: #27ae60;
+        }
+        
+        .option.incorrect {
+            background-color: rgba(231, 76, 60, 0.3);
+            border-color: #c0392b;
+        }
+        
+        .timer {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 15px 0;
+            color: #f1c40f;
+        }
+        
+        .timer.warning {
+            color: #e74c3c;
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .rules {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 10px;
+            border: 2px solid #3498db;
+        }
+        
+        .rules h3 {
+            margin-bottom: 15px;
+            color: #f1c40f;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .rules ul {
+            padding-left: 20px;
+        }
+        
+        .rules li {
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        
+        .rules strong {
+            color: #f1c40f;
+        }
+        
+        .message {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            z-index: 100;
+            opacity: 0;
+            transition: opacity 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+        
+        .message.show {
+            opacity: 1;
+        }
+        
+        .message.win {
+            background: linear-gradient(to right, #27ae60, #229954);
+            color: white;
+        }
+        
+        .message.error {
+            background: linear-gradient(to right, #e74c3c, #c0392b);
+            color: white;
+        }
+        
+        .message.info {
+            background: linear-gradient(to right, #3498db, #2980b9);
+            color: white;
+        }
+        
+        .message.question {
+            background: linear-gradient(to right, #9b59b6, #8e44ad);
+            color: white;
+        }
+        
+        .back-container {
+            margin: 20px;
+            text-align: center;
+        }
+        
+        .back-btn {
+            display: inline-block;
+            padding: 12px 22px;
+            background: linear-gradient(135deg, #6dd5fa, #ffffff);
+            color: #000;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 10px;
+            border: 2px solid #6dd5fa;
+            transition: all 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            background: linear-gradient(135deg, #ffffff, #6dd5fa);
+            transform: translateX(-5px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+        }
+        
+        @media (max-width: 1100px) {
+            .game-content {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .game-info {
+                width: 560px;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .board {
+                width: 400px;
+                height: 400px;
+            }
+            
+            .game-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .game-info {
+                width: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="inicioeljuegoeducativo.html" class="back-button">⬅ Volver</a>
+    
+    <div class="security-badge">🔒 SISTEMA PROTEGIDO</div>
+    
+    <!-- PANTALLA DE ACCESO DENEGADO -->
+    <div class="container" id="access-container">
+        <div class="header">
+            <h1>JUEGO NO DISPONIBLE</h1>
+            <p>El acceso está restringido exclusivamente al horario establecido.</p>
+            <p>Vuelve durante el período permitido para disfrutar del juego.</p>
+        </div>
+        
+        <div class="clock-container">
+            <div class="current-time" id="current-time">00:00:00</div>
+            <div id="time-status"></div>
+        </div>
+        
+        <div class="warning" id="time-warning" style="display: none;">
+            ⚠️ DETECTADO: Intento de modificación de hora. Acceso bloqueado.
+        </div>
+        
+        <div class="access-info">
+            <div class="info-card">
+                <h3>⏰ Horario de acceso permitido:</h3>
+                <p>🕕 18:00 - 21:00 (Hora local)</p>
+            </div>
+            
+            <div class="info-card">
+                <h3>⌛ Próximo acceso en:</h3>
+                <p id="next-access">Calculando...</p>
+            </div>
+        </div>
+        
+        <div class="access-info">
+            <div class="info-card">
+                <h3>🌍 PAÍS</h3>
+                <p id="country">Detectando...</p>
+            </div>
+            
+            <div class="info-card">
+                <h3>📍 REGIÓN</h3>
+                <p id="region">Detectando...</p>
+            </div>
+            
+            <div class="info-card">
+                <h3>🏙️ CIUDAD</h3>
+                <p id="city">Detectando...</p>
+            </div>
+        </div>
+        
+        <div class="access-info">
+            <div class="info-card">
+                <h3>⏰ ZONA HORARIA</h3>
+                <p id="timezone">Detectando...</p>
+            </div>
+            
+            <div class="info-card">
+                <h3>🌐 IP PÚBLICA</h3>
+                <p id="ip">Detectando...</p>
+            </div>
+        </div>
+        
+        <div class="access-form">
+            <h3>👑 ACCESO EXCLUSIVO TITULAR</h3>
+            <p style="text-align: center; margin-bottom: 1.5rem; color: #ecf0f1;">
+                Si eres el titular autorizado, ingresa la contraseña especial para acceder fuera del horario establecido.
+            </p>
+            
+            <input type="password" 
+                   class="password-input" 
+                   id="password-input" 
+                   placeholder="Contraseña de acceso"
+                   maxlength="20">
+            
+            <button class="access-button" id="access-button">🚀 ACCEDER COMO TITULAR</button>
+            
+            <div class="attempts-counter" id="attempts-counter">
+                🔑 Intentos disponibles: 3
+            </div>
+        </div>
+    </div>
+    
+    <!-- JUEGO DE DAMAS (OCULTO INICIALMENTE) -->
+    <div class="game-container" id="game-container" style="display: none;">
+        <header class="game-header">
+            <h1><i class="fas fa-brain"></i> DAMAS DEL CONOCIMIENTO</h1>
+            <p class="subtitle">Un juego donde cada movimiento requiere resolver un desafío intelectual</p>
+            <div class="difficulty">NIVEL: EXPERTO</div>
+        </header>
+        
+        <div class="game-content">
+            <div class="game-board">
+                <div class="board" id="board">
+                    <!-- El tablero se genera con JavaScript -->
+                </div>
+            </div>
+            
+            <div class="game-info">
+                <div class="player-turn">
+                    <div class="turn-indicator">
+                        <div class="player-icon player1-icon"></div>
+                        <span id="turn-text">Turno de: <strong>Rojo</strong></span>
+                    </div>
+                    <div id="turn-indicator" class="player-icon player1-icon"></div>
+                </div>
+                
+                <div class="score">
+                    <div class="score-item player1-score">
+                        <div>Jugador Rojo</div>
+                        <div class="score-value" id="player1-score">12</div>
+                    </div>
+                    <div class="score-item player2-score">
+                        <div>Jugador Azul</div>
+                        <div class="score-value" id="player2-score">12</div>
+                    </div>
+                </div>
+                
+                <div class="challenge-container" id="challenge-container">
+                    <div class="challenge-header">
+                        <i class="fas fa-question-circle"></i>
+                        <span>DESAFÍO INTELECTUAL</span>
+                        <span id="category-tag" class="category-tag biology-tag">BIOLOGÍA</span>
+                    </div>
+                    
+                    <div class="question-text" id="question-text">
+                        <!-- La pregunta aparecerá aquí -->
+                    </div>
+                    
+                    <div class="timer" id="timer">30</div>
+                    
+                    <div class="options-container" id="options-container">
+                        <!-- Las opciones aparecerán aquí -->
+                    </div>
+                </div>
+                
+                <div class="controls">
+                    <button class="game-btn" id="new-game-btn">
+                        <i class="fas fa-gamepad"></i> Nuevo Juego
+                    </button>
+                    <button class="game-btn" id="hint-btn">
+                        <i class="fas fa-lightbulb"></i> Pista (10s menos)
+                    </button>
+                    <button class="game-btn" id="rules-btn">
+                        <i class="fas fa-book"></i> Reglas del Juego
+                    </button>
+                    <button class="game-btn lock-btn" id="lock-game-btn">
+                        <i class="fas fa-lock"></i> Bloquear Juego
+                    </button>
+                </div>
+                
+                <div class="back-container">
+                    <a href="inicioeljuegoeducativo.html" class="back-btn">⬅ Volver a atras</a>
+                </div>
+                
+                <div class="rules">
+                    <h3><i class="fas fa-info-circle"></i> Reglas del Juego</h3>
+                    <ul>
+                        <li>Para mover una pieza, primero selecciónala y luego <strong>responde correctamente</strong> al desafío intelectual.</li>
+                        <li>Tienes <strong>30 segundos</strong> para responder cada pregunta.</li>
+                        <li>Las <strong>damas (reyes)</strong> pueden moverse hacia atrás.</li>
+                        <li><strong>Captura obligatoria:</strong> debes capturar si es posible.</li>
+                        <li>Si fallas la pregunta, <strong>pierdes tu turno</strong>.</li>
+                        <li>Gana el jugador que <strong>captura todas las piezas</strong> del oponente.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Damas del Conocimiento © 2023 | Combina estrategia con intelecto</p>
+        </footer>
+    </div>
+    
+    <div class="message" id="game-message"></div>
+    <div class="admin-log" id="admin-log"></div>
+
+    <script>
+        // ============================================
+        // SISTEMA DE CONTROL DE HORARIO
+        // ============================================
+        
+        // Configuración del sistema
+        const ACCESS_PASSWORD = "motiva2026"; // Solo el programador sabe esta contraseña
+        const ALLOWED_START_HOUR = 18; // 18:00
+        const ALLOWED_END_HOUR = 21;   // 21:00
+        const MAX_ATTEMPTS = 3;
+        
+        // Variables del sistema
+        let accessAttempts = 0;
+        let isTimeManipulated = false;
+        let lastValidTime = null;
+        let locationData = {};
+        let accessUnlocked = false;
+        
+        // Elementos DOM del sistema de control
+        const currentTimeEl = document.getElementById('current-time');
+        const nextAccessEl = document.getElementById('next-access');
+        const timeWarningEl = document.getElementById('time-warning');
+        const passwordInput = document.getElementById('password-input');
+        const accessButton = document.getElementById('access-button');
+        const attemptsCounter = document.getElementById('attempts-counter');
+        const gameContainer = document.getElementById('game-container');
+        const accessContainer = document.getElementById('access-container');
+        const adminLog = document.getElementById('admin-log');
+        const lockGameBtn = document.getElementById('lock-game-btn');
+        
+        // Elementos de información de ubicación
+        const countryEl = document.getElementById('country');
+        const regionEl = document.getElementById('region');
+        const cityEl = document.getElementById('city');
+        const timezoneEl = document.getElementById('timezone');
+        const ipEl = document.getElementById('ip');
+        const timeStatusEl = document.getElementById('time-status');
+        
+        // ============================================
+        // JUEGO DE DAMAS DEL CONOCIMIENTO
+        // ============================================
+        
+        // Variables del juego
+        let board = [];
+        let currentPlayer = 1; // 1 = Rojo, 2 = Azul
+        let selectedPiece = null;
+        let validMoves = [];
+        let player1Score = 12;
+        let player2Score = 12;
+        let gameActive = true;
+        let challengeActive = false;
+        let timerInterval;
+        let timeLeft = 30;
+        let currentChallenge = null;
+        let pendingMove = null;
+        
+        // Constantes del juego
+        const PLAYER1 = 1;
+        const PLAYER2 = 2;
+        const EMPTY = 0;
+        const PLAYER1_KING = 3;
+        const PLAYER2_KING = 4;
+        
+        // Banco de preguntas difíciles por categoría
+        const questions = {
+            biology: [
+                {
+                    question: "¿Cuál es el mecanismo por el cual las bacterias adquieren ADN del ambiente y lo incorporan a su genoma?",
+                    options: [
+                        "Transducción",
+                        "Transformación",
+                        "Conjugación",
+                        "Transcripción inversa"
+                    ],
+                    correct: 1,
+                    explanation: "La transformación es el proceso por el cual las bacterias toman ADN exógeno del ambiente y lo incorporan a su genoma."
+                },
+                {
+                    question: "¿Qué enzima es responsable de la síntesis de ARN a partir de una plantilla de ADN durante la transcripción en eucariotas?",
+                    options: [
+                        "ARN polimerasa I",
+                        "ARN polimerasa II",
+                        "ARN polimerasa III",
+                        "ADN polimerasa delta"
+                    ],
+                    correct: 1,
+                    explanation: "La ARN polimerasa II es la enzima responsable de transcribir ARN mensajero (mRNA) en eucariotas."
+                }
+            ],
+            chemistry: [
+                {
+                    question: "En una reacción SN2, ¿cómo afecta la sustitución en el carbono electrófilo a la velocidad de reacción?",
+                    options: [
+                        "Acelera la reacción debido a la estabilización del carbocatión",
+                        "No tiene efecto significativo",
+                        "Disminuye la velocidad debido al impedimento estérico",
+                        "Solo afecta la estereoquímica, no la velocidad"
+                    ],
+                    correct: 2,
+                    explanation: "En reacciones SN2, el impedimento estérico alrededor del carbono electrófilo disminuye drásticamente la velocidad de reacción."
+                }
+            ],
+            physics: [
+                {
+                    question: "En relatividad general, ¿qué curva el espacio-tiempo causando lo que percibimos como gravedad?",
+                    options: [
+                        "La masa-energía",
+                        "La carga eléctrica",
+                        "El spin de las partículas",
+                        "Las fuerzas nucleares"
+                    ],
+                    correct: 0,
+                    explanation: "Según la teoría de la relatividad general de Einstein, la masa y la energía curvan el espacio-tiempo, creando lo que percibimos como gravedad."
+                }
+            ],
+            programming: [
+                {
+                    question: "En programación funcional, ¿qué propiedad permite reemplazar una expresión por su valor sin cambiar el comportamiento del programa?",
+                    options: [
+                        "Transparencia referencial",
+                        "Inmutabilidad",
+                        "Recursividad de cola",
+                        "Evaluación perezosa"
+                    ],
+                    correct: 0,
+                    explanation: "La transparencia referencial es la propiedad que permite reemplazar una expresión por su valor sin cambiar el comportamiento del programa."
+                }
+            ],
+            medicine: [
+                {
+                    question: "¿Qué clase de fármacos bloquea los receptores H2 de la histamina, reduciendo la producción de ácido gástrico?",
+                    options: [
+                        "Antiácidos",
+                        "Inhibidores de la bomba de protones",
+                        "Antagonistas H2",
+                        "Procinéticos"
+                    ],
+                    correct: 2,
+                    explanation: "Los antagonistas de los receptores H2 (como la ranitidina) bloquean estos receptores en las células parietales, reduciendo la secreción de ácido gástrico."
+                }
+            ],
+            math: [
+                {
+                    question: "¿Cuál es el teorema que establece que todo grafo plano puede ser coloreado con 4 colores de manera que no haya dos regiones adyacentes con el mismo color?",
+                    options: [
+                        "Teorema de los cuatro colores",
+                        "Teorema de Kuratowski",
+                        "Teorema de Euler para grafos",
+                        "Teorema de Ramsey"
+                    ],
+                    correct: 0,
+                    explanation: "El teorema de los cuatro colores establece que cualquier mapa plano puede ser coloreado con solo cuatro colores sin que regiones adyacentes compartan color."
+                }
+            ]
+        };
+        
+        // Categorías disponibles
+        const categories = ['biology', 'chemistry', 'physics', 'programming', 'medicine', 'math'];
+        
+        // Elementos DOM del juego
+        const gameMessage = document.getElementById('game-message');
+        const turnText = document.getElementById('turn-text');
+        const turnIndicator = document.getElementById('turn-indicator');
+        const player1ScoreElement = document.getElementById('player1-score');
+        const player2ScoreElement = document.getElementById('player2-score');
+        const newGameBtn = document.getElementById('new-game-btn');
+        const hintBtn = document.getElementById('hint-btn');
+        const rulesBtn = document.getElementById('rules-btn');
+        
+        // ============================================
+        // FUNCIONES DEL SISTEMA DE CONTROL
+        // ============================================
+        
+        // Función para detectar manipulación de hora
+        function detectTimeManipulation() {
+            const now = new Date();
+            const clientTime = now.getTime();
+            
+            if (!lastValidTime) {
+                lastValidTime = clientTime;
+                return false;
+            }
+            
+            const timeDiff = Math.abs(clientTime - lastValidTime);
+            
+            if (timeDiff > 5 * 60 * 1000) {
+                logEvent(`⚠️ SOSPECHA: Diferencia de tiempo detectada: ${Math.floor(timeDiff/1000/60)} minutos`);
+                return true;
+            }
+            
+            lastValidTime = clientTime;
+            return false;
+        }
+        
+        // Función para obtener información de ubicación
+        async function getLocationInfo() {
+            try {
+                const response = await fetch('https://ipapi.co/json/');
+                const data = await response.json();
+                
+                locationData = {
+                    country: data.country_name || 'No detectado',
+                    region: data.region || 'No detectado',
+                    city: data.city || 'No detectado',
+                    timezone: data.timezone || 'No detectado',
+                    ip: data.ip || 'No detectado'
+                };
+                
+                countryEl.textContent = locationData.country;
+                regionEl.textContent = locationData.region;
+                cityEl.textContent = locationData.city;
+                timezoneEl.textContent = locationData.timezone;
+                ipEl.textContent = locationData.ip;
+                
+                logEvent(`📍 Ubicación detectada: ${locationData.city}, ${locationData.country}`);
+                
+            } catch (error) {
+                logEvent('❌ Error obteniendo ubicación');
+                countryEl.textContent = 'No disponible';
+                regionEl.textContent = 'No disponible';
+                cityEl.textContent = 'No disponible';
+                timezoneEl.textContent = 'No disponible';
+                ipEl.textContent = 'No disponible';
+            }
+        }
+        
+        // Función para verificar si está dentro del horario permitido
+        function isWithinAllowedHours() {
+            const now = new Date();
+            const currentHour = now.getHours();
+            
+            if (detectTimeManipulation()) {
+                isTimeManipulated = true;
+                timeWarningEl.style.display = 'block';
+                logEvent('🚨 BLOQUEO: Manipulación de hora detectada');
+                return false;
+            }
+            
+            if (currentHour >= ALLOWED_START_HOUR && currentHour < ALLOWED_END_HOUR) {
+                return true;
+            }
+            
+            return false;
+        }
+        
+        // Función para calcular el próximo acceso
+        function calculateNextAccess() {
+            const now = new Date();
+            const currentHour = now.getHours();
+            
+            if (currentHour < ALLOWED_START_HOUR) {
+                const nextAccess = new Date(now);
+                nextAccess.setHours(ALLOWED_START_HOUR, 0, 0, 0);
+                return nextAccess;
+            } else {
+                const nextAccess = new Date(now);
+                nextAccess.setDate(nextAccess.getDate() + 1);
+                nextAccess.setHours(ALLOWED_START_HOUR, 0, 0, 0);
+                return nextAccess;
+            }
+        }
+        
+        // Función para actualizar el reloj
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('es-ES', { 
+                hour12: false,
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            
+            currentTimeEl.textContent = timeString;
+            
+            if (isWithinAllowedHours() && !isTimeManipulated) {
+                timeStatusEl.innerHTML = '<span style="color:#2ecc71;">✅ Horario permitido - Acceso habilitado</span>';
+                unlockGame();
+            } else {
+                if (isTimeManipulated) {
+                    timeStatusEl.innerHTML = '<span style="color:#e74c3c;">⛔ Acceso bloqueado por seguridad</span>';
+                } else {
+                    timeStatusEl.innerHTML = '<span style="color:#e74c3c;">⛔ Fuera del horario permitido</span>';
+                }
+                
+                const nextAccess = calculateNextAccess();
+                const timeDiff = nextAccess - now;
+                const hoursLeft = Math.floor(timeDiff / (1000 * 60 * 60));
+                const minutesLeft = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+                
+                nextAccessEl.textContent = `${hoursLeft}h ${minutesLeft}m`;
+            }
+        }
+        
+        // Función para desbloquear el juego
+        function unlockGame() {
+            if (!accessUnlocked) {
+                accessUnlocked = true;
+                accessContainer.style.display = 'none';
+                gameContainer.style.display = 'block';
+                document.body.classList.add('game-active');
+                logEvent('🎮 Damas del Conocimiento desbloqueado - Acceso permitido');
+                
+                // Iniciar el juego
+                initGame();
+            }
+        }
+        
+        // Función para bloquear el juego
+        function lockGame() {
+            accessUnlocked = false;
+            gameContainer.style.display = 'none';
+            accessContainer.style.display = 'block';
+            document.body.classList.remove('game-active');
+            logEvent('🔒 Juego bloqueado');
+            
+            // Detener el temporizador del juego
+            clearInterval(timerInterval);
+            
+            // Reiniciar variables del juego
+            selectedPiece = null;
+            validMoves = [];
+            challengeActive = false;
+            hideChallenge();
+        }
+        
+        // Función para verificar la contraseña
+        function checkPassword() {
+            const password = passwordInput.value.trim();
+            
+            if (password === ACCESS_PASSWORD) {
+                logEvent('✅ Contraseña correcta - Acceso especial concedido');
+                unlockGame();
+                passwordInput.value = '';
+                accessAttempts = 0;
+                updateAttemptsCounter();
+            } else {
+                accessAttempts++;
+                updateAttemptsCounter();
+                
+                if (accessAttempts >= MAX_ATTEMPTS) {
+                    accessButton.disabled = true;
+                    passwordInput.disabled = true;
+                    attemptsCounter.innerHTML = '<span style="color:#e74c3c;">⛔ ACCESO BLOQUEADO</span>';
+                    logEvent('🚨 BLOQUEO: Máximos intentos alcanzados');
+                    
+                    setTimeout(() => {
+                        accessButton.disabled = false;
+                        passwordInput.disabled = false;
+                        accessAttempts = 0;
+                        updateAttemptsCounter();
+                        logEvent('🔓 Bloqueo temporal removido');
+                    }, 5 * 60 * 1000);
+                } else {
+                    logEvent(`❌ Intento fallido ${accessAttempts}/${MAX_ATTEMPTS}`);
+                    passwordInput.value = '';
+                    passwordInput.style.borderColor = '#e74c3c';
+                    setTimeout(() => {
+                        passwordInput.style.borderColor = '#9b59b6';
+                    }, 500);
+                }
+            }
+        }
+        
+        // Función para actualizar el contador de intentos
+        function updateAttemptsCounter() {
+            const remaining = MAX_ATTEMPTS - accessAttempts;
+            attemptsCounter.textContent = `🔑 Intentos disponibles: ${remaining}`;
+            
+            if (remaining <= 1) {
+                attemptsCounter.style.color = '#e74c3c';
+            } else {
+                attemptsCounter.style.color = '#3498db';
+            }
+        }
+        
+        // Función para registrar eventos
+        function logEvent(message) {
+            const timestamp = new Date().toLocaleTimeString('es-ES');
+            const logEntry = `[${timestamp}] ${message}`;
+            
+            console.log(logEntry);
+            
+            const logs = adminLog.textContent.split('\n');
+            logs.push(logEntry);
+            if (logs.length > 3) {
+                logs.shift();
+            }
+            adminLog.textContent = logs.join('\n');
+        }
+        
+        // ============================================
+        // FUNCIONES DEL JUEGO DE DAMAS
+        // ============================================
+        
+        // Inicializar el juego
+        function initGame() {
+            createBoard();
+            setupBoard();
+            renderBoard();
+            updateGameInfo();
+            
+            // Agregar eventos
+            newGameBtn.addEventListener('click', newGame);
+            hintBtn.addEventListener('click', showHint);
+            rulesBtn.addEventListener('click', showRules);
+            lockGameBtn.addEventListener('click', lockGame);
+        }
+        
+        // Crear la estructura del tablero
+        function createBoard() {
+            const boardElement = document.getElementById('board');
+            boardElement.innerHTML = '';
+            
+            for (let row = 0; row < 8; row++) {
+                for (let col = 0; col < 8; col++) {
+                    const cell = document.createElement('div');
+                    cell.className = `cell ${(row + col) % 2 === 0 ? 'light' : 'dark'}`;
+                    cell.dataset.row = row;
+                    cell.dataset.col = col;
+                    
+                    // Solo permitir clics en casillas oscuras
+                    if ((row + col) % 2 !== 0) {
+                        cell.addEventListener('click', () => handleCellClick(row, col));
+                    }
+                    
+                    boardElement.appendChild(cell);
+                }
+            }
+        }
+        
+        // Configurar el tablero inicial
+        function setupBoard() {
+            board = [];
+            for (let row = 0; row < 8; row++) {
+                board[row] = [];
+                for (let col = 0; col < 8; col++) {
+                    // Colocar piezas solo en casillas oscuras
+                    if ((row + col) % 2 !== 0) {
+                        if (row < 3) {
+                            board[row][col] = PLAYER2; // Jugador 2 (azul) arriba
+                        } else if (row > 4) {
+                            board[row][col] = PLAYER1; // Jugador 1 (rojo) abajo
+                        } else {
+                            board[row][col] = EMPTY;
+                        }
+                    } else {
+                        board[row][col] = EMPTY;
+                    }
+                }
+            }
+            
+            // Reiniciar variables del juego
+            currentPlayer = PLAYER1;
+            selectedPiece = null;
+            validMoves = [];
+            player1Score = 12;
+            player2Score = 12;
+            gameActive = true;
+            challengeActive = false;
+            timeLeft = 30;
+            clearInterval(timerInterval);
+            hideChallenge();
+        }
+        
+        // Renderizar el tablero
+        function renderBoard() {
+            const cells = document.querySelectorAll('.cell');
+            
+            cells.forEach(cell => {
+                // Limpiar cualquier indicador anterior
+                const existingPiece = cell.querySelector('.piece');
+                const existingIndicator = cell.querySelector('.valid-move-indicator');
+                
+                if (existingPiece) existingPiece.remove();
+                if (existingIndicator) existingIndicator.remove();
+                
+                const row = parseInt(cell.dataset.row);
+                const col = parseInt(cell.dataset.col);
+                const piece = board[row][col];
+                
+                // Solo crear piezas en casillas oscuras
+                if ((row + col) % 2 !== 0 && piece !== EMPTY) {
+                    const pieceElement = document.createElement('div');
+                    pieceElement.className = 'piece';
+                    
+                    if (piece === PLAYER1) {
+                        pieceElement.classList.add('player1');
+                    } else if (piece === PLAYER2) {
+                        pieceElement.classList.add('player2');
+                    } else if (piece === PLAYER1_KING) {
+                        pieceElement.classList.add('player1', 'king');
+                    } else if (piece === PLAYER2_KING) {
+                        pieceElement.classList.add('player2', 'king');
+                    }
+                    
+                    // Marcar pieza seleccionada
+                    if (selectedPiece && selectedPiece.row === row && selectedPiece.col === col) {
+                        pieceElement.classList.add('selected');
+                    }
+                    
+                    if (!challengeActive) {
+                        pieceElement.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            handlePieceClick(row, col);
+                        });
+                    }
+                    
+                    cell.appendChild(pieceElement);
+                }
+                
+                // Mostrar movimientos válidos
+                if (validMoves.some(move => move.row === row && move.col === col)) {
+                    const indicator = document.createElement('div');
+                    indicator.className = 'valid-move-indicator';
+                    cell.appendChild(indicator);
+                    
+                    // Resaltar celda para capturas
+                    const move = validMoves.find(m => m.row === row && m.col === col);
+                    if (move.capture) {
+                        cell.style.boxShadow = 'inset 0 0 0 3px #f44336';
+                    } else {
+                        cell.style.boxShadow = 'inset 0 0 0 3px #4caf50';
+                    }
+                } else {
+                    cell.style.boxShadow = 'none';
+                }
+            });
+        }
+        
+        // Manejar clic en una pieza
+        function handlePieceClick(row, col) {
+            if (!gameActive || challengeActive) return;
+            
+            const piece = board[row][col];
+            
+            // Verificar que la pieza pertenece al jugador actual
+            if ((piece === PLAYER1 || piece === PLAYER1_KING) && currentPlayer !== PLAYER1) return;
+            if ((piece === PLAYER2 || piece === PLAYER2_KING) && currentPlayer !== PLAYER2) return;
+            
+            // Si ya está seleccionada, deseleccionar
+            if (selectedPiece && selectedPiece.row === row && selectedPiece.col === col) {
+                selectedPiece = null;
+                validMoves = [];
+            } else {
+                selectedPiece = { row, col };
+                validMoves = getValidMoves(row, col);
+                
+                // Si hay capturas obligatorias, filtrar solo movimientos de captura
+                const allCaptures = getAllCapturesForPlayer(currentPlayer);
+                if (allCaptures.length > 0) {
+                    // Verificar si esta pieza tiene capturas
+                    const pieceCaptures = validMoves.filter(move => move.capture);
+                    if (pieceCaptures.length > 0) {
+                        validMoves = pieceCaptures;
+                    } else {
+                        selectedPiece = null;
+                        validMoves = [];
+                        showMessage("Debes capturar si es posible. Selecciona otra pieza.", "info");
+                        return;
+                    }
+                }
+                
+                if (validMoves.length === 0) {
+                    showMessage("Esta pieza no tiene movimientos válidos", "info");
+                    selectedPiece = null;
+                }
+            }
+            
+            renderBoard();
+        }
+        
+        // Manejar clic en una celda
+        function handleCellClick(row, col) {
+            if (!gameActive || !selectedPiece || challengeActive) return;
+            
+            // Verificar si el movimiento es válido
+            const move = validMoves.find(m => m.row === row && m.col === col);
+            if (move) {
+                // Guardar el movimiento pendiente
+                pendingMove = {
+                    fromRow: selectedPiece.row,
+                    fromCol: selectedPiece.col,
+                    toRow: row,
+                    toCol: col,
+                    capture: move.capture,
+                    capturedRow: move.capturedRow,
+                    capturedCol: move.capturedCol
+                };
+                
+                // Mostrar desafío intelectual
+                showChallenge();
+            }
+        }
+        
+        // Mostrar desafío intelectual
+        function showChallenge() {
+            challengeActive = true;
+            timeLeft = 30;
+            
+            // Seleccionar categoría aleatoria
+            const category = categories[Math.floor(Math.random() * categories.length)];
+            const categoryQuestions = questions[category];
+            const randomQuestion = categoryQuestions[Math.floor(Math.random() * categoryQuestions.length)];
+            
+            currentChallenge = {
+                category: category,
+                question: randomQuestion.question,
+                options: [...randomQuestion.options],
+                correct: randomQuestion.correct,
+                explanation: randomQuestion.explanation
+            };
+            
+            // Actualizar la interfaz
+            document.getElementById('challenge-container').classList.add('active');
+            
+            // Mostrar categoría
+            const categoryTag = document.getElementById('category-tag');
+            categoryTag.textContent = category.toUpperCase();
+            categoryTag.className = 'category-tag ' + category + '-tag';
+            
+            // Mostrar pregunta
+            document.getElementById('question-text').textContent = currentChallenge.question;
+            
+            // Mostrar opciones
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+            
+            currentChallenge.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
+                optionElement.textContent = `${String.fromCharCode(65 + index)}) ${option}`;
+                optionElement.dataset.index = index;
+                
+                optionElement.addEventListener('click', () => handleAnswer(index));
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            // Iniciar temporizador
+            updateTimerDisplay();
+            timerInterval = setInterval(updateTimer, 1000);
+            
+            showMessage("¡Responde correctamente para realizar tu movimiento!", "question");
+        }
+        
+        // Ocultar desafío
+        function hideChallenge() {
+            document.getElementById('challenge-container').classList.remove('active');
+            challengeActive = false;
+            clearInterval(timerInterval);
+        }
+        
+        // Actualizar temporizador
+        function updateTimer() {
+            timeLeft--;
+            updateTimerDisplay();
+            
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                handleTimeout();
+            }
+        }
+        
+        // Actualizar visualización del temporizador
+        function updateTimerDisplay() {
+            const timerElement = document.getElementById('timer');
+            timerElement.textContent = timeLeft;
+            
+            if (timeLeft <= 10) {
+                timerElement.classList.add('warning');
+            } else {
+                timerElement.classList.remove('warning');
+            }
+        }
+        
+        // Manejar tiempo agotado
+        function handleTimeout() {
+            showMessage("¡Tiempo agotado! Pierdes tu turno.", "error");
+            endTurn();
+        }
+        
+        // Manejar respuesta del usuario
+        function handleAnswer(selectedIndex) {
+            clearInterval(timerInterval);
+            
+            const options = document.querySelectorAll('.option');
+            options.forEach(option => {
+                option.style.pointerEvents = 'none'; // Deshabilitar más clics
+                
+                if (parseInt(option.dataset.index) === currentChallenge.correct) {
+                    option.classList.add('correct');
+                } else if (parseInt(option.dataset.index) === selectedIndex) {
+                    option.classList.add('incorrect');
+                }
+            });
+            
+            // Verificar si la respuesta es correcta
+            if (selectedIndex === currentChallenge.correct) {
+                setTimeout(() => {
+                    showMessage("¡Respuesta correcta! Realizando movimiento...", "info");
+                    executePendingMove();
+                }, 1500);
+            } else {
+                setTimeout(() => {
+                    showMessage(`Incorrecto. ${currentChallenge.explanation} Pierdes tu turno.`, "error");
+                    endTurn();
+                }, 1500);
+            }
+        }
+        
+        // Ejecutar movimiento pendiente
+        function executePendingMove() {
+            if (!pendingMove) return;
+            
+            const { fromRow, fromCol, toRow, toCol, capture, capturedRow, capturedCol } = pendingMove;
+            
+            // Mover la pieza
+            const piece = board[fromRow][fromCol];
+            board[fromRow][fromCol] = EMPTY;
+            board[toRow][toCol] = piece;
+            
+            // Capturar pieza si es necesario
+            if (capture && capturedRow !== undefined && capturedCol !== undefined) {
+                board[capturedRow][capturedCol] = EMPTY;
+                
+                // Actualizar puntuación
+                if (currentPlayer === PLAYER1) {
+                    player2Score--;
+                } else {
+                    player1Score--;
+                }
+                
+                // Verificar si hay capturas múltiples
+                const additionalCaptures = getValidMoves(toRow, toCol).filter(move => move.capture);
+                
+                if (additionalCaptures.length > 0) {
+                    // Permanece el turno del mismo jugador para captura múltiple
+                    selectedPiece = { row: toRow, col: toCol };
+                    validMoves = additionalCaptures;
+                    
+                    hideChallenge();
+                    pendingMove = null;
+                    renderBoard();
+                    updateGameInfo();
+                    
+                    showMessage("¡Captura múltiple! Selecciona otro movimiento o responde otro desafío.", "info");
+                    return;
+                }
+            }
+            
+            // Coronar pieza si llega al extremo opuesto
+            if (piece === PLAYER1 && toRow === 0) {
+                board[toRow][toCol] = PLAYER1_KING;
+            } else if (piece === PLAYER2 && toRow === 7) {
+                board[toRow][toCol] = PLAYER2_KING;
+            }
+            
+            hideChallenge();
+            pendingMove = null;
+            endTurn();
+        }
+        
+        // Finalizar turno
+        function endTurn() {
+            // Cambiar jugador
+            currentPlayer = currentPlayer === PLAYER1 ? PLAYER2 : PLAYER1;
+            
+            // Limpiar selección
+            selectedPiece = null;
+            validMoves = [];
+            
+            setTimeout(() => {
+                hideChallenge();
+                renderBoard();
+                updateGameInfo();
+                checkGameEnd();
+                
+                // Verificar si hay capturas obligatorias para el siguiente jugador
+                const nextPlayerCaptures = getAllCapturesForPlayer(currentPlayer);
+                if (nextPlayerCaptures.length > 0) {
+                    showMessage("El jugador actual tiene capturas obligatorias", "info");
+                }
+            }, 1000);
+        }
+        
+        // Obtener movimientos válidos para una pieza
+        function getValidMoves(row, col) {
+            const piece = board[row][col];
+            const moves = [];
+            
+            if (piece === EMPTY) return moves;
+            
+            const isKing = piece === PLAYER1_KING || piece === PLAYER2_KING;
+            const player = piece === PLAYER1 || piece === PLAYER1_KING ? PLAYER1 : PLAYER2;
+            
+            // Direcciones según el tipo de pieza
+            const directions = [];
+            
+            if (player === PLAYER1 || isKing) {
+                directions.push([-1, -1], [-1, 1]); // Arriba
+            }
+            
+            if (player === PLAYER2 || isKing) {
+                directions.push([1, -1], [1, 1]); // Abajo
+            }
+            
+            // Verificar movimientos simples
+            for (const [dr, dc] of directions) {
+                const newRow = row + dr;
+                const newCol = col + dc;
+                
+                if (isValidPosition(newRow, newCol) && board[newRow][newCol] === EMPTY) {
+                    moves.push({ row: newRow, col: newCol, capture: false });
+                }
+            }
+            
+            // Verificar capturas
+            for (const [dr, dc] of directions) {
+                const jumpRow = row + dr;
+                const jumpCol = col + dc;
+                const landRow = row + 2 * dr;
+                const landCol = col + 2 * dc;
+                
+                if (isValidPosition(jumpRow, jumpCol) && isValidPosition(landRow, landCol)) {
+                    const jumpedPiece = board[jumpRow][jumpCol];
+                    const isOpponentPiece = 
+                        (player === PLAYER1 && (jumpedPiece === PLAYER2 || jumpedPiece === PLAYER2_KING)) ||
+                        (player === PLAYER2 && (jumpedPiece === PLAYER1 || jumpedPiece === PLAYER1_KING));
+                    
+                    if (isOpponentPiece && board[landRow][landCol] === EMPTY) {
+                        moves.push({ 
+                            row: landRow, 
+                            col: landCol, 
+                            capture: true, 
+                            capturedRow: jumpRow, 
+                            capturedCol: jumpCol 
+                        });
+                    }
+                }
+            }
+            
+            return moves;
+        }
+        
+        // Obtener todas las capturas posibles para un jugador
+        function getAllCapturesForPlayer(player) {
+            const captures = [];
+            
+            for (let row = 0; row < 8; row++) {
+                for (let col = 0; col < 8; col++) {
+                    const piece = board[row][col];
+                    
+                    if (piece !== EMPTY) {
+                        const isPlayerPiece = 
+                            (player === PLAYER1 && (piece === PLAYER1 || piece === PLAYER1_KING)) ||
+                            (player === PLAYER2 && (piece === PLAYER2 || piece === PLAYER2_KING));
+                        
+                        if (isPlayerPiece) {
+                            const moves = getValidMoves(row, col);
+                            const pieceCaptures = moves.filter(move => move.capture);
+                            captures.push(...pieceCaptures);
+                        }
+                    }
+                }
+            }
+            
+            return captures;
+        }
+        
+        // Verificar si la posición está dentro del tablero
+        function isValidPosition(row, col) {
+            return row >= 0 && row < 8 && col >= 0 && col < 8;
+        }
+        
+        // Verificar fin del juego
+        function checkGameEnd() {
+            // Verificar si algún jugador no tiene piezas
+            if (player1Score === 0) {
+                endGame(PLAYER2, "¡Jugador Azul gana! Has demostrado gran conocimiento.");
+                return;
+            }
+            
+            if (player2Score === 0) {
+                endGame(PLAYER1, "¡Jugador Rojo gana! Has demostrado gran conocimiento.");
+                return;
+            }
+            
+            // Verificar si el jugador actual tiene movimientos posibles
+            let hasValidMoves = false;
+            
+            for (let row = 0; row < 8; row++) {
+                for (let col = 0; col < 8; col++) {
+                    const piece = board[row][col];
+                    
+                    if (piece !== EMPTY) {
+                        const isPlayerPiece = 
+                            (currentPlayer === PLAYER1 && (piece === PLAYER1 || piece === PLAYER1_KING)) ||
+                            (currentPlayer === PLAYER2 && (piece === PLAYER2 || piece === PLAYER2_KING));
+                        
+                        if (isPlayerPiece && getValidMoves(row, col).length > 0) {
+                            hasValidMoves = true;
+                            break;
+                        }
+                    }
+                }
+                
+                if (hasValidMoves) break;
+            }
+            
+            if (!hasValidMoves) {
+                const winner = currentPlayer === PLAYER1 ? PLAYER2 : PLAYER1;
+                const winnerName = winner === PLAYER1 ? "Rojo" : "Azul";
+                endGame(winner, `¡Jugador ${winnerName} gana! El oponente no tiene movimientos.`);
+            }
+        }
+        
+        // Finalizar el juego
+        function endGame(winner, message) {
+            gameActive = false;
+            showMessage(message, "win");
+            
+            // Deshabilitar interacción con el tablero
+            const cells = document.querySelectorAll('.cell');
+            cells.forEach(cell => {
+                cell.replaceWith(cell.cloneNode(true));
+            });
+            
+            // Deshabilitar selección de piezas
+            const pieces = document.querySelectorAll('.piece');
+            pieces.forEach(piece => {
+                piece.style.cursor = 'default';
+                piece.replaceWith(piece.cloneNode(true));
+            });
+            
+            hideChallenge();
+        }
+        
+        // Mostrar mensaje
+        function showMessage(text, type) {
+            gameMessage.textContent = text;
+            gameMessage.className = `message ${type} show`;
+            
+            setTimeout(() => {
+                gameMessage.classList.remove('show');
+            }, 4000);
+        }
+        
+        // Mostrar pista
+        function showHint() {
+            if (!gameActive || challengeActive) return;
+            
+            // Reducir tiempo en 10 segundos
+            if (timeLeft > 10) {
+                timeLeft -= 10;
+                updateTimerDisplay();
+                showMessage("Se redujo el tiempo en 10 segundos", "info");
+            } else {
+                showMessage("El tiempo ya es muy corto", "info");
+            }
+        }
+        
+        // Mostrar reglas del juego
+        function showRules() {
+            const rules = `
+                <strong>REGLAS DEL JUEGO DE DAMAS DEL CONOCIMIENTO:</strong><br><br>
+                <strong>1. MOVIMIENTO DE PIEZAS:</strong><br>
+                - Las piezas rojas (jugador 1) se mueven diagonalmente hacia arriba.<br>
+                - Las piezas azules (jugador 2) se mueven diagonalmente hacia abajo.<br>
+                - Las damas (reyes) pueden moverse en cualquier dirección diagonal.<br><br>
+                
+                <strong>2. CAPTURAS:</strong><br>
+                - Para capturar, debes saltar sobre una pieza enemiga a una casilla vacía.<br>
+                - La captura es obligatoria: si puedes capturar, debes hacerlo.<br>
+                - Las capturas múltiples en un solo turno son posibles.<br><br>
+                
+                <strong>3. CORONACIÓN:</strong><br>
+                - Una pieza se convierte en dama al llegar al extremo opuesto del tablero.<br><br>
+                
+                <strong>4. DESAFÍOS INTELECTUALES:</strong><br>
+                - Para mover una pieza, debes responder correctamente una pregunta.<br>
+                - Tienes 30 segundos para responder cada pregunta.<br>
+                - Si fallas o se agota el tiempo, pierdes tu turno.<br>
+                - Las preguntas son de: Biología, Química, Física, Programación, Medicina y Matemáticas.<br><br>
+                
+                <strong>5. VICTORIA:</strong><br>
+                - Gana el jugador que capture todas las piezas del oponente.<br>
+                - También ganas si bloqueas todos los movimientos del oponente.<br>
+            `;
+            
+            alert(rules);
+        }
+        
+        // Actualizar información del juego
+        function updateGameInfo() {
+            // Actualizar turno
+            if (currentPlayer === PLAYER1) {
+                turnText.innerHTML = 'Turno de: <strong>Rojo</strong>';
+                turnIndicator.className = 'player-icon player1-icon';
+            } else {
+                turnText.innerHTML = 'Turno de: <strong>Azul</strong>';
+                turnIndicator.className = 'player-icon player2-icon';
+            }
+            
+            // Actualizar puntuaciones
+            player1ScoreElement.textContent = player1Score;
+            player2ScoreElement.textContent = player2Score;
+        }
+        
+        // Nuevo juego
+        function newGame() {
+            if (confirm("¿Estás seguro de que quieres comenzar un nuevo juego? Se perderá el progreso actual.")) {
+                setupBoard();
+                renderBoard();
+                updateGameInfo();
+                showMessage("Nuevo juego comenzado. ¡Demuestra tu conocimiento!", "info");
+            }
+        }
+        
+        // ============================================
+        // EVENT LISTENERS Y CONFIGURACIÓN INICIAL
+        // ============================================
+        
+        // Event Listeners del sistema de control
+        accessButton.addEventListener('click', checkPassword);
+        passwordInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+        
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', () => {
+            getLocationInfo();
+            updateClock();
+            setInterval(updateClock, 1000);
+            
+            if (isWithinAllowedHours() && !isTimeManipulated) {
+                unlockGame();
+            }
+            
+            setInterval(() => {
+                if (detectTimeManipulation()) {
+                    isTimeManipulated = true;
+                    timeWarningEl.style.display = 'block';
+                    lockGame();
+                }
+            }, 30000);
+            
+            logEvent('🔐 Sistema de control de acceso iniciado');
+        });
+        
+        // Protección básica
+        document.addEventListener('contextmenu', (e) => e.preventDefault());
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+                e.preventDefault();
+                logEvent('🛡️ Intento de acceso a herramientas de desarrollo bloqueado');
+                return false;
+            }
+        });
+    </script>
+</body>
+</html>

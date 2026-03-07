@@ -1,0 +1,2787 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACADEMIC RACER PRO - Control de Acceso</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0a1128;
+            --secondary: #001f54;
+            --accent: #034078;
+            --highlight: #1282a2;
+            --success: #00a676;
+            --danger: #ff4d6d;
+            --warning: #ffbd00;
+            --player1: #4cc9f0;
+            --player2: #f72585;
+            --track: #1b4332;
+            --road: #2d6a4f;
+            --asphalt: #343a40;
+            --grass: #40916c;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(to right, #2c3e50, #34495e);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+            position: relative;
+            transition: background 0.5s ease;
+            
+   border-radius: 10px;
+  max-width: 900px;
+  margin: 90px auto;
+        }
+        
+        body.game-active {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1600px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            color: #ff6b6b;
+        }
+        
+        .access-denied {
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .access-denied h2 {
+            font-size: 2rem;
+            color: #ff6b6b;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .access-denied p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            color: #ecf0f1;
+        }
+        
+        .clock-container {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: center;
+            border: 2px solid #3498db;
+        }
+        
+        .current-time {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: #3498db;
+            font-family: 'Courier New', monospace;
+            text-shadow: 0 0 10px rgba(52, 152, 219, 0.5);
+            margin-bottom: 1rem;
+        }
+        
+        .access-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .info-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border-left: 4px solid #3498db;
+        }
+        
+        .info-card h3 {
+            color: #3498db;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .info-card p {
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+        
+        .access-form {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+            border: 2px solid #9b59b6;
+        }
+        
+        .access-form h3 {
+            text-align: center;
+            color: #9b59b6;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .password-input {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.2rem;
+            border: 2px solid #9b59b6;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-align: center;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+        
+        .password-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .access-button {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            background: linear-gradient(to right, #9b59b6, #e74c3c);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .access-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(155, 89, 182, 0.4);
+        }
+        
+        .attempts-counter {
+            text-align: center;
+            margin-top: 1rem;
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .warning {
+            background: rgba(231, 76, 60, 0.2);
+            border: 2px solid #e74c3c;
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
+            text-align: center;
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .security-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(231, 76, 60, 0.2);
+            border: 1px solid #e74c3c;
+            border-radius: 8px;
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            color: #e74c3c;
+        }
+        
+        .game-container {
+            width: 100%;
+            max-width: 1600px;
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background: rgba(52, 152, 219, 0.8);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .back-button:hover {
+            background: rgba(41, 128, 185, 0.9);
+            transform: translateX(-3px);
+        }
+        
+        .admin-log {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.3);
+            font-family: monospace;
+        }
+        
+        /* =========================================== */
+        /* ESTILOS DEL JUEGO ACADEMIC RACER PRO */
+        /* =========================================== */
+        
+        .game-header {
+            width: 100%;
+            background: rgba(0, 31, 84, 0.8);
+            border-radius: 20px;
+            padding: 25px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 3px solid var(--highlight);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .game-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--player1), var(--player2), var(--highlight));
+        }
+        
+        .game-title {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .game-title h1 {
+            font-size: 2.8rem;
+            background: linear-gradient(to right, var(--player1), var(--player2));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            letter-spacing: 1px;
+        }
+        
+        .game-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+        }
+        
+        .header-stats {
+            display: flex;
+            gap: 25px;
+        }
+        
+        .stat-box {
+            text-align: center;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            min-width: 120px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 5px;
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--highlight);
+        }
+        
+        /* MAIN GAME LAYOUT */
+        .game-main {
+            display: grid;
+            grid-template-columns: 2.5fr 1fr;
+            gap: 30px;
+            width: 100%;
+        }
+        
+        @media (max-width: 1200px) {
+            .game-main {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* RACE TRACK - PROFESIONAL */
+        .race-section {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 2px solid var(--accent);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .track-container {
+            position: relative;
+            height: 500px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 25px;
+            border: 10px solid #5a3921;
+            background: linear-gradient(to bottom, #87CEEB, #E0F7FA);
+            box-shadow: 
+                inset 0 0 50px rgba(0, 0, 0, 0.5),
+                0 10px 40px rgba(0, 0, 0, 0.6);
+        }
+        
+        /* LANDSCAPE PROFESIONAL */
+        .sky {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 40%;
+            background: linear-gradient(to bottom, #87CEEB, #B3E5FC);
+            z-index: 1;
+        }
+        
+        .cloud {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.9;
+        }
+        
+        .cloud-1 { top: 20%; left: 10%; width: 100px; height: 40px; }
+        .cloud-2 { top: 15%; right: 20%; width: 120px; height: 50px; }
+        .cloud-3 { top: 30%; left: 40%; width: 80px; height: 30px; }
+        
+        .mountains {
+            position: absolute;
+            bottom: 40%;
+            width: 100%;
+            height: 30%;
+            z-index: 2;
+        }
+        
+        .mountain {
+            position: absolute;
+            bottom: 0;
+            background: linear-gradient(to top, #4a6741, #2d6a4f);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        }
+        
+        .mountain-1 { left: 10%; width: 200px; height: 150px; }
+        .mountain-2 { left: 30%; width: 250px; height: 180px; }
+        .mountain-3 { right: 20%; width: 180px; height: 130px; }
+        
+        .city-background {
+            position: absolute;
+            bottom: 30%;
+            width: 100%;
+            height: 20%;
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            z-index: 3;
+        }
+        
+        .city-building {
+            background: linear-gradient(to top, #212121, #37474f);
+            position: relative;
+            border-radius: 5px 5px 0 0;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+        }
+        
+        .city-building:nth-child(1) { width: 60px; height: 100px; }
+        .city-building:nth-child(2) { width: 80px; height: 140px; }
+        .city-building:nth-child(3) { width: 100px; height: 180px; }
+        .city-building:nth-child(4) { width: 70px; height: 120px; }
+        .city-building:nth-child(5) { width: 90px; height: 160px; }
+        
+        .road {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 30%;
+            background: var(--asphalt);
+            z-index: 4;
+        }
+        
+        .road-lines {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            height: 10px;
+            display: flex;
+            justify-content: space-around;
+            transform: translateY(-50%);
+        }
+        
+        .road-line {
+            width: 60px;
+            height: 5px;
+            background: white;
+        }
+        
+        .road-shoulder {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 20px;
+            background: var(--grass);
+        }
+        
+        /* CARS PROFESIONALES */
+        .car-container {
+            position: absolute;
+            bottom: 50px;
+            left: 50px;
+            width: 120px;
+            height: 60px;
+            z-index: 10;
+            transition: left 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform-origin: center;
+        }
+        
+        #car1 {
+            bottom: 80px;
+        }
+        
+        #car2 {
+            bottom: 20px;
+        }
+        
+        .car-body {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            border-radius: 10px 20px 10px 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        #car1 .car-body {
+            background: linear-gradient(135deg, var(--player1), #0096c7);
+            box-shadow: 
+                0 5px 20px rgba(76, 201, 240, 0.5),
+                inset 0 0 20px rgba(255, 255, 255, 0.3);
+            border: 3px solid #90e0ef;
+        }
+        
+        #car2 .car-body {
+            background: linear-gradient(135deg, var(--player2), #b5179e);
+            box-shadow: 
+                0 5px 20px rgba(247, 37, 133, 0.5),
+                inset 0 0 20px rgba(255, 255, 255, 0.3);
+            border: 3px solid #f48c06;
+        }
+        
+        .car-window {
+            position: absolute;
+            top: 10px;
+            width: 60%;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 5px;
+        }
+        
+        .car-details {
+            position: absolute;
+            bottom: 5px;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+        }
+        
+        .car-light {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #ffbd00;
+            box-shadow: 0 0 10px #ffbd00;
+        }
+        
+        .car-exhaust {
+            width: 15px;
+            height: 8px;
+            background: #333;
+            border-radius: 2px;
+            position: absolute;
+            right: -10px;
+            bottom: 10px;
+        }
+        
+        .car-number {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .car-speed {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            font-weight: bold;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 2px 8px;
+            border-radius: 5px;
+            white-space: nowrap;
+        }
+        
+        /* FINISH LINE PROFESIONAL */
+        .finish-line {
+            position: absolute;
+            right: 100px;
+            top: 0;
+            bottom: 0;
+            width: 15px;
+            background: repeating-linear-gradient(
+                to bottom,
+                white,
+                white 20px,
+                black 20px,
+                black 40px
+            );
+            z-index: 5;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+        
+        .finish-flag {
+            position: absolute;
+            right: 115px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 3.5rem;
+            color: #ff0000;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+            z-index: 6;
+            animation: wave 2s infinite alternate;
+        }
+        
+        @keyframes wave {
+            0% { transform: translateY(-50%) rotate(-5deg); }
+            100% { transform: translateY(-50%) rotate(5deg); }
+        }
+        
+        /* TRACK ELEMENTS */
+        .grandstand {
+            position: absolute;
+            right: 250px;
+            bottom: 30%;
+            width: 150px;
+            height: 100px;
+            background: linear-gradient(to bottom, #6c757d, #495057);
+            border-radius: 10px 10px 0 0;
+            display: grid;
+            grid-template-rows: repeat(3, 1fr);
+            padding: 5px;
+            gap: 2px;
+        }
+        
+        .grandstand-row {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 1px;
+        }
+        
+        .spectator {
+            background: var(--danger);
+            border-radius: 2px;
+        }
+        
+        .spectator:nth-child(2n) {
+            background: var(--warning);
+        }
+        
+        /* PLAYER CONTROLS PROFESIONAL */
+        .players-dashboard {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .player-panel {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            border: 2px solid;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #panel1 {
+            border-color: var(--player1);
+        }
+        
+        #panel2 {
+            border-color: var(--player2);
+        }
+        
+        .player-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .player-name {
+            font-size: 1.4rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .player-stats {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+        
+        .player-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .game-btn {
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        #action1 {
+            background: linear-gradient(135deg, var(--player1), #0077b6);
+            color: white;
+        }
+        
+        #action2 {
+            background: linear-gradient(135deg, var(--player2), #9d0208);
+            color: white;
+        }
+        
+        .game-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .game-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        /* GAME CONTROLS */
+        .game-controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 25px;
+        }
+        
+        .control-button {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 180px;
+            justify-content: center;
+        }
+        
+        #startRace {
+            background: linear-gradient(135deg, var(--success), #007f5f);
+            color: white;
+        }
+        
+        #pauseRace {
+            background: linear-gradient(135deg, var(--warning), #e85d04);
+            color: white;
+        }
+        
+        #resetRace {
+            background: linear-gradient(135deg, #6c757d, #495057);
+            color: white;
+        }
+        
+        /* SIDEBAR PROFESIONAL */
+        .game-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        
+        .sidebar-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 25px;
+            border: 2px solid var(--accent);
+            backdrop-filter: blur(10px);
+        }
+        
+        .card-title {
+            font-size: 1.5rem;
+            color: var(--highlight);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* QUESTION CARD */
+        .question-display {
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .question-text {
+            font-size: 1.3rem;
+            line-height: 1.5;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .answers-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+        
+        .answer-option {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .answer-option:hover:not(.disabled) {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateX(5px);
+        }
+        
+        .answer-letter {
+            width: 30px;
+            height: 30px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .answer-option.correct {
+            background: rgba(0, 166, 118, 0.3);
+            border-color: var(--success);
+        }
+        
+        .answer-option.incorrect {
+            background: rgba(255, 77, 109, 0.3);
+            border-color: var(--danger);
+        }
+        
+        /* INFO CARD */
+        .info-content {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .info-label {
+            opacity: 0.8;
+        }
+        
+        .info-value {
+            font-weight: bold;
+            color: var(--highlight);
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--player1), var(--player2));
+            border-radius: 4px;
+            transition: width 0.5s;
+        }
+        
+        /* STATUS BAR */
+        .game-status {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 2px solid var(--accent);
+            text-align: center;
+            font-size: 1.2rem;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .status-indicator {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--highlight);
+            animation: pulse 2s infinite;
+        }
+        
+        /* POWER-UPS */
+        .powerups-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .powerup {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .powerup:hover {
+            transform: scale(1.1);
+        }
+        
+        .powerup-tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        
+        .powerup:hover .powerup-tooltip {
+            opacity: 1;
+        }
+        
+        .powerup-speed { background: linear-gradient(135deg, #ff9e00, #ff5400); }
+        .powerup-knowledge { background: linear-gradient(135deg, #00b4d8, #0077b6); }
+        .powerup-time { background: linear-gradient(135deg, #9d4edd, #560bad); }
+        
+        /* ANIMATIONS */
+        @keyframes nitro {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+        
+        .nitro-effect {
+            position: absolute;
+            right: -20px;
+            bottom: 15px;
+            width: 40px;
+            height: 20px;
+            background: linear-gradient(90deg, #ff5400, transparent);
+            border-radius: 50%;
+            animation: nitro 0.3s infinite;
+            display: none;
+        }
+        
+        .car-container.accelerating .nitro-effect {
+            display: block;
+        }
+        
+        /* TUTORIAL */
+        .tutorial-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .tutorial-content {
+            max-width: 800px;
+            background: var(--secondary);
+            padding: 40px;
+            border-radius: 20px;
+            border: 3px solid var(--highlight);
+        }
+        
+        .tutorial-title {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: var(--player1);
+        }
+        
+        .tutorial-steps {
+            text-align: left;
+            margin: 30px 0;
+            line-height: 1.8;
+        }
+        
+        .tutorial-button {
+            padding: 15px 40px;
+            background: linear-gradient(135deg, var(--success), #007f5f);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        
+        /* LOADING */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+        
+        .loader {
+            width: 80px;
+            height: 80px;
+            border: 5px solid rgba(255, 255, 255, 0.1);
+            border-top-color: var(--player1);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 30px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .back-container {
+            margin: 20px;
+            text-align: center;
+        }
+        
+        .back-btn {
+            display: inline-block;
+            padding: 12px 22px;
+            background: linear-gradient(135deg, #6dd5fa, #ffffff);
+            color: #000;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 10px;
+            border: 2px solid #6dd5fa;
+            transition: all 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            background: linear-gradient(135deg, #ffffff, #6dd5fa);
+            transform: translateX(-5px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+        }
+        
+        @media (max-width: 1400px) {
+            .game-header {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .header-stats {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .players-dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .game-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .control-button {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+        
+        /* FOOTER */
+        .game-footer {
+            width: 100%;
+            text-align: center;
+            padding: 25px;
+            margin-top: 30px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            border-top: 3px solid var(--highlight);
+        }
+    </style>
+</head>
+<body>
+    <a href="inicioeljuegoeducativo.html" class="back-button">⬅ Volver</a>
+    
+    <div class="security-badge">🔒 SISTEMA PROTEGIDO</div>
+    
+    <!-- PANTALLA DE ACCESO DENEGADO -->
+    <div class="container" id="access-container">
+        <div class="header">
+            <h1>JUEGO NO DISPONIBLE</h1>
+            <p>El acceso está restringido exclusivamente al horario establecido.</p>
+            <p>Vuelve durante el período permitido para disfrutar del juego.</p>
+        </div>
+        
+        <div class="clock-container">
+            <div class="current-time" id="current-time">00:00:00</div>
+            <div id="time-status"></div>
+        </div>
+        
+        <div class="warning" id="time-warning" style="display: none;">
+            ⚠️ DETECTADO: Intento de modificación de hora. Acceso bloqueado.
+        </div>
+        
+        <div class="access-info">
+            <div class="info-card">
+                <h3>⏰ Horario de acceso permitido:</h3>
+                <p>🕕 18:00 - 21:00 (Hora local)</p>
+            </div>
+            
+            <div class="info-card">
+                <h3>⌛ Próximo acceso en:</h3>
+                <p id="next-access">Calculando...</p>
+            </div>
+        </div>
+        
+        <div class="access-info">
+            <div class="info-card">
+                <h3>🌍 PAÍS</h3>
+                <p id="country">Detectando...</p>
+            </div>
+            
+            <div class="info-card">
+                <h3>📍 REGIÓN</h3>
+                <p id="region">Detectando...</p>
+            </div>
+            
+            <div class="info-card">
+                <h3>🏙️ CIUDAD</h3>
+                <p id="city">Detectando...</p>
+            </div>
+        </div>
+        
+        <div class="access-info">
+            <div class="info-card">
+                <h3>⏰ ZONA HORARIA</h3>
+                <p id="timezone">Detectando...</p>
+            </div>
+            
+            <div class="info-card">
+                <h3>🌐 IP PÚBLICA</h3>
+                <p id="ip">Detectando...</p>
+            </div>
+        </div>
+        
+        <div class="access-form">
+            <h3>👑 ACCESO EXCLUSIVO TITULAR</h3>
+            <p style="text-align: center; margin-bottom: 1.5rem; color: #ecf0f1;">
+                Si eres el titular autorizado, ingresa la contraseña especial para acceder fuera del horario establecido.
+            </p>
+            
+            <input type="password" 
+                   class="password-input" 
+                   id="password-input" 
+                   placeholder="Contraseña de acceso"
+                   maxlength="20">
+            
+            <button class="access-button" id="access-button">🚀 ACCEDER COMO TITULAR</button>
+            
+            <div class="attempts-counter" id="attempts-counter">
+                🔑 Intentos disponibles: 3
+            </div>
+        </div>
+    </div>
+    
+    <!-- JUEGO ACADEMIC RACER PRO (OCULTO INICIALMENTE) -->
+    <div class="game-container" id="game-container" style="display: none;">
+        <!-- LOADING SCREEN -->
+        <div class="loading-screen" id="loadingScreen">
+            <div class="loader"></div>
+            <h2>CARGANDO ACADEMIC RACER PRO...</h2>
+            <p>Inicializando motores de conocimiento...</p>
+        </div>
+
+        <!-- TUTORIAL OVERLAY -->
+        <div class="tutorial-overlay" id="tutorialOverlay">
+            <div class="tutorial-content">
+                <h1 class="tutorial-title">¡BIENVENIDO A ACADEMIC RACER PRO!</h1>
+                <p style="font-size: 1.2rem; margin-bottom: 30px;">El juego de carreras educativo más avanzado</p>
+                
+                <div class="tutorial-steps">
+                    <p><strong>🎯 OBJETIVO:</strong> Llegar primero a la meta respondiendo preguntas educativas</p>
+                    <p><strong>👥 JUGADORES:</strong> 2 jugadores compiten por turnos</p>
+                    <p><strong>🎮 CONTROLES:</strong> Cada jugador tiene su propio panel de control</p>
+                    <p><strong>📚 PREGUNTAS:</strong> Matemáticas, Ciencias, Historia, Geografía y más</p>
+                    <p><strong>⚡ POWER-UPS:</strong> Usa mejoras para ganar ventaja en la carrera</p>
+                    <p><strong>🏆 VICTORIA:</strong> Responde correctamente y administra tus recursos</p>
+                </div>
+                
+                <button class="tutorial-button" id="startTutorial">¡COMENZAR CARRERA!</button>
+            </div>
+        </div>
+
+        <div class="container">
+            <!-- HEADER -->
+            <header class="game-header">
+                <div class="game-title">
+                    <h1><i class="fas fa-trophy"></i> ACADEMIC RACER PRO</h1>
+                    <p class="game-subtitle">Competencia educativa de alta velocidad - Conocimiento vs Velocidad</p>
+                </div>
+                
+                <div class="header-stats">
+                    <div class="stat-box">
+                        <div class="stat-label">VELOCIDAD MÁXIMA</div>
+                        <div class="stat-value" id="maxSpeed">0 km/h</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">RÉCORD PISTA</div>
+                        <div class="stat-value" id="trackRecord">0s</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">NIVEL</div>
+                        <div class="stat-value" id="gameLevel">1</div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- MAIN GAME AREA -->
+            <div class="game-main">
+                <!-- RACE TRACK SECTION -->
+                <section class="race-section">
+                    <div class="track-container" id="trackContainer">
+                        <!-- Sky and Clouds -->
+                        <div class="sky">
+                            <div class="cloud cloud-1"></div>
+                            <div class="cloud cloud-2"></div>
+                            <div class="cloud cloud-3"></div>
+                        </div>
+                        
+                        <!-- Mountains -->
+                        <div class="mountains">
+                            <div class="mountain mountain-1"></div>
+                            <div class="mountain mountain-2"></div>
+                            <div class="mountain mountain-3"></div>
+                        </div>
+                        
+                        <!-- City Background -->
+                        <div class="city-background">
+                            <div class="city-building"></div>
+                            <div class="city-building"></div>
+                            <div class="city-building"></div>
+                            <div class="city-building"></div>
+                            <div class="city-building"></div>
+                        </div>
+                        
+                        <!-- Road -->
+                        <div class="road">
+                            <div class="road-shoulder"></div>
+                            <div class="road-lines">
+                                <div class="road-line"></div>
+                                <div class="road-line"></div>
+                                <div class="road-line"></div>
+                                <div class="road-line"></div>
+                                <div class="road-line"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Grandstand -->
+                        <div class="grandstand">
+                            <div class="grandstand-row"></div>
+                            <div class="grandstand-row"></div>
+                            <div class="grandstand-row"></div>
+                        </div>
+                        
+                        <!-- Finish Line -->
+                        <div class="finish-line"></div>
+                        <div class="finish-flag">
+                            <i class="fas fa-flag-checkered"></i>
+                        </div>
+                        
+                        <!-- Cars -->
+                        <div class="car-container" id="car1">
+                            <div class="car-body">
+                                <div class="car-window"></div>
+                                <div class="car-details">
+                                    <div class="car-light"></div>
+                                    <div class="car-light"></div>
+                                </div>
+                                <div class="car-exhaust"></div>
+                                <div class="car-number">#01</div>
+                                <div class="car-speed" id="speed1">0 km/h</div>
+                                <div class="nitro-effect"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="car-container" id="car2">
+                            <div class="car-body">
+                                <div class="car-window"></div>
+                                <div class="car-details">
+                                    <div class="car-light"></div>
+                                    <div class="car-light"></div>
+                                </div>
+                                <div class="car-exhaust"></div>
+                                <div class="car-number">#02</div>
+                                <div class="car-speed" id="speed2">0 km/h</div>
+                                <div class="nitro-effect"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- PLAYERS DASHBOARD -->
+                    <div class="players-dashboard">
+                        <div class="player-panel" id="panel1">
+                            <div class="player-header">
+                                <div class="player-name">
+                                    <i class="fas fa-user"></i> JUGADOR 1
+                                </div>
+                                <div class="player-stats">
+                                    <div class="stat">
+                                        <div class="stat-value" id="score1">0</div>
+                                        <div class="stat-label">PUNTOS</div>
+                                    </div>
+                                    <div class="stat">
+                                        <div class="stat-value" id="correct1">0</div>
+                                        <div class="stat-label">ACIERTOS</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="player-actions">
+                                <button class="game-btn" id="action1" disabled>
+                                    <i class="fas fa-play-circle"></i> RESPONDER PREGUNTA
+                                </button>
+                                
+                                <div class="powerups-container">
+                                    <div class="powerup powerup-speed" onclick="usePowerUp(1, 'speed')">
+                                        <i class="fas fa-bolt"></i>
+                                        <div class="powerup-tooltip">NITRO BOOST (+50% velocidad)</div>
+                                    </div>
+                                    <div class="powerup powerup-knowledge" onclick="usePowerUp(1, 'knowledge')">
+                                        <i class="fas fa-brain"></i>
+                                        <div class="powerup-tooltip">DOBLE CONOCIMIENTO (x2 puntos)</div>
+                                    </div>
+                                    <div class="powerup powerup-time" onclick="usePowerUp(1, 'time')">
+                                        <i class="fas fa-clock"></i>
+                                        <div class="powerup-tooltip">TIEMPO EXTRA (+10 segundos)</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="player-panel" id="panel2">
+                            <div class="player-header">
+                                <div class="player-name">
+                                    <i class="fas fa-user"></i> JUGADOR 2
+                                </div>
+                                <div class="player-stats">
+                                    <div class="stat">
+                                        <div class="stat-value" id="score2">0</div>
+                                        <div class="stat-label">PUNTOS</div>
+                                    </div>
+                                    <div class="stat">
+                                        <div class="stat-value" id="correct2">0</div>
+                                        <div class="stat-label">ACIERTOS</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="player-actions">
+                                <button class="game-btn" id="action2" disabled>
+                                    <i class="fas fa-play-circle"></i> RESPONDER PREGUNTA
+                                </button>
+                                
+                                <div class="powerups-container">
+                                    <div class="powerup powerup-speed" onclick="usePowerUp(2, 'speed')">
+                                        <i class="fas fa-bolt"></i>
+                                        <div class="powerup-tooltip">NITRO BOOST (+50% velocidad)</div>
+                                    </div>
+                                    <div class="powerup powerup-knowledge" onclick="usePowerUp(2, 'knowledge')">
+                                        <i class="fas fa-brain"></i>
+                                        <div class="powerup-tooltip">DOBLE CONOCIMIENTO (x2 puntos)</div>
+                                    </div>
+                                    <div class="powerup powerup-time" onclick="usePowerUp(2, 'time')">
+                                        <i class="fas fa-clock"></i>
+                                        <div class="powerup-tooltip">TIEMPO EXTRA (+10 segundos)</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- GAME CONTROLS -->
+                    <div class="game-controls">
+                        <button class="control-button" id="startRace">
+                            <i class="fas fa-flag-checkered"></i> INICIAR CARRERA
+                        </button>
+                        <button class="control-button" id="pauseRace" disabled>
+                            <i class="fas fa-pause"></i> PAUSAR
+                        </button>
+                        <button class="control-button" id="resetRace" disabled>
+                            <i class="fas fa-redo"></i> REINICIAR
+                        </button>
+                    </div>
+                    
+                    <!-- GAME STATUS -->
+                    <div class="game-status" id="gameStatus">
+                        <div class="status-indicator"></div>
+                        <div id="statusText">PREPARADO PARA INICIAR CARRERA</div>
+                    </div>
+                </section>
+        
+                <!-- SIDEBAR -->
+                <aside class="game-sidebar">
+                    <!-- QUESTION CARD -->
+                    <div class="sidebar-card">
+                        <h3 class="card-title">
+                            <i class="fas fa-question-circle"></i> DESAFÍO ACTUAL
+                        </h3>
+                        
+                        <div class="question-display">
+                            <div class="question-text" id="questionText">
+                                Esperando inicio de carrera...
+                            </div>
+                            
+                            <div class="answers-grid" id="answersGrid">
+                                <!-- Answers will be inserted here -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- INFO CARD -->
+                    <div class="sidebar-card">
+                        <h3 class="card-title">
+                            <i class="fas fa-chart-line"></i> ESTADÍSTICAS
+                        </h3>
+                        
+                        <div class="info-content">
+                            <div class="info-item">
+                                <span class="info-label">DISTANCIA RECORRIDA:</span>
+                                <span class="info-value" id="distanceTraveled">0%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="distanceProgress" style="width: 0%"></div>
+                            </div>
+                            
+                            <div class="info-item">
+                                <span class="info-label">TURNO ACTUAL:</span>
+                                <span class="info-value" id="currentTurn">-</span>
+                            </div>
+                            
+                            <div class="info-item">
+                                <span class="info-label">TIEMPO:</span>
+                                <span class="info-value" id="gameTime">00:00</span>
+                            </div>
+                            
+                            <div class="info-item">
+                                <span class="info-label">PREGUNTAS RESTANTES:</span>
+                                <span class="info-value" id="questionsLeft">50</span>
+                            </div>
+                            
+                            <div class="info-item">
+                                <span class="info-label">DIFICULTAD:</span>
+                                <span class="info-value" id="currentDifficulty">EXTREMA</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- POWER-UPS CARD -->
+                    <div class="sidebar-card">
+                        <h3 class="card-title">
+                            <i class="fas fa-rocket"></i> MEJORAS ACTIVAS
+                        </h3>
+                        
+                        <div class="info-content" id="activePowerups">
+                            <p style="text-align: center; opacity: 0.7; padding: 20px;">
+                                Ninguna mejora activa
+                            </p>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+            
+            <div class="back-container">
+                <a href="inicioeljuegoeducativo.html" class="back-btn">⬅ Volver al Menú Principal</a>
+            </div>
+            
+            <div class="game-footer">
+                <p class="footer-text">ACADEMIC RACER PRO © 2023 | Conocimiento a máxima velocidad</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="admin-log" id="admin-log"></div>
+
+    <script>
+        // ============================================
+        // SISTEMA DE CONTROL DE HORARIO
+        // ============================================
+        
+        // Configuración del sistema
+        const ACCESS_PASSWORD = "motiva2026"; // Solo el programador sabe esta contraseña
+        const ALLOWED_START_HOUR = 18; // 18:00
+        const ALLOWED_END_HOUR = 21;   // 21:00
+        const MAX_ATTEMPTS = 3;
+        
+        // Variables del sistema
+        let accessAttempts = 0;
+        let isTimeManipulated = false;
+        let lastValidTime = null;
+        let locationData = {};
+        let accessUnlocked = false;
+        
+        // Elementos DOM del sistema de control
+        const currentTimeEl = document.getElementById('current-time');
+        const nextAccessEl = document.getElementById('next-access');
+        const timeWarningEl = document.getElementById('time-warning');
+        const passwordInput = document.getElementById('password-input');
+        const accessButton = document.getElementById('access-button');
+        const attemptsCounter = document.getElementById('attempts-counter');
+        const gameContainer = document.getElementById('game-container');
+        const accessContainer = document.getElementById('access-container');
+        const adminLog = document.getElementById('admin-log');
+        
+        // Elementos de información de ubicación
+        const countryEl = document.getElementById('country');
+        const regionEl = document.getElementById('region');
+        const cityEl = document.getElementById('city');
+        const timezoneEl = document.getElementById('timezone');
+        const ipEl = document.getElementById('ip');
+        const timeStatusEl = document.getElementById('time-status');
+        
+        // ============================================
+        // JUEGO ACADEMIC RACER PRO
+        // ============================================
+        
+        // Variables del juego
+        let gameActive = false;
+        let gamePaused = false;
+        let currentPlayer = 1;
+        let currentQuestion = null;
+        let gameTimer = 0;
+        let timerInterval = null;
+        let player1 = {
+            score: 0,
+            correctAnswers: 0,
+            position: 0,
+            speed: 0,
+            powerUps: { speed: 2, knowledge: 1, time: 1 },
+            activeEffects: [],
+            carElement: document.getElementById('car1')
+        };
+        
+        let player2 = {
+            score: 0,
+            correctAnswers: 0,
+            position: 0,
+            speed: 0,
+            powerUps: { speed: 2, knowledge: 1, time: 1 },
+            activeEffects: [],
+            carElement: document.getElementById('car2')
+        };
+        
+        const trackLength = 1000;
+        let questionsAnswered = 0;
+        const totalQuestions = 50; // 50 preguntas en total
+        
+        // ============================================
+        // BANCO DE 50 PREGUNTAS DIFÍCILES
+        // ============================================
+        
+        const questionDatabase = {
+            extreme: [
+                // MATEMÁTICAS AVANZADAS (10 preguntas)
+                {
+                    question: "¿Cuál es el valor de la integral definida ∫₀¹ x² dx?",
+                    answers: ["1/3", "1/2", "2/3", "3/4"],
+                    correct: 0,
+                    category: "Matemáticas Avanzadas",
+                    explanation: "∫x² dx = x³/3. Evaluando de 0 a 1: (1³/3) - (0³/3) = 1/3"
+                },
+                {
+                    question: "¿Qué representa el número 'e' en matemáticas?",
+                    answers: ["Base de logaritmos naturales", "Número áureo", "Razón de circunferencia a diámetro", "Constante de Euler-Mascheroni"],
+                    correct: 0,
+                    category: "Matemáticas Avanzadas",
+                    explanation: "'e' es la base de los logaritmos naturales, aproximadamente 2.71828"
+                },
+                {
+                    question: "¿Cuál es el límite de (sen x)/x cuando x tiende a 0?",
+                    answers: ["0", "1", "∞", "No existe"],
+                    correct: 1,
+                    category: "Matemáticas Avanzadas",
+                    explanation: "Este es un límite fundamental en cálculo: lim(x→0) sen x / x = 1"
+                },
+                {
+                    question: "¿Qué teorema establece que toda función continua en un intervalo cerrado alcanza máximo y mínimo?",
+                    answers: ["Teorema de Weierstrass", "Teorema de Bolzano", "Teorema del valor medio", "Teorema de Rolle"],
+                    correct: 0,
+                    category: "Matemáticas Avanzadas",
+                    explanation: "Teorema de Weierstrass: Toda función continua en [a,b] alcanza máximo y mínimo absolutos"
+                },
+                {
+                    question: "¿Cuál es la derivada de e^(x²)?",
+                    answers: ["2x e^(x²)", "e^(2x)", "x² e^(x²)", "2e^x"],
+                    correct: 0,
+                    category: "Matemáticas Avanzadas",
+                    explanation: "d/dx [e^(x²)] = e^(x²) * d/dx(x²) = 2x e^(x²)"
+                },
+                {
+                    question: "¿Qué representa ∇ (nabla) en cálculo vectorial?",
+                    answers: ["Operador gradiente", "Divergencia", "Rotacional", "Laplaciano"],
+                    correct: 0,
+                    category: "Matemáticas Avanzadas",
+                    explanation: "∇ es el operador gradiente: ∇f = (∂f/∂x, ∂f/∂y, ∂f/∂z)"
+                },
+                {
+                    question: "¿Cuál es la solución general de dy/dx = y?",
+                    answers: ["y = Ce^x", "y = Cx", "y = e^x + C", "y = ln|x| + C"],
+                    correct: 0,
+                    category: "Matemáticas Avanzadas",
+                    explanation: "La ecuación diferencial dy/dx = y tiene solución y = Ce^x"
+                },
+                {
+                    question: "¿Qué significa que una matriz sea ortogonal?",
+                    answers: ["Su inversa es igual a su transpuesta", "Su determinante es 1", "Es simétrica", "Todos sus elementos son 0 o 1"],
+                    correct: 0,
+                    category: "Matemáticas Avanzadas",
+                    explanation: "Una matriz Q es ortogonal si Q^T Q = I, es decir, Q^{-1} = Q^T"
+                },
+                {
+                    question: "¿Qué número es conocido como la constante de la proporción áurea?",
+                    answers: ["φ = (1+√5)/2", "π = 3.14159...", "e = 2.71828...", "γ = 0.57721..."],
+                    correct: 0,
+                    category: "Matemáticas Avanzadas",
+                    explanation: "φ ≈ 1.618 aparece en arte, arquitectura y naturaleza"
+                },
+                {
+                    question: "¿Cuál es el valor de i^i?",
+                    answers: ["e^{-π/2}", "0", "1", "π"],
+                    correct: 0,
+                    category: "Matemáticas Avanzadas",
+                    explanation: "i^i = e^{i ln i} = e^{i(iπ/2)} = e^{-π/2} ≈ 0.20788"
+                },
+                
+                // FÍSICA CUÁNTICA (10 preguntas)
+                {
+                    question: "¿Qué principio establece que no se pueden conocer simultáneamente posición y momento exactos?",
+                    answers: ["Principio de incertidumbre de Heisenberg", "Principio de exclusión de Pauli", "Principio de superposición", "Principio de correspondencia"],
+                    correct: 0,
+                    category: "Física Cuántica",
+                    explanation: "Δx Δp ≥ ħ/2. Heisenberg mostró límites fundamentales a mediciones simultáneas"
+                },
+                {
+                    question: "¿Qué partícula mediadora es responsable de la fuerza electromagnética?",
+                    answers: ["Fotón", "Gluón", "Bosón W/Z", "Gravitón"],
+                    correct: 0,
+                    category: "Física Cuántica",
+                    explanation: "El fotón (γ) es el bosón gauge de la interacción electromagnética"
+                },
+                {
+                    question: "¿Qué número cuántico determina la forma del orbital atómico?",
+                    answers: ["Número cuántico azimutal (l)", "Número cuántico principal (n)", "Número cuántico magnético (m)", "Número cuántico de spin (s)"],
+                    correct: 0,
+                    category: "Física Cuántica",
+                    explanation: "l determina la forma: 0=s, 1=p, 2=d, 3=f"
+                },
+                {
+                    question: "¿Qué experimento demostró la dualidad onda-partícula?",
+                    answers: ["Experimento de doble rendija", "Experimento de Millikan", "Experimento de Rutherford", "Experimento de Michelson-Morley"],
+                    correct: 0,
+                    category: "Física Cuántica",
+                    explanation: "Electrones muestran interferencia como ondas pero impactan como partículas"
+                },
+                {
+                    question: "¿Qué es la función de onda en mecánica cuántica?",
+                    answers: ["Ψ(x,t), cuya magnitud al cuadrado da densidad de probabilidad", "Ecuación que describe trayectorias clásicas", "Función que determina energía exacta", "Representación de partículas como puntos"],
+                    correct: 0,
+                    category: "Física Cuántica",
+                    explanation: "|Ψ|² dx da la probabilidad de encontrar la partícula en dx"
+                },
+                {
+                    question: "¿Qué teoría unifica electromagnetismo con fuerza débil?",
+                    answers: ["Teoría electrodébil", "Cromodinámica cuántica", "Teoría de cuerdas", "Relatividad general"],
+                    correct: 0,
+                    category: "Física Cuántica",
+                    explanation: "Glashow, Weinberg y Salam unificaron electromagnetismo y fuerza débil"
+                },
+                {
+                    question: "¿Qué significa que un sistema esté en un estado entrelazado?",
+                    answers: ["Las propiedades están correlacionadas incluso a distancia", "Tiene energía definida", "Está en superposición", "Sigue trayectoria clásica"],
+                    correct: 0,
+                    category: "Física Cuántica",
+                    explanation: "Medición en una partícula afecta instantáneamente a la otra (no-localidad)"
+                },
+                {
+                    question: "¿Qué partícula predice el campo de Higgs?",
+                    answers: ["Bosón de Higgs", "Gravitón", "Neutrino estéril", "Axión"],
+                    correct: 0,
+                    category: "Física Cuántica",
+                    explanation: "Descubierto en 2012 en el CERN, da masa a otras partículas"
+                },
+                {
+                    question: "¿Qué principio prohíbe que dos fermiones idénticos ocupen el mismo estado cuántico?",
+                    answers: ["Principio de exclusión de Pauli", "Principio de incertidumbre", "Principio de superposición", "Principio de correspondencia"],
+                    correct: 0,
+                    category: "Física Cuántica",
+                    explanation: "Fundamental para estructura atómica y estabilidad de la materia"
+                },
+                {
+                    question: "¿Qué es el efecto túnel cuántico?",
+                    answers: ["Partícula atraviesa barrera clásicamente prohibida", "Partícula salta entre niveles", "Onda se refleja completamente", "Sistema decae exponencialmente"],
+                    correct: 0,
+                    category: "Física Cuántica",
+                    explanation: "Explica desintegración nuclear, microscopio de efecto túnel, etc."
+                },
+                
+                // QUÍMICA ORGÁNICA AVANZADA (10 preguntas)
+                {
+                    question: "¿Qué tipo de isómeros tienen diferente conectividad de átomos?",
+                    answers: ["Isómeros constitucionales", "Estereoisómeros", "Enantiómeros", "Diastereómeros"],
+                    correct: 0,
+                    category: "Química Orgánica",
+                    explanation: "Diferente orden de enlace: cadena, posición o grupo funcional"
+                },
+                {
+                    question: "¿Qué reacción convierte alquenos en alcoholes con anti-Markovnikov?",
+                    answers: ["Hidroboración-oxidación", "Hidratación ácida", "Oximercuriación", "Halogenación"],
+                    correct: 0,
+                    category: "Química Orgánica",
+                    explanation: "BH₃ luego H₂O₂/OH⁻ da alcohol con OH en carbono menos sustituido"
+                },
+                {
+                    question: "¿Qué mecanismo sigue la sustitución nucleófila en haluros de alquilo primarios?",
+                    answers: ["SN2", "SN1", "E2", "E1"],
+                    correct: 0,
+                    category: "Química Orgánica",
+                    explanation: "Bimolecular, un paso, inversión de configuración"
+                },
+                {
+                    question: "¿Qué compuesto es aromático según la regla de Hückel?",
+                    answers: ["Piridina", "Ciclopentadieno", "Ciclooctatetraeno", "Benceno"],
+                    correct: 0,
+                    category: "Química Orgánica",
+                    explanation: "4n+2 electrones π (6), plana, cíclica, conjugada"
+                },
+                {
+                    question: "¿Qué catalizador se usa en hidrogenación de alquenos?",
+                    answers: ["Pd/C", "NaBH₄", "LiAlH₄", "KMnO₄"],
+                    correct: 0,
+                    category: "Química Orgánica",
+                    explanation: "Paladio sobre carbón activado, H₂ atmosférico"
+                },
+                {
+                    question: "¿Qué propiedad óptica tienen los enantiómeros?",
+                    answers: ["Rotan plano de luz polarizada en direcciones opuestas", "Absorben diferente longitud de onda", "Emiten diferente fluorescencia", "Tienen diferente punto de fusión"],
+                    correct: 0,
+                    category: "Química Orgánica",
+                    explanation: "Dextro (+) y levo (-) rotatoria, misma magnitud, signo opuesto"
+                },
+                {
+                    question: "¿Qué reacción forma un éster a partir de ácido carboxílico y alcohol?",
+                    answers: ["Esterificación de Fischer", "Saponificación", "Transesterificación", "Hidrólisis"],
+                    correct: 0,
+                    category: "Química Orgánica",
+                    explanation: "RCOOH + R'OH ⇌ RCOOR' + H₂O, catalizada por ácido"
+                },
+                {
+                    question: "¿Qué es la tautomería ceto-enólica?",
+                    answers: ["Equilibrio entre forma cetona y enol", "Isomería conformacional", "Inversión de anillo", "Rotación de enlace"],
+                    correct: 0,
+                    category: "Química Orgánica",
+                    explanation: "CH₃C(O)CH₃ ⇌ CH₂=C(OH)CH₃, importante en síntesis"
+                },
+                {
+                    question: "¿Qué compuesto es el producto de una condensación aldólica?",
+                    answers: ["β-hidroxicetona", "α,β-insaturado", "Dicetona", "Aldehído conjugado"],
+                    correct: 0,
+                    category: "Química Orgánica",
+                    explanation: "Dos carbonilos reaccionan formando enlace C-C y alcohol β"
+                },
+                {
+                    question: "¿Qué grupo funcional tiene prioridad en nomenclatura IUPAC?",
+                    answers: ["Ácido carboxílico", "Aldehído", "Cetona", "Alcohol"],
+                    correct: 0,
+                    category: "Química Orgánica",
+                    explanation: "-oico tiene máxima prioridad, determina nombre base"
+                },
+                
+                // BIOLOGÍA MOLECULAR (10 preguntas)
+                {
+                    question: "¿Qué enzima replica el ADN en procariotas?",
+                    answers: ["ADN polimerasa III", "ADN polimerasa I", "ARN polimerasa", "ADN ligasa"],
+                    correct: 0,
+                    category: "Biología Molecular",
+                    explanation: "Principal enzima replicativa en E. coli, alta fidelidad"
+                },
+                {
+                    question: "¿Qué proceso convierte ARN en ADN?",
+                    answers: ["Transcriptasa inversa", "Transcripción", "Traducción", "Replicación"],
+                    correct: 0,
+                    category: "Biología Molecular",
+                    explanation: "En retrovirus como VIH, codificada por gen pol"
+                },
+                {
+                    question: "¿Qué codón inicia la traducción en eucariotas?",
+                    answers: ["AUG", "UAA", "UAG", "UGA"],
+                    correct: 0,
+                    category: "Biología Molecular",
+                    explanation: "Codifica metionina, señal de inicio para ribosoma"
+                },
+                {
+                    question: "¿Qué estructura del ARNt lleva el aminoácido?",
+                    answers: ["Extremo 3' CCA", "Brazo aceptor", "Brazo TΨC", "Brazo anticodón"],
+                    correct: 0,
+                    category: "Biología Molecular",
+                    explanation: "Sitio de unión covalente del aminoácido específico"
+                },
+                {
+                    question: "¿Qué técnica amplifica fragmentos específicos de ADN?",
+                    answers: ["PCR", "Western blot", "ELISA", "Secuenciación Sanger"],
+                    correct: 0,
+                    category: "Biología Molecular",
+                    explanation: "Reacción en cadena de la polimerasa, ciclos térmicos"
+                },
+                {
+                    question: "¿Qué modificación postranscripcional sufren los ARNm eucariotas?",
+                    answers: ["Cap 5', cola polyA, splicing", "Metilación", "Acetilación", "Fosforilación"],
+                    correct: 0,
+                    category: "Biología Molecular",
+                    explanation: "Procesamiento para estabilidad, exportación y traducción"
+                },
+                {
+                    question: "¿Qué proteína se une al operador en regulación lac?",
+                    answers: ["Represor lac", "CAP", "ARN polimerasa", "β-galactosidasa"],
+                    correct: 0,
+                    category: "Biología Molecular",
+                    explanation: "Regula transcripción según presencia de lactosa"
+                },
+                {
+                    question: "¿Qué enzima corta ADN en secuencias específicas?",
+                    answers: ["Endonucleasas de restricción", "ADN ligasa", "Topoisomerasa", "Helicasa"],
+                    correct: 0,
+                    category: "Biología Molecular",
+                    explanation: "Herramientas clave en ingeniería genética"
+                },
+                {
+                    question: "¿Qué proceso corrige errores de apareamiento en ADN?",
+                    answers: ["Reparación por malapareamiento", "Reparación por escisión", "Reparación por recombinación", "Fotorreactivación"],
+                    correct: 0,
+                    category: "Biología Molecular",
+                    explanation: "Sistema MutHLS en E. coli, reconoce bases mal apareadas"
+                },
+                {
+                    question: "¿Qué estructura forma el ADN en eucariotas?",
+                    answers: ["Nucleosoma", "Horquilla", "Bucle", "Hélice tripe"],
+                    correct: 0,
+                    category: "Biología Molecular",
+                    explanation: "ADN enrollado alrededor de histonas (octámero)"
+                },
+                
+                // HISTORIA Y FILOSOFÍA (10 preguntas)
+                {
+                    question: "¿Qué filósofo propuso el 'cogito ergo sum'?",
+                    answers: ["René Descartes", "Immanuel Kant", "Friedrich Nietzsche", "Aristóteles"],
+                    correct: 0,
+                    category: "Filosofía",
+                    explanation: "'Pienso, luego existo', fundamento del racionalismo"
+                },
+                {
+                    question: "¿Qué imperio gobernó la India durante el 'periodo dorado' de la ciencia?",
+                    answers: ["Imperio Gupta", "Imperio Maurya", "Imperio Mogol", "Imperio Británico"],
+                    correct: 0,
+                    category: "Historia",
+                    explanation: "Siglos IV-VI d.C., avances en matemáticas, astronomía y medicina"
+                },
+                {
+                    question: "¿Qué filósofo escribió 'Así habló Zaratustra'?",
+                    answers: ["Friedrich Nietzsche", "Arthur Schopenhauer", "Søren Kierkegaard", "Martin Heidegger"],
+                    correct: 0,
+                    category: "Filosofía",
+                    explanation: "Obra que presenta conceptos como superhombre y eterno retorno"
+                },
+                {
+                    question: "¿Qué civilización desarrolló el concepto del cero?",
+                    answers: ["Civilización maya", "Antigua Grecia", "Imperio romano", "Antiguo Egipto"],
+                    correct: 0,
+                    category: "Historia",
+                    explanation: "Los mayas usaron el cero como marcador de posición en su sistema vigesimal"
+                },
+                {
+                    question: "¿Qué filósofo propuso el 'velo de la ignorancia'?",
+                    answers: ["John Rawls", "John Locke", "Thomas Hobbes", "Jean-Jacques Rousseau"],
+                    correct: 0,
+                    category: "Filosofía",
+                    explanation: "En 'Teoría de la justicia', para determinar principios justos"
+                },
+                {
+                    question: "¿Qué imperio construyó el Taj Mahal?",
+                    answers: ["Imperio Mogol", "Imperio Otomano", "Imperio Safávida", "Imperio Gupta"],
+                    correct: 0,
+                    category: "Historia",
+                    explanation: "Shah Jahan lo construyó como mausoleo para su esposa Mumtaz Mahal"
+                },
+                {
+                    question: "¿Qué filósofo es conocido por su 'dialéctica del amo y el esclavo'?",
+                    answers: ["Georg Wilhelm Friedrich Hegel", "Karl Marx", "Friedrich Engels", "Max Weber"],
+                    correct: 0,
+                    category: "Filosofía",
+                    explanation: "En 'Fenomenología del espíritu', sobre autoconciencia y reconocimiento"
+                },
+                {
+                    question: "¿Qué dinastía china construyó la Gran Muralla?",
+                    answers: ["Dinastía Ming", "Dinastía Qin", "Dinastía Han", "Dinastía Tang"],
+                    correct: 0,
+                    category: "Historia",
+                    explanation: "Aunque comenzó con Qin, la mayoría de la muralla visible es de Ming"
+                },
+                {
+                    question: "¿Qué filósofo propuso que 'el hombre es la medida de todas las cosas'?",
+                    answers: ["Protágoras", "Sócrates", "Platón", "Aristóteles"],
+                    correct: 0,
+                    category: "Filosofía",
+                    explanation: "Filósofo sofista, representante del relativismo"
+                },
+                {
+                    question: "¿Qué imperio controlaba la Ruta de la Seda durante su apogeo?",
+                    answers: ["Imperio Mongol", "Imperio Romano", "Imperio Persa", "Imperio Bizantino"],
+                    correct: 0,
+                    category: "Historia",
+                    explanation: "Pax Mongolica permitió comercio seguro desde Europa hasta China"
+                }
+            ]
+        };
+        
+        // ============================================
+        // FUNCIONES DEL SISTEMA DE CONTROL
+        // ============================================
+        
+        // Función para detectar manipulación de hora
+        function detectTimeManipulation() {
+            const now = new Date();
+            const clientTime = now.getTime();
+            
+            if (!lastValidTime) {
+                lastValidTime = clientTime;
+                return false;
+            }
+            
+            const timeDiff = Math.abs(clientTime - lastValidTime);
+            
+            if (timeDiff > 5 * 60 * 1000) {
+                logEvent(`⚠️ SOSPECHA: Diferencia de tiempo detectada: ${Math.floor(timeDiff/1000/60)} minutos`);
+                return true;
+            }
+            
+            lastValidTime = clientTime;
+            return false;
+        }
+        
+        // Función para obtener información de ubicación
+        async function getLocationInfo() {
+            try {
+                const response = await fetch('https://ipapi.co/json/');
+                const data = await response.json();
+                
+                locationData = {
+                    country: data.country_name || 'No detectado',
+                    region: data.region || 'No detectado',
+                    city: data.city || 'No detectado',
+                    timezone: data.timezone || 'No detectado',
+                    ip: data.ip || 'No detectado'
+                };
+                
+                countryEl.textContent = locationData.country;
+                regionEl.textContent = locationData.region;
+                cityEl.textContent = locationData.city;
+                timezoneEl.textContent = locationData.timezone;
+                ipEl.textContent = locationData.ip;
+                
+                logEvent(`📍 Ubicación detectada: ${locationData.city}, ${locationData.country}`);
+                
+            } catch (error) {
+                logEvent('❌ Error obteniendo ubicación');
+                countryEl.textContent = 'No disponible';
+                regionEl.textContent = 'No disponible';
+                cityEl.textContent = 'No disponible';
+                timezoneEl.textContent = 'No disponible';
+                ipEl.textContent = 'No disponible';
+            }
+        }
+        
+        // Función para verificar si está dentro del horario permitido
+        function isWithinAllowedHours() {
+            const now = new Date();
+            const currentHour = now.getHours();
+            
+            if (detectTimeManipulation()) {
+                isTimeManipulated = true;
+                timeWarningEl.style.display = 'block';
+                logEvent('🚨 BLOQUEO: Manipulación de hora detectada');
+                return false;
+            }
+            
+            if (currentHour >= ALLOWED_START_HOUR && currentHour < ALLOWED_END_HOUR) {
+                return true;
+            }
+            
+            return false;
+        }
+        
+        // Función para calcular el próximo acceso
+        function calculateNextAccess() {
+            const now = new Date();
+            const currentHour = now.getHours();
+            
+            if (currentHour < ALLOWED_START_HOUR) {
+                const nextAccess = new Date(now);
+                nextAccess.setHours(ALLOWED_START_HOUR, 0, 0, 0);
+                return nextAccess;
+            } else {
+                const nextAccess = new Date(now);
+                nextAccess.setDate(nextAccess.getDate() + 1);
+                nextAccess.setHours(ALLOWED_START_HOUR, 0, 0, 0);
+                return nextAccess;
+            }
+        }
+        
+        // Función para actualizar el reloj
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('es-ES', { 
+                hour12: false,
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            
+            currentTimeEl.textContent = timeString;
+            
+            if (isWithinAllowedHours() && !isTimeManipulated) {
+                timeStatusEl.innerHTML = '<span style="color:#2ecc71;">✅ Horario permitido - Acceso habilitado</span>';
+                unlockGame();
+            } else {
+                if (isTimeManipulated) {
+                    timeStatusEl.innerHTML = '<span style="color:#e74c3c;">⛔ Acceso bloqueado por seguridad</span>';
+                } else {
+                    timeStatusEl.innerHTML = '<span style="color:#e74c3c;">⛔ Fuera del horario permitido</span>';
+                }
+                
+                const nextAccess = calculateNextAccess();
+                const timeDiff = nextAccess - now;
+                const hoursLeft = Math.floor(timeDiff / (1000 * 60 * 60));
+                const minutesLeft = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+                
+                nextAccessEl.textContent = `${hoursLeft}h ${minutesLeft}m`;
+            }
+        }
+        
+        // Función para desbloquear el juego
+        function unlockGame() {
+            if (!accessUnlocked) {
+                accessUnlocked = true;
+                accessContainer.style.display = 'none';
+                gameContainer.style.display = 'block';
+                document.body.classList.add('game-active');
+                logEvent('🎮 Academic Racer Pro desbloqueado - Acceso permitido');
+                
+                // Iniciar el juego después de un breve retraso
+                setTimeout(() => {
+                    document.getElementById('loadingScreen').style.display = 'none';
+                    document.getElementById('tutorialOverlay').style.display = 'flex';
+                }, 1000);
+            }
+        }
+        
+        // Función para bloquear el juego
+        function lockGame() {
+            accessUnlocked = false;
+            gameContainer.style.display = 'none';
+            accessContainer.style.display = 'block';
+            document.body.classList.remove('game-active');
+            logEvent('🔒 Juego bloqueado');
+            
+            // Detener el temporizador del juego
+            clearInterval(timerInterval);
+        }
+        
+        // Función para verificar la contraseña
+        function checkPassword() {
+            const password = passwordInput.value.trim();
+            
+            if (password === ACCESS_PASSWORD) {
+                logEvent('✅ Contraseña correcta - Acceso especial concedido');
+                unlockGame();
+                passwordInput.value = '';
+                accessAttempts = 0;
+                updateAttemptsCounter();
+            } else {
+                accessAttempts++;
+                updateAttemptsCounter();
+                
+                if (accessAttempts >= MAX_ATTEMPTS) {
+                    accessButton.disabled = true;
+                    passwordInput.disabled = true;
+                    attemptsCounter.innerHTML = '<span style="color:#e74c3c;">⛔ ACCESO BLOQUEADO</span>';
+                    logEvent('🚨 BLOQUEO: Máximos intentos alcanzados');
+                    
+                    setTimeout(() => {
+                        accessButton.disabled = false;
+                        passwordInput.disabled = false;
+                        accessAttempts = 0;
+                        updateAttemptsCounter();
+                        logEvent('🔓 Bloqueo temporal removido');
+                    }, 5 * 60 * 1000);
+                } else {
+                    logEvent(`❌ Intento fallido ${accessAttempts}/${MAX_ATTEMPTS}`);
+                    passwordInput.value = '';
+                    passwordInput.style.borderColor = '#e74c3c';
+                    setTimeout(() => {
+                        passwordInput.style.borderColor = '#9b59b6';
+                    }, 500);
+                }
+            }
+        }
+        
+        // Función para actualizar el contador de intentos
+        function updateAttemptsCounter() {
+            const remaining = MAX_ATTEMPTS - accessAttempts;
+            attemptsCounter.textContent = `🔑 Intentos disponibles: ${remaining}`;
+            
+            if (remaining <= 1) {
+                attemptsCounter.style.color = '#e74c3c';
+            } else {
+                attemptsCounter.style.color = '#3498db';
+            }
+        }
+        
+        // Función para registrar eventos
+        function logEvent(message) {
+            const timestamp = new Date().toLocaleTimeString('es-ES');
+            const logEntry = `[${timestamp}] ${message}`;
+            
+            console.log(logEntry);
+            
+            const logs = adminLog.textContent.split('\n');
+            logs.push(logEntry);
+            if (logs.length > 3) {
+                logs.shift();
+            }
+            adminLog.textContent = logs.join('\n');
+        }
+        
+        // ============================================
+        // FUNCIONES DEL JUEGO ACADEMIC RACER PRO
+        // ============================================
+        
+        // Inicializar el juego
+        function initGame() {
+            document.getElementById('tutorialOverlay').style.display = 'none';
+            
+            gameActive = true;
+            gamePaused = false;
+            currentPlayer = Math.random() > 0.5 ? 1 : 2;
+            
+            // Resetear jugadores
+            resetPlayers();
+            
+            // Habilitar controles
+            document.getElementById('startRace').disabled = true;
+            document.getElementById('pauseRace').disabled = false;
+            document.getElementById('resetRace').disabled = false;
+            
+            // Iniciar timer
+            startTimer();
+            
+            // Actualizar UI
+            updateUI();
+            updatePlayerControls();
+            createSpectators();
+            
+            // Mostrar primera pregunta
+            setTimeout(() => {
+                showQuestion();
+                updateStatus(`¡CARRERA INICIADA! Turno del JUGADOR ${currentPlayer}`);
+            }, 1000);
+            
+            // Iniciar animaciones
+            animateClouds();
+        }
+        
+        function resetPlayers() {
+            player1 = {
+                score: 0,
+                correctAnswers: 0,
+                position: 0,
+                speed: 0,
+                powerUps: { speed: 2, knowledge: 1, time: 1 },
+                activeEffects: [],
+                carElement: document.getElementById('car1')
+            };
+            
+            player2 = {
+                score: 0,
+                correctAnswers: 0,
+                position: 0,
+                speed: 0,
+                powerUps: { speed: 2, knowledge: 1, time: 1 },
+                activeEffects: [],
+                carElement: document.getElementById('car2')
+            };
+            
+            questionsAnswered = 0;
+            gameTimer = 0;
+            
+            // Resetear posiciones de coches
+            updateCarPositions();
+        }
+        
+        function startPlayerTurn(player) {
+            if (!gameActive || gamePaused || currentPlayer !== player) return;
+            
+            const difficulty = getCurrentDifficulty();
+            const questions = questionDatabase[difficulty];
+            currentQuestion = questions[Math.floor(Math.random() * questions.length)];
+            
+            // Mostrar pregunta
+            displayQuestion(currentQuestion);
+            
+            // Deshabilitar botón del jugador
+            document.getElementById(`action${player}`).disabled = true;
+            
+            updateStatus(`JUGADOR ${player}: Responde la pregunta`);
+        }
+        
+        function displayQuestion(question) {
+            document.getElementById('questionText').textContent = question.question;
+            
+            const answersGrid = document.getElementById('answersGrid');
+            answersGrid.innerHTML = '';
+            
+            const answerLetters = ['A', 'B', 'C', 'D'];
+            
+            // Mezclar las respuestas para que no sea obvia la correcta
+            const shuffledAnswers = [...question.answers];
+            const originalCorrectIndex = question.correct;
+            
+            // Algoritmo de Fisher-Yates para mezclar
+            for (let i = shuffledAnswers.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffledAnswers[i], shuffledAnswers[j]] = [shuffledAnswers[j], shuffledAnswers[i]];
+            }
+            
+            // Encontrar nueva posición de la respuesta correcta
+            const newCorrectIndex = shuffledAnswers.indexOf(question.answers[originalCorrectIndex]);
+            
+            // Actualizar la pregunta con respuestas mezcladas
+            const shuffledQuestion = {
+                ...question,
+                answers: shuffledAnswers,
+                correct: newCorrectIndex
+            };
+            
+            shuffledQuestion.answers.forEach((answer, index) => {
+                const option = document.createElement('div');
+                option.className = 'answer-option';
+                option.dataset.index = index;
+                
+                const letter = document.createElement('div');
+                letter.className = 'answer-letter';
+                letter.textContent = answerLetters[index];
+                
+                const text = document.createElement('div');
+                text.textContent = answer;
+                
+                option.appendChild(letter);
+                option.appendChild(text);
+                
+                option.addEventListener('click', () => selectAnswer(index, shuffledQuestion));
+                answersGrid.appendChild(option);
+            });
+            
+            // Actualizar categoría
+            document.getElementById('currentDifficulty').textContent = 
+                shuffledQuestion.category.toUpperCase();
+        }
+        
+        function selectAnswer(selectedIndex, question) {
+            if (!gameActive || gamePaused) return;
+            
+            const options = document.querySelectorAll('.answer-option');
+            const correctIndex = question.correct;
+            
+            // Deshabilitar todas las opciones
+            options.forEach(option => {
+                option.classList.add('disabled');
+                option.style.pointerEvents = 'none';
+            });
+            
+            // Marcar respuesta correcta e incorrecta
+            options[correctIndex].classList.add('correct');
+            
+            if (selectedIndex !== correctIndex) {
+                options[selectedIndex].classList.add('incorrect');
+            }
+            
+            const isCorrect = selectedIndex === correctIndex;
+            
+            // Procesar resultado
+            processAnswer(isCorrect, question);
+            
+            // Mostrar explicación después de un retraso
+            setTimeout(() => {
+                updateStatus(question.explanation);
+            }, 1500);
+            
+            // Siguiente turno después de un retraso
+            setTimeout(() => {
+                if (gameActive) {
+                    questionsAnswered++;
+                    currentPlayer = currentPlayer === 1 ? 2 : 1;
+                    updatePlayerControls();
+                    showQuestion();
+                    updateUI();
+                }
+            }, 3000);
+        }
+        
+        function processAnswer(isCorrect, question) {
+            const player = currentPlayer === 1 ? player1 : player2;
+            
+            if (isCorrect) {
+                // Calcular puntos base (más puntos por preguntas difíciles)
+                let points = 200; // Doble puntos por dificultad extrema
+                
+                // Aplicar efectos activos
+                if (player.activeEffects.some(e => e.type === 'knowledge')) {
+                    points *= 2;
+                }
+                
+                // Calcular velocidad de avance
+                let advance = 100 + Math.random() * 50;
+                
+                // Aplicar nitro si está activo
+                if (player.activeEffects.some(e => e.type === 'speed')) {
+                    advance *= 1.5;
+                    player.carElement.classList.add('accelerating');
+                    setTimeout(() => {
+                        player.carElement.classList.remove('accelerating');
+                    }, 1000);
+                }
+                
+                // Actualizar jugador
+                player.score += points;
+                player.correctAnswers++;
+                player.position += advance;
+                player.speed = Math.min(250, player.speed + 25);
+                
+                updateStatus(`¡CORRECTO! +${points} puntos. Avanzas ${Math.round(advance)}m`);
+            } else {
+                player.speed = Math.max(0, player.speed - 15);
+                updateStatus("Respuesta incorrecta. Pierdes velocidad");
+            }
+            
+            // Actualizar UI
+            updateCarPositions();
+            updatePlayerScores();
+            
+            // Verificar si hay ganador
+            checkWinner();
+        }
+        
+        function usePowerUp(playerNum, type) {
+            const player = playerNum === 1 ? player1 : player2;
+            
+            if (player.powerUps[type] <= 0) {
+                updateStatus(`JUGADOR ${playerNum}: No tienes más power-ups de este tipo`);
+                return;
+            }
+            
+            player.powerUps[type]--;
+            
+            // Aplicar efecto
+            const effect = {
+                type: type,
+                duration: type === 'time' ? 10000 : 5000, // 10s para tiempo, 5s para otros
+                startTime: Date.now()
+            };
+            
+            player.activeEffects.push(effect);
+            
+            // Mostrar en UI
+            showActiveEffect(playerNum, type);
+            
+            // Actualizar status
+            let message = `JUGADOR ${playerNum} usa: `;
+            switch(type) {
+                case 'speed': message += "NITRO BOOST!"; break;
+                case 'knowledge': message += "DOBLE CONOCIMIENTO!"; break;
+                case 'time': message += "TIEMPO EXTRA!"; break;
+            }
+            
+            updateStatus(message);
+            
+            // Eliminar efecto después de su duración
+            setTimeout(() => {
+                const index = player.activeEffects.findIndex(e => 
+                    e.type === type && e.startTime === effect.startTime);
+                if (index > -1) {
+                    player.activeEffects.splice(index, 1);
+                    updateActivePowerups();
+                }
+            }, effect.duration);
+        }
+        
+        function showActiveEffect(playerNum, type) {
+            const activePowerups = document.getElementById('activePowerups');
+            const effectDiv = document.createElement('div');
+            effectDiv.className = 'info-item';
+            effectDiv.id = `effect-${playerNum}-${type}`;
+            
+            let icon, text;
+            switch(type) {
+                case 'speed': 
+                    icon = '⚡'; 
+                    text = `J${playerNum}: Nitro Activo`; 
+                    break;
+                case 'knowledge': 
+                    icon = '🧠'; 
+                    text = `J${playerNum}: Conocimiento x2`; 
+                    break;
+                case 'time': 
+                    icon = '⏱️'; 
+                    text = `J${playerNum}: +10s`; 
+                    break;
+            }
+            
+            effectDiv.innerHTML = `
+                <span>${icon} ${text}</span>
+                <span class="info-value">ACTIVO</span>
+            `;
+            
+            activePowerups.appendChild(effectDiv);
+        }
+        
+        function updateActivePowerups() {
+            const activePowerups = document.getElementById('activePowerups');
+            activePowerups.innerHTML = '';
+            
+            [...player1.activeEffects, ...player2.activeEffects].forEach(effect => {
+                // Recrear elementos de efectos activos
+                // Implementación simplificada
+            });
+            
+            if (activePowerups.children.length === 0) {
+                activePowerups.innerHTML = '<p style="text-align: center; opacity: 0.7; padding: 20px;">Ninguna mejora activa</p>';
+            }
+        }
+        
+        function showQuestion() {
+            const difficulty = getCurrentDifficulty();
+            const questions = questionDatabase[difficulty];
+            currentQuestion = questions[Math.floor(Math.random() * questions.length)];
+            
+            displayQuestion(currentQuestion);
+        }
+        
+        function getCurrentDifficulty() {
+            return 'extreme'; // Todas las preguntas son de dificultad extrema
+        }
+        
+        function checkWinner() {
+            if (player1.position >= trackLength || player2.position >= trackLength || questionsAnswered >= totalQuestions) {
+                gameActive = false;
+                clearInterval(timerInterval);
+                
+                let winner = '';
+                let message = '';
+                
+                if (player1.position >= trackLength && player2.position >= trackLength) {
+                    winner = 'EMPATE';
+                    message = '¡AMBOS JUGADORES CRUZARON LA META AL MISMO TIEMPO!';
+                } else if (player1.position >= trackLength) {
+                    winner = 'JUGADOR 1';
+                    message = '¡JUGADOR 1 GANA LA CARRERA!';
+                } else if (player2.position >= trackLength) {
+                    winner = 'JUGADOR 2';
+                    message = '¡JUGADOR 2 GANA LA CARRERA!';
+                } else {
+                    winner = player1.score > player2.score ? 'JUGADOR 1' : 
+                            player2.score > player1.score ? 'JUGADOR 2' : 'EMPATE';
+                    message = `¡CARRERA TERMINADA! Ganador por puntos: ${winner}`;
+                }
+                
+                // Deshabilitar controles
+                document.getElementById('action1').disabled = true;
+                document.getElementById('action2').disabled = true;
+                document.getElementById('pauseRace').disabled = true;
+                
+                updateStatus(`${message} | Tiempo total: ${formatTime(gameTimer)}`);
+                
+                // Mostrar resumen detallado
+                setTimeout(() => {
+                    alert(`🏁 CARRERA FINALIZADA 🏁\n\nGanador: ${winner}\n\nJUGADOR 1:\n- Puntos: ${player1.score}\n- Aciertos: ${player1.correctAnswers}/${questionsAnswered}\n- Distancia: ${Math.round(player1.position)}m\n\nJUGADOR 2:\n- Puntos: ${player2.score}\n- Aciertos: ${player2.correctAnswers}/${questionsAnswered}\n- Distancia: ${Math.round(player2.position)}m\n\nTiempo: ${formatTime(gameTimer)}\n\n🏆 ¡FELICITACIONES POR COMPLETAR EL DESAFÍO DE 50 PREGUNTAS!`);
+                }, 1000);
+            }
+        }
+        
+        function togglePause() {
+            if (!gameActive) return;
+            
+            gamePaused = !gamePaused;
+            const pauseBtn = document.getElementById('pauseRace');
+            
+            if (gamePaused) {
+                clearInterval(timerInterval);
+                pauseBtn.innerHTML = '<i class="fas fa-play"></i> REANUDAR';
+                updateStatus('JUEGO EN PAUSA');
+                document.querySelectorAll('.answer-option').forEach(opt => {
+                    opt.style.pointerEvents = 'none';
+                });
+            } else {
+                startTimer();
+                pauseBtn.innerHTML = '<i class="fas fa-pause"></i> PAUSAR';
+                updateStatus('JUEGO REANUDADO');
+                document.querySelectorAll('.answer-option').forEach(opt => {
+                    opt.style.pointerEvents = 'auto';
+                });
+            }
+        }
+        
+        function resetGame() {
+            gameActive = false;
+            gamePaused = false;
+            clearInterval(timerInterval);
+            
+            // Restablecer controles
+            document.getElementById('startRace').disabled = false;
+            document.getElementById('pauseRace').disabled = true;
+            document.getElementById('resetRace').disabled = true;
+            document.getElementById('action1').disabled = true;
+            document.getElementById('action2').disabled = true;
+            
+            // Resetear UI
+            document.getElementById('questionText').textContent = 'Esperando inicio de carrera...';
+            document.getElementById('answersGrid').innerHTML = '';
+            document.getElementById('gameTime').textContent = '00:00';
+            document.getElementById('questionsLeft').textContent = totalQuestions;
+            
+            updateStatus('JUEGO REINICIADO - Preparado para nueva carrera');
+        }
+        
+        // ============================================
+        // FUNCIONES DE UI
+        // ============================================
+        
+        function updateUI() {
+            // Actualizar scores
+            document.getElementById('score1').textContent = player1.score;
+            document.getElementById('score2').textContent = player2.score;
+            document.getElementById('correct1').textContent = player1.correctAnswers;
+            document.getElementById('correct2').textContent = player2.correctAnswers;
+            
+            // Actualizar velocidades
+            document.getElementById('speed1').textContent = `${Math.round(player1.speed)} km/h`;
+            document.getElementById('speed2').textContent = `${Math.round(player2.speed)} km/h`;
+            
+            // Actualizar máxima velocidad
+            const maxSpeed = Math.max(player1.speed, player2.speed);
+            document.getElementById('maxSpeed').textContent = `${Math.round(maxSpeed)} km/h`;
+            
+            // Actualizar progreso
+            const maxPosition = Math.max(player1.position, player2.position);
+            const progress = (maxPosition / trackLength) * 100;
+            document.getElementById('distanceProgress').style.width = `${progress}%`;
+            document.getElementById('distanceTraveled').textContent = `${Math.round(progress)}%`;
+            
+            // Actualizar preguntas restantes
+            const questionsLeft = totalQuestions - questionsAnswered;
+            document.getElementById('questionsLeft').textContent = Math.max(0, questionsLeft);
+            
+            // Actualizar nivel
+            const level = Math.floor(progress / 25) + 1;
+            document.getElementById('gameLevel').textContent = level;
+        }
+        
+        function updatePlayerControls() {
+            document.getElementById('action1').disabled = !gameActive || gamePaused || currentPlayer !== 1;
+            document.getElementById('action2').disabled = !gameActive || gamePaused || currentPlayer !== 2;
+            
+            document.getElementById('currentTurn').textContent = `JUGADOR ${currentPlayer}`;
+        }
+        
+        function updateCarPositions() {
+            const trackWidth = document.getElementById('trackContainer').offsetWidth - 200;
+            
+            // Posición del jugador 1
+            const pos1 = (player1.position / trackLength) * trackWidth;
+            document.getElementById('car1').style.left = `${50 + pos1}px`;
+            
+            // Posición del jugador 2
+            const pos2 = (player2.position / trackLength) * trackWidth;
+            document.getElementById('car2').style.left = `${50 + pos2}px`;
+            
+            // Efecto visual si están muy cerca
+            const distance = Math.abs(pos1 - pos2);
+            if (distance < 50 && player1.position > 0 && player2.position > 0) {
+                document.getElementById('car1').style.transform = 'translateY(-5px)';
+                document.getElementById('car2').style.transform = 'translateY(5px)';
+            } else {
+                document.getElementById('car1').style.transform = 'translateY(0)';
+                document.getElementById('car2').style.transform = 'translateY(0)';
+            }
+        }
+        
+        function updatePlayerScores() {
+            document.getElementById('score1').textContent = player1.score;
+            document.getElementById('score2').textContent = player2.score;
+            document.getElementById('correct1').textContent = player1.correctAnswers;
+            document.getElementById('correct2').textContent = player2.correctAnswers;
+        }
+        
+        function updateStatus(message) {
+            document.getElementById('statusText').textContent = message;
+        }
+        
+        function startTimer() {
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                if (!gamePaused && gameActive) {
+                    gameTimer++;
+                    document.getElementById('gameTime').textContent = formatTime(gameTimer);
+                    
+                    // Actualizar récord si es necesario
+                    if (gameTimer % 10 === 0) {
+                        document.getElementById('trackRecord').textContent = 
+                            `${Math.floor(gameTimer/60)}:${(gameTimer%60).toString().padStart(2, '0')}`;
+                    }
+                }
+            }, 1000);
+        }
+        
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+        
+        function createSpectators() {
+            const rows = document.querySelectorAll('.grandstand-row');
+            rows.forEach(row => {
+                for (let i = 0; i < 10; i++) {
+                    const spectator = document.createElement('div');
+                    spectator.className = 'spectator';
+                    row.appendChild(spectator);
+                }
+            });
+        }
+        
+        function animateClouds() {
+            const clouds = document.querySelectorAll('.cloud');
+            clouds.forEach((cloud, index) => {
+                let pos = parseInt(cloud.style.left) || (index * 100 + 10);
+                pos = (pos + 0.1) % 100;
+                cloud.style.left = `${pos}%`;
+            });
+            requestAnimationFrame(animateClouds);
+        }
+        
+        // ============================================
+        // EVENT LISTENERS Y CONFIGURACIÓN INICIAL
+        // ============================================
+        
+        // Event Listeners del sistema de control
+        accessButton.addEventListener('click', checkPassword);
+        passwordInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+        
+        // Event Listeners del juego
+        document.getElementById('startTutorial').addEventListener('click', initGame);
+        document.getElementById('startRace').addEventListener('click', initGame);
+        document.getElementById('pauseRace').addEventListener('click', togglePause);
+        document.getElementById('resetRace').addEventListener('click', resetGame);
+        document.getElementById('action1').addEventListener('click', () => startPlayerTurn(1));
+        document.getElementById('action2').addEventListener('click', () => startPlayerTurn(2));
+        
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', () => {
+            getLocationInfo();
+            updateClock();
+            setInterval(updateClock, 1000);
+            
+            if (isWithinAllowedHours() && !isTimeManipulated) {
+                unlockGame();
+            }
+            
+            setInterval(() => {
+                if (detectTimeManipulation()) {
+                    isTimeManipulated = true;
+                    timeWarningEl.style.display = 'block';
+                    lockGame();
+                }
+            }, 30000);
+            
+            logEvent('🔐 Sistema de control de acceso iniciado');
+            
+            // Actualizar UI periódicamente
+            setInterval(() => {
+                if (gameActive && !gamePaused) {
+                    // Disminuir velocidad gradualmente
+                    player1.speed = Math.max(0, player1.speed * 0.98);
+                    player2.speed = Math.max(0, player2.speed * 0.98);
+                    
+                    // Actualizar velocidades en UI
+                    document.getElementById('speed1').textContent = `${Math.round(player1.speed)} km/h`;
+                    document.getElementById('speed2').textContent = `${Math.round(player2.speed)} km/h`;
+                }
+            }, 1000);
+        });
+        
+        // Protección básica
+        document.addEventListener('contextmenu', (e) => e.preventDefault());
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+                e.preventDefault();
+                logEvent('🛡️ Intento de acceso a herramientas de desarrollo bloqueado');
+                return false;
+            }
+        });
+    </script>
+</body>
+</html>

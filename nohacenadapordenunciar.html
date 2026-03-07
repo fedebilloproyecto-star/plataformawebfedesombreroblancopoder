@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>La Soledad · denuncia inútil</title>
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:"Segoe UI", Arial, sans-serif;
+}
+
+/* fondo general */
+body{
+background:linear-gradient(to top,#020111,#191621,#2c5364);
+color:white;
+line-height:1.8;
+font-family: Arial, sans-serif;
+padding: 20px;
+text-align: center;
+}
+
+/* cielo con estrellas */
+.estrellas{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:
+radial-gradient(white 1px, transparent 1px),
+radial-gradient(white 1px, transparent 1px);
+background-size:100px 100px,150px 150px;
+opacity:0.4;
+z-index:-1;
+animation:brillo 5s infinite alternate;
+}
+
+@keyframes brillo{
+from{opacity:0.3;}
+to{opacity:0.7;}
+}
+
+/* luna */
+.luna{
+position:fixed;
+top:80px;
+right:120px;
+width:120px;
+height:120px;
+background:#fff9c4;
+border-radius:50%;
+box-shadow:0 0 80px rgba(255,255,200,0.8);
+z-index:-1;
+}
+
+/* header */
+header{
+text-align:center;
+padding:80px 20px 40px;
+}
+
+h2 {
+font-size: 40px;
+color: #000;
+letter-spacing: 3px;
+text-align: center;
+position: relative;
+text-shadow:
+0 0 5px rgba(255,200,0,0.7),
+0 0 15px rgba(255,200,0,0.5),
+0 0 25px rgba(255,200,0,0.3);
+background: linear-gradient(90deg, #ffeb3b, #ffc107);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+}
+
+.linea{
+width:120px;
+height:3px;
+background:#ffd369;
+margin:20px auto;
+}
+
+/* contenedor texto */
+main{
+max-width:900px;
+margin:auto;
+padding:40px;
+background:rgba(0,0,0,0.55);
+backdrop-filter:blur(10px);
+border-radius:20px;
+box-shadow:0 30px 60px rgba(0,0,0,0.8);
+}
+
+/* Estilo para la imagen */
+.imagen-container {
+margin-bottom: 30px;
+border-radius: 15px;
+overflow: hidden;
+box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+border: 3px solid rgba(255,215,0,0.3);
+}
+
+.imagen-justicia {
+width: 100%;
+max-width: 600px;
+height: auto;
+display: block;
+margin: 0 auto;
+transition: transform 0.5s ease;
+border-radius: 12px;
+}
+
+.imagen-justicia:hover {
+transform: scale(1.02);
+box-shadow: 0 15px 40px rgba(255,215,0,0.4);
+}
+
+/* parrafos */
+p{
+margin-bottom:25px;
+font-size:20px;
+color:#f1f1f1;
+text-align: left;
+}
+
+/* efecto al pasar mouse */
+p:hover{
+color:#ffffff;
+transform:translateX(5px);
+transition:0.3s;
+}
+
+/* Estilos para los botones de control */
+.botones-control {
+margin: 30px 0 10px;
+display: flex;
+gap: 15px;
+justify-content: center;
+flex-wrap: wrap;
+}
+
+.btn-control {
+padding: 12px 30px;
+margin: 5px;
+font-size: 18px;
+cursor: pointer;
+border: none;
+border-radius: 50px;
+background: linear-gradient(145deg, #2c3e50, #1a2634);
+color: white;
+transition: all 0.3s ease;
+box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+font-weight: 600;
+letter-spacing: 1px;
+border: 1px solid rgba(255,255,255,0.1);
+}
+
+.btn-control:hover {
+transform: translateY(-3px);
+box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+background: linear-gradient(145deg, #34495e, #2c3e50);
+}
+
+.btn-control:active {
+transform: translateY(-1px);
+}
+
+.btn-control.reproducir {
+background: linear-gradient(145deg, #27ae60, #229954);
+}
+
+.btn-control.reproducir:hover {
+background: linear-gradient(145deg, #2ecc71, #27ae60);
+}
+
+.btn-control.pausa {
+background: linear-gradient(145deg, #f39c12, #e67e22);
+}
+
+.btn-control.pausa:hover {
+background: linear-gradient(145deg, #f1c40f, #f39c12);
+}
+
+.btn-control.detener {
+background: linear-gradient(145deg, #e74c3c, #c0392b);
+}
+
+.btn-control.detener:hover {
+background: linear-gradient(145deg, #ff6b6b, #e74c3c);
+}
+
+/* Estilo para el botón volver */
+.btn-volver {
+display: inline-block;
+padding: 12px 30px;
+margin: 20px auto;
+font-size: 18px;
+cursor: pointer;
+border: none;
+border-radius: 50px;
+background: linear-gradient(145deg, #8e44ad, #9b59b6);
+color: white;
+transition: all 0.3s ease;
+box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+font-weight: 600;
+letter-spacing: 1px;
+border: 1px solid rgba(255,255,255,0.1);
+text-decoration: none;
+}
+
+.btn-volver:hover {
+transform: translateY(-3px);
+box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+background: linear-gradient(145deg, #9b59b6, #8e44ad);
+}
+
+.btn-volver:active {
+transform: translateY(-1px);
+}
+
+/* footer */
+footer{
+text-align:center;
+padding:30px;
+font-size:14px;
+color:#ccc;
+}
+
+/* montañas abajo */
+.montañas{
+position:fixed;
+bottom:0;
+width:100%;
+height:200px;
+background:#0f3460;
+clip-path:polygon(0% 100%,20% 70%,35% 85%,50% 60%,70% 80%,85% 65%,100% 100%);
+z-index:-1;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="estrellas"></div>
+<div class="luna"></div>
+<div class="montañas"></div>
+
+<header>
+<h2>
+DENUNCIAR ES INÚTIL
+</h2>
+<h2>
+    PROTEGE A LOS DELINCUENTES Y NO RECUPERA COSAS PERSONALES DE LA VICTIMA
+</h2>
+<div class="linea"></div>
+</header>
+
+<main>
+
+<!-- Imagen agregada sin texto -->
+<div class="imagen-container">
+    <img class="imagen-justicia" src="victimafotofamilia.jpg">
+</div>
+
+<p id="texto-1">
+Hemos denunciado robos de diversos objetos como una moto, una billetera, cuatro celulares, tres llaves de auto o un bolso. Parece que los jueces terminan defendiendo a los delincuentes. Por esta situación, muchas personas creen que presentar una denuncia formal no sirve de mucho, porque no realizan allanamientos ni recuperan las pertenencias robadas. Todo queda en la impunidad. Los jueces no protegen a las víctimas, protegen a los delincuentes.
+</p>
+
+<p id="texto-2">
+En mi barrio han ocurrido varios hechos. A mi papá, Ariel, en el año 2012 le robaron la billetera y una llave del auto. En el año 2015 le robaron tres celulares: lo amenazaron con un cuchillo para que entregara sus pertenencias. En el año 2021 también lo amenazaron con una pistola, pero un comisario de policía logró intervenir y lo ayudó. El delincuente terminó escapando con un celular y la llave del auto.
+</p>
+
+<p id="texto-3">
+A mis tíos Cristian, Fabio y Pablo también les robaron una moto. Además, a mi abuelo Hugo y a mi abuela Elsa les robaron aproximadamente 500 mil pesos y varias pertenencias que tenían para la reparación de la casa. Esto ocurrió en el año 2023. También a mis tíos Cristian, Fabio y Pablo los estafaron mediante un delito digital. Ellos hicieron la denuncia por fraude, pero no se hizo nada y no pudieron recuperar el dinero.
+</p>
+
+<p id="texto-4">
+Mi abuelo Roberto también fue víctima de una estafa de aproximadamente 250 mil pesos. El hecho fue denunciado ante la policía, pero no recuperó el dinero, que quedó en manos de las autoridades, como políticos, jueces y la policía de cibercrimen, durante el allanamiento al delincuente.
+</p>
+
+<p id="texto-5">
+Además, tres de mis primas fueron víctimas de grooming. Ellas denunciaron a los responsables, pero los jueces y las juezas no hicieron nada. Los acusados no están en la cárcel y continúan en libertad, pudiendo seguir perjudicando a otras víctimas.
+</p>
+
+<p id="texto-6">
+Cuando se realizan allanamientos, el dinero de los delincuentes no vuelve a las víctimas. Ese dinero queda en manos de las autoridades, como políticos, jueces, la policía de cibercrimen y el gobierno No puede recuperar su ganancia porque fue víctima de fraude . Por esta razón, las víctimas casi nunca recuperan lo que les robaron. Por eso decimos que no se hace nada, a pesar de las múltiples denuncias realizadas por nuestra familia.
+</p>
+
+<p id="texto-7">
+    Además, esto fue denunciado ante la comisaría.
+
+En el año 2015 le robaron un celular; le sacaron la mano en la calle y no logró recuperarlo. En el año 2025 le robaron otro celular en la escuela donde trabaja, y aunque lo denunció, no recuperó sus pertenencias ni sus cosas personales.
+A todo esto, la policía no mostró compromiso con la víctima, ya que a menudo le dicen que vaya a la casa del ladrón o que compre el celular robado, o simplemente minimizan lo ocurrido. Esto evidencia que algunos policías son corruptos, al igual que jueces y juezas, pues hoy en día las denuncias formales de las víctimas suelen quedar sin resultado.
+La víctima no puede ir a la casa de los delincuentes, especialmente si estos tienen problemas mentales y podrían causar daño físico con un cuchillo o pistola.
+</p>
+
+<div class="botones-control">
+    <button class="btn-control reproducir" onclick="playAllText()">▶ Reproducir Todo</button>
+    <button class="btn-control pausa" onclick="pauseText()">⏸ Pausar</button>
+    <button class="btn-control detener" onclick="stopText()">⏹ Detener</button>
+</div>
+
+<!-- Botón para volver a index.html con función stop -->
+<a href="aprendeprincipalconocimientosabogacia.html" class="btn-volver" onclick="stopTextAndGoBack(event)">← Volver atrás</a>
+
+</main>
+
+
+<script>
+    const synth = window.speechSynthesis;
+    let utterance;
+    let currentText = '';
+
+    // Función para obtener todo el texto de los párrafos (incluye texto-7)
+    function getAllText() {
+        const textos = [];
+        // i <= 7 para incluir el último párrafo editado
+        for (let i = 1; i <= 7; i++) {
+            const elemento = document.getElementById(`texto-${i}`);
+            if (elemento) {
+                textos.push(elemento.innerText);
+            }
+        }
+        return textos.join(' ');
+    }
+
+    function playAllText() {
+        const textoCompleto = getAllText();
+        
+        if (!textoCompleto) {
+            alert("No hay texto para reproducir.");
+            return;
+        }
+
+        // Detener cualquier reproducción en curso
+        if (synth.speaking) {
+            synth.cancel();
+        }
+
+        // Crear nueva utterance
+        utterance = new SpeechSynthesisUtterance(textoCompleto);
+        
+        // Configurar el idioma español
+        utterance.lang = 'es-ES';
+        
+        // Velocidad normal
+        utterance.rate = 1;
+        
+        // Tono normal
+        utterance.pitch = 1;
+        
+        // Volumen máximo
+        utterance.volume = 1;
+
+        // Evento cuando termina
+        utterance.onend = function() {
+            console.log('Reproducción completada');
+        };
+
+        // Evento si hay error
+        utterance.onerror = function(event) {
+            console.error('Error en la reproducción:', event);
+        };
+
+        // Comenzar reproducción
+        synth.speak(utterance);
+    }
+
+    function pauseText() {
+        if (synth.speaking && !synth.paused) {
+            synth.pause();
+        } else if (synth.paused) {
+            synth.resume();
+        }
+    }
+
+    function stopText() {
+        if (synth.speaking) {
+            synth.cancel();
+        }
+    }
+
+    // Nueva función: Detiene el audio y luego vuelve atrás
+    function stopTextAndGoBack(event) {
+        event.preventDefault(); // Evita que el enlace navegue inmediatamente
+        
+        // Detener cualquier reproducción en curso
+        if (synth.speaking) {
+            synth.cancel();
+            console.log('Audio detenido antes de volver');
+        }
+        
+        // Pequeña pausa para asegurar que se detenga antes de navegar
+        setTimeout(function() {
+            window.location.href = 'aprendeprincipalconocimientosabogacia.html';
+        }, 50);
+    }
+
+    // Detener audio cuando la página se oculta (navegación hacia atrás con el botón del navegador)
+    window.addEventListener('beforeunload', function() {
+        if (synth.speaking) {
+            synth.cancel();
+        }
+    });
+
+    // Detener audio cuando la página se actualiza
+    window.addEventListener('unload', function() {
+        if (synth.speaking) {
+            synth.cancel();
+        }
+    });
+
+    // Soporte para teclas de espacio (pausa/reanuda)
+    document.addEventListener('keydown', function(event) {
+        if (event.code === 'Space' && synth.speaking) {
+            event.preventDefault();
+            if (synth.paused) {
+                synth.resume();
+            } else {
+                synth.pause();
+            }
+        }
+    });
+
+</script>
+</body>
+</html>

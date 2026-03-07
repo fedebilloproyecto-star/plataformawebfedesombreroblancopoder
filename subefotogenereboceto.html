@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>🎨 Boceto completo</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: chocolate;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+            background-image: radial-gradient(circle at 30% 40%, #5093b8 0%, #6f23b1 95%);
+        }
+
+        /* contenedor principal con efecto cristal */
+        .master {
+            max-width: 1440px;
+            width: 100%;
+            background: rgba(15, 12, 8, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(230, 180, 130, 0.2);
+            border-radius: 40px;
+            padding: 20px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.9), inset 0 2px 1px rgba(255,200,150,0.1);
+        }
+
+        /* botón de retroceso tipo navegador */
+        .top-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-left: 5px;
+            flex-wrap: wrap;
+        }
+        .back-button {
+            background: rgba(35, 25, 18, 0.9);
+            border: 1.5px solid #c29a6b;
+            color: #fadcba;
+            padding: 10px 20px;
+            border-radius: 60px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 12px black;
+        }
+        .back-button:hover {
+            background: #b48653;
+            color: #191009;
+            border-color: #ffdbb5;
+        }
+        .back-button span {
+            font-size: 1.6rem;
+        }
+        .top-bar-title {
+            color: #ac927b;
+            font-size: 1.1rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+
+        /* layout doble columna - MOBILE FIRST */
+        .split {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* panel de control */
+        .control-panel {
+            width: 100%;
+            background: rgba(0,0,0,0.35);
+            border-radius: 32px;
+            padding: 20px;
+            border: 1px solid #8b6f5190;
+            box-shadow: inset 0 0 15px #221a12;
+        }
+
+        .control-panel h3 {
+            font-size: 1.6rem;
+            font-weight: 400;
+            color: #f3dbbc;
+            margin-bottom: 18px;
+            border-left: 5px solid #d78c4a;
+            padding-left: 16px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            color: #d5b185;
+            letter-spacing: 1px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+            margin-left: 8px;
+        }
+
+        .field {
+            background: #1d1610;
+            border: 1px solid #7b614b;
+            border-radius: 50px;
+            padding: 4px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .field span {
+            font-size: 1.3rem;
+        }
+        .field input, .field select {
+            background: transparent;
+            border: none;
+            padding: 14px 0;
+            color: white;
+            font-size: 0.95rem;
+            width: 100%;
+            outline: none;
+        }
+        .field input[type="color"] {
+            height: 48px;
+            padding: 4px;
+        }
+        .field select option {
+            background: #2a1f15;
+            color: #f3dbbc;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        /* IA color lab */
+        .ia-color-box {
+            background: #2a1f15;
+            border-radius: 30px;
+            padding: 18px;
+            margin: 20px 0;
+            border: 2px solid #b2814a;
+            box-shadow: 0 0 16px #dfa45e55;
+        }
+        .ia-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #f8cfa0;
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 16px;
+        }
+        .ia-title span {
+            font-size: 2rem;
+        }
+        .ia-presets {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+        .ia-chip {
+            background: #3c3026;
+            border: 1px solid #b58d62;
+            border-radius: 40px;
+            padding: 12px 16px;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #efd4b5;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.15s;
+            flex: 1 0 auto;
+            justify-content: center;
+            min-width: 110px;
+        }
+        .ia-chip:hover {
+            background: #72553b;
+            color: #ffe5ca;
+            border-color: #eeb67b;
+        }
+        .chip-active {
+            background: #b17c4b;
+            color: #1f140c;
+            border-color: #feda9e;
+            font-weight: bold;
+        }
+
+        /* imagen ejemplo */
+        .image-sample {
+            display: flex;
+            margin: 12px 0 0;
+            gap: 12px;
+            align-items: center;
+            background: #1e1610;
+            border-radius: 28px;
+            padding: 12px 16px;
+        }
+        .sample-emoji {
+            font-size: 2.5rem;
+        }
+
+        /* botones descarga */
+        .download-zone {
+            display: flex;
+            gap: 10px;
+            margin-top: 24px;
+            flex-wrap: wrap;
+        }
+        .down-btn {
+            background: #32261d;
+            border: 2px solid #b58853;
+            color: #f7dbb8;
+            padding: 14px 0;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: 0.2s;
+            min-width: 100px;
+        }
+        .down-btn:hover {
+            background: #cb9c66;
+            color: #1f150e;
+            border-color: #ffeac2;
+        }
+
+        /* canvas del boleto - VISTA PREVIA OPTIMIZADA MÓVIL */
+        .canvas-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+        .canvas-wrap {
+            background: #231b13;
+            padding: 12px;
+            border-radius: 36px;
+            box-shadow: 0 20px 30px #000000cc;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        #ticketCanvas {
+            display: block;
+            width: 100%;
+            max-width: 480px;  /* se adapta perfecto a cualquier pantalla */
+            height: auto;
+            border-radius: 24px;
+            box-shadow: 0 6px 0 #3d2e1f;
+            background: #ede3d5;
+            aspect-ratio: 1040/1440; /* mantiene proporción exacta */
+        }
+        .badge-live {
+            margin-top: 16px;
+            background: #2a1f16d0;
+            backdrop-filter: blur(8px);
+            padding: 10px 20px;
+            border-radius: 40px;
+            color: #edd7bb;
+            font-size: 0.9rem;
+            border: 1px solid #b48758;
+            text-align: center;
+            width: fit-content;
+        }
+
+        /* Ajuste para pantallas muy pequeñas */
+        @media (max-width: 380px) {
+            .master { padding: 12px; }
+            .ia-chip { min-width: 100%; }
+            .grid-2 { grid-template-columns: 1fr; }
+            .back-button { padding: 8px 16px; font-size: 1rem; }
+        }
+
+        /* Para tablets y arriba ya se ve bien con el ancho completo */
+        @media (min-width: 900px) {
+            .split {
+                flex-direction: row;
+                align-items: flex-start;
+            }
+            .control-panel {
+                width: 380px;
+                flex-shrink: 0;
+            }
+            .canvas-area {
+                flex: 1;
+            }
+            #ticketCanvas {
+                max-width: 520px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="master">
+    <!-- BARRA SUPERIOR -->
+    <div class="top-bar">
+        <div class="back-button" id="goBackBtn">
+            <span>Volver atras</span> 
+        </div>
+        <div class="top-bar-title">✦ Te invita el sombrero blanco a crea tu boceto ✦</div>
+    </div>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <div class="split">
+        <!-- PANEL IZQUIERDO -->
+        <div class="control-panel">
+            <h3>personalizar</h3>
+
+            <!-- foto -->
+            <div class="input-group">
+                <label>📸 foto principal (+ IA color)</label>
+                <div class="field">
+                    <span>🖼️</span>
+                    <input type="file" id="photoInput" accept="image/*">
+                </div>
+                <div class="image-sample">
+                    <span class="sample-emoji" id="previewEmoji">🎨</span>
+                    <span style="color:#cbac86; font-size:0.9rem;">Color IA: elige preset</span>
+                </div>
+            </div>
+
+            <!-- textos -->
+            <div class="input-group">
+                <label>evento</label>
+                <div class="field"><span>🎫</span><input type="text" id="evName" value="VELADA CULTURAL"></div>
+            </div>
+            <div class="input-group">
+                <label>invitado</label>
+                <div class="field"><span>👤</span><input type="text" id="attName" value="SOFÍA CASTRO"></div>
+            </div>
+            <div class="grid-2">
+                <div class="input-group">
+                    <label>fecha</label>
+                    <div class="field"><span>📅</span><input type="date" id="evDate" value="2025-09-12"></div>
+                </div>
+                <div class="input-group">
+                    <label>lugar</label>
+                    <div class="field"><span>📍</span><input type="text" id="placeField" value="TEATRO PRINCIPAL"></div>
+                </div>
+            </div>
+
+            <!-- paleta colores -->
+            <div class="grid-2">
+                <div class="input-group"><label>papel</label><div class="field"><span>📄</span><input type="color" id="paperCol" value="#f7ebd0"></div></div>
+                <div class="input-group"><label>marco</label><div class="field"><span>🖼️</span><input type="color" id="borderCol" value="#4a3624"></div></div>
+                <div class="input-group"><label>texto</label><div class="field"><span>✒️</span><input type="color" id="textCol" value="#1e1610"></div></div>
+                <div class="input-group"><label>mancha</label><div class="field"><span>☕</span><input type="color" id="stainCol" value="#96683b"></div></div>
+            </div>
+
+            <!-- IA color lab -->
+            <div class="ia-color-box">
+                <div class="ia-title"><span>✨</span> IA color lab</div>
+                <div class="ia-presets">
+                    <div class="ia-chip" data-style="vibrant">🌈 vibrante</div>
+                    <div class="ia-chip" data-style="sepia">📀 sepia</div>
+                    <div class="ia-chip" data-style="cool">❄️ frío</div>
+                    <div class="ia-chip" data-style="warm">🔥 cálido</div>
+                    <div class="ia-chip" data-style="neon">💎 neón</div>
+                    <div class="ia-chip" data-style="pastel">🌸 pastel</div>
+                </div>
+            </div>
+
+            <!-- textura -->
+            <div class="grid-2" style="margin-top:10px;">
+                <div class="input-group"><label>textura</label><div class="field"><span>🌀</span>
+                    <select id="textureSelect">
+                        <option value="dots">puntillismo</option>
+                        <option value="grid">servilleta</option>
+                        <option value="cross">cruzado</option>
+                        <option value="linen">lino</option>
+                    </select>
+                </div></div>
+                <div></div>
+            </div>
+
+            <!-- descargas -->
+            <div class="download-zone">
+                <div class="down-btn" id="dlPng">📥 PNG</div>
+                <div class="down-btn" id="dlJpg">📥 JPG</div>
+                <div class="down-btn" id="dlWebp">📥 WEBP</div>
+            </div>
+        </div>
+
+        <!-- VISTA PREVIA DEL BOLETO (canvas) -->
+        <div class="canvas-area">
+            <div class="canvas-wrap">
+                <canvas id="ticketCanvas" width="1040" height="1440"></canvas>
+            </div>
+            <div class="badge-live">✧ vista previa en vivo · IA activa ✧</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const canvas = document.getElementById('ticketCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // inputs
+        const photoInput = document.getElementById('photoInput');
+        const evName = document.getElementById('evName');
+        const attName = document.getElementById('attName');
+        const evDate = document.getElementById('evDate');
+        const placeField = document.getElementById('placeField');
+        const paperCol = document.getElementById('paperCol');
+        const borderCol = document.getElementById('borderCol');
+        const textCol = document.getElementById('textCol');
+        const stainCol = document.getElementById('stainCol');
+        const textureSelect = document.getElementById('textureSelect');
+        const iaChips = document.querySelectorAll('.ia-chip');
+        const previewEmoji = document.getElementById('previewEmoji');
+
+        let userImage = null;
+        let lastIaStyle = 'vibrant';
+
+        function applyIaStyle(style) {
+            let paper, border, text, stain, emoji;
+            switch(style) {
+                case 'vibrant': paper = '#f2d98b'; border = '#c5531e'; text = '#2c1e0f'; stain = '#bc4f15'; emoji = '🌈'; break;
+                case 'sepia': paper = '#e2cfb4'; border = '#7f6242'; text = '#3d3228'; stain = '#a57749'; emoji = '📀'; break;
+                case 'cool': paper = '#c9e2e6'; border = '#2f6d7a'; text = '#1c3b44'; stain = '#4a7b8c'; emoji = '❄️'; break;
+                case 'warm': paper = '#f7cfad'; border = '#ad5f2a'; text = '#4b2c17'; stain = '#bb733c'; emoji = '🔥'; break;
+                case 'neon': paper = '#c3f0c3'; border = '#f149e8'; text = '#2a0256'; stain = '#ff5eaa'; emoji = '💎'; break;
+                case 'pastel': paper = '#fbd7db'; border = '#af8fbc'; text = '#564c6b'; stain = '#cb9ac5'; emoji = '🌸'; break;
+                default: return;
+            }
+            paperCol.value = paper;
+            borderCol.value = border;
+            textCol.value = text;
+            stainCol.value = stain;
+            previewEmoji.textContent = emoji;
+            lastIaStyle = style;
+            [paperCol, borderCol, textCol, stainCol].forEach(el => el.dispatchEvent(new Event('input', {bubbles:true})));
+            redrawCanvas();
+        }
+
+        iaChips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                iaChips.forEach(c => c.classList.remove('chip-active'));
+                chip.classList.add('chip-active');
+                applyIaStyle(chip.dataset.style);
+            });
+        });
+
+        window.addEventListener('load', ()=>{
+            document.querySelector('.ia-chip[data-style="vibrant"]').classList.add('chip-active');
+            applyIaStyle('vibrant');
+        });
+
+        photoInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(ev) {
+                const img = new Image();
+                img.onload = function() { userImage = img; redrawCanvas(); };
+                img.src = ev.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+
+        function redrawCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = paperCol.value;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // textura
+            ctx.globalCompositeOperation = 'multiply';
+            ctx.globalAlpha = 0.13;
+            const tex = textureSelect.value;
+            ctx.fillStyle = '#594e40';
+            if (tex === 'grid') {
+                for (let i=0; i<canvas.width; i+=30) ctx.fillRect(i, 0, 1, canvas.height);
+                for (let i=0; i<canvas.height; i+=30) ctx.fillRect(0, i, canvas.width, 1);
+            } else if (tex === 'dots') {
+                for (let y=0; y<canvas.height; y+=25) for (let x=0; x<canvas.width; x+=25) { ctx.beginPath(); ctx.arc(x,y,2,0,7); ctx.fill(); }
+            } else if (tex === 'cross') {
+                ctx.strokeStyle = '#5f4f3b'; ctx.lineWidth=1.4;
+                for (let i=0; i<canvas.width; i+=20) { ctx.beginPath(); ctx.moveTo(i,0); ctx.lineTo(i+10,20); ctx.stroke(); }
+            } else if (tex === 'linen') {
+                for (let y=0; y<canvas.height; y+=10) for (let x=0; x<canvas.width; x+=10) if ((x+y)%20===0) ctx.fillRect(x,y,3,3);
+            }
+            ctx.globalCompositeOperation = 'source-over';
+            ctx.globalAlpha = 1.0;
+
+            ctx.strokeStyle = borderCol.value;
+            ctx.lineWidth = 40;
+            ctx.strokeRect(30, 30, canvas.width-60, canvas.height-60);
+
+            // imagen
+            if (userImage) {
+                try {
+                    const imgX = 140, imgY = 190, imgW = 760, imgH = 440;
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.rect(imgX, imgY, imgW, imgH);
+                    ctx.clip();
+                    ctx.drawImage(userImage, imgX, imgY, imgW, imgH);
+                    ctx.globalCompositeOperation = 'overlay';
+                    ctx.globalAlpha = 0.25;
+                    if (lastIaStyle === 'vibrant') ctx.fillStyle = '#ffaa33';
+                    else if (lastIaStyle === 'sepia') ctx.fillStyle = '#bb8855';
+                    else if (lastIaStyle === 'cool') ctx.fillStyle = '#88ccff';
+                    else if (lastIaStyle === 'warm') ctx.fillStyle = '#ff9966';
+                    else if (lastIaStyle === 'neon') ctx.fillStyle = '#ee88ff';
+                    else if (lastIaStyle === 'pastel') ctx.fillStyle = '#ffb6c1';
+                    else ctx.fillStyle = '#ddbb99';
+                    ctx.fillRect(imgX, imgY, imgW, imgH);
+                    ctx.restore();
+                    ctx.globalCompositeOperation = 'source-over';
+                    ctx.globalAlpha = 1.0;
+                } catch (e) {}
+            } else {
+                ctx.fillStyle = '#dacbb8';
+                ctx.fillRect(140, 190, 760, 440);
+                ctx.font = 'bold 46px "Courier New"';
+                ctx.fillStyle = '#977b60';
+                ctx.fillText('SUBIR FOTO', 340, 400);
+            }
+
+            ctx.shadowColor = '#00000070';
+            ctx.shadowBlur = 35;
+            ctx.fillStyle = stainCol.value;
+            ctx.globalAlpha = 0.45;
+            ctx.beginPath();
+            ctx.ellipse(780, 1080, 200, 150, 0.4, 0, 7);
+            ctx.fill();
+            ctx.shadowBlur = 0;
+            ctx.globalAlpha = 1;
+            ctx.shadowColor = 'transparent';
+            ctx.fillStyle = textCol.value;
+            
+            ctx.font = 'bold 72px "Courier New", monospace';
+            ctx.fillText(evName.value.toUpperCase() || 'EVENTO', 160, 770);
+            ctx.font = 'bold 50px "Courier New"';
+            ctx.fillText('INVITADO', 160, 900);
+            ctx.font = '60px "Courier New", bold';
+            ctx.fillText(attName.value.toUpperCase() || 'NOMBRE', 160, 980);
+            let fechaStr = evDate.value ? new Date(evDate.value).toLocaleDateString('es-ES',{year:'numeric',month:'long',day:'numeric'}).toUpperCase() : '12 SEPTIEMBRE 2025';
+            ctx.font = '40px "Courier New"';
+            ctx.fillText('📅 ' + fechaStr, 160, 1090);
+            ctx.fillText('📍 ' + (placeField.value.toUpperCase() || 'SALA PRINCIPAL'), 160, 1170);
+            ctx.strokeStyle = borderCol.value;
+            ctx.lineWidth = 6;
+            ctx.strokeRect(50, 50, canvas.width-100, canvas.height-100);
+        }
+
+        const allInputs = [evName, attName, evDate, placeField, paperCol, borderCol, textCol, stainCol, textureSelect, photoInput];
+        allInputs.forEach(el => el.addEventListener('input', redrawCanvas));
+        allInputs.forEach(el => el.addEventListener('change', redrawCanvas));
+
+        function download(format) {
+            setTimeout(() => {
+                let mime = 'image/png', ext = 'png', q = 1;
+                if (format === 'jpg') { mime = 'image/jpeg'; ext = 'jpg'; q = 0.96; }
+                if (format === 'webp') { mime = 'image/webp'; ext = 'webp'; q = 0.98; }
+                const link = document.createElement('a');
+                link.download = `boleto-ia.${ext}`;
+                link.href = canvas.toDataURL(mime, q);
+                link.click();
+            }, 20);
+        }
+        document.getElementById('dlPng').addEventListener('click', ()=>download('png'));
+        document.getElementById('dlJpg').addEventListener('click', ()=>download('jpg'));
+        document.getElementById('dlWebp').addEventListener('click', ()=>download('webp'));
+
+        document.getElementById('goBackBtn').addEventListener('click', ()=>{
+            if (document.referrer) window.location.href = document.referrer;
+            else window.location.href = 'iniciopremiumdibujosprincipal.html';
+        });
+
+        setTimeout(redrawCanvas, 120);
+    })();
+</script>
+</body>
+</html>

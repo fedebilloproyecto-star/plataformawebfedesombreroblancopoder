@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sitios Web Recomendables - Desarrolladores Profesionales</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0a2f44, #0a1c2f);
+            color: #f0f4fa;
+            line-height: 1.6;
+            padding: 25px;
+        }
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: rgba(20, 35, 45, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+            overflow: hidden;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 191, 255, 0.3);
+        }
+        
+        header {
+            background: linear-gradient(145deg, #0e4b6b, #0a6b75, #0f8a7a);
+            color: white;
+            padding: 40px 25px;
+            text-align: center;
+            position: relative;
+            border-bottom: 4px solid #00e0ff;
+        }
+        
+        h1 {
+            font-size: 2.6rem;
+            margin-bottom: 15px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.7);
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #ffffff;
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.98;
+            max-width: 900px;
+            margin: 15px auto 0;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 18px 30px;
+            border-radius: 60px;
+            border-left: 6px solid #00e0ff;
+            border-right: 6px solid #00e0ff;
+            font-weight: 500;
+            color: #e6f7ff;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px 25px;
+            background: rgba(10, 30, 40, 0.8);
+            border-bottom: 1px solid rgba(0, 224, 255, 0.4);
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 10px 25px;
+            background: rgba(0, 191, 255, 0.08);
+            border-radius: 16px;
+            min-width: 170px;
+            border: 1px solid rgba(0, 224, 255, 0.3);
+        }
+        
+        .stat-value {
+            font-size: 2.1rem;
+            font-weight: 800;
+            color: #00e0ff;
+            text-shadow: 0 0 15px rgba(0, 224, 255, 0.6);
+        }
+        
+        .stat-label {
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #b0f0ff;
+        }
+        
+        .controls {
+            padding: 20px 25px;
+            background: rgba(0, 120, 140, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 18px;
+        }
+        
+        .search-box {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            min-width: 280px;
+        }
+        
+        .search-box input {
+            padding: 12px 20px;
+            border: 2px solid rgba(0, 224, 255, 0.4);
+            border-radius: 30px 0 0 30px;
+            margin-right: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            transition: all 0.3s;
+            font-size: 1rem;
+            backdrop-filter: blur(5px);
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: #00e0ff;
+            background: rgba(0, 50, 70, 0.5);
+            box-shadow: 0 0 15px rgba(0, 224, 255, 0.4);
+        }
+        
+        .search-box input::placeholder {
+            color: rgba(200, 240, 255, 0.8);
+            font-style: italic;
+        }
+        
+        .search-box button {
+            padding: 12px 25px;
+            background: linear-gradient(145deg, #00e0ff, #0088cc);
+            color: white;
+            border: none;
+            border-radius: 0 30px 30px 0;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 700;
+            font-size: 1rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-left: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .search-box button:hover {
+            background: linear-gradient(145deg, #0088cc, #006699);
+            transform: scale(1.02);
+            box-shadow: 0 5px 15px rgba(0, 224, 255, 0.6);
+            color: white;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            padding: 25px;
+            background: rgba(8, 25, 35, 0.7);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 12px;
+            min-width: 600px;
+        }
+        
+        thead tr {
+            background: linear-gradient(145deg, #0a6b75, #0e4b6b);
+            border-radius: 15px;
+        }
+        
+        th {
+            padding: 18px 15px;
+            text-align: left;
+            font-weight: 700;
+            color: #00e0ff;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-size: 0.9rem;
+            border-bottom: 3px solid #00e0ff;
+        }
+        
+        tbody tr {
+            background: rgba(25, 55, 70, 0.7);
+            border-radius: 12px;
+            transition: all 0.25s;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(0, 224, 255, 0.1);
+        }
+        
+        tbody tr:hover {
+            background: rgba(30, 80, 100, 0.9);
+            transform: scale(1.005);
+            box-shadow: 0 5px 20px rgba(0, 224, 255, 0.3);
+            border-color: #00e0ff;
+        }
+        
+        td {
+            padding: 18px 15px;
+            color: #e6f7ff;
+        }
+        
+        .descripcion {
+            font-weight: 600;
+            color: #a0f0ff;
+            font-size: 1.05rem;
+            text-shadow: 0 0 5px rgba(0,224,255,0.3);
+        }
+        
+        .ip {
+            font-family: 'Courier New', monospace;
+            background: rgba(0, 40, 60, 0.7);
+            padding: 6px 16px;
+            border-radius: 30px;
+            display: inline-block;
+            border: 1px solid #00e0ff;
+            color: #c4ffff;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            box-shadow: 0 0 8px rgba(0,224,255,0.2);
+        }
+        
+        .link a {
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            display: inline-block;
+            padding: 8px 22px;
+            border-radius: 40px;
+            background: linear-gradient(145deg, #0f8a7a, #0a6b75);
+            border: 1.5px solid #00e0ff;
+            transition: all 0.25s;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        .link a:hover {
+            background: linear-gradient(145deg, #00e0ff, #0088cc);
+            color: white;
+            border-color: white;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 18px rgba(0, 224, 255, 0.6);
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            padding: 25px;
+            border-top: 1px solid rgba(0, 224, 255, 0.4);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .pagination button {
+            padding: 10px 20px;
+            margin: 0 3px;
+            background: rgba(10, 75, 90, 0.6);
+            border: 1px solid rgba(0, 224, 255, 0.4);
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: white;
+            font-weight: 600;
+            min-width: 50px;
+            font-size: 0.95rem;
+        }
+        
+        .pagination button:hover {
+            background: rgba(0, 224, 255, 0.3);
+            border-color: #00e0ff;
+            transform: translateY(-2px);
+        }
+        
+        .pagination button.active {
+            background: linear-gradient(145deg, #00e0ff, #0088cc);
+            color: white;
+            border-color: white;
+            font-weight: 800;
+            box-shadow: 0 0 15px rgba(0,224,255,0.6);
+        }
+        
+        .btn-volver {
+            background: linear-gradient(145deg, #0a6b75, #0e4b6b);
+            color: white;
+            padding: 14px 32px;
+            font-size: 1.1rem;
+            border: 2px solid #00e0ff;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            margin: 20px 30px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.4);
+        }
+        
+        .btn-volver:hover {
+            background: linear-gradient(145deg, #00e0ff, #0088cc);
+            color: white;
+            border-color: white;
+            transform: scale(1.06);
+            box-shadow: 0 10px 25px rgba(0, 224, 255, 0.7);
+        }
+        
+        .profesionales-footer {
+            background: #051f2a;
+            padding: 40px 35px;
+            text-align: center;
+            border-top: 4px solid #00e0ff;
+            color: #d4f4ff;
+        }
+        
+        .profesionales-footer h3 {
+            color: #00e0ff;
+            font-size: 2rem;
+            margin-bottom: 25px;
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(0,224,255,0.5);
+            letter-spacing: 2px;
+        }
+        
+        .texto-creacion {
+            font-size: 1.25rem;
+            line-height: 1.8;
+            max-width: 950px;
+            margin: 0 auto;
+            color: #ffffff;
+            background: rgba(0, 160, 200, 0.1);
+            padding: 25px 35px;
+            border-radius: 20px;
+            border: 1px solid #00e0ff;
+        }
+        
+        .texto-creacion p {
+            margin-bottom: 20px;
+        }
+        
+        .texto-creacion strong {
+            color: #00e0ff;
+            font-weight: 700;
+        }
+        
+        .empresas-badge {
+            display: inline-block;
+            background: rgba(0, 224, 255, 0.18);
+            padding: 16px 35px;
+            border-radius: 60px;
+            margin-top: 30px;
+            border: 2px solid #00e0ff;
+            font-size: 1.25rem;
+            color: white;
+            backdrop-filter: blur(5px);
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .subtitle { font-size: 1rem; }
+            .controls { flex-direction: column; }
+            .search-box { width: 100%; }
+            table { min-width: 100%; }
+            .texto-creacion { font-size: 1.1rem; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌐 SITIOS WEB RECOMENDABLES</h1>
+            <div class="subtitle">
+                Plataformas digitales desarrolladas por profesionales de la programación
+            </div>
+        </header>
+        
+        <a href="tecnologiaguiaportadainicio.html" class="btn-volver">⬅ VOLVER AL INICIO</a>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-value" id="totalRecords">12</div>
+                <div class="stat-label">SITIOS WEB</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="filteredRecords">12</div>
+                <div class="stat-label">RECOMENDADOS</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="devCount">8</div>
+                <div class="stat-label">EMPRESAS PROPIAS</div>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="🔍 Buscar por descripción del sitio o IP del servidor...">
+                <button id="searchButton">BUSCAR</button>
+            </div>
+        </div>
+        
+        <div class="table-container">
+            <table id="evidenceTable">
+                <thead>
+                    <tr>
+                        <th>DESCRIPCIÓN DEL SITIO WEB</th>
+                        <th>IP DEL SERVIDOR</th>
+                        <th>ENLACE AL SITIO</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- Los datos se cargarán dinámicamente -->
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="pagination" id="pagination">
+            <!-- Controles de paginación generados por JS -->
+        </div>
+        
+        <div class="profesionales-footer">
+            <h3>👨‍💻 CREACIÓN DE LOS SITIOS WEB 👩‍💻</h3>
+            
+            <div class="texto-creacion">
+                <p>Los sitios web recomendados fueron desarrollados por programadores que estudiaron la <strong>Tecnicatura en Programación</strong>, también conocida como la carrera de <strong>Analista de Sistemas</strong>, en la universidad.</p>
+                
+                <p>Es importante aclarar que cualquier software o sitio web es creado por programadores, ya que son los profesionales encargados de diseñar, desarrollar y mantener estas herramientas tecnológicas.</p>
+                
+                <p>Actualmente, estos profesionales trabajan en sus propias empresas.</p>
+            </div>
+            
+            <div class="empresas-badge">
+                ⚡Los sitio web  fue creado por los pogramadores que trabaja con la empresas.⚡
+            </div>
+            
+           
+        </div>
+    </div>
+
+    <script>
+        // =====================================================
+        // SITIOS WEB RECOMENDABLES - DESARROLLADOS POR PROFESIONALES
+        // =====================================================
+        
+        const evidenceData = [
+         
+            {
+                descripcion: "Se lo llama chat gtp: Ese sitio web te permite escribir un mensaje en el chat y allí realiza lo que necesites. Por ejemplo, si quieres modificar una foto, la modifica. Es muy bueno para diseño gráfico y arte, pero también ofrece muchas otras funciones, no solo esa. Es muy recomendable, ya que ayuda en todo, incluso con la orientación vocacional para elegir la carrera que deseas estudiar, según tus intereses.",
+                ip: "No hay datos",
+                enlace: "http://chatgpt.com/"
+            },
+              {
+                descripcion: "Se lo llama chat deepseek: Ese sitio web te permite escribir un mensaje en el chat y allí realiza lo que necesites. Por ejemplo, si quieres modificar una foto, la modifica. Es muy bueno para diseño gráfico y arte, pero también ofrece muchas otras funciones, no solo esa. Es muy recomendable, ya que ayuda en todo, incluso con la orientación vocacional para elegir la carrera que deseas estudiar, según tus intereses.",
+                ip: "No hay datos",
+                enlace: "https://chat.deepseek.com/"
+            },  
+    {
+                descripcion: "Se lo llama gemenis: Ese sitio web te permite escribir un mensaje en el chat y allí realiza lo que necesites. Por ejemplo, si quieres modificar una foto, la modifica. Es muy bueno para diseño gráfico y arte, pero también ofrece muchas otras funciones, no solo esa. Es muy recomendable, ya que ayuda en todo, incluso con la orientación vocacional para elegir la carrera que deseas estudiar, según tus intereses.",
+                ip: "No hay datos",
+                enlace: "https://gemini.google.com/"
+            },  
+        ];
+
+        // Variables para paginación y filtrado
+        let currentPage = 1;
+        const rowsPerPage = 5;
+        let filteredData = [...evidenceData];
+
+        // Elementos DOM
+        const tableBody = document.getElementById('tableBody');
+        const paginationElement = document.getElementById('pagination');
+        const searchInput = document.getElementById('searchInput');
+        const searchButton = document.getElementById('searchButton');
+        const totalRecords = document.getElementById('totalRecords');
+        const filteredRecords = document.getElementById('filteredRecords');
+        const devCount = document.getElementById('devCount');
+
+        // Función para mostrar datos en tabla
+        function displayTableData(data, page = 1) {
+            tableBody.innerHTML = '';
+            
+            const startIndex = (page - 1) * rowsPerPage;
+            const endIndex = startIndex + rowsPerPage;
+            const paginatedData = data.slice(startIndex, endIndex);
+            
+            if (paginatedData.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="3" style="text-align: center; padding: 45px; background: rgba(0,0,0,0.4); border-radius: 15px;">🔍 No se encontraron sitios web</td></tr>';
+                return;
+            }
+            
+            paginatedData.forEach(item => {
+                const row = document.createElement('tr');
+                
+                row.innerHTML = `
+                    <td class="descripcion">${item.descripcion}</td>
+                    <td><span class="ip">${item.ip}</span></td>
+                    <td class="link"><a href="${item.enlace}" target="_blank">🌐 VISITAR SITIO</a></td>
+                `;
+                
+                tableBody.appendChild(row);
+            });
+            
+            updateStats(data);
+        }
+
+        // Configuración de paginación
+        function setupPagination(data) {
+            paginationElement.innerHTML = '';
+            
+            const pageCount = Math.ceil(data.length / rowsPerPage);
+            
+            if (pageCount <= 1) return;
+            
+            // Botón anterior
+            const prevButton = document.createElement('button');
+            prevButton.innerHTML = '◀ ANTERIOR';
+            prevButton.disabled = currentPage === 1;
+            prevButton.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    displayTableData(data, currentPage);
+                    setupPagination(data);
+                }
+            });
+            paginationElement.appendChild(prevButton);
+            
+            // Números de página
+            for (let i = 1; i <= pageCount; i++) {
+                const pageButton = document.createElement('button');
+                pageButton.innerText = i;
+                pageButton.classList.toggle('active', i === currentPage);
+                
+                pageButton.addEventListener('click', () => {
+                    currentPage = i;
+                    displayTableData(data, currentPage);
+                    setupPagination(data);
+                });
+                
+                paginationElement.appendChild(pageButton);
+            }
+            
+            // Botón siguiente
+            const nextButton = document.createElement('button');
+            nextButton.innerHTML = 'SIGUIENTE ▶';
+            nextButton.disabled = currentPage === pageCount;
+            nextButton.addEventListener('click', () => {
+                if (currentPage < pageCount) {
+                    currentPage++;
+                    displayTableData(data, currentPage);
+                    setupPagination(data);
+                }
+            });
+            paginationElement.appendChild(nextButton);
+        }
+
+        // Función de búsqueda
+        function searchData() {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            
+            filteredData = evidenceData.filter(item => 
+                item.descripcion.toLowerCase().includes(searchTerm) ||
+                item.ip.includes(searchTerm)
+            );
+            
+            currentPage = 1;
+            displayTableData(filteredData, currentPage);
+            setupPagination(filteredData);
+        }
+
+        // Actualizar estadísticas
+        function updateStats(data) {
+            totalRecords.textContent = evidenceData.length;
+            filteredRecords.textContent = data.length;
+            devCount.textContent = "8";
+        }
+
+        // Inicialización
+        function init() {
+            displayTableData(evidenceData, currentPage);
+            setupPagination(evidenceData);
+            updateStats(evidenceData);
+            
+            // Event listeners
+            searchButton.addEventListener('click', searchData);
+            searchInput.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    searchData();
+                }
+            });
+        }
+
+        // Ejecutar al cargar la página
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

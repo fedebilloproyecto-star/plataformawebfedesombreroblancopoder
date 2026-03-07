@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estructura Organizacional Empresarial</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #1e3c72;
+            --secondary: #2a5298;
+            --accent: #4a7bd9;
+            --light: #f5f7fa;
+            --dark: #333;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+                border-radius: 10px;
+  max-width: 800px;
+  margin: 90px auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2.5rem 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
+            background-size: cover;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            backdrop-filter: blur(5px);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2.5rem;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+        }
+
+        .nav-tab {
+            padding: 1.2rem 1.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            text-align: center;
+            flex: 1;
+            min-width: 160px;
+            border-bottom: 3px solid transparent;
+        }
+
+        .nav-tab:hover {
+            background-color: #f0f4ff;
+        }
+
+        .nav-tab.active {
+            background-color: var(--secondary);
+            color: white;
+            border-bottom: 3px solid var(--accent);
+        }
+
+        .content-section {
+            display: none;
+            background-color: white;
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2.5rem;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        h2 {
+            color: var(--primary);
+            margin-bottom: 1.8rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid #eaeaea;
+            font-size: 1.8rem;
+        }
+
+        h3 {
+            color: var(--secondary);
+            margin: 2rem 0 1.2rem;
+            font-size: 1.4rem;
+        }
+
+        .section-intro {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            color: #555;
+            line-height: 1.7;
+        }
+
+        .role-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.8rem;
+        }
+
+        .role-card {
+            background-color: #f8faff;
+            border-left: 5px solid var(--accent);
+            padding: 1.5rem;
+            border-radius: 8px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .role-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        .role-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .role-title {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.7rem;
+            font-size: 1.2rem;
+        }
+
+        .role-description {
+            color: #555;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .clients-section {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, #e8f4ff, #d4e6ff);
+            border-radius: 12px;
+            margin-bottom: 2.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .clients-section::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+            z-index: 0;
+        }
+
+        .clients-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .clients-icon {
+            font-size: 4rem;
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .department-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .department-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+            text-align: center;
+            border-top: 4px solid var(--accent);
+        }
+
+        .department-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .department-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+
+        .department-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .department-description {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .org-chart {
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .chart-container {
+            display: inline-block;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-top: 1rem;
+        }
+
+        footer {
+            background: linear-gradient(135deg, var(--primary), #152a51);
+            color: white;
+            text-align: center;
+            padding: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin: 1.5rem 0;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .footer-links a:hover {
+            opacity: 0.8;
+        }
+
+        .copyright {
+            margin-top: 1.5rem;
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-tabs {
+                flex-direction: column;
+            }
+            
+            .role-list, .department-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .stats {
+                gap: 1rem;
+            }
+            
+            .stat-item {
+                padding: 0.8rem 1rem;
+            }
+            
+            .stat-number {
+                font-size: 1.5rem;
+            }
+        }
+        /* Solo estilos para el botón "Volver atrás" */
+.back-button {
+  display: inline-block;
+  padding: 10px 18px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 2px solid #333;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  user-select: none;
+}
+
+/* Efecto al pasar el ratón */
+.back-button:hover,
+.back-button:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+  text-decoration: none;
+  outline: none;
+}
+
+/* Efecto al hacer clic */
+.back-button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Estructura Organizacional Empresarial</h1>
+            <p class="subtitle">Descubre la organización completa de una empresa moderna y las funciones de cada departamento y nivel jerárquico</p>
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-number">6</span>
+                    <span class="stat-label">Niveles Jerárquicos</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">15+</span>
+                    <span class="stat-label">Departamentos</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">60+</span>
+                    <span class="stat-label">Roles Profesionales</span>
+                </div>
+            </div>
+        </div>
+    </header>
+<a href="tecnologiaguiaportadainicio.html" class="back-button" aria-label="Volver atrás">Volver atrás</a>
+
+    <div class="container">
+        <div class="clients-section">
+            <div class="clients-content">
+                <div class="clients-icon">👥</div>
+                <h2>Clientes</h2>
+                <p class="section-intro">Personas o empresas que compran o usan productos o servicios. Son el centro de toda organización y el motivo principal de su existencia.</p>
+            </div>
+        </div>
+
+        <div class="nav-tabs">
+            <div class="nav-tab active" data-target="alta-direccion">Alta Dirección</div>
+            <div class="nav-tab" data-target="gerencia">Gerencia</div>
+            <div class="nav-tab" data-target="jefaturas">Jefaturas</div>
+            <div class="nav-tab" data-target="tecnologia">Tecnología</div>
+            <div class="nav-tab" data-target="contabilidad">Contabilidad</div>
+            <div class="nav-tab" data-target="otros-departamentos">Otros Departamentos</div>
+        </div>
+
+        <div id="alta-direccion" class="content-section active">
+            <h2>Alta Dirección / Nivel Estratégico</h2>
+            <p class="section-intro">La alta dirección establece la visión, misión y estrategia general de la empresa. Toma decisiones críticas que afectan el rumbo de toda la organización.</p>
+            
+            <div class="role-list">
+                <div class="role-card">
+                    <div class="role-title">Director General (CEO)</div>
+                    <div class="role-description">Máximo responsable de la empresa, dirige la visión y estrategia global.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Presidente del Consejo de Administración</div>
+                    <div class="role-description">Supervisa la gestión general y toma decisiones clave a nivel corporativo.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Director de Operaciones (COO)</div>
+                    <div class="role-description">Responsable de las operaciones diarias y eficiencia organizacional.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Director Financiero (CFO)</div>
+                    <div class="role-description">Maneja finanzas, presupuesto, inversiones y estrategia financiera.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Director Comercial</div>
+                    <div class="role-description">Encargado de ventas, estrategia comercial y relaciones con clientes.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Director de Marketing</div>
+                    <div class="role-description">Responsable de la imagen de marca, posicionamiento y estrategias de promoción.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Director de Recursos Humanos (CHRO)</div>
+                    <div class="role-description">Gestiona talento, cultura organizacional y desarrollo del capital humano.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Director de Tecnología (CTO)</div>
+                    <div class="role-description">Supervisa tecnología, innovación y estrategia digital de la empresa.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Director de Producción</div>
+                    <div class="role-description">Controla procesos productivos, cadena de suministro y manufactura.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Director de Calidad</div>
+                    <div class="role-description">Asegura el cumplimiento de estándares y mejora continua.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Director Legal</div>
+                    <div class="role-description">Atiende asuntos legales, cumplimiento normativo y contratos.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Director de Logística</div>
+                    <div class="role-description">Administra transporte, almacenes, distribución y cadena de suministro.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Director de Seguridad</div>
+                    <div class="role-description">Responsable de la seguridad física, patrimonial y de la información.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Director de Comunicación</div>
+                    <div class="role-description">Maneja comunicación interna, externa y relaciones públicas.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Director de Innovación</div>
+                    <div class="role-description">Lidera nuevos proyectos, I+D y desarrollo de productos.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Director de Proyectos</div>
+                    <div class="role-description">Supervisa planificación, ejecución y control de proyectos estratégicos.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Director de Compras</div>
+                    <div class="role-description">Administra la adquisición de insumos, materiales y servicios.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Director de Sostenibilidad</div>
+                    <div class="role-description">Gestiona políticas ambientales, responsabilidad social y sostenibilidad.</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="gerencia" class="content-section">
+            <h2>Gerencia / Nivel Táctico</h2>
+            <p class="section-intro">La gerencia implementa las estrategias definidas por la alta dirección y supervisa las operaciones departamentales.</p>
+            
+            <div class="role-list">
+                <div class="role-card">
+                    <div class="role-title">Gerente de Ventas</div>
+                    <div class="role-description">Lidera el equipo de ventas, estrategia comercial y relaciones con clientes clave.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Gerente de Producción</div>
+                    <div class="role-description">Supervisa el proceso productivo, calidad y eficiencia operativa.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Gerente de Marketing</div>
+                    <div class="role-description">Implementa campañas, análisis de mercado y estrategias de posicionamiento.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Gerente de Recursos Humanos</div>
+                    <div class="role-description">Maneja reclutamiento, formación, desarrollo y bienestar del personal.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Gerente de Finanzas</div>
+                    <div class="role-description">Controla contabilidad, tesorería, presupuestos y reportes financieros.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Gerente de Logística</div>
+                    <div class="role-description">Organiza distribución, almacenamiento y gestión de la cadena de suministro.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Gerente de Calidad</div>
+                    <div class="role-description">Asegura cumplimiento de normas, certificaciones y mejora continua.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Gerente de Proyectos</div>
+                    <div class="role-description">Coordina actividades, equipos y recursos para la ejecución de proyectos.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Gerente de Seguridad</div>
+                    <div class="role-description">Garantiza seguridad integral, protocolos y gestión de riesgos.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Gerente de Compras</div>
+                    <div class="role-description">Negocia con proveedores, controla inventarios y gestión de adquisiciones.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Gerente de Comunicación</div>
+                    <div class="role-description">Coordina estrategias de comunicación interna y externa.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Gerente de Atención al Cliente</div>
+                    <div class="role-description">Supervisa soporte, servicio al cliente y experiencia del usuario.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Gerente de Innovación</div>
+                    <div class="role-description">Promueve ideas, nuevos desarrollos y cultura de innovación.</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="jefaturas" class="content-section">
+            <h2>Jefaturas y Supervisión / Nivel Operativo</h2>
+            <p class="section-intro">Las jefaturas y supervisores gestionan equipos operativos, asegurando la ejecución efectiva de las actividades diarias.</p>
+            
+            <div class="role-list">
+                <div class="role-card">
+                    <div class="role-title">Jefe de Equipo de Ventas</div>
+                    <div class="role-description">Coordina vendedores, seguimiento a clientes y cumplimiento de metas comerciales.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Jefe de Producción</div>
+                    <div class="role-description">Controla turnos, cumplimiento de metas y eficiencia en procesos productivos.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Supervisor de Atención al Cliente</div>
+                    <div class="role-description">Gestiona equipo de soporte, calidad de servicio y resolución de incidencias.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Supervisor de Logística</div>
+                    <div class="role-description">Supervisa almacenaje, reparto y operaciones logísticas.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Supervisor de Mantenimiento</div>
+                    <div class="role-description">Coordina reparaciones, revisiones y mantenimiento preventivo.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Jefe de Calidad</div>
+                    <div class="role-description">Realiza inspecciones, controles y seguimiento de estándares de calidad.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Supervisor de Recursos Humanos</div>
+                    <div class="role-description">Apoya procesos de personal, capacitación y desarrollo organizacional.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Jefe de Seguridad</div>
+                    <div class="role-description">Administra guardias, protocolos y medidas de seguridad.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Jefe de Compras</div>
+                    <div class="role-description">Controla órdenes, recepción de productos y gestión de proveedores.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Jefe de Proyectos</div>
+                    <div class="role-description">Supervisa tareas específicas, recursos y cronogramas del proyecto.</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tecnologia" class="content-section">
+            <h2>Departamento de Tecnología</h2>
+            <p class="section-intro">El departamento de tecnología impulsa la transformación digital, desarrolla soluciones tecnológicas y garantiza la infraestructura IT de la empresa.</p>
+            
+            <h3>Liderazgo Tecnológico</h3>
+            <div class="role-list">
+                <div class="role-card">
+                    <div class="role-title">Director de Tecnología (CTO)</div>
+                    <div class="role-description">Define la estrategia tecnológica, supervisa desarrollo e innovación digital.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Director de Información (CIO)</div>
+                    <div class="role-description">Gestiona sistemas de información, infraestructura IT y gobernanza de datos.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Director de Ciberseguridad (CISO)</div>
+                    <div class="role-description">Lidera estrategias de seguridad informática y protección de datos.</div>
+                </div>
+            </div>
+            
+            <h3>Desarrollo de Software</h3>
+            <div class="role-list">
+                <div class="role-card">
+                    <div class="role-title">Arquitecto de Software</div>
+                    <div class="role-description">Diseña la estructura técnica de sistemas y aplicaciones empresariales.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Desarrollador Frontend</div>
+                    <div class="role-description">Crea interfaces de usuario, experiencias web y aplicaciones cliente.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Desarrollador Backend</div>
+                    <div class="role-description">Programa lógica de servidor, APIs y sistemas de base de datos.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Desarrollador Full Stack</div>
+                    <div class="role-description">Domina desarrollo tanto frontend como backend de aplicaciones.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Desarrollador Móvil</div>
+                    <div class="role-description">Crea aplicaciones para iOS, Android y plataformas móviles.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Ingeniero de DevOps</div>
+                    <div class="role-description">Automatiza procesos de desarrollo, integración y despliegue continuo.</div>
+                </div>
+            </div>
+            
+            <h3>Infraestructura y Operaciones IT</h3>
+            <div class="role-list">
+                <div class="role-card">
+                    <div class="role-title">Administrador de Sistemas</div>
+                    <div class="role-description">Gestiona servidores, redes y infraestructura tecnológica.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Ingeniero de Redes</div>
+                    <div class="role-description">Diseña, implementa y mantiene infraestructura de red corporativa.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Especialista en Ciberseguridad</div>
+                    <div class="role-description">Protege sistemas, detecta vulnerabilidades y gestiona incidentes.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Administrador de Bases de Datos</div>
+                    <div class="role-description">Gestiona, optimiza y asegura bases de datos empresariales.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Especialista en Cloud</div>
+                    <div class="role-description">Administra infraestructura en la nube y servicios cloud.</div>
+                </div>
+            </div>
+            
+            <h3>Análisis y Datos</h3>
+            <div class="role-list">
+                <div class="role-card">
+                    <div class="role-title">Científico de Datos</div>
+                    <div class="role-description">Desarrolla modelos predictivos y algoritmos de machine learning.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Analista de Datos</div>
+                    <div class="role-description">Interpreta datos, crea dashboards y reportes para la toma de decisiones.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Ingeniero de Datos</div>
+                    <div class="role-description">Diseña y construye pipelines de datos y arquitecturas de big data.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Analista de BI</div>
+                    <div class="role-description">Desarrolla soluciones de Business Intelligence y reporting estratégico.</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="contabilidad" class="content-section">
+            <h2>Departamento de Contabilidad y Finanzas</h2>
+            <p class="section-intro">El departamento contable y financiero gestiona los recursos económicos, asegura el cumplimiento fiscal y proporciona información para la toma de decisiones.</p>
+            
+            <h3>Gestión Financiera</h3>
+            <div class="role-list">
+                <div class="role-card">
+                    <div class="role-title">Contador General</div>
+                    <div class="role-description">Supervisa toda la contabilidad, estados financieros y cumplimiento normativo.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Jefe de Contabilidad</div>
+                    <div class="role-description">Coordina el equipo contable, conciliaciones y cierres mensuales.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Contador de Costos</div>
+                    <div class="role-description">Analiza y controla costos de producción, servicios y operaciones.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Contador Fiscal</div>
+                    <div class="role-description">Gestiona impuestos, declaraciones y cumplimiento obligaciones fiscales.</div>
+                </div>
+            </div>
+            
+            <h3>Análisis y Control</h3>
+            <div class="role-list">
+                <div class="role-card">
+                    <div class="role-title">Analista Financiero</div>
+                    <div class="role-description">Estudia datos económicos, prepara presupuestos y reporta riesgos financieros.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Auditor Interno</div>
+                    <div class="role-description">Revisa procesos, control interno y cumplimiento de políticas.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Controller Financiero</div>
+                    <div class="role-description">Controla presupuestos, análisis de desviaciones y reporting financiero.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Especialista en Tesorería</div>
+                    <div class="role-description">Gestiona flujo de caja, inversiones y financiamiento corporativo.</div>
+                </div>
+            </div>
+            
+            <h3>Operaciones Contables</h3>
+            <div class="role-list">
+                <div class="role-card">
+                    <div class="role-title">Auxiliar Contable</div>
+                    <div class="role-description">Registra operaciones diarias, conciliaciones y documentación contable.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Asistente de Facturación</div>
+                    <div class="role-description">Gestiona facturación, cuentas por cobrar y documentación comercial.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Auxiliar de Nóminas</div>
+                    <div class="role-description">Procesa nóminas, prestaciones y obligaciones laborales.</div>
+                </div>
+                <div class="role-card">
+                    <div class="role-title">Asistente de Auditoría</div>
+                    <div class="role-description">Apoya en revisiones contables, verificaciones y preparación de papeles de trabajo.</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="otros-departamentos" class="content-section">
+            <h2>Otros Departamentos Empresariales</h2>
+            <p class="section-intro">Las empresas modernas cuentan con diversos departamentos especializados que contribuyen al funcionamiento integral de la organización.</p>
+            
+            <div class="department-grid">
+                <div class="department-card">
+                    <div class="department-icon">📊</div>
+                    <div class="department-title">Recursos Humanos</div>
+                    <div class="department-description">Gestiona talento, reclutamiento, formación, desarrollo organizacional y clima laboral.</div>
+                </div>
+                <div class="department-card">
+                    <div class="department-icon">🛍️</div>
+                    <div class="department-title">Marketing y Ventas</div>
+                    <div class="department-description">Desarrolla estrategias comerciales, posicionamiento de marca y relaciones con clientes.</div>
+                </div>
+                <div class="department-card">
+                    <div class="department-icon">🏭</div>
+                    <div class="department-title">Operaciones y Producción</div>
+                    <div class="department-description">Gestiona procesos productivos, cadena de suministro, calidad y eficiencia operativa.</div>
+                </div>
+                <div class="department-card">
+                    <div class="department-icon">🔧</div>
+                    <div class="department-title">I+D e Innovación</div>
+                    <div class="department-description">Desarrolla nuevos productos, investiga tecnologías y impulsa la innovación.</div>
+                </div>
+                <div class="department-card">
+                    <div class="department-icon">⚖️</div>
+                    <div class="department-title">Legal y Cumplimiento</div>
+                    <div class="department-description">Asegura el cumplimiento normativo, gestiona contratos y asesoría legal.</div>
+                </div>
+                <div class="department-card">
+                    <div class="department-icon">🌱</div>
+                    <div class="department-title">Sostenibilidad y RSC</div>
+                    <div class="department-description">Gestiona impacto ambiental, responsabilidad social y relaciones comunitarias.</div>
+                </div>
+                <div class="department-card">
+                    <div class="department-icon">🔄</div>
+                    <div class="department-title">Logística y Cadena de Suministro</div>
+                    <div class="department-description">Coordina transporte, almacenamiento, distribución y gestión de inventarios.</div>
+                </div>
+                <div class="department-card">
+                    <div class="department-icon">📞</div>
+                    <div class="department-title">Atención al Cliente</div>
+                    <div class="department-description">Gestiona soporte, servicio postventa y experiencia del cliente.</div>
+                </div>
+            </div>
+            
+            <div class="org-chart">
+                <h3>Estructura Organizacional General</h3>
+                <div class="chart-container">
+                    <p>La estructura típica de una empresa moderna incluye:</p>
+                    <ul style="text-align: left; margin-top: 1rem;">
+                        <li><strong>Nivel Estratégico:</strong> Alta Dirección y Consejo de Administración</li>
+                        <li><strong>Nivel Táctico:</strong> Gerencias y Direcciones Departamentales</li>
+                        <li><strong>Nivel Operativo:</strong> Jefaturas, Supervisores y Coordinadores</li>
+                        <li><strong>Nivel Especializado:</strong> Técnicos, Analistas y Profesionales</li>
+                        <li><strong>Nivel de Apoyo:</strong> Personal administrativo y operativo</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.nav-tab');
+            const sections = document.querySelectorAll('.content-section');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const target = this.getAttribute('data-target');
+                    
+                    // Remover clase activa de todas las pestañas
+                    tabs.forEach(t => t.classList.remove('active'));
+                    
+                    // Añadir clase activa a la pestaña clickeada
+                    this.classList.add('active');
+                    
+                    // Ocultar todas las secciones
+                    sections.forEach(section => {
+                        section.classList.remove('active');
+                    });
+                    
+                    // Mostrar la sección objetivo
+                    document.getElementById(target).classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

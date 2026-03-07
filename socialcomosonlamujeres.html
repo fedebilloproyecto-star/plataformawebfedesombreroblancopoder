@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tecnología Urbana - Velocidad Digital en la Ciudad</title>
+<style>
+  /* RESET Y VARIABLES PROFESIONALES - NUEVA PALETA DE COLORES */
+  :root {
+    /* Nueva paleta de colores vibrantes y modernos */
+    --primary-dark: #1a1a2e;
+    --primary-medium: #16213e;
+    --primary-light: #0f3460;
+    
+    --accent-teal: #00b4d8;
+    --accent-cyan: #90e0ef;
+    --accent-blue: #0077b6;
+    --accent-purple: #7b2cbf;
+    --accent-magenta: #e63946;
+    --accent-coral: #ff6b6b;
+    --accent-yellow: #ffd166;
+    --accent-lime: #06d6a0;
+    
+    --neutral-white: #f8f9fa;
+    --neutral-offwhite: #e9ecef;
+    --neutral-light: #dee2e6;
+    --neutral-gray: #adb5bd;
+    --neutral-dark: #495057;
+    --neutral-black: #212529;
+    
+    /* Sombras con colores */
+    --shadow-subtle: 0 1px 3px rgba(0, 180, 216, 0.1);
+    --shadow-medium: 0 4px 6px rgba(123, 44, 191, 0.15);
+    --shadow-large: 0 10px 15px rgba(7, 59, 76, 0.2);
+    --shadow-xl: 0 20px 25px rgba(0, 119, 182, 0.15);
+    --shadow-hover: 0 25px 50px rgba(230, 57, 70, 0.25);
+    --shadow-glow: 0 0 30px rgba(144, 224, 239, 0.4);
+    
+    /* Bordes y radios */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --radius-2xl: 24px;
+    
+    /* Transiciones */
+    --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-normal: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Espaciado */
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.25rem;
+    --space-6: 1.5rem;
+    --space-8: 2rem;
+    --space-10: 2.5rem;
+    --space-12: 3rem;
+    --space-16: 4rem;
+    --space-20: 5rem;
+    
+    /* Tipografía */
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.25rem;
+    --font-size-2xl: 1.5rem;
+    --font-size-3xl: 1.875rem;
+    --font-size-4xl: 2.25rem;
+    --font-size-5xl: 3rem;
+    --font-size-6xl: 3.75rem;
+    
+    --font-mono: 'Courier New', 'SF Mono', monospace;
+    --font-sans: 'Segoe UI', 'Roboto', sans-serif;
+    --font-accent: 'Montserrat', 'Arial', sans-serif;
+  }
+  
+  /* RESET */
+  *, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    height: 100%;
+  }
+  
+  /* FONDO PRINCIPAL CON GRADIENTE VIBRANTE */
+  body {
+    font-family: var(--font-sans);
+    min-height: 100vh;
+    background: 
+      linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-light) 50%, var(--primary-medium) 100%),
+      
+      /* Patrón geométrico sutil */
+      radial-gradient(
+        circle at 20% 80%,
+        rgba(144, 224, 239, 0.1) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        circle at 80% 20%,
+        rgba(255, 107, 107, 0.1) 0%,
+        transparent 50%
+      ),
+      
+      /* Líneas diagonales sutiles */
+      repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 10px,
+        rgba(255, 209, 102, 0.03) 10px,
+        rgba(255, 209, 102, 0.03) 20px
+      );
+    
+    background-attachment: fixed;
+    color: var(--neutral-white);
+    line-height: 1.6;
+    position: relative;
+    overflow-x: hidden;
+    padding: var(--space-8);
+    border-radius: var(--radius-xl);
+    max-width: 1200px;
+    margin: 40px auto;
+    box-shadow: 
+      var(--shadow-xl),
+      0 0 0 1px rgba(144, 224, 239, 0.2);
+    border: 1px solid rgba(144, 224, 239, 0.3);
+  }
+  
+  /* EFECTO DE PARTÍCULAS FLOTANTES */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 10% 20%, rgba(255, 107, 107, 0.1) 0%, transparent 20%),
+      radial-gradient(circle at 90% 30%, rgba(144, 224, 239, 0.1) 0%, transparent 20%),
+      radial-gradient(circle at 50% 80%, rgba(255, 209, 102, 0.1) 0%, transparent 20%);
+    pointer-events: none;
+    z-index: -1;
+    animation: float 20s infinite ease-in-out;
+  }
+  
+  /* BORDE ANIMADO */
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, 
+      var(--accent-magenta), 
+      var(--accent-purple), 
+      var(--accent-teal), 
+      var(--accent-lime), 
+      var(--accent-yellow), 
+      var(--accent-magenta)
+    );
+    background-size: 300% 100%;
+    animation: gradientShift 3s linear infinite;
+    z-index: 1000;
+  }
+  
+  /* CONTENEDOR PRINCIPAL */
+  .main-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: var(--space-8);
+    position: relative;
+    z-index: 1;
+  }
+  
+  /* ANIMACIONES MEJORADAS */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+  }
+  
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+  
+  /* HEADER MODERNO */
+  .newspaper-header {
+    background: linear-gradient(135deg, 
+      rgba(26, 26, 46, 0.9) 0%, 
+      rgba(22, 33, 62, 0.9) 100%
+    );
+    backdrop-filter: blur(10px);
+    border-radius: var(--radius-xl);
+    padding: var(--space-16) var(--space-12);
+    margin-bottom: var(--space-16);
+    text-align: center;
+    position: relative;
+    animation: fadeInUp 0.8s ease-out;
+    border: 1px solid rgba(144, 224, 239, 0.3);
+    box-shadow: var(--shadow-large);
+    overflow: hidden;
+  }
+  
+  .newspaper-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, 
+      transparent 0%, 
+      rgba(144, 224, 239, 0.1) 100%
+    );
+    z-index: 0;
+  }
+  
+  .newspaper-title {
+    font-family: var(--font-accent);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    background: linear-gradient(45deg, 
+      var(--accent-cyan), 
+      var(--accent-teal), 
+      var(--accent-lime)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: var(--space-4) 0;
+    letter-spacing: -0.5px;
+    text-transform: uppercase;
+    position: relative;
+    line-height: 1.1;
+    z-index: 1;
+  }
+  
+  .newspaper-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 150px;
+    height: 3px;
+    background: linear-gradient(90deg, 
+      var(--accent-teal), 
+      var(--accent-lime)
+    );
+    border-radius: 2px;
+  }
+  
+  .newspaper-subtitle {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xl);
+    color: var(--accent-cyan);
+    font-weight: 400;
+    margin-bottom: var(--space-4);
+    padding: var(--space-2) 0;
+    display: block;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border-top: 1px solid rgba(144, 224, 239, 0.3);
+    border-bottom: 1px solid rgba(144, 224, 239, 0.3);
+    position: relative;
+    z-index: 1;
+  }
+  
+  .newspaper-date {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--accent-cyan);
+    padding: var(--space-2) var(--space-4);
+    background: rgba(144, 224, 239, 0.1);
+    backdrop-filter: blur(5px);
+    display: inline-block;
+    border: 1px solid rgba(144, 224, 239, 0.3);
+    border-radius: var(--radius-md);
+    letter-spacing: 1px;
+    margin-top: var(--space-4);
+    position: relative;
+    z-index: 1;
+  }
+  
+  /* SECCIÓN PRINCIPAL */
+  .sociedad-section {
+    background: linear-gradient(135deg, 
+      rgba(26, 26, 46, 0.85) 0%, 
+      rgba(15, 52, 96, 0.85) 100%
+    );
+    backdrop-filter: blur(10px);
+    border-radius: var(--radius-xl);
+    padding: var(--space-16) var(--space-12);
+    margin-bottom: var(--space-16);
+    position: relative;
+    animation: fadeInUp 1s ease-out 0.3s both;
+    border: 1px solid rgba(144, 224, 239, 0.3);
+    box-shadow: var(--shadow-large);
+  }
+  
+  .sociedad-section::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: 20px;
+    right: 20px;
+    height: 1px;
+    background: linear-gradient(90deg, 
+      transparent, 
+      var(--accent-teal), 
+      var(--accent-lime), 
+      var(--accent-teal), 
+      transparent
+    );
+  }
+  
+  .section-title {
+    font-family: var(--font-accent);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    background: linear-gradient(45deg, 
+      var(--accent-yellow), 
+      var(--accent-coral)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: var(--space-8);
+    position: relative;
+    padding-bottom: var(--space-4);
+    line-height: 1.2;
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+  }
+  
+  .section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(90deg, 
+      var(--accent-yellow), 
+      var(--accent-coral)
+    );
+    border-radius: 2px;
+  }
+  
+  .section-subtitle {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-base);
+    color: var(--accent-cyan);
+    margin-bottom: var(--space-8);
+    padding: var(--space-3) var(--space-4);
+    background: rgba(144, 224, 239, 0.1);
+    backdrop-filter: blur(5px);
+    border-left: 3px solid var(--accent-teal);
+    font-weight: 400;
+    letter-spacing: 1px;
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  }
+  
+  /* CONTENEDOR DE CONTENIDO */
+  .content-wrapper {
+    background: transparent;
+    padding: var(--space-8) 0;
+    position: relative;
+  }
+  
+  /* PÁRRAFOS */
+  .article-paragraph {
+    margin-bottom: var(--space-6);
+    font-size: var(--font-size-lg);
+    line-height: 1.8;
+    text-align: justify;
+    color: var(--neutral-light);
+    position: relative;
+    font-weight: 300;
+    padding-left: var(--space-4);
+    border-left: 2px solid var(--accent-teal);
+  }
+  
+  .article-paragraph:first-of-type {
+    font-size: var(--font-size-xl);
+    font-weight: 400;
+    border-left: 4px solid var(--accent-lime);
+    padding-left: var(--space-6);
+    color: var(--neutral-white);
+  }
+  
+  .article-paragraph:first-of-type::first-letter {
+    initial-letter: 3;
+    font-weight: 900;
+    font-size: 5rem;
+    margin-right: var(--space-2);
+    line-height: 0.8;
+    float: left;
+    background: linear-gradient(45deg, 
+      var(--accent-purple), 
+      var(--accent-teal)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-family: var(--font-accent);
+  }
+  
+  /* LÍNEAS SEPARADORAS */
+  .separator {
+    height: 1px;
+    margin: var(--space-8) 0;
+    position: relative;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--accent-teal) 20%,
+      var(--accent-lime) 50%,
+      var(--accent-teal) 80%,
+      transparent
+    );
+  }
+  
+  .separator::before {
+    content: '✦';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--accent-cyan);
+    background: var(--primary-dark);
+    padding: 0 var(--space-2);
+    font-size: var(--space-3);
+    animation: pulse 2s infinite;
+  }
+  
+  /* CITAS DESTACADAS */
+  .highlight {
+    background: linear-gradient(135deg, 
+      rgba(144, 224, 239, 0.1) 0%, 
+      rgba(0, 180, 216, 0.1) 100%
+    );
+    backdrop-filter: blur(5px);
+    padding: var(--space-6);
+    margin: var(--space-8) 0;
+    border-left: 4px solid var(--accent-lime);
+    font-style: normal;
+    color: var(--neutral-white);
+    position: relative;
+    font-family: var(--font-mono);
+    font-size: var(--font-size-base);
+    letter-spacing: 0.5px;
+    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+  }
+  
+  .highlight::before {
+    content: '"';
+    position: absolute;
+    top: -20px;
+    left: -15px;
+    font-size: 4rem;
+    background: linear-gradient(45deg, 
+      var(--accent-lime), 
+      var(--accent-teal)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-family: var(--font-accent);
+  }
+  
+  /* FOOTER MODERNO */
+  .newspaper-footer {
+    background: linear-gradient(135deg, 
+      rgba(26, 26, 46, 0.95) 0%, 
+      rgba(15, 52, 96, 0.95) 100%
+    );
+    backdrop-filter: blur(10px);
+    color: var(--neutral-white);
+    padding: var(--space-12);
+    margin-top: var(--space-16);
+    text-align: center;
+    border-radius: var(--radius-xl);
+    position: relative;
+    animation: fadeInUp 1s ease-out 0.6s both;
+    border: 1px solid rgba(144, 224, 239, 0.3);
+    box-shadow: var(--shadow-large);
+  }
+  
+  .footer-content {
+    position: relative;
+    z-index: 1;
+  }
+  
+  .footer-logo {
+    font-family: var(--font-accent);
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+    background: linear-gradient(45deg, 
+      var(--accent-cyan), 
+      var(--accent-teal)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: var(--space-4);
+    line-height: 1.2;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  
+  .footer-logo::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 2px;
+    background: linear-gradient(90deg, 
+      var(--accent-teal), 
+      var(--accent-lime)
+    );
+    margin: var(--space-3) auto;
+    border-radius: 1px;
+  }
+  
+  .copyright {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--space-4);
+    color: var(--accent-cyan);
+    letter-spacing: 1px;
+  }
+  
+  .disclaimer {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-sm);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+    color: var(--neutral-gray);
+    padding: var(--space-4);
+    border-top: 1px solid rgba(144, 224, 239, 0.2);
+    border-bottom: 1px solid rgba(144, 224, 239, 0.2);
+  }
+  
+  /* ESCENA CON NUEVOS COLORES */
+  .scene {
+    width: 100%;
+    max-width: 900px;
+    height: 460px;
+    margin: var(--space-12) auto;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, 
+      var(--accent-blue) 0%, 
+      var(--accent-teal) 50%, 
+      var(--accent-cyan) 100%
+    );
+    border: 10px solid;
+    border-image: linear-gradient(
+      45deg, 
+      var(--accent-magenta), 
+      var(--accent-purple), 
+      var(--accent-teal), 
+      var(--accent-lime), 
+      var(--accent-yellow), 
+      var(--accent-magenta)
+    ) 1;
+    border-radius: var(--radius-2xl);
+    animation: borderColorShift 8s linear infinite;
+    box-shadow: 
+      0 0 0 6px rgba(26, 26, 46, 0.8),
+      0 25px 50px rgba(0, 0, 0, 0.6),
+      var(--shadow-glow);
+  }
+  
+  .scene::before,
+  .scene::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+    border-radius: var(--radius-xl);
+  }
+  
+  .scene::before {
+    inset: 6px;
+    border: 4px dashed;
+    border-image: linear-gradient(
+      45deg, 
+      var(--accent-magenta), 
+      var(--accent-purple), 
+      var(--accent-teal), 
+      var(--accent-lime), 
+      var(--accent-yellow), 
+      var(--accent-magenta)
+    ) 1;
+    animation: dashedMove 4s linear infinite;
+  }
+  
+  .scene::after {
+    inset: 14px;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+  }
+  
+  .sun {
+    width: 80px;
+    height: 80px;
+    background: var(--accent-yellow);
+    border-radius: 50%;
+    position: absolute;
+    top: 40px;
+    left: 60px;
+    box-shadow: 
+      0 0 50px var(--accent-yellow),
+      0 0 100px rgba(255, 209, 102, 0.5);
+  }
+  
+  .cloud {
+    position: absolute;
+    top: 90px;
+    width: 130px;
+    height: 45px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 25px;
+    animation: cloudMove 30s linear infinite;
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+  }
+  
+  .cloud::before,
+  .cloud::after {
+    content: "";
+    position: absolute;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 50%;
+  }
+  
+  .cloud::before {
+    width: 55px;
+    height: 55px;
+    top: -25px;
+    left: 20px;
+  }
+  
+  .cloud::after {
+    width: 65px;
+    height: 65px;
+    top: -35px;
+    left: 55px;
+  }
+  
+  .c2 {
+    top: 140px;
+    animation-duration: 40s;
+    opacity: 0.7;
+  }
+  
+  .mountain {
+    position: absolute;
+    bottom: 120px;
+    width: 0;
+    height: 0;
+    border-left: 230px solid transparent;
+    border-right: 230px solid transparent;
+    border-bottom: 280px solid var(--accent-lime);
+    filter: brightness(0.8);
+  }
+  
+  .m2 {
+    left: 260px;
+    border-bottom-color: var(--accent-teal);
+    filter: brightness(0.7);
+  }
+  
+  .m3 {
+    left: 520px;
+    border-bottom-color: var(--accent-blue);
+    filter: brightness(0.6);
+  }
+  
+  .city {
+    position: absolute;
+    bottom: 120px;
+    width: 100%;
+    display: flex;
+    gap: 22px;
+    padding: 0 70px;
+  }
+  
+  .building {
+    width: 85px;
+    background: linear-gradient(var(--primary-dark), var(--primary-medium));
+    border-radius: 4px 4px 0 0;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  }
+  
+  .b1 { height: 110px; }
+  .b2 { height: 145px; }
+  .b3 { height: 100px; }
+  
+  .window {
+    width: 10px;
+    height: 14px;
+    background: var(--accent-yellow);
+    margin: 6px;
+    float: left;
+    box-shadow: 0 0 10px var(--accent-yellow);
+    border-radius: 2px;
+    animation: pulse 3s infinite;
+  }
+  
+  .river {
+    position: absolute;
+    bottom: 60px;
+    width: 100%;
+    height: 80px;
+    background: linear-gradient(var(--accent-blue), var(--accent-teal));
+  }
+  
+  .ground {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    background: linear-gradient(var(--accent-lime), var(--accent-teal));
+  }
+  
+  @keyframes cloudMove {
+    from { left: -160px; }
+    to { left: 100%; }
+  }
+  
+  @keyframes dashedMove {
+    from { filter: hue-rotate(0deg); }
+    to { filter: hue-rotate(360deg); }
+  }
+  
+  @keyframes borderColorShift {
+    0% { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(360deg); }
+  }
+  
+  /* BOTÓN VOLVER ACTUALIZADO */
+  .volver {
+    display: inline-block;
+    padding: var(--space-3) var(--space-6);
+    background: linear-gradient(45deg, var(--accent-teal), var(--accent-lime));
+    color: var(--primary-dark);
+    text-decoration: none;
+    border-radius: var(--radius-lg);
+    font-family: var(--font-accent);
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition-normal);
+    margin-top: var(--space-8);
+    box-shadow: var(--shadow-medium);
+  }
+  
+  .volver:hover {
+    background: linear-gradient(45deg, var(--accent-lime), var(--accent-teal));
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+  }
+  
+  /* RESPONSIVE DESIGN */
+  @media (max-width: 1024px) {
+    body {
+      padding: var(--space-6);
+      margin: 20px auto;
+    }
+    
+    .main-container {
+      padding: var(--space-6);
+    }
+    
+    .newspaper-header,
+    .sociedad-section {
+      padding: var(--space-12) var(--space-8);
+    }
+    
+    .article-paragraph {
+      font-size: var(--font-size-base);
+    }
+    
+    .article-paragraph:first-of-type::first-letter {
+      font-size: 4rem;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    body {
+      padding: var(--space-4);
+      margin: 10px auto;
+    }
+    
+    .newspaper-title {
+      font-size: clamp(2rem, 6vw, 2.5rem);
+    }
+    
+    .section-title {
+      font-size: clamp(1.5rem, 5vw, 2rem);
+    }
+    
+    .newspaper-subtitle {
+      font-size: var(--font-size-lg);
+    }
+    
+    .newspaper-date {
+      font-size: var(--font-size-xs);
+    }
+    
+    .footer-logo {
+      font-size: var(--font-size-xl);
+    }
+    
+    .scene {
+      height: 350px;
+    }
+    
+    .mountain {
+      border-left: 180px solid transparent;
+      border-right: 180px solid transparent;
+      border-bottom: 220px solid;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    :root {
+      --space-8: 1rem;
+      --space-12: 1.5rem;
+      --space-16: 2rem;
+    }
+    
+    body {
+      padding: var(--space-2);
+      margin: 5px auto;
+      border-radius: var(--radius-lg);
+    }
+    
+    .newspaper-header,
+    .sociedad-section,
+    .newspaper-footer {
+      padding: var(--space-8);
+      border-width: 1px;
+      border-radius: var(--radius-lg);
+    }
+    
+    .article-paragraph {
+      font-size: var(--font-size-base);
+      padding-left: var(--space-3);
+      text-align: left;
+    }
+    
+    .article-paragraph:first-of-type::first-letter {
+      initial-letter: 2;
+      font-size: 3rem;
+    }
+    
+    .section-subtitle {
+      font-size: var(--font-size-sm);
+    }
+    
+    .scene {
+      height: 250px;
+      border-width: 6px;
+    }
+    
+    .mountain {
+      border-left: 120px solid transparent;
+      border-right: 120px solid transparent;
+      border-bottom: 160px solid;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- Líneas de cuadrícula decorativas -->
+<div class="grid-line-vertical" style="left: 20%;"></div>
+<div class="grid-line-vertical" style="left: 50%;"></div>
+<div class="grid-line-vertical" style="left: 80%;"></div>
+<div class="grid-line-horizontal" style="top: 30%;"></div>
+<div class="grid-line-horizontal" style="top: 70%;"></div>
+
+<div class="scene">
+  <div class="sun"></div>
+
+  <div class="cloud"></div>
+  <div class="cloud c2"></div>
+
+  <div class="mountain"></div>
+  <div class="mountain m2"></div>
+  <div class="mountain m3"></div>
+
+  <div class="city">
+    <div class="building b1">
+      <div class="window"></div><div class="window"></div>
+    </div>
+    <div class="building b2">
+      <div class="window"></div><div class="window"></div>
+      <div class="window"></div>
+    </div>
+    <div class="building b3">
+      <div class="window"></div><div class="window"></div>
+    </div>
+  </div>
+
+  <div class="river"></div>
+  <div class="ground"></div>
+</div>
+
+<div class="main-container">
+  <!-- ENCABEZADO -->
+    <div class="newspaper-subtitle">
+   <a href="iniciosociologiaaprende.html" class="volver">Volver atrás</a>
+</div> 
+    
+    <div class="newspaper-date"> 
+      <h2>
+        
+    La verdad por adelantes
+    </div>  </h2>
+  </header>
+  
+  <!-- SECCIÓN PRINCIPAL -->
+  <section class="sociedad-section">
+   
+  <h1>
+    ¿Cómo son las mujeres adultas?
+  </h1>
+    
+    <div class="content-wrapper">
+      <p class="article-paragraph">Las mujeres son así cuando miran las redes sociales: Facebook, Instagram, Twitter,
+         además de la televisión y los sitios web que miran. Muchas cosas no eran verdades en lo digital, eso quiere decir 
+         que son esas mujeres que se equivocan, que pueden acumular en su mente mucha información y que pueden enfermarse su mente 
+         por tanta cosa que no eran verdades. Pero si había alguien que es sincero y dice la verdad, ahí las mujeres creen más las 
+         mentiras y no las verdades que publicaron. Las mujeres les encanta juzgar, pero esas mujeres son cobardes porque no tienen 
+         que decir boludeces, pelotudeces, pendejo, idioteces, tonto, atolondrado, chiflado, mamarracho, pavote, menso o sonso, qué pasó, 
+         salame, o qué tóxico o tóxica, e inmaduro, porque eso son mecanismos de engaño hasta llegar al control, que será llevar 
+         a una persona como un objeto de esclavo. Es decir, eso es una manipulación. A la vez, todo da risa por esto, pero digo la verdad:
+          decir eso está haciendo un delito digital. Si un hombre le denuncia a la mujeres , la policía de cibercrimen lo que va a hacer 
+          es recuperar todos tus mensajes, y esa captura sacada puede llevar a juicio a los jueces y juezas, y te puede llevar a prisión, cárcel,
+         como cinco o más años pero algunos jueces y juezas toma de joda y broma no acepta los derecho del hombres de que es victima.  </p>
+      
+      <div class="separator"></div>
+      
+      <p class="article-paragraph">
+Entonces, cuando mira las redes sociales, Facebook, Instagram, Twitter o sitios web, esa mujer, por lo que dice ella,
+ tiene que saber: si le gustó, que siga mirando, y si no le gustó, realmente no quiere saber la verdad,
+  porque esas mujeres escuchan más entre mujeres y no al hombre que dice con sinceridad la verdad en la sociedad.
+   Incluso las mujeres dicen que no dependen de nada o dicen cada uno haga su vida, pero no cumplen esa promesa; 
+   dicen no depender de nada, pero demuestran lo contrario. Hay muchos hombres que son sinceros y dicen la verdad en las redes sociales, 
+   Facebook, Instagram, Twitter o sitios web, pero diversas mujeres lo que hacen es ir a la comisaría a hacer una falsa denuncia.
+    Es decir, esas mujeres quieren juzgar y quieren hablar muchas cosas sin fundamentos y sin evidencia, porque lo que hace 
+    la mujer es solo querer sacar dinero al inocente, pero después el inocente se va a la cárcel por no haber cometido ningún delito.
+     Esto quiere decir que son mujeres que quieren controlar todo, hasta quieren que el hombre sea un esclavo, es decir, no quieren 
+     que los hombres pongan nada de sus conocimientos y aprendizajes que aprendieron en la facultad, ya sea carrera, curso u otros
+      aprendizajes, aunque ese hombre haya sido sincero al decir la verdad.
+
+  </p>
+      
+
+      
+      <p class="article-paragraph"> 
+        En la sociedad actual, muchas mujeres presentan problemas mentales, 
+        ya que algunas promueven la falta de respeto, lo cual es una falta de educación. 
+        En estas situaciones, se termina culpando al hombre por la falta de respeto de algunas mujeres 
+        y por los mensajes o palabras que la mujeres que lo expresan. Algunas mujeres publican diciendo cosas como: 
+        te quiero chupar la polla o te quiero chupar el pene. Este tipo de mensaje se convierte en un engaño,
+         donde las mujeres manipulan a los hombres. A veces incluyen frases provocadoras para que la manipulación
+          llegue incluso a la extorsión, incluso en el ámbito profesional.  Las mujeres dicen mensaje como: me encantan 
+          los hombres atrevidos, ya rompí con mi novio o estoy interesada en sexo, perdón, no me siento cómoda son usados
+           para presionar. Además, lo que hacen algunas mujeres es tomar capturas de pantalla para culpar al hombre, 
+           aunque él no haya cometido ningún delito. Esto se convierte en una evidencia sin fundamentos,
+            lo que equivale a una falsa denuncia, injuria, calumnia y desinformación. Por eso, en estos casos, 
+            los hombres acusados eran inocentes y no deberían ir nunca a la cárcel. No nombro a los menores de edad porque, 
+            la verdad, no son responsables. Son algunas mujeres adultas las que obligan, manipulan o se aprovechan 
+            de los menores de edad para culpar a los adultos, sobre todo a los hombres, que son inocentes y dicen la verdad.
+             También hay mujeres menores de edad que ayudan a decir la verdad y muestran lo que realmente pasa en la sociedad.
+      </p>
+      
+
+
+      
+      
+      
+      <p class="article-paragraph">
+Si hubiera sido en todos los países que el gobierno estuviera formado por mujeres políticas, mujeres que son diputadas, 
+que obligaran a las mujeres a que maten a los hombres, ahí diríamos: ¿alguien va a defender a los hombres por una ley o un derecho?
+ ¿No existiría la sexualidad masculina? Si hubiera países con solo mujeres y no hubiera más hombres, ¿qué harían? ¿Van a tener hijo o hija? 
+ ¿Ese hijo o hija va a formar una familia deseada? ¿Es necesario el reproductor masculino o no?La soledad puede ser un refugio sereno,
+  un espacio donde el alma se encuentra a sí misma y cada actitud tiene su lugar, como hojas que flotan suavemente en un río tranquilo,
+   permitiendo que cada emoción se despliegue sin prisas y que cada suspiro se sienta pleno y consciente. En esa quietud, 
+   la paz se desliza lentamente por los rincones más íntimos del corazón. Cada instante se convierte en un pequeño universo propio,
+    donde la luz que entra por la ventana pinta sombras suaves sobre las paredes y cada sonido, por mínimo que sea, 
+    adquiere un ritmo delicado que acompaña la respiración y el latido de la vida interior. La soledad se convierte en un espejo, 
+    donde el reflejo que se observa no es vacío ni incompleto, sino lleno de potencial, de serenidad y de una autenticidad que pocas 
+    veces se alcanza en la prisa del mundo exterior. Cada detalle del entorno parece más vivo: el roce del viento, el murmullo de las hojas,
+     el aroma de la tierra o del agua cercana, el cambio sutil de la luz durante el día; 
+todo contribuye a una sensación de presencia plena, donde cada acción se realiza con atención y cuidado.
+
+
+      </p>
+
+   </p>
+
+
+    </div>
+  </section>
+  
+
+</div>
+
+</body>
+</html>

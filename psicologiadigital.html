@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Explorador Emocional Integral</title>
+<style>
+  :root {
+    --primary: #4361ee;
+    --primary-dark: #3a56d4;
+    --secondary: #3f37c9;
+    --light: #f8f9fa;
+    --dark: #212529;
+    --success: #4cc9f0;
+    --warning: #f8961e;
+    --danger: #f72585;
+    --info: #4895ef;
+    --digital: #7209b7;
+    --wisdom: #2a9d8f;
+    --glass: rgba(255, 255, 255, 0.15);
+    --border-glow: rgba(67, 97, 238, 0.3);
+  }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+    background: linear-gradient(-45deg, #d0e2ff, #f0d0ff, #ffe8e8, #e1f5fe);
+    background-size: 400% 400%;
+    background-attachment: fixed;
+    animation: gradientBackground 15s ease infinite;
+    color: var(--dark);
+        border-radius: 10px;
+  max-width: 900px;
+  margin: 90px auto;
+  }
+
+  @keyframes gradientBackground {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  h1 {
+    text-align: center;
+    color: var(--primary);
+    font-size: 2.8rem;
+    margin-bottom: 35px;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15);
+    position: relative;
+    padding-bottom: 20px;
+  }
+
+  h1::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 140px;
+    height: 4px;
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    border-radius: 3px;
+    box-shadow: 0 0 10px var(--primary);
+  }
+
+  .container {
+    max-width: 950px;
+    margin: auto;
+    background: var(--glass);
+    backdrop-filter: blur(18px);
+    padding: 35px;
+    border-radius: 20px;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.12), inset 0 0 25px rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    transition: all 0.3s ease;
+  }
+
+  .container:hover {
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.15);
+  }
+
+  .buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    justify-content: center;
+    margin-bottom: 25px;
+  }
+
+  .emotion-btn {
+    padding: 14px 24px;
+    border: none;
+    border-radius: 12px;
+    background-color: var(--primary);
+    color: #fff;
+    cursor: pointer;
+    flex: 1 1 160px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: center;
+    transition: all 0.35s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15),
+                inset 0 0 0 rgba(255, 255, 255, 0);
+  }
+
+  .emotion-btn:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 8px 20px var(--border-glow),
+                inset 0 0 8px rgba(255, 255, 255, 0.2);
+    filter: brightness(1.1);
+  }
+
+  .emotion-btn:active {
+    transform: scale(0.97);
+  }
+
+  .response {
+    margin-top: 30px;
+    background: linear-gradient(135deg, #ffffff 0%, #f1f3f5 100%);
+    padding: 28px;
+    border-radius: 14px;
+    line-height: 1.75;
+    display: none;
+    border-left: 5px solid var(--primary);
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.05);
+    animation: fadeIn 0.5s ease;
+  }
+
+  .response h3 {
+    color: var(--primary);
+    font-size: 1.6rem;
+    margin-top: 0;
+    border-bottom: 2px solid var(--primary);
+    padding-bottom: 10px;
+    display: inline-block;
+  }
+
+  .response p {
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+  }
+
+  .response strong {
+    color: var(--primary-dark);
+  }
+
+  .group-title {
+    color: var(--secondary);
+    font-weight: 700;
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .wisdom-section {
+    background: linear-gradient(to right, #dafaf5, #c9f5ea);
+    border-left: 5px solid var(--wisdom);
+    padding: 22px;
+    border-radius: 12px;
+    margin: 25px 0;
+    box-shadow: 0 0 12px rgba(42, 157, 143, 0.25);
+  }
+
+  .wisdom-section h3 {
+    color: var(--wisdom);
+    margin-top: 0;
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 30px;
+    color: #6c757d;
+    font-size: 0.9rem;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Botones individuales: colores emocionales */
+  .btn-alegria        { background-color: #4cc9f0; }
+  .btn-tristeza       { background-color: #4895ef; }
+  .btn-enojo          { background-color: #f72585; }
+  .btn-miedo          { background-color: #7209b7; }
+  .btn-ansiedad       { background-color: #560bad; }
+  .btn-culpa          { background-color: #480ca8; }
+  .btn-verguenza      { background-color: #3a0ca3; }
+  .btn-sorpresa       { background-color: #4361ee; }
+  .btn-amor           { background-color: #f72585; }
+  .btn-esperanza      { background-color: #4cc9f0; }
+  .btn-soledad        { background-color: #4895ef; }
+  .btn-confusion      { background-color: #7209b7; }
+  .btn-frustracion    { background-color: #f8961e; }
+  .btn-comparacion    { background-color: #f72585; }
+  .btn-fomo           { background-color: #560bad; }
+  .btn-validacion     { background-color: #4361ee; }
+  .btn-adiccion       { background-color: #f8961e; }
+  .btn-envidia        { background-color: #4895ef; }
+  .btn-ira            { background-color: #f72585; }
+  .btn-empoderamiento { background-color: #7209b7; }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .container {
+      padding: 20px;
+    }
+    .emotion-btn {
+      flex: 1 1 120px;
+      padding: 12px 10px;
+      font-size: 0.9rem;
+    }
+    h1 {
+      font-size: 2.2rem;
+    }
+  }
+
+  .audio-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+
+  .audio-controls button {
+    background-color: #ff4d4f;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 6px 16px rgba(255, 77, 79, 0.3);
+  }
+
+  .audio-controls button:hover {
+    background-color: #d9363e;
+    transform: scale(1.05);
+  }
+
+  .audio-controls button:active {
+    transform: scale(0.95);
+  }
+
+
+
+/* Estilo para el botón de "Atrás" */
+.boton-atras {
+    position: absolute;
+    top: 30px;  /* Coloca el botón 30 píxeles desde la parte superior de la página */
+    left: 30px;  /* Coloca el botón 30 píxeles desde la parte izquierda de la página */
+    padding: 15px 30px;  /* Tamaño más grande */
+    font-size: 18px;  /* Texto más grande */
+    font-weight: bold;  /* Hacer el texto más prominente */
+    background-color: #ff5733;  /* Cambié el color de fondo a un naranja brillante */
+    color: #fff;  /* Texto blanco */
+    border: none;
+    border-radius: 10px;  /* Bordes redondeados */
+    cursor: pointer;
+    transition: all 0.3s ease;  /* Transición suave */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);  /* Sombra para hacer el botón más destacado */
+}
+
+/* Efecto hover */
+.boton-atras:hover {
+    background-color: #c0392b;  /* Cambié el color de fondo a un rojo más oscuro */
+    transform: translateY(-3px);  /* Eleva el botón un poco */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);  /* Sombra más fuerte */
+}
+
+/* Efecto cuando se hace clic (presionando) */
+.boton-atras:active {
+    transform: translateY(1px);  /* Se mueve hacia abajo para simular presión */
+}
+
+  /* Estilo base del botón */
+        .boton-atras {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(37, 117, 252, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Efecto hover */
+        .boton-atras:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(37, 117, 252, 0.4);
+            background: linear-gradient(135deg, #5d0eb7 0%, #1a6bf5 100%);
+        }
+        
+        /* Efecto al hacer clic */
+        .boton-atras:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 8px rgba(37, 117, 252, 0.3);
+        }
+        
+        /* Efecto de brillo al pasar el mouse */
+        .boton-atras::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
+        
+        .boton-atras:hover::after {
+            left: 100%;
+        }
+        
+        /* Opcional: Estilo para el enlace contenedor */
+        a {
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px;
+        }
+
+ .btn-moderno {
+            /* Aspecto visual */
+            display: inline-block;
+            padding: 14px 28px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            
+            /* Tipografía */
+            font-family: 'Segoe UI', Roboto, -apple-system, sans-serif;
+            font-size: 1.05rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            
+            /* Efectos y transiciones */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+            
+            /* Texto */
+            text-transform: uppercase;
+        }
+
+        .btn-moderno:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(135deg, #5b6fd8 0%, #6a42a0 100%);
+        }
+
+        .btn-moderno:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-moderno::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.15),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .btn-moderno:hover::before {
+            left: 100%;
+        }
+
+        /* Efecto de onda al hacer clic */
+        .btn-moderno:active::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+            animation: ripple 0.6s ease-out;
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(20, 20);
+                opacity: 0;
+            }
+        }
+        .back-button {
+  padding: 10px 20px;
+  background-color: #4a6baf;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.back-button:hover {
+  background-color: #3a5a9f;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.back-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 3px rgba(0,0,0,0.2);
+}
+/* Solo estilos para el botón "Volver atrás" */
+.back-button {
+  display: inline-block;
+  padding: 10px 18px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 2px solid #333;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  user-select: none;
+}
+
+/* Efecto al pasar el ratón */
+.back-button:hover,
+.back-button:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+  text-decoration: none;
+  outline: none;
+}
+
+/* Efecto al hacer clic */
+.back-button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+</style>
+
+</head>
+
+ 
+<body>
+        <div class="legal-frame">
+
+ 
+  <h1>Explorador Emocional Integral</h1>
+  <div class="container">
+    <div class="wisdom-section"> <a href="psicologiaportadaaprendeinicio.html" class="back-button" aria-label="Volver atrás">Volver atrás</a>
+      <h3>El Valor de un Nuevo Comienzo</h3>
+      <p>El tiempo no se detiene por nadie, pero siempre ofrece nuevas oportunidades. Cada día es una página en blanco, y aunque no podemos borrar lo escrito, siempre podemos cambiar la historia que estamos contando.</p>
+    </div>
+
+    <div class="wisdom-section">
+      <h3>Aprender a Soltar</h3>
+      <p>A veces, soltar no significa rendirse, sino aceptar que hay cosas que no se pueden controlar. Aferrarse duele más que dejar ir, y la paz llega cuando entendemos que no todo está en nuestras manos.</p>
+    </div>
+
+    <div class="wisdom-section">
+      <h3>El Valor del Conocimiento Real</h3>
+      <p>No todos los conocimientos vienen de una universidad o de un curso digital. Muchas personas aprenden con la práctica, con la experiencia, con la curiosidad y el esfuerzo de cada día. Algunos crean plataformas web, otros resuelven problemas sin necesidad de un título. Lo que realmente importa no es el camino, sino lo que sabes hacer y cómo lo aplicas. Nunca permitas que alguien te menosprecie por no seguir el camino tradicional, especialmente si sus ideas son inventadas y nacen desde la ignorancia o la negatividad. Quienes repiten constantemente acusaciones sin base sobre "delitos informáticos" solo demuestran su desconocimiento del mundo digital. A veces, esa actitud refleja frustración o problemas personales. No dejes que esa energía te desvíe de tu propósito.</p>
+    </div>
+
+    <div class="wisdom-section">
+      <h3>La Fuerza del Cambio</h3>
+      <p>El cambio es una constante en la vida, y aunque a veces nos asuste, es también lo que nos permite avanzar. Quedarse en lo familiar puede sentirse seguro, pero es en la transformación donde realmente crecemos. A veces, dar un paso hacia lo desconocido es lo único que necesitamos para descubrir nuestras verdaderas capacidades. No tengas miedo de lo nuevo; abraza lo que te desafía, porque ahí está la oportunidad de ser mejor.</p>
+    </div>
+
+ 
+
+    <div class="wisdom-section">
+      <h3>El Valor de Cuidar de Uno Mismo</h3>
+      <p>La salud no solo se construye con lo que comemos o cómo ejercitamos el cuerpo, sino también con lo que permitimos entrar en nuestra mente y corazón. Cuidar de uno mismo no es un acto egoísta, sino esencial. En un mundo que constantemente exige más de nosotros, es fundamental recordar que la primera persona a la que debemos cuidar y escuchar es a nosotros mismos. Sin bienestar personal, es imposible cuidar de los demás o hacer frente a los desafíos de la vida.</p>
+    </div>
+
+    <div class="emotion-group">
+      <div class="group-title">Emociones Básicas</div>
+      <div class="buttons" id="botones-basicas"></div>
+    </div>
+    
+    <div class="emotion-group">
+      <div class="group-title">Emociones Complejas</div>
+      <div class="buttons" id="botones-complejas"></div>
+    </div>
+    
+    <div class="emotion-group">
+      <div class="group-title">Emociones Digitales</div>
+      <div class="buttons" id="botones-digitales"></div>
+    </div>
+    
+    <div id="respuesta" class="response"></div>
+     <div class="audio-controls">
+ 
+  <button onclick="detenerVoz()">⏹ Detener</button>
+</div>
+
+  </div>
+  
+
+
+  <script>
+
+  function reproducirAudio(boton) {
+    detenerVoz();
+
+    const seccion = boton.closest('.wisdom-section');
+    const titulo = seccion.querySelector('h3').innerText;
+    const contenido = seccion.querySelector('p').innerText;
+
+    const utterance = new SpeechSynthesisUtterance(`${titulo}. ${contenido}`);
+    utterance.lang = 'es-AR';
+    utterance.rate = 0.95;
+    speechSynthesis.speak(utterance);
+  }
+
+
+
+    const respuestasEmocionales = {
+      Alegría: [
+        "La alegría es señal de que algo te está haciendo bien y conecta con tus valores.",
+        "Celebrar los momentos de alegría fortalece tu bienestar emocional.",
+        "Compartir tu alegría puede multiplicar su efecto positivo.",
+        "La alegría auténtica surge cuando estás en armonía contigo mismo.",
+        "Reconocer la alegría en lo cotidiano es un acto de mindfulness.",
+        "La alegría te conecta con el presente y con la gratitud.",
+        "Permitirte sentir alegría sin culpa es un acto de autoaceptación."
+      ],
+      Tristeza: [
+        "La tristeza es una respuesta natural a la pérdida o el cambio importante.",
+        "Honrar tu tristeza te permite procesar y sanar emocionalmente.",
+        "La tristeza puede ser un puente hacia la autocompasión.",
+        "Esta emoción a menudo precede a periodos de crecimiento personal.",
+        "La tristeza te recuerda lo que realmente valoras en la vida.",
+        "Permitirte llorar es permitirte sanar a tu propio ritmo.",
+        "La tristeza compartida puede crear conexiones profundas con otros."
+      ],
+      Enojo: [
+        "El enojo señala límites transgredidos o necesidades no atendidas.",
+        "Esta emoción contiene energía para el cambio y la autoprotección.",
+        "El enojo gestionado sabiamente puede ser tu aliado.",
+        "Detrás del enojo suele haber dolor o miedo que necesita atención.",
+        "Reconocer tu enojo es el primer paso para expresarlo asertivamente.",
+        "El enojo puede ser combustible para establecer límites saludables.",
+        "Esta emoción te muestra qué valores consideras importantes."
+      ],
+      Miedo: [
+        "El miedo es un mecanismo de protección que a veces se activa en exceso.",
+        "Respirar profundamente ayuda a regular la respuesta de miedo.",
+        "El miedo a menudo exagera los riesgos y minimiza tus recursos.",
+        "Reconocer tu miedo ya es un acto de valentía emocional.",
+        "El miedo puede ser un maestro sobre qué áreas necesitas fortalecer.",
+        "Esta emoción te prepara para enfrentar desafíos percibidos.",
+        "El coraje no es ausencia de miedo, sino acción a pesar de él."
+      ],
+      Ansiedad: [
+        "La ansiedad es miedo proyectado hacia el futuro incierto.",
+        "Anclarte en el presente (aquí y ahora) reduce la ansiedad.",
+        "La ansiedad suele surgir cuando sobrestimamos el peligro.",
+        "Esta emoción puede ser una señal para practicar autocuidado.",
+        "La ansiedad a menudo se alimenta de pensamientos 'y si...'.",
+        "Pequeñas acciones concretas pueden reducir la sensación de ansiedad.",
+        "La aceptación radical de la incertidumbre disminuye la ansiedad."
+      ],
+      Culpa: [
+        "La culpa saludable señala cuando hemos actuado contra nuestros valores.",
+        "La culpa excesiva puede convertirse en autoflagelación improductiva.",
+        "Aprender de los errores es más sabio que quedarse atrapado en la culpa.",
+        "El perdón a uno mismo es un proceso necesario para seguir adelante.",
+        "La culpa puede transformarse en responsabilidad y aprendizaje.",
+        "Distinguir entre culpa constructiva y destructiva es clave.",
+        "Todos merecemos compasión, especialmente cuando nos equivocamos."
+      ],
+      Vergüenza: [
+        "La vergüenza surge cuando sentimos que fallamos a expectativas propias o ajenas.",
+        "Esta emoción a menudo se relaciona con el miedo al rechazo.",
+        "Compartir lo que te da vergüenza con alguien de confianza puede sanar.",
+        "La autocompasión es el antídoto contra la vergüenza tóxica.",
+        "Todos tenemos derecho a ser imperfectos y seguir siendo dignos.",
+        "La vergüenza disminuye cuando practicamos la autenticidad.",
+        "Reconocer tu humanidad compartida ayuda a sanar la vergüenza."
+      ],
+      Sorpresa: [
+        "La sorpresa interrumpe patrones habituales y abre a nuevas posibilidades.",
+        "Las sorpresas agradables activan centros de placer en el cerebro.",
+        "Esta emoción prepara tu mente para procesar información nueva.",
+        "La capacidad de sorprenderse es signo de mentalidad abierta.",
+        "Las sorpresas, incluso incómodas, pueden llevar a crecimiento.",
+        "Mantener capacidad de asombro enriquece la experiencia vital.",
+        "La sorpresa precede a momentos de aprendizaje significativo."
+      ],
+      Amor: [
+        "El amor en sus diversas formas es fundamental para el bienestar humano.",
+        "Amar implica vulnerabilidad, que es fuente de fortaleza auténtica.",
+        "El amor propio es base para relaciones saludables con otros.",
+        "Esta emoción amplía tus perspectivas y capacidad de conexión.",
+        "El amor genuino incluye límites saludables y respeto mutuo.",
+        "Practicar el amor es cultivar paciencia, bondad y aceptación.",
+        "El amor transforma tanto a quien lo da como a quien lo recibe."
+      ],
+      Esperanza: [
+        "La esperanza es la luz que persiste incluso en situaciones difíciles.",
+        "Esta emoción moviliza recursos internos para enfrentar desafíos.",
+        "La esperanza realista se basa en posibilidades, no en ilusiones.",
+        "Cultivar esperanza activa es un acto de resistencia emocional.",
+        "La esperanza se fortalece al recordar tus capacidades y logros.",
+        "Esta emoción te orienta hacia soluciones y posibilidades.",
+        "La esperanza compartida puede ser especialmente poderosa."
+      ],
+      Soledad: [
+        "La soledad señala la necesidad humana esencial de conexión.",
+        "Hay diferencia entre soledad física y soledad emocional.",
+        "Esta emoción puede ser oportunidad para autoconocimiento profundo.",
+        "La soledad no elegida puede transformarse en búsqueda activa de vínculos.",
+        "Aprender a estar cómodo contigo mismo reduce el miedo a la soledad.",
+        "La soledad temporal puede ser espacio para recargar energías.",
+        "Compartir tu experiencia de soledad puede ayudar a otros."
+      ],
+      Confusión: [
+        "La confusión indica que estás procesando información compleja.",
+        "Esta emoción puede ser etapa previa a nuevos entendimientos.",
+        "Permitirte estar confuso es permitirte aprender algo nuevo.",
+        "La confusión a menudo precede a momentos de claridad.",
+        "Dividir problemas en partes más pequeñas reduce la confusión.",
+        "Esta emoción te recuerda que el aprendizaje es proceso, no evento.",
+        "Todos experimentamos confusión en el camino del crecimiento."
+      ],
+      Frustración: [
+        "La frustración surge cuando resultados no coinciden con expectativas.",
+        "Esta emoción puede ser motivadora para buscar nuevos enfoques.",
+        "La frustración gestionada lleva a persistencia y creatividad.",
+        "Reevaluar expectativas realistas reduce la frustración crónica.",
+        "La frustración señala dónde necesitas ajustar tu estrategia.",
+        "Esta emoción puede transformarse en determinación con práctica.",
+        "Aprender a tolerar cierta frustración es parte de la madurez."
+      ],
+      Comparación: [
+        "La comparación constante en redes sociales puede distorsionar tu autopercepción.",
+        "Recuerda que las redes muestran momentos seleccionados, no la realidad completa.",
+        "La comparación suele ignorar tus propios logros y circunstancias únicas.",
+        "Esta emoción puede señalar áreas donde buscas validación externa.",
+        "Cada persona tiene su propio ritmo y camino que no es comparable.",
+        "La comparación en redes suele ser injusta porque comparas tu detrás de cámaras con el 'highlight reel' de otros.",
+        "Practicar gratitud por lo que tienes puede contrarrestar la comparación negativa."
+      ],
+      FOMO: [
+        "El miedo a perderse algo (FOMO) es una respuesta a la sobreestimulación digital.",
+        "Esta ansiedad surge de la creencia ilusoria de que otros viven experiencias mejores.",
+        "El FOMO puede llevarte a usar redes de forma compulsiva buscando validación.",
+        "Establecer límites de tiempo en redes ayuda a reducir esta sensación.",
+        "Practicar JOMO (Joy of Missing Out) puede ser el antídoto al FOMO.",
+        "El FOMO a menudo es síntoma de necesidades no atendidas en tu vida offline.",
+        "Reconocer que no puedes estar en todos lados es aceptar tu humanidad."
+      ],
+      Validación: [
+        "Buscar validación constante en redes puede debilitar tu autoestima intrínseca.",
+        "La dopamina de likes/compartidos crea un ciclo de dependencia a aprobación externa.",
+        "Esta necesidad refleja nuestro deseo humano fundamental de aceptación social.",
+        "Reconocer tu valor independientemente de métricas digitales es saludable.",
+        "La validación digital es efímera y no sustituye la autoaceptación profunda.",
+        "Cultivar fuentes de autoestima offline fortalece tu independencia emocional.",
+        "Pregúntate: ¿Publico esto para compartir o para recibir aprobación?"
+      ],
+      Adicción: [
+        "La adicción digital activa los mismos circuitos cerebrales que otras adicciones.",
+        "El diseño persuasivo de apps explota nuestros mecanismos psicológicos básicos.",
+        "Esta dependencia puede interferir con relaciones, trabajo y autocuidado.",
+        "Síntomas incluyen ansiedad cuando no puedes acceder y uso compulsivo.",
+        "Establecer límites claros de uso es el primer paso para recuperar control.",
+        "Reemplazar hábitos digitales con actividades offline gratificantes ayuda.",
+        "Reconocer que no es falta de voluntad sino diseño intencional reduce la culpa."
+      ],
+      Envidia: [
+        "La envidia digital surge al comparar tu realidad con versiones idealizadas online.",
+        "Esta emoción puede señalar deseos o aspiraciones no reconocidas.",
+        "La envidia distorsionada por redes sociales puede ser especialmente tóxica.",
+        "Reconocer que la envidia es humana permite transformarla en motivación sana.",
+        "Preguntarte qué te dice esta envidia sobre tus propios valores puede ser útil.",
+        "Limitar exposición a contenidos que desencadenan envidia es un acto de autocuidado.",
+        "Convertir la envidia en inspiración para tu propio camino es el antídoto."
+      ],
+      Ira: [
+        "La ira en entornos digitales se amplifica por el anonimato y falta de señales sociales.",
+        "Esta emoción puede llevar a espirales de confrontación poco productivas.",
+        "El 'rage-scrolling' (consumir contenido que enfurece) mantiene la ira activa.",
+        "La ira digital a menudo es respuesta a percepciones de injusticia o falta de control.",
+        "Practicar pausas antes de responder puede prevenir escaladas emocionales online.",
+        "Reconocer que algoritmos favorecen contenido que genera ira ayuda a tomar distancia.",
+        "Canalizar ira digital hacia acción constructiva offline puede ser transformador."
+      ],
+      Empoderamiento: [
+        "El empoderamiento digital surge cuando usas tecnología alineado a tus valores.",
+        "Esta emoción positiva se fortalece con uso intencional y consciente de herramientas.",
+        "Las redes pueden amplificar voces marginadas y crear cambio social positivo.",
+        "El empoderamiento incluye tomar control sobre tu tiempo y atención digital.",
+        "Aprender habilidades digitales aumenta sensación de competencia y autonomía.",
+        "Usar plataformas para conectar con comunidades de apoyo refuerza empoderamiento.",
+        "El verdadero empoderamiento digital equilibra conexión online con presencia offline."
+      ]
+    };
+
+    const reflexion = emocion => {
+      const preguntasReflexivas = {
+        Alegría: "¿Qué personas, actividades o circunstancias alimentan tu alegría? ¿Cómo puedes cultivar más de esto en tu vida?",
+        Tristeza: "¿Qué pérdida o cambio está reflejando tu tristeza? ¿Qué necesita tu corazón para sanar?",
+        Enojo: "¿Qué límite se ha transgredido? ¿Qué necesidad no está siendo atendida? ¿Cómo puedes expresar esto de manera constructiva?",
+        Miedo: "¿Qué estás percibiendo como amenaza? ¿Cuáles son los riesgos reales versus los imaginados? ¿Qué recursos tienes para enfrentarlo?",
+        Ansiedad: "¿Qué futuro incierto te preocupa? ¿Cómo puedes volver al presente? ¿Qué pequeña acción puede ayudarte ahora?",
+        Culpa: "¿Qué valor personal crees haber transgredido? ¿Qué aprendizaje puedes extraer? ¿Cómo puedes practicar el autoperdón?",
+        Vergüenza: "¿Qué estándar crees no haber cumplido? ¿Es realmente válido ese estándar? ¿Qué dirías a un amigo en tu situación?",
+        Sorpresa: "¿Qué ha interrumpido tus expectativas? ¿Cómo puedes integrar esta nueva información? ¿Qué oportunidad podría representar?",
+        Amor: "¿Cómo puedes expresar amor hacia ti mismo y otros hoy? ¿Qué relaciones nutren tu bienestar? ¿Cómo puedes profundizar tus conexiones?",
+        Esperanza: "¿Qué posibilidades realistas puedes visualizar? ¿Qué pequeña acción puede moverte en esa dirección? ¿Quién puede apoyarte en este camino?",
+        Soledad: "¿Qué tipo de conexión necesitas ahora? ¿Cómo puedes buscarla? ¿Qué relación contigo mismo puedes fortalecer en este momento?",
+        Confusión: "¿Qué información te falta? ¿Cómo puedes obtenerla? ¿Qué preguntas clarificadoras puedes hacerte?",
+        Frustración: "¿Qué expectativa no se está cumpliendo? ¿Es realista? ¿Qué enfoque alternativo podrías probar?",
+        Comparación: "¿Qué aspectos específicos estás comparando? ¿Cómo puedes enfocarte más en tu propio progreso? ¿Qué cualidades únicas tienes?",
+        FOMO: "¿Qué crees que te estás perdiendo realmente? ¿Cómo puedes cultivar más presencia en tu vida actual?",
+        Validación: "¿Qué validación buscas específicamente? ¿Cómo puedes desarrollar más auto-validación?",
+        Adicción: "¿Qué necesidades emocionales satisface tu uso digital? ¿Qué actividades alternativas podrían satisfacerlas?",
+        Envidia: "¿Qué ves en otros que despierta tu envidia? ¿Qué te dice esto sobre tus propios deseos?",
+        Ira: "¿Qué contenido o interacciones despiertan tu ira? ¿Cómo puedes proteger tu bienestar emocional?",
+        Empoderamiento: "¿Qué usos de la tecnología te hacen sentir más empoderado? ¿Cómo puedes amplificar estas experiencias?"
+      };
+      
+      return `<div class="reflexion-box">
+        <p><strong>Reflexión guiada:</strong> ${preguntasReflexivas[emocion]}</p>
+        <p><strong>Sugerencias prácticas:</strong> Escribe en un diario, dibuja tu emoción, habla con alguien de confianza, practica meditación o respiración consciente.</p>
+      </div>`;
+    };
+
+    function seleccionarAleatorias(lista, cantidad) {
+      const copia = [...lista];
+      const seleccionadas = [];
+      while (cantidad > 0 && copia.length > 0) {
+        const index = Math.floor(Math.random() * copia.length);
+        seleccionadas.push(copia.splice(index, 1)[0]);
+        cantidad--;
+      }
+      return seleccionadas;
+    }
+
+    // Detener cualquier síntesis de voz en curso
+    function detenerVoz() {
+      speechSynthesis.cancel();
+    }
+
+    function mostrarEmocion(nombre) {
+      detenerVoz(); // Detener voz anterior al hacer clic en nuevo botón
+      
+      const frases = respuestasEmocionales[nombre];
+      const seleccionadas = seleccionarAleatorias(frases, 3).map(f => `<p>${f}</p>`).join('');
+      const contenido = `<h3>${nombre}</h3>${seleccionadas}${reflexion(nombre)}`;
+
+      const contenedor = document.getElementById("respuesta");
+      contenedor.innerHTML = contenido;
+      contenedor.style.display = "block";
+
+      const utterance = new SpeechSynthesisUtterance(`${nombre}. ${frases[0]}`);
+      utterance.lang = 'es-AR';
+      utterance.rate = 0.9;
+      speechSynthesis.speak(utterance);
+    }
+
+    // Agrupar emociones
+    const emocionesBasicas = ['Alegría', 'Tristeza', 'Enojo', 'Miedo', 'Sorpresa'];
+    const emocionesComplejas = ['Ansiedad', 'Culpa', 'Vergüenza', 'Amor', 'Esperanza', 'Soledad', 'Confusión', 'Frustración'];
+    const emocionesDigitales = ['Comparación', 'FOMO', 'Validación', 'Adicción', 'Envidia', 'Ira', 'Empoderamiento'];
+
+    const contenedorBasicas = document.getElementById("botones-basicas");
+    const contenedorComplejas = document.getElementById("botones-complejas");
+    const contenedorDigitales = document.getElementById("botones-digitales");
+
+    emocionesBasicas.forEach(emocion => {
+      const btn = document.createElement("button");
+      btn.className = `emotion-btn btn-${emocion.toLowerCase()}`;
+      btn.textContent = emocion;
+      btn.onclick = () => mostrarEmocion(emocion);
+      contenedorBasicas.appendChild(btn);
+    });
+
+    emocionesComplejas.forEach(emocion => {
+      const btn = document.createElement("button");
+      btn.className = `emotion-btn btn-${emocion.toLowerCase()}`;
+      btn.textContent = emocion;
+      btn.onclick = () => mostrarEmocion(emocion);
+      contenedorComplejas.appendChild(btn);
+    });
+
+    emocionesDigitales.forEach(emocion => {
+      const btn = document.createElement("button");
+      btn.className = `emotion-btn btn-${emocion.toLowerCase()}`;
+      btn.textContent = emocion;
+      btn.onclick = () => mostrarEmocion(emocion);
+      contenedorDigitales.appendChild(btn);
+    });
+  </script>
+</body>
+</html>

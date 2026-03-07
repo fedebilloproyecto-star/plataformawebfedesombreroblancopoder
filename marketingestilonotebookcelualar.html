@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S.BLANCO · Links COMPLETOS visibles</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- QRCode.js (opcional) -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #b8f5b0 0%, #70db84 100%);
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            padding: 20px;
+            min-height: 100vh;
+            
+   border-radius: 10px;
+  max-width: 900px;
+  margin: 90px auto;
+        }
+
+        .main-container {
+            max-width: 1500px;
+            margin: 20px auto;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(15px);
+            border-radius: 70px;
+            padding: 35px;
+            border: 6px solid #0a4d24;
+        }
+
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .main-title {
+            font-size: 3.2rem;
+            font-weight: 900;
+            color: #023e1a;
+            text-shadow: 5px 5px 0 #b3ffae;
+        }
+
+        .main-title i {
+            background: #b3ffae;
+            padding: 14px;
+            border-radius: 80px;
+        }
+
+        .back-button {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 16px 50px;
+            background: #ff5e5e;
+            color: white;
+            text-decoration: none;
+            border-radius: 60px;
+            font-weight: 800;
+            font-size: 1.5rem;
+            border: 4px solid white;
+            box-shadow: 0 12px 0 #9e3232;
+        }
+
+        .back-button:active {
+            transform: translateY(8px);
+            box-shadow: 0 4px 0 #9e3232;
+        }
+
+        .main-layout {
+            display: flex;
+            gap: 35px;
+            flex-wrap: wrap;
+        }
+
+        /* Panel izquierdo */
+        .control-panel {
+            flex: 1.2;
+            min-width: 460px;
+            background: #fafff0;
+            border: 6px solid #0a4d24;
+            border-radius: 60px;
+            padding: 30px;
+            box-shadow: 22px 22px 0 #0a4d24;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .panel-title {
+            font-size: 2.3rem;
+            font-weight: 900;
+            color: #0a4d24;
+            text-align: center;
+            border-bottom: 5px dashed #0a4d24;
+            padding-bottom: 20px;
+            margin-bottom: 25px;
+        }
+
+        .panel-section {
+            background: #ffffe4;
+            border-radius: 50px;
+            padding: 22px;
+            margin-bottom: 25px;
+            border: 3px solid #0a4d24;
+        }
+
+        .section-title {
+            font-size: 1.7rem;
+            color: #0a4d24;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 800;
+        }
+
+        .control-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        input, select, textarea {
+            background: white;
+            border-radius: 60px;
+            padding: 14px 22px;
+            border: 2px solid #0a4d24;
+            width: 100%;
+            font-size: 1rem;
+        }
+
+        input[type="color"] {
+            height: 60px;
+        }
+
+        .file-upload-area {
+            background: #dcffcf;
+            border-radius: 60px;
+            padding: 22px;
+            text-align: center;
+            border: 4px dashed #0a4d24;
+            cursor: pointer;
+        }
+
+        .size-control {
+            display: flex;
+            gap: 12px;
+            margin: 12px 0;
+        }
+
+        .size-btn {
+            background: #0a4d24;
+            color: white;
+            border: 2px solid #b3ffae;
+            border-radius: 40px;
+            padding: 10px 0;
+            font-weight: 700;
+            flex: 1;
+            cursor: pointer;
+        }
+
+        /* PREVIEW DERECHA */
+        .preview-col {
+            flex: 2;
+            min-width: 750px;
+            background: rgba(255, 255, 210, 0.5);
+            border-radius: 70px;
+            padding: 30px;
+            border: 6px solid #0a4d24;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .device-switch {
+            display: flex;
+            gap: 40px;
+        }
+
+        .dev-btn {
+            background: white;
+            border: 5px solid #0a4d24;
+            padding: 16px 55px;
+            border-radius: 60px;
+            font-weight: 900;
+            font-size: 1.6rem;
+            box-shadow: 8px 8px 0 #0a4d24;
+            cursor: pointer;
+        }
+
+        .dev-btn.active {
+            background: #0a4d24;
+            color: white;
+            border-color: #b3ffae;
+        }
+
+        /* teléfono */
+        .phone-case {
+            width: 380px;
+            min-height: 760px;
+            background: #0a2618;
+            border: 18px solid #0a4d24;
+            border-radius: 90px;
+            position: relative;
+            box-shadow: 35px 35px 0 #04381d;
+            display: none;
+            flex-direction: column;
+        }
+
+        .phone-case::after {
+            content: "⚡ LINKS COMPLETOS ⚡";
+            position: absolute;
+            top: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #0a4d24;
+            color: #b3ffae;
+            padding: 8px 28px;
+            border-radius: 50px;
+            font-weight: 900;
+            font-size: 0.9rem;
+            border: 2px solid #b3ffae;
+            z-index: 10;
+            white-space: nowrap;
+        }
+
+        .phone-wallpaper {
+            flex: 1;
+            margin: 70px 14px 18px 14px;
+            background: #0a2618;
+            border-radius: 50px;
+            border: 3px solid #b3ffae;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* laptop */
+        .laptop-wrapper {
+            width: 100%;
+            max-width: 1100px;
+            display: none;
+            flex-direction: column;
+        }
+
+        .laptop-screen {
+            width: 100%;
+            background: #0a2618;
+            border: 20px solid #0a4d24;
+            border-radius: 60px 60px 0 0;
+            overflow: hidden;
+            box-shadow: 30px 30px 0 #04381d;
+        }
+
+        .laptop-wallpaper {
+            padding: 28px;
+            display: flex;
+            gap: 30px;
+            background: #0a2618;
+        }
+
+        .laptop-base {
+            width: 110%;
+            height: 28px;
+            background: #2a4232;
+            border-radius: 0 0 70px 70px;
+        }
+
+        /* Componentes comunes */
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-main {
+            font-size: 1.9rem;
+            font-weight: 900;
+            color: white;
+        }
+
+        .logo-lab {
+            background: #b3ffae;
+            color: #023e1a;
+            padding: 6px 20px;
+            border-radius: 50px;
+            font-weight: 800;
+        }
+
+        .user-image {
+            width: 100%;
+            height: 85px;
+            object-fit: cover;
+            border-radius: 28px;
+            border: 3px solid #b3ffae;
+        }
+
+        .frase-destacada {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #b3ffae;
+        }
+
+        .btn-activar {
+            background: linear-gradient(145deg, #b3ffae, #70db84);
+            border: none;
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-weight: 800;
+            border: 2px solid white;
+        }
+
+        .nota-ia {
+            color: #b3ffae;
+            font-size: 0.8rem;
+        }
+
+        /* ===== LINKS COMPLETOS (SIN CORTES) ===== */
+        .links-visor {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 10px 0;
+            width: 100%;
+        }
+
+        .link-text-block {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #173726;
+            border: 2px solid #b3ffae;
+            border-radius: 60px;
+            padding: 12px 20px;
+            color: white;
+            text-decoration: none;
+            transition: 0.1s;
+            width: 100%;
+        }
+
+        .link-text-block i:first-child {
+            font-size: 1.5rem;
+            width: 32px;
+            color: #b3ffae;
+            flex-shrink: 0;
+        }
+
+        .link-url {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #b3ffae;
+            background: #1e3a2a;
+            padding: 6px 12px;
+            border-radius: 40px;
+            border: 1px solid #5a9e6b;
+            white-space: normal;      /* Permite saltos de línea */
+            word-break: break-all;    /* Rompe la URL si es necesario */
+            overflow-wrap: break-word;
+            flex: 1;
+            min-width: 0;             /* Evita desbordes */
+            line-height: 1.4;
+        }
+
+        .link-text-block .fa-external-link-alt {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            flex-shrink: 0;
+            margin-left: 5px;
+        }
+
+        .link-text-block:hover {
+            background: #22553b;
+            transform: scale(1.01);
+        }
+
+        /* QR adicional */
+        .qr-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .qr-code {
+            width: 85px;
+            height: 85px;
+            background: white;
+            border-radius: 22px;
+            border: 3px solid #b3ffae;
+            overflow: hidden;
+        }
+
+        .qr-code canvas { width: 100% !important; height: 100% !important; }
+
+        .qr-label {
+            background: #0a4d24;
+            color: white;
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-size: 0.65rem;
+            margin-top: 4px;
+        }
+
+        .metrics-grid {
+            display: flex;
+            gap: 6px;
+            background: #1e3327b3;
+            border-radius: 35px;
+            padding: 10px;
+            border: 2px solid #b3ffae;
+            flex: 1;
+        }
+
+        .metric-item {
+            text-align: center;
+            flex: 1;
+        }
+
+        .metric-number {
+            font-size: 1.1rem;
+            font-weight: 900;
+            color: #b3ffae;
+        }
+
+        .metric-text {
+            font-size: 0.6rem;
+            color: white;
+        }
+
+        .badge-edicion {
+            background: #b3ffae;
+            color: #023e1a;
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-weight: 800;
+            width: fit-content;
+        }
+
+        .specs-row {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .spec-chip {
+            background: #1f3b2c;
+            border: 2px solid #b3ffae;
+            border-radius: 30px;
+            padding: 5px 14px;
+            color: white;
+            font-size: 0.75rem;
+        }
+
+        .apps-phone, .apps-laptop {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .app-phone-item {
+            background: #1e3b2b;
+            border: 2px solid #b3ffae;
+            border-radius: 20px;
+            padding: 5px 0;
+            width: 22%;
+            text-align: center;
+            color: white;
+            font-size: 0.65rem;
+        }
+
+        .app-laptop-item {
+            background: #1e3b2b;
+            border: 2px solid #b3ffae;
+            border-radius: 30px;
+            padding: 6px 18px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+        }
+
+        .btn-download {
+            background: #0a4d24;
+            color: white;
+            border: 4px solid #b3ffae;
+            padding: 18px 50px;
+            border-radius: 70px;
+            font-weight: 900;
+            font-size: 1.4rem;
+            box-shadow: 9px 9px 0 #04381d;
+            cursor: pointer;
+        }
+
+        .btn-update {
+            background: #0a4d24;
+            color: white;
+            border: 3px solid #b3ffae;
+            padding: 16px;
+            border-radius: 60px;
+            font-weight: 800;
+            width: 100%;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .show-flex { display: flex !important; }
+
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+            gap: 12px;
+        }
+        .app-card {
+            background: white;
+            border: 2px solid #0a4d24;
+            border-radius: 35px;
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="main-container">
+    <div class="header-section">
+        <h1 class="main-title"><i class="fas fa-link"></i> LINKS COMPLETOS VISIBLES</h1>
+        <a href="inicioprincipalmarketingpremium.html" class="back-button" onclick="history.back()"><i class="fas fa-arrow-left"></i> volver atras</a>
+    </div>
+
+    <div class="main-layout">
+        <!-- Panel control -->
+        <div class="control-panel">
+            <div class="panel-title">✏️ EDITAR URLs (se ven completas)</div>
+
+            <!-- Foto -->
+            <div class="panel-section">
+                <div class="section-title"><i class="fas fa-camera"></i> FOTO</div>
+                <div class="file-upload-area" id="fileUploadArea">
+                    <i class="fas fa-cloud-upload-alt" style="font-size:2.6rem;color:#0a4d24"></i>
+                    <div style="font-size:1.1rem;">SUBIR FOTO</div>
+                    <input type="file" id="upload" accept="image/*" hidden>
+                    <div id="fileName">ninguna</div>
+                </div>
+                <div class="size-control">
+                    <button class="size-btn" id="fotoPequena">pequeña</button>
+                    <button class="size-btn" id="fotoMediana">media</button>
+                    <button class="size-btn" id="fotoGrande">grande</button>
+                </div>
+                <input type="range" id="fotoSize" min="40" max="140" value="85">
+            </div>
+
+            <!-- ENLACES COMPLETOS -->
+            <div class="panel-section">
+                <div class="section-title"><i class="fas fa-thumbtack"></i> URLs (texto completo)</div>
+                <div style="display:flex; flex-direction:column; gap:15px;">
+                    <div><i class="fab fa-instagram" style="font-size:1.2rem;"></i> Instagram</div>
+                    <input type="url" id="linkInstagram" value="https://instagram.com/s.blanco" placeholder="URL Instagram">
+                    
+                    <div><i class="fab fa-facebook"></i> Facebook</div>
+                    <input type="url" id="linkFacebook" value="https://facebook.com/s.blanco" placeholder="URL Facebook">
+                    
+                    <div><i class="fab fa-twitter"></i> Twitter/X</div>
+                    <input type="url" id="linkTwitter" value="https://twitter.com/s.blanco" placeholder="URL Twitter">
+                    
+                    <div><i class="fab fa-youtube"></i> YouTube</div>
+                    <input type="url" id="linkYoutube" value="https://youtube.com/@s.blanco" placeholder="URL YouTube">
+                    
+                    <div><i class="fas fa-globe"></i> Web principal</div>
+                    <input type="url" id="linkWeb" value="https://sblanco.com" placeholder="Web personal">
+                </div>
+            </div>
+
+            <!-- QR adicional -->
+            <div class="panel-section">
+                <div class="section-title"><i class="fas fa-qrcode"></i> QR extra (elige link)</div>
+                <select id="qrUrlSelect">
+                    <option value="instagram">📸 Instagram</option>
+                    <option value="facebook">👤 Facebook</option>
+                    <option value="twitter">🐦 Twitter</option>
+                    <option value="youtube">▶️ YouTube</option>
+                    <option value="web">🌍 Web principal</option>
+                    <option value="personalizado">🔗 Personalizada</option>
+                </select>
+                <input type="text" id="qrCustomUrl" placeholder="https://tudominio.com" value="https://sblanco.digital" style="display:none; margin-top:10px;">
+                <div class="control-grid" style="margin-top:12px;">
+                    <div><label>Color QR</label><input type="color" id="qrColor" value="#0a4d24"></div>
+                    <div><label>Fondo QR</label><input type="color" id="qrBgColor" value="#ffffff"></div>
+                </div>
+                <div class="size-control">
+                    <button class="size-btn" id="qrPequeno">QR pequeño</button>
+                    <button class="size-btn" id="qrMediano">QR medio</button>
+                    <button class="size-btn" id="qrGrande">QR grande</button>
+                </div>
+                <input type="range" id="qrSize" min="50" max="120" value="80">
+            </div>
+
+            <!-- Colores -->
+            <div class="panel-section">
+                <div class="section-title"><i class="fas fa-palette"></i> COLORES</div>
+                <div class="control-grid">
+                    <div><label>Fondo</label><input type="color" id="fondoColor" value="#0a2618"></div>
+                    <div><label>Borde/Acento</label><input type="color" id="bordeColor" value="#b3ffae"></div>
+                </div>
+            </div>
+
+            <!-- Textos -->
+            <div class="panel-section">
+                <div class="section-title"><i class="fas fa-font"></i> TEXTOS</div>
+                <input type="text" id="logo1" value="S.BLANCO" style="margin-bottom:6px;">
+                <input type="text" id="logo2" value="lab" style="margin-bottom:6px;">
+                <input type="text" id="frase" value="CREA SIN LÍMITES" style="margin-bottom:6px;">
+                <input type="text" id="boton" value="ACTIVAR" style="margin-bottom:6px;">
+                <input type="text" id="nota" value="foto con IA" style="margin-bottom:6px;">
+                <div style="display:flex; gap:4px;">
+                    <input type="text" id="m1Valor" value="2.8k"><input type="text" id="m1Sufijo" value="+22%"><input type="text" id="m1Texto" value="IMPACTOS">
+                </div>
+                <div style="display:flex; gap:4px; margin:6px 0;">
+                    <input type="text" id="m2Valor" value="94"><input type="text" id="m2Sufijo" value="%"><input type="text" id="m2Texto" value="IMÁGENES">
+                </div>
+                <div style="display:flex; gap:4px;">
+                    <input type="text" id="m3Valor" value="12"><input type="text" id="m3Sufijo" value="premios"><input type="text" id="m3Texto" value="PREMIOS">
+                </div>
+                <input type="text" id="badge" value="EDICIÓN PREMIUM" style="margin:6px 0;">
+                <textarea id="descripcion" rows="2">Marketing con links completos · 2025</textarea>
+                <div style="margin:10px 0;">Specs</div>
+                <input type="text" id="spec1" value="ARR1 Alexa" style="margin-bottom:4px;">
+                <input type="text" id="spec2" value="LUTs custom" style="margin-bottom:4px;">
+                <input type="text" id="spec3" value="8K RAW">
+            </div>
+
+            <!-- apps -->
+            <div class="panel-section">
+                <div class="section-title"><i class="fas fa-mobile-alt"></i> APPS</div>
+                <div id="appsGrid" class="apps-grid"></div>
+            </div>
+
+            <button class="btn-update" id="updateBtn"><i class="fas fa-sync-alt"></i> ACTUALIZAR (links completos)</button>
+        </div>
+
+        <!-- PREVIEW con LINKS COMPLETOS (sin cortes) -->
+        <div class="preview-col">
+            <div class="device-switch">
+                <button class="dev-btn active" id="btnPhone">📱 MÓVIL</button>
+                <button class="dev-btn" id="btnLaptop">💻 NOTEBOOK</button>
+            </div>
+
+            <!-- teléfono -->
+            <div id="phone" class="phone-case show-flex">
+                <div class="phone-wallpaper" id="phoneWallpaper">
+                    <div class="logo-section">
+                        <span class="logo-main" id="phoneLogo">S.BLANCO</span>
+                        <span class="logo-lab" id="phoneLogoSpan">lab</span>
+                    </div>
+                    <img id="phoneImage" class="user-image" src="data:image/svg+xml,%3Csvg%3E%3Crect width='300' height='90' fill='%23344e5c'/%3E%3Ctext x='90' y='50' fill='%23fff'%3Eusuario%3C/text%3E%3C/svg%3E">
+                    
+                    <div style="display:flex; gap:5px; align-items:center; flex-wrap:wrap;">
+                        <span class="frase-destacada" id="phoneFrase">CREA SIN LÍMITES</span>
+                        <button class="btn-activar" id="phoneBoton">ACTIVAR</button>
+                    </div>
+                    <div class="nota-ia" id="phoneNota">foto con IA</div>
+
+                    <!-- ===== LINKS COMPLETOS (SIN CORTES, SE VE TODO) ===== -->
+                    <div class="links-visor">
+                        <a href="#" target="_blank" class="link-text-block" id="phoneLinkIG">
+                            <i class="fab fa-instagram"></i>
+                            <span class="link-url" id="phoneIGurl">instagram.com/s.blanco</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                        <a href="#" target="_blank" class="link-text-block" id="phoneLinkFB">
+                            <i class="fab fa-facebook"></i>
+                            <span class="link-url" id="phoneFBurl">facebook.com/s.blanco</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                        <a href="#" target="_blank" class="link-text-block" id="phoneLinkTW">
+                            <i class="fab fa-twitter"></i>
+                            <span class="link-url" id="phoneTWurl">twitter.com/s.blanco</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                        <a href="#" target="_blank" class="link-text-block" id="phoneLinkYT">
+                            <i class="fab fa-youtube"></i>
+                            <span class="link-url" id="phoneYTurl">youtube.com/@s.blanco</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                        <a href="#" target="_blank" class="link-text-block" id="phoneLinkWEB">
+                            <i class="fas fa-globe"></i>
+                            <span class="link-url" id="phoneWEBurl">sblanco.com</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+
+                    <!-- QR + métricas -->
+                    <div style="display:flex; gap:10px; align-items:center;">
+                        <div class="qr-section">
+                            <div class="qr-code" id="phoneQR"></div>
+                            <span class="qr-label">QR extra</span>
+                        </div>
+                        <div class="metrics-grid">
+                            <div class="metric-item"><span class="metric-number" id="phoneM1">2.8k</span><span class="metric-suffix" id="phoneS1">+22%</span><div class="metric-text" id="phoneT1">IMPACTOS</div></div>
+                            <div class="metric-item"><span class="metric-number" id="phoneM2">94</span><span class="metric-suffix" id="phoneS2">%</span><div class="metric-text" id="phoneT2">IMÁGENES</div></div>
+                            <div class="metric-item"><span class="metric-number" id="phoneM3">12</span><span class="metric-suffix" id="phoneS3">premios</span><div class="metric-text" id="phoneT3">PREMIOS</div></div>
+                        </div>
+                    </div>
+
+                    <div class="badge-edicion" id="phoneBadge">EDICIÓN PREMIUM</div>
+                    <div class="descripcion" id="phoneDesc">Marketing con links completos · 2025</div>
+                    <div class="specs-row" id="phoneSpecs">
+                        <span class="spec-chip" id="phoneSpec1">ARR1 Alexa</span>
+                        <span class="spec-chip" id="phoneSpec2">LUTs custom</span>
+                        <span class="spec-chip" id="phoneSpec3">8K RAW</span>
+                    </div>
+                    <div class="apps-phone" id="phoneApps"></div>
+                </div>
+            </div>
+
+            <!-- laptop (links completos) -->
+            <div id="laptop" class="laptop-wrapper">
+                <div class="laptop-screen">
+                    <div class="laptop-wallpaper" id="laptopWallpaper">
+                        <div style="flex:1;">
+                            <div class="logo-section"><span class="logo-main" id="laptopLogo">S.BLANCO</span><span class="logo-lab" id="laptopLogoSpan">lab</span></div>
+                            <img id="laptopImage" class="user-image" src="data:image/svg+xml,%3Csvg%3E%3Crect width='300' height='90' fill='%23344e5c'/%3E%3Ctext x='90' y='50' fill='%23fff'%3Eusuario%3C/text%3E%3C/svg%3E">
+                            <div style="display:flex; gap:5px; align-items:center; flex-wrap:wrap;">
+                                <span class="frase-destacada" id="laptopFrase">CREA SIN LÍMITES</span>
+                                <button class="btn-activar" id="laptopBoton">ACTIVAR</button>
+                            </div>
+                            <div class="nota-ia" id="laptopNota">foto con IA</div>
+
+                            <!-- Links completos laptop -->
+                            <div class="links-visor">
+                                <a href="#" class="link-text-block" id="laptopLinkIG"><i class="fab fa-instagram"></i><span class="link-url" id="laptopIGurl">instagram.com/s.blanco</span><i class="fas fa-external-link-alt"></i></a>
+                                <a href="#" class="link-text-block" id="laptopLinkFB"><i class="fab fa-facebook"></i><span class="link-url" id="laptopFBurl">facebook.com/s.blanco</span><i class="fas fa-external-link-alt"></i></a>
+                                <a href="#" class="link-text-block" id="laptopLinkTW"><i class="fab fa-twitter"></i><span class="link-url" id="laptopTWurl">twitter.com/s.blanco</span><i class="fas fa-external-link-alt"></i></a>
+                                <a href="#" class="link-text-block" id="laptopLinkYT"><i class="fab fa-youtube"></i><span class="link-url" id="laptopYTurl">youtube.com/@s.blanco</span><i class="fas fa-external-link-alt"></i></a>
+                                <a href="#" class="link-text-block" id="laptopLinkWEB"><i class="fas fa-globe"></i><span class="link-url" id="laptopWEBurl">sblanco.com</span><i class="fas fa-external-link-alt"></i></a>
+                            </div>
+
+                            <div class="badge-edicion" id="laptopBadge">EDICIÓN PREMIUM</div>
+                            <div class="descripcion" id="laptopDesc">Marketing con links completos · 2025</div>
+                        </div>
+                        <div style="flex:1;">
+                            <div style="display:flex; gap:10px; margin-bottom:8px;">
+                                <div class="qr-section"><div class="qr-code" id="laptopQR"></div><span class="qr-label">QR extra</span></div>
+                                <div class="metrics-grid">
+                                    <div class="metric-item"><span class="metric-number" id="laptopM1">2.8k</span><span class="metric-suffix" id="laptopS1">+22%</span><div class="metric-text" id="laptopT1">IMPACTOS</div></div>
+                                    <div class="metric-item"><span class="metric-number" id="laptopM2">94</span><span class="metric-suffix" id="laptopS2">%</span><div class="metric-text" id="laptopT2">IMÁGENES</div></div>
+                                    <div class="metric-item"><span class="metric-number" id="laptopM3">12</span><span class="metric-suffix" id="laptopS3">premios</span><div class="metric-text" id="laptopT3">PREMIOS</div></div>
+                                </div>
+                            </div>
+                            <div class="specs-row" id="laptopSpecs">
+                                <span class="spec-chip" id="laptopSpec1">ARR1 Alexa</span>
+                                <span class="spec-chip" id="laptopSpec2">LUTs custom</span>
+                                <span class="spec-chip" id="laptopSpec3">8K RAW</span>
+                            </div>
+                            <div class="apps-laptop" id="laptopApps"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="laptop-base"></div>
+            </div>
+
+            <button class="btn-download" id="downloadPNG"><i class="fas fa-camera"></i> DESCARGAR PNG</button>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script>
+(function(){
+    const appsData = [
+        { name:'TG', icon:'fab fa-telegram-plane', color:'#ffffff' },
+        { name:'FB', icon:'fab fa-facebook-f', color:'#ffffff' },
+        { name:'IG', icon:'fab fa-instagram', color:'#ffffff' },
+        { name:'Tw', icon:'fab fa-twitter', color:'#ffffff' },
+        { name:'Gmail', icon:'fab fa-google', color:'#ffffff' },
+        { name:'Chrome', icon:'fab fa-chrome', color:'#ffffff' },
+        { name:'SB', icon:'fas fa-hat-cowboy', color:'#ffffff' },
+        { name:'YT', icon:'fab fa-youtube', color:'#ffffff' }
+    ];
+
+    const upload = document.getElementById('upload');
+    const fileName = document.getElementById('fileName');
+    const uploadArea = document.getElementById('fileUploadArea');
+    const phoneImage = document.getElementById('phoneImage');
+    const laptopImage = document.getElementById('laptopImage');
+    const phoneDiv = document.getElementById('phone');
+    const laptopDiv = document.getElementById('laptop');
+    const btnPhone = document.getElementById('btnPhone');
+    const btnLaptop = document.getElementById('btnLaptop');
+    const appsGrid = document.getElementById('appsGrid');
+    const qrSelect = document.getElementById('qrUrlSelect');
+    const qrCustom = document.getElementById('qrCustomUrl');
+    const qrColor = document.getElementById('qrColor');
+    const qrBg = document.getElementById('qrBgColor');
+    const qrSize = document.getElementById('qrSize');
+    const qrP = document.getElementById('qrPequeno');
+    const qrM = document.getElementById('qrMediano');
+    const qrG = document.getElementById('qrGrande');
+    const fotoSize = document.getElementById('fotoSize');
+    const fotoP = document.getElementById('fotoPequena');
+    const fotoMed = document.getElementById('fotoMediana');
+    const fotoG = document.getElementById('fotoGrande');
+
+    let activeDevice = 'phone';
+
+    qrSelect.addEventListener('change', ()=>{
+        qrCustom.style.display = qrSelect.value === 'personalizado' ? 'block' : 'none';
+        generarQR();
+    });
+
+    function getQRUrl() {
+        const val = qrSelect.value;
+        if (val === 'personalizado') return qrCustom.value || 'https://sblanco.digital';
+        const map = {
+            instagram: document.getElementById('linkInstagram').value || 'https://instagram.com/s.blanco',
+            facebook: document.getElementById('linkFacebook').value || 'https://facebook.com/s.blanco',
+            twitter: document.getElementById('linkTwitter').value || 'https://twitter.com/s.blanco',
+            youtube: document.getElementById('linkYoutube').value || 'https://youtube.com/@s.blanco',
+            web: document.getElementById('linkWeb').value || 'https://sblanco.com',
+        };
+        return map[val] || 'https://sblanco.digital';
+    }
+
+    function generarQR() {
+        const url = getQRUrl();
+        const dark = qrColor.value;
+        const light = qrBg.value;
+        const size = parseInt(qrSize.value, 10);
+        ['phoneQR','laptopQR'].forEach(id => {
+            const container = document.getElementById(id);
+            container.innerHTML = '';
+            QRCode.toCanvas(url, { width:size, margin:1, color:{ dark, light } }, (err, canvas)=>{
+                if(err) { container.innerHTML = '⚠️'; return; }
+                canvas.style.width='100%'; canvas.style.height='100%';
+                container.appendChild(canvas);
+            });
+        });
+    }
+
+    function renderAppsPanel() {
+        appsGrid.innerHTML = '';
+        appsData.forEach((app,idx)=>{
+            const card = document.createElement('div');
+            card.className = 'app-card';
+            card.innerHTML = `<i class="${app.icon}" style="color:${app.color}"></i><div>${app.name}</div><input type="color" class="app-color" value="${app.color}" data-index="${idx}">`;
+            card.querySelector('.app-color').addEventListener('change', (e)=>{
+                appsData[idx].color = e.target.value;
+                renderAppsPanel();
+                renderDeviceApps();
+                actualizarPreview();
+            });
+            appsGrid.appendChild(card);
+        });
+    }
+
+    function renderDeviceApps() {
+        const phoneApps = document.getElementById('phoneApps');
+        const laptopApps = document.getElementById('laptopApps');
+        phoneApps.innerHTML = ''; laptopApps.innerHTML = '';
+        appsData.forEach(a=>{
+            let p = document.createElement('div'); p.className='app-phone-item'; p.innerHTML=`<i class="${a.icon}" style="color:${a.color}"></i><div>${a.name}</div>`; phoneApps.appendChild(p);
+            let l = document.createElement('div'); l.className='app-laptop-item'; l.innerHTML=`<i class="${a.icon}" style="color:${a.color}"></i><span>${a.name}</span>`; laptopApps.appendChild(l);
+        });
+    }
+
+    // Mostrar la URL completa sin cortes
+    function formatUrlForDisplay(url) {
+        if (!url) return '';
+        // Eliminar protocolo pero mostrar el resto completo
+        return url.replace(/^https?:\/\//, '').replace(/^www\./, '');
+    }
+
+    function actualizarPreview() {
+        const borde = document.getElementById('bordeColor').value;
+        const fondo = document.getElementById('fondoColor').value;
+        document.querySelectorAll('.phone-wallpaper, .laptop-wallpaper').forEach(el=>el.style.backgroundColor=fondo);
+        document.querySelectorAll('.btn-activar').forEach(el=>el.style.background=`linear-gradient(145deg, ${borde}, #70db84)`);
+        document.querySelectorAll('.logo-lab, .badge-edicion, .metric-number').forEach(el=>{el.style.background=borde; el.style.color='#023e1a';});
+        document.querySelectorAll('.frase-destacada, .nota-ia, .link-text-block i:first-child, .qr-label').forEach(el=>el.style.color=borde);
+        document.querySelectorAll('.link-text-block, .spec-chip, .metrics-grid, .qr-code, .app-phone-item, .app-laptop-item').forEach(el=>el.style.borderColor=borde);
+
+        // textos
+        document.getElementById('phoneLogo').innerText = document.getElementById('logo1').value;
+        document.getElementById('phoneLogoSpan').innerText = document.getElementById('logo2').value;
+        document.getElementById('phoneFrase').innerText = document.getElementById('frase').value;
+        document.getElementById('phoneBoton').innerText = document.getElementById('boton').value;
+        document.getElementById('phoneNota').innerText = document.getElementById('nota').value;
+        document.getElementById('phoneM1').innerText = document.getElementById('m1Valor').value;
+        document.getElementById('phoneS1').innerText = document.getElementById('m1Sufijo').value;
+        document.getElementById('phoneT1').innerText = document.getElementById('m1Texto').value;
+        document.getElementById('phoneM2').innerText = document.getElementById('m2Valor').value;
+        document.getElementById('phoneS2').innerText = document.getElementById('m2Sufijo').value;
+        document.getElementById('phoneT2').innerText = document.getElementById('m2Texto').value;
+        document.getElementById('phoneM3').innerText = document.getElementById('m3Valor').value;
+        document.getElementById('phoneS3').innerText = document.getElementById('m3Sufijo').value;
+        document.getElementById('phoneT3').innerText = document.getElementById('m3Texto').value;
+        document.getElementById('phoneBadge').innerText = document.getElementById('badge').value;
+        document.getElementById('phoneDesc').innerText = document.getElementById('descripcion').value;
+        document.getElementById('phoneSpec1').innerText = document.getElementById('spec1').value;
+        document.getElementById('phoneSpec2').innerText = document.getElementById('spec2').value;
+        document.getElementById('phoneSpec3').innerText = document.getElementById('spec3').value;
+
+        document.getElementById('laptopLogo').innerText = document.getElementById('logo1').value;
+        document.getElementById('laptopLogoSpan').innerText = document.getElementById('logo2').value;
+        document.getElementById('laptopFrase').innerText = document.getElementById('frase').value;
+        document.getElementById('laptopBoton').innerText = document.getElementById('boton').value;
+        document.getElementById('laptopNota').innerText = document.getElementById('nota').value;
+        document.getElementById('laptopBadge').innerText = document.getElementById('badge').value;
+        document.getElementById('laptopDesc').innerText = document.getElementById('descripcion').value;
+        document.getElementById('laptopM1').innerText = document.getElementById('m1Valor').value;
+        document.getElementById('laptopS1').innerText = document.getElementById('m1Sufijo').value;
+        document.getElementById('laptopT1').innerText = document.getElementById('m1Texto').value;
+        document.getElementById('laptopM2').innerText = document.getElementById('m2Valor').value;
+        document.getElementById('laptopS2').innerText = document.getElementById('m2Sufijo').value;
+        document.getElementById('laptopT2').innerText = document.getElementById('m2Texto').value;
+        document.getElementById('laptopM3').innerText = document.getElementById('m3Valor').value;
+        document.getElementById('laptopS3').innerText = document.getElementById('m3Sufijo').value;
+        document.getElementById('laptopT3').innerText = document.getElementById('m3Texto').value;
+        document.getElementById('laptopSpec1').innerText = document.getElementById('spec1').value;
+        document.getElementById('laptopSpec2').innerText = document.getElementById('spec2').value;
+        document.getElementById('laptopSpec3').innerText = document.getElementById('spec3').value;
+
+        // Obtener URLs
+        const ig = document.getElementById('linkInstagram').value;
+        const fb = document.getElementById('linkFacebook').value;
+        const tw = document.getElementById('linkTwitter').value;
+        const yt = document.getElementById('linkYoutube').value;
+        const web = document.getElementById('linkWeb').value;
+
+        // Asignar href y texto visible COMPLETO (sin cortes)
+        document.getElementById('phoneLinkIG').href = ig;
+        document.getElementById('phoneIGurl').innerText = formatUrlForDisplay(ig);
+        document.getElementById('phoneLinkFB').href = fb;
+        document.getElementById('phoneFBurl').innerText = formatUrlForDisplay(fb);
+        document.getElementById('phoneLinkTW').href = tw;
+        document.getElementById('phoneTWurl').innerText = formatUrlForDisplay(tw);
+        document.getElementById('phoneLinkYT').href = yt;
+        document.getElementById('phoneYTurl').innerText = formatUrlForDisplay(yt);
+        document.getElementById('phoneLinkWEB').href = web;
+        document.getElementById('phoneWEBurl').innerText = formatUrlForDisplay(web);
+
+        document.getElementById('laptopLinkIG').href = ig;
+        document.getElementById('laptopIGurl').innerText = formatUrlForDisplay(ig);
+        document.getElementById('laptopLinkFB').href = fb;
+        document.getElementById('laptopFBurl').innerText = formatUrlForDisplay(fb);
+        document.getElementById('laptopLinkTW').href = tw;
+        document.getElementById('laptopTWurl').innerText = formatUrlForDisplay(tw);
+        document.getElementById('laptopLinkYT').href = yt;
+        document.getElementById('laptopYTurl').innerText = formatUrlForDisplay(yt);
+        document.getElementById('laptopLinkWEB').href = web;
+        document.getElementById('laptopWEBurl').innerText = formatUrlForDisplay(web);
+
+        generarQR();
+    }
+
+    document.getElementById('updateBtn').addEventListener('click', actualizarPreview);
+
+    uploadArea.addEventListener('click', ()=>upload.click());
+    upload.addEventListener('change', function(e){
+        if(e.target.files[0]){
+            fileName.innerText = e.target.files[0].name;
+            const reader = new FileReader();
+            reader.onload = (ev)=> { phoneImage.src = ev.target.result; laptopImage.src = ev.target.result; };
+            reader.readAsDataURL(e.target.files[0]);
+        }
+    });
+
+    function setFotoSize(v){ fotoSize.value = v; phoneImage.style.height = v+'px'; laptopImage.style.height = v+'px'; }
+    fotoSize.addEventListener('input', ()=>setFotoSize(fotoSize.value));
+    fotoP.addEventListener('click', ()=>setFotoSize(55));
+    fotoMed.addEventListener('click', ()=>setFotoSize(85));
+    fotoG.addEventListener('click', ()=>setFotoSize(120));
+
+    function setQrSize(v){ qrSize.value = v; generarQR(); }
+    qrSize.addEventListener('input', ()=>setQrSize(qrSize.value));
+    qrP.addEventListener('click', ()=>setQrSize(55));
+    qrM.addEventListener('click', ()=>setQrSize(80));
+    qrG.addEventListener('click', ()=>setQrSize(100));
+
+    qrColor.addEventListener('input', generarQR);
+    qrBg.addEventListener('input', generarQR);
+
+    function setDevice(dev){
+        activeDevice = dev;
+        if(dev==='phone'){ phoneDiv.classList.add('show-flex'); laptopDiv.classList.remove('show-flex'); btnPhone.classList.add('active'); btnLaptop.classList.remove('active'); }
+        else { laptopDiv.classList.add('show-flex'); phoneDiv.classList.remove('show-flex'); btnLaptop.classList.add('active'); btnPhone.classList.remove('active'); }
+    }
+    btnPhone.onclick = ()=>setDevice('phone');
+    btnLaptop.onclick = ()=>setDevice('laptop');
+
+    document.getElementById('downloadPNG').addEventListener('click', async()=>{
+        const el = activeDevice==='phone'? phoneDiv : laptopDiv;
+        el.classList.add('show-flex');
+        await new Promise(r=>setTimeout(r,200));
+        html2canvas(el, { scale:1.6, backgroundColor:null, useCORS:true }).then(canvas=>{
+            const a = document.createElement('a');
+            a.download = `sblanco-${activeDevice}.png`;
+            a.href = canvas.toDataURL('image/png');
+            a.click();
+        });
+    });
+
+    ['linkInstagram','linkFacebook','linkTwitter','linkYoutube','linkWeb'].forEach(id=>{
+        document.getElementById(id)?.addEventListener('input', actualizarPreview);
+    });
+    qrCustom.addEventListener('input', generarQR);
+
+    renderAppsPanel();
+    renderDeviceApps();
+    setDevice('phone');
+    setFotoSize(85);
+    setQrSize(80);
+    actualizarPreview();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1163 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Reflexiones de Fede B - Investigación Completa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+    /* 🚀 Estilos de Nivel Profesional (v5.0 Mejorado) */
+
+    /* ----------------------- 1. Variables Globales y Resets ----------------------- */
+    :root {
+        /* Paleta: Colores claros para mejor visibilidad */
+        --bg-primary: #ffffff;
+        --bg-secondary: #f8f9fa;
+        --surface-color: rgba(255, 255, 255, 0.98);
+        
+        --text-primary: #222222;
+        --text-secondary: #555555;
+        --text-muted: #777777;
+        
+        --accent-main: #20b2aa;
+        --accent-light: #52e1d7;
+        --accent-dark: #1a8c86;
+        --accent-glow: rgba(32, 178, 170, 0.15);
+        
+        /* Colores para la tabla */
+        --delito-grave: #ff4444;
+        --delito-grave-bg: #fff5f5;
+        --delito-medio: #ffaa00;
+        --delito-medio-bg: #fffaf0;
+        --delito-leve: #44aaff;
+        --delito-leve-bg: #f0f8ff;
+        --delito-especial: #aa44ff;
+        --delito-especial-bg: #f9f0ff;
+        --sin-denuncia: #e9ecef;
+        
+        /* Gradientes */
+        --gradient-primary: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+        --gradient-accent: linear-gradient(135deg, var(--accent-main) 0%, var(--accent-light) 100%);
+        
+        /* Sombras y efectos */
+        --shadow-elevation: 0 10px 30px rgba(0, 0, 0, 0.1);
+        --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.15);
+        --shadow-accent: 0 0 20px var(--accent-glow);
+        
+        --border-radius-lg: 20px;
+        --border-radius-xl: 40px;
+        
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-size: 16px;
+        line-height: 1.65;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Reset moderno */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    /* ----------------------- 2. Estructura y Layout ----------------------- */
+    body {
+        margin: 0;
+        background: linear-gradient(135deg, 
+            #f7e9d7 0%, 
+            #f3d4c0 50%, 
+            #e8c4ab 100%);
+        color: #2b2b2b;
+        padding: 40px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        overflow-x: hidden;
+        position: relative;
+        
+   border-radius: 10px;
+  max-width: 900px;
+  margin: 90px auto;
+    }
+
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: 
+            radial-gradient(circle at 20% 80%, rgba(32, 178, 170, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 80% 20%, rgba(82, 225, 215, 0.05) 0%, transparent 50%);
+        pointer-events: none;
+        z-index: -1;
+    }
+
+    .main-container {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        width: 100%;
+        max-width: 1200px;
+    }
+
+    .wrap {
+        width: 100%;
+        background: var(--surface-color);
+        border-radius: var(--border-radius-xl);
+        padding: 60px;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        box-shadow: var(--shadow-elevation);
+        backdrop-filter: blur(10px) saturate(180%);
+        -webkit-backdrop-filter: blur(10px) saturate(180%);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .wrap::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, 
+            transparent, 
+            var(--accent-main), 
+            transparent);
+        opacity: 0.5;
+    }
+
+    .wrap:hover {
+        box-shadow: var(--shadow-hover), var(--shadow-accent);
+        transform: translateY(-5px);
+    }
+
+    /* ----------------------- 3. Encabezado y Componentes ----------------------- */
+    header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 60px;
+        padding-bottom: 35px;
+        position: relative;
+    }
+
+    header::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background: linear-gradient(90deg, 
+            transparent, 
+            rgba(32, 178, 170, 0.3), 
+            transparent);
+    }
+
+    .brand {
+        display: flex;
+        align-items: center;
+        gap: 28px;
+    }
+
+    .badge {
+        width: 90px;
+        height: 90px;
+        background: var(--gradient-accent);
+        border-radius: var(--border-radius-lg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 900;
+        color: white;
+        font-size: 32px;
+        box-shadow: var(--shadow-accent);
+        transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .badge::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+            transparent,
+            rgba(255, 255, 255, 0.1),
+            transparent
+        );
+        transform: rotate(45deg);
+        transition: transform 0.6s;
+    }
+
+    .badge:hover {
+        transform: scale(1.1) rotate(5deg);
+        box-shadow: 0 0 50px rgba(82, 225, 215, 0.4);
+    }
+
+    .badge:hover::before {
+        transform: rotate(45deg) translate(20%, 20%);
+    }
+
+    h1 {
+        margin: 0;
+        font-size: 3rem;
+        color: var(--text-primary);
+        font-weight: 900;
+        letter-spacing: -0.03em;
+        line-height: 1.1;
+        background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-main) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .author-info {
+        font-size: 1.4rem;
+        color: var(--text-secondary);
+        margin-top: 12px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .author-info::before {
+        content: '👤';
+        opacity: 0.7;
+    }
+
+    /* ----------------------- 4. Tarjeta y Artículo ----------------------- */
+    .card {
+        background: var(--gradient-primary);
+        padding: 50px;
+        border-radius: var(--border-radius-lg);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        box-shadow: 
+            inset 0 1px 0 rgba(255, 255, 255, 0.1),
+            0 8px 32px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, 
+            transparent, 
+            rgba(0, 0, 0, 0.1), 
+            transparent);
+    }
+
+    article {
+        line-height: 1.9;
+        font-size: 1.15rem;
+        color: var(--text-primary);
+        text-align: justify;
+        hyphens: auto;
+        font-feature-settings: "kern", "liga", "clig", "calt";
+    }
+
+    article p {
+        margin-bottom: 30px;
+        text-indent: 2em;
+        position: relative;
+    }
+
+    article p:first-child {
+        text-indent: 0;
+        font-size: 1.25rem;
+        line-height: 1.8;
+        color: var(--text-secondary);
+    }
+
+    article p:first-child::first-letter {
+        font-size: 3em;
+        font-weight: 900;
+        float: left;
+        line-height: 1;
+        margin-right: 10px;
+        background: var(--gradient-accent);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    article strong {
+        color: var(--accent-main);
+        font-weight: 700;
+        padding: 0 2px;
+        transition: all 0.3s ease;
+    }
+
+    article strong:hover {
+        text-shadow: 0 0 10px var(--accent-glow);
+    }
+
+    /* Lista de Delitos */
+    article ul {
+        list-style: none;
+        padding-left: 0;
+        margin: 40px 0;
+        border-left: 4px solid var(--accent-main);
+        padding-left: 30px;
+        background: rgba(32, 178, 170, 0.05);
+        padding: 25px 30px;
+        border-radius: var(--border-radius-lg);
+        position: relative;
+    }
+
+    article ul::before {
+        content: '⚖️';
+        position: absolute;
+        top: -15px;
+        left: -15px;
+        font-size: 24px;
+        background: var(--bg-primary);
+        padding: 5px;
+        border-radius: 50%;
+        border: 2px solid var(--accent-main);
+    }
+
+    article ul li {
+        margin-bottom: 16px;
+        color: var(--text-primary);
+        font-style: italic;
+        font-size: 1.1rem;
+        position: relative;
+        padding-left: 10px;
+        transition: all 0.3s ease;
+    }
+
+    article ul li:hover {
+        color: var(--accent-main);
+        transform: translateX(5px);
+    }
+
+    article ul li::before {
+        content: '→';
+        color: var(--accent-main);
+        font-weight: bold;
+        display: inline-block;
+        width: 1em;
+        margin-left: -1.5em;
+        font-size: 1.2em;
+        transition: transform 0.3s ease;
+    }
+
+    article ul li:hover::before {
+        transform: translateX(5px);
+    }
+
+    /* ----------------------- 5. Tabla de Delitos Mejorada ----------------------- */
+    .container {
+        width: 100%;
+        background: var(--surface-color);
+        border-radius: var(--border-radius-xl);
+        padding: 50px;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        box-shadow: var(--shadow-elevation);
+        backdrop-filter: blur(10px) saturate(180%);
+        -webkit-backdrop-filter: blur(10px) saturate(180%);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .container:hover {
+        box-shadow: var(--shadow-hover), var(--shadow-accent);
+        transform: translateY(-5px);
+    }
+
+    .container header {
+        text-align: center;
+        margin-bottom: 40px;
+        padding-bottom: 30px;
+        border-bottom: 2px solid var(--accent-main);
+    }
+
+    .container h2 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        color: var(--text-primary);
+        font-weight: 800;
+        letter-spacing: -0.02em;
+    }
+
+    .acusado-info {
+        background: var(--accent-dark);
+        color: white;
+        padding: 15px 25px;
+        border-radius: 12px;
+        display: inline-block;
+        margin-top: 10px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        box-shadow: 0 4px 12px rgba(26, 140, 134, 0.3);
+        transition: all 0.3s ease;
+    }
+
+    .acusado-info:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 18px rgba(26, 140, 134, 0.4);
+    }
+
+    .delitos-container {
+        margin-top: 30px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        background: white;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    th {
+        background: linear-gradient(135deg, var(--accent-main) 0%, var(--accent-dark) 100%);
+        color: white;
+        padding: 22px 20px;
+        text-align: left;
+        font-size: 1.15rem;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        position: relative;
+        overflow: hidden;
+    }
+
+    th::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: rgba(255, 255, 255, 0.3);
+    }
+
+    th:first-child {
+        width: 80px;
+        text-align: center;
+    }
+
+    td {
+        padding: 20px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        vertical-align: top;
+        transition: all 0.3s ease;
+    }
+
+    .numero-delito {
+        background: var(--accent-dark);
+        color: white;
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 1.1rem;
+        margin: 0 auto;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .descripcion-delito {
+        display: block;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        color: var(--text-primary);
+    }
+
+    /* Categorías de delitos con colores distintivos */
+    .delito-grave { 
+        border-left: 6px solid var(--delito-grave);
+        background: var(--delito-grave-bg);
+    }
+    
+    .delito-medio { 
+        border-left: 6px solid var(--delito-medio);
+        background: var(--delito-medio-bg);
+    }
+    
+    .delito-leve { 
+        border-left: 6px solid var(--delito-leve);
+        background: var(--delito-leve-bg);
+    }
+    
+    .delito-especial { 
+        border-left: 6px solid var(--delito-especial);
+        background: var(--delito-especial-bg);
+    }
+
+    .sin-denuncia {
+        background: var(--sin-denuncia);
+        font-style: italic;
+        color: var(--text-muted);
+        border-left: 6px solid #adb5bd;
+    }
+
+    tr:hover {
+        background: rgba(32, 178, 170, 0.05);
+        transform: translateX(5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    tr:hover .numero-delito {
+        transform: scale(1.1);
+        background: var(--accent-main);
+    }
+
+    /* Leyenda de colores */
+    .leyenda-colores {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        margin-top: 30px;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 12px;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .color-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+    }
+
+    .color-box {
+        width: 20px;
+        height: 20px;
+        border-radius: 4px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .grave-color { background: var(--delito-grave-bg); border-left: 4px solid var(--delito-grave); }
+    .medio-color { background: var(--delito-medio-bg); border-left: 4px solid var(--delito-medio); }
+    .leve-color { background: var(--delito-leve-bg); border-left: 4px solid var(--delito-leve); }
+    .especial-color { background: var(--delito-especial-bg); border-left: 4px solid var(--delito-especial); }
+    .sin-color { background: var(--sin-denuncia); border-left: 4px solid #adb5bd; }
+
+    /* ----------------------- 6. Botones y Enlaces ----------------------- */
+    .volver {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 28px;
+        background: var(--accent-main);
+        color: white;
+        text-decoration: none;
+        font-size: 1.1rem;
+        font-weight: 700;
+        border-radius: 12px;
+        border: 2px solid var(--accent-main);
+        transition: all 0.3s ease;
+        margin-bottom: 40px;
+        box-shadow: 0 4px 12px rgba(32, 178, 170, 0.3);
+    }
+
+    .volver:hover {
+        background: white;
+        color: var(--accent-main);
+        border-color: var(--accent-main);
+        box-shadow: 0 6px 18px rgba(32, 178, 170, 0.4);
+        transform: translateY(-3px);
+    }
+
+    .volver:active {
+        transform: translateY(0);
+    }
+
+    .link-detalle {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background-color: #222;
+        color: #fff;
+        padding: 16px 30px;
+        text-decoration: none;
+        border: 3px solid #ff4444;
+        font-weight: 800;
+        text-align: center;
+        border-radius: 12px;
+        margin-top: 30px;
+        transition: all 0.3s ease;
+        font-size: 1.1rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .link-detalle:hover {
+        background-color: #ff4444;
+        border-color: #222;
+        color: #fff;
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(255, 68, 68, 0.3);
+    }
+
+    .link-detalle:active {
+        transform: translateY(0);
+    }
+
+    /* ----------------------- 7. Pie de Página ----------------------- */
+    footer {
+        text-align: center;
+        margin-top: 80px;
+        padding-top: 40px;
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        position: relative;
+        width: 100%;
+        max-width: 1200px;
+    }
+
+    footer::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 200px;
+        height: 1px;
+        background: linear-gradient(90deg, 
+            transparent, 
+            rgba(0, 0, 0, 0.1), 
+            transparent);
+    }
+
+    /* ----------------------- 8. Efectos de Scroll ----------------------- */
+    @media (prefers-reduced-motion: no-preference) {
+        .wrap, .container, .card, article p, article ul li, table tr {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .wrap.visible, .container.visible, .card.visible, article p.visible, article ul li.visible, table tr.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* ----------------------- 9. Animaciones Suaves ----------------------- */
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+    }
+
+    .badge {
+        animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    /* ----------------------- 10. Media Queries Mejoradas ----------------------- */
+    @media (max-width: 1200px) {
+        .main-container {
+            max-width: 95%;
+        }
+        
+        .wrap, .container {
+            padding: 50px;
+        }
+    }
+
+    @media (max-width: 992px) {
+        body {
+            padding: 30px 15px;
+        }
+        
+        .wrap, .container {
+            padding: 40px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+        }
+        
+        .container h2 {
+            font-size: 2rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .wrap, .container {
+            padding: 30px 25px;
+            border-radius: 30px;
+        }
+
+        header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .brand {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .badge {
+            width: 70px;
+            height: 70px;
+            font-size: 28px;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+        }
+        
+        .container h2 {
+            font-size: 1.8rem;
+        }
+
+        .card {
+            padding: 30px 25px;
+        }
+
+        article {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            text-align: left;
+            hyphens: none;
+        }
+
+        article p {
+            text-indent: 1.5em;
+            margin-bottom: 25px;
+        }
+
+        article ul {
+            padding: 20px;
+            margin-left: -10px;
+        }
+
+        article ul li {
+            font-size: 1rem;
+        }
+        
+        th, td {
+            padding: 15px 12px;
+        }
+        
+        .descripcion-delito {
+            font-size: 1rem;
+        }
+        
+        .volver, .link-detalle {
+            padding: 12px 20px;
+            font-size: 1rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .wrap, .container {
+            padding: 25px 20px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+        }
+        
+        .container h2 {
+            font-size: 1.6rem;
+        }
+
+        .card {
+            padding: 25px 20px;
+        }
+
+        article p:first-child::first-letter {
+            font-size: 2.2em;
+        }
+        
+        table {
+            display: block;
+            overflow-x: auto;
+        }
+        
+        th:first-child {
+            width: 60px;
+        }
+        
+        .leyenda-colores {
+            flex-direction: column;
+            gap: 10px;
+        }
+    }
+
+    /* ----------------------- 11. Mejoras de Accesibilidad ----------------------- */
+    @media (prefers-reduced-motion: reduce) {
+        * {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+        }
+        
+        .badge {
+            animation: none;
+        }
+    }
+
+    :focus-visible {
+        outline: 3px solid var(--accent-main);
+        outline-offset: 4px;
+        border-radius: 6px;
+    }
+
+    /* Indicador de carga */
+    .loading-indicator {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, var(--accent-main), transparent);
+        z-index: 9999;
+        animation: loading 1.5s infinite;
+        display: none;
+    }
+
+    @keyframes loading {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(100%); }
+    }
+   
+
+.badge {
+  width: 150px;               /* tamaño del marco un poco más grande */
+  height: 150px;
+  border-radius: 16px;        /* bordes redondeados */
+  padding: 6px;               /* espacio entre borde y foto */
+  background: linear-gradient(135deg, #4facfe, #00f2fe); /* marco degradado */
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3); /* sombra para resaltar */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;           /* corta la foto que sobresalga */
+  transition: transform 0.3s;
+}
+
+.badge img {
+  width: 100%;                /* la imagen ocupa todo el marco */
+  height: 100%;
+  border-radius: 12px;        /* bordes sutiles de la foto */
+  object-fit: cover;          /* cubre todo el marco sin deformarse */
+  border: 2px solid white;    /* borde interno para destacar */
+  transition: transform 0.3s;
+}
+
+/* efecto hover para dinamismo */
+.badge:hover {
+  transform: scale(1.05);
+}
+
+.badge:hover img {
+  transform: scale(1.08);     /* aumenta un poco más la foto al pasar el mouse */
+}
+
+
+</style>
+</head>
+<body>
+<!-- Indicador de carga -->
+<div class="loading-indicator" id="loadingIndicator"></div>
+
+<!-- Botón volver -->
+<a href="declaracionvictima.html" class="volver">
+  <i class="fas fa-arrow-left"></i> Volver atrás
+</a>
+
+<!-- Contenedor principal -->
+<div class="main-container">
+  <!-- Primera sección: Reflexiones -->
+  <div class="wrap">
+    <header>
+      <!-- Foto clickeable -->
+      <div class="brand">
+        <a href="paisajefotovictima.jpg" target="_blank">
+          <div class="badge">
+            <img src="paisajefotovictima.jpg" alt="Foto de la víctima">
+          </div>
+        </a>
+      </div>
+
+      <!-- Texto de historia y autor -->
+      <div class="text-content">
+        <h2>
+        Historia de nuestra Escuela Secundaria: la verdad siempre hay que ser sincero.
+        </h2>
+        <div class="author-info">
+         Relator de la Verdad: Me dicen el Sombrero Blanco, porque decir la verdad es justo; nadie me va a tapar, nadie va a silenciar mi voz, nadie va a callarme.
+        </div>
+      </div>
+    </header>
+  </div>
+</div>
+
+         
+            <main>
+                <section class="card" id="contentCard">
+                    <article id="texto">
+                        <p>
+                      El respeto de la sexualidad y me encanta amar a las mujeres: soy heterosexual. Entiendo que cada persona tiene derecho a vivir y expresar quién es, y por eso acompaño la libertad de expresión con solidaridad y respeto.      
+                   </p>
+                        <p>
+                  
+Cuando uno pasa mucho tiempo con el celular, el móvil o la notebook, es importante detenerse a leer, a aprender sobre el verdadero objetivo de la vida. Pero yo busco un espacio donde no esté rodeado de distracciones, un lugar donde pueda darme un respiro, una pausa para la relajación, porque eso también es parte de vivir. 
+          
+                   </p>
+
+                        <p>
+En el gimnasio aprendo la paciencia, la constancia y la paz interior. Es un recordatorio de que la vida se construye en momentos simples, en la dedicación, en la disciplina y en la capacidad de encontrar tranquilidad.
+
+ </p>
+                        <p>
+                  Sobre algunas experiencias. Está muy bueno no tener ciertos compañeros de la escuela secundaria que solo les importaba ir al boliche y la cerveza. Tenía evidencia que los hombre  buscaban sexo con las mujeres todos los días. Esto no es simplemente estupidez o tontería; muestra que había hombres con problemas en su cabeza y en su mentalidad, que solo buscaban sexo sin amor y no estaba enamorado de ellas. Me di cuenta de que usaban a las mujeres, tratándolas casi como si fueran objetos, lo cual estaba muy mal. Es importante reflexionar sobre eso: en esos momentos, como si fueran esclavas de sus deseos.           
+                  </p>
+                        <p>
+Mi compañero: primer delito, abuso sexual; segundo delito, hostigamientos, que es algo psicológico y verbal. Esto, es decir, cuando un hombre amenaza a otro hombre de entregar su carpeta para que el lo copie hay lo entregaba a sus profesoras eso sería un delito hostigamiento. También es delito violencia psicológica, amenazas y ciberacoso (bullying digital), insultaba y bardeaba todos los días a propósito, usando la manipulación para obligar al hombre víctima que era el sombrero blanco.
+Ya que nadie no lo denunciaba, pero si alguien lo denunciaba y había justicia, iba a la cárcel, aproximadamente entre 9 y 10 años, compañero de la escuela secundaria. No es ninguna tontería, boludez ni inmadurez; es la verdad sincera.
+
+
+                  </p>
+                        <p>
+               Una persona madura es aquella que dice la verdad sinceramente, que puede mostrar con orgullo lo que ha dicho y sabe que nadie la puede cambiar por haber sido sincera. Contar la verdad implica tener libertad de expresión y actuar con honestidad sobre uno mismo. 
+                
+                
+                        </p>
+                        <p>
+                Los profesores y profesoras que nunca se enteraron de ese tema porque no lo veían desde la misma perspectiva. Muchas veces incluso terminaban defendiendo a esos compañeros. Lo que quiero decir es que aquellos docentes creían que esa persona tenía una buena mentalidad.
+                
+                        </p>
+                        <p>
+                  Los profesores explicaban que en la escuela no había conductas agresivas ni violencia hacia las mujeres, pero en su casa o en otros espacios ese compañero tenía actitudes como bullying al compañero que se llama el sombrero blanco.
+Soy el autor, me llamo Sombrero Blanco y asistí a la escuela secundaria. Fui un profesional del análisis inteligente, sin recurrir jamás a la violencia verbal ni física contra los manipuladores y acusadores. Decir la verdad no es buscar problemas, es romper el silencio. Nadie me va a sobornar, porque eso no es plata ni dinero, y no es justicia que los jueces o juezas se aprovechen de la verdad que dije. La verdadera felicidad está en decir la verdad sinceramente. No voy a contactar a ningún abogado o abogada, porque no me importa el dinero por esa situación no lo denuncie. 
+ Había una compañera que hacía la defensa de la víctima sombrero blanco, pero el sombrero blanco se daba cuenta de que todo eso era un juego de los manipuladores. Es decir, no funcionaba muy bien, porque cuando el sombrero blanco era muy inteligente, detectaba todos sus movimientos. Esa compañera, en realidad, defendía más a los manipuladores que a la víctima, que es el sombrero blanco.
+
+                  
+                        </p>
+                        <p>
+ Después del quinto año cambié mi SIM para evitar que alguien viniera a decirme algo. Sé que conocen mi casa, pero lo que digan nunca podrá cambiar quién soy.  Fui la historia de la vida sincero de mi propia vida y siempre seré fiel a mi ser. Sé por qué me dicen el Sombrero Blanco porque soy una persona que no se oculta, que es sincero y que no se deja llevar por discusiones sin sentido. 
+
+                  </p>
+                        <p>
+                 
+Nunca seré esclavo de nadie, y defiendo mi derecho a la libertad de expresión, a decir la verdad y aclarar lo que es real.
+Fui víctima de delitos en el ámbito digital, donde recibí insultos y agresiones verbales constantes. Mi nombre es el sombrero blanco . y también fui víctima de amenazas verbales durante mi etapa en la escuela secundaria, lo que constituye bullying escolar, ya que no se me permitía expresarme libremente y se vulneraba mi derecho a la libertad de expresión.
+
+                 
+                        </p>
+                        <p> 
+¿Cómo es la víctima?
+
+Soy una persona libre para expresarme, con convicciones claras y profundo respeto por mi identidad. Me mantengo fiel a mis valores y principios en todo momento. Cuando detecto una amenaza, la analizo cuidadosamente antes de actuar y doy una respuesta basada en seguridad, estrategia e inteligencia. Mi silencio también refleja esa inteligencia, ya que sé que callar puede ser una forma poderosa de protegerme y defenderme.
+  </p>
+
+                    
+                    </article>
+                </section>
+            </main>
+        </div>
+
+ 
+     
+    </div>
+
+<script>
+// =======================
+// ANIMACIONES Y FUNCIONALIDADES
+// =======================
+document.addEventListener('DOMContentLoaded', function() {
+    // Mostrar indicador de carga
+    const loadingIndicator = document.getElementById('loadingIndicator');
+    loadingIndicator.style.display = 'block';
+    
+    // Ocultar indicador después de cargar
+    window.addEventListener('load', function() {
+        setTimeout(() => {
+            loadingIndicator.style.display = 'none';
+        }, 500);
+    });
+
+    // Configurar observador de intersección para animaciones
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                
+                // Animación especial para las filas de la tabla
+                if (entry.target.tagName === 'TR') {
+                    setTimeout(() => {
+                        entry.target.style.animation = 'fadeIn 0.6s ease forwards';
+                    }, 100);
+                }
+            }
+        });
+    }, observerOptions);
+
+    // Observar elementos para animaciones
+    document.querySelectorAll('.wrap, .container, .card, article p, article ul li, table tr').forEach(el => {
+        observer.observe(el);
+    });
+
+    // Hacer que las filas de la tabla sean interactivas
+    document.querySelectorAll(".delitos-container tbody tr").forEach((fila, index) => {
+        // Retraso escalonado para la animación inicial
+        setTimeout(() => {
+            fila.style.opacity = '1';
+            fila.style.transform = 'translateY(0)';
+        }, index * 100);
+        
+        fila.addEventListener("mouseenter", function() {
+            this.style.transform = "translateX(8px)";
+            this.style.boxShadow = "0 8px 20px rgba(0, 0, 0, 0.1)";
+            this.style.zIndex = "10";
+        });
+        
+        fila.addEventListener("mouseleave", function() {
+            this.style.transform = "translateX(0)";
+            this.style.boxShadow = "0 5px 15px rgba(0, 0, 0, 0.05)";
+            this.style.zIndex = "1";
+        });
+        
+        // Click en fila para resaltar
+        fila.addEventListener("click", function() {
+            document.querySelectorAll(".delitos-container tbody tr").forEach(r => {
+                r.style.backgroundColor = "";
+            });
+            this.style.backgroundColor = "rgba(32, 178, 170, 0.1)";
+        });
+    });
+
+    // Animación para el botón de volver
+    const volverBtn = document.querySelector('.volver');
+    if (volverBtn) {
+        volverBtn.addEventListener('mouseenter', () => {
+            volverBtn.style.transform = 'translateY(-3px)';
+        });
+        
+        volverBtn.addEventListener('mouseleave', () => {
+            volverBtn.style.transform = 'translateY(0)';
+        });
+    }
+
+    // Animación para el enlace de detalle
+    const detalleLink = document.querySelector('.link-detalle');
+    if (detalleLink) {
+        detalleLink.addEventListener('mouseenter', () => {
+            detalleLink.style.transform = 'translateY(-3px)';
+        });
+        
+        detalleLink.addEventListener('mouseleave', () => {
+            detalleLink.style.transform = 'translateY(0)';
+        });
+    }
+
+    // Efecto de parpadeo para información confidencial
+    const confidencialInfo = document.querySelector('.acusado-info');
+    if (confidencialInfo) {
+        setInterval(() => {
+            confidencialInfo.style.boxShadow = '0 4px 12px rgba(26, 140, 134, 0.4)';
+            setTimeout(() => {
+                confidencialInfo.style.boxShadow = '0 4px 12px rgba(26, 140, 134, 0.3)';
+            }, 500);
+        }, 3000);
+    }
+
+    // Contador de delitos
+    const delitosCount = document.querySelectorAll('.delitos-container tbody tr:not(.sin-denuncia)').length;
+    const delitosTitle = document.querySelector('.container h2');
+    if (delitosTitle) {
+        delitosTitle.innerHTML = `Tabla de Delitos Identificados <span style="font-size: 1.2rem; background: #ff4444; color: white; padding: 2px 10px; border-radius: 20px; margin-left: 10px;">${delitosCount} delitos</span>`;
+    }
+
+    console.log("Página cargada correctamente ✔");
+    console.log(`Delitos identificados: ${delitosCount}`);
+});
+
+// Efecto de escritura para el primer párrafo
+window.addEventListener('load', function() {
+    const firstParagraph = document.querySelector('article p:first-child');
+    if (firstParagraph) {
+        const originalText = firstParagraph.textContent;
+        firstParagraph.textContent = '';
+        
+        let i = 0;
+        const typeWriter = () => {
+            if (i < originalText.length) {
+                firstParagraph.textContent += originalText.charAt(i);
+                i++;
+                setTimeout(typeWriter, 20);
+            }
+        };
+        
+        // Iniciar efecto después de un breve retraso
+        setTimeout(typeWriter, 1000);
+    }
+});
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const audio = new Audio('musicaverdad.mp3');
+    audio.loop = true;
+    audio.volume = 0.7; // Ajusta volumen 0.0 a 1.0
+
+    function iniciarMusica() {
+        audio.play().catch(() => console.log("Reproducción bloqueada por el navegador."));
+        document.removeEventListener('click', iniciarMusica);
+        document.removeEventListener('touchstart', iniciarMusica);
+    }
+
+    // Primer clic o toque inicia la música
+    document.addEventListener('click', iniciarMusica);
+    document.addEventListener('touchstart', iniciarMusica);
+});
+
+
+
+
+
+
+
+
+
+</script>
+
+</body>
+</html>

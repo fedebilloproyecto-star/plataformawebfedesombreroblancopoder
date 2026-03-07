@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mensaje sobre el conocimiento</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+                border-radius: 10px;
+  max-width: 900px;
+  margin: 90px auto;
+        }
+        
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            border: 4px solid #ff5722;
+            position: relative;
+        }
+        
+        .container::before {
+            content: "";
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
+            border: 2px solid #2196f3;
+            border-radius: 16px;
+            pointer-events: none;
+        }
+        
+        .message-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .message-table td {
+            padding: 25px;
+            border-bottom: 2px solid #eaeaea;
+            position: relative;
+        }
+        
+        .message-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .message-table tr:nth-child(odd) {
+            background-color: #f8f9fa;
+        }
+        
+        .message-table tr:nth-child(even) {
+            background-color: #e3f2fd;
+        }
+        
+        .message-table tr:hover {
+            background-color: #fff8e1;
+            transition: background-color 0.3s ease;
+        }
+        
+        p {
+            font-size: 18px;
+            text-align: justify;
+            color: #1a237e;
+            line-height: 1.8;
+            font-weight: 500;
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, #ffeb3b 0%, #ffeb3b 100%);
+            background-repeat: no-repeat;
+            background-size: 100% 0.3em;
+            background-position: 0 88%;
+            transition: background-size 0.25s ease-in;
+        }
+        
+        .highlight:hover {
+            background-size: 100% 88%;
+        }
+        
+        .corner-decoration {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+        }
+        
+        .top-left {
+            top: 10px;
+            left: 10px;
+            border-top: 3px solid #ff5722;
+            border-left: 3px solid #ff5722;
+        }
+        
+        .top-right {
+            top: 10px;
+            right: 10px;
+            border-top: 3px solid #ff5722;
+            border-right: 3px solid #ff5722;
+        }
+        
+        .bottom-left {
+            bottom: 10px;
+            left: 10px;
+            border-bottom: 3px solid #ff5722;
+            border-left: 3px solid #ff5722;
+        }
+        
+        .bottom-right {
+            bottom: 10px;
+            right: 10px;
+            border-bottom: 3px solid #ff5722;
+            border-right: 3px solid #ff5722;
+        }
+        
+        .title {
+            text-align: center;
+            padding: 15px;
+            background: linear-gradient(to right, #ff5722, #2196f3);
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+/* Solo estilos para el botón "Volver atrás" */
+.back-button {
+  display: inline-block;
+  padding: 10px 18px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 2px solid #333;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  user-select: none;
+}
+
+/* Efecto al pasar el ratón */
+.back-button:hover,
+.back-button:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+  text-decoration: none;
+  outline: none;
+}
+
+/* Efecto al hacer clic */
+.back-button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title"> Nuevos conocimientos empresariales de la verdad y diversas areas sobre impacto tecnologica</div>
+         <a href="reflexionvidaverdad.html" class="back-button" aria-label="Volver atrás">Volver atrás</a>
+        <table class="message-table">
+            <tr><td>
+                <div class="corner-decoration top-left"></div>
+                <div class="corner-decoration top-right"></div>
+                <div class="corner-decoration bottom-left"></div>
+                <div class="corner-decoration bottom-right"></div>
+                <p>
+Cuando vas a la facultad, a cursos o aprendes programación, debes saber todo sobre la estructura de la web o del software. Además, tienes que reconocer qué procedimientos son legales y cuáles son ilegales. Pero uno dice la verdad porque las personas, tanto mujeres como hombres adultos, quieren saber la verdad. Sin embargo, a algunas personas les da risa en su cabeza porque les encanta escuchar a los demás hablar y pensar que todo son chismes sin fundamentos. Eso significa que no tienen un buen conocimiento. Hay personas que, al enterarse, se enojan o se enfadan.
+                </p>
+                <h4>
+                    Cómo se fundó Google Chrome
+                </h4>
+                <p>
+                    Google Chrome se fundó en Estados Unidos. Fue creado por un grupo de personas con sólidos conocimientos tecnológicos y de programación. Gracias a esta experiencia, desarrollaron tanto el software como el sitio web que conocemos como Google Chrome. La empresa tiene un marco legal que le permite gestionar los datos de navegación de los usuarios, aunque la información sobre la historia de estos suele estar oculta. Sin embargo, aquellos usuarios con conocimientos en programación pueden rastrear ciertos datos personales dispersos por la web. A pesar de esto, todos esos enlaces permanecen disponibles para los usuarios, lo que le da a la empresa, desde su sede en Estados Unidos, la capacidad de eliminar sitios web o software, muchos de los cuales podrían aparecer en los resultados de búsqueda de Google Chrome. Sin embargo la empresa  tanto Google Chrome como Microsoft Edge mantienen visibles estos enlaces y no los eliminan por esta razon dejan en la vista por lo que crearon los delicuentes infomatico como esta evidencia 
+                
+                <a href="
+https://www.google.com/search?q=porno&oq=porno&gs_lcrp=EgZjaHJvbWUyBggAEEUYOdIBCDEyMjVqMGoxqAIAsAIA&sourceid=chrome&ie=UTF-8&sei=SajtaLuOKoDn1sQPgp3b4QY
+" target="_blank"> Esta información está en Google Chrome, pero la empresa no la elimina eso sitio web que eso semejante delito infomatico. Dejan la evidencia relacionada con delincuentes informáticos sin borrar. Es un acto de corrupción. </a>
+                </p>
+                <p>
+Google Chrome y Microsoft Edge tienen la capacidad de manejar información como la ubicación y la IP pública del usuario, lo que permite conocer la localidad, provincia, calle o dirección de cada persona. Sin embargo, las empresas tienen la autoridad de borrar enlaces o sitios web inapropiados, pero en la práctica no siempre lo hacen. Esto no significa que cometan ilegalidades; simplemente algunos contenidos se mantienen disponibles. Las empresas cumplen con la ley: no incluyen virus, phishing ni códigos maliciosos en sus sitios web o software. Esto demuestra que respetan la legislación, incluyendo las leyes de propiedad intelectual y otras normativas vigentes en Estados Unidos.
+A veces, la información sobre cómo funcionan estas empresas es difícil de entender para personas sin conocimientos técnicos, como profesores de biología, química, educación física, matemáticas, o incluso abogados que no estudiaron programación. La información a menudo se oculta, pero la responsabilidad no recae únicamente en la policía; también hay profesionales de programación que conocen estos temas y deciden no divulgarlo por diversas razones, como la salud mental que muchos adultos como mujeres y hombre tiene una enfermedad mental.
+
+                </p>
+                <p>
+                    Google Drive es un servicio desarrollado por la empresa Google Chrome. Los usuarios pueden registrarse creando una cuenta para uso personal o laboral, proporcionando datos como nombre, apellido, fecha de nacimiento, género, correo electrónico, contraseña y número de celular. Una vez iniciada la sesión, los usuarios pueden almacenar archivos personales como PDF, Word, fotos familiares o laborales, ya sea de la escuela, universidad o trabajo. Esto incluye todas las ramas del conocimiento, desde tecnología y programación hasta biología, química o educación física. Aunque muchos usuarios creen que sus datos están protegidos, la realidad es que los programadores y analistas de sistemas que crearon Google Drive tienen acceso a los datos de los usuarios. Esto no implica ilegalidad: Google Chrome no distribuye virus ni utiliza sistemas como Kali Linux para obtener información de forma ilícita. Todo se realiza bajo la legalidad y normativa empresarial de Estados Unidos.
+                </p>
+              <h4>
+                
+Microsoft Edge, Outlook y OneDrive
+
+              </h4>
+              <p>
+                Los servicios OneDrive y Outlook están relacionados con Microsoft Edge y el sistema operativo Windows. Cuando un usuario se registra en Outlook o OneDrive proporcionando correo electrónico, datos personales, contraseña y fecha de nacimiento, la empresa puede acceder a esta información. Esto es legal, ya que cumple con las leyes de protección de datos. Toda la información se guarda en sistemas controlados por programadores autorizados por la empresa. Estos datos pueden incluir documentos como PDF, Word, fotos o presentaciones en PowerPoint. La información se utiliza para realizar resúmenes y análisis, que luego pueden ser compartidos a través de cursos o productos educativos de pago. De esta manera, las empresas generan ganancias de manera legal. La protección empresarial de Google Chrome, Outlook y OneDrive asegura que los usuarios no realicen acciones inapropiadas, como subir contenido desnudo o ilegal. Además, protege a las empresas frente a actividades ilícitas de usuarios que utilicen herramientas como Kali Linux para hackear o robar información.
+              </p>
+              <p>
+                
+La situación engaña a las personas que no tienen conocimientos sobre la estructura de una organización empresarial, ni sobre cómo funcionan sitios web o software. Esto es especialmente fácil de lograr con profesores de biología, química, educación física, matemáticas, e incluso abogados, ya que suelen ser personas que no tienen formación en programación. ¿Qué significa ser persona débil ? Son aquellos que no han estudiado programación o no tienen formación técnica en esas áreas.En la sociedad, lo que ocurre es que la policía oculta ciertas verdades. Además, existen profesionales y personas que entienden de programación, pero prefieren no compartir ese conocimiento. ¿Por qué? Porque hacerlo podría afectar la salud mental de muchas personas. Hay individuos, especialmente adultos, que se sienten ansiosos ante estos temas, como ocurre con muchos profesores de diversas disciplinas, quienes suelen verse afectados por el estrés y la presión mental.Una de las formas en que esta presión mental se manifiesta es en la forma en que algunas personas, especialmente mujeres, interactúan en entornos digitales. En ciertos casos, debido a la ansiedad o la presión social, pueden llegar a enviar contenido íntimo, como fotos o videos, a través de plataformas como WhatsApp o Telegram. Sin embargo, cuando posteriormente culpan a los hombres que recibieron ese contenido podrá ser vecino,vecinas o desconocidos. 
+
+              </p>
+              <p>
+                En estas situaciones, es importante reconocer que los hombres son inocentes.  Si una mujer comparte contenido íntimo (como fotos o videos desnudos) a través de plataformas como whatsApp o telegram, y luego acusa falsamente a un hombre que seria inocentes que no tendrá ir a la cárcel. ¿El sitio web y software de Google Drive es de la empresa Google Chrome? Si, la empresa Google Chrome fue fundado el sitio web y software que se llama Google Drive que los usuario podrá hacer esto: lo primero registrarse a donde dice crear cuenta, ahí pone para uso personal o para trabajo. Ahí ingresa esos datos: nombre, apellido, fecha de nacimiento, día, mes, año, el género, pone su correo electrónico, ahí pone la contraseña que quiere desear para entrar a su cuenta personal y pone su número celular. Después de todo eso, al iniciar sesión pone la contraseña y el email.Una vez que el usuario ha iniciado sesión en el software, podrá subir o almacenar información confidencial y personal que solo le pertenece a él, como documentos en PDF, archivos de Word, fotos familiares, imágenes de amigos, tíos, tías, e incluso fotos relacionadas con su trabajo, ya sea laboral o académico, como las de su escuela o universidad. Esto incluye todas las áreas del conocimiento, desde tecnología y programación hasta disciplinas como biología, química, educación física, entre muchas otras.Ahora bien, si alguien afirma que su información está protegida en un sitio web o en un software como Google Chrome, ya sea por medio de Google Drive instalado en su celular, es incorrecto decir que "estamos protegidos" o que "estamos privados de algo personal". En realidad, la información no está tan protegida como podría parecer, ya que los desarrolladores y analistas de sistemas que crean estos software, en su mayoría ubicados en Estados Unidos, pueden acceder a los datos personales del usuario a través de plataformas como Google Drive. Y, ¿dónde se almacenan estos datos? En servidores, computadoras y notebooks que contienen millones de registros personales de los usuarios eso queda en la empresa Google chome todo esos datos almacenados.  A pesar de todo esto, se justifica bajo la legalidad de la programación y las normativas empresariales, ya que las plataformas nunca han sido responsables de distribuir virus o utilizar sistemas operativos como Kali Linux para vulnerar la seguridad de los usuarios. Por esta razón, se puede afirmar que la empresa  Google Chrome, en su función básica, no comete ninguna ilegalidad, aunque no se puede garantizar una protección total de la información personal.¿Entonces, cuando una persona se registra en Outlook o OneDrive, poniendo su correo electrónico, datos personales, contraseña y fecha de nacimiento, la empresa Outlook puede acceder a esa información? Sí, la programación de esa empresa obtiene esos datos personales del usuario. ¿Esto es legal? Sí, es legal, porque cumple con las leyes de protección de datos. Toda esa información se guarda en los sistemas de la empresa Outlook y OneDrive, controlados por programadores autorizados por la empresa de Outlook y OneDrive en Estados Unidos. ¿Entonces la empresa Outlook y OneDrive saca esta información como PDF, Word, fotos o PowerPoint del usuario? Sí, pueden acceder a la información del usuario, porque si hay un sitio web o software, puede recopilar todos esos datos. ¿Para qué utilizan esa información? La empresa la utiliza para hacer resúmenes y análisis básicos. Después, enseñan ese conocimiento al resto de la sociedad, y la población compra esos cursos que no son gratuitos. De esa manera, la empresa de Estados Unidos, dueña de OneDrive y Outlook, obtiene sus ganancias.
+              </p>
+              <p>
+                ¿Hay personas inteligentes que instalaron Kali Linux y hackearon empresas como Google Chrome, Microsoft Edge, Google Drive, OneDrive y Outlook? Sí, hay muchas personas que instalaron Kali Linux y lograron robar millones de datos de estas empresas, obteniendo acceso a correos electrónicos y contraseñas de usuarios registrados en los sitios web de esa empresa de Google Chome (relación en Google drive), Microsoft Edge (relación con sistema operativo windows, Outlook e OneDrive). ¿Pero qué hicieron esos delincuentes informáticos? Usaron esa información para hacer cosas inapropiadas, como modificar datos para engañar o estafar a otras personas de la población.Reflexión sobre la vida: aunque los seres humanos puedan vivir hasta 80 años, ningún adulto puede vivir para siempre. Con el tiempo, el cuerpo se debilita y, al final, todos terminamos en el cementerio. Nadie puede llevarse dinero, casas, objetos o dispositivos al morir. Esta reflexión nos enseña que no debemos obsesionarnos con el dinero, ya sea en dólares, pesos, reales u otras monedas. Es más valioso aprender y compartir conocimientos de manera gratuita para beneficio personal y de la sociedad.Hay personas adultas a las que les interesa vivir la vida, disfrutar de los paisajes y observar la sociedad y la población, porque la vida es muy corta y pasan los años, meses y días. Por eso, es mejor no depender de quién pueda obtener datos digitales de un celular, notebook o computadora, ya sean DNI, correos electrónicos o fotos personales importantes. La vida hay que disfrutarla, y las personas que reflexionan así en su mentalidad no tienen una enfermedad mental, porque priorizan vivir antes de que llegue el momento de ir al cementerio. Desde un punto de vista psicológico, podemos preguntarnos: ¿de qué sirve tanta tecnología —celulares, notebooks, routers o dispositivos electrónicos— si al final todos iremos al cementerio? Incluso si alguien luchó contra una enfermedad como el cáncer, la tecnología no puede evitar la muerte. Esta reflexión nos enseña dos cosas: primero, disfrutar la vida con la familia, tíos y amigos, sin obsesionarse con la tecnología; segundo, reconocer que la tecnología también tiene un valor real para la sociedad. Por ejemplo, los edificios y las profesiones en mecánica, electrónica, industria o medicina se han beneficiado enormemente de la tecnología. La medicina, en particular, ha revolucionado la detección de enfermedades  Gracias a los aparatos electrónicos que se dicen también inteligencia artificial, que fueron creados por los profesionales en programación, también se ha abierto la puerta a muchas personas que, aunque no poseen un título universitario, han podido aprender y desarrollarse en este campo a través de cursos y su propio interés, ya que les apasiona la programación.
+</p>
+<h4>
+    ¿Cómo ha podido mejorar la inteligencia artificial en el ámbito de la medicina, específicamente en la resonancia magnética y otras especialidades médicas?
+</h4>
+<p>
+    Resonancia magnética tuvo mejoras en la calidad de las imágenes y análisis automático: La inteligencia artificial (IA) mejora significativamente la calidad de las imágenes, reduciendo el ruido y las distorsiones, y aumentando la resolución sin necesidad de aumentar la dosis de radiación.
+Algoritmos avanzados de IA pueden realizar correcciones y ajustes en las imágenes, haciéndolas más claras y precisas. Además, uno de los avances más significativos de la IA análisis automático de imágenes, lo que permite identificar patrones específicos, como tumores, lesiones o anomalías en estructuras cerebrales, de manera más rápida y precisa que el análisis visual manual realizado por radiólogos. Esta capacidad facilita la detección de problemas que, de otro modo, podrían pasar desapercibidos. La segmentación de tejidos es otro aspecto clave en el análisis de imágenes.
+En términos de predicción y diagnóstico, la IA puede analizar los cambios sutiles en la anatomía cerebral a partir de las imágenes, ayudando a predecir enfermedades.
+
+</p>
+
+
+</td></tr>
+  <table>
+    <tr>
+        <td>
+            <h4>Cápsula endoscópica</h4>
+            <p>
+                La cápsula endoscópica es un pequeño dispositivo que contiene una cámara diminuta, una fuente de luz, una batería y un transmisor. Al ser ingerida por el paciente, recorre el sistema digestivo tomando miles de fotografías (algunas versiones avanzadas también graban video). Las imágenes se transmiten en tiempo real a un dispositivo receptor que el paciente lleva consigo, generalmente en un cinturón con sensores o una grabadora portátil. 
+                Tras ser expulsada naturalmente, el médico analiza las imágenes para detectar anomalías. Se utiliza principalmente para detectar sangrados ocultos, diagnosticar enfermedades como el Crohn, localizar tumores o pólipos, e investigar causas de dolor abdominal o anemia inexplicada.
+            </p>
+            <p><a href="https://www.youtube.com/watch?v=fEfqyNinzTQ" target="_blank">Accede a información avanzada</a></p>
+
+            <h3>Radiología</h3>
+            <p>
+                La radiología digital reemplaza los métodos tradicionales basados en película por sistemas digitales que permiten adquirir, almacenar y procesar imágenes médicas electrónicamente. Esto mejora la eficiencia clínica al proporcionar imágenes de alta resolución de forma inmediata, facilitando diagnósticos más precisos y seguros. 
+                Además, reduce la dosis de radiación necesaria. Su integración con tecnologías como la tomografía computarizada, la resonancia magnética y la inteligencia artificial, mejora significativamente la atención médica.
+            </p>
+            <ul>
+                <li><a href="https://www.youtube.com/watch?v=dYd0caha-S4" target="_blank">Parte 1 - Radiología explicada</a></li>
+                <li><a href="https://www.youtube.com/watch?v=6PLTivpZupM" target="_blank">Parte 2</a></li>
+                <li><a href="https://www.youtube.com/watch?v=Uxg3VWP5ATw" target="_blank">Parte 3</a></li>
+                <li><a href="https://www.youtube.com/watch?v=N1JlwkoWmyM" target="_blank">Parte 4</a></li>
+            </ul>
+
+            <h4>¿Qué es el ojo biónico?</h4>
+            <p>
+                El ojo biónico es un dispositivo electrónico diseñado para restaurar parcial o totalmente la visión en personas con pérdida visual severa. Captura imágenes mediante una cámara externa, las convierte en señales eléctricas y las envía a un implante en el ojo o cerebro, donde se interpretan como imágenes. 
+                Permite percibir formas, luces y movimientos, mejorando la orientación y autonomía del usuario.
+            </p>
+            <ul>
+                <li><a href="https://www.youtube.com/watch?v=RpxszgRz9-Q" target="_blank">Parte 1 - Ojo biónico</a></li>
+                <li><a href="https://www.youtube.com/watch?v=NDzWd-zNzhw" target="_blank">Parte 2</a></li>
+                <li><a href="https://www.youtube.com/watch?v=t2dJMNEhTtw" target="_blank">Parte 3</a></li>
+            </ul>
+
+            <h4>Lectores de control de acceso en edificios</h4>
+            <p>
+                Los lectores de control de acceso permiten gestionar quién puede ingresar a lugares específicos mediante tarjetas, biometría, códigos PIN, o reconocimiento facial. Son comunes en empresas y edificios para garantizar la seguridad.
+            </p>
+            <p><a href="https://www.youtube.com/watch?v=PIIiDYX6f9g" target="_blank">Ver explicación sobre lectores de acceso</a></p>
+
+            <h4>Anteojo espía</h4>
+            <p>
+                El anteojo espía parece un accesorio común pero permite observar o grabar discretamente. Algunos modelos tienen cámaras integradas para video o fotos. Si bien pueden tener usos legales (por ejemplo, investigaciones), su uso sin consentimiento puede ser ilegal.
+            </p>
+            <p><a href="https://www.youtube.com/watch?v=z4tN8TNTFtY" target="_blank">Ver explicación sobre el anteojo espía</a></p>
+
+            <h4>Agricultura digital</h4>
+            <p>
+                La agricultura digital aplica tecnologías como sensores, drones e inteligencia artificial para optimizar la producción, reducir costos y cuidar el medio ambiente. Permite un manejo más preciso de cultivos y recursos.
+            </p>
+            <ul>
+                <li><a href="https://www.youtube.com/watch?v=kL-GzDh7BgA" target="_blank">Parte 1 - Agricultura y tecnología</a></li>
+                <li><a href="https://www.youtube.com/watch?v=DX0f8vskgOQ" target="_blank">Parte 2 - Agricultura y tecnología</a></li>
+            </ul>
+
+            <h4>Educación y tecnología</h4>
+            <p>
+                La educación permite a las personas adquirir conocimientos, habilidades y valores fundamentales. Profesionales como docentes de biología, química, arte y más, son claves para el desarrollo social y científico. La inteligencia artificial y las nuevas tecnologías potencian la enseñanza, personalizan el aprendizaje y automatizan tareas.
+            </p>
+            <ul>
+                <li><a href="https://www.youtube.com/watch?v=8Czk6FtNxjk" target="_blank">Parte 1 - Educación y tecnología</a></li>
+                <li><a href="https://www.youtube.com/watch?v=xgUSSygbrbo" target="_blank">Parte 2 - Educación y tecnología</a></li>
+            </ul>
+        </td>
+    </tr>
+</table>
+
+
+    </div>
+</body>
+</html>

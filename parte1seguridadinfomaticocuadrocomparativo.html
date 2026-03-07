@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Derecho en Ciberseguridad: Más que una Aventura Documental</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+            line-height: 1.6;
+                border-radius: 10px;
+  max-width: 900px;
+  margin: 90px auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #2c3e50;
+            color: white;
+            border-radius: 5px;
+        }
+        h1 {
+            color: #ecf0f1;
+            margin: 0;
+        }
+        .subtitle {
+            font-style: italic;
+            color: #bdc3c7;
+        }
+        .action-buttons {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .btn {
+            padding: 10px 15px;
+            margin: 0 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .btn-pdf {
+            background-color: #e74c3c;
+            color: white;
+        }
+        .btn-print {
+            background-color: #3498db;
+            color: white;
+        }
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+            position: sticky;
+            top: 0;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .table-container {
+            margin-bottom: 40px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 5px;
+        }
+        .highlight {
+            background-color: #ffeb3b;
+            font-weight: bold;
+        }
+        @media print {
+            body {
+                background-color: white;
+                font-size: 12pt;
+            }
+            .header {
+                background-color: white !important;
+                color: black !important;
+                padding: 10px !important;
+            }
+            h1 {
+                color: black !important;
+            }
+            .subtitle {
+                color: #555 !important;
+            }
+            .action-buttons {
+                display: none;
+            }
+            .table-container {
+                box-shadow: none;
+                page-break-inside: avoid;
+            }
+            table {
+                page-break-inside: auto;
+            }
+            tr {
+                page-break-inside: avoid;
+                page-break-after: auto;
+            }
+        }
+          /* Estilos para el botón Siguientes */
+        .button-container {
+            position: absolute; /* Posicionamiento absoluto */
+           top:6px; /* Distancia desde arriba */ 
+            left: 1300px; /* Distancia desde la izquierda */
+            z-index: 100; /* Para que esté por encima de otros elementos */
+        }
+
+       .btn-atras {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #f0f0f0;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-decoration: none;
+  font-family: Arial, sans-serif;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.btn-atras:hover {
+  background-color: #e0e0e0;
+}
+
+.btn-atras:active {
+  background-color: #d0d0d0;
+  transform: scale(0.98);
+}
+
+        /* Estilo para el cuerpo para evitar que el contenido quede detrás */
+        body {
+            margin: 0;
+            padding: 40px 20px 20px; /* Añade espacio arriba para el botón */
+            position: relative; /* Necesario para el posicionamiento absoluto del botón */
+        }
+    .siguientes-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4285F4;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .siguientes-btn:hover {
+            background-color: #3367D6;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .siguientes-btn:active {
+            background-color: #2A56C6;
+            transform: translateY(1px);
+        }
+/* Solo estilos para el botón "Volver atrás" */
+.back-button {
+  display: inline-block;
+  padding: 10px 18px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 2px solid #333;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  user-select: none;
+}
+
+/* Efecto al pasar el ratón */
+.back-button:hover,
+.back-button:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+  text-decoration: none;
+  outline: none;
+}
+
+/* Efecto al hacer clic */
+.back-button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+
+    </style>
+</head>
+<body>
+ <!-- Botón en esquina superior izquierda -->
+  
+    <div class="header">
+        <h1>Derecho en Ciberseguridad</h1>
+        <div class="subtitle">Más que una Aventura Documental</div>
+         <a href="aprendeprincipalconocimientosabogacia.html" class="back-button" aria-label="Volver atrás">Volver atrás</a>
+    </div>
+
+    <div class="table-container">
+        <h2>Cuadro Comparativo de Funciones del Derecho en Ciberseguridad</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Función del Derecho en Ciberseguridad</th>
+                    <th>Concepto</th>
+                    <th>Decreto/Ley en Argentina</th>
+                    <th>Regulaciones Internacionales</th>
+                    <th>Objetivos Legales</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="highlight">Regulación de Tecnologías Emergentes</td>
+                    <td>Adaptación legal a tecnologías avanzadas que protegen los sistemas cibernéticos.</td>
+                    <td><b>Ley 27.506</b> - Ley de Protección de Datos Personales (adaptada a las tecnologías emergentes en Argentina)</td>
+                    <td><b>GDPR</b> (Reglamento General de Protección de Datos) - Adaptación a IA y algoritmos predictivos.</td>
+                    <td>Regular el uso ético y seguro de tecnologías como IA, Blockchain, y computación cuántica en Argentina.</td>
+                </tr>
+                <tr>
+                    <td class="highlight">Protección de Infraestructuras Críticas</td>
+                    <td>Protección de sectores estratégicos ante ciberataques sofisticados.</td>
+                    <td><b>Ley 27.541</b> - Ley de Emergencia Pública en Argentina (incluye medidas para proteger infraestructuras críticas).</td>
+                    <td><b>NIST Cybersecurity Framework</b> (EE.UU.): Protección de infraestructuras críticas.</td>
+                    <td>Asegurar la seguridad de sectores estratégicos en Argentina, como la energía y las telecomunicaciones.</td>
+                </tr>
+                <tr>
+                    <td class="highlight">Responsabilidad y Normativa de las Empresas</td>
+                    <td>Obligaciones legales para proteger la información y la privacidad de los usuarios.</td>
+                    <td><b>Ley 25.326</b> - Ley de Protección de los Datos Personales, <b>Ley 27.506</b> (adaptación a nuevas tecnologías en Argentina).</td>
+                    <td><b>ISO/IEC 27001</b> - Estándar internacional para la gestión de la seguridad de la información.</td>
+                    <td>Asegurar que las empresas en Argentina implementen medidas de seguridad para proteger datos y privacidad.</td>
+                </tr>
+                <tr>
+                    <td class="highlight">Cibercrimen y Legislación Penal Avanzada</td>
+                    <td>Tipificación de delitos informáticos cada vez más sofisticados, como ransomware.</td>
+                    <td><b>Ley 26.388</b> - Ley de Delitos Informáticos en Argentina.</td>
+                    <td><b>Convenio de Budapest sobre Cibercriminalidad</b> (Consejo de Europa): Tratado internacional para la cooperación en la lucha contra delitos informáticos.</td>
+                    <td>Tipificar y sancionar delitos informáticos avanzados en Argentina, como ransomware y manipulación de datos.</td>
+                </tr>
+                <tr>
+                    <td class="highlight">Cooperación Internacional</td>
+                    <td>Colaboración entre países para prevenir y resolver incidentes cibernéticos.</td>
+                    <td><b>Ley 27.497</b> - Ley de Cooperación Internacional en Materia Penal en Argentina.</td>
+                    <td><b>Convenio de Budapest sobre Cibercriminalidad</b>: Cooperación entre países para perseguir cibercrímenes.</td>
+                    <td>Facilitar la cooperación internacional en la resolución de incidentes cibernéticos y cibercriminalidad en Argentina.</td>
+                </tr>
+                <tr>
+                    <td class="highlight">Protección de Datos Personales en Escenarios Complejos</td>
+                    <td>Protección frente a amenazas avanzadas a la privacidad, como la IA y la automatización.</td>
+                    <td><b>Ley 27.506</b> - Ley de Protección de Datos Personales (adaptación a tecnologías emergentes en Argentina).</td>
+                    <td><b>GDPR</b> (Reglamento General de Protección de Datos): Protección de datos en escenarios complejos.</td>
+                    <td>Proteger la privacidad de los individuos en Argentina frente a las nuevas amenazas tecnológicas, como la IA y los algoritmos predictivos.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="table-container">
+        <h2>Cuadro Comparativo 2: Enfoques y Tecnologías</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Concepto</th>
+                    <th>Descripción</th>
+                    <th>Enfoque Principal</th>
+                    <th>Tecnologías Clave</th>
+                    <th>Objetivo Legal</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="highlight">Regulación de Tecnologías Emergentes</td>
+                    <td>Adaptación de la legislación a nuevas tecnologías que mejoran la ciberseguridad.</td>
+                    <td>Regulación de IA, Blockchain, IA, Computación Cuántica</td>
+                    <td>Inteligencia Artificial, Blockchain, Aprendizaje Automático, Computación Cuántica</td>
+                    <td>Regular el uso de tecnologías para proteger infraestructuras y datos.</td>
+                </tr>
+                <tr>
+                    <td class="highlight">Protección de Infraestructuras Críticas</td>
+                    <td>Protección legal de sectores esenciales (energía, telecomunicaciones, finanzas).</td>
+                    <td>Proteger sectores clave frente a ciberamenazas sofisticadas.</td>
+                    <td>Infraestructuras de energía, telecomunicaciones, servicios financieros</td>
+                    <td>Garantizar la seguridad nacional y la estabilidad económica.</td>
+                </tr>
+                <tr>
+                    <td class="highlight">Responsabilidad y Normativa de las Empresas</td>
+                    <td>Definición de obligaciones legales para empresas en cuanto a seguridad de datos y protección de la privacidad.</td>
+                    <td>Obligaciones de las empresas sobre ciberseguridad.</td>
+                    <td>Cifrado, Análisis de vulnerabilidades, DDoS</td>
+                    <td>Asegurar el cumplimiento de las normas de seguridad de datos y privacidad.</td>
+                </tr>
+                <tr>
+                    <td class="highlight">Cibercrimen y Legislación Penal Avanzada</td>
+                    <td>Actualización de la legislación penal para enfrentar cibercrímenes avanzados.</td>
+                    <td>Tipificación y penalización de nuevos delitos cibernéticos.</td>
+                    <td>Ransomware, Manipulación de datos, Ataques a infraestructuras críticas</td>
+                    <td>Perseguir y castigar los cibercrímenes.</td>
+                </tr>
+                <tr>
+                    <td class="highlight">Cooperación Internacional</td>
+                    <td>Colaboración entre países para enfrentar ciberataques que trascienden fronteras.</td>
+                    <td>Coordinación internacional para resolver incidentes cibernéticos.</td>
+                    <td>Tratados internacionales, Estándares de ciberseguridad</td>
+                    <td>Facilitar la resolución global de incidentes cibernéticos.</td>
+                </tr>
+                <tr>
+                    <td class="highlight">Protección de Datos Personales en Escenarios Complejos</td>
+                    <td>Adaptación de leyes para proteger la privacidad frente a ciberamenazas avanzadas.</td>
+                    <td>Protección de la privacidad y datos sensibles.</td>
+                    <td>Inteligencia Artificial, Algoritmos Predictivos, Automatización</td>
+                    <td>Proteger la privacidad y los derechos de los individuos en un entorno digital.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script>
+        function generatePDF() {
+            const element = document.body;
+            const opt = {
+                margin: 10,
+                filename: 'Derecho_Ciberseguridad_Aventura_Documental.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            // New Promise-based usage:
+            html2pdf().set(opt).from(element).save();
+        }
+    </script>
+
+</body>
+</html>

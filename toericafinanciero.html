@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explicación Paso a Paso - Fórmulas Financieras</title>
+    <style>
+        :root {
+            --primary: #3498db;
+            --success: #2ecc71;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --dark: #2c3e50;
+            --light: #f5f7fa;
+            --gray: #95a5a6;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+                border-radius: 10px;
+  max-width: 1100px;
+  margin: 90px auto;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            color: var(--dark);
+            margin-bottom: 15px;
+            font-size: 2.5rem;
+        }
+        
+        .description {
+            color: var(--gray);
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .tabs {
+            display: flex;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #ddd;
+            flex-wrap: wrap;
+            background: white;
+            border-radius: 10px 10px 0 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+        
+        .tab {
+            padding: 18px 30px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--gray);
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            flex: 1;
+            text-align: center;
+            min-width: 200px;
+        }
+        
+        .tab:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .tab.active {
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+            background-color: #f8f9fa;
+        }
+        
+        .tab-content {
+            display: none;
+            background: white;
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .formula-section {
+            margin-bottom: 40px;
+        }
+        
+        .formula-title {
+            color: var(--dark);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--light);
+            font-size: 1.8rem;
+        }
+        
+        .formula {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-weight: bold;
+            font-size: 1.4rem;
+            text-align: center;
+            border-left: 5px solid var(--primary);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .step-by-step {
+            margin-top: 30px;
+        }
+        
+        .step {
+            margin-bottom: 30px;
+            padding: 25px;
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+            border-radius: 10px;
+            border-left: 5px solid var(--primary);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+        
+        .step:hover {
+            transform: translateY(-5px);
+        }
+        
+        .step-number {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), #2980b9);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin-right: 15px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: 0 3px 10px rgba(52, 152, 219, 0.3);
+        }
+        
+        .step-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--dark);
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .step-calculation {
+            background-color: #e9ecef;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            border-left: 4px solid var(--success);
+        }
+        
+        .step-explanation {
+            color: var(--dark);
+            margin-top: 15px;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+        
+        .example-box {
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+            padding: 25px;
+            border-radius: 10px;
+            margin: 25px 0;
+            border-left: 5px solid var(--warning);
+        }
+        
+        .example-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--dark);
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .example-title:before {
+            content: "💡";
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .example-content {
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+        
+        .variable {
+            color: var(--primary);
+            font-weight: bold;
+            background-color: #e3f2fd;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        
+        .operation {
+            color: var(--danger);
+            font-weight: bold;
+        }
+        
+        .result {
+            color: var(--success);
+            font-weight: bold;
+            background-color: #e8f5e9;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        
+        .symbol-explanation {
+            margin-top: 30px;
+            padding: 25px;
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+            border-radius: 10px;
+            border-left: 5px solid var(--success);
+        }
+        
+        .symbol-explanation h3 {
+            color: var(--dark);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+        
+        .symbol-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .symbol-item {
+            padding: 15px;
+            background-color: white;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+        
+        .symbol-item .symbol {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .symbol-item .name {
+            font-size: 1rem;
+            color: var(--dark);
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .tab {
+                min-width: 100%;
+            }
+            
+            .tab-content {
+                padding: 25px;
+            }
+            
+            .formula {
+                font-size: 1.1rem;
+                padding: 20px;
+            }
+        }
+        /* Solo estilos para el botón "Volver atrás" */
+.back-button {
+  display: inline-block;
+  padding: 10px 18px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 2px solid #333;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  user-select: none;
+}
+
+/* Efecto al pasar el ratón */
+.back-button:hover,
+.back-button:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+  text-decoration: none;
+  outline: none;
+}
+
+/* Efecto al hacer clic */
+.back-button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Guía Completa de Fórmulas Financieras</h1>
+            <p class="description">Aprende paso a paso cómo funcionan las principales fórmulas financieras y domina los cálculos más importantes</p>
+        </header>
+        <a href="principal.html" class="back-button" aria-label="Volver atrás">Volver atrás</a>
+        <div class="tabs">
+            <div class="tab active" data-tab="interes">Interés Compuesto</div>
+            <div class="tab" data-tab="margen">Margen de Ganancia</div>
+            <div class="tab" data-tab="prestamo">Préstamos</div>
+            <div class="tab" data-tab="ahorro">Ahorro e Inversión</div>
+        </div>
+        
+        <!-- INTERÉS COMPUESTO -->
+        <div class="tab-content active" id="interes-tab">
+            <div class="formula-section">
+                <h2 class="formula-title">Fórmula de Interés Compuesto</h2>
+                
+                <div class="formula">
+                    <span class="variable">CF</span> = <span class="variable">CI</span> × (1 + <span class="variable">i</span>)<span class="operation">^</span><span class="variable">n</span>
+                </div>
+                
+                <div class="step-by-step">
+                    <h3 style="color: var(--dark); margin-bottom: 20px; font-size: 1.5rem;">Explicación Paso a Paso</h3>
+                    
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">1</span>
+                            Convertir la tasa de interés a decimal
+                        </div>
+                        <div class="step-calculation">
+                            Tasa decimal = Tasa porcentual ÷ 100
+                        </div>
+                        <div class="step-explanation">
+                            Para usar la tasa de interés en la fórmula, necesitamos convertirla de porcentaje a decimal. 
+                            Simplemente dividimos el porcentaje entre 100. Por ejemplo, 10% se convierte en 0.10.
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">2</span>
+                            Calcular (1 + tasa de interés)
+                        </div>
+                        <div class="step-calculation">
+                            1 + Tasa decimal
+                        </div>
+                        <div class="step-explanation">
+                            Sumamos 1 a la tasa de interés decimal. Esto representa el factor de crecimiento por cada 
+                            unidad de capital. Si tu capital crece 10%, se multiplica por 1.10 (1 + 0.10).
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">3</span>
+                            Elevar a la potencia del número de años
+                        </div>
+                        <div class="step-calculation">
+                            (1 + Tasa decimal)<span class="operation">^</span>Años
+                        </div>
+                        <div class="step-explanation">
+                            Elevamos el resultado anterior a la potencia del número de años. Esto representa el 
+                            crecimiento compuesto año tras año. Cada año, el capital se multiplica por el mismo factor.
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">4</span>
+                            Multiplicar por el capital inicial
+                        </div>
+                        <div class="step-calculation">
+                            Capital Inicial × Resultado del paso 3
+                        </div>
+                        <div class="step-explanation">
+                            Multiplicamos el capital inicial por el factor de crecimiento calculado para obtener 
+                            el capital final. Este es el monto total que tendrás al final del período.
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">5</span>
+                            Calcular la ganancia total
+                        </div>
+                        <div class="step-calculation">
+                            Capital Final - Capital Inicial
+                        </div>
+                        <div class="step-explanation">
+                            Restamos el capital inicial al capital final para obtener la ganancia total por intereses. 
+                            Esto te muestra exactamente cuánto ganaste gracias al interés compuesto.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="example-box">
+                    <div class="example-title">Ejemplo Práctico</div>
+                    <div class="example-content">
+                        <p><strong>Supongamos:</strong></p>
+                        <ul>
+                            <li>Capital Inicial: $1,000</li>
+                            <li>Tasa de interés: 10% anual</li>
+                            <li>Período: 3 años</li>
+                        </ul>
+                        <p><strong>Cálculos:</strong></p>
+                        <ol>
+                            <li>Tasa decimal = 10% ÷ 100 = 0.10</li>
+                            <li>1 + 0.10 = 1.10</li>
+                            <li>1.10³ = 1.10 × 1.10 × 1.10 = 1.331</li>
+                            <li>Capital Final = $1,000 × 1.331 = $1,331</li>
+                            <li>Ganancia = $1,331 - $1,000 = $331</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="symbol-explanation">
+                    <h3>Significado de las Variables</h3>
+                    <div class="symbol-list">
+                        <div class="symbol-item">
+                            <div class="symbol">CF</div>
+                            <div class="name">Capital Final</div>
+                        </div>
+                        <div class="symbol-item">
+                            <div class="symbol">CI</div>
+                            <div class="name">Capital Inicial</div>
+                        </div>
+                        <div class="symbol-item">
+                            <div class="symbol">i</div>
+                            <div class="name">Tasa de interés (decimal)</div>
+                        </div>
+                        <div class="symbol-item">
+                            <div class="symbol">n</div>
+                            <div class="name">Número de períodos</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- MARGEN DE GANANCIA -->
+        <div class="tab-content" id="margen-tab">
+            <div class="formula-section">
+                <h2 class="formula-title">Fórmula de Margen de Ganancia</h2>
+                
+                <div class="formula">
+                    <span class="variable">Margen %</span> = ((<span class="variable">PV</span> - <span class="variable">C</span>) / <span class="variable">PV</span>) × 100
+                </div>
+                
+                <div class="step-by-step">
+                    <h3 style="color: var(--dark); margin-bottom: 20px; font-size: 1.5rem;">Explicación Paso a Paso</h3>
+                    
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">1</span>
+                            Calcular la ganancia por unidad
+                        </div>
+                        <div class="step-calculation">
+                            Precio de Venta - Costo
+                        </div>
+                        <div class="step-explanation">
+                            Restamos el costo del precio de venta para obtener la ganancia por cada unidad vendida. 
+                            Esta es la ganancia bruta antes de considerar otros gastos.
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">2</span>
+                            Dividir la ganancia entre el precio de venta
+                        </div>
+                        <div class="step-calculation">
+                            Ganancia por unidad ÷ Precio de Venta
+                        </div>
+                        <div class="step-explanation">
+                            Dividimos la ganancia por unidad entre el precio de venta para obtener la proporción 
+                            de ganancia. Esto nos dice qué fracción del precio de venta representa la ganancia.
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">3</span>
+                            Multiplicar por 100 para obtener el porcentaje
+                        </div>
+                        <div class="step-calculation">
+                            Resultado del paso 2 × 100
+                        </div>
+                        <div class="step-explanation">
+                            Multiplicamos por 100 para convertir la proporción a porcentaje. Esto nos da el 
+                            margen de ganancia expresado como porcentaje del precio de venta.
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">4</span>
+                            Calcular la ganancia total (opcional)
+                        </div>
+                        <div class="step-calculation">
+                            Ganancia por unidad × Cantidad vendida
+                        </div>
+                        <div class="step-explanation">
+                            Si quieres saber la ganancia total, multiplicas la ganancia por unidad por la 
+                            cantidad de unidades vendidas.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="example-box">
+                    <div class="example-title">Ejemplo Práctico</div>
+                    <div class="example-content">
+                        <p><strong>Supongamos:</strong></p>
+                        <ul>
+                            <li>Precio de Venta: $80</li>
+                            <li>Costo: $50</li>
+                            <li>Cantidad vendida: 10 unidades</li>
+                        </ul>
+                        <p><strong>Cálculos:</strong></p>
+                        <ol>
+                            <li>Ganancia por unidad = $80 - $50 = $30</li>
+                            <li>Proporción = $30 ÷ $80 = 0.375</li>
+                            <li>Margen % = 0.375 × 100 = 37.5%</li>
+                            <li>Ganancia total = $30 × 10 = $300</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="symbol-explanation">
+                    <h3>Significado de las Variables</h3>
+                    <div class="symbol-list">
+                        <div class="symbol-item">
+                            <div class="symbol">PV</div>
+                            <div class="name">Precio de Venta</div>
+                        </div>
+                        <div class="symbol-item">
+                            <div class="symbol">C</div>
+                            <div class="name">Costo</div>
+                        </div>
+                        <div class="symbol-item">
+                            <div class="symbol">%</div>
+                            <div class="name">Porcentaje</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- PRÉSTAMOS -->
+        <div class="tab-content" id="prestamo-tab">
+            <div class="formula-section">
+                <h2 class="formula-title">Fórmula de Préstamos (Amortización)</h2>
+                
+                <div class="formula">
+                    <span class="variable">PM</span> = <span class="variable">P</span> × [<span class="variable">i</span>(1+<span class="variable">i</span>)<span class="operation">^</span><span class="variable">n</span>] / [(1+<span class="variable">i</span>)<span class="operation">^</span><span class="variable">n</span> - 1]
+                </div>
+                
+                <div class="step-by-step">
+                    <h3 style="color: var(--dark); margin-bottom: 20px; font-size: 1.5rem;">Explicación Paso a Paso</h3>
+                    
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">1</span>
+                            Convertir la tasa anual a mensual
+                        </div>
+                        <div class="step-calculation">
+                            Tasa mensual = Tasa anual ÷ 12 ÷ 100
+                        </div>
+                        <div class="step-explanation">
+                            Como los pagos son mensuales, necesitamos la tasa de interés mensual. Dividimos 
+                            la tasa anual entre 12 y luego entre 100 para convertir a decimal.
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">2</span>
+                            Calcular el número total de pagos
+                        </div>
+                        <div class="step-calculation">
+                            Número de pagos = Años × 12
+                        </div>
+                        <div class="step-explanation">
+                            Multiplicamos el número de años por 12 para obtener el total de pagos mensuales 
+                            que harás durante la vida del préstamo.
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">3</span>
+                            Calcular (1 + tasa mensual)
+                        </div>
+                        <div class="step-calculation">
+                            1 + Tasa mensual
+                        </div>
+                        <div class="step-explanation">
+                            Sumamos 1 a la tasa mensual para obtener el factor de crecimiento mensual. 
+                            Esto representa cuánto crece la deuda cada mes si no hicieras pagos.
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">4</span>
+                            Elevar a la potencia del número de pagos
+                        </div>
+                        <div class="step-calculation">
+                            (1 + Tasa mensual)<span class="operation">^</span>Número de pagos
+                        </div>
+                        <div class="step-explanation">
+                            Elevamos el factor de crecimiento a la potencia del número total de pagos. 
+                            Esto calcula el crecimiento compuesto durante todo el período del préstamo.
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">5</span>
+                            Calcular el numerador de la fórmula
+                        </div>
+                        <div class="step-calculation">
+                            Tasa mensual × Resultado del paso 4
+                        </div>
+                        <div class="step-explanation">
+                            Multiplicamos la tasa mensual por el factor de crecimiento compuesto. 
+                            Esta es la primera parte de la fórmula de amortización.
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">6</span>
+                            Calcular el denominador de la fórmula
+                        </div>
+                        <div class="step-calculation">
+                            Resultado del paso 4 - 1
+                        </div>
+                        <div class="step-explanation">
+                            Restamos 1 al factor de crecimiento compuesto. Esta es la segunda parte 
+                            de la fórmula de amortización.
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">7</span>
+                            Dividir numerador entre denominador
+                        </div>
+                        <div class="step-calculation">
+                            Resultado del paso 5 ÷ Resultado del paso 6
+                        </div>
+                        <div class="step-explanation">
+                            Dividimos el numerador entre el denominador para obtener el factor de 
+                            amortización, que determina qué parte de cada pago va a intereses y qué parte a capital.
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">8</span>
+                            Multiplicar por el monto del préstamo
+                        </div>
+                        <div class="step-calculation">
+                            Monto del préstamo × Resultado del paso 7
+                        </div>
+                        <div class="step-explanation">
+                            Finalmente, multiplicamos el monto del préstamo por el factor de amortización 
+                            para obtener el pago mensual fijo.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="example-box">
+                    <div class="example-title">Ejemplo Práctico</div>
+                    <div class="example-content">
+                        <p><strong>Supongamos:</strong></p>
+                        <ul>
+                            <li>Monto del préstamo: $10,000</li>
+                            <li>Tasa de interés: 5% anual</li>
+                            <li>Plazo: 5 años</li>
+                        </ul>
+                        <p><strong>Cálculos:</strong></p>
+                        <ol>
+                            <li>Tasa mensual = 5% ÷ 12 ÷ 100 = 0.004167</li>
+                            <li>Número de pagos = 5 × 12 = 60</li>
+                            <li>1 + 0.004167 = 1.004167</li>
+                            <li>1.004167⁶⁰ = 1.283</li>
+                            <li>Numerador = 0.004167 × 1.283 = 0.005345</li>
+                            <li>Denominador = 1.283 - 1 = 0.283</li>
+                            <li>Factor = 0.005345 ÷ 0.283 = 0.01887</li>
+                            <li>Pago mensual = $10,000 × 0.01887 = $188.70</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="symbol-explanation">
+                    <h3>Significado de las Variables</h3>
+                    <div class="symbol-list">
+                        <div class="symbol-item">
+                            <div class="symbol">PM</div>
+                            <div class="name">Pago Mensual</div>
+                        </div>
+                        <div class="symbol-item">
+                            <div class="symbol">P</div>
+                            <div class="name">Monto del Préstamo</div>
+                        </div>
+                        <div class="symbol-item">
+                            <div class="symbol">i</div>
+                            <div class="name">Tasa interés mensual</div>
+                        </div>
+                        <div class="symbol-item">
+                            <div class="symbol">n</div>
+                            <div class="name">Número de pagos</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- AHORRO E INVERSIÓN -->
+        <div class="tab-content" id="ahorro-tab">
+            <div class="formula-section">
+                <h2 class="formula-title">Fórmula de Ahorro con Aportes Regulares</h2>
+                
+                <div class="formula">
+                    <span class="variable">VF</span> = <span class="variable">P</span>(1+<span class="variable">i</span>)<span class="operation">^</span><span class="variable">n</span> + <span class="variable">A</span> × [((1+<span class="variable">i</span>)<span class="operation">^</span><span class="variable">n</span> - 1) / <span class="variable">i</span>]
+                </div>
+                
+                <div class="step-by-step">
+                    <h3 style="color: var(--dark); margin-bottom: 20px; font-size: 1.5rem;">Explicación Paso a Paso</h3>
+                    
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">1</span>
+                            Convertir la tasa anual a mensual
+                        </div>
+                        <div class="step-calculation">
+                            Tasa mensual = Tasa anual ÷ 12 ÷ 100
+                        </div>
+                        <div class="step-explanation">
+                            Como los aportes son mensuales, necesitamos trabajar con la tasa de interés mensual. 
+                            Dividimos la tasa anual entre 12 y luego entre 100 para convertir a decimal.
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">2</span>
+                            Calcular el número total de meses
+                        </div>
+                        <div class="step-calculation">
+                            Número de meses = Años × 12
+                        </div>
+                        <div class="step-explanation">
+                            Multiplicamos el número de años por 12 para obtener el total de meses durante 
+                            los cuales harás aportes y ganarás intereses.
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">3</span>
+                            Calcular el crecimiento del ahorro inicial
+                        </div>
+                        <div class="step-calculation">
+                            Ahorro inicial × (1 + Tasa mensual)<span class="operation">^</span>Meses
+                        </div>
+                        <div class="step-explanation">
+                            Calculamos cuánto crece el ahorro inicial con interés compuesto durante todo 
+                            el período. Esta es la primera parte del valor futuro.
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">4</span>
+                            Calcular el factor de crecimiento de los aportes
+                        </div>
+                        <div class="step-calculation">
+                            (1 + Tasa mensual)<span class="operation">^</span>Meses - 1
+                        </div>
+                        <div class="step-explanation">
+                            Calculamos el factor de crecimiento compuesto para los aportes mensuales. 
+                            Esto representa cuánto crecerían los aportes con interés compuesto.
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">5</span>
+                            Dividir entre la tasa mensual
+                        </div>
+                        <div class="step-calculation">
+                            Resultado del paso 4 ÷ Tasa mensual
+                        </div>
+                        <div class="step-explanation">
+                            Dividimos el factor de crecimiento entre la tasa mensual para obtener el 
+                            factor de anualidad, que nos ayuda a calcular el valor futuro de una serie de pagos.
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">6</span>
+                            Multiplicar por el aporte mensual
+                        </div>
+                        <div class="step-calculation">
+                            Aporte mensual × Resultado del paso 5
+                        </div>
+                        <div class="step-explanation">
+                            Multiplicamos el aporte mensual por el factor de anualidad para obtener 
+                            el valor futuro de todos los aportes mensuales. Esta es la segunda parte del valor futuro.
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-title">
+                            <span class="step-number">7</span>
+                            Sumar ambas partes
+                        </div>
+                        <div class="step-calculation">
+                            Resultado del paso 3 + Resultado del paso 6
+                        </div>
+                        <div class="step-explanation">
+                            Sumamos el valor futuro del ahorro inicial más el valor futuro de los 
+                            aportes para obtener el valor futuro total de la inversión.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="example-box">
+                    <div class="example-title">Ejemplo Práctico</div>
+                    <div class="example-content">
+                        <p><strong>Supongamos:</strong></p>
+                        <ul>
+                            <li>Ahorro inicial: $1,000</li>
+                            <li>Aporte mensual: $100</li>
+                            <li>Tasa de interés: 6% anual</li>
+                            <li>Tiempo: 10 años</li>
+                        </ul>
+                        <p><strong>Cálculos:</strong></p>
+                        <ol>
+                            <li>Tasa mensual = 6% ÷ 12 ÷ 100 = 0.005</li>
+                            <li>Número de meses = 10 × 12 = 120</li>
+                            <li>Valor futuro inicial = $1,000 × (1.005)¹²⁰ = $1,819.40</li>
+                            <li>Factor crecimiento = (1.005)¹²⁰ - 1 = 0.819</li>
+                            <li>Factor anualidad = 0.819 ÷ 0.005 = 163.8</li>
+                            <li>Valor futuro aportes = $100 × 163.8 = $16,380</li>
+                            <li>Valor futuro total = $1,819.40 + $16,380 = $18,199.40</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="symbol-explanation">
+                    <h3>Significado de las Variables</h3>
+                    <div class="symbol-list">
+                        <div class="symbol-item">
+                            <div class="symbol">VF</div>
+                            <div class="name">Valor Futuro</div>
+                        </div>
+                        <div class="symbol-item">
+                            <div class="symbol">P</div>
+                            <div class="name">Ahorro Inicial</div>
+                        </div>
+                        <div class="symbol-item">
+                            <div class="symbol">A</div>
+                            <div class="name">Aporte Mensual</div>
+                        </div>
+                        <div class="symbol-item">
+                            <div class="symbol">i</div>
+                            <div class="name">Tasa interés mensual</div>
+                        </div>
+                        <div class="symbol-item">
+                            <div class="symbol">n</div>
+                            <div class="name">Número de meses</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sistema de pestañas
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remover clase active de todas las pestañas y contenidos
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // Agregar clase active a la pestaña clickeada
+                tab.classList.add('active');
+                
+                // Mostrar el contenido correspondiente
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(`${tabId}-tab`).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

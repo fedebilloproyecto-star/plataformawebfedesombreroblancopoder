@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manual - Marco Geométrico Premium</title>
+<style>
+  /* ======= GLOBAL ======= */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: #f4f6fa;
+    color: #2c3e50;
+    line-height: 1.6;
+    
+   border-radius: 10px;
+  max-width: 1200px;
+  margin: 90px auto;
+  }
+  h1, h2, h3 {
+    font-weight: 600;
+  }
+  ul {
+    margin-left: 20px;
+    margin-bottom: 10px;
+  }
+  li {
+    margin: 5px 0;
+  }
+  
+  /* ======= HEADER ======= */
+  header {
+    text-align: center;
+    padding: 50px 20px;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    color: #fff;
+    border-radius: 0 0 25px 25px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    position: relative;
+  }
+  header h1 span {
+    color: #ffde59;
+  }
+  header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-top: 10px;
+  }
+  
+  /* Botón volver al inicio */
+  .back-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 8px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .back-btn:hover {
+    background: rgba(255,255,255,0.3);
+    transform: translateX(-3px);
+  }
+
+  /* ======= MAIN ======= */
+  main {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+  .section {
+    background: #fff;
+    border-radius: 15px;
+    padding: 25px 30px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    border-left: 6px solid #2575fc;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .section:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+  }
+  .section h2 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section h2:before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    background: #2575fc;
+    border-radius: 50%;
+  }
+  .section h3 {
+    color: #34495e;
+    margin-top: 15px;
+    font-size: 1.1rem;
+    border-bottom: 1px dashed #ddd;
+    padding-bottom: 5px;
+  }
+  .section p {
+    margin: 8px 0;
+  }
+  
+  /* ======= TABLAS ======= */
+  .table-container {
+    overflow-x: auto;
+    margin: 15px 0;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+  }
+  th {
+    background: #2575fc;
+    color: white;
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 600;
+  }
+  td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #eee;
+  }
+  tr:nth-child(even) {
+    background: #f9fafc;
+  }
+  tr:hover {
+    background: #f0f5ff;
+  }
+  
+  /* ======= BOTONES ESTÉTICOS ======= */
+  .btn {
+    display: inline-block;
+    background: #2575fc;
+    color: #fff;
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-weight: 500;
+    margin: 5px 5px 5px 0;
+    text-decoration: none;
+    cursor: default;
+    opacity: 0.9;
+    border: none;
+    font-family: inherit;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  .btn:hover {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  
+  .btn-secondary {
+    background: #6c757d;
+  }
+  .btn-success {
+    background: #28a745;
+  }
+  .btn-warning {
+    background: #ffc107;
+    color: #212529;
+  }
+  .btn-danger {
+    background: #dc3545;
+  }
+  .btn-info {
+    background: #17a2b8;
+  }
+  .btn-light {
+    background: #f8f9fa;
+    color: #212529;
+  }
+  .btn-dark {
+    background: #343a40;
+  }
+
+  .pattern-preview {
+    width: 100%;
+    height: 100px;
+    background: repeating-linear-gradient(
+      45deg,
+      #dfe6e9,
+      #dfe6e9 10px,
+      #b2bec3 10px,
+      #b2bec3 20px
+    );
+    border-radius: 10px;
+    margin: 15px 0;
+    border: 1px solid #ccc;
+  }
+  
+  .pattern-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+    margin: 15px 0;
+  }
+  .pattern-item {
+    background: white;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    border: 1px solid #eee;
+    transition: all 0.3s ease;
+  }
+  .pattern-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+  }
+  .pattern-icon {
+    height: 60px;
+    background: #f1f3f9;
+    border-radius: 5px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+  }
+
+  footer {
+    text-align: center;
+    padding: 25px;
+    font-size: 0.9rem;
+    color: #777;
+    border-top: 1px solid #ddd;
+    margin-top: 50px;
+  }
+
+  @media (max-width: 768px) {
+    header h1 { font-size: 2rem; }
+    .section { padding: 20px; }
+    .back-btn {
+      position: relative;
+      top: 0;
+      left: 0;
+      margin-bottom: 15px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="ManualinstruccionesArte.html" class="back-btn">
+
+ Volver atrás 🏠</a>
+  <h1>Manual de <span>Marco Geométrico Premium</span></h1>
+  <p>Guía completa para personalizar fotos con marcos geométricos paso a paso</p>
+</header>
+
+<main>
+
+  <section class="section">
+    <h2>1. Cómo Empezar</h2>
+    <h3>1.1 Subir tu Foto</h3>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Botón</th>
+            <th>Descripción</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="btn">Subir tu propia foto</span></td>
+            <td>Permite cargar una imagen desde tu dispositivo</td>
+            <td>Selecciona una imagen en formato JPG, PNG o WebP</td>
+          </tr>
+          <tr>
+            <td><span class="btn btn-secondary">Cargar desde URL</span></td>
+            <td>Carga una imagen desde una dirección web</td>
+            <td>Ingresa la URL de la imagen en el campo de texto</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <h3>1.2 Usar Foto de Ejemplo</h3>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Botón</th>
+            <th>Descripción</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="btn btn-info">Usar Foto de Ejemplo</span></td>
+            <td>Carga automáticamente una imagen de muestra</td>
+            <td>Se carga una imagen de alta calidad desde Unsplash</td>
+          </tr>
+          <tr>
+            <td><span class="btn btn-warning">Aleatorio</span></td>
+            <td>Genera una nueva imagen aleatoria</td>
+            <td>Carga una imagen diferente de la biblioteca de Unsplash</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>2. Personalización del Marco</h2>
+    <h3>Colores del Marco</h3>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Control</th>
+            <th>Descripción</th>
+            <th>Valores</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="btn">Color Marco</span></td>
+            <td>Color principal del marco exterior</td>
+            <td>Cualquier color en formato HEX, RGB o HSL</td>
+          </tr>
+          <tr>
+            <td><span class="btn">Color Patrón</span></td>
+            <td>Color de los patrones geométricos internos</td>
+            <td>Cualquier color en formato HEX, RGB o HSL</td>
+          </tr>
+          <tr>
+            <td><span class="btn">Color Fondo</span></td>
+            <td>Color del área detrás de la foto</td>
+            <td>Cualquier color en formato HEX, RGB o HSL</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <h3>Ajustes de Tamaño y Forma</h3>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Control</th>
+            <th>Descripción</th>
+            <th>Rango</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="btn">Ancho del Marco</span></td>
+            <td>Grosor del marco alrededor de la foto</td>
+            <td>5px - 50px</td>
+          </tr>
+          <tr>
+            <td><span class="btn">Bordes Marco</span></td>
+            <td>Redondez de las esquinas del marco</td>
+            <td>0px - 50px</td>
+          </tr>
+          <tr>
+            <td><span class="btn">Bordes Foto</span></td>
+            <td>Redondez de las esquinas de la foto</td>
+            <td>0px - 50px</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <h3>Estilos Geométricos</h3>
+    <p>Se pueden elegir entre 16 patrones diferentes:</p>
+    <div class="pattern-grid">
+      <div class="pattern-item">
+        <div class="pattern-icon">●</div>
+        <div>Círculos</div>
+      </div>
+      <div class="pattern-item">
+        <div class="pattern-icon">▲</div>
+        <div>Triángulos</div>
+      </div>
+      <div class="pattern-item">
+        <div class="pattern-icon">⬡</div>
+        <div>Hexágonos</div>
+      </div>
+      <div class="pattern-item">
+        <div class="pattern-icon">◆</div>
+        <div>Diamantes</div>
+      </div>
+      <div class="pattern-item">
+        <div class="pattern-icon">~</div>
+        <div>Ondas</div>
+      </div>
+      <div class="pattern-item">
+        <div class="pattern-icon">⬟</div>
+        <div>Polígonos</div>
+      </div>
+      <div class="pattern-item">
+        <div class="pattern-icon">⧉</div>
+        <div>Laberinto</div>
+      </div>
+      <div class="pattern-item">
+        <div class="pattern-icon">|</div>
+        <div>Rayas</div>
+      </div>
+    </div>
+    
+    <h3>Presets Predefinidos</h3>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Preset</th>
+            <th>Descripción</th>
+            <th>Características</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="btn btn-secondary">Vintage</span></td>
+            <td>Estilo retro con tonos sepia</td>
+            <td>Colores cálidos, bordes redondeados, efecto sepia</td>
+          </tr>
+          <tr>
+            <td><span class="btn">Moderno</span></td>
+            <td>Diseño contemporáneo y minimalista</td>
+            <td>Colores neutros, bordes rectos, patrones geométricos simples</td>
+          </tr>
+          <tr>
+            <td><span class="btn btn-warning">Elegante</span></td>
+            <td>Estilo sofisticado y refinado</td>
+            <td>Colores oscuros, detalles dorados, patrones complejos</td>
+          </tr>
+          <tr>
+            <td><span class="btn btn-success">Divertido</span></td>
+            <td>Estilo colorido y juguetón</td>
+            <td>Colores vibrantes, patrones dinámicos, bordes redondeados</td>
+          </tr>
+          <tr>
+            <td><span class="btn btn-light">Minimalista</span></td>
+            <td>Diseño limpio y simple</td>
+            <td>Colores claros, poco contraste, elementos esenciales</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>3. Ajustes de la Foto</h2>
+    <h3>Ajustes Básicos</h3>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Control</th>
+            <th>Descripción</th>
+            <th>Rango</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="btn">Brillo</span></td>
+            <td>Ajusta la luminosidad de la imagen</td>
+            <td>0% - 200%</td>
+          </tr>
+          <tr>
+            <td><span class="btn">Contraste</span></td>
+            <td>Ajusta la diferencia entre luces y sombras</td>
+            <td>0% - 200%</td>
+          </tr>
+          <tr>
+            <td><span class="btn">Saturación</span></td>
+            <td>Ajusta la intensidad de los colores</td>
+            <td>0% - 200%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <h3>Efectos Avanzados</h3>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Control</th>
+            <th>Descripción</th>
+            <th>Rango</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="btn">Tono (Hue)</span></td>
+            <td>Cambia el matiz de todos los colores</td>
+            <td>0° - 360°</td>
+          </tr>
+          <tr>
+            <td><span class="btn">Sepia</span></td>
+            <td>Aplica un efecto vintage en tonos marrones</td>
+            <td>0% - 100%</td>
+          </tr>
+          <tr>
+            <td><span class="btn">Desenfoque</span></td>
+            <td>Suaviza los detalles de la imagen</td>
+            <td>0px - 10px</td>
+          </tr>
+          <tr>
+            <td><span class="btn">Escala de grises</span></td>
+            <td>Convierte la imagen a blanco y negro</td>
+            <td>0% - 100%</td>
+          </tr>
+          <tr>
+            <td><span class="btn">Invertir colores</span></td>
+            <td>Invierte todos los colores de la imagen</td>
+            <td>0% - 100%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <h3>Herramientas de Foto</h3>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Control</th>
+            <th>Descripción</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="btn">Rotar</span></td>
+            <td>Gira la imagen 90° en sentido horario</td>
+            <td>Clic para rotar, mantén presionado para rotación continua</td>
+          </tr>
+          <tr>
+            <td><span class="btn">Zoom</span></td>
+            <td>Aumenta o reduce el tamaño de la imagen</td>
+            <td>Deslizador o rueda del ratón sobre la imagen</td>
+          </tr>
+          <tr>
+            <td><span class="btn">Arrastrar</span></td>
+            <td>Mueve la imagen dentro del marco</td>
+            <td>Haz clic y arrastra la imagen para reposicionarla</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>4. Efectos Especiales</h2>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Control</th>
+            <th>Descripción</th>
+            <th>Opciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="btn">Superposición de Color</span></td>
+            <td>Aplica una capa de color sobre la imagen</td>
+            <td>Elige color y ajusta opacidad (0%-100%)</td>
+          </tr>
+          <tr>
+            <td><span class="btn">Modo de Mezcla</span></td>
+            <td>Controla cómo se mezclan las capas</td>
+            <td>Normal, Multiplicar, Pantalla, Sobreexponer, etc.</td>
+          </tr>
+          <tr>
+            <td><span class="btn btn-warning">Efectos Rápidos</span></td>
+            <td>Aplica efectos predefinidos con un clic</td>
+            <td>Colores Rápidos, Sacudida, Vintage, Desenfocar</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>5. Branding y Texto</h2>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Función</th>
+            <th>Descripción</th>
+            <th>Opciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="btn">Subir Logo</span></td>
+            <td>Añade una marca de agua o logo</td>
+            <td>Controla tamaño, posición y opacidad</td>
+          </tr>
+          <tr>
+            <td><span class="btn">Agregar Texto</span></td>
+            <td>Inserta texto personalizado</td>
+            <td>Color, fuente, tamaño, posición y opacidad</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>6. Funciones Avanzadas</h2>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Función</th>
+            <th>Descripción</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="btn btn-success">Guardar Preset</span></td>
+            <td>Guarda la configuración actual</td>
+            <td>Almacena todos los ajustes para uso futuro</td>
+          </tr>
+          <tr>
+            <td><span class="btn">Cargar Preset</span></td>
+            <td>Carga una configuración guardada</td>
+            <td>Restaura todos los ajustes de un preset</td>
+          </tr>
+          <tr>
+            <td><span class="btn btn-info">Descargar Imagen</span></td>
+            <td>Guarda la imagen final</td>
+            <td>Descarga en formato PNG alta calidad</td>
+          </tr>
+          <tr>
+            <td><span class="btn btn-danger">Reiniciar Todo</span></td>
+            <td>Vuelve a la configuración inicial</td>
+            <td>Restablece todos los ajustes a sus valores por defecto</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>7. Consejos y Mejores Prácticas</h2>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Consejo</th>
+            <th>Descripción</th>
+            <th>Beneficio</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Usar fotos de alta resolución</td>
+            <td>Imágenes con al menos 2000px en su dimensión mayor</td>
+            <td>Mayor calidad en el resultado final</td>
+          </tr>
+          <tr>
+            <td>Combinaciones de colores complementarios</td>
+            <td>Usa la rueda de color para elegir combinaciones armónicas</td>
+            <td>Resultados visualmente atractivos</td>
+          </tr>
+          <tr>
+            <td>Ajustar opacidad para efectos sutiles</td>
+            <td>Usa valores entre 10% y 30% para efectos de superposición</td>
+            <td>Efectos más naturales y profesionales</td>
+          </tr>
+          <tr>
+            <td>Usar presets como base</td>
+            <td>Comienza con un preset y luego personaliza</td>
+            <td>Ahorra tiempo y garantiza buenos resultados</td>
+          </tr>
+          <tr>
+            <td>Guardar configuraciones favoritas</td>
+            <td>Guarda tus combinaciones más exitosas</td>
+            <td>Consistencia en futuros proyectos</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>8. Compatibilidad y Requisitos</h2>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Elemento</th>
+            <th>Requisitos</th>
+            <th>Notas</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Navegadores</td>
+            <td>Chrome, Firefox, Safari, Edge (versiones recientes)</td>
+            <td>Funcionalidad completa garantizada</td>
+          </tr>
+          <tr>
+            <td>Dispositivos</td>
+            <td>Computadoras, tablets, smartphones</td>
+            <td>Interfaz responsive adaptada a cada dispositivo</td>
+          </tr>
+          <tr>
+            <td>Conexión a internet</td>
+            <td>Requerida para cargar recursos externos</td>
+            <td>Fotos de Unsplash y fuentes web</td>
+          </tr>
+          <tr>
+            <td>Almacenamiento</td>
+            <td>Presets guardados localmente en el navegador</td>
+            <td>Los datos se pierden al limpiar el caché del navegador</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+
+
+</body>
+</html>

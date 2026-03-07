@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ciudad del Conocimiento | Guía Vocacional Profesional</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        /* ==================================== */
+        /* 1. Variables CSS Mejoradas */
+        /* ==================================== */
+        :root {
+            /* Paleta de colores mejorada */
+            --color-primary: #3498db;
+            --color-secondary: #2ecc71;
+            --color-accent: #e67e22;
+            --color-dark: #2c3e50;
+            --color-light: #ecf0f1;
+            --color-gray: #95a5a6;
+            
+            /* Gradientes modernos */
+            --gradient-primary: linear-gradient(135deg, #3498db, #2c3e50);
+            --gradient-secondary: linear-gradient(135deg, #2ecc71, #27ae60);
+            --gradient-accent: linear-gradient(135deg, #e67e22, #d35400);
+            --gradient-card: linear-gradient(145deg, #ffffff, #f5f7fa);
+            
+            /* Sombras mejoradas */
+            --shadow-light: 0 10px 20px rgba(0,0,0,0.05);
+            --shadow-medium: 0 15px 30px rgba(0,0,0,0.1);
+            --shadow-heavy: 0 20px 40px rgba(0,0,0,0.15);
+            --shadow-inset: inset 0 2px 4px rgba(0,0,0,0.05);
+            
+            /* Bordes redondeados */
+            --radius-small: 12px;
+            --radius-medium: 20px;
+            --radius-large: 30px;
+            --radius-full: 50px;
+            
+            /* Espaciado consistente */
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 1.5rem;
+            --space-lg: 2.5rem;
+            --space-xl: 4rem;
+        }
+
+        /* ==================================== */
+        /* 2. Reset y Estilos Base */
+        /* ==================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--gradient-primary);
+            color: var(--color-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: var(--space-md);
+                border-radius: 10px;
+  max-width: 900px;
+  margin: 90px auto;
+        }
+
+        /* ==================================== */
+        /* 3. Contenedor Principal */
+        /* ==================================== */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            background: var(--gradient-card);
+            border-radius: var(--radius-large);
+            box-shadow: var(--shadow-heavy);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Efecto de partículas decorativas */
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-accent);
+            z-index: 10;
+        }
+
+        /* ==================================== */
+        /* 4. Encabezado Mejorado */
+        /* ==================================== */
+        .header {
+            /* Se ajusta el padding para compensar la eliminación de la navegación */
+            padding: var(--space-xl); 
+            text-align: center;
+            background: var(--gradient-primary);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 8s infinite linear;
+        }
+
+        @keyframes pulse {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: var(--space-sm);
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 2;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            font-weight: 300;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ==================================== */
+        /* 5. Navegación Mejorada (ELIMINADA) */
+        /* ==================================== */
+        
+        /* Se eliminaron los estilos .navigation, .nav-tabs, .nav-tab, etc. */
+
+
+        /* ==================================== */
+        /* 6. Área de Contenido Mejorada */
+        /* ==================================== */
+        .content-area {
+            padding: var(--space-xl);
+            min-height: 500px;
+        }
+
+        .content-header {
+            margin-bottom: var(--space-lg);
+            padding-bottom: var(--space-md);
+            border-bottom: 2px solid rgba(0,0,0,0.05);
+        }
+
+        .content-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: var(--space-xs);
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .content-description {
+            font-size: 1.1rem;
+            color: var(--color-gray);
+            max-width: 800px;
+        }
+        
+        /* Contenedor para la CTA principal */
+        .main-cta-container {
+            text-align: center;
+            margin-top: var(--space-lg);
+            margin-bottom: var(--space-xl);
+            opacity: 0; 
+            animation: fadeInUp 0.6s ease forwards 0.2s; 
+        }
+
+
+        /* ==================================== */
+        /* 7. Grid de Tarjetas Mejorado */
+        /* ==================================== */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: var(--space-lg);
+            margin-top: var(--space-lg);
+        }
+
+        .knowledge-card {
+            background: white;
+            border-radius: var(--radius-medium);
+            padding: var(--space-lg);
+            box-shadow: var(--shadow-light);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            border-left: 5px solid var(--color-primary);
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .knowledge-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .knowledge-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .knowledge-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: var(--space-md);
+            color: var(--color-primary);
+            background: var(--gradient-card);
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            box-shadow: var(--shadow-light);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: var(--space-sm);
+            color: var(--color-dark);
+        }
+
+        .card-description {
+            color: var(--color-gray);
+            line-height: 1.6;
+        }
+
+        .card-description strong {
+            color: var(--color-primary);
+            font-weight: 700;
+        }
+
+        /* ==================================== */
+        /* 8. Caja de Reflexión Mejorada */
+        /* ==================================== */
+        .reflection-box {
+            background: white;
+            border-radius: var(--radius-medium);
+            padding: var(--space-xl);
+            box-shadow: var(--shadow-light);
+            text-align: center;
+            margin-top: var(--space-xl); 
+            border-left: 5px solid var(--color-accent);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .reflection-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(230, 126, 34, 0.03), transparent);
+            z-index: 0;
+        }
+
+        .reflection-box p {
+            font-style: italic;
+            font-size: 1.5rem;
+            color: var(--color-dark);
+            line-height: 1.6;
+            margin-bottom: var(--space-lg);
+            position: relative;
+            z-index: 1;
+        }
+
+        .redirect-link {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            padding: var(--space-sm) var(--space-lg);
+            background: var(--gradient-accent);
+            color: white;
+            text-decoration: none;
+            border-radius: var(--radius-full);
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-medium);
+            position: relative;
+            z-index: 1;
+            font-size: 1.1rem; 
+        }
+
+        .redirect-link:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-heavy);
+        }
+        
+        /* Estilos para el botón de conocimientos */
+        .conocimientos-button {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            padding: var(--space-sm) var(--space-lg);
+            background: var(--gradient-secondary);
+            color: white;
+            text-decoration: none;
+            border-radius: var(--radius-full);
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-medium);
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem; 
+        }
+
+        .conocimientos-button:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-heavy);
+        }
+
+        /* ==================================== */
+        /* 9. Animaciones Mejoradas */
+        /* ==================================== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .slide-in-left {
+            animation: slideInLeft 0.6s ease forwards;
+        }
+
+        .stagger-delay-1 { animation-delay: 0.1s; }
+        .stagger-delay-2 { animation-delay: 0.2s; }
+        .stagger-delay-3 { animation-delay: 0.3s; }
+        .stagger-delay-4 { animation-delay: 0.4s; }
+
+        /* ==================================== */
+        /* 10. Responsive Design */
+        /* ==================================== */
+        @media (max-width: 992px) {
+            h1 { font-size: 2.8rem; }
+            .card-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+        }
+
+        @media (max-width: 768px) {
+            body { padding: var(--space-sm); }
+            
+            .container { border-radius: var(--radius-medium); }
+            
+            .header { padding: var(--space-lg) var(--space-md); }
+            
+            h1 { font-size: 2.2rem; }
+            
+            .subtitle { font-size: 1.1rem; }
+            
+            .content-area { padding: var(--space-lg) var(--space-md); }
+            
+            .content-header h2 { font-size: 2rem; }
+            
+            .card-grid { grid-template-columns: 1fr; gap: var(--space-md); }
+            
+            .reflection-box p { font-size: 1.3rem; }
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 1.8rem; }
+            
+            .content-header h2 { font-size: 1.6rem; }
+            
+            .knowledge-card { padding: var(--space-md); }
+            
+            .reflection-box { padding: var(--space-lg); }
+            
+            .reflection-box p { font-size: 1.1rem; }
+        }
+        /* Solo estilos para el botón "Volver atrás" */
+.back-button {
+  display: inline-block;
+  padding: 10px 18px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 2px solid #333;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  user-select: none;
+}
+
+/* Efecto al pasar el ratón */
+.back-button:hover,
+.back-button:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+  text-decoration: none;
+  outline: none;
+}
+
+/* Efecto al hacer clic */
+.back-button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+/* Solo estilos para el botón "Volver atrás" */
+.back-button {
+  display: inline-block;
+  padding: 10px 18px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 2px solid #333;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  user-select: none;
+}
+
+/* Efecto al pasar el ratón */
+.back-button:hover,
+.back-button:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+  text-decoration: none;
+  outline: none;
+}
+
+/* Efecto al hacer clic */
+.back-button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+.back-btn {
+    display: inline-block;
+    padding: 12px 20px;
+    margin: 10px 0;
+
+    /* Texto */
+    color: #000; /* negro bien visible */
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+
+    /* Fondo y borde */
+    background-color: #f2f2f2;
+    border: 3px solid #007BFF; /* azul */
+    border-radius: 8px;
+
+    /* Marco tipo sombra */
+    box-shadow: 3px 3px 0px #ff9800; /* naranja */
+
+    /* Transición suave */
+    transition: all 0.3s ease;
+}
+
+/* Efecto al pasar el mouse */
+.back-btn:hover {
+    background-color: #007BFF;
+    color: #fff;
+    box-shadow: 3px 3px 0px #000;
+    transform: translateY(-2px);
+}
+
+/* Icono */
+.back-btn i {
+    margin-right: 8px;
+}
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+    <div class="header"> 
+            <h1>CIUDAD DEL CONOCIMIENTO</h1>
+            <p class="subtitle">Explora los pilares fundamentales y las rutas detalladas de nuestra Guía Vocacional Profesional.</p>
+        </div>
+         <a href="Webconocimientosprincipal.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Volver Atrás
+        </a>
+        <div class="content-area">
+            <div class="content-header fade-in-up">
+                <h2>EDIFICIOS FUNDAMENTALES (Ramas BÁSICAS)</h2>
+                <p class="content-description">Estas estructuras clave son los cimientos de cualquier carrera profesional. ¡Haz clic para explorar los temas que te interesan!</p>
+            </div>
+            
+          
+            </div>
+            
+            <div class="card-grid">
+                <a href="#abogacia" class="knowledge-card stagger-delay-1 fade-in-up">
+                    <i class="fas fa-landmark card-icon"></i>
+                    <div class="card-title">Abogacía</div>
+                    <p class="card-description">Análisis de la justicia, el derecho y el sistema legal. <strong>Abogacía, Leyes, Notariado</strong>.</p>
+                </a>
+                
+                <a href="#tecnologia" class="knowledge-card stagger-delay-2 fade-in-up">
+                    <i class="fas fa-robot card-icon"></i>
+                    <div class="card-title">Tecnología</div>
+                    <p class="card-description">Sistemas, desarrollo, infraestructura digital y automatización. <strong>Programación, Ciberseguridad, IA</strong>.</p>
+                </a>
+                
+                <a href="#psicologia" class="knowledge-card stagger-delay-3 fade-in-up">
+                    <i class="fas fa-brain card-icon" style="color: #2ecc71;"></i> 
+                    <div class="card-title">Psicología</div>
+                    <p class="card-description">Estudio de la conducta humana, la mente y el comportamiento. <strong>Psicología Clínica, Neurociencia, Coaching</strong>.</p>
+                </a>
+                
+                <a href="#contabilidad" class="knowledge-card stagger-delay-4 fade-in-up">
+                    <i class="fas fa-chart-line card-icon"></i>
+                    <div class="card-title">Contabilidad</div>
+                    <p class="card-description">Administración, gestión de negocios y estrategia económica. <strong>Contabilidad, Finanzas, RRHH</strong>.</p>
+                </a>
+            </div>
+            
+            <div class="reflection-box fade-in-up">
+                <p>Cada vocación es un viaje único, lleno de descubrimientos, retos y oportunidades. Al recorrer nuestro catálogo, no solo eliges un destino académico o profesional, sino que decides quién deseas ser, qué habilidades quieres desarrollar y cómo quieres impactar en tu vida y en el mundo. Te ayudamos a comprender cada carrera y a elegir el camino que mejor se adapte a ti, para que sigas tu era con actitud, confianza y motivación. Cada curso, cada experiencia práctica y teórica es una oportunidad para crecer, explorar tus talentos y acercarte a la mejor versión de ti mismo, construyendo un futuro con propósito, pasión y determinación.</p>
+                
+                <a href="conocimientosaprende.html" class="redirect-link">
+                    <i class="fas fa-map-marked-alt"></i> Explorar el Catálogo Completo
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

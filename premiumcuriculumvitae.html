@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover" />
+  <title>CV PRO · Optimizado para Celular</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    /* --- RESET Y VARIABLES --- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    body {
+      background: #1a2632; /* fondo oscuro pero suave */
+      min-height: 100vh;
+      padding: 8px 6px; /* menos padding para aprovechar espacio */
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+
+    :root {
+      --bg-aside: #1a1a1a;
+      --text-aside: #ffffff;
+      --bg-main: #ffffff;
+      --text-main: #2d3436;
+      --accent: #0066cc;
+      --border-color: #d0d9e5;
+      --border-radius: 24px; /* ligeramente más pequeño para móvil */
+      --aside-padding: 20px; /* reducido para móvil */
+      --main-padding: 20px; /* reducido para móvil */
+      --font-size-base: 14px; /* más pequeño para móvil */
+      --touch-target-size: 44px; /* tamaño mínimo táctil */
+    }
+
+    /* --- CONTENEDOR PRINCIPAL - OCUPA TODO EL ANCHO --- */
+    .premium-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 12px; /* menos espacio entre elementos */
+      width: 100%;
+      max-width: 100%; /* ocupar todo el ancho disponible */
+      margin: 0 auto;
+    }
+
+    /* --- EDITOR SIDEBAR - OCUPA TODA LA PANTALLA --- */
+    .editor-sidebar {
+      background: #ffffff;
+      border-radius: var(--border-radius);
+      padding: 16px 14px; /* padding reducido */
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      border: 1px solid var(--border-color);
+      width: 100%;
+    }
+
+    /* BOTÓN VOLVER - MÁS GRANDE PARA TÁCTIL */
+    .back-button-container {
+      margin-bottom: 16px;
+    }
+    .btn-back {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: #2d3436;
+      color: white;
+      padding: 14px 16px; /* altura táctil 44px+ */
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 1rem;
+      transition: 0.2s;
+      border: 2px solid transparent;
+      width: 100%;
+      min-height: var(--touch-target-size);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .btn-back:active {
+      background: var(--accent);
+      transform: scale(0.98);
+    }
+
+    /* PANEL DE CONTROL DE ESTILOS - COMPACTO */
+    .style-panel {
+      background: #f0f4fa;
+      border-radius: 22px;
+      padding: 14px 12px;
+      margin-bottom: 16px;
+      border: 2px solid var(--border-color);
+    }
+    .style-panel h3 {
+      font-size: 0.95rem;
+      font-weight: 900;
+      margin-bottom: 12px;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      border-left: 4px solid var(--accent);
+      padding-left: 10px;
+    }
+    .control-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+    .control-row label {
+      font-weight: 800;
+      font-size: 0.65rem;
+      color: #2d4a4a;
+      text-transform: uppercase;
+      min-width: 70px;
+    }
+    .control-row input[type="color"] {
+      width: 45px;
+      height: 32px;
+      border: 2px solid var(--border-color);
+      border-radius: 20px;
+      cursor: pointer;
+    }
+    .control-row input[type="range"] {
+      flex: 1;
+      height: 6px;
+      border-radius: 20px;
+      background: #d9e0e8;
+    }
+    .control-row span {
+      font-weight: 700;
+      min-width: 35px;
+      font-size: 0.7rem;
+    }
+
+    /* SECCIONES - MÁS COMPACTAS */
+    .section-card {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 16px 14px;
+      margin-bottom: 14px;
+      border: 2px solid var(--border-color);
+      box-shadow: 0 3px 6px rgba(0,0,0,0.02);
+    }
+    .section-card h3 {
+      font-size: 1rem;
+      font-weight: 900;
+      margin-bottom: 12px;
+      color: var(--text-main);
+      border-left: 4px solid var(--accent);
+      padding-left: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .section-card label {
+      font-size: 0.6rem;
+      font-weight: 800;
+      display: block;
+      margin-top: 10px;
+      margin-bottom: 3px;
+      color: #555;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    .section-card input,
+    .section-card textarea {
+      width: 100%;
+      padding: 12px 14px; /* altura táctil */
+      border: 2px solid var(--border-color);
+      border-radius: 22px;
+      font-size: 0.9rem;
+      background: #fafbfc;
+      transition: 0.2s;
+      min-height: 44px; /* tamaño mínimo táctil */
+    }
+    .section-card input:focus,
+    .section-card textarea:focus {
+      border-color: var(--accent);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(0,102,204,0.1);
+    }
+    /* textarea más alto */
+    .section-card textarea {
+      min-height: 80px;
+    }
+
+    /* PRESETS DE COLOR - BOTONES TÁCTILES */
+    .color-preset-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin: 10px 0;
+    }
+    .preset-btn {
+      padding: 14px 3px; /* altura táctil */
+      border: none;
+      border-radius: 40px;
+      font-weight: 800;
+      font-size: 0.7rem;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: 0.1s;
+      min-height: 44px;
+    }
+    .preset-btn:active {
+      transform: scale(0.96);
+      filter: brightness(1.1);
+    }
+
+    /* BOTONES DE DESCARGA - GRANDES Y TÁCTILES */
+    .download-buttons {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+      flex-wrap: nowrap; /* en línea en móvil */
+    }
+    .btn-download-img {
+      flex: 1;
+      padding: 14px 5px;
+      border: none;
+      border-radius: 40px;
+      background: var(--accent);
+      color: white;
+      font-weight: 800;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: 0 6px 12px rgba(0,102,204,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      min-height: 48px; /* extra grande para táctil */
+    }
+    .btn-download-img:active {
+      background: #0052a3;
+      transform: scale(0.97);
+    }
+    .btn-download-img i {
+      font-size: 1rem;
+    }
+
+    /* --- PREVIEW DEL CV - TAMAÑO REAL SIN ESCALADOS EXTRAÑOS --- */
+    .preview-pane {
+      width: 100%;
+      background: transparent;
+    }
+    .cv-canvas {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      background: white;
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      border: 2px solid var(--border-color);
+      font-size: var(--font-size-base);
+      /* SIN ESCALA - tamaño real */
+    }
+    .cv-aside {
+      background: var(--bg-aside);
+      color: var(--text-aside);
+      padding: var(--aside-padding);
+      width: 100%;
+    }
+    .cv-main {
+      background: var(--bg-main);
+      color: var(--text-main);
+      padding: var(--main-padding);
+      width: 100%;
+    }
+
+    /* ELEMENTOS DEL CV - AJUSTADOS PARA MÓVIL */
+    .profile-img {
+      width: 100px; /* más pequeña en móvil */
+      height: 100px;
+      margin: 0 auto 15px;
+      border: 3px solid var(--accent);
+      border-radius: 25px 8px;
+      overflow: hidden;
+      background: #eee;
+    }
+    .profile-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .aside-title {
+      font-size: 0.8rem;
+      font-weight: 900;
+      color: var(--accent);
+      border-bottom: 2px solid var(--accent);
+      margin-top: 18px;
+      margin-bottom: 8px;
+      padding-bottom: 5px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .aside-item {
+      font-size: 0.8rem;
+      margin: 8px 0;
+      line-height: 1.4;
+      display: flex;
+      flex-direction: column;
+      background: rgba(255,255,255,0.05); /* sutil en modo oscuro */
+      padding: 6px 10px;
+      border-radius: 16px;
+    }
+    .aside-item b {
+      font-size: 0.6rem;
+      opacity: 0.7;
+      text-transform: uppercase;
+    }
+    .main-name {
+      font-size: 1.8rem; /* más pequeño en móvil */
+      font-weight: 900;
+      line-height: 1.1;
+      color: var(--text-main);
+      word-break: break-word;
+    }
+    .main-job {
+      font-size: 1rem;
+      color: var(--accent);
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+    .main-title {
+      font-size: 1rem;
+      font-weight: 900;
+      color: var(--accent);
+      margin: 18px 0 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      border-left: 4px solid var(--accent);
+      padding-left: 12px;
+    }
+    .main-content {
+      font-size: 0.85rem;
+      line-height: 1.5;
+      white-space: pre-line;
+      color: #4a5568;
+    }
+    .edu-item {
+      margin-bottom: 12px;
+      border-left: 3px solid var(--accent);
+      padding-left: 10px;
+    }
+    .edu-label {
+      font-weight: 900;
+      color: var(--accent);
+      text-transform: uppercase;
+      font-size: 0.6rem;
+    }
+    .edu-value {
+      font-weight: 600;
+      display: block;
+      font-size: 0.85rem;
+    }
+    .skill {
+      background: var(--accent);
+      color: white;
+      padding: 5px 10px;
+      border-radius: 30px;
+      font-size: 0.7rem;
+      display: inline-block;
+      margin: 2px;
+    }
+
+    /* --- ELIMINAMOS CUALQUIER ESCALA QUE DISTORSIONE --- */
+    /* No hay transform: scale en ningún lado */
+    
+    /* Ajustes para pantallas muy pequeñas (menos de 360px) */
+    @media (max-width: 360px) {
+      :root {
+        --aside-padding: 16px;
+        --main-padding: 16px;
+        --font-size-base: 13px;
+      }
+      .profile-img {
+        width: 90px;
+        height: 90px;
+      }
+      .main-name {
+        font-size: 1.6rem;
+      }
+      .btn-download-img {
+        font-size: 0.75rem;
+        padding: 12px 3px;
+      }
+      .download-buttons {
+        gap: 5px;
+      }
+    }
+
+    /* Para pantallas más grandes (tablets) el preview se ve proporcionado */
+    @media (min-width: 500px) {
+      .premium-wrapper {
+        max-width: 550px;
+      }
+      :root {
+        --font-size-base: 15px;
+      }
+    }
+
+    /* escritorio - si alguna vez se ve en pantalla grande */
+    @media (min-width: 1024px) {
+      body {
+        padding: 20px;
+      }
+      .premium-wrapper {
+        max-width: 1400px;
+        flex-direction: row;
+        gap: 20px;
+      }
+      .editor-sidebar {
+        width: 420px;
+      }
+      .preview-pane {
+        flex: 1;
+      }
+      .cv-canvas {
+        flex-direction: row;
+      }
+      .cv-aside {
+        width: 35%;
+      }
+      .cv-main {
+        width: 65%;
+      }
+      .profile-img {
+        width: 130px;
+        height: 130px;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="premium-wrapper">
+
+  <!-- EDITOR SIDEBAR - OCUPA TODO EL ANCHO -->
+  <aside class="editor-sidebar">
+
+    <div class="back-button-container">
+   <a href="herramientamultimediapresentacion.html" class="btn-back">
+  <i class="fas fa-arrow-left"></i> VOLVER ATRÁS
+</a>
+    </div>
+
+    <!-- PANEL DE PERSONALIZACIÓN TOTAL -->
+    <div class="style-panel">
+      <h3><i class="fas fa-paint-brush"></i> PERSONALIZAR</h3>
+      
+      <div class="control-row">
+        <label>Fondo Aside</label>
+        <input type="color" id="colorAside" value="#1a1a1a" oninput="updateStyle()">
+        <label>Texto Aside</label>
+        <input type="color" id="colorAsideText" value="#ffffff" oninput="updateStyle()">
+      </div>
+      <div class="control-row">
+        <label>Fondo Main</label>
+        <input type="color" id="colorMain" value="#ffffff" oninput="updateStyle()">
+        <label>Texto Main</label>
+        <input type="color" id="colorMainText" value="#2d3436" oninput="updateStyle()">
+      </div>
+      <div class="control-row">
+        <label>Acento</label>
+        <input type="color" id="colorAccent" value="#0066cc" oninput="updateStyle()">
+        <label>Borde</label>
+        <input type="color" id="colorBorder" value="#d0d9e5" oninput="updateStyle()">
+      </div>
+      <div class="control-row">
+        <label>Radio borde</label>
+        <input type="range" id="borderRadius" min="0" max="30" value="24" step="1" oninput="updateRange(this); updateStyle()">
+        <span id="borderRadiusVal">24px</span>
+      </div>
+      <div class="control-row">
+        <label>Padding Aside</label>
+        <input type="range" id="asidePadding" min="10" max="30" value="20" step="1" oninput="updateRange(this); updateStyle()">
+        <span id="asidePaddingVal">20px</span>
+      </div>
+      <div class="control-row">
+        <label>Padding Main</label>
+        <input type="range" id="mainPadding" min="10" max="30" value="20" step="1" oninput="updateRange(this); updateStyle()">
+        <span id="mainPaddingVal">20px</span>
+      </div>
+      <div class="control-row">
+        <label>Fuente base</label>
+        <input type="range" id="fontSizeBase" min="12" max="18" value="14" step="1" oninput="updateRange(this); updateStyle()">
+        <span id="fontSizeBaseVal">14px</span>
+      </div>
+    </div>
+
+    <!-- INTELIGENCIA DE COLOR -->
+    <div class="section-card" style="background: #1a1a1a; color: white;">
+      <h3 style="color:white; border-left-color:#ffb347;"><i class="fas fa-magic"></i> INTELIGENCIA DE COLOR</h3>
+      <div class="color-preset-grid">
+        <button class="preset-btn" style="background:#ff4757; color:white;" onclick="applyPreset('#1a1a1a','#ffffff','#ffffff','#2d3436','#ff4757')">🔥 Vibrante Rojo</button>
+        <button class="preset-btn" style="background:#0a3d62; color:white;" onclick="applyPreset('#0a3d62','#ffffff','#f1f2f6','#0a3d62','#3c6382')">⚓ Azul Naval</button>
+        <button class="preset-btn" style="background:#05c46b; color:#1e272e;" onclick="applyPreset('#1e272e','#ffffff','#ffffff','#1e272e','#05c46b')">🌿 Ecológico</button>
+        <button class="preset-btn" style="background:#eccc68; color:#2f3542;" onclick="applyPreset('#2f3542','#ffffff','#2f3542','#ffffff','#eccc68')">🏆 Premium Oro</button>
+      </div>
+    </div>
+
+    <!-- 1. DATOS PERSONALES PRO -->
+    <div class="section-card">
+      <h3><i class="fas fa-user-circle"></i> 1. DATOS PERSONALES</h3>
+      <label>Nombre Completo</label><input type="text" id="in_name" value="ALEXANDER VANCE" oninput="upd()">
+      <label>Título Profesional</label><input type="text" id="in_job" value="SENIOR PROJECT MANAGER" oninput="upd()">
+      <label>DNI / Pasaporte</label><input type="text" id="in_dni" value="ID: 99.888.777-Q" oninput="upd()">
+      <label>Fecha Nacimiento</label><input type="text" id="in_birth" value="12 Mayo 1985" oninput="upd()">
+      <label>Nacionalidad</label><input type="text" id="in_nat" value="Española / Italiana" oninput="upd()">
+      <label>Dirección</label><input type="text" id="in_addr" value="Madrid, España" oninput="upd()">
+    </div>
+
+    <!-- 2. REDES SOCIALES (solo las más importantes para ahorrar espacio) -->
+    <div class="section-card">
+      <h3><i class="fab fa-facebook"></i> 2. REDES</h3>
+      <label>Facebook</label><input type="text" id="in_fb" value="fb.com/alex.vance" oninput="upd()">
+      <label>Instagram</label><input type="text" id="in_ig" value="@alexvance_pro" oninput="upd()">
+      <label>LinkedIn</label><input type="text" id="in_li" value="linkedin.com/in/alexvance" oninput="upd()">
+      <label>Web</label><input type="text" id="in_web" value="www.vancedesign.pro" oninput="upd()">
+      <label>Teléfono</label><input type="text" id="in_tel" value="+34 611 222 333" oninput="upd()">
+      <label>Email</label><input type="text" id="in_mail" value="vance.pro@email.com" oninput="upd()">
+    </div>
+
+    <!-- 3. EXPERIENCIA (resumida para móvil) -->
+    <div class="section-card">
+      <h3><i class="fas fa-briefcase"></i> 3. EXPERIENCIA</h3>
+      <label>Perfil</label>
+      <textarea id="in_profile" rows="2" oninput="upd()">Líder estratégico con +15 años en tecnología. Optimización de procesos y reducción de costes 25%.</textarea>
+      <label>Experiencia</label>
+      <textarea id="in_exp" rows="3" oninput="upd()">• Director Operaciones - Global Tech (2018-2024)\n• Senior Consultant - Strategy Group (2012-2018)</textarea>
+    </div>
+
+    <!-- 4. EDUCACIÓN (compacta) -->
+    <div class="section-card">
+      <h3><i class="fas fa-graduation-cap"></i> 4. EDUCACIÓN</h3>
+      <label>Primaria</label><input type="text" id="in_primaria" value="Colegio San Gabriel" oninput="upd()">
+      <label>Secundaria</label><input type="text" id="in_secundaria" value="Instituto Marqués" oninput="upd()">
+      <label>Universidad</label><input type="text" id="in_univ" value="Univ. Politécnica - Ing. Informática" oninput="upd()">
+      <label>Máster</label><input type="text" id="in_master" value="MBA - Harvard" oninput="upd()">
+      <label>Certificaciones</label><input type="text" id="in_cert" value="PMP®, Scrum Master" oninput="upd()">
+    </div>
+
+    <!-- 5. SKILLS (una línea) -->
+    <div class="section-card">
+      <h3><i class="fas fa-tools"></i> 5. SKILLS</h3>
+      <label>Habilidades (comas)</label><input type="text" id="in_skills" value="Agile, SAP, Python, Liderazgo, Negociación" oninput="upd()">
+      <label>Idiomas</label><input type="text" id="in_lang" value="Español, Inglés C2, Alemán B2" oninput="upd()">
+      <label>Referencias</label>
+      <textarea id="in_ref" rows="2" oninput="upd()">Juan Mentore - CEO TechCorp\nDra. Ana Silva - RRHH</textarea>
+    </div>
+
+    <!-- BOTONES DE DESCARGA (PNG, WEBP, JPG) -->
+    <div class="download-buttons">
+      <button class="btn-download-img" onclick="downloadImage('png')"><i class="fas fa-file-image"></i> PNG</button>
+      <button class="btn-download-img" onclick="downloadImage('webp')"><i class="fas fa-file-image"></i> WEBP</button>
+      <button class="btn-download-img" onclick="downloadImage('jpg')"><i class="fas fa-file-image"></i> JPG</button>
+    </div>
+  </aside>
+
+  <!-- PREVIEW DEL CV - SIN ESCALAS -->
+  <main class="preview-pane">
+    <div id="cv-canvas" class="cv-canvas">
+      <!-- COLUMNA IZQUIERDA -->
+      <div class="cv-aside">
+        <div class="profile-img">
+          <img src="https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Avatar" crossorigin="anonymous">
+        </div>
+        <div class="aside-title">DATOS PERSONALES</div>
+        <div class="aside-item"><b>DNI</b><span id="out_dni">ID: 99.888.777-Q</span></div>
+        <div class="aside-item"><b>NACIMIENTO</b><span id="out_birth">12 Mayo 1985</span></div>
+        <div class="aside-item"><b>NACIONALIDAD</b><span id="out_nat">Española / Italiana</span></div>
+        <div class="aside-item"><b>UBICACIÓN</b><span id="out_addr">Madrid, España</span></div>
+        <div class="aside-title">CONTACTO</div>
+        <div class="aside-item"><b>TELÉFONO</b><span id="out_tel">+34 611 222 333</span></div>
+        <div class="aside-item"><b>EMAIL</b><span id="out_mail">vance.pro@email.com</span></div>
+        <div class="aside-title">REDES</div>
+        <div class="aside-item"><b>FB</b><span id="out_fb">fb.com/alex.vance</span></div>
+        <div class="aside-item"><b>IG</b><span id="out_ig">@alexvance_pro</span></div>
+        <div class="aside-item"><b>LI</b><span id="out_li">linkedin.com/in/alexvance</span></div>
+        <div class="aside-item"><b>WEB</b><span id="out_web">www.vancedesign.pro</span></div>
+        <div class="aside-title">IDIOMAS</div>
+        <div class="aside-item" id="out_lang">Español, Inglés C2, Alemán B2</div>
+        <div class="aside-title">CERTIFICACIONES</div>
+        <div class="aside-item" id="out_cert">PMP®, Scrum Master</div>
+      </div>
+
+      <!-- COLUMNA DERECHA -->
+      <div class="cv-main">
+        <h1 class="main-name" id="out_name">ALEXANDER VANCE</h1>
+        <div class="main-job" id="out_job">SENIOR PROJECT MANAGER</div>
+
+        <div class="main-title"><i class="fas fa-user-tie"></i> PERFIL</div>
+        <div class="main-content" id="out_profile">Líder estratégico con +15 años...</div>
+
+        <div class="main-title"><i class="fas fa-university"></i> FORMACIÓN</div>
+        <div class="edu-item"><span class="edu-label">Primaria:</span><span class="edu-value" id="out_primaria">Colegio San Gabriel</span></div>
+        <div class="edu-item"><span class="edu-label">Secundaria:</span><span class="edu-value" id="out_secundaria">Instituto Marqués</span></div>
+        <div class="edu-item"><span class="edu-label">Universidad:</span><span class="edu-value" id="out_univ">Univ. Politécnica</span></div>
+        <div class="edu-item"><span class="edu-label">Máster:</span><span class="edu-value" id="out_master">MBA - Harvard</span></div>
+
+        <div class="main-title"><i class="fas fa-history"></i> EXPERIENCIA</div>
+        <div class="main-content" id="out_exp">• Director Operaciones - Global Tech...</div>
+
+        <div class="main-title"><i class="fas fa-rocket"></i> APTITUDES</div>
+        <div id="out_skills" style="display:flex; flex-wrap:wrap; gap:5px;"></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+  // --- ACTUALIZAR ESTILOS ---
+  function updateStyle() {
+    document.documentElement.style.setProperty('--bg-aside', document.getElementById('colorAside').value);
+    document.documentElement.style.setProperty('--text-aside', document.getElementById('colorAsideText').value);
+    document.documentElement.style.setProperty('--bg-main', document.getElementById('colorMain').value);
+    document.documentElement.style.setProperty('--text-main', document.getElementById('colorMainText').value);
+    document.documentElement.style.setProperty('--accent', document.getElementById('colorAccent').value);
+    document.documentElement.style.setProperty('--border-color', document.getElementById('colorBorder').value);
+    document.documentElement.style.setProperty('--border-radius', document.getElementById('borderRadius').value + 'px');
+    document.documentElement.style.setProperty('--aside-padding', document.getElementById('asidePadding').value + 'px');
+    document.documentElement.style.setProperty('--main-padding', document.getElementById('mainPadding').value + 'px');
+    document.documentElement.style.setProperty('--font-size-base', document.getElementById('fontSizeBase').value + 'px');
+  }
+
+  function updateRange(el) {
+    document.getElementById(el.id + 'Val').innerText = el.value + 'px';
+  }
+
+  // --- PRESETS ---
+  function applyPreset(bgA, txtA, bgM, txtM, acc) {
+    document.documentElement.style.setProperty('--bg-aside', bgA);
+    document.documentElement.style.setProperty('--text-aside', txtA);
+    document.documentElement.style.setProperty('--bg-main', bgM);
+    document.documentElement.style.setProperty('--text-main', txtM);
+    document.documentElement.style.setProperty('--accent', acc);
+    document.getElementById('colorAside').value = bgA;
+    document.getElementById('colorAsideText').value = txtA;
+    document.getElementById('colorMain').value = bgM;
+    document.getElementById('colorMainText').value = txtM;
+    document.getElementById('colorAccent').value = acc;
+  }
+
+  // --- ACTUALIZAR TEXTO ---
+  function upd() {
+    const fields = ['name','job','dni','birth','nat','addr','tel','mail','fb','ig','li','web','profile','exp','primaria','secundaria','univ','master','lang','cert','ref'];
+    fields.forEach(f => {
+      const inp = document.getElementById('in_' + f);
+      const out = document.getElementById('out_' + f);
+      if (inp && out) out.innerText = inp.value;
+    });
+
+    const skillsRaw = document.getElementById('in_skills').value;
+    const skillsArr = skillsRaw.split(',').map(s => s.trim()).filter(s => s);
+    const container = document.getElementById('out_skills');
+    container.innerHTML = '';
+    skillsArr.forEach(s => {
+      const span = document.createElement('span');
+      span.className = 'skill';
+      span.innerText = s;
+      container.appendChild(span);
+    });
+  }
+
+  // --- DESCARGAR IMAGEN ---
+  function downloadImage(format) {
+    const element = document.getElementById('cv-canvas');
+    const originalTransform = element.style.transform;
+    element.style.transform = 'scale(1)';
+    
+    html2canvas(element, { scale: 2.5, backgroundColor: '#ffffff', useCORS: true }).then(canvas => {
+      const link = document.createElement('a');
+      let mimeType, extension;
+      if (format === 'png') { mimeType = 'image/png'; extension = 'png'; }
+      else if (format === 'webp') { mimeType = 'image/webp'; extension = 'webp'; }
+      else { mimeType = 'image/jpeg'; extension = 'jpg'; }
+      
+      link.download = `CV_${Date.now()}.${extension}`;
+      link.href = canvas.toDataURL(mimeType, 0.95);
+      link.click();
+      element.style.transform = originalTransform;
+    }).catch(() => {
+      alert('Error al generar imagen');
+      element.style.transform = originalTransform;
+    });
+  }
+
+  window.onload = function() {
+    upd();
+    // Inicializar valores de los spans
+    document.querySelectorAll('input[type="range"]').forEach(r => {
+      document.getElementById(r.id + 'Val').innerText = r.value + 'px';
+    });
+  };
+</script>
+</body>
+</html>

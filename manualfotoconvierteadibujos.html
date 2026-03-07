@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manual de Instrucciones – Convierte Fotos en Arte</title>
+<style>
+    /* ===== RESET ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #3b82f6;
+      --primary-dark: #2563eb;
+      --secondary: #9333ea;
+      --light-bg: #fafafa;
+      --dark-bg: #111;
+      --card-bg: #fff;
+      --text-dark: #222;
+      --text-light: #ccc;
+      --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      height: 100%;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      background: var(--light-bg);
+      color: var(--text-dark);
+      line-height: 1.6;
+      min-height: 100vh;
+      
+   border-radius: 10px;
+  max-width: 1200px;
+  margin: 90px auto;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 90px auto 0;
+      padding: 0 20px;
+      border-radius: 10px;
+    }
+
+    h1, h2, h3 {
+      font-weight: 700;
+      color: var(--dark-bg);
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #fff;
+      padding: 3rem 1rem;
+      text-align: center;
+      position: relative;
+      border-radius: 10px 10px 0 0;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    header p {
+      max-width: 700px;
+      margin: 0 auto;
+      font-size: 1.1rem;
+    }
+
+    .hero-img {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      margin: 1.5rem auto;
+      display: block;
+      object-fit: cover;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    section {
+      max-width: 1000px;
+      margin: 3rem auto;
+      padding: 0 1rem;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      font-size: 1.8rem;
+    }
+
+    .section-title::after {
+      content: "";
+      flex: 1;
+      height: 2px;
+      background: linear-gradient(to right, var(--primary), transparent);
+      margin-left: 1rem;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .feature {
+      background: var(--card-bg);
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      padding: 1.5rem;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .feature:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .feature-icon {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .feature h3 {
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    ul li {
+      padding: 0.5rem 0;
+      display: flex;
+      align-items: flex-start;
+    }
+
+    ul li::before {
+      content: "🎨 ";
+      margin-right: 0.5rem;
+      flex-shrink: 0;
+    }
+
+    .steps {
+      background: #f0f4ff;
+      border-left: 5px solid var(--primary);
+      padding: 1.5rem;
+      margin-top: 1rem;
+      border-radius: 10px;
+    }
+
+    .step {
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .step-number {
+      background: var(--primary);
+      color: white;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 1rem;
+      flex-shrink: 0;
+    }
+
+    .highlight {
+      background: #e0e7ff;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      display: inline-block;
+      font-weight: 600;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1.5rem;
+      background: var(--card-bg);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    th, td {
+      padding: 1rem;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+
+    th {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    tr:hover {
+      background-color: #f5f5f5;
+    }
+
+    footer {
+      background: var(--dark-bg);
+      color: var(--text-light);
+      text-align: center;
+      padding: 2rem 1rem;
+      margin-top: 3rem;
+      border-radius: 0 0 10px 10px;
+    }
+
+    footer p {
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Botón centrado para volver atrás */
+    .back-button-container {
+      display: flex;
+      justify-content: center;
+      margin: 2rem 0;
+    }
+
+    .back-button {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 30px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .back-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Botones flotantes */
+    .floating-buttons {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 1000;
+    }
+
+    .floating-btn {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .floating-btn:hover {
+      background: var(--primary-dark);
+      transform: scale(1.1);
+    }
+
+    .floating-btn.hidden {
+      display: none;
+    }
+
+    /* Botón de volver al inicio */
+    .back-to-index {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .back-to-index:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    /* Botón en el footer */
+    .footer-button {
+      display: inline-block;
+      padding: 12px 25px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: var(--transition);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .footer-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        margin: 70px auto 0;
+        padding: 0 15px;
+      }
+      
+      header h1 {
+        font-size: 2rem;
+      }
+      
+      .section-title {
+        font-size: 1.5rem;
+      }
+      
+      .features {
+        grid-template-columns: 1fr;
+      }
+      
+      .floating-buttons {
+        bottom: 20px;
+        right: 20px;
+      }
+      
+      .floating-btn {
+        width: 45px;
+        height: 45px;
+      }
+      
+      table {
+        display: block;
+        overflow-x: auto;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        margin: 60px auto 0;
+      }
+      
+      header {
+        padding: 2rem 1rem;
+      }
+      
+      header h1 {
+        font-size: 1.7rem;
+      }
+      
+      header p {
+        font-size: 1rem;
+      }
+      
+      .hero-img {
+        width: 150px;
+        height: 150px;
+      }
+      
+      .section-title {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .section-title::after {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 0.5rem;
+      }
+    }
+</style>
+</head>
+<body>
+  <header>
+    
+    <img src="https://cdn-icons-png.flaticon.com/512/2910/2910768.png" alt="Arte digital" class="hero-img">
+    <h1>Manual de Instrucciones</h1>
+    <p>
+      <strong>Convierte tus fotos en dibujos y pinturas</strong> con nuestra plataforma avanzada: todo el procesamiento ocurre directamente en tu navegador, sin subir tus imágenes a ningún servidor.
+    </p>
+  </header>
+ <!-- Botón centrado para volver atrás -->
+<a href="ManualinstruccionesArte.html" class="footer-button">Volver atras</a>
+  <section>
+    <h2 class="section-title">🚀 Características Principales</h2>
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">💻</div>
+        <h3>Procesamiento local</h3>
+        <p>Todo ocurre en tu navegador, sin riesgos ni cargas externas.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🖌️</div>
+        <h3>Transformación real</h3>
+        <p>La imagen se mejora antes de aplicar el estilo artístico.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🎭</div>
+        <h3>Más de 100 estilos</h3>
+        <p>Convierte tus fotos en dibujos, pinturas o ilustraciones.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">⚙️</div>
+        <h3>Control total</h3>
+        <p>Ajusta brillo, contraste, intensidad y detalle.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🌈</div>
+        <h3>Interfaz intuitiva</h3>
+        <p>Diseñada en español para todos los niveles.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">⬇️</div>
+        <h3>Descarga inmediata</h3>
+        <p>Obtén tu obra final en formato PNG o JPG.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">🧰 Herramientas Disponibles</h2>
+    <ul>
+      <li><strong>🧠 Generador de Estilos Avanzado:</strong> más de 400 estilos, con mejora automática de color y nitidez.</li>
+      <li><strong>✏️ Conversor de Imágenes a Dibujos:</strong> trazo realista, contraste preciso, ideal para retratos y arquitectura.</li>
+      <li><strong>🎨 ArtPro – Editor Profesional:</strong> 80 efectos exclusivos tipo Anime, Cubista y Moderno.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="section-title">🧭 Guía Paso a Paso</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-number">1</div>
+        <div><span class="highlight">Sube tu imagen:</span> JPG, PNG, GIF o WebP.</div>
+      </div>
+      <div class="step">
+        <div class="step-number">2</div>
+        <div><span class="highlight">Elige un estilo:</span> artístico o efecto de dibujo.</div>
+      </div>
+      <div class="step">
+        <div class="step-number">3</div>
+        <div><span class="highlight">Personaliza:</span> intensidad, brillo, contraste y detalle.</div>
+      </div>
+      <div class="step">
+        <div class="step-number">4</div>
+        <div><span class="highlight">Previsualiza:</span> en tiempo real.</div>
+      </div>
+      <div class="step">
+        <div class="step-number">5</div>
+        <div><span class="highlight">Descarga:</span> tu obra final en alta calidad.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">🖼️ Categorías y Efectos</h2>
+    <ul>
+      <li>✏️ Bocetos: Lápiz, Tinta, Carbón, Dibujo Lineal.</li>
+      <li>🎨 Estilos Artísticos: Acuarela, Óleo, Pixel Art, Low Poly.</li>
+      <li>📸 Efectos Fotográficos: HDR, Vintage, Negativo.</li>
+      <li>✨ ArtPro Especiales: Anime, Cyberpunk, Picasso, Biomecánico.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="section-title">🧑‍🎨 Casos de Uso</h2>
+    <table>
+      <thead>
+        <tr><th>Tipo de Imagen</th><th>Efectos Recomendados</th><th>Consejos</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Retratos</td><td>Boceto, Anime Clásico, Acuarela</td><td>Usa intensidad media</td></tr>
+        <tr><td>Paisajes</td><td>Óleo, HDR, Estilo Ghibli</td><td>Aumenta detalle y saturación</td></tr>
+        <tr><td>Arquitectura</td><td>Dibujo Lineal, Low Poly, Cubismo</td><td>Contraste alto</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+ 
+
+
+
+  <div class="floating-buttons">
+    <button id="toTop" class="floating-btn hidden">↑</button>
+  </div>
+
+  <script>
+    // Botón scroll arriba
+    const toTop = document.getElementById("toTop");
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 300) {
+        toTop.classList.remove("hidden");
+      } else {
+        toTop.classList.add("hidden");
+      }
+    });
+    
+    toTop.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  </script>
+</body>
+</html>

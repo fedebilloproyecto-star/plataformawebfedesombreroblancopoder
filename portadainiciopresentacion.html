@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentación de Portada - Planes Gratuitos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 1200px;
+            margin: 90px auto;
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(90deg, #2c3e50, #4a6491);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .description {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #333;
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+        
+        .plans {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .plan {
+            flex: 1;
+            min-width: 280px;
+            max-width: 400px;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .plan:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .plan-basic {
+            border-top: 5px solid #2ecc71;
+        }
+        
+        .plan-medium {
+            border-top: 5px solid #3498db;
+        }
+        
+        .plan h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .plan-basic h2 {
+            color: #2ecc71;
+        }
+        
+        .plan-medium h2 {
+            color: #3498db;
+        }
+        
+        .price {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+            color: #2ecc71;
+        }
+        
+        .features {
+            list-style-type: none;
+            margin: 20px 0;
+            flex-grow: 1;
+        }
+        
+        .features li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+        }
+        
+        .features li:before {
+            content: "✓";
+            color: #2ecc71;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .btn {
+            display: block;
+            padding: 15px;
+            text-align: center;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+            margin-top: auto;
+        }
+        
+        .btn-basic {
+            background-color: #2ecc71;
+            color: white;
+        }
+        
+        .btn-basic:hover {
+            background-color: #27ae60;
+            transform: scale(1.05);
+        }
+        
+        .btn-medium {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .btn-medium:hover {
+            background-color: #2980b9;
+            transform: scale(1.05);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .plans {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .plan {
+                min-width: 100%;
+                max-width: 100%;
+            }
+        }
+
+        /* Espacio permanente debajo del header */
+        .back-container {
+            padding-top: 40px;
+            margin-left: 20px;
+        }
+
+        /* Botón */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 22px;
+            font-size: 15px;
+            font-weight: 600;
+            background: #111827;
+            color: #fff;
+            border: 2px solid #fff;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Presentación de Portada</h1>
+            <p class="subtitle">Selecciona el plan que mejor se adapte a tus necesidades</p>
+        </header>
+        
+        <div class="content">
+            <div class="description">
+                <p>Todos nuestros planes son completamente gratuitos. Solo tienes que descargar la web y alojarla en GitHub Pages para comenzar a usarla inmediatamente.</p>
+            </div>
+            
+            <div class="plans">
+                <div class="plan plan-basic">
+                    <h2>Plan Básico</h2>
+                    <div class="price">GRATIS</div>
+                    <ul class="features">
+                        <li>Diseño simple y funcional</li>
+                        <li>Fácil personalización</li>
+                    </ul>
+                    <button class="btn btn-basic" onclick="redirectToOtherPage('basic')">Seleccionar Básico</button>
+                    <div class="back-container">
+                        <button class="back-btn" onclick="window.location.href='herramientamultimediapresentacion.html'">
+                            <i class="fas fa-arrow-left"></i> Volver atras
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="plan plan-medium">
+                    <h2>Plan Medium</h2>
+                    <div class="price">GRATIS</div>
+                    <ul class="features">
+                        <li>Diseño más avanzado</li>
+                        <li>Efectos y animaciones</li>
+                        <li>Mejor estructura visual</li>
+                        <li>Navegación mejorada</li>
+                    </ul>
+                    <button class="btn btn-avanzado" onclick="redirectToOtherPage('avanzado')">Seleccionar medium(avanzado)</button>
+                    <div class="back-container">
+                        <button class="back-btn" onclick="window.location.href='herramientamultimediapresentacion.html'">
+                            <i class="fas fa-arrow-left"></i> Volver atras
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+      
+    </div>
+
+    <script>
+        function redirectToOtherPage(plan) {
+            // Redirige a diferentes archivos index.html según el plan
+            if (plan === 'basic') {
+                window.location.href = 'basico.html';
+            } else if (plan === 'avanzado') {
+                window.location.href = 'avanzado.html';
+            }
+        }
+        
+        function goBack() {
+            // Vuelve a la página anterior
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

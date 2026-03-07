@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publicidad Pro · Diseño Premium</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        /* --- FONDO "MÁS MEJOR": PAISAJE CINEMÁTICO --- */
+        body {
+            font-family: 'Outfit', 'Inter', sans-serif;
+            min-height: 100vh;
+            color: #f1f5f9;
+            position: relative;
+            overflow-x: hidden;
+            display: block;
+            
+            /* Imagen de fondo principal (Paisaje nocturno futurista) */
+            background-image: url('https://images.unsplash.com/photo-1506318137071-a8e063b4bcc0?q=80&w=1900&auto=format&fit=crop'); 
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Efecto Parallax sutil */
+            background-color: #030712; /* Color de respaldo */
+        }
+
+        /* Capa de Aurora/Luces Dinámicas sobre el paisaje */
+        .aurora-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image: 
+                radial-gradient(circle at 20% 20%, rgba(139, 92, 246, 0.2) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(251, 191, 36, 0.15) 0%, transparent 40%);
+            filter: blur(60px);
+            animation: auroraLoop 30s linear infinite alternate;
+        }
+
+        /* Capa oscura para asegurar legibilidad */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(3, 7, 18, 0.5); /* Oscurece el paisaje un 50% */
+            z-index: -2;
+        }
+
+        @keyframes auroraLoop {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(50px, 50px) rotate(5deg); }
+        }
+
+        /* --- TUS MEDIDAS SOLICITADAS --- */
+        .welcome-card {
+            position: relative;
+            z-index: 10;
+            /* Cristal esmerilado más intenso para el nuevo fondo */
+            background: rgba(17, 24, 39, 0.6); 
+            backdrop-filter: blur(25px) saturate(150%);
+            -webkit-backdrop-filter: blur(25px) saturate(150%);
+            
+            /* Ajustes pedidos */
+            max-width: 900px;
+            margin: 90px auto;
+            border-radius: 10px;
+            
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.7);
+            padding: 3rem 2rem;
+        }
+
+        /* --- BOTÓN VOLVER ATRÁS --- */
+        .back-nav {
+            margin-bottom: 2.5rem;
+        }
+
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            color: #f1f5f9; /* Color más claro para el nuevo fondo */
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            padding: 0.5rem 1rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 5px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .btn-back:hover {
+            color: #111827;
+            background: #fbbf24;
+            border-color: #fbbf24;
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.5);
+        }
+
+        .premium-header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .premium-header h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #ffffff;
+            text-transform: lowercase;
+            letter-spacing: -1.8px;
+            margin-bottom: 0.6rem;
+            /* Brillo sutil en el texto */
+            text-shadow: 0 2px 10px rgba(255,255,255,0.2);
+        }
+
+        .headline-sub {
+            font-size: 1.2rem;
+            color: #cbd5e1;
+            font-weight: 300;
+        }
+
+        /* Grid de 5 botones */
+        .editor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.8rem;
+        }
+
+        .editor-tile {
+            /* Mosaicos un poco más opacos */
+            background: rgba(31, 41, 55, 0.7);
+            border-radius: 1.5rem;
+            padding: 2.5rem 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .editor-tile:hover {
+            transform: translateY(-8px);
+            background: rgba(45, 55, 72, 0.95);
+            border-color: #fbbf24;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+        }
+
+        .editor-icon {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            color: #fbbf24;
+            filter: drop-shadow(0 0 5px rgba(251, 191, 36, 0.3));
+        }
+
+        .editor-tile h3 {
+            font-weight: 800;
+            font-size: 1.4rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .editor-desc {
+            font-size: 0.9rem;
+            color: #cbd5e1;
+            line-height: 1.5;
+            margin-bottom: 1.8rem;
+            min-height: 3rem;
+        }
+
+        .premium-tag {
+            background: rgba(251, 191, 36, 0.15);
+            color: #fbbf24;
+            font-weight: 800;
+            font-size: 0.7rem;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            text-transform: uppercase;
+            margin-bottom: 0.8rem;
+            border: 1px solid rgba(251, 191, 36, 0.3);
+        }
+
+        .btn-entry {
+            width: 100%;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #111827;
+            padding: 0.9rem;
+            border-radius: 1rem;
+            font-weight: 900;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            box-shadow: 0 5px 10px rgba(245, 158, 11, 0.3);
+        }
+
+        .editor-tile:hover .btn-entry {
+            background: #ffffff;
+            color: #111827;
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .welcome-card { margin: 40px 15px; padding: 2rem 1.2rem; }
+            .premium-header h1 { font-size: 2.2rem; }
+            .editor-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="aurora-overlay"></div>
+
+    <div class="welcome-card">
+        <nav class="back-nav">
+            <a href="bievenidospremium.html" class="btn-back">
+                <i class="fas fa-arrow-left"></i> Volver a atras
+            </a>
+        </nav>
+
+        <div class="premium-header">
+            <h1>diseña tu publicidad</h1>
+            <div class="headline-sub">cuando lo crea descarga hay podra mandar a quien quiera</div>
+        </div>
+
+        <div class="editor-grid">
+        
+
+            <a href="marketing2avanzado.html" class="editor-tile">
+                <i class="fas fa-wand-magic-sparkles editor-icon"></i>
+                <span class="premium-tag">Avanzado</span>
+                <h3>Vislumbra</h3>
+                <p class="editor-desc">Personalización total y descarga en PNG/PDF.</p>
+                <div class="btn-entry">ENTRAR A DISEÑAR <i class="fas fa-chevron-right"></i></div>
+            </a>
+
+            <a href="marketingbasico.html" class="editor-tile">
+                <i class="fas fa-briefcase editor-icon"></i>
+                <span class="premium-tag">Corporativo</span>
+                <h3>Executive</h3>
+                <p class="editor-desc">25 estilos elegantes con zoom de alta precisión.</p>
+                <div class="btn-entry">ENTRAR A DISEÑAR <i class="fas fa-chevron-right"></i></div>
+            </a>
+
+            <a href="marketingestilonotebookcelualar.html" class="editor-tile">
+                <i class="fas fa-laptop-code editor-icon"></i>
+                <span class="premium-tag">Multi-formato</span>
+                <h3>Smart Mobile</h3>
+                <p class="editor-desc">El "White Hat" del diseño tecnológico profesional.</p>
+                <div class="btn-entry">ENTRAR A DISEÑAR <i class="fas fa-chevron-right"></i></div>
+            </a>
+
+            <a href="marketingpoder.html" class="editor-tile">
+                <i class="fas fa-fire-flame-curved editor-icon"></i>
+                <span class="premium-tag">Premium Plus</span>
+                <h3>Máximo Poder</h3>
+                <p class="editor-desc">Paisajes IA y 16 estilos de alto impacto visual.</p>
+                <div class="btn-entry">ENTRAR A DISEÑAR <i class="fas fa-chevron-right"></i></div>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

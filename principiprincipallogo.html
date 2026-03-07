@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Sombrero Blanco | Crea tu Identidad Visual</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+            background: radial-gradient(circle at 10% 30%, #f8f9ff, #e6ecfe, #d0ddff);
+            color: #1a2b4c;
+            line-height: 1.5;
+            min-height: 100vh;
+            padding: 2rem 1rem;
+        }
+
+        /* Header principal */
+        .main-header {
+            max-width: 1300px;
+            margin: 0 auto 3rem auto;
+            background: linear-gradient(145deg, #0f1a2f, #1b2b4a);
+            border-radius: 2.5rem 2.5rem 2rem 2rem;
+            padding: 3rem 2rem;
+            color: white;
+            box-shadow: 0 25px 40px -15px rgba(0, 20, 50, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 20% 30%, rgba(100, 180, 255, 0.2), transparent 50%);
+            pointer-events: none;
+        }
+
+        .main-header h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            max-width: 900px;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #fff, #d6e4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .main-header p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            color: #b0cbff;
+            font-weight: 400;
+        }
+
+        /* Contenedor de tarjetas */
+        .cards-grid {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+        }
+
+        /* Estilos base de tarjetas */
+        .plan-card {
+            flex: 1 1 300px;
+            min-width: 280px;
+            max-width: 380px;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 2.5rem;
+            padding: 2rem 1.8rem;
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.2);
+            transition: all 0.35s cubic-bezier(0.15, 0.75, 0.45, 1);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .plan-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 32px 60px -15px rgba(0, 30, 80, 0.4);
+            background: rgba(255, 255, 255, 0.9);
+            border-color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Colores distintivos por tipo */
+        .card-fast {
+            border-top: 8px solid #FF8A5C;
+            background: linear-gradient(145deg, rgba(255, 245, 240, 0.8), rgba(255, 255, 255, 0.8));
+        }
+        .card-fast .card-icon {
+            background: #FF8A5C;
+            box-shadow: 0 12px 20px -10px #FF8A5C;
+        }
+
+        .card-premium {
+            border-top: 8px solid #7858A6;
+            background: linear-gradient(145deg, rgba(245, 240, 255, 0.8), rgba(255, 255, 255, 0.8));
+        }
+        .card-premium .card-icon {
+            background: #7858A6;
+            box-shadow: 0 12px 20px -10px #7858A6;
+        }
+
+        .card-medium {
+            border-top: 8px solid #2E86C1;
+            background: linear-gradient(145deg, rgba(235, 245, 255, 0.8), rgba(255, 255, 255, 0.8));
+        }
+        .card-medium .card-icon {
+            background: #2E86C1;
+            box-shadow: 0 12px 20px -10px #2E86C1;
+        }
+
+        /* Icono circular */
+        .card-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.8rem;
+            font-size: 2rem;
+            font-weight: 600;
+            color: white;
+            transition: 0.3s;
+        }
+
+        .plan-card h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.75rem;
+        }
+
+        .fast-title { color: #C4452b; }
+        .premium-title { color: #4A2C6B; }
+        .medium-title { color: #1B5A8C; }
+
+        .desc {
+            color: #2d3f5e;
+            margin-bottom: 2rem;
+            font-weight: 400;
+            font-size: 1rem;
+            border-left: 3px solid rgba(0,0,0,0.1);
+            padding-left: 1rem;
+        }
+
+        /* lista de características */
+        .feature-list {
+            list-style: none;
+            margin: 1.5rem 0 2rem;
+            flex-grow: 1;
+        }
+
+        .feature-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            margin-bottom: 0.9rem;
+            font-weight: 450;
+        }
+
+        .feature-list li::before {
+            content: "✨";
+            font-size: 1.2rem;
+            opacity: 0.8;
+        }
+
+        .card-fast .feature-list li::before { content: "⚡"; }
+        .card-premium .feature-list li::before { content: "💎"; }
+        .card-medium .feature-list li::before { content: "🎯"; }
+
+        /* Botón */
+        .btn-plan {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border: none;
+            border-radius: 2rem;
+            font-weight: 600;
+            font-size: 1.2rem;
+            background: white;
+            color: #1a2b4c;
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            margin-top: 1rem;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.05);
+        }
+
+        .btn-fast {
+            background: #FF8A5C;
+            color: white;
+            border-color: #C4452b;
+        }
+        .btn-premium {
+            background: #7858A6;
+            color: white;
+            border-color: #4A2C6B;
+        }
+        .btn-medium {
+            background: #2E86C1;
+            color: white;
+            border-color: #1B5A8C;
+        }
+
+        .btn-plan:hover {
+            filter: brightness(1.08);
+            transform: scale(1.02);
+            box-shadow: 0 12px 24px -8px currentColor;
+        }
+
+        /* Botón volver elegante */
+        .back-wrapper {
+            max-width: 1300px;
+            margin: 3.5rem auto 1rem;
+        }
+
+        .btn-volver {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7rem;
+            background: rgba(255,255,255,0.5);
+            backdrop-filter: blur(8px);
+            padding: 0.9rem 2rem;
+            border-radius: 3rem;
+            color: #0f1a2f;
+            font-weight: 600;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.7);
+            transition: 0.3s;
+            font-size: 1.1rem;
+        }
+
+        .btn-volver:hover {
+            background: white;
+            border-color: #7858A6;
+            transform: translateX(-8px);
+            box-shadow: 0 10px 20px -12px #0f1a2f;
+        }
+
+        /* footer */
+        .main-footer {
+            max-width: 1300px;
+            margin: 5rem auto 0;
+            padding: 2rem 2rem 1.5rem;
+            background: rgba(15, 26, 47, 0.8);
+            backdrop-filter: blur(8px);
+            border-radius: 2rem 2rem 2rem 2rem;
+            color: #ccdfff;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+
+        .main-footer small {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .plan-card {
+            animation: fadeUp 0.5s ease forwards;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <h1>El Sombrero Blanco.</h1>
+        <p>Diseño inteligente para marcas con alma. Explorá estilos únicos y dale identidad a tus ideas con color, forma e inteligencia visual.</p>
+    </header>
+
+    <div class="cards-grid">
+        <!-- TARJETA Medium -->
+        <div class="plan-card card-fast">
+            <div class="card-icon">⚡</div>
+            <h2 class="fast-title"> fastantico </h2>
+             inmediato · versátil</p>
+            <ul class="feature-list">
+                <li>Logo en alta energía</li>
+                <li>3 propuestas relámpago</li>
+                <li>Paleta neón + contraste</li>
+           
+            </ul>
+            <button class="btn-plan btn-fast" onclick="ir(' logofastantico.html ')">
+                <span>⚡</span> Crear logo fastantico
+            </button>
+
+            
+    <div class="back-wrapper">
+        <a href="bievenidospremium.html" class="btn-volver">
+             Volver a Atras
+        </a>
+    </div> 
+        </div>
+  
+        <!-- TARJETA Fastántico  -->
+        <div class="plan-card card-premium">
+            <div class="card-icon">💎</div>
+            <h2 class="premium-title">  Premium  </h2>
+            <p class="desc">Elegancia · detalles exclusivos · alta costura visual</p>
+            <ul class="feature-list">
+                <li>Logo con acabado de lujo</li>
+                <li>5 conceptos exclusivos</li>
+                <li>Paleta sofisticada / dorados</li>
+                <li>Entrega con manual de marca</li>
+            </ul>
+            <button class="btn-plan btn-premium" onclick="ir('logopremium.html')">
+                <span>💎</span>  Crear logo Premium
+            </button>
+             <div class="back-wrapper">
+        <a href="bievenidospremium.html" class="btn-volver">
+             Volver a Atras
+        </a>
+    </div> 
+        </div>
+
+        <!-- TARJETA MEDIUM -->
+        <div class="plan-card card-medium">
+            <div class="card-icon">🎯</div>
+            <h2 class="medium-title"> Medium</h2>
+            <p class="desc">Profesional · equilibrio · identidad sólida</p>
+            <ul class="feature-list">
+                <li>Logo equilibrado y moderno</li>
+                <li>2 opciones profesionales</li>
+                <li>Paleta versátil</li>
+               
+            </ul>
+            <button class="btn-plan btn-medium" onclick="ir('logomedium.html')">
+                <span>🎯</span>  Crear logo Medium 
+            </button>
+             <div class="back-wrapper">
+        <a href="bievenidospremium.html" class="btn-volver">
+             Volver a Atras
+        </a>
+    </div> 
+        </div>
+    </div>
+
+ 
+
+    <footer class="main-footer">
+        <small>El Sombrero Blanco — Creatividad e inteligencia para dar identidad a tus ideas. Colores vivos, diseños únicos.</small>
+    </footer>
+
+    <script>
+        function ir(pagina) {
+            document.body.style.opacity = '0.7';
+            document.body.style.transition = 'opacity 0.2s';
+            setTimeout(() => {
+                window.location.href = pagina;
+            }, 200);
+        }
+
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '1';
+        });
+    </script>
+
+</body>
+</html>

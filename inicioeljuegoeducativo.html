@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sombrero Blanco - Centro de Juegos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #ffffff;
+            --accent: #00f2fe; /* Azul cian brillante */
+            --bg-dark: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --text: #f8fafc;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(-45deg, #0f172a, #1e1b4b, #312e81, #1e293b);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animación del fondo tipo paisaje nocturno/aurora */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Capa de estrellas/partículas */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at center, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+
+        header {
+            height: 50vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            background: rgba(15, 23, 42, 0.3);
+            backdrop-filter: blur(5px);
+            margin-bottom: 4rem;
+        }
+
+        .hat-icon {
+            font-size: 4.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 0 20px rgba(0, 242, 254, 0.6));
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            text-transform: uppercase;
+            letter-spacing: 10px;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(to bottom, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h1 span {
+            color: var(--accent);
+            -webkit-text-fill-color: var(--accent);
+            text-shadow: 0 0 30px rgba(0, 242, 254, 0.4);
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #cbd5e1;
+            max-width: 700px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto 100px auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .game-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 2.5rem;
+            backdrop-filter: blur(12px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .game-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            background: rgba(30, 41, 59, 0.9);
+            border-color: var(--accent);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(0, 242, 254, 0.2);
+        }
+
+        .game-card i {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, #fff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .game-card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .game-card p {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .btn-enter {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(45deg, #00f2fe, #4facfe);
+            color: #000;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+
+        .btn-enter:hover {
+            filter: brightness(1.1);
+            box-shadow: 0 0 20px rgba(79, 172, 254, 0.5);
+        }
+
+        footer {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+          /* Estilo general del botón */
+  .boton-volver {
+    display: inline-block;
+    padding: 12px 25px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff; /* Color del texto */
+    background: linear-gradient(135deg, #6a11cb, #2575fc); /* Gradiente moderno */
+    border: 2px solid #fff; /* Borde blanco */
+    border-radius: 12px; /* Bordes redondeados */
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2); /* Sombra ligera */
+  }
+
+  /* Efecto al pasar el mouse */
+  .boton-volver:hover {
+    background: linear-gradient(135deg, #2575fc, #6a11cb);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  }
+    </style>
+</head>
+<body>
+
+    <div class="stars"></div>
+
+    <header>
+        <div class="hat-icon">
+            <i class="fas fa-user-secret"></i>
+        </div>
+<h1 style="
+  font-family: Arial, sans-serif;
+  font-size: 2em;
+  padding: 0.5em 1em;
+  border: 4px solid;
+  border-image: linear-gradient(45deg, #FF5733, #33FF57, #3357FF) 1;
+  border-radius: 12px;
+  background-color: #fff;
+  color: #000;
+  text-align: center;
+">
+  ¡Descubre y comparte Sombrero Blanco, el juego educativo más divertido!
+</h1>
+        <p class="subtitle">Bienvenido al sistema. Selecciona un módulo para iniciar el desafío. Seguridad, lógica y destreza en un solo lugar.</p>
+    </header>
+
+    <div class="container">
+        <div class="game-card">
+            <i class="fas fa-brain"></i>
+            <h3>juego adivina la palabra</h3>
+            <p>Desafía tus límites cognitivos con nuestro sistema de emparejamiento de alta seguridad.</p>
+            <a href="adivinarjuegomemoria.html" class="btn-enter">Entrar al juego</a>
+     
+
+<a href="juegoeducativoprincipal.html" class="boton-volver">Volver a atras</a>
+        </div>
+
+        <div class="game-card">
+            <i class="fas fa-terminal"></i>
+            <h3> Juego ahorcado</h3>
+            <p>Descifra la palabra clave antes de que el sistema se bloquee permanentemente.</p>
+            <a href="ahorcado.html" class="btn-enter">Entrar al juego</a>
+<a href="juegoeducativoprincipal.html" class="boton-volver">Volver a atras</a>
+
+         
+        </div>
+
+        <div class="game-card">
+            <i class="fas fa-bolt"></i>
+            <h3> Juego carrera </h3>
+            <p>Velocidad de procesamiento y conocimiento. Una carrera contra el reloj y la mente.</p>
+            <a href="juegocarreraeducativo.html" class="btn-enter">Entrar al juego</a>
+<a href="juegoeducativoprincipal.html" class="boton-volver">Volver a atras</a>
+
+         
+        </div>
+
+        <div class="game-card">
+            <i class="fas fa-border-all"></i>
+            <h3>Juego de damas</h3>
+            <p>El juego de mesa milenario, rediseñado para la era digital del Sombrero Blanco.</p>
+            <a href="juegodamas.html" class="btn-enter">Entrar al juego</a>
+          <a href="juegoeducativoprincipal.html" class="boton-volver">Volver a atras</a>
+        </div>
+
+        <div class="game-card">
+            <i class="fas fa-dice-d20"></i>
+            <h3>juego ludo</h3>
+            <p>Gestiona tus recursos y mueve tus piezas con precisión táctica sobre el tablero.</p>
+            <a href="juegoludo.html" class="btn-enter">Entrar al juego</a>
+           <a href="juegoeducativoprincipal.html" class="boton-volver">Volver a atras</a>
+        </div>
+
+        <div class="game-card">
+            <i class="fas fa-circle-notch"></i>
+            <h3>juego pasapalabra</h3>
+            <p>La prueba definitiva de vocabulario. ¿Tienes lo necesario para completar el ciclo?</p>
+            <a href="pasapalabras.html" class="btn-enter">Entrar al juego</a>
+            <a href="juegoeducativoprincipal.html" class="boton-volver">Volver a atras</a>
+        </div>
+
+        <div class="game-card">
+            <i class="fas fa-sliders-h"></i>
+            <h3>juego de crea tu texto a musica</h3>
+            <p>Convierte datos en sonido y explora la ingeniería acústica detrás de la música.</p>
+            <a href="textoamusica.html" class="btn-enter">Abrir Herramienta</a>
+         <a href="juegoeducativoprincipal.html" class="boton-volver">Volver a atras</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 SOMBRERO BLANCO HUB | Desarrollado para mentes curiosas</p>
+    </footer>
+
+</body>
+</html>

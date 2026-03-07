@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ludo Profesional - Sin Bloqueos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 20px;
+            width: 100%;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #ff9a00, #ff0058);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #a0a0c0;
+            margin-bottom: 20px;
+        }
+        
+        .game-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            width: 100%;
+        }
+        
+        .game-board {
+            background-color: #0d1021;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+            border: 3px solid #2d3561;
+        }
+        
+        .board {
+            width: 600px;
+            height: 600px;
+            display: grid;
+            grid-template-columns: repeat(15, 1fr);
+            grid-template-rows: repeat(15, 1fr);
+            gap: 2px;
+            position: relative;
+            background-color: #1a1f3e;
+            border-radius: 10px;
+            padding: 5px;
+        }
+        
+        .cell {
+            background-color: #252a4a;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .home {
+            background-color: #333a66;
+        }
+        
+        .safe {
+            background-color: #3a4166;
+        }
+        
+        .red-area { background-color: #ff3a3a; }
+        .green-area { background-color: #2ecc71; }
+        .yellow-area { background-color: #f1c40f; }
+        .blue-area { background-color: #3498db; }
+        
+        .red-home { background-color: rgba(255, 58, 58, 0.4); }
+        .green-home { background-color: rgba(46, 204, 113, 0.4); }
+        .yellow-home { background-color: rgba(241, 196, 15, 0.4); }
+        .blue-home { background-color: rgba(52, 152, 219, 0.4); }
+        
+        .red-start { background-color: #ff6b6b; }
+        .green-start { background-color: #58d68d; }
+        .yellow-start { background-color: #f7dc6f; }
+        .blue-start { background-color: #85c1e9; }
+        
+        .red-path { border: 1px dashed #ff3a3a; }
+        .green-path { border: 1px dashed #2ecc71; }
+        .yellow-path { border: 1px dashed #f1c40f; }
+        .blue-path { border: 1px dashed #3498db; }
+        
+        .player-info {
+            width: 350px;
+            background-color: #0d1021;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 3px solid #2d3561;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .player-info h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #ff9a00;
+            font-size: 1.8rem;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #2d3561;
+        }
+        
+        .player {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: #151a33;
+            transition: all 0.3s ease;
+        }
+        
+        .player.active {
+            background-color: #2d3561;
+            box-shadow: 0 0 10px rgba(255, 154, 0, 0.5);
+            border-left: 5px solid #ff9a00;
+        }
+        
+        .player-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+        
+        .red-player .player-icon { background-color: #ff3a3a; }
+        .green-player .player-icon { background-color: #2ecc71; }
+        .yellow-player .player-icon { background-color: #f1c40f; }
+        .blue-player .player-icon { background-color: #3498db; }
+        
+        .player-details {
+            flex-grow: 1;
+        }
+        
+        .player-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .player-status {
+            font-size: 0.9rem;
+            color: #a0a0c0;
+        }
+        
+        .player-pieces {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .piece {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+        }
+        
+        .controls {
+            display: flex;
+            flex-direction: column;
+            margin-top: 20px;
+        }
+        
+        .dice-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #151a33;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .dice {
+            width: 80px;
+            height: 80px;
+            background-color: #fff;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #1a1a2e;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .dice.rolling {
+            animation: rollDice 0.8s ease-in-out;
+        }
+        
+        @keyframes rollDice {
+            0% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(90deg) scale(1.1); }
+            50% { transform: rotate(180deg) scale(1); }
+            75% { transform: rotate(270deg) scale(1.1); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+        
+        .roll-btn {
+            background: linear-gradient(90deg, #ff9a00, #ff0058);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(255, 0, 88, 0.3);
+        }
+        
+        .roll-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 0, 88, 0.4);
+        }
+        
+        .roll-btn:disabled {
+            background: #555;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .game-status {
+            background-color: #151a33;
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 1.2rem;
+            margin-top: 20px;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .game-message {
+            font-weight: bold;
+            color: #ff9a00;
+        }
+        
+        .rules-btn {
+            margin-top: 20px;
+            background-color: #2d3561;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        
+        .rules-btn:hover {
+            background-color: #3a4475;
+        }
+        
+        .piece-on-board {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            position: absolute;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .piece-on-board:hover {
+            transform: scale(1.1);
+        }
+        
+        .piece-red { background-color: #ff3a3a; }
+        .piece-green { background-color: #2ecc71; }
+        .piece-yellow { background-color: #f1c40f; }
+        .piece-blue { background-color: #3498db; }
+        
+        .player-turn {
+            font-size: 1.1rem;
+            color: #ff9a00;
+            margin-top: 10px;
+            text-align: center;
+        }
+        
+        .winner-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .winner-content {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            border: 3px solid #ff9a00;
+            box-shadow: 0 0 30px rgba(255, 154, 0, 0.5);
+        }
+        
+        .winner-content h2 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #ff9a00;
+        }
+        
+        .winner-content p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+        }
+        
+        .play-again-btn {
+            background: linear-gradient(90deg, #ff9a00, #ff0058);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.3rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .play-again-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .rules-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .rules-content {
+            background-color: #0d1021;
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 700px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 3px solid #2d3561;
+        }
+        
+        .rules-content h2 {
+            color: #ff9a00;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 2rem;
+        }
+        
+        .rules-content ul {
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .rules-content li {
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+        
+        .close-rules {
+            background-color: #ff3a3a;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+        }
+        
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #a0a0c0;
+            padding: 20px;
+            font-size: 0.9rem;
+            width: 100%;
+        }
+        
+        @media (max-width: 1100px) {
+            .game-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .player-info {
+                width: 600px;
+                max-width: 100%;
+            }
+        }
+        
+        @media (max-width: 650px) {
+            .board {
+                width: 95vw;
+                height: 95vw;
+                max-width: 500px;
+                max-height: 500px;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .player-info {
+                width: 95vw;
+                max-width: 500px;
+            }
+        }
+.back-container {
+    margin: 20px;
+}
+
+.back-btn {
+    display: inline-block;
+    padding: 12px 22px;
+    background: linear-gradient(135deg, #6dd5fa, #ffffff);
+    color: #000;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 10px;
+    border: 2px solid #6dd5fa;
+    transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+    background: linear-gradient(135deg, #ffffff, #6dd5fa);
+    transform: translateX(-5px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-dice"></i> LUDO PROFESIONAL</h1>
+            <p class="subtitle">Sin bloqueos de turno - ¡Juego fluido y divertido!</p>
+        </header>
+        
+        <div class="game-container">
+            <div class="game-board">
+                <div class="board" id="board">
+                    <!-- El tablero se generará con JavaScript -->
+                </div>
+            </div>
+            
+            <div class="player-info">
+                <h2>Jugadores</h2>
+                
+                <div class="player red-player active" id="player-red">
+                    <div class="player-icon">R</div>
+                    <div class="player-details">
+                        <div class="player-name">Jugador Rojo</div>
+                        <div class="player-status" id="status-red">Turno actual</div>
+                        <div class="player-pieces">
+                            <div class="piece piece-red"></div>
+                            <div class="piece piece-red"></div>
+                            <div class="piece piece-red"></div>
+                            <div class="piece piece-red"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="player green-player" id="player-green">
+                    <div class="player-icon">V</div>
+                    <div class="player-details">
+                        <div class="player-name">Jugador Verde</div>
+                        <div class="player-status" id="status-green">Esperando turno</div>
+                        <div class="player-pieces">
+                            <div class="piece piece-green"></div>
+                            <div class="piece piece-green"></div>
+                            <div class="piece piece-green"></div>
+                            <div class="piece piece-green"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="player yellow-player" id="player-yellow">
+                    <div class="player-icon">A</div>
+                    <div class="player-details">
+                        <div class="player-name">Jugador Amarillo</div>
+                        <div class="player-status" id="status-yellow">Esperando turno</div>
+                        <div class="player-pieces">
+                            <div class="piece piece-yellow"></div>
+                            <div class="piece piece-yellow"></div>
+                            <div class="piece piece-yellow"></div>
+                            <div class="piece piece-yellow"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="player blue-player" id="player-blue">
+                    <div class="player-icon">Z</div>
+                    <div class="player-details">
+                        <div class="player-name">Jugador Azul</div>
+                        <div class="player-status" id="status-blue">Esperando turno</div>
+                        <div class="player-pieces">
+                            <div class="piece piece-blue"></div>
+                            <div class="piece piece-blue"></div>
+                            <div class="piece piece-blue"></div>
+                            <div class="piece piece-blue"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="controls">
+                    <div class="dice-container">
+                        <div class="dice" id="dice">6</div>
+                        <button class="roll-btn" id="roll-btn">LANZAR DADO</button>
+                        <div class="player-turn" id="player-turn">Turno: Jugador Rojo</div>
+                    </div>
+                    
+                    <div class="game-status">
+                        <div class="game-message" id="game-message">Lanza el dado para comenzar el juego</div>
+                    </div>
+                    
+                    <button class="rules-btn" id="rules-btn">Ver Reglas del Juego</button>
+                    <div class="back-container">
+    <a href="inicioeljuegoeducativo.html" class="back-btn">⬅ Volver</a>
+</div>
+
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Ludo Profesional - Versión sin bloqueos | Todos los turnos fluyen correctamente</p>
+        </footer>
+    </div>
+    
+    <!-- Modal de Ganador -->
+    <div class="winner-modal" id="winner-modal">
+        <div class="winner-content">
+            <h2><i class="fas fa-trophy"></i> ¡FELICIDADES!</h2>
+            <p id="winner-text">El Jugador Rojo ha ganado el juego</p>
+            <button class="play-again-btn" id="play-again-btn">JUGAR DE NUEVO</button>
+        </div>
+    </div>
+    
+    <!-- Modal de Reglas -->
+    <div class="rules-modal" id="rules-modal">
+        <div class="rules-content">
+            <h2>Reglas del Ludo</h2>
+            <p>Ludo es un juego de mesa para 2-4 jugadores. Cada jugador tiene 4 fichas que deben recorrer el tablero desde la salida hasta la meta.</p>
+            
+            <h3>Cómo jugar:</h3>
+            <ul>
+                <li>Los jugadores se turnan para lanzar el dado.</li>
+                <li>Para sacar una ficha de la casa, debes obtener un 6 en el dado.</li>
+                <li>Con un 6, obtienes un turno extra.</li>
+                <li>Las fichas se mueven en el sentido de las agujas del reloj según el número obtenido en el dado.</li>
+                <li>Si una ficha cae en una casilla ocupada por una ficha contraria, la ficha contraria regresa a su casa.</li>
+                <li>Las casillas seguras (con círculo) protegen las fichas de ser capturadas.</li>
+                <li>Para entrar a la zona de meta, debes obtener el número exacto.</li>
+                <li>El primer jugador en llevar sus 4 fichas a la meta gana el juego.</li>
+            </ul>
+            
+            <h3>Controles:</h3>
+            <ul>
+                <li>Haz clic en el botón "LANZAR DADO" para lanzar el dado.</li>
+                <li>Después de lanzar, haz clic en una de tus fichas para moverla.</li>
+                <li>Solo puedes mover fichas que estén en juego (fuera de casa).</li>
+                <li>Si no tienes movimientos posibles, tu turno pasará automáticamente al siguiente jugador.</li>
+            </ul>
+            
+            <button class="close-rules" id="close-rules">Cerrar Reglas</button>
+        </div>
+    </div>
+
+    <script>
+        // Variables del juego
+        const players = {
+            'red': { 
+                name: 'Jugador Rojo', 
+                color: '#ff3a3a', 
+                homePositions: [[2,2], [2,3], [3,2], [3,3]], 
+                startPosition: [6,1], 
+                path: [], 
+                pieces: [], 
+                turn: false, 
+                finishedPieces: 0 
+            },
+            'green': { 
+                name: 'Jugador Verde', 
+                color: '#2ecc71', 
+                homePositions: [[11,2], [11,3], [12,2], [12,3]], 
+                startPosition: [1,8], 
+                path: [], 
+                pieces: [], 
+                turn: false, 
+                finishedPieces: 0 
+            },
+            'yellow': { 
+                name: 'Jugador Amarillo', 
+                color: '#f1c40f', 
+                homePositions: [[11,11], [11,12], [12,11], [12,12]], 
+                startPosition: [8,13], 
+                path: [], 
+                pieces: [], 
+                turn: false, 
+                finishedPieces: 0 
+            },
+            'blue': { 
+                name: 'Jugador Azul', 
+                color: '#3498db', 
+                homePositions: [[2,11], [2,12], [3,11], [3,12]], 
+                startPosition: [13,6], 
+                path: [], 
+                pieces: [], 
+                turn: false, 
+                finishedPieces: 0 
+            }
+        };
+        
+        const playerOrder = ['red', 'green', 'yellow', 'blue'];
+        let currentPlayerIndex = 0;
+        let diceValue = 1;
+        let gameStarted = false;
+        let gameOver = false;
+        let diceRolled = false;
+        let canMovePiece = false;
+        let selectedPiece = null;
+        let extraTurn = false; // Para controlar turnos extra por sacar 6
+        
+        // Elementos del DOM
+        const boardElement = document.getElementById('board');
+        const diceElement = document.getElementById('dice');
+        const rollBtn = document.getElementById('roll-btn');
+        const gameMessage = document.getElementById('game-message');
+        const playerTurnElement = document.getElementById('player-turn');
+        const winnerModal = document.getElementById('winner-modal');
+        const winnerText = document.getElementById('winner-text');
+        const playAgainBtn = document.getElementById('play-again-btn');
+        const rulesBtn = document.getElementById('rules-btn');
+        const rulesModal = document.getElementById('rules-modal');
+        const closeRulesBtn = document.getElementById('close-rules');
+        
+        // Inicializar el juego
+        function initGame() {
+            createBoard();
+            initializePlayerPaths();
+            createPieces();
+            setCurrentPlayer(0);
+            updateGameStatus();
+            
+            // Event Listeners
+            rollBtn.addEventListener('click', rollDice);
+            playAgainBtn.addEventListener('click', resetGame);
+            rulesBtn.addEventListener('click', () => {
+                rulesModal.style.display = 'flex';
+            });
+            
+            closeRulesBtn.addEventListener('click', () => {
+                rulesModal.style.display = 'none';
+            });
+            
+            // Cerrar modal al hacer clic fuera
+            window.addEventListener('click', (e) => {
+                if (e.target === winnerModal) {
+                    winnerModal.style.display = 'none';
+                }
+                if (e.target === rulesModal) {
+                    rulesModal.style.display = 'none';
+                }
+            });
+        }
+        
+        // Crear el tablero
+        function createBoard() {
+            // Limpiar el tablero
+            boardElement.innerHTML = '';
+            
+            // Crear 15x15 celdas
+            for (let row = 0; row < 15; row++) {
+                for (let col = 0; col < 15; col++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'cell';
+                    cell.dataset.row = row;
+                    cell.dataset.col = col;
+                    
+                    // Determinar el tipo de celda
+                    if ((row === 0 || row === 14 || col === 0 || col === 14) && 
+                        !((row >= 6 && row <= 8) && (col >= 6 && col <= 8))) {
+                        // Celdas del camino principal
+                        if (row === 0 && col >= 6 && col <= 8) cell.classList.add('green-area');
+                        else if (row === 14 && col >= 6 && col <= 8) cell.classList.add('yellow-area');
+                        else if (col === 0 && row >= 6 && row <= 8) cell.classList.add('red-area');
+                        else if (col === 14 && row >= 6 && row <= 8) cell.classList.add('blue-area');
+                        else cell.classList.add('home');
+                    } 
+                    else if ((row >= 6 && row <= 8) && (col >= 6 && col <= 8)) {
+                        // Área central
+                        if (row === 7 && col === 7) {
+                            cell.classList.add('safe');
+                            cell.innerHTML = '<i class="fas fa-star"></i>';
+                        } else {
+                            cell.classList.add('safe');
+                        }
+                    }
+                    else {
+                        // Casillas de inicio y casas
+                        if (row >= 2 && row <= 3 && col >= 2 && col <= 3) cell.classList.add('red-home');
+                        else if (row >= 2 && row <= 3 && col >= 11 && col <= 12) cell.classList.add('blue-home');
+                        else if (row >= 11 && row <= 12 && col >= 2 && col <= 3) cell.classList.add('green-home');
+                        else if (row >= 11 && row <= 12 && col >= 11 && col <= 12) cell.classList.add('yellow-home');
+                        else if (row === 6 && col === 1) cell.classList.add('red-start');
+                        else if (row === 1 && col === 8) cell.classList.add('green-start');
+                        else if (row === 8 && col === 13) cell.classList.add('yellow-start');
+                        else if (row === 13 && col === 6) cell.classList.add('blue-start');
+                        else if ((row === 6 && col >= 2 && col <= 5) || (col === 6 && row >= 2 && row <= 5)) cell.classList.add('red-path');
+                        else if ((row === 8 && col >= 9 && col <= 12) || (col === 8 && row >= 2 && row <= 5)) cell.classList.add('green-path');
+                        else if ((row === 8 && col >= 2 && col <= 5) || (col === 8 && row >= 9 && row <= 12)) cell.classList.add('yellow-path');
+                        else if ((row === 6 && col >= 9 && col <= 12) || (col === 6 && row >= 9 && row <= 12)) cell.classList.add('blue-path');
+                    }
+                    
+                    boardElement.appendChild(cell);
+                }
+            }
+        }
+        
+        // Inicializar los caminos de cada jugador
+        function initializePlayerPaths() {
+            // Camino rojo (57 posiciones)
+            for (let i = 1; i <= 5; i++) players.red.path.push([6, i]);
+            for (let i = 5; i >= 1; i--) players.red.path.push([i, 6]);
+            for (let i = 7; i <= 13; i++) players.red.path.push([1, i]);
+            for (let i = 2; i <= 6; i++) players.red.path.push([i, 13]);
+            players.red.path.push([7, 13], [7, 12], [7, 11], [7, 10], [7, 9]);
+            // Meta roja (5 posiciones adicionales)
+            for (let i = 8; i <= 12; i++) players.red.path.push([7, i]);
+            
+            // Camino verde (57 posiciones)
+            for (let i = 7; i <= 13; i++) players.green.path.push([i, 8]);
+            for (let i = 7; i >= 1; i--) players.green.path.push([13, i]);
+            for (let i = 12; i >= 6; i--) players.green.path.push([i, 1]);
+            for (let i = 2; i <= 6; i++) players.green.path.push([1, i]);
+            players.green.path.push([1, 7], [2, 7], [3, 7], [4, 7], [5, 7]);
+            // Meta verde (5 posiciones adicionales)
+            for (let i = 2; i <= 6; i++) players.green.path.push([i, 7]);
+            
+            // Camino amarillo (57 posiciones)
+            for (let i = 7; i >= 1; i--) players.yellow.path.push([8, i]);
+            for (let i = 7; i <= 13; i++) players.yellow.path.push([i, 1]);
+            for (let i = 2; i <= 6; i++) players.yellow.path.push([13, i]);
+            for (let i = 12; i >= 8; i--) players.yellow.path.push([i, 6]);
+            players.yellow.path.push([7, 6], [7, 5], [7, 4], [7, 3], [7, 2]);
+            // Meta amarilla (5 posiciones adicionales)
+            for (let i = 6; i >= 2; i--) players.yellow.path.push([7, i]);
+            
+            // Camino azul (57 posiciones)
+            for (let i = 7; i >= 1; i--) players.blue.path.push([i, 6]);
+            for (let i = 7; i <= 13; i++) players.blue.path.push([1, i]);
+            for (let i = 2; i <= 6; i++) players.blue.path.push([i, 13]);
+            for (let i = 12; i >= 8; i--) players.blue.path.push([6, i]);
+            players.blue.path.push([6, 7], [5, 7], [4, 7], [3, 7], [2, 7]);
+            // Meta azul (5 posiciones adicionales)
+            for (let i = 6; i >= 2; i--) players.blue.path.push([i, 7]);
+        }
+        
+        // Crear las fichas de cada jugador
+        function createPieces() {
+            // Limpiar fichas existentes
+            document.querySelectorAll('.piece-on-board').forEach(piece => piece.remove());
+            
+            // Crear fichas para cada jugador
+            for (const playerId in players) {
+                const player = players[playerId];
+                player.pieces = [];
+                
+                // Crear 4 fichas en la casa
+                for (let i = 0; i < 4; i++) {
+                    const piece = {
+                        id: `${playerId}-${i}`,
+                        position: player.homePositions[i], // En casa
+                        index: -1, // -1 significa en casa
+                        isHome: true,
+                        isFinished: false,
+                        element: null
+                    };
+                    
+                    player.pieces.push(piece);
+                    renderPiece(piece);
+                }
+            }
+        }
+        
+        // Renderizar una ficha en el tablero
+        function renderPiece(piece) {
+            // Eliminar la ficha si ya existe
+            const existingPiece = document.getElementById(piece.id);
+            if (existingPiece) existingPiece.remove();
+            
+            // Si la ficha está en casa o terminada, no renderizar en el tablero
+            if (piece.isFinished) return;
+            
+            const [row, col] = piece.position;
+            const cell = document.querySelector(`.cell[data-row="${row}"][data-col="${col}"]`);
+            if (!cell) return;
+            
+            const pieceElement = document.createElement('div');
+            pieceElement.id = piece.id;
+            pieceElement.className = `piece-on-board piece-${piece.id.split('-')[0]}`;
+            pieceElement.dataset.pieceId = piece.id;
+            pieceElement.innerHTML = piece.id.split('-')[1];
+            
+            // Posicionar la ficha en la celda
+            const cellRect = cell.getBoundingClientRect();
+            const boardRect = boardElement.getBoundingClientRect();
+            
+            pieceElement.style.left = `${cellRect.left - boardRect.left + cellRect.width/2 - 15}px`;
+            pieceElement.style.top = `${cellRect.top - boardRect.top + cellRect.height/2 - 15}px`;
+            
+            // Event listener para mover la ficha
+            pieceElement.addEventListener('click', () => handlePieceClick(piece.id));
+            
+            boardElement.appendChild(pieceElement);
+            piece.element = pieceElement;
+        }
+        
+        // Manejar clic en una ficha
+        function handlePieceClick(pieceId) {
+            if (!canMovePiece || gameOver) return;
+            
+            const [playerId, pieceIndex] = pieceId.split('-');
+            const player = players[playerId];
+            
+            // Solo se puede mover fichas del jugador actual
+            if (playerId !== playerOrder[currentPlayerIndex]) {
+                gameMessage.textContent = "No es tu ficha. Es el turno del " + player.name;
+                return;
+            }
+            
+            const piece = player.pieces[parseInt(pieceIndex)];
+            
+            // Verificar si la ficha se puede mover
+            if (!canPieceMove(piece, diceValue, playerId)) {
+                gameMessage.textContent = "Esta ficha no se puede mover con el valor del dado";
+                return;
+            }
+            
+            // Mover la ficha
+            movePiece(piece, diceValue, playerId);
+            canMovePiece = false;
+            
+            // Verificar si el jugador ganó
+            if (player.finishedPieces === 4) {
+                gameOver = true;
+                showWinner(player);
+                return;
+            }
+            
+            // Si sacó 6, puede lanzar de nuevo (turno extra)
+            if (diceValue === 6 && !piece.isFinished) {
+                extraTurn = true;
+                gameMessage.textContent = `¡Sacaste 6! ${player.name} lanza de nuevo`;
+                diceRolled = false;
+                rollBtn.disabled = false;
+                updateGameStatus();
+            } else {
+                // Cambiar al siguiente jugador
+                extraTurn = false;
+                setTimeout(() => nextPlayer(), 1000);
+            }
+        }
+        
+        // Verificar si una ficha puede moverse
+        function canPieceMove(piece, diceValue, playerId) {
+            const player = players[playerId];
+            
+            // Si la ficha está en casa
+            if (piece.isHome) {
+                // Solo puede salir con un 6
+                return diceValue === 6;
+            }
+            
+            // Si la ficha está en el camino
+            const newIndex = piece.index + diceValue;
+            
+            // Si se pasa de la meta
+            if (newIndex >= player.path.length) {
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // Mover una ficha
+        function movePiece(piece, diceValue, playerId) {
+            const player = players[playerId];
+            
+            // Si la ficha está en casa y sacó 6
+            if (piece.isHome && diceValue === 6) {
+                piece.isHome = false;
+                piece.index = 0;
+                piece.position = player.path[0];
+                gameMessage.textContent = `${player.name} sacó una ficha de casa`;
+            }
+            // Si la ficha está en el camino
+            else if (!piece.isHome && !piece.isFinished) {
+                const newIndex = piece.index + diceValue;
+                
+                // Si llega exactamente a la meta
+                if (newIndex === player.path.length - 1) {
+                    piece.isFinished = true;
+                    piece.position = [-1, -1]; // Fuera del tablero
+                    player.finishedPieces++;
+                    gameMessage.textContent = `¡${player.name} llevó una ficha a la meta!`;
+                    
+                    // Actualizar contador de fichas en la interfaz
+                    updatePlayerPiecesDisplay(playerId);
+                }
+                // Si se mueve normalmente
+                else if (newIndex < player.path.length) {
+                    piece.index = newIndex;
+                    piece.position = player.path[newIndex];
+                    
+                    // Verificar si captura una ficha enemiga
+                    checkCapture(piece, playerId);
+                    
+                    gameMessage.textContent = `${player.name} movió una ficha ${diceValue} casillas`;
+                }
+            }
+            
+            // Renderizar la ficha actualizada
+            renderPiece(piece);
+        }
+        
+        // Verificar si una ficha captura a otra
+        function checkCapture(piece, playerId) {
+            const [row, col] = piece.position;
+            
+            // Buscar fichas enemigas en la misma posición
+            for (const otherPlayerId in players) {
+                if (otherPlayerId === playerId) continue;
+                
+                const otherPlayer = players[otherPlayerId];
+                for (const otherPiece of otherPlayer.pieces) {
+                    if (!otherPiece.isHome && !otherPiece.isFinished && 
+                        otherPiece.position[0] === row && otherPiece.position[1] === col) {
+                        
+                        // La casilla no es segura (no es la central ni las de salida)
+                        const isSafeCell = (row === 7 && col === 7) || 
+                                          (row === 6 && col === 1) ||
+                                          (row === 1 && col === 8) ||
+                                          (row === 8 && col === 13) ||
+                                          (row === 13 && col === 6);
+                        
+                        if (!isSafeCell) {
+                            // Capturar la ficha enemiga (regresarla a casa)
+                            otherPiece.isHome = true;
+                            otherPiece.index = -1;
+                            otherPiece.position = otherPlayer.homePositions[otherPiece.id.split('-')[1]];
+                            gameMessage.textContent += ` y capturó una ficha de ${otherPlayer.name}`;
+                            renderPiece(otherPiece);
+                        }
+                    }
+                }
+            }
+        }
+        
+        // Actualizar la visualización de fichas del jugador
+        function updatePlayerPiecesDisplay(playerId) {
+            const player = players[playerId];
+            const statusElement = document.getElementById(`status-${playerId}`);
+            
+            if (statusElement) {
+                const piecesAtHome = player.pieces.filter(p => p.isHome).length;
+                const piecesFinished = player.finishedPieces;
+                const piecesOnBoard = 4 - piecesAtHome - piecesFinished;
+                
+                statusElement.textContent = `En casa: ${piecesAtHome}, En juego: ${piecesOnBoard}, Meta: ${piecesFinished}`;
+            }
+        }
+        
+        // Lanzar el dado
+        function rollDice() {
+            if (diceRolled || gameOver) return;
+            
+            // Animación del dado
+            diceElement.classList.add('rolling');
+            rollBtn.disabled = true;
+            
+            // Generar un valor aleatorio del dado
+            setTimeout(() => {
+                diceValue = Math.floor(Math.random() * 6) + 1;
+                diceElement.textContent = diceValue;
+                diceElement.classList.remove('rolling');
+                
+                diceRolled = true;
+                gameStarted = true;
+                
+                const currentPlayerId = playerOrder[currentPlayerIndex];
+                const player = players[currentPlayerId];
+                
+                // Verificar si el jugador tiene movimientos posibles
+                const hasValidMoves = checkValidMoves(currentPlayerId, diceValue);
+                
+                if (hasValidMoves) {
+                    gameMessage.textContent = `${player.name} sacó ${diceValue}. Selecciona una ficha para mover`;
+                    canMovePiece = true;
+                } else {
+                    gameMessage.textContent = `${player.name} sacó ${diceValue}. No tiene movimientos posibles.`;
+                    
+                    // Si sacó 6 y no tiene movimientos, NO le da turno extra
+                    if (diceValue === 6) {
+                        gameMessage.textContent += " Sacó 6 pero no tiene movimientos, pierde el turno extra.";
+                    }
+                    
+                    // Cambiar al siguiente jugador automáticamente después de un breve delay
+                    setTimeout(() => {
+                        nextPlayer();
+                    }, 1500);
+                }
+                
+                updateGameStatus();
+            }, 800);
+        }
+        
+        // Verificar si el jugador tiene movimientos válidos
+        function checkValidMoves(playerId, diceValue) {
+            const player = players[playerId];
+            
+            // Verificar cada ficha
+            for (const piece of player.pieces) {
+                if (canPieceMove(piece, diceValue, playerId)) {
+                    return true;
+                }
+            }
+            
+            return false;
+        }
+        
+        // Cambiar al siguiente jugador
+        function nextPlayer() {
+            // Si el juego terminó, no hacer nada
+            if (gameOver) return;
+            
+            // Desactivar jugador actual
+            const currentPlayerId = playerOrder[currentPlayerIndex];
+            document.getElementById(`player-${currentPlayerId}`).classList.remove('active');
+            
+            // Si hay turno extra, no cambiamos de jugador
+            if (extraTurn) {
+                extraTurn = false;
+                diceRolled = false;
+                rollBtn.disabled = false;
+                gameMessage.textContent = `${players[currentPlayerId].name}, tienes turno extra. Lanza el dado`;
+                updateGameStatus();
+                return;
+            }
+            
+            // Avanzar al siguiente jugador
+            let attempts = 0;
+            do {
+                currentPlayerIndex = (currentPlayerIndex + 1) % playerOrder.length;
+                attempts++;
+                
+                // Prevención de bucle infinito
+                if (attempts > playerOrder.length * 2) {
+                    console.error("Error: No se encontró jugador válido después de múltiples intentos");
+                    break;
+                }
+            } while (players[playerOrder[currentPlayerIndex]].finishedPieces === 4 && attempts < playerOrder.length * 2);
+            
+            // Verificar si el juego terminó (todos menos uno han ganado)
+            const activePlayers = playerOrder.filter(id => players[id].finishedPieces < 4);
+            if (activePlayers.length <= 1 && gameStarted) {
+                gameOver = true;
+                const winnerId = activePlayers[0];
+                showWinner(players[winnerId]);
+                return;
+            }
+            
+            // Activar nuevo jugador
+            setCurrentPlayer(currentPlayerIndex);
+            diceRolled = false;
+            rollBtn.disabled = false;
+            canMovePiece = false;
+            
+            updateGameStatus();
+        }
+        
+        // Establecer el jugador actual
+        function setCurrentPlayer(index) {
+            currentPlayerIndex = index;
+            const playerId = playerOrder[index];
+            
+            // Actualizar interfaz
+            playerOrder.forEach(id => {
+                const playerElement = document.getElementById(`player-${id}`);
+                if (id === playerId) {
+                    playerElement.classList.add('active');
+                    players[id].turn = true;
+                } else {
+                    playerElement.classList.remove('active');
+                    players[id].turn = false;
+                }
+            });
+            
+            playerTurnElement.textContent = `Turno: ${players[playerId].name}`;
+            gameMessage.textContent = `${players[playerId].name}, es tu turno. Lanza el dado`;
+        }
+        
+        // Actualizar el estado del juego
+        function updateGameStatus() {
+            const currentPlayerId = playerOrder[currentPlayerIndex];
+            const player = players[currentPlayerId];
+            
+            if (!gameStarted) {
+                gameMessage.textContent = "Lanza el dado para comenzar el juego";
+            } else if (!diceRolled) {
+                gameMessage.textContent = `${player.name}, es tu turno. Lanza el dado`;
+            }
+            
+            // Actualizar estado de fichas para todos los jugadores
+            for (const playerId in players) {
+                updatePlayerPiecesDisplay(playerId);
+            }
+        }
+        
+        // Mostrar el ganador
+        function showWinner(player) {
+            winnerText.textContent = `¡${player.name} ha ganado el juego!`;
+            winnerModal.style.display = 'flex';
+        }
+        
+        // Reiniciar el juego
+        function resetGame() {
+            // Restablecer variables
+            currentPlayerIndex = 0;
+            diceValue = 1;
+            gameStarted = false;
+            gameOver = false;
+            diceRolled = false;
+            canMovePiece = false;
+            extraTurn = false;
+            
+            // Restablecer jugadores
+            for (const playerId in players) {
+                players[playerId].pieces = [];
+                players[playerId].finishedPieces = 0;
+                players[playerId].turn = false;
+            }
+            
+            // Restablecer interfaz
+            diceElement.textContent = '6';
+            winnerModal.style.display = 'none';
+            
+            // Recrear el juego
+            createPieces();
+            setCurrentPlayer(0);
+            updateGameStatus();
+        }
+        
+        // Iniciar el juego cuando la página cargue
+        window.addEventListener('DOMContentLoaded', initGame);
+    </script>
+</body>
+</html>

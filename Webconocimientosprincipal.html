@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Educación</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0c2461, #1e3799, #4a69bd);
+            color: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Efectos de fondo profundo */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(253, 187, 45, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 20%, rgba(52, 152, 219, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 40% 40%, rgba(46, 204, 113, 0.1) 0%, transparent 40%);
+            z-index: -1;
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.1) 1px, transparent 0);
+            background-size: 40px 40px;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            text-align: center;
+            z-index: 1;
+        }
+
+        header {
+            margin-bottom: 3rem;
+            animation: fadeInDown 1s ease;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(to right, #fdbb2d, #ffd166, #fdbb2d);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            font-size: 1.4rem;
+            color: #e9ecef;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
+            font-weight: 400;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            margin-top: 3rem;
+        }
+
+        /* Estilos para los botones principales */
+        .main-button {
+            width: 380px;
+            height: 450px;
+            border-radius: 25px;
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border: 3px solid transparent;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .main-button-1 {
+            background: linear-gradient(145deg, 
+                rgba(255, 255, 255, 0.95), 
+                rgba(248, 249, 250, 0.95));
+            border: 3px solid #fdbb2d;
+        }
+
+        .main-button-2 {
+            background: linear-gradient(145deg, 
+                rgba(255, 255, 255, 0.95), 
+                rgba(248, 249, 250, 0.95));
+            border: 3px solid #2ecc71;
+        }
+
+        .main-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.2) 50%, transparent 70%);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+
+        .main-button:hover::before {
+            transform: translateX(100%);
+        }
+
+        .main-button:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+            border-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .button-icon {
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 2;
+            filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.2));
+        }
+
+        .button-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            line-height: 1.2;
+        }
+
+        .button-description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 2;
+            flex-grow: 1;
+            color: #495057;
+            font-weight: 500;
+        }
+
+        .button-footer {
+            font-size: 1rem;
+            padding: 0.9rem 2rem;
+            border-radius: 50px;
+            border: 2px solid;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        /* Colores específicos para cada botón */
+        .main-button-1 .button-icon {
+            color: #e67700;
+        }
+
+        .main-button-1 .button-title {
+            color: #d35400;
+            background: linear-gradient(to right, #e67e22, #d35400);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .main-button-1 .button-footer {
+            background: #e67e22;
+            color: white;
+            border-color: #d35400;
+        }
+
+        .main-button-1:hover .button-footer {
+            background: #d35400;
+            border-color: #e67e22;
+            transform: scale(1.05);
+        }
+
+        .main-button-2 .button-icon {
+            color: #27ae60;
+        }
+
+        .main-button-2 .button-title {
+            color: #229954;
+            background: linear-gradient(to right, #2ecc71, #27ae60);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .main-button-2 .button-footer {
+            background: #2ecc71;
+            color: white;
+            border-color: #27ae60;
+        }
+
+        .main-button-2:hover .button-footer {
+            background: #27ae60;
+            border-color: #2ecc71;
+            transform: scale(1.05);
+        }
+
+        /* Mejorar contrastes del texto general */
+        .main-button-1 .button-description {
+            color: #2d3436;
+        }
+
+        .main-button-2 .button-description {
+            color: #2d3436;
+        }
+
+        /* Decoraciones adicionales */
+        .decoration {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+            z-index: 0;
+        }
+
+        .decoration-1 {
+            width: 300px;
+            height: 300px;
+            top: 10%;
+            left: 5%;
+            animation: pulse 4s infinite alternate;
+        }
+
+        .decoration-2 {
+            width: 200px;
+            height: 200px;
+            bottom: 15%;
+            right: 8%;
+            animation: pulse 5s infinite alternate-reverse;
+        }
+
+        .decoration-3 {
+            width: 150px;
+            height: 150px;
+            top: 50%;
+            left: 10%;
+            animation: pulse 6s infinite alternate;
+        }
+
+        /* Animaciones */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            width: 100%;
+            text-align: center;
+            font-size: 1rem;
+            color: #e9ecef;
+            font-weight: 400;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .buttons-container {
+                gap: 2rem;
+            }
+            
+            .main-button {
+                width: 340px;
+                height: 420px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+                color: #f1f3f5;
+            }
+            
+            .buttons-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .main-button {
+                width: 100%;
+                max-width: 400px;
+                height: 380px;
+                background: linear-gradient(145deg, 
+                    rgba(255, 255, 255, 0.97), 
+                    rgba(252, 253, 255, 0.97));
+            }
+            
+            .decoration {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 1.5rem;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+                color: #f8f9fa;
+            }
+            
+            .main-button {
+                height: 360px;
+                padding: 1.8rem;
+            }
+            
+            .button-icon {
+                font-size: 4rem;
+            }
+            
+            .button-title {
+                font-size: 1.8rem;
+            }
+            
+            .button-description {
+                font-size: 1rem;
+                color: #343a40;
+            }
+            
+            footer {
+                font-size: 0.9rem;
+                color: #dee2e6;
+            }
+        }
+/* ===== BOTÓN VOLVER ===== */
+.back-btn {
+    margin-top: 12px;     /* 🔥 separación grande del header */
+    display: inline-block;
+     padding: 12px 10px;
+    background-color: #4CAF50;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+/* Ícono */
+.back-btn i {
+    margin-right: 8px;
+}
+
+/* Hover */
+.back-btn:hover {
+    background-color: #43a047;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .back-btn {
+        margin-top: 100px;
+        font-size: 15px;
+        padding: 10px 16px;
+    }
+}
+/* Contenedor */
+.back-container {
+    margin: 20px 0;
+}
+
+/* Botón */
+.back-button {
+    display: inline-block;
+    padding: 14px 22px;
+
+    /* Texto */
+    color: #000;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+
+    /* Fondo y borde */
+    background-color: #eaeaea;
+    border: 3px solid #2c7be5;
+    border-radius: 10px;
+
+    /* Marco / sombra */
+    box-shadow: 4px 4px 0px #ff9800;
+
+    transition: all 0.3s ease;
+}
+
+/* Hover */
+.back-button:hover {
+    background-color: #2c7be5;
+    color: #fff;
+    box-shadow: 4px 4px 0px #000;
+    transform: translateY(-2px);
+}
+
+
+
+    </style>
+</head>
+<body>
+    <!-- Decoraciones de fondo -->
+    <div class="decoration decoration-1"></div>
+    <div class="decoration decoration-2"></div>
+    <div class="decoration decoration-3"></div>
+    
+    <div class="container">
+   
+
+        <header>
+            <h1>Portal de Educación Integral</h1>
+            <p class="subtitle">Explora dos mundos de conocimiento diseñados para tu crecimiento personal y profesional. Cada portal ofrece herramientas, conceptos y guías especializadas para diferentes áreas de aprendizaje.</p>
+        </header>
+      
+        <div class="buttons-container">
+            <!-- Botón 1: Cálculos Financieros -->
+            <a href="principal.html" class="main-button main-button-1">
+                <div class="button-icon">🧮</div>
+                <h2 class="button-title">Cálculos Financieros</h2>
+                <p class="button-description">Domina los cálculos esenciales de finanzas personales y empresariales. Calcula intereses compuestos, márgenes de ganancia, préstamos, inversiones y más con herramientas interactivas precisas y fáciles de usar.</p>
+                <div class="button-footer">Acceder a Calculadoras
+
+
+                </div>
+
+          
+            </a>
+            
+            <!-- Botón 2: Ciudad del Conocimiento -->
+            <a href="anteentrarconocimientosportada.html" class="main-button main-button-2">
+                <div class="button-icon">🏛️</div>
+                <h2 class="button-title">Ciudad del Conocimiento</h2>
+                <p class="button-description">Descubre tu vocación profesional explorando diferentes áreas de estudio. Guía completa con información detallada sobre carreras como abogacía, tecnología, psicología, contabilidad y mucho más.</p>
+                <div class="button-footer">Explorar Guía Vocacional</div>
+            </a>
+         
+        </div>
+         
+   <div class="back-container">
+    <a href="index.html"
+       class="back-button"
+       aria-label="Volver atrás">
+        ← Volver atrás
+    </a>
+</div>
+
+     
+    </div>
+    <script src="scriptaprendeconocimientos.js"></script>
+    <script>
+        // Efecto de interacción adicional al pasar el mouse
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('.main-button');
+            
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', function() {
+                    this.style.zIndex = '10';
+                });
+                
+                button.addEventListener('mouseleave', function() {
+                    this.style.zIndex = '1';
+                });
+            });
+            
+            // Efecto de aparición secuencial
+            const elements = document.querySelectorAll('.main-button');
+            elements.forEach((el, index) => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                
+                setTimeout(() => {
+                    el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, 300 + (index * 200));
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuadro Comparativo de Profesorados</title>
+    <style>
+        /* Variables y configuraciones globales */
+        :root {
+            --primary-color: #0056b3;
+            --secondary-color: #28a745;
+            --html-btn-color: #17a2b8;
+            --background-color: #f4f7f9;
+            --table-border-color: #e0e6ee;
+            --text-color: #333;
+            --header-bg-color: #f9fbfd;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+                border-radius: 10px;
+  max-width: 900px;
+  margin: 90px auto;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            font-size: 2.5em;
+            font-weight: 600;
+        }
+
+        /* Controles de usuario (barra de búsqueda y botones) */
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .download-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        #search-input {
+            flex-grow: 1;
+            padding: 12px 18px;
+            font-size: 1em;
+            border: 1px solid var(--table-border-color);
+            border-radius: 8px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        #search-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.2);
+            outline: none;
+        }
+
+        .download-btn {
+            padding: 12px 25px;
+            font-size: 1em;
+            font-weight: bold;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            position: relative;
+        }
+
+        #download-pdf-btn {
+            background-color: var(--secondary-color);
+        }
+
+        #download-pdf-btn:hover {
+            background-color: #218838;
+        }
+
+        #download-html-btn {
+            background-color: var(--html-btn-color);
+        }
+
+        #download-html-btn:hover {
+            background-color: #138496;
+        }
+
+        .download-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Animación del "spinner" de carga */
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+            display: none; /* Oculto por defecto */
+        }
+
+        .download-btn.loading .spinner {
+            display: inline-block;
+        }
+
+        .download-btn.loading span {
+            visibility: hidden;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Estilos de la tabla */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+            overflow: hidden; /* Para que las esquinas redondeadas funcionen */
+        }
+
+        thead {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--table-border-color);
+            word-wrap: break-word; /* Rompe palabras largas */
+        }
+
+        th {
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        th:hover {
+            background-color: #004599;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: var(--header-bg-color);
+        }
+
+        tbody tr:hover {
+            background-color: #f1f5fa;
+            transition: background-color 0.2s;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        a:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+        .ai-tools {
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+
+        /* Estilos responsivos para la tabla */
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+            }
+
+            #search-input, .download-buttons {
+                width: 100%;
+            }
+
+            .download-buttons {
+                justify-content: center;
+            }
+
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+
+            thead tr {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+
+            tr {
+                margin-bottom: 20px;
+                border: 1px solid var(--table-border-color);
+                border-radius: 8px;
+            }
+
+            td {
+                border: none;
+                position: relative;
+                padding-left: 50%;
+                text-align: right;
+            }
+
+            td:before {
+                content: attr(data-label);
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 45%;
+                padding: 15px 10px 15px 15px;
+                white-space: nowrap;
+                text-align: left;
+                font-weight: bold;
+                color: var(--primary-color);
+                border-right: 1px solid var(--table-border-color);
+                border-bottom: 1px solid var(--table-border-color);
+            }
+            td:last-child:before {
+                border-bottom: none;
+            }
+        }
+
+/* Solo estilos para el botón "Volver atrás" */
+.back-button {
+  display: inline-block;
+  padding: 10px 18px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 2px solid #333;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  user-select: none;
+}
+
+/* Efecto al pasar el ratón */
+.back-button:hover,
+.back-button:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+  text-decoration: none;
+  outline: none;
+}
+
+/* Efecto al hacer clic */
+.back-button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Lista de carrera nombrada para ayuda vocacional. </h1>
+         <a href="inicioaprendeguiacatalogo.html" class="back-button" aria-label="Volver atrás">Volver atrás</a>
+        <div class="controls">
+            <input type="text" id="search-input" placeholder="Buscar por nombre, función, IA...">
+            <div class="download-buttons">
+                <button id="download-html-btn" class="download-btn">Descargar HTML</button>
+                <button id="download-pdf-btn" class="download-btn">
+                    <span class="spinner"></span>
+                    <span>Descargar PDF</span>
+                </button>
+            </div>
+        </div>
+
+        <div id="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th data-sort-by="number">N°</th>
+                        <th data-sort-by="name">Nombre</th>
+                        <th data-sort-by="function">Función Principal</th>
+                        <th data-sort-by="areas">Áreas de Especialización</th>
+                        <th data-sort-by="environment">Entornos de Trabajo Comunes</th>
+                        <th data-sort-by="link">Link Práctica (YouTube)</th>
+                        <th data-sort-by="software">Herramientas de Software</th>
+                        <th data-sort-by="ai">Ayuda con la IA</th>
+                    </tr>
+                </thead>
+                <tbody id="professorship-table-body">
+                    <tr data-row-number="1">
+                        <td data-label="N°">1</td>
+                        <td data-label="Nombre">Profesorado de Educación Inicial</td>
+                        <td data-label="Función Principal">Diseñar e impartir clases para niños de 45 días a 5 años.</td>
+                        <td data-label="Áreas de Especialización">Desarrollo infantil, pedagogía del juego, neurociencias.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Jardines de infantes, guarderías, centros de estimulación temprana.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+educación+inicial" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">PDI, Storybird, ScratchJr.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">Gemini</span> para generar ideas de actividades lúdicas y cuentos infantiles personalizados.</td>
+                    </tr>
+                    <tr data-row-number="2">
+                        <td data-label="N°">2</td>
+                        <td data-label="Nombre">Profesorado de Educación Primaria</td>
+                        <td data-label="Función Principal">Enseñar todas las materias del currículo en el nivel primario.</td>
+                        <td data-label="Áreas de Especialización">Multidisciplinario (Lengua, Matemática, Ciencias Sociales y Naturales).</td>
+                        <td data-label="Entornos de Trabajo Comunes">Escuelas primarias, centros de refuerzo.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+educación+primaria" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">G Suite, ClassDojo, Kahoot!.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">ChatGPT</span> para crear resúmenes de temas complejos para niños y generar preguntas de repaso.</td>
+                    </tr>
+                    <tr data-row-number="3">
+                        <td data-label="N°">3</td>
+                        <td data-label="Nombre">Profesorado de Lengua y Literatura</td>
+                        <td data-label="Función Principal">Enseñar la gramática, la lectura, la escritura y el análisis literario.</td>
+                        <td data-label="Áreas de Especialización">Lingüística, semiótica, literatura universal y argentina.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Escuelas secundarias, institutos de formación.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+lengua+y+literatura" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">Grammarly, Turnitin, e-books.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">Deepseek Chat</span> para analizar la estructura de un texto literario y detectar figuras retóricas.</td>
+                    </tr>
+                    <tr data-row-number="4">
+                        <td data-label="N°">4</td>
+                        <td data-label="Nombre">Profesorado de Inglés</td>
+                        <td data-label="Función Principal">Enseñar el idioma inglés.</td>
+                        <td data-label="Áreas de Especialización">Fonética, gramática, cultura angloparlante, didáctica de idiomas.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Escuelas de todos los niveles, institutos de idiomas.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+de+inglés" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">Duolingo, Memrise, Moodle.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">Gemini</span> para simular conversaciones en inglés con diferentes acentos y situaciones.</td>
+                    </tr>
+                    <tr data-row-number="5">
+                        <td data-label="N°">5</td>
+                        <td data-label="Nombre">Profesorado de Francés</td>
+                        <td data-label="Función Principal">Enseñar el idioma francés.</td>
+                        <td data-label="Áreas de Especialización">Gramática, literatura, cultura francófona.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Escuelas, alianzas francesas, institutos privados.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+de+francés" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">WordReference, Larousse, TV5Monde.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">ChatGPT</span> para generar diálogos en francés para representaciones teatrales en clase.</td>
+                    </tr>
+                    <tr data-row-number="6">
+                        <td data-label="N°">6</td>
+                        <td data-label="Nombre">Profesorado de Portugués</td>
+                        <td data-label="Función Principal">Enseñar el idioma portugués.</td>
+                        <td data-label="Áreas de Especialización">Cultura brasileña y portuguesa, didáctica del idioma.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Escuelas, centros de idiomas.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+de+portugués" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">Babbel, Busuu.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">Deepseek Chat</span> para crear listas de vocabulario temáticas con ejemplos de uso.</td>
+                    </tr>
+                    <tr data-row-number="7">
+                        <td data-label="N°">7</td>
+                        <td data-label="Nombre">Profesorado de Italiano</td>
+                        <td data-label="Función Principal">Enseñar el idioma italiano.</td>
+                        <td data-label="Áreas de Especialización">Historia del arte, gastronomía, cine italiano.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Escuelas, institutos culturales.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+de+italiano" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">Reverso, IATE.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">Gemini</span> para traducir y adaptar recetas tradicionales italianas con vocabulario simplificado.</td>
+                    </tr>
+                    <tr data-row-number="8">
+                        <td data-label="N°">8</td>
+                        <td data-label="Nombre">Profesorado de Alemán</td>
+                        <td data-label="Función Principal">Enseñar el idioma alemán.</td>
+                        <td data-label="Áreas de Especialización">Cultura germánica, historia, didáctica del idioma.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Escuelas secundarias, institutos.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+de+alemán" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">DW Learn German, PONS.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">ChatGPT</span> para generar ejercicios de gramática con niveles de dificultad variados.</td>
+                    </tr>
+                    <tr data-row-number="9">
+                        <td data-label="N°">9</td>
+                        <td data-label="Nombre">Profesorado de Lenguas Clásicas</td>
+                        <td data-label="Función Principal">Enseñar latín y griego.</td>
+                        <td data data-label="Áreas de Especialización">Etimología, literatura clásica, historia antigua.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Universidades, escuelas secundarias.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+de+lenguas+clásicas" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">Perseus Digital Library.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">Deepseek Chat</span> para desglosar la etimología de palabras modernas a partir de raíces clásicas.</td>
+                    </tr>
+                    <tr data-row-number="10">
+                        <td data-label="N°">10</td>
+                        <td data-label="Nombre">Profesorado de Lenguas Extranjeras</td>
+                        <td data-label="Función Principal">Formación general para enseñar distintos idiomas.</td>
+                        <td data-label="Áreas de Especialización">Didáctica de lenguas, multilingüismo.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Escuelas con enfoque bilingüe, institutos.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+de+lenguas+extranjeras" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">Rosetta Stone, HelloTalk.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">Gemini</span> para crear planes de lecciones sobre multilingüismo y su impacto cultural.</td>
+                    </tr>
+                    <tr data-row-number="11">
+                        <td data-label="N°">11</td>
+                        <td data-label="Nombre">Profesorado de Matemática</td>
+                        <td data-label="Función Principal">Enseñar el pensamiento lógico-matemático.</td>
+                        <td data-label="Áreas de Especialización">Álgebra, geometría, cálculo, estadística.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Escuelas secundarias, institutos terciarios.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+de+matemática" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">GeoGebra, Desmos, MATLAB.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">ChatGPT</span> para generar problemas matemáticos con soluciones detalladas paso a paso.</td>
+                    </tr>
+                    <tr data-row-number="12">
+                        <td data-label="N°">12</td>
+                        <td data-label="Nombre">Profesorado de Estadística</td>
+                        <td data-label="Función Principal">Enseñar la recolección, análisis e interpretación de datos.</td>
+                        <td data-label="Áreas de Especialización">Probabilidad, inferencia, análisis multivariado.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Universidades, escuelas secundarias.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+de+estadística" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">RStudio, Python, Excel.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">Gemini</span> para interpretar grandes conjuntos de datos y generar visualizaciones de forma interactiva.</td>
+                    </tr>
+                    <tr data-row-number="13">
+                        <td data-label="N°">13</td>
+                        <td data-label="Nombre">Profesorado de Física</td>
+                        <td data-label="Función Principal">Enseñar las leyes del universo y sus fenómenos.</td>
+                        <td data-label="Áreas de Especialización">Mecánica, termodinámica, electromagnetismo.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Escuelas secundarias, universidades.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+de+física" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">PhET Interactive Simulations, Tracker.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">Deepseek Chat</span> para explicar teorías complejas de la física en analogías sencillas y fáciles de entender.</td>
+                    </tr>
+                    <tr data-row-number="14">
+                        <td data-label="N°">14</td>
+                        <td data-label="Nombre">Profesorado de Química</td>
+                        <td data-label="Función Principal">Enseñar la composición y propiedades de la materia.</td>
+                        <td data-label="Áreas de Especialización">Química orgánica e inorgánica, bioquímica.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Escuelas secundarias, laboratorios.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+de+química" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">ChemDraw, Avogadro.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">ChatGPT</span> para generar nombres y fórmulas de compuestos químicos a partir de descripciones.</td>
+                    </tr>
+                    <tr data-row-number="15">
+                        <td data-label="N°">15</td>
+                        <td data-label="Nombre">Profesorado de Biología</td>
+                        <td data-label="Función Principal">Enseñar los procesos y sistemas de los seres vivos.</td>
+                        <td data-label="Áreas de Especialización">Botánica, zoología, genética, ecología.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Escuelas secundarias, institutos de investigación.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+de+biología" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">Biodigital Human, Google Earth.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">Gemini</span> para crear infografías y diagramas de procesos biológicos complejos.</td>
+                    </tr>
+                    <tr data-row-number="16">
+                        <td data-label="N°">16</td>
+                        <td data-label="Nombre">Profesorado de Ciencias Naturales</td>
+                        <td data-label="Función Principal">Abordar la física, química, biología y geología de forma integrada.</td>
+                        <td data-label="Áreas de Especialización">Ecología, ambiente, salud.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Escuelas secundarias, talleres de educación ambiental.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+de+ciencias+naturales" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">iNaturalist, Stellarium.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">ChatGPT</span> para redactar descripciones de especies y ecosistemas con datos científicos precisos.</td>
+                    </tr>
+                    <tr data-row-number="17">
+                        <td data-label="N°">17</td>
+                        <td data-label="Nombre">Profesorado de Ciencias Ambientales</td>
+                        <td data-label="Función Principal">Formar en la gestión y conservación del medio ambiente.</td>
+                        <td data-label="Áreas de Especialización">Ecosistemas, desarrollo sostenible, políticas ambientales.</td>
+                        <td data-label="Entornos de Trabajo Comunes">ONGs, centros de educación ambiental.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+de+ciencias+ambientales" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">ArcGis, Google Earth Engine.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">Gemini</span> para modelar el impacto ambiental de proyectos y proponer soluciones sostenibles.</td>
+                    </tr>
+                    <tr data-row-number="18">
+                        <td data-label="N°">18</td>
+                        <td data-label="Nombre">Profesorado de Historia</td>
+                        <td data-label="Función Principal">Enseñar el pasado de la humanidad y sus procesos.</td>
+                        <td data-label="Áreas de Especialización">Historia argentina, universal, economía, política.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Escuelas secundarias, museos.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+de+historia" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">Google Arts & Culture.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">ChatGPT</span> para generar narrativas históricas desde la perspectiva de diferentes personajes o épocas.</td>
+                    </tr>
+                    <tr data-row-number="19">
+                        <td data-label="N°">19</td>
+                        <td data-label="Nombre">Profesorado de Geografía</td>
+                        <td data-label="Función Principal">Enseñar la relación entre los seres humanos y su entorno.</td>
+                        <td data-label="Áreas de Especialización">Geografía física, humana, económica.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Escuelas secundarias, organismos de planificación.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+de+geografía" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">Google Maps, ArcGis.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">Gemini</span> para analizar datos geoespaciales y crear mapas temáticos con información demográfica.</td>
+                    </tr>
+                    <tr data-row-number="20">
+                        <td data-label="N°">20</td>
+                        <td data-label="Nombre">Profesorado de Filosofía</td>
+                        <td data-label="Función Principal">Fomentar el pensamiento crítico y la reflexión.</td>
+                        <td data-label="Áreas de Especialización">Lógica, ética, metafísica, estética.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Escuelas secundarias, universidades.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+de+filosofía" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">SEP (Stanford Encyclopedia of Philosophy).</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">Deepseek Chat</span> para formular argumentos a favor y en contra de diferentes posturas filosóficas.</td>
+                    </tr>
+                    <tr data-row-number="21">
+                        <td data-label="N°">21</td>
+                        <td data-label="Nombre">Profesorado de Sociología</td>
+                        <td data-label="Función Principal">Enseñar la estructura y el comportamiento de las sociedades.</td>
+                        <td data-label="Áreas de Especialización">Teoría social, estratificación, política.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Universidades, escuelas secundarias.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+de+sociología" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">SPSS, R, Atlas.ti.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">Gemini</span> para analizar y resumir grandes encuestas o estudios sociológicos.</td>
+                    </tr>
+                    <tr data-row-number="22">
+                        <td data-label="N°">22</td>
+                        <td data-label="Nombre">Profesorado de Ciencias Políticas</td>
+                        <td data-label="Función Principal">Formar en el estudio de los sistemas políticos y el poder.</td>
+                        <td data-label="Áreas de Especialización">Relaciones internacionales, políticas públicas.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Universidades, escuelas secundarias.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+de+ciencias+políticas" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">World Bank Open Data.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">ChatGPT</span> para simular debates políticos y analizar el discurso de figuras públicas.</td>
+                    </tr>
+                    <tr data-row-number="23">
+                        <td data-label="N°">23</td>
+                        <td data-label="Nombre">Profesorado de Economía</td>
+                        <td data-label="Función Principal">Enseñar los principios de la producción, distribución y consumo.</td>
+                        <td data-label="Áreas de Especialización">Microeconomía, macroeconomía, finanzas.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Escuelas secundarias, universidades.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+de+economía" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">Eviews, Stata.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">Gemini</span> para generar escenarios de mercado y predecir posibles resultados económicos.</td>
+                    </tr>
+                    <tr data-row-number="24">
+                        <td data-label="N°">24</td>
+                        <td data-label="Nombre">Profesorado de Antropología</td>
+                        <td data-label="Función Principal">Enseñar el estudio del ser humano en su dimensión cultural.</td>
+                        <td data-label="Áreas de Especialización">Antropología social y cultural, arqueología.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Universidades, museos.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+de+antropología" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">EthnoData.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">Deepseek Chat</span> para crear historias y relatos basados en hallazgos arqueológicos.</td>
+                    </tr>
+                    <tr data-row-number="25">
+                        <td data-label="N°">25</td>
+                        <td data-label="Nombre">Profesorado de Psicología</td>
+                        <td data-label="Función Principal">Formar en la enseñanza del comportamiento humano y los procesos mentales.</td>
+                        <td data-label="Áreas de Especialización">Psicología educativa, del desarrollo, social.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Escuelas con enfoque psicológico, institutos.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+de+psicología" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">MindMeister, SPSS.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">ChatGPT</span> para generar estudios de caso sobre trastornos del aprendizaje y del comportamiento.</td>
+                    </tr>
+                    <tr data-row-number="26">
+                        <td data-label="N°">26</td>
+                        <td data-label="Nombre">Profesorado de Música</td>
+                        <td data-label="Función Principal">Enseñar la teoría, práctica y apreciación musical.</td>
+                        <td data-label="Áreas de Especialización">Instrumentos, coro, dirección orquestal, composición.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Escuelas de música, conservatorios.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+de+música" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">Sibelius, Musescore, GarageBand.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">Gemini</span> para crear melodías simples y armonías a partir de una nota o acorde.</td>
+                    </tr>
+                    <tr data-row-number="27">
+                        <td data-label="N°">27</td>
+                        <td data-label="Nombre">Profesorado de Artes Visuales</td>
+                        <td data-label="Función Principal">Enseñar técnicas de dibujo, pintura, escultura y diseño.</td>
+                        <td data-label="Áreas de Especialización">Historia del arte, grabado, fotografía, expresión plástica.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Escuelas de arte, talleres.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+de+artes+visuales" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">Adobe Photoshop, Illustrator, Procreate.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">Midjourney</span> o **DALL-E** para generar imágenes que sirvan de inspiración para proyectos artísticos.</td>
+                    </tr>
+                    <tr data-row-number="28">
+                        <td data-label="N°">28</td>
+                        <td data-label="Nombre">Profesorado de Teatro</td>
+                        <td data-label="Función Principal">Formar en la actuación, dirección y producción teatral.</td>
+                        <td data-label="Áreas de Especialización">Dramaturgia, expresión corporal, historia del teatro.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Escuelas de teatro, talleres.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+de+teatro" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">Celtx, Final Draft.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">ChatGPT</span> para generar guiones cortos con diferentes géneros y personajes.</td>
+                    </tr>
+                    <tr data-row-number="29">
+                        <td data-label="N°">29</td>
+                        <td data-label="Nombre">Profesorado de Danza</td>
+                        <td data-label="Función Principal">Enseñar diversas técnicas de danza y coreografía.</td>
+                        <td data-label="Áreas de Especialización">Ballet, contemporánea, folclore, historia de la danza.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Escuelas de danza, academias.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+de+danza" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">DanceForms, KineBody.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">Gemini</span> para proponer ideas de coreografías basadas en una canción o un tema específico.</td>
+                    </tr>
+                    <tr data-row-number="30">
+                        <td data-label="N°">30</td>
+                        <td data-label="Nombre">Profesorado de Diseño</td>
+                        <td data-label="Función Principal">Enseñar los principios del diseño gráfico, industrial y de moda.</td>
+                        <td data-label="Áreas de Especialización">Tipografía, ilustración, maquetación.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Escuelas de diseño, escuelas técnicas.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+de+diseño" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">Adobe Creative Suite.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">Deepseek Chat</span> para obtener feedback sobre paletas de colores y combinaciones tipográficas.</td>
+                    </tr>
+                    <tr data-row-number="31">
+                        <td data-label="N°">31</td>
+                        <td data-label="Nombre">Profesorado de Artes Audiovisuales</td>
+                        <td data-label="Función Principal">Formar en la creación de cine, televisión y video.</td>
+                        <td data-label="Áreas de Especialización">Guionismo, dirección, fotografía, edición.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Escuelas de cine, institutos de comunicación.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+de+artes+audiovisuales" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">Adobe Premiere Pro, Final Cut Pro.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">RunwayML</span> para aplicar efectos visuales a videos de forma automatizada.</td>
+                    </tr>
+                    <tr data-row-number="32">
+                        <td data-label="N°">32</td>
+                        <td data-label="Nombre">Profesorado de Educación Física</td>
+                        <td data-label="Función Principal">Enseñar el desarrollo físico, la motricidad y el deporte.</td>
+                        <td data-label="Áreas de Especialización">Deportes, salud, anatomía, recreación.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Escuelas de todos los niveles, clubes.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+de+educación+física" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">MyFitnessPal, Strava.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">ChatGPT</span> para generar rutinas de entrenamiento personalizadas para diferentes deportes.</td>
+                    </tr>
+                    <tr data-row-number="33">
+                        <td data-label="N°">33</td>
+                        <td data-label="Nombre">Profesorado en Recreación y Deporte</td>
+                        <td data-label="Función Principal">Organizar actividades recreativas y deportivas.</td>
+                        <td data-label="Áreas de Especialización">Gestión de eventos, psicología del deporte.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Centros deportivos, colonias de vacaciones.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+en+recreación+y+deporte" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">TeamSnap, Sportlyzer.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">Gemini</span> para planificar eventos deportivos y de recreación detallando roles y cronogramas.</td>
+                    </tr>
+                    <tr data-row-number="34">
+                        <td data-label="N°">34</td>
+                        <td data-label="Nombre">Profesorado en Natación</td>
+                        <td data-label="Función Principal">Enseñar la natación y la seguridad en el agua.</td>
+                        <td data-label="Áreas de Especialización">Estilos de nado, primeros auxilios.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Clubes, piscinas, gimnasios.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+en+natación" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">Coach's Eye.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">IA de visión por computadora</span> para analizar la técnica de nado y ofrecer correcciones.</td>
+                    </tr>
+                    <tr data-row-number="35">
+                        <td data-label="N°">35</td>
+                        <td data-label="Nombre">Profesorado de Educación Especial</td>
+                        <td data-label="Función Principal">Adaptar la enseñanza para estudiantes con necesidades especiales.</td>
+                        <td data-label="Áreas de Especialización">Discapacidad intelectual, motora, sensorial.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Escuelas especiales, escuelas inclusivas.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+de+educación+especial" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">TEACCH, PECS.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">Gemini</span> para adaptar materiales de lectura a un nivel de comprensión más sencillo.</td>
+                    </tr>
+                    <tr data-row-number="36">
+                        <td data-label="N°">36</td>
+                        <td data-label="Nombre">Profesorado en Educación Intercultural Bilingüe</td>
+                        <td data-label="Función Principal">Enseñar en contextos con diversidad cultural y lingüística.</td>
+                        <td data-label="Áreas de Especialización">Lenguas originarias, cosmovisiones.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Escuelas rurales, comunidades.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+de+educación+intercultural" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">Diccionarios bilingües.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">ChatGPT</span> para generar recursos educativos en lenguas minoritarias con el apoyo de hablantes nativos.</td>
+                    </tr>
+                    <tr data-row-number="37">
+                        <td data-label="N°">37</td>
+                        <td data-label="Nombre">Profesorado en Integración Escolar</td>
+                        <td data-label="Función Principal">Promover la inclusión de estudiantes con discapacidad.</td>
+                        <td data-label="Áreas de Especialización">Diseño Universal de Aprendizaje (DUA), apoyos pedagógicos.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Escuelas regulares, equipos de orientación.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+en+integración+escolar" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">Herramientas de texto a voz (TTS).</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">Deepseek Chat</span> para proponer estrategias de apoyo individualizadas según el perfil del estudiante.</td>
+                    </tr>
+                    <tr data-row-number="38">
+                        <td data-label="N°">38</td>
+                        <td data-label="Nombre">Profesorado en Educación Socioemocional</td>
+                        <td data-label="Función Principal">Enseñar habilidades de convivencia y gestión emocional.</td>
+                        <td data-label="Áreas de Especialización">Mindfulness, resiliencia.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Escuelas de todos los niveles, centros comunitarios.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+de+educación+socioemocional" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">Calm, Headspace.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">Gemini</span> para crear actividades y juegos de roles que desarrollen la empatía.</td>
+                    </tr>
+                    <tr data-row-number="39">
+                        <td data-label="N°">39</td>
+                        <td data-label="Nombre">Profesorado de Formación Profesional</td>
+                        <td data-label="Función Principal">Enseñar oficios y habilidades técnicas.</td>
+                        <td data-label="Áreas de Especialización">Electricidad, mecánica, carpintería.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Escuelas técnicas, centros de formación.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+de+formación+profesional" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">AutoCAD, SolidWorks.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">ChatGPT</span> para generar descripciones detalladas de procedimientos técnicos y de seguridad.</td>
+                    </tr>
+                    <tr data-row-number="40">
+                        <td data-label="N°">40</td>
+                        <td data-label="Nombre">Profesorado de Educación Agropecuaria</td>
+                        <td data-label="Función Principal">Formar en técnicas de agricultura y ganadería.</td>
+                        <td data-label="Áreas de Especialización">Agronomía, zootecnia, agroecología.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Escuelas agrotécnicas, granjas escuela.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+de+educación+agropecuaria" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">Drones, sensores.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">Gemini</span> para analizar datos de suelos y clima y proponer planes de cultivo óptimos.</td>
+                    </tr>
+                    <tr data-row-number="41">
+                        <td data-label="N°">41</td>
+                        <td data-label="Nombre">Profesorado en Comercio y Administración</td>
+                        <td data-label="Función Principal">Enseñar gestión de empresas, contabilidad y marketing.</td>
+                        <td data-label="Áreas de Especialización">Administración, contabilidad, derecho comercial.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Escuelas técnicas, institutos superiores.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+en+comercio+y+administración" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">Excel, SAP, Trello.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">Deepseek Chat</span> para generar planes de negocios y estrategias de marketing simuladas.</td>
+                    </tr>
+                    <tr data-row-number="42">
+                        <td data-label="N°">42</td>
+                        <td data-label="Nombre">Profesorado de Enfermería</td>
+                        <td data-label="Función Principal">Formar a futuros profesionales de la salud.</td>
+                        <td data-label="Áreas de Especialización">Anatomía, fisiología, cuidados de enfermería.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Escuelas de enfermería, universidades.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+de+enfermería" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">Human Anatomy Atlas.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">IA de diagnóstico</span> para simular casos clínicos y ayudar a los estudiantes a practicar.</td>
+                    </tr>
+                    <tr data-row-number="43">
+                        <td data-label="N°">43</td>
+                        <td data-label="Nombre">Profesorado en Trabajo Social</td>
+                        <td data-label="Función Principal">Enseñar a intervenir en problemáticas sociales.</td>
+                        <td data-label="Áreas de Especialización">Políticas sociales, derechos humanos.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Universidades, escuelas.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+en+trabajo+social" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">Software de gestión de casos.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">ChatGPT</span> para redactar informes sociales y de intervención con lenguaje profesional.</td>
+                    </tr>
+                    <tr data-row-number="44">
+                        <td data-label="N°">44</td>
+                        <td data-label="Nombre">Profesorado en Educación Sexual Integral (ESI)</td>
+                        <td data-label="Función Principal">Abordar la sexualidad de manera integral y científica.</td>
+                        <td data-label="Áreas de Especialización">Biología, género, derechos.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Escuelas de todos los niveles, centros de salud.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+de+esi" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">Plataformas interactivas.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">Gemini</span> para generar presentaciones interactivas y recursos visuales sobre temas de ESI.</td>
+                    </tr>
+                    <tr data-row-number="45">
+                        <td data-label="N°">45</td>
+                        <td data-label="Nombre">Profesorado de Ciencias de la Comunicación</td>
+                        <td data-label="Función Principal">Enseñar la teoría y práctica de la comunicación.</td>
+                        <td data-label="Áreas de Especialización">Periodismo, publicidad.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Universidades, institutos.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+de+ciencias+de+la+comunicación" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">Adobe Premiere, Audacity.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">ChatGPT</span> para escribir borradores de notas de prensa, eslóganes y guiones publicitarios.</td>
+                    </tr>
+                    <tr data-row-number="46">
+                        <td data-label="N°">46</td>
+                        <td data-label="Nombre">Profesorado de Bibliotecología</td>
+                        <td data-label="Función Principal">Formar en la gestión de información y bibliotecas.</td>
+                        <td data-label="Áreas de Especialización">Catalogación, clasificación.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Bibliotecas, centros de documentación.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+de+bibliotecología" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">KOHA, OpenBiblio.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">Gemini</span> para organizar y categorizar grandes volúmenes de información bibliográfica.</td>
+                    </tr>
+                    <tr data-row-number="47">
+                        <td data-label="N°">47</td>
+                        <td data-label="Nombre">Profesorado de Gestión Educativa</td>
+                        <td data-label="Función Principal">Formar líderes para la dirección de instituciones educativas.</td>
+                        <td data-label="Áreas de Especialización">Planificación, administración, liderazgo.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Instituciones educativas.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+de+gestión+educativa" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">Plataformas de gestión escolar (SGE).</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">Deepseek Chat</span> para analizar estadísticas de rendimiento escolar y proponer planes de mejora.</td>
+                    </tr>
+                    <tr data-row-number="48">
+                        <td data-label="N°">48</td>
+                        <td data-label="Nombre">Profesorado en Artesanías</td>
+                        <td data-label="Función Principal">Enseñar técnicas de oficios artísticos.</td>
+                        <td data-label="Áreas de Especialización">Cerámica, orfebrería, telar.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Talleres, centros de oficios.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+en+artesanías" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">Software de diseño 3D.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">Midjourney</span> para generar patrones y diseños que sirvan como base para artesanías.</td>
+                    </tr>
+                    <tr data-row-number="49">
+                        <td data-label="N°">49</td>
+                        <td data-label="Nombre">Profesorado en Diseño de Indumentaria</td>
+                        <td data-label="Función Principal">Formar en el diseño y confección de ropa.</td>
+                        <td data-label="Áreas de Especialización">Patronaje, moldería.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Escuelas de moda, talleres.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+en+diseño+de+indumentaria" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">Adobe Illustrator.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">Gemini</span> para proponer combinaciones de telas y colores para una colección de moda.</td>
+                    </tr>
+                    <tr data-row-number="50">
+                        <td data-label="N°">50</td>
+                        <td data-label="Nombre">Profesorado en Fotografía</td>
+                        <td data-label="Función Principal">Enseñar la técnica, la composición y la edición fotográfica.</td>
+                        <td data-label="Áreas de Especialización">Iluminación, postproducción.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Escuelas de fotografía, talleres.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+en+fotografía" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">Adobe Photoshop, Lightroom.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">IA de edición</span> para retocar imperfecciones y mejorar la calidad de las imágenes de forma rápida.</td>
+                    </tr>
+                    <tr data-row-number="51">
+                        <td data-label="N°">51</td>
+                        <td data-label="Nombre">Profesorado en Educación para Adultos</td>
+                        <td data-label="Función Principal">Enseñar a jóvenes y adultos que retoman sus estudios.</td>
+                        <td data-label="Áreas de Especialización">Alfabetización, capacitación laboral.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Centros de educación de adultos.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+en+educación+de+adultos" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">MOOCs.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">ChatGPT</span> para adaptar textos complejos a un lenguaje más sencillo para adultos principiantes.</td>
+                    </tr>
+                    <tr data-row-number="52">
+                        <td data-label="N°">52</td>
+                        <td data-label="Nombre">Profesorado en Educación Rural</td>
+                        <td data-label="Función Principal">Adaptar la enseñanza a las particularidades del entorno rural.</td>
+                        <td data-label="Áreas de Especialización">Agroecología, desarrollo comunitario.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Escuelas rurales.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+en+educación+rural" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">GIS.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">Gemini</span> para crear planes de estudio que integren conocimientos del campo y la vida rural.</td>
+                    </tr>
+                    <tr data-row-number="53">
+                        <td data-label="N°">53</td>
+                        <td data-label="Nombre">Profesorado en Educación en Contextos de Privación de la Libertad</td>
+                        <td data-label="Función Principal">Impartir educación en cárceles y centros de detención.</td>
+                        <td data-label="Áreas de Especialización">Pedagogía del encierro, reinserción social.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Unidades penitenciarias.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+en+educación+en+contextos+de+privación+de+la+libertad" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">Plataformas de e-learning.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">Deepseek Chat</span> para generar materiales didácticos sobre oficios adaptados a un contexto de reinserción.</td>
+                    </tr>
+                    <tr data-row-number="54">
+                        <td data-label="N°">54</td>
+                        <td data-label="Nombre">Profesorado en Educación Inicial Comunitaria</td>
+                        <td data-label="Función Principal">Formar en la educación de la primera infancia en el contexto comunitario.</td>
+                        <td data-label="Áreas de Especialización">Desarrollo infantil, trabajo con familias.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Jardines maternales comunitarios.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+en+educación+inicial+comunitaria" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">PDI, Storybird.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">ChatGPT</span> para generar ideas de talleres para padres sobre crianza y desarrollo infantil.</td>
+                    </tr>
+                    <tr data-row-number="55">
+                        <td data-label="N°">55</td>
+                        <td data-label="Nombre">Profesorado en Educación Ambiental y Desarrollo Sustentable</td>
+                        <td data-label="Función Principal">Promover la conciencia ambiental y prácticas sostenibles.</td>
+                        <td data-label="Áreas de Especialización">Ecología, cambio climático.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Escuelas, ONGs.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+en+educación+ambiental+y+desarrollo+sustentable" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">ArcGis, Google Earth Engine.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">Gemini</span> para crear simulaciones de impacto de la contaminación en diferentes ecosistemas.</td>
+                    </tr>
+                    <tr data-row-number="56">
+                        <td data-label="N°">56</td>
+                        <td data-label="Nombre">Profesorado en Educación Tecnológica</td>
+                        <td data-label="Función Principal">Enseñar programación, robótica y fabricación digital.</td>
+                        <td data-label="Áreas de Especialización">Robótica educativa, impresión 3D.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Escuelas técnicas, espacios maker.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+en+educación+tecnológica" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">Scratch, Tinkercad.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">Deepseek Chat</span> para generar código de programas básicos y explicarlo línea por línea.</td>
+                    </tr>
+                    <tr data-row-number="57">
+                        <td data-label="N°">57</td>
+                        <td data-label="Nombre">Profesorado en Educación por las Artes</td>
+                        <td data-label="Función Principal">Integrar las artes en la enseñanza de otras materias.</td>
+                        <td data-label="Áreas de Especialización">Enfoque interdisciplinario.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Escuelas de todos los niveles.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+en+educación+por+las+artes" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">Glogster, Padlet.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">Gemini</span> para proponer proyectos artísticos que conecten la historia, la ciencia y la matemática.</td>
+                    </tr>
+                    <tr data-row-number="58">
+                        <td data-label="N°">58</td>
+                        <td data-label="Nombre">Profesorado en Educación Infantil Especializada</td>
+                        <td data-label="Función Principal">Especializarse en áreas como estimulación temprana.</td>
+                        <td data-label="Áreas de Especialización">Desarrollo temprano, psicomotricidad.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Centros de estimulación temprana.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+en+educación+infantil+especializada" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">Plataformas de terapia.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">ChatGPT</span> para redactar descripciones detalladas de actividades de estimulación para niños.</td>
+                    </tr>
+                    <tr data-row-number="59">
+                        <td data-label="N°">59</td>
+                        <td data-label="Nombre">Profesorado en Música Popular / Folklore</td>
+                        <td data-label="Función Principal">Enseñar géneros musicales autóctonos y contemporáneos.</td>
+                        <td data-label="Áreas de Especialización">Folclore, tango, rock.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Escuelas de música, centros culturales.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+en+música+popular" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">Ableton Live, Logic Pro X.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">Gemini</span> para crear listas de canciones folclóricas con datos históricos y culturales de su origen.</td>
+                    </tr>
+                    <tr data-row-number="60">
+                        <td data-label="N°">60</td>
+                        <td data-label="Nombre">Profesorado en Teatro Musical / Expresión Corporal</td>
+                        <td data-label="Función Principal">Enseñar la integración del teatro, el canto y la danza.</td>
+                        <td data-label="Áreas de Especialización">Puesta en escena, coreografía.</td>
+                        <td data-label="Entornos de Trabajo Comunes">Escuelas de arte, conservatorios.</td>
+                        <td data-label="Link Práctica"><a href="https://www.youtube.com/results?search_query=práctica+profesorado+en+teatro+musical" target="_blank">Ver</a></td>
+                        <td data-label="Herramientas de Software">Celtx, Sibelius.</td>
+                        <td data-label="Ayuda con la IA"><span class="ai-tools">Deepseek Chat</span> para analizar el lenguaje corporal en una escena y proponer mejoras.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('search-input');
+            const tableBody = document.getElementById('professorship-table-body');
+            const tableHeaders = document.querySelectorAll('th[data-sort-by]');
+            const downloadPdfBtn = document.getElementById('download-pdf-btn');
+            const downloadHtmlBtn = document.getElementById('download-html-btn');
+
+            const allRows = Array.from(tableBody.getElementsByTagName('tr'));
+            let sortDirection = {}; // Almacena el estado de ordenación de cada columna
+
+            // Función para filtrar la tabla
+            searchInput.addEventListener('input', (e) => {
+                const searchTerm = e.target.value.toLowerCase().trim();
+                for (let row of allRows) {
+                    const rowContent = row.textContent.toLowerCase();
+                    if (rowContent.includes(searchTerm)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                }
+            });
+
+            // Función para ordenar la tabla
+            tableHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    const sortBy = header.getAttribute('data-sort-by');
+                    const isAscending = sortDirection[sortBy] !== 'asc'; // Invertir el orden
+
+                    allRows.sort((a, b) => {
+                        const aValue = a.querySelector(`[data-label="${header.textContent.trim()}"]`) ? a.querySelector(`[data-label="${header.textContent.trim()}"]`).textContent.trim() : a.querySelector(`td:nth-of-type(${parseInt(header.cellIndex) + 1})`).textContent.trim();
+                        const bValue = b.querySelector(`[data-label="${header.textContent.trim()}"]`) ? b.querySelector(`[data-label="${header.textContent.trim()}"]`).textContent.trim() : b.querySelector(`td:nth-of-type(${parseInt(header.cellIndex) + 1})`).textContent.trim();
+
+                        // Manejo especial para la columna 'N°'
+                        if (sortBy === 'number') {
+                            const aNum = parseInt(aValue, 10);
+                            const bNum = parseInt(bValue, 10);
+                            return isAscending ? aNum - bNum : bNum - aNum;
+                        } else {
+                            // Comparación de texto
+                            return isAscending ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
+                        }
+                    });
+
+                    // Limpiar y agregar las filas ordenadas al cuerpo de la tabla
+                    while(tableBody.firstChild) {
+                        tableBody.removeChild(tableBody.firstChild);
+                    }
+                    allRows.forEach(row => tableBody.appendChild(row));
+
+                    // Actualizar el estado de ordenación
+                    sortDirection = {};
+                    sortDirection[sortBy] = isAscending ? 'asc' : 'desc';
+                });
+            });
+
+            // Función para descargar la tabla como PDF
+            downloadPdfBtn.addEventListener('click', () => {
+                downloadPdfBtn.classList.add('loading');
+                downloadPdfBtn.disabled = true;
+
+                const element = document.getElementById('table-container');
+                const opt = {
+                    margin: 10,
+                    filename: 'Cuadro_Comparativo_Profesorados.pdf',
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2, logging: true, dpi: 192, letterRendering: true },
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' }
+                };
+
+                html2pdf().set(opt).from(element).save().then(() => {
+                    downloadPdfBtn.classList.remove('loading');
+                    downloadPdfBtn.disabled = false;
+                });
+            });
+
+            // Función para descargar la tabla como HTML (MEJORADA)
+            downloadHtmlBtn.addEventListener('click', () => {
+                const htmlContent = `
+                    <!DOCTYPE html>
+                    <html lang="es">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Cuadro Comparativo de Profesorados</title>
+                        <style>
+                            /* Estilos CSS para el documento HTML descargado */
+                            :root {
+                                --primary-color: #0056b3;
+                                --secondary-color: #28a745;
+                                --html-btn-color: #17a2b8;
+                                --background-color: #f4f7f9;
+                                --table-border-color: #e0e6ee;
+                                --text-color: #333;
+                                --header-bg-color: #f9fbfd;
+                            }
+
+                            body {
+                                font-family: 'Segoe UI', Arial, sans-serif;
+                                margin: 0;
+                                padding: 20px;
+                                background-color: var(--background-color);
+                                color: var(--text-color);
+                                line-height: 1.6;
+                            }
+
+                            .container {
+                                max-width: 1300px;
+                                margin: auto;
+                                padding: 20px;
+                                background-color: white;
+                                border-radius: 12px;
+                                box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+                            }
+
+                            h1 {
+                                text-align: center;
+                                color: var(--primary-color);
+                                margin-bottom: 25px;
+                                font-size: 2.5em;
+                                font-weight: 600;
+                            }
+
+                            table {
+                                width: 100%;
+                                border-collapse: collapse;
+                                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+                                border-radius: 8px;
+                                overflow: hidden;
+                            }
+
+                            thead {
+                                background-color: var(--primary-color);
+                                color: white;
+                            }
+
+                            th, td {
+                                padding: 15px;
+                                text-align: left;
+                                border-bottom: 1px solid var(--table-border-color);
+                                word-wrap: break-word;
+                            }
+
+                            th {
+                                background-color: #004599;
+                            }
+
+                            tbody tr:nth-child(even) {
+                                background-color: var(--header-bg-color);
+                            }
+
+                            a {
+                                color: #007bff;
+                                text-decoration: none;
+                            }
+                            .ai-tools {
+                                font-weight: bold;
+                                color: var(--secondary-color);
+                            }
+
+                            /* Estilos responsivos para la tabla */
+                            @media (max-width: 768px) {
+                                table, thead, tbody, th, td, tr {
+                                    display: block;
+                                }
+
+                                thead tr {
+                                    position: absolute;
+                                    top: -9999px;
+                                    left: -9999px;
+                                }
+
+                                tr {
+                                    margin-bottom: 20px;
+                                    border: 1px solid var(--table-border-color);
+                                    border-radius: 8px;
+                                }
+
+                                td {
+                                    border: none;
+                                    position: relative;
+                                    padding-left: 50%;
+                                    text-align: right;
+                                }
+
+                                td:before {
+                                    content: attr(data-label);
+                                    position: absolute;
+                                    top: 0;
+                                    left: 0;
+                                    width: 45%;
+                                    padding: 15px 10px 15px 15px;
+                                    white-space: nowrap;
+                                    text-align: left;
+                                    font-weight: bold;
+                                    color: var(--primary-color);
+                                    border-right: 1px solid var(--table-border-color);
+                                    border-bottom: 1px solid var(--table-border-color);
+                                }
+                                td:last-child:before {
+                                    border-bottom: none;
+                                }
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="container">
+                            <h1>Cuadro Comparativo de Profesorados</h1>
+                            <div class="downloaded-content">
+                                ${document.querySelector('table').outerHTML}
+                            </div>
+                        </div>
+                    </body>
+                    </html>
+                `;
+
+                const blob = new Blob([htmlContent], { type: 'text/html' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'Cuadro_Comparativo_Profesorados.html';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            });
+        });
+    </script>
+</body>
+</html>

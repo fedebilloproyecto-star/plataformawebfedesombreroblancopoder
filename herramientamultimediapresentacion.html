@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Herramientas Creativas - Suite Completa</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style> 
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+        background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+        min-height: 100vh;
+        color: #333;
+        padding: 10px;
+        width: 100%;
+        overflow-x: hidden;
+        animation: gradientShift 15s ease infinite;
+        background-size: 400% 400%;
+    }
+    
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    .back-button {
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        z-index: 1000;
+    }
+    
+    .back-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        padding: 8px 12px;
+        background-color: rgba(44, 62, 80, 0.95);
+        color: white;
+        text-decoration: none;
+        border-radius: 25px;
+        font-weight: bold;
+        font-size: 0.85rem;
+        transition: all 0.3s;
+        border: 2px solid white;
+        cursor: pointer;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+        white-space: nowrap;
+        backdrop-filter: blur(10px);
+    }
+    
+    .back-btn:hover {
+        background-color: #2c3e50;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        border-color: #3498db;
+    }
+    
+    .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        background-color: rgba(255, 255, 255, 0.98);
+        border-radius: 15px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+        overflow: hidden;
+        min-height: calc(100vh - 20px);
+        display: flex;
+        flex-direction: column;
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    header {
+        background: linear-gradient(90deg, #2c3e50, #4a6491);
+        color: white;
+        padding: 20px 15px;
+        text-align: center;
+        flex-shrink: 0;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #3498db, #2ecc71, #9b59b6, #e74c3c, #f39c12, #1abc9c);
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+        margin-bottom: 8px;
+        line-height: 1.3;
+        padding: 0 5px;
+        word-wrap: break-word;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        position: relative;
+        display: inline-block;
+    }
+    
+    h1::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 50px;
+        height: 3px;
+        background: #3498db;
+        border-radius: 2px;
+    }
+    
+    .subtitle {
+        font-size: 0.95rem;
+        opacity: 0.9;
+        line-height: 1.4;
+        padding: 0 10px;
+        max-width: 800px;
+        margin: 0 auto;
+        font-style: italic;
+    }
+    
+    .intro {
+        padding: 20px 15px;
+        text-align: center;
+        font-size: 0.95rem;
+        line-height: 1.5;
+        color: #444;
+        background: linear-gradient(to right, #f9f9f9, #ffffff);
+        border-bottom: 2px solid #eee;
+        flex-shrink: 0;
+        position: relative;
+    }
+    
+    .intro::before {
+        content: '✨';
+        position: absolute;
+        left: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    
+    .intro::after {
+        content: '✨';
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    
+    .tools-container {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 15px;
+        padding: 15px;
+        flex-grow: 1;
+        overflow-y: auto;
+    }
+    
+    .tool-card {
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 12px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        border-top: 4px solid;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        min-height: 280px;
+        position: relative;
+    }
+    
+    .tool-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+        opacity: 0;
+        transition: opacity 0.3s;
+        pointer-events: none;
+    }
+    
+    .tool-card:hover::before {
+        opacity: 1;
+        animation: shine 1s;
+    }
+    
+    @keyframes shine {
+        0% { background-position: -200% 0; }
+        100% { background-position: 200% 0; }
+    }
+    
+    .tool-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    .tool-card-1 {
+        border-color: #3498db;
+    }
+    
+    .tool-card-2 {
+        border-color: #2ecc71;
+    }
+    
+    .tool-card-3 {
+        border-color: #9b59b6;
+    }
+    
+    .tool-card-4 {
+        border-color: #e74c3c;
+    }
+    
+    .tool-card-5 {
+        border-color: #f39c12;
+    }
+    
+    .tool-card-6 {
+        border-color: #1abc9c;
+    }
+    
+    .tool-card-7 {
+        border-color: #e84393;
+    }
+    
+    .tool-header {
+        padding: 15px;
+        background: linear-gradient(to right, rgba(52, 152, 219, 0.1), rgba(52, 152, 219, 0.05));
+        text-align: center;
+        flex-shrink: 0;
+        position: relative;
+    }
+    
+    .tool-card-2 .tool-header {
+        background: linear-gradient(to right, rgba(46, 204, 113, 0.1), rgba(46, 204, 113, 0.05));
+    }
+    
+    .tool-card-3 .tool-header {
+        background: linear-gradient(to right, rgba(155, 89, 182, 0.1), rgba(155, 89, 182, 0.05));
+    }
+    
+    .tool-card-4 .tool-header {
+        background: linear-gradient(to right, rgba(231, 76, 60, 0.1), rgba(231, 76, 60, 0.05));
+    }
+    
+    .tool-card-5 .tool-header {
+        background: linear-gradient(to right, rgba(243, 156, 18, 0.1), rgba(243, 156, 18, 0.05));
+    }
+    
+    .tool-card-6 .tool-header {
+        background: linear-gradient(to right, rgba(26, 188, 156, 0.1), rgba(26, 188, 156, 0.05));
+    }
+    
+    .tool-card-7 .tool-header {
+        background: linear-gradient(to right, rgba(232, 67, 147, 0.1), rgba(232, 67, 147, 0.05));
+    }
+    
+    .tool-header h3 {
+        font-size: 1.2rem;
+        margin-bottom: 6px;
+        color: #2c3e50;
+        position: relative;
+    }
+    
+    .tool-icon {
+        font-size: 1.8rem;
+        margin-bottom: 8px;
+        color: #3498db;
+        position: relative;
+        display: inline-block;
+    }
+    
+    .tool-icon::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 20px;
+        height: 2px;
+        background: currentColor;
+        opacity: 0.5;
+    }
+    
+    .tool-card-2 .tool-icon {
+        color: #2ecc71;
+    }
+    
+    .tool-card-3 .tool-icon {
+        color: #9b59b6;
+    }
+    
+    .tool-card-4 .tool-icon {
+        color: #e74c3c;
+    }
+    
+    .tool-card-5 .tool-icon {
+        color: #f39c12;
+    }
+    
+    .tool-card-6 .tool-icon {
+        color: #1abc9c;
+    }
+    
+    .tool-card-7 .tool-icon {
+        color: #e84393;
+    }
+    
+    .tool-content {
+        padding: 15px;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+    
+    .tool-content p {
+        line-height: 1.4;
+        color: #555;
+        margin-bottom: 12px;
+        font-size: 0.9rem;
+        flex-grow: 1;
+        overflow-y: auto;
+        position: relative;
+        padding-left: 10px;
+    }
+    
+    .tool-content p::before {
+        content: '→';
+        position: absolute;
+        left: 0;
+        color: #3498db;
+        font-weight: bold;
+    }
+    
+    .features {
+        list-style-type: none;
+        margin-bottom: 15px;
+        flex-shrink: 0;
+    }
+    
+    .features li {
+        padding: 5px 0;
+        border-bottom: 1px dashed #eee;
+        display: flex;
+        align-items: center;
+        font-size: 0.85rem;
+        transition: all 0.2s;
+    }
+    
+    .features li:hover {
+        padding-left: 5px;
+        color: #2c3e50;
+    }
+    
+    .features li:before {
+        content: "✓";
+        color: #2ecc71;
+        font-weight: bold;
+        margin-right: 8px;
+        flex-shrink: 0;
+        transition: transform 0.3s;
+    }
+    
+    .features li:hover:before {
+        transform: scale(1.2);
+    }
+    
+    .tool-footer {
+        padding: 0 15px 15px;
+        text-align: center;
+        margin-top: auto;
+        flex-shrink: 0;
+        position: relative;
+    }
+    
+    .btn {
+        display: block;
+        padding: 10px 15px;
+        background-color: #3498db;
+        color: white;
+        text-decoration: none;
+        border-radius: 25px;
+        font-weight: bold;
+        font-size: 0.9rem;
+        transition: all 0.3s;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        letter-spacing: 0.5px;
+    }
+    
+    .btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+        transition: left 0.7s;
+    }
+    
+    .btn:hover::before {
+        left: 100%;
+    }
+    
+    .btn:after {
+        content: '→';
+        position: absolute;
+        right: 12px;
+        opacity: 0;
+        transition: all 0.3s;
+    }
+    
+    .btn:hover:after {
+        opacity: 1;
+        right: 10px;
+    }
+    
+    .btn:hover {
+        transform: scale(1.02);
+        box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+        padding-right: 30px;
+        letter-spacing: 1px;
+    }
+    
+    .tool-card-1 .btn {
+        background-color: #3498db;
+    }
+    
+    .tool-card-2 .btn {
+        background-color: #2ecc71;
+    }
+    
+    .tool-card-3 .btn {
+        background-color: #9b59b6;
+    }
+    
+    .tool-card-4 .btn {
+        background-color: #e74c3c;
+    }
+    
+    .tool-card-5 .btn {
+        background-color: #f39c12;
+    }
+    
+    .tool-card-6 .btn {
+        background-color: #1abc9c;
+    }
+    
+    .tool-card-7 .btn {
+        background-color: #e84393;
+    }
+    
+    .tool-card-1 .btn:hover {
+        box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+    }
+    
+    .tool-card-2 .btn:hover {
+        box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3);
+    }
+    
+    .tool-card-3 .btn:hover {
+        box-shadow: 0 4px 12px rgba(155, 89, 182, 0.3);
+    }
+    
+    .tool-card-4 .btn:hover {
+        box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+    }
+    
+    .tool-card-5 .btn:hover {
+        box-shadow: 0 4px 12px rgba(243, 156, 18, 0.3);
+    }
+    
+    .tool-card-6 .btn:hover {
+        box-shadow: 0 4px 12px rgba(26, 188, 156, 0.3);
+    }
+    
+    .tool-card-7 .btn:hover {
+        box-shadow: 0 4px 12px rgba(232, 67, 147, 0.3);
+    }
+    
+    .footer-note {
+        text-align: center;
+        padding: 15px;
+        background: linear-gradient(to right, #f8f9fa, #ffffff);
+        color: #6c757d;
+        font-size: 0.8rem;
+        border-top: 2px solid #eee;
+        line-height: 1.4;
+        flex-shrink: 0;
+        position: relative;
+    }
+    
+    .footer-note::before {
+        content: '💡';
+        position: absolute;
+        left: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    
+    .footer-note p {
+        margin: 0 auto 8px;
+        max-width: 800px;
+    }
+    
+    /* RESPONSIVE PARA PC */
+    @media (min-width: 768px) {
+        body {
+            padding: 20px;
+        }
+        
+        .back-button {
+            top: 20px;
+            left: 20px;
+        }
+        
+        .back-btn {
+            padding: 10px 18px;
+            font-size: 1rem;
+        }
+        
+        .container {
+            min-height: calc(100vh - 40px);
+            border-radius: 20px;
+        }
+        
+        header {
+            padding: 30px 20px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+        }
+        
+        h1::after {
+            width: 80px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+        }
+        
+        .intro {
+            padding: 30px 20px;
+            font-size: 1.1rem;
+        }
+        
+        .tools-container {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            padding: 30px;
+        }
+        
+        .tool-card {
+            min-height: 350px;
+            border-radius: 12px;
+        }
+        
+        .tool-header {
+            padding: 20px;
+        }
+        
+        .tool-header h3 {
+            font-size: 1.5rem;
+        }
+        
+        .tool-icon {
+            font-size: 2.2rem;
+        }
+        
+        .tool-content {
+            padding: 20px;
+        }
+        
+        .tool-content p {
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+        
+        .features li {
+            font-size: 0.95rem;
+            padding: 7px 0;
+        }
+        
+        .tool-footer {
+            padding: 0 20px 20px;
+        }
+        
+        .btn {
+            padding: 12px 20px;
+            font-size: 1rem;
+            border-radius: 30px;
+        }
+        
+        .footer-note {
+            padding: 20px;
+            font-size: 0.9rem;
+        }
+    }
+    
+    @media (min-width: 1024px) {
+        .tools-container {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+        }
+        
+        .tool-card {
+            min-height: 380px;
+        }
+    }
+    
+    @media (min-width: 1200px) {
+        .tools-container {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            padding: 40px;
+        }
+        
+        .tool-card {
+            min-height: 400px;
+        }
+    }
+    
+    /* Ajustes para tablets en modo vertical */
+    @media (min-width: 600px) and (max-width: 767px) {
+        .tools-container {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            padding: 20px;
+        }
+        
+        .tool-card {
+            min-height: 320px;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+        }
+    }
+    
+    /* Ajustes para pantallas muy pequeñas */
+    @media (max-width: 360px) {
+        body {
+            padding: 8px;
+        }
+        
+        .tools-container {
+            padding: 10px;
+            gap: 12px;
+        }
+        
+        .tool-card {
+            min-height: 260px;
+        }
+        
+        .tool-header {
+            padding: 12px;
+        }
+        
+        .tool-header h3 {
+            font-size: 1.1rem;
+        }
+        
+        .tool-content {
+            padding: 12px;
+        }
+        
+        .tool-footer {
+            padding: 0 12px 12px;
+        }
+        
+        .btn {
+            padding: 8px 12px;
+            font-size: 0.85rem;
+        }
+        
+        .intro {
+            padding: 15px 12px;
+        }
+    }
+
+    /* Contador de herramientas */
+    .tools-count {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: rgba(44, 62, 80, 0.9);
+        color: white;
+        padding: 8px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        z-index: 100;
+    }
+
+    /* Animación de entrada para las tarjetas */
+    @keyframes cardAppear {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .tool-card {
+        animation: cardAppear 0.5s ease-out forwards;
+        animation-delay: calc(var(--card-index, 0) * 0.1s);
+    }
+
+    /* Efecto de pulsación en el título principal */
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.02); }
+        100% { transform: scale(1); }
+    }
+
+    h1 {
+        animation: pulse 3s infinite;
+    }
+
+    /* Mejoras para los enlaces de las características */
+    .features {
+        list-style: none;
+        padding: 0;
+    }
+
+    .features li {
+        position: relative;
+        padding-left: 25px;
+    }
+
+    .features li::before {
+        position: absolute;
+        left: 0;
+    }
+
+    /* Efecto de scroll personalizado */
+    .tool-content p::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .tool-content p::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 2px;
+    }
+
+    .tool-content p::-webkit-scrollbar-thumb {
+        background: #3498db;
+        border-radius: 2px;
+    }
+
+    /* Badge para herramientas nuevas */
+    .new-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: #e74c3c;
+        color: white;
+        padding: 3px 8px;
+        border-radius: 10px;
+        font-size: 0.7rem;
+        font-weight: bold;
+        animation: blink 2s infinite;
+    }
+
+    @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.7; }
+    }
+
+    /* Efecto de confeti al hacer hover en el contenedor */
+    .confetti {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background: var(--confetti-color, #3498db);
+        border-radius: 50%;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+
+/* Tarjeta Premium Cinemática con texto blanco */
+.tool-card-premium {
+    background: linear-gradient(135deg, #2c2c54, #4b6584); /* fondo azul-gris suave */
+    color: #ffffff; /* texto blanco para todo */
+    border-radius: 16px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tool-card-premium:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.4);
+}
+
+/* Header */
+.tool-card-premium .tool-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 24px;
+}
+
+.tool-card-premium .tool-header .tool-icon {
+    font-size: 2.2rem;
+    color: #ffd369; /* dorado suave para icono */
+}
+
+.tool-card-premium .tool-header h3 {
+    font-size: 1.7rem;
+    font-weight: 700;
+    margin: 0;
+    color: #ffffff; /* título blanco */
+    text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+}
+
+/* Contenido */
+.tool-card-premium .tool-content {
+    padding: 0 24px 24px 24px;
+    line-height: 1.6;
+}
+
+.tool-card-premium .tool-content p {
+    color: #ffffff; /* párrafo blanco */
+    opacity: 0.95;
+    font-weight: 500;
+}
+
+.tool-card-premium .tool-content ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 12px;
+}
+
+.tool-card-premium .tool-content ul li {
+    margin: 6px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    color: #ffffff; /* lista blanca */
+}
+
+/* Footer */
+.tool-card-premium .tool-footer {
+    padding: 0 24px 24px 24px;
+}
+
+.tool-card-premium .premium-btn {
+    display: inline-block;
+    background: linear-gradient(90deg, #ffd369, #f5a623); /* degradado dorado suave */
+    color: #2c2c54; /* texto negro para contraste con el dorado */
+    font-weight: 700;
+    text-decoration: none;
+    padding: 14px 28px;
+    border-radius: 10px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.tool-card-premium .premium-btn:hover {
+    transform: scale(1.06);
+    box-shadow: 0 12px 30px rgba(255, 179, 71, 0.45);
+    background: linear-gradient(90deg, #ffe58f, #ffb347);
+}
+
+</style>
+
+</head>
+<body>
+    <!-- Botón para volver atrás -->
+    <div class="back-button">
+        <a href="index.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Volver Atrás
+        </a>
+    </div>
+    
+    <!-- Contador de herramientas -->
+    <div class="tools-count">
+        <i class="fas fa-tools"></i> 7 Herramientas Disponibles
+    </div>
+    
+    <div class="container">
+        <header>
+            <h1> El Sombrero Blanco</h1>
+            <p class="subtitle">Suite completa de herramientas multimedia gratuitas</p>
+        </header>
+        
+        <div class="intro">
+            <p>Todo 100% gratuito - Creado para compartir conocimiento sin fines de lucro</p>
+        </div>
+        
+        <div class="tools-container">
+            <!-- Herramienta 1: Generador de Portadas para Eventos -->
+            <div class="tool-card tool-card-1" style="--card-index: 0;">
+                <div class="tool-header">
+                    <div class="tool-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h3>Generador de Portadas para Eventos</h3>
+                </div>
+                <div class="tool-content">
+                    <p>Crea portadas profesionales para cualquier tipo de evento: sociales, empresariales, académicos, culturales y más.</p>
+                    <ul class="features">
+                        <li>Personalización completa de colores y estilos</li>
+                        <li>Carga de logos e imágenes de fondo</li>
+                        <li>Información detallada de fechas, horarios y ubicación</li>
+                        <li>Compatible con eventos presenciales, virtuales e híbridos</li>
+                    </ul>
+                </div>
+                <div class="tool-footer">
+                    <a href="eventos.html" class="btn" data-target="eventos.html">
+                        <i class="fas fa-external-link-alt"></i> Usar Generador de Portadas
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Herramienta 2: Creador de Currículums Vitae -->
+            <div class="tool-card tool-card-2" style="--card-index: 1;">
+                <div class="tool-header">
+                    <div class="tool-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h3>Creador de Currículums Vitae</h3>
+                </div>
+                <div class="tool-content">
+                    <p>Diseña tu CV profesional con personalización avanzada de colores, fuentes y estructura.</p>
+                    <ul class="features">
+                        <li>Personalización completa de colores y diseño</li>
+                        <li>Subida de foto de perfil</li>
+                        <li>Formulario detallado con todos los datos personales y profesionales</li>
+                        <li>Vista previa en tiempo real</li>
+                    </ul>
+                </div>
+                <div class="tool-footer">
+                    <a href="premiumcuriculumvitae.html" class="btn" data-target="curiculumvitae.html">
+                        <i class="fas fa-external-link-alt"></i> Usar Creador de CV
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Herramienta 3: Diseñador IA de Presentaciones -->
+            <div class="tool-card tool-card-3" style="--card-index: 2;">
+                <div class="tool-header">
+                    <div class="tool-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3>Hace tu presentación y descarga</h3>
+                </div>
+                <div class="tool-content">
+                    <p>Crea presentaciones profesionales. Controla cada aspecto del diseño: colores, fuentes, marcos y efectos.</p>
+                    <ul class="features">
+                        <li>Generador de paletas de colores</li>
+                        <li>Control individual de tamaños de texto</li>
+                        <li>Personalización de marcos y bordes</li>
+                        <li>Múltiples diapositivas con navegación</li>
+                    </ul>
+                </div>
+                <div class="tool-footer">
+                    <a href="textodescripccionconocimientos.html" class="btn" data-target="textodescripccionconocimientos.html">
+                        <i class="fas fa-external-link-alt"></i> Usar Diseñador de Presentaciones
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Herramienta 4: Editor de Texto Avanzado -->
+            <div class="tool-card tool-card-4" style="--card-index: 3;">
+                <div class="tool-header">
+                    <div class="tool-icon">
+                        <i class="fas fa-edit"></i>
+                    </div>
+                    <h3>Texto convierte a Imagen</h3>
+                </div>
+                <div class="tool-content">
+                    <p>Escribe y personaliza textos sin límite de caracteres y conviértelos en imágenes impactantes.</p>
+                    <ul class="features">
+                        <li>Sin límite de caracteres</li>
+                        <li>Control completo de fuentes, colores y alineación</li>
+                        <li>Personalización de bordes y fondos</li>
+                        <li>Vista previa en tiempo real</li>
+                    </ul>
+                </div>
+                <div class="tool-footer">
+                    <a href="textoconvertirafoto.html" class="btn" data-target="textoconvertirafoto.html">
+                        <i class="fas fa-external-link-alt"></i> Usar Editor de Texto
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Herramienta 5: Presentación de Portadas -->
+            <div class="tool-card tool-card-5" style="--card-index: 4;">
+                <div class="tool-header">
+                    <div class="tool-icon">
+                        <i class="fas fa-images"></i>
+                    </div>
+                    <h3>Presentación de Portadas</h3>
+                </div>
+                <div class="tool-content">
+                    <p>Selecciona entre diferentes planes de diseño de portadas, todos gratuitos. Ideal para elegir el estilo que mejor se adapte a tus necesidades.</p>
+                    <ul class="features">
+                        <li>Diseños adaptados a diferentes necesidades</li>
+                        <li>Interfaz intuitiva y atractiva</li>
+                        <li>Vista previa de todos los diseños</li>
+                        <li>Descarga inmediata</li>
+                    </ul>
+                </div>
+                <div class="tool-footer">
+                    <a href="portadainiciopresentacion.html" class="btn" data-target="portadainiciopresentacion.html">
+                        <i class="fas fa-external-link-alt"></i> Ver Portadas Disponibles
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Herramienta 6: Texto a Audio -->
+            <div class="tool-card tool-card-6" style="--card-index: 5;">
+                <div class="tool-header">
+                    <div class="tool-icon">
+                        <i class="fas fa-volume-up"></i>
+                    </div>
+                    <h3>Convierte texto en audio</h3>
+                </div>  
+                <div class="tool-content">
+                    <p>Convierte tus textos en archivos de audio de alta calidad de forma rápida y sencilla. Ideal para crear locuciones o escuchar tus documentos.</p>
+                    <ul class="features">
+                        <li>Convierte cualquier texto a voz clara</li>
+                        <li>Descarga instantánea en formato de audio</li>
+                        <li>Múltiples voces y tonos disponibles</li>
+                        <li>Procesamiento rápido y gratuito</li>
+                    </ul>
+                </div>
+                <div class="tool-footer">
+                    <a href="Textoconvertiraaudio.html" class="btn" data-target="Textoconvertiraaudio.html">
+                        <i class="fas fa-external-link-alt"></i> Texto escucha a audio 
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Herramienta 7: Foto a Video -->
+            <div class="tool-card tool-card-7" style="--card-index: 6;">
+                <div class="tool-header">
+                    <div class="tool-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3>Sube una foto y conviértela en video</h3>
+                </div>  
+                <div class="tool-content">
+                    <p>Sube una imagen y conviértela automáticamente en un video listo para descargar.</p>
+                    <ul class="features">
+                        <li>Sube una foto o imagen</li>
+                        <li>Convierte la foto en video</li>
+                        <li>Descarga el video en alta calidad</li>
+                        <li>Proceso rápido y sencillo</li>
+                    </ul>
+                </div>
+                <div class="tool-footer">
+                    <a href="presentacionfotoconvertiravideo.html" class="btn" data-target="FotoaVideo.html">
+                        <i class="fas fa-external-link-alt"></i> Convertir a Video
+                    </a>
+                </div>
+            </div>
+        </div>
+
+<!-- Publicidad Premium Cinemática -->
+<div class="tool-card tool-card-premium" style="--card-index: 6; background: linear-gradient(135deg, #2c2c54, #4b6584); color: #fff; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); overflow: hidden; font-family: 'Poppins', sans-serif;">
+
+    <div class="tool-header" style="display:flex; align-items:center; gap:12px; padding:20px;">
+        <div class="tool-icon" style="font-size:2rem; color:#ffd369;">
+            <i class="fas fa-crown"></i>
+        </div>
+        <h3 style="font-size:1.5rem; font-weight:600; margin:0;">Entra a Premium </h3>
+    </div>  
+
+    <div class="tool-content" style="padding:0 20px 20px 20px; line-height:1.6;">
+    
+        <ul class="features" style="list-style:none; padding:0; margin-top:10px;">
+         <li>✨ Exportación en máxima calidad</li>
+             <li>🎨 Funciones creativas avanzadas y exclusivas</li>
+              <li>⚡ Rendimiento confiable</li>
+
+        </ul>
+    </div>
+
+    <div class="tool-footer" style="padding:0 20px 20px 20px;">
+        <a href="premiuminicio.html" class="btn premium-btn" style="display:inline-block; background: linear-gradient(90deg, #ffd369, #f3a683); color:#2c2c54; font-weight:600; text-decoration:none; padding:12px 24px; border-radius:8px; box-shadow:0 5px 15px rgba(0,0,0,0.2); transition:0.3s;">
+            <i class="fas fa-crown"></i> Obtener Premium
+        </a>
+    </div>
+
+</div>
+
+</div>
+        <div class="footer-note">
+            
+            <p><em>Compartir conocimiento es nuestra misión</em></p>
+        </div>
+    </div>
+<script src="scriptherramientamultimediapresentacion.js"></script>
+
+    <script>
+        // Efectos mejorados para las tarjetas
+        document.querySelectorAll('.tool-card').forEach((card, index) => {
+            card.style.setProperty('--card-index', index);
+            
+            card.addEventListener('mouseenter', function() {
+                const icon = this.querySelector('.tool-icon i');
+                icon.style.animation = 'bounce 0.5s';
+                setTimeout(() => {
+                    icon.style.animation = '';
+                }, 500);
+            });
+        });
+
+        // Efecto de confeti al hacer clic en botones
+        document.querySelectorAll('.btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                if (!this.getAttribute('href') || this.getAttribute('href') === '#') {
+                    e.preventDefault();
+                    
+                    // Crear confetti
+                    for (let i = 0; i < 10; i++) {
+                        const confetti = document.createElement('div');
+                        confetti.className = 'confetti';
+                        confetti.style.setProperty('--confetti-color', 
+                            getComputedStyle(this).backgroundColor);
+                        confetti.style.left = Math.random() * 100 + 'vw';
+                        confetti.style.top = '0px';
+                        document.body.appendChild(confetti);
+                        
+                        // Animación
+                        setTimeout(() => {
+                            confetti.style.opacity = '1';
+                            confetti.style.transform = `translateY(${window.innerHeight}px) rotate(${Math.random() * 360}deg)`;
+                            confetti.style.transition = 'all 1s ease-out';
+                        }, 10);
+                        
+                        // Eliminar después de la animación
+                        setTimeout(() => {
+                            confetti.remove();
+                        }, 1100);
+                    }
+                    
+                    // Efecto de pulso en la tarjeta
+                    const card = this.closest('.tool-card');
+                    card.style.animation = 'none';
+                    setTimeout(() => {
+                        card.style.animation = 'pulse 0.5s';
+                    }, 10);
+                }
+            });
+        });
+
+        // Actualizar contador de herramientas
+        function updateToolsCount() {
+            const count = document.querySelectorAll('.tool-card').length;
+            document.querySelector('.tools-count').innerHTML = 
+                `<i class="fas fa-tools"></i> ${count} Herramientas Disponibles`;
+        }
+
+        // Efecto de scroll suave para el contenedor
+        const toolsContainer = document.querySelector('.tools-container');
+        toolsContainer.addEventListener('wheel', function(e) {
+            if (e.deltaY > 0) {
+                this.scrollBy({ top: 50, behavior: 'smooth' });
+            } else {
+                this.scrollBy({ top: -50, behavior: 'smooth' });
+            }
+        });
+
+        // Preloader sutil
+        window.addEventListener('load', function() {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s';
+            
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+                updateToolsCount();
+                
+                // Animar título principal
+                const title = document.querySelector('h1');
+                title.style.animation = 'pulse 3s infinite';
+            }, 100);
+        });
+
+        // Efecto de resaltado al pasar sobre características
+        document.querySelectorAll('.features li').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.backgroundColor = 'rgba(52, 152, 219, 0.1)';
+                this.style.transform = 'translateX(5px)';
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.backgroundColor = '';
+                this.style.transform = '';
+            });
+        });
+
+        // Detectar si es móvil y ajustar animaciones
+        const isMobile = window.innerWidth <= 768;
+        if (isMobile) {
+            document.querySelectorAll('.tool-card').forEach(card => {
+                card.style.animationDelay = '0s';
+            });
+        }
+
+        // Efecto de onda en el botón de volver
+        const backBtn = document.querySelector('.back-btn');
+        backBtn.addEventListener('click', function(e) {
+            if (!this.getAttribute('href')) {
+                e.preventDefault();
+                
+                // Crear efecto de onda
+                const wave = document.createElement('div');
+                wave.style.position = 'fixed';
+                wave.style.borderRadius = '50%';
+                wave.style.background = 'rgba(52, 152, 219, 0.3)';
+                wave.style.transform = 'translate(-50%, -50%)';
+                wave.style.pointerEvents = 'none';
+                wave.style.zIndex = '9999';
+                
+                const rect = this.getBoundingClientRect();
+                wave.style.left = rect.left + rect.width/2 + 'px';
+                wave.style.top = rect.top + rect.height/2 + 'px';
+                wave.style.width = '0px';
+                wave.style.height = '0px';
+                
+                document.body.appendChild(wave);
+                
+                // Animación
+                setTimeout(() => {
+                    wave.style.transition = 'all 0.5s ease-out';
+                    wave.style.width = '100px';
+                    wave.style.height = '100px';
+                    wave.style.opacity = '0';
+                }, 10);
+                
+                // Eliminar después de la animación
+                setTimeout(() => {
+                    wave.remove();
+                }, 600);
+            }
+        });
+
+        // Agregar CSS para animaciones adicionales
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes bounce {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-5px); }
+            }
+            
+            .loading {
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .loading::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+                animation: loading 1s infinite;
+            }
+            
+            @keyframes loading {
+                0% { transform: translateX(-100%); }
+                100% { transform: translateX(100%); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

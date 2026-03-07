@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manual Inspirador - Generador de Logos PRO</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #004aad;
+    --secondary: #00d4ff;
+    --accent: #ff6b6b;
+    --light: #f4f7fa;
+    --dark: #222;
+    --gray: #777;
+    --white: #fff;
+    --shadow: 0 10px 30px rgba(0,0,0,0.1);
+    --transition: all 0.3s ease;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: "Poppins", Arial, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4efe9 100%);
+    margin: 0;
+    padding: 0;
+    color: var(--dark);
+    line-height: 1.7;
+    overflow-x: hidden;
+    
+   border-radius: 10px;
+  max-width: 1200px;
+  margin: 90px auto;
+  }
+
+  header {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: var(--white);
+    text-align: center;
+    padding: 80px 20px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
+    background-size: cover;
+  }
+
+  header h1 {
+    font-family: "Playfair Display", serif;
+    font-size: 3.2em;
+    margin-bottom: 15px;
+    position: relative;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  }
+
+  header p {
+    font-size: 1.3em;
+    font-style: italic;
+    max-width: 700px;
+    margin: 0 auto;
+    position: relative;
+    font-weight: 300;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  section {
+    margin: 40px auto;
+    background: var(--white);
+    border-radius: 15px;
+    padding: 35px 40px;
+    box-shadow: var(--shadow);
+    position: relative;
+    transition: var(--transition);
+  }
+
+  section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+  }
+
+  h2 {
+    color: var(--primary);
+    border-left: 5px solid var(--secondary);
+    padding-left: 15px;
+    margin-bottom: 20px;
+    font-size: 1.8em;
+    font-weight: 600;
+  }
+
+  h3 {
+    color: var(--primary);
+    margin-top: 25px;
+    margin-bottom: 10px;
+    font-size: 1.3em;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+  }
+
+  h3::before {
+    content: "•";
+    color: var(--secondary);
+    margin-right: 10px;
+    font-size: 1.5em;
+  }
+
+  p.quote {
+    font-style: italic;
+    color: var(--gray);
+    background: #f0faff;
+    border-left: 4px solid var(--secondary);
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin: 20px 0;
+    position: relative;
+    font-size: 1.1em;
+  }
+
+p.quote {
+  position: relative; /* Necesario para posicionar el ::before correctamente */
+  padding-left: 2.5em; /* Deja espacio para la comilla decorativa */
+}
+
+p.quote::before {
+  content: "“"; /* Comilla tipográfica de apertura */
+  font-size: 3em;
+  color: var(--secondary);
+  position: absolute;
+  left: 10px;
+  top: -10px;
+  opacity: 0.3;
+  font-family: Georgia, serif;
+  line-height: 1;
+}
+
+
+  ul {
+    margin-left: 25px;
+    margin-bottom: 20px;
+  }
+
+  li {
+    margin-bottom: 8px;
+    position: relative;
+    padding-left: 5px;
+  }
+
+  li::marker {
+    color: var(--secondary);
+  }
+
+  details {
+    margin: 25px 0;
+    background: #fafafa;
+    border-radius: 10px;
+    border: 1px solid #e0e0e0;
+    padding: 15px 20px;
+    transition: var(--transition);
+    position: relative;
+  }
+
+  summary {
+    font-weight: 600;
+    font-size: 1.2em;
+    cursor: pointer;
+    color: var(--primary);
+    padding: 10px 0;
+    list-style: none;
+    display: flex;
+    align-items: center;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  summary::before {
+    content: "+";
+    color: var(--white);
+    background: var(--primary);
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    transition: var(--transition);
+    flex-shrink: 0;
+  }
+
+  details[open] summary::before {
+    content: "-";
+    background: var(--secondary);
+  }
+
+  details[open] {
+    background: #f0faff;
+    border-color: var(--secondary);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  }
+
+  table th, table td {
+    border: 1px solid #e0e0e0;
+    padding: 12px 15px;
+    text-align: left;
+  }
+
+  table th {
+    background: var(--secondary);
+    color: var(--white);
+    font-weight: 600;
+  }
+
+  table tr:nth-child(even) {
+    background: #f9f9f9;
+  }
+
+  table tr:hover {
+    background: #f0faff;
+  }
+
+  footer {
+    text-align: center;
+    color: var(--gray);
+    font-size: 0.95em;
+    padding: 30px 10px;
+    margin-top: 60px;
+    background: var(--white);
+    border-top: 1px solid #eaeaea;
+  }
+
+  .highlight {
+    color: var(--primary);
+    font-weight: 600;
+    background: rgba(0, 212, 255, 0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+
+  .badge {
+    display: inline-block;
+    background: var(--accent);
+    color: white;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    margin-left: 10px;
+    vertical-align: middle;
+  }
+
+  .tip {
+    background: #fff9e6;
+    border-left: 4px solid #ffc107;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 15px 0;
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .tip::before {
+    content: "💡";
+    margin-right: 10px;
+    font-size: 1.2em;
+  }
+
+  .step-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    background: var(--primary);
+    color: white;
+    border-radius: 50%;
+    margin-right: 10px;
+    font-weight: bold;
+    font-size: 0.9em;
+  }
+
+  .progress-bar {
+    height: 5px;
+    background: #e0e0e0;
+    border-radius: 5px;
+    margin: 30px 0;
+    overflow: hidden;
+  }
+
+  .progress {
+    height: 100%;
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    width: 0%;
+    transition: width 0.5s ease;
+  }
+
+  @media (max-width: 768px) {
+    section {
+      padding: 25px;
+      margin: 25px 15px;
+    }
+    
+    header h1 {
+      font-size: 2.5em;
+    }
+    
+    header p {
+      font-size: 1.1em;
+    }
+    
+    h2 {
+      font-size: 1.5em;
+    }
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 500;
+    transition: var(--transition);
+    box-shadow: 0 4px 15px rgba(0, 74, 173, 0.3);
+    margin: 10px 5px;
+    text-decoration: none;
+  }
+
+  .btn:hover {
+    background: #003d8f;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 74, 173, 0.4);
+  }
+
+  .btn-secondary {
+    background: var(--secondary);
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+  }
+
+  .btn-secondary:hover {
+    background: #00b8e6;
+    box-shadow: 0 6px 20px rgba(0, 212, 255, 0.4);
+  }
+
+  .btn-back {
+    background: #6c757d;
+    box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
+  }
+
+  .btn-back:hover {
+    background: #5a6268;
+    box-shadow: 0 6px 20px rgba(108, 117, 125, 0.4);
+  }
+
+  .btn-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 30px 0;
+  }
+
+  .floating-button {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background: var(--primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    cursor: pointer;
+    z-index: 100;
+    transition: var(--transition);
+  }
+
+  .floating-button:hover {
+    transform: scale(1.1);
+    background: var(--secondary);
+  }
+
+  .logo-preview {
+    display: flex;
+    justify-content: center;
+    margin: 30px 0;
+  }
+
+  .logo-placeholder {
+    width: 200px;
+    height: 150px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    box-shadow: var(--shadow);
+  }
+
+  .color-palette {
+    display: flex;
+    margin: 15px 0;
+  }
+
+  .color-box {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    margin-right: 10px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: var(--transition);
+  }
+
+  .color-box:hover {
+    transform: scale(1.1);
+  }
+
+  .tooltip {
+    position: relative;
+    display: inline-block;
+  }
+
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 200px;
+    background-color: var(--dark);
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 10px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -100px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 0.9em;
+  }
+
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .back-button {
+    display: flex;
+    align-items: center;
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--transition);
+  }
+
+  .back-button:hover {
+    color: var(--secondary);
+    transform: translateX(-5px);
+  }
+
+  .back-button::before {
+    content: "←";
+    margin-right: 8px;
+    font-size: 1.2em;
+  }
+/* CSS */
+.footer-button {
+    display: inline-block;
+    padding: 12px 25px;        /* Tamaño del botón */
+    background-color: #4CAF50; /* Color de fondo */
+    color: white;              /* Color del texto */
+    font-size: 16px;           /* Tamaño del texto */
+    font-weight: bold;         /* Negrita */
+    text-decoration: none;     /* Quitar subrayado */
+    border-radius: 8px;        /* Bordes redondeados */
+    transition: background-color 0.3s, transform 0.2s; /* Efecto suave */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2); /* Sombra */
+}
+
+.footer-button:hover {
+    background-color: #45a049; /* Color al pasar el mouse */
+    transform: translateY(-2px); /* Levanta un poco */
+}
+
+
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Manual Inspirador de Uso</h1>
+  <p>"Diseñar un logo no es solo crear una imagen. Es dar forma visible a una idea, un sueño y una historia."</p>
+</header>
+
+<div class="container">
+  <section>
+    <div class="btn-container">
+      <button class="btn" onclick="scrollToSection('estructura')">Comenzar Tutorial</button>
+      <button class="btn btn-secondary" onclick="scrollToSection('consejos')">Ver Consejos Rápidos</button>
+
+<a href="ManualinstruccionesArte.html" class="footer-button">Volver atras</a>
+
+    </div>
+    
+    <div class="progress-bar">
+      <div class="progress" id="progress"></div>
+    </div>
+    
+    <h2>Bienvenido al Generador de Logos PRO</h2>
+    <p>Este manual te guiará paso a paso para crear logos impresionantes que reflejen la esencia de tu marca. Ya seas un diseñador experimentado o estés dando tus primeros pasos, encontrarás inspiración y herramientas poderosas para materializar tu visión.</p>
+    
+    <div class="logo-preview">
+      <div class="logo-placeholder">
+        TU LOGO AQUÍ
+      </div>
+    </div>
+    
+   
+  </section>
+
+  <section id="estructura">
+    <h2><span class="step-number">1</span> Estructura de la Interfaz</h2>
+    <p class="quote">El orden no limita la creatividad, la potencia.</p>
+    
+    <h3>Panel de Control (Izquierda)</h3>
+    <p>Contiene todas las herramientas que permiten personalizar tu logo paso a paso, organizadas en secciones lógicas para un flujo de trabajo intuitivo.</p>
+    
+    <h3>Área de Previsualización (Derecha)</h3>
+    <p>Observa en tiempo real los cambios que realizas. Es tu lienzo digital, donde las ideas cobran forma. Puedes hacer zoom y desplazarte para ver los detalles.</p>
+    
+    <div class="tip">
+      <div>
+        <strong>Consejo profesional:</strong> Utiliza el modo de pantalla completa para concentrarte en tu diseño sin distracciones.
+      </div>
+    </div>
+    
+    <p class="quote">No temas equivocarte al crear. Cada cambio te acerca a tu mejor versión.</p>
+  </section>
+
+  <section>
+    <h2><span class="step-number">2</span> Guía Paso a Paso</h2>
+    <p class="quote">Toda gran creación comienza con un primer clic.</p>
+    
+    <details open>
+      <summary>Paso 1: Subir Logo Propio</summary>
+      <ul>
+        <li>Clic en <span class="highlight">Seleccionar Archivo</span>.</li>
+        <li>Formatos compatibles: PNG, JPG <span class="badge">NUEVO</span>.</li>
+        <li>Tu imagen se mostrará en la vista previa con opciones de ajuste automático.</li>
+      </ul>
+      <p class="quote">Cada logo cuenta una historia: la tuya.</p>
+    </details>
+
+    <details>
+      <summary>Control de Tamaño y Posición</summary>
+      <ul>
+        <li>Ancho: 50px – 500px (con opción de mantener proporciones)</li>
+        <li>Alto: 50px – 500px</li>
+        <li>Rotación: -180° a 180° con control deslizante</li>
+        <li>Posicionamiento con guías inteligentes</li>
+      </ul>
+      <p class="quote">El equilibrio no es inmovilidad, es armonía en movimiento.</p>
+    </details>
+
+    <details>
+      <summary>Paso 2: Fondo del Lienzo</summary>
+      <p>Elige entre colores sólidos, fondos transparentes o degradados generados.</p>
+      
+      <div class="color-palette">
+        <div class="color-box" style="background: #004aad;" title="Azul Corporativo"></div>
+        <div class="color-box" style="background: #ffffff; border: 1px solid #eee;" title="Blanco"></div>
+        <div class="color-box" style="background: transparent; border: 1px solid #eee;" title="Transparente"></div>
+        <div class="color-box" style="background: linear-gradient(135deg, #004aad, #00d4ff);" title="Degradado Azul"></div>
+        <div class="color-box" style="background: linear-gradient(135deg, #ff6b6b, #ffd93d);" title="Degradado Cálido"></div>
+      </div>
+      
+      <p class="quote">El color habla cuando las palabras callan.</p>
+    </details>
+
+    <details>
+      <summary>Paso 3: Personalización Tipográfica</summary>
+      <p class="quote">La tipografía no solo se lee, se siente.</p>
+      <ul>
+        <li>Campo editable (máximo 30 caracteres) con contador en tiempo real.</li>
+        <li>Selector de color con soporte HEX, RGB y paletas predefinidas.</li>
+        <li>Fuentes: Montserrat, Roboto, Oswald, Arial, Georgia, Courier New + 15 fuentes premium.</li>
+        <li>Efectos: desenfoque, rotación, sombras, contornos, tamaño ajustable.</li>
+      </ul>
+
+      <h3>Interacción con el Texto</h3>
+      <ul>
+        <li><b>Mover:</b> clic sostenido y arrastrar con guías de alineación.</li>
+        <li><b>Editar:</b> doble clic y presiona Enter para confirmar.</li>
+        <li><b>Eliminar:</b> cursor sobre el texto y clic en ❌ o presiona Supr.</li>
+        <li><b>Agregar nuevo:</b> clic en Agregar Nuevo Texto o presiona T.</li>
+        <li><b>Alinear:</b> utiliza las herramientas de alineación automática.</li>
+      </ul>
+      
+      <div class="tip">
+        <div>
+          <strong>Atajos de teclado:</strong> T (texto nuevo), Supr (eliminar selección), Ctrl+Z (deshacer), Ctrl+Y (rehacer).
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <section>
+    <h2><span class="step-number">3</span> Efectos con pogramacion que se dicen IA</h2>
+    <p class="quote">La inteligencia artificial potencia tu arte, pero el alma sigue siendo tuya.</p>
+    <ul>
+      <li>Más de 60 efectos agrupados por estilo artístico, temático y profesional.</li>
+      <li>Selecciona varios y aplícalos con un clic.</li>
+      <li>Usa Restablecer Efectos para volver al diseño original.</li>
+      <li>Nuevos efectos mensuales basados en tendencias de diseño.</li>
+    </ul>
+    
+    <div class="tip">
+      <div>
+        <strong>Efectos recomendados:</strong> Para marcas corporativas prueba Brillo Profesional, para creativas Acuarela Digital.
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="step-number">4</span> Exportar tu Logo</h2>
+    <p class="quote">Compartir tu creación es el último paso del proceso, pero el primero hacia el impacto.</p>
+    <ul>
+      <li>Formatos disponibles: PNG, JPG .</li>
+      <li>Escalas: 1x (300px), 2x (600px), 3x (900px) y personalizada.</li>
+      <li>Calidad ajustable para optimizar el tamaño del archivo.</li>
+      <li>Clic en Descargar Logo Actual o usa Ctrl+S.</li>
+      <li>Opción de compartir directamente en redes sociales.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2><span class="step-number">5</span> Galería de Diseños</h2>
+    <p class="quote">Explorar otros diseños también es una forma de inspirarte.</p>
+    <ul>
+      <li>Hasta 99 diseños según tu plan (ilimitados en plan PRO).</li>
+      <li>Explora, selecciona y personaliza en tiempo real.</li>
+      <li>Filtra por categorías: corporativo, startup, creativo, gaming, etc.</li>
+      <li>Guarda tus diseños favoritos para acceder rápidamente.</li>
+    </ul>
+    <p class="quote">La inspiración no se busca, se encuentra mientras creas.</p>
+  </section>
+
+  <section id="consejos">
+    <h2><span class="step-number">6</span> Consejos de Diseño Profesional</h2>
+    
+    <details open>
+      <summary>Estilo Corporativo</summary>
+      <ul>
+        <li>Fondo: gris oscuro o azul medianoche</li>
+        <li>Texto: blanco o gris claro</li>
+        <li>Fuentes: serif o sans-serif limpias</li>
+        <li>Efectos: mínimo, solo sombras sutiles</li>
+      </ul>
+    </details>
+
+    <details>
+      <summary>Estilo Startup</summary>
+      <ul>
+        <li>Fondo: degradados IA o colores vibrantes</li>
+        <li>Texto: blanco o negro con contraste alto</li>
+        <li>Fuentes: sans-serif modernas</li>
+        <li>Efectos: brillo sutil o gradientes de texto</li>
+      </ul>
+    </details>
+
+    <details>
+      <summary>Estilo Gaming</summary>
+      <ul>
+        <li>Fondo: negro o colores neón oscuros</li>
+        <li>Texto: verde lima, magenta brillante o azul eléctrico</li>
+        <li>Fuentes: bold, mayúsculas, con efecto pixelado opcional</li>
+        <li>Efectos: neón, resplandor, destellos</li>
+      </ul>
+    </details>
+    
+    <p class="quote">Un logo simple puede decir cosas grandes.</p>
+  </section>
+
+  <section>
+    <h2><span class="step-number">7</span> Solución de Problemas</h2>
+    <table>
+      <tr><th>Problema</th><th>Posible Solución</th></tr>
+      <tr><td>Texto poco visible</td><td>Cambia el color o ajusta la opacidad del fondo. Añade contorno o sombra al texto.</td></tr>
+      <tr><td>Icono no se actualiza</td><td>Presiona Enter después de seleccionarlo. Verifica que el formato sea compatible.</td></tr>
+      <tr><td>No descarga</td><td>Revisa los permisos del navegador. Intenta en modo incógnito.</td></tr>
+      <tr><td>Logo pixelado</td><td>Usa una escala de exportación mayor o sube una imagen de mayor resolución.</td></tr>
+      <tr><td>La interfaz se ve rara</td><td>Actualiza la página (F5). Limpia la caché del navegador.</td></tr>
+    </table>
+    <p class="quote">La paciencia también es parte del diseño.</p>
+  </section>
+
+  <section>
+    <h2><span class="step-number">8</span> Compatibilidad</h2>
+    <ul>
+      <li>Navegadores: Chrome 80+, Firefox 75+, Safari 13+, Edge 80+.</li>
+      <li>Dispositivos: Escritorio, tablet, móvil (interfaz responsive).</li>
+      <li>Requiere conexión a Internet para funciones de IA.</li>
+      <li>Funciona offline para edición básica una vez cargada la página.</li>
+    </ul>
+    <p class="quote">Tu creatividad se adapta, evoluciona y se multiplica en cualquier dispositivo.</p>
+  </section>
+
+  <div class="btn-container">
+    <button class="btn" onclick="scrollToTop()">⬆ Volver al Inicio</button>
+
+   
+  </div>
+</div>
+
+
+
+<div class="floating-button" onclick="scrollToTop()">
+  ↑
+</div>
+
+<script>
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function scrollToSection(sectionId) {
+  document.getElementById(sectionId).scrollIntoView({ behavior: "smooth" });
+}
+
+// Actualizar barra de progreso al hacer scroll
+window.addEventListener('scroll', function() {
+  const winHeight = window.innerHeight;
+  const docHeight = document.documentElement.scrollHeight;
+  const scrollTop = window.pageYOffset;
+  const trackLength = docHeight - winHeight;
+  const progress = Math.floor(scrollTop / trackLength * 100);
+  
+  document.getElementById('progress').style.width = progress + '%';
+});
+
+// Simulador básico de la aplicación
+function simulateApp() {
+  alert("¡Bienvenido al simulador del Generador de Logos PRO!\n\nEn la aplicación real podrás:\n• Subir tu propio logo\n• Aplicar efectos con IA\n• Personalizar colores y tipografía\n• Exportar en alta calidad\n\n¡Experimenta con todas las funciones!");
+}
+
+// Efecto de aparición gradual al hacer scroll
+const observerOptions = {
+  threshold: 0.1,
+  rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver(function(entries) {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = 1;
+      entry.target.style.transform = 'translateY(0)';
+    }
+  });
+}, observerOptions);
+
+// Aplicar efecto a todas las secciones
+document.querySelectorAll('section').forEach(section => {
+  section.style.opacity = 0;
+  section.style.transform = 'translateY(20px)';
+  section.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+  observer.observe(section);
+});
+</script>
+
+</body>
+</html>

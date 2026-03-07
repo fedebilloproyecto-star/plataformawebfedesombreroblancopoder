@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manuales Creativos - Ciudad, Autos y Paisajes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Variables y estilos globales */
+        :root {
+            --primary-blue: #1e88e5;
+            --primary-green: #43a047;
+            --primary-purple: #8e24aa;
+            --primary-orange: #fb8c00;
+            --primary-red: #e53935;
+            --primary-teal: #00897b;
+            --primary-dark: #121212;
+            --light-bg: #f5f5f5;
+            --text-color: #333;
+            --transition: all 0.3s ease;
+            --shadow: 0 5px 15px rgba(0,0,0,0.1);
+            --border-radius: 12px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+            background-color: #0a1929;
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(30, 136, 229, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(139, 195, 74, 0.1) 0%, transparent 20%);
+            overflow-x: hidden;
+            
+   border-radius: 10px;
+  max-width: 1200px;
+  margin: 90px auto;
+        }
+        
+        /* Header con ciudad y autos */
+        header {
+            background: linear-gradient(180deg, 
+                #0a1929 0%, 
+                #1c3b5a 30%,
+                #2a4a7a 60%,
+                #3a5a95 80%,
+                #4a6ab0 100%);
+            color: white;
+            padding: 4rem 1rem 10rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+        }
+        
+        .city-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 250px;
+        }
+        
+        .road {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: #333;
+            z-index: 5;
+        }
+        
+        .road-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: repeating-linear-gradient(
+                90deg,
+                #ffd700 0%,
+                #ffd700 40px,
+                transparent 40px,
+                transparent 80px
+            );
+            transform: translateY(-50%);
+            z-index: 6;
+            animation: roadMove 3s linear infinite;
+        }
+        
+        @keyframes roadMove {
+            0% { transform: translateY(-50%) translateX(0); }
+            100% { transform: translateY(-50%) translateX(-80px); }
+        }
+        
+        .building {
+            position: absolute;
+            bottom: 60px;
+            background: linear-gradient(to top, #2c3e50, #34495e);
+            border-radius: 5px 5px 0 0;
+            box-shadow: inset 0 -5px 10px rgba(0,0,0,0.3);
+        }
+        
+        .window {
+            position: absolute;
+            background: #ffd700;
+            border-radius: 2px;
+        }
+        
+        /* Edificios específicos */
+        .bldg-1 { width: 60px; height: 120px; left: 5%; }
+        .bldg-2 { width: 80px; height: 180px; left: 12%; }
+        .bldg-3 { width: 100px; height: 220px; left: 22%; }
+        .bldg-4 { width: 70px; height: 160px; left: 35%; }
+        .bldg-5 { width: 120px; height: 250px; left: 45%; }
+        .bldg-6 { width: 90px; height: 200px; left: 60%; }
+        .bldg-7 { width: 80px; height: 170px; left: 73%; }
+        .bldg-8 { width: 110px; height: 210px; left: 85%; }
+        
+        /* Ventanas en edificios */
+        .bldg-1 .window:nth-child(1) { width: 15px; height: 20px; top: 20px; left: 10px; }
+        .bldg-1 .window:nth-child(2) { width: 15px; height: 20px; top: 50px; left: 35px; }
+        .bldg-1 .window:nth-child(3) { width: 15px; height: 20px; top: 80px; left: 10px; }
+        
+        .bldg-3 .window:nth-child(1) { width: 20px; height: 25px; top: 30px; left: 15px; }
+        .bldg-3 .window:nth-child(2) { width: 20px; height: 25px; top: 30px; left: 45px; }
+        .bldg-3 .window:nth-child(3) { width: 20px; height: 25px; top: 70px; left: 15px; }
+        .bldg-3 .window:nth-child(4) { width: 20px; height: 25px; top: 70px; left: 45px; }
+        .bldg-3 .window:nth-child(5) { width: 20px; height: 25px; top: 110px; left: 15px; }
+        .bldg-3 .window:nth-child(6) { width: 20px; height: 25px; top: 110px; left: 45px; }
+        
+        /* Autos en la carretera */
+        .car {
+            position: absolute;
+            bottom: 30px;
+            width: 60px;
+            height: 30px;
+            border-radius: 5px 10px 10px 5px;
+            z-index: 10;
+            animation: carDrive 15s linear infinite;
+        }
+        
+        .car-1 {
+            background: linear-gradient(to right, #e53935, #ff5252);
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .car-2 {
+            background: linear-gradient(to right, #1e88e5, #64b5f6);
+            left: 40%;
+            animation-delay: 5s;
+            animation-duration: 18s;
+        }
+        
+        .car-3 {
+            background: linear-gradient(to right, #43a047, #66bb6a);
+            left: 70%;
+            animation-delay: 10s;
+            animation-duration: 20s;
+        }
+        
+        .car-wheel {
+            position: absolute;
+            bottom: -8px;
+            width: 12px;
+            height: 12px;
+            background: #222;
+            border-radius: 50%;
+            border: 2px solid #555;
+        }
+        
+        .car-wheel.front { left: 8px; }
+        .car-wheel.back { right: 8px; }
+        
+        .car-light {
+            position: absolute;
+            top: 10px;
+            width: 5px;
+            height: 5px;
+            background: #ffd700;
+            border-radius: 50%;
+        }
+        
+        .car-light.front { right: 5px; }
+        
+        @keyframes carDrive {
+            0% { transform: translateX(-100px); }
+            100% { transform: translateX(1200px); }
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 20;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 3.2rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+            background: linear-gradient(90deg, #ffffff, #a3d5ff, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% auto;
+            animation: shine 3s linear infinite;
+        }
+        
+        @keyframes shine {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            color: #c2e0ff;
+        }
+        
+        /* Contenedor principal */
+        .container {
+            max-width: 1200px;
+            margin: -4rem auto 3rem;
+            padding: 0 1.5rem;
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* Grid de tarjetas */
+        .manual-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+        
+        /* Tarjetas individuales */
+        .manual-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        
+        .manual-card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            background: white;
+        }
+        
+        /* Encabezados de tarjetas con fondos temáticos */
+        .card-header {
+            padding: 1.8rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            min-height: 160px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .card-header::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+        }
+        
+        /* Fondos temáticos para cada tarjeta */
+        .editor-card .card-header {
+            background: 
+                linear-gradient(135deg, rgba(30, 136, 229, 0.9), rgba(66, 165, 245, 0.9)),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400"><path fill="%231e88e5" d="M0,200L80,180C160,160,320,120,480,110C640,100,800,120,960,130C1120,140,1280,140,1360,140L1440,140L1440,400L1360,400C1280,400,1120,400,960,400C800,400,640,400,480,400C320,400,160,400,80,400L0,400Z"/><rect x="100" y="150" width="60" height="50" fill="%23ffffff" opacity="0.2"/><rect x="200" y="120" width="80" height="80" fill="%23ffffff" opacity="0.2"/><rect x="350" y="100" width="100" height="100" fill="%23ffffff" opacity="0.2"/></svg>');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .logo-card .card-header {
+            background: 
+                linear-gradient(135deg, rgba(142, 36, 170, 0.9), rgba(186, 104, 200, 0.9)),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400"><path fill="%238e24aa" d="M0,300L80,280C160,260,320,220,480,200C640,180,800,180,960,190C1120,200,1280,220,1360,230L1440,240L1440,400L1360,400C1280,400,1120,400,960,400C800,400,640,400,480,400C320,400,160,400,80,400L0,400Z"/><circle cx="150" cy="150" r="40" fill="%23ffffff" opacity="0.2"/><circle cx="300" cy="120" r="30" fill="%23ffffff" opacity="0.2"/><circle cx="450" cy="180" r="50" fill="%23ffffff" opacity="0.2"/></svg>');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .pattern-card .card-header {
+            background: 
+                linear-gradient(135deg, rgba(67, 160, 71, 0.9), rgba(102, 187, 106, 0.9)),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400"><path fill="%2343a047" d="M0,100L80,130C160,160,320,220,480,230C640,240,800,200,960,180C1120,160,1280,160,1360,160L1440,160L1440,400L1360,400C1280,400,1120,400,960,400C800,400,640,400,480,400C320,400,160,400,80,400L0,400Z"/><rect x="120" y="120" width="40" height="40" fill="%23ffffff" opacity="0.2"/><rect x="180" y="160" width="40" height="40" fill="%23ffffff" opacity="0.2"/><rect x="240" y="120" width="40" height="40" fill="%23ffffff" opacity="0.2"/><rect x="300" y="160" width="40" height="40" fill="%23ffffff" opacity="0.2"/></svg>');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .frame-card .card-header {
+            background: 
+                linear-gradient(135deg, rgba(251, 140, 0, 0.9), rgba(255, 167, 38, 0.9)),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400"><path fill="%23fb8c00" d="M0,250L80,230C160,210,320,170,480,150C640,130,800,130,960,140C1120,150,1280,170,1360,180L1440,190L1440,400L1360,400C1280,400,1120,400,960,400C800,400,640,400,480,400C320,400,160,400,80,400L0,400Z"/><polygon points="150,150 200,120 250,150 200,180" fill="%23ffffff" opacity="0.2"/><polygon points="350,120 400,90 450,120 400,150" fill="%23ffffff" opacity="0.2"/><polygon points="550,180 600,150 650,180 600,210" fill="%23ffffff" opacity="0.2"/></svg>');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .art-card .card-header {
+            background: 
+                linear-gradient(135deg, rgba(229, 57, 53, 0.9), rgba(239, 83, 80, 0.9)),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400"><path fill="%23e53935" d="M0,150L80,170C160,190,320,230,480,240C640,250,800,230,960,210C1120,190,1280,170,1360,160L1440,150L1440,400L1360,400C1280,400,1120,400,960,400C800,400,640,400,480,400C320,400,160,400,80,400L0,400Z"/><path d="M150,180 Q200,130 250,180 T350,180" fill="none" stroke="%23ffffff" stroke-width="3" opacity="0.3"/><path d="M400,150 Q450,100 500,150 T600,150" fill="none" stroke="%23ffffff" stroke-width="3" opacity="0.3"/></svg>');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .portrait-card .card-header {
+            background: 
+                linear-gradient(135deg, rgba(0, 137, 123, 0.9), rgba(38, 166, 154, 0.9)),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400"><path fill="%2300897b" d="M0,50L80,80C160,110,320,170,480,180C640,190,800,150,960,130C1120,110,1280,110,1360,110L1440,110L1440,400L1360,400C1280,400,1120,400,960,400C800,400,640,400,480,400C320,400,160,400,80,400L0,400Z"/><ellipse cx="200" cy="150" rx="50" ry="30" fill="%23ffffff" opacity="0.2"/><ellipse cx="400" cy="120" rx="40" ry="25" fill="%23ffffff" opacity="0.2"/><ellipse cx="600" cy="180" rx="60" ry="35" fill="%23ffffff" opacity="0.2"/></svg>');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+        
+        .card-title {
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+        
+        .card-subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+        
+        /* Contenido de las tarjetas */
+        .card-content {
+            padding: 1.8rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .card-description {
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+            color: #444;
+        }
+        
+        .features-list {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+        
+        .features-list li {
+            padding: 0.3rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: #555;
+        }
+        
+        .features-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--primary-blue);
+            font-weight: bold;
+        }
+        
+        /* Botones */
+        .card-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: auto;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            gap: 0.5rem;
+            flex: 1;
+            text-align: center;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-blue), #3498db);
+            color: white;
+            box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #0056a3, #2980b9);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
+        }
+        
+        /* Sección de paisajes naturales */
+        .nature-section {
+            background: 
+                linear-gradient(135deg, rgba(12, 36, 56, 0.95), rgba(26, 58, 95, 0.95)),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><linearGradient id="mount" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%232c3e50;stop-opacity:1"/><stop offset="100%" style="stop-color:%231a252f;stop-opacity:1"/></linearGradient></defs><path fill="url(%23mount)" d="M0,400 C300,200 600,300 900,250 C1200,200 1200,600 1200,600 L0,600 Z"/><ellipse cx="300" cy="300" rx="150" ry="80" fill="%231e824c" opacity="0.7"/><ellipse cx="800" cy="350" rx="120" ry="60" fill="%231e824c" opacity="0.7"/><circle cx="150" cy="150" r="40" fill="%23ffffff" opacity="0.1"/><circle cx="1000" cy="100" r="30" fill="%23ffffff" opacity="0.1"/><circle cx="500" cy="80" r="25" fill="%23ffffff" opacity="0.1"/></svg>');
+            background-size: cover;
+            background-position: center;
+            border-radius: var(--border-radius);
+            padding: 4rem 2rem;
+            margin-top: 4rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .nature-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><circle cx="200" cy="100" r="3" fill="%23ffffff" opacity="0.5"/><circle cx="900" cy="150" r="2" fill="%23ffffff" opacity="0.5"/><circle cx="500" cy="80" r="4" fill="%23ffffff" opacity="0.5"/><circle cx="1100" cy="200" r="3" fill="%23ffffff" opacity="0.5"/><circle cx="700" cy="50" r="2" fill="%23ffffff" opacity="0.5"/><circle cx="300" cy="180" r="3" fill="%23ffffff" opacity="0.5"/></svg>');
+            background-size: cover;
+            background-position: center;
+            animation: stars 20s linear infinite;
+        }
+        
+        @keyframes stars {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-20px); }
+        }
+        
+        .nature-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .nature-title {
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 1.5rem;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+        }
+        
+        .nature-description {
+            font-size: 1.2rem;
+            color: #c2e0ff;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            line-height: 1.8;
+        }
+        
+        .nature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+        
+        .nature-feature {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 1.5rem;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: var(--transition);
+        }
+        
+        .nature-feature:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-5px);
+        }
+        
+        .nature-feature i {
+            font-size: 2rem;
+            color: #a3d5ff;
+            margin-bottom: 1rem;
+        }
+        
+        .nature-feature h4 {
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+        
+        .nature-feature p {
+            color: #c2e0ff;
+            font-size: 0.9rem;
+        }
+        
+        /* Sección de autos y transporte */
+        .transport-section {
+            background: 
+                linear-gradient(135deg, rgba(33, 33, 33, 0.95), rgba(66, 66, 66, 0.95)),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><rect x="0" y="250" width="1200" height="150" fill="%23555555"/><path d="M0,280 L1200,280" stroke="%23ffd700" stroke-width="4" stroke-dasharray="20,20"/><rect x="100" y="200" width="80" height="50" fill="%23e53935" rx="5"/><rect x="350" y="180" width="100" height="70" fill="%231e88e5" rx="5"/><rect x="650" y="220" width="70" height="30" fill="%2343a047" rx="5"/><rect x="900" y="190" width="90" height="60" fill="%23fb8c00" rx="5"/></svg>');
+            background-size: cover;
+            background-position: center;
+            border-radius: var(--border-radius);
+            padding: 4rem 2rem;
+            margin-top: 4rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .transport-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .transport-title {
+            font-size: 2.2rem;
+            color: white;
+            margin-bottom: 1.5rem;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+        }
+        
+        .transport-description {
+            font-size: 1.2rem;
+            color: #e0e0e0;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            line-height: 1.8;
+        }
+        
+        /* Footer */
+        footer {
+            background: #0a1929;
+            color: #a3d5ff;
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .nature-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .building {
+                height: calc(100% - 40px);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .manual-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .card-actions {
+                flex-direction: column;
+            }
+            
+            .nature-section, .transport-section {
+                padding: 3rem 1rem;
+            }
+            
+            .nature-title, .transport-title {
+                font-size: 1.8rem;
+            }
+            
+            .nature-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .city-container {
+                height: 180px;
+            }
+            
+            .road {
+                height: 40px;
+            }
+            
+            .car {
+                width: 50px;
+                height: 25px;
+                bottom: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .card-header {
+                padding: 1.5rem;
+                min-height: 140px;
+            }
+            
+            .card-title {
+                font-size: 1.4rem;
+            }
+            
+            .building {
+                display: none;
+            }
+            
+            .bldg-3, .bldg-5 {
+                display: block;
+                width: 50px;
+                height: 100px;
+            }
+            
+            .bldg-3 { left: 20%; }
+            .bldg-5 { left: 60%; }
+        }
+        
+/* ===== BOTÓN VOLVER ===== */
+.back-btn {
+    display: inline-block;
+    margin-top: 120px;     /* 🔥 separación grande del header */
+    margin-left: 20px;
+    padding: 12px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+/* Ícono */
+.back-btn i {
+    margin-right: 8px;
+}
+
+/* Hover */
+.back-btn:hover {
+    background-color: #43a047;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .back-btn {
+        margin-top: 100px;
+        font-size: 15px;
+        padding: 10px 16px;
+    }
+}
+    </style>
+</head>
+<body>
+    <!-- Header con ciudad y autos -->
+    <header>
+        <div class="header-content">
+            <h1><i class="fas fa-city"></i> Manuales Instrucciones </h1>
+            <p class="subtitle">Explora nuestras herramientas de edición y diseño en un entorno urbano y natural</p>
+        </div>
+      
+        <div class="city-container">
+            <div class="road">
+                <div class="road-line"></div>
+            </div>
+            
+            <!-- Edificios -->
+            <div class="building bldg-1">
+                <div class="window"></div>
+                <div class="window"></div>
+                <div class="window"></div>
+            </div>
+            <div class="building bldg-2"></div>
+            <div class="building bldg-3">
+                <div class="window"></div>
+                <div class="window"></div>
+                <div class="window"></div>
+                <div class="window"></div>
+                <div class="window"></div>
+                <div class="window"></div>
+            </div>
+            <div class="building bldg-4"></div>
+            <div class="building bldg-5"></div>
+            <div class="building bldg-6"></div>
+            <div class="building bldg-7"></div>
+            <div class="building bldg-8"></div>
+            
+            <!-- Autos -->
+            <div class="car car-1">
+                <div class="car-wheel front"></div>
+                <div class="car-wheel back"></div>
+                <div class="car-light front"></div>
+            </div>
+            <div class="car car-2">
+                <div class="car-wheel front"></div>
+                <div class="car-wheel back"></div>
+                <div class="car-light front"></div>
+            </div>
+            <div class="car car-3">
+                <div class="car-wheel front"></div>
+                <div class="car-wheel back"></div>
+                <div class="car-light front"></div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Contenedor principal -->
+    <div class="container">
+        <!-- Grid de manuales -->
+        <div class="manual-grid">
+            <!-- Editor de Imágenes Profesional -->
+            <div class="manual-card editor-card">
+                <div class="card-header">
+
+     
+                    <div class="card-icon">🎨</div>
+                    <h2 class="card-title">Editor de Imágenes</h2>
+                    <p class="card-subtitle">Manual completo de edición profesional</p>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Aprende a utilizar todas las funciones de nuestro editor de imágenes profesional: ajustes básicos, filtros, marcos, texto, herramientas de dibujo y funciones avanzadas.</p>
+                    
+                    <ul class="features-list">
+                        <li>Ajustes de color y exposición</li>
+                        <li>Más de 50 filtros y efectos</li>
+                        <li>Marcos y bordes personalizables</li>
+                        <li>Herramientas de texto y dibujo</li>
+                        <li>Funciones avanzadas (recorte, marca de agua)</li>
+                    </ul>
+                    
+                    <div class="card-actions">
+                        <a href="manualcambiafotos.html" class="btn btn-primary">
+                            <i class="fas fa-external-link-alt"></i> Abrir Manual Completo
+                        </a>
+        
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                Volver al inicio
+            </a>
+       
+
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Generador de Logos PRO -->
+            <div class="manual-card logo-card">
+                <div class="card-header">
+                    <div class="card-icon">✨</div>
+                    <h2 class="card-title">Generador de Logos PRO</h2>
+                    <p class="card-subtitle">Manual inspirador para crear identidades visuales</p>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Convierte tus ideas en logotipos impresionantes. Este manual te guía paso a paso en la creación de identidades visuales profesionales con herramientas intuitivas.</p>
+                    
+                    <ul class="features-list">
+                        <li>Estructura de interfaz intuitiva</li>
+                        <li>Guía paso a paso para diseño de logos</li>
+                        <li>Efectos avanzados con IA</li>
+                        <li>Consejos de diseño profesional</li>
+                        <li>Exportación en múltiples formatos</li>
+                    </ul>
+                    
+                    <div class="card-actions">
+                        <a href="manualpersonalizarlogos.html" class="btn btn-primary">
+                            <i class="fas fa-external-link-alt"></i> Abrir Manual Completo
+                        </a>
+                        <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                Volver al inicio
+            </a>
+       
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Generador de Patrones -->
+            <div class="manual-card pattern-card">
+                <div class="card-header">
+                    <div class="card-icon">🔄</div>
+                    <h2 class="card-title">Generador de Patrones</h2>
+                    <p class="card-subtitle">Manual de 5 pasos para crear diseños repetitivos</p>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Aprende a crear patrones visuales impresionantes repitiendo tus imágenes. Este manual te muestra cómo configurar filas, columnas y colores para resultados sorprendentes.</p>
+                    
+                    <ul class="features-list">
+                        <li>5 pasos fáciles para crear patrones</li>
+                        <li>Control de repetición (filas y columnas)</li>
+                        <li>Paletas de colores personalizables</li>
+                        <li>Patrones predefinidos</li>
+                        <li>Exportación en PNG, JPG y PDF</li>
+                    </ul>
+                    
+                    <div class="card-actions">
+                        <a href="manualgenerafotosdeuna.html" class="btn btn-primary">
+                            <i class="fas fa-external-link-alt"></i> Abrir Manual Completo
+                        </a>
+                        <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                Volver al inicio
+            </a>
+       
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Marco Geométrico Premium -->
+            <div class="manual-card frame-card">
+                <div class="card-header">
+                    <div class="card-icon">🖼️</div>
+                    <h2 class="card-title">Marco Geométrico Premium</h2>
+                    <p class="card-subtitle">Manual para personalizar fotos con marcos geométricos</p>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Domina el arte de enmarcar tus fotos con diseños geométricos elegantes. Desde marcos simples hasta patrones complejos, este manual te enseña todas las posibilidades.</p>
+                    
+                    <ul class="features-list">
+                        <li>16 patrones geométricos diferentes</li>
+                        <li>Personalización completa de colores</li>
+                        <li>Presets predefinidos (vintage, moderno, etc.)</li>
+                        <li>Efectos especiales y superposiciones</li>
+                        <li>Funciones avanzadas de branding</li>
+                    </ul>
+                    
+                    <div class="card-actions">
+                        <a href="manualinstrucionmarcos.html" class="btn btn-primary">
+                            <i class="fas fa-external-link-alt"></i> Abrir Manual Completo
+                        </a>
+                        <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                Volver al inicio
+            </a>
+       
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Convertir Fotos en Arte -->
+            <div class="manual-card art-card">
+                <div class="card-header">
+                    <div class="card-icon">🎭</div>
+                    <h2 class="card-title">Convierte Fotos en Arte</h2>
+                    <p class="card-subtitle">Manual para transformar imágenes en dibujos y pinturas</p>
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Descubre cómo transformar tus fotografías en obras de arte digital. Este manual te muestra todas las técnicas y efectos disponibles para crear ilustraciones únicas.</p>
+                    
+                    <ul class="features-list">
+                        <li>Procesamiento 100% local (sin subir imágenes)</li>
+                        <li>Más de 100 estilos artísticos</li>
+                        <li>Efectos de dibujo realista</li>
+                        <li>Control total sobre parámetros artísticos</li>
+                        <li>Casos de uso específicos por tipo de imagen</li>
+                    </ul>
+                    
+                    <div class="card-actions">
+                        <a href="manualfotoconvierteadibujos.html" class="btn btn-primary">
+                            <i class="fas fa-external-link-alt"></i> Abrir Manual Completo
+                        </a>
+                        <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                Volver al inicio
+            </a>
+       
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Portaretratos Mágicos -->
+            <div class="manual-card portrait-card">
+                <div class="card-header">
+                    <div class="card-icon">🖼️</div>
+                    <h2 class="card-title">Manual instrucciones juego educativo </h2>
+                    
+                </div>
+                <div class="card-content">
+                    <p class="card-description">Los juegos educativos son sanos si se juegan con equilibrio. Lo ideal es jugar solo de 18:00 a 21:00. Antes de las 18:00 y después de las 21:00, el juego se bloquea hasta el día siguiente para proteger la salud mental y evitar la obsesión. </p>
+                    
+                    <ul class="features-list">
+                     <li>Estilos visuales variados para actividades educativas</li>
+<li>Efectos gráficos que apoyan el aprendizaje</li>
+<li>Elementos decorativos animados</li>
+<li>Fondos visuales con animación y texturas</li>
+<li>Recomendaciones para un diseño educativo efectivo</li>
+
+                    </ul>
+                    
+                    <div class="card-actions">
+                        <a href="manualjuegoeducativo.html" class="btn btn-primary">
+                            <i class="fas fa-external-link-alt"></i> Abrir Manual Completo
+                        </a>
+                        <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                Volver al inicio
+            </a>
+       
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sección de paisajes naturales -->
+        <div class="nature-section">
+            <div class="nature-content">
+                <h2 class="nature-title"><i class="fas fa-mountain"></i> Paisajes Naturales</h2>
+                <p class="nature-description">Inspírate en la belleza de la naturaleza mientras exploras nuestras herramientas creativas. Desde montañas majestuosas hasta valles serenos, cada manual te guía a través de paisajes digitales que transformarán tu creatividad.</p>
+                
+                <div class="nature-grid">
+                    <div class="nature-feature">
+                        <i class="fas fa-tree"></i>
+                        <h4>Entornos Naturales</h4>
+                        <p>Aprende a incorporar elementos naturales en tus diseños y ediciones fotográficas.</p>
+                    </div>
+                    <div class="nature-feature">
+                        <i class="fas fa-water"></i>
+                        <h4>Elementos Acuáticos</h4>
+                        <p>Técnicas para trabajar con reflejos, transparencias y efectos de agua en tus imágenes.</p>
+                    </div>
+                    <div class="nature-feature">
+                        <i class="fas fa-sun"></i>
+                        <h4>Iluminación Natural</h4>
+                        <p>Domina el uso de la luz natural y artificial para crear atmósferas únicas.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sección de autos y transporte -->
+        <div class="transport-section">
+            <div class="transport-content">
+                <h2 class="transport-title"><i class="fas fa-car"></i> Movimiento y Transporte</h2>
+                <p class="transport-description">Captura la esencia del movimiento urbano. Nuestras herramientas te permiten trabajar con elementos dinámicos como autos, tráfico y paisajes urbanos en constante movimiento, añadiendo vida y energía a tus proyectos creativos.</p>
+                
+                <div class="nature-grid">
+                    <div class="nature-feature">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <h4>Efectos de Velocidad</h4>
+                        <p>Crea sensación de movimiento y velocidad en tus imágenes y diseños.</p>
+                    </div>
+                    <div class="nature-feature">
+                        <i class="fas fa-road"></i>
+                        <h4>Elementos Viales</h4>
+                        <p>Incorpora carreteras, señales y elementos urbanos en tus composiciones.</p>
+                    </div>
+                    <div class="nature-feature">
+                        <i class="fas fa-traffic-light"></i>
+                        <h4>Luces Urbanas</h4>
+                        <p>Trabaja con iluminación nocturna, farolas y efectos luminosos urbanos.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer minimalista -->
+    <footer>
+        <div class="footer-content">
+            <p><i class="fas fa-city"></i> Manuales Creativos - Ciudad, Autos y Paisajes © 2024</p>
+        </div>
+    </footer>
+     <script src="scriptmanualinstruccionesarte.js"></script>
+    <script>
+        // Efecto de hover 3D para tarjetas
+        document.querySelectorAll('.manual-card').forEach(card => {
+            card.addEventListener('mousemove', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateY = (x - centerX) / 25;
+                const rotateX = (centerY - y) / 25;
+                
+                this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px)`;
+                this.style.zIndex = '10';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
+                this.style.zIndex = '1';
+            });
+        });
+        
+        // Animación de carga
+        window.addEventListener('load', function() {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.8s';
+            
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+            
+            // Animación de edificios al cargar
+            const buildings = document.querySelectorAll('.building');
+            buildings.forEach((bldg, index) => {
+                bldg.style.transform = 'translateY(100px)';
+                bldg.style.opacity = '0';
+                bldg.style.transition = `transform 0.5s ${index * 0.1}s, opacity 0.5s ${index * 0.1}s`;
+                
+                setTimeout(() => {
+                    bldg.style.transform = 'translateY(0)';
+                    bldg.style.opacity = '1';
+                }, 300);
+            });
+        });
+        
+        // Efecto parallax para el header
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const header = document.querySelector('header');
+            const buildings = document.querySelectorAll('.building');
+            const cars = document.querySelectorAll('.car');
+            
+            // Efecto parallax en el header
+            header.style.backgroundPosition = `center ${scrolled * 0.5}px`;
+            
+            // Efecto parallax en edificios
+            buildings.forEach((bldg, index) => {
+                const rate = (index + 1) * 0.1;
+                bldg.style.transform = `translateY(${scrolled * rate * 0.05}px)`;
+            });
+            
+            // Efecto parallax en autos
+            cars.forEach((car, index) => {
+                const rate = (index + 1) * 0.15;
+                car.style.transform = `translateX(${scrolled * rate * 0.02}px)`;
+            });
+        });
+        
+        // Efecto de luces intermitentes en ventanas
+        setInterval(() => {
+            const windows = document.querySelectorAll('.window');
+            windows.forEach(window => {
+                if (Math.random() > 0.7) {
+                    window.style.opacity = Math.random() > 0.5 ? '0.8' : '0.3';
+                }
+            });
+        }, 1000);
+    </script>
+</body>
+</html>

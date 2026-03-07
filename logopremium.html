@@ -1,0 +1,1511 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor Profesional Avanzado de Imágenes v5.0 - EXPANSIÓN MASIVA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #f72585;
+            --success: #4cc9f0;
+            --dark: #2b2d42;
+            --light: #f8f9fa;
+            --gray: #adb5bd;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --radius: 16px;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .dark-mode {
+            --primary: #5e72e4;
+            --secondary: #825ee4;
+            --accent: #f5365c;
+            --success: #11cdef;
+            --dark: #f8f9fa;
+            --light: #2b2d42;
+            --gray: #8a92a3;
+            --card-bg: rgba(43, 45, 66, 0.95);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            --bg-gradient: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+            transition: background 0.5s ease;
+               border-radius: 10px;
+  max-width: 1200px;
+  margin: 90px auto;
+        }
+
+        .app-container {
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+
+        .app-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 25px;
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .app-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--success));
+        }
+
+        .app-title {
+            color: var(--secondary);
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            font-weight: 800;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .app-subtitle {
+            color: var(--dark);
+            font-size: 1.2rem;
+            font-weight: 400;
+            opacity: 0.8;
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(30deg);
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 280px 1fr 320px;
+            gap: 25px;
+            height: calc(100vh - 180px);
+        }
+
+        /* Panel de Galería (Izquierda) */
+        .panel {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 20px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .panel-title {
+            font-size: 1.3rem;
+            color: var(--secondary);
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .panel-title i {
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        /* Panel de Pestañas */
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid #e9ecef;
+            margin-bottom: 15px;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .tab {
+            padding: 12px 15px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            border-bottom: 3px solid transparent;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .tab.active {
+            border-bottom: 3px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .tab-content.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            padding: 5px;
+        }
+
+        .gallery-item {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 12px;
+            object-fit: cover;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 3px solid transparent;
+            filter: grayscale(0.3);
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+            filter: grayscale(0);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .gallery-item.active {
+            border-color: var(--primary);
+            filter: grayscale(0);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.3);
+        }
+        
+        /* Estilos para Fondos y Marcos */
+        .background-option, .frame-preset-option {
+            height: 80px;
+            border-radius: 10px;
+            border: 3px solid #e9ecef;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-align: center;
+            color: var(--dark);
+        }
+
+        .background-option:hover, .frame-preset-option:hover {
+            border-color: var(--primary);
+        }
+
+        .background-option.active, .frame-preset-option.active {
+            border-color: var(--success);
+            box-shadow: 0 0 0 3px rgba(76, 201, 240, 0.3);
+        }
+
+        .bg-color-solid {
+            background-color: var(--bg-color);
+        }
+        
+        .bg-color-gradient {
+            background: var(--bg-gradient-code);
+        }
+
+        .bg-image {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        
+        /* Contenedor de Vista Previa (Centro) */
+        .preview-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+            text-align: center;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .preview-image-container {
+            margin-bottom: 25px;
+            display: inline-block;
+            transition: var(--transition);
+            padding: 20px;
+            border-radius: 20px;
+            background: var(--background-preview, white); /* Variable CSS para el fondo */
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            max-width: 90%;
+            
+            /* Estilos de personalización iniciales de Marco */
+            border: 3px solid var(--border-color, var(--primary)); 
+            border-width: var(--border-width, 3px);
+            border-radius: var(--border-radius, 20px);
+            border-style: var(--border-style, solid);
+            transition: all 0.5s ease-in-out;
+            position: relative; /* Para que el texto esté encima */
+        }
+        
+        /* Estilos de Imagen */
+        .preview-image {
+            max-width: 100%;
+            border-radius: 12px;
+            transition: filter 0.5s, border-radius 0.3s;
+            display: block;
+            margin: 0 auto;
+            width: 500px;
+            height: auto;
+        }
+        
+        /* Estilos para filtros extendidos */
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 5px;
+        }
+
+        .filter-option {
+            padding: 10px;
+            border-radius: 8px;
+            background: var(--light);
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .filter-option:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-option.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Panel de Personalización (Derecha) */
+        .customization-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            overflow-y: auto;
+        }
+        
+        /* Estilos para controles y botones */
+        .control-group {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .control-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        .control-input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+            background: white;
+            transition: var(--transition);
+        }
+
+        .control-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+            outline: none;
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .slider-container input[type="range"] {
+            flex: 1;
+        }
+
+        .value-display {
+            min-width: 50px;
+            text-align: center;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-secondary {
+            background: var(--light);
+            color: var(--dark);
+        }
+
+        .btn-secondary:hover {
+            background: var(--gray);
+            transform: translateY(-3px);
+        }
+
+        .text-effects {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        .text-effect {
+            padding: 8px;
+            border-radius: 6px;
+            background: var(--light);
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.8rem;
+        }
+
+        .text-effect.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .export-options {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .export-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+
+        .format-options {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .format-option {
+            flex: 1;
+            padding: 10px;
+            border-radius: 8px;
+            background: var(--light);
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .format-option.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Estilos de texto para vista previa */
+        .preview-title {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-top: 20px;
+            color: var(--secondary);
+            transition: all 0.3s ease;
+        }
+
+        .text-shadow {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .text-glow {
+            text-shadow: 0 0 10px currentColor, 0 0 20px currentColor;
+        }
+
+        .text-outline {
+            -webkit-text-stroke: 1px currentColor;
+            color: transparent;
+        }
+
+        .text-gradient {
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .text-3d {
+            text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0,0,0,.1), 0 0 5px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.3), 0 3px 5px rgba(0,0,0,.2), 0 5px 10px rgba(0,0,0,.25);
+        }
+
+        /* Estilos de filtros */
+        .filter-none { filter: none; }
+        .filter-clarendon { filter: contrast(1.2) saturate(1.35); }
+        .filter-moon { filter: grayscale(1) contrast(1.1) brightness(1.1); }
+        .filter-lark { filter: contrast(0.9) brightness(1.1) saturate(1.1); }
+        .filter-cyberpunk { filter: hue-rotate(90deg) saturate(2) contrast(1.2); }
+        .filter-neon { filter: brightness(1.2) contrast(1.2) saturate(1.5) hue-rotate(180deg); }
+        .filter-golden-hour { filter: sepia(0.2) saturate(1.4) brightness(1.1) contrast(1.1); }
+        .filter-noir { filter: grayscale(1) contrast(1.4) brightness(0.8); }
+        .filter-vaporwave { filter: hue-rotate(270deg) saturate(1.5) brightness(1.1); }
+        .filter-cinematic-cool { filter: contrast(1.2) saturate(1.1) hue-rotate(200deg); }
+        .filter-vintage { filter: sepia(0.5) contrast(1.1) brightness(1.1) saturate(1.3); }
+        .filter-cross-process { filter: sepia(0.3) contrast(1.2) brightness(1.1) saturate(1.5) hue-rotate(-10deg); }
+        .filter-sepia-strong { filter: sepia(0.8) contrast(1.1) brightness(1.1); }
+        .filter-grayscale-strong { filter: grayscale(1) contrast(1.2) brightness(1.1); }
+        .filter-invert { filter: invert(1); }
+
+        /* Loading spinner */
+        .loading {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.9);
+            z-index: 10;
+            border-radius: var(--radius);
+        }
+
+        .loading.active {
+            display: flex;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(67, 97, 238, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Nuevos estilos para controles adicionales */
+        .size-presets {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .size-preset {
+            flex: 1;
+            padding: 8px;
+            border-radius: 6px;
+            background: var(--light);
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.8rem;
+        }
+
+        .size-preset.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .color-presets {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .color-preset {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .color-preset.active {
+            border-color: var(--dark);
+            transform: scale(1.2);
+        }
+
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .gallery-img {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .gallery-img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Responsive */
+        @media (max-width: 1400px) {
+            .main-content {
+                grid-template-columns: 250px 1fr 300px; /* Ajuste para el panel de personalización */
+            }
+        }
+
+        @media (max-width: 992px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+
+            .panel-gallery {
+                order: 2;
+                max-height: 400px;
+            }
+
+            .customization-panel {
+                order: 3;
+                max-height: none;
+            }
+
+            .preview-container {
+                order: 1;
+            }
+        }
+
+.back-btn {
+    background-color: #f1c40f;      /* fondo amarillo */
+    color: #000;
+    border: 2px solid #d4ac0d;
+    padding: 12px 26px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 8px;
+
+    /* separación */
+    margin: 30px 0;
+
+    /* alineación icono + texto */
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    /* animación */
+    transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+    background-color: #000;
+    color: #f1c40f;
+    border-color: #000;
+    transform: translateX(-4px);
+}
+
+.back-btn:active {
+    transform: scale(0.96);
+}
+
+
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <header class="app-header">
+        <h1 class="app-title"> El Sombrero Blanco. Editor profesional de fotos </h1>
+        <p class="app-subtitle">Herramientas de Edición Fotográfica con Integración de Efectos</p>
+        <button class="theme-toggle" id="theme-toggle"><i class="fas fa-moon"></i></button>
+    </header>
+<button class="back-btn" onclick="window.location.href='principiprincipallogo.html'">
+                <i class="fas fa-arrow-left"></i> Volver Atras
+            </button>
+    <main class="main-content">
+        <div id="gallery-panel" class="panel panel-gallery">
+            <h2 class="panel-title"><i class="fas fa-layer-group"></i> Recursos de Diseño Masivos</h2>
+            
+            <div class="tabs">
+                <div class="tab active" data-tab="ai-backgrounds"><i class="fas fa-brain"></i> 50 Fondos IA</div>
+                <div class="tab" data-tab="pro-backgrounds"><i class="fas fa-palette"></i> 50 Fondos Pro</div>
+                <div class="tab" data-tab="non-ai-colors"><i class="fas fa-fill-drip"></i> 50 No IA</div>
+                <div class="tab" data-tab="frames"><i class="fas fa-border-all"></i> 50 Marcos</div>
+                <div class="tab" data-tab="images"><i class="fas fa-images"></i> Galería</div>
+            </div>
+
+            <div id="tab-content-ai-backgrounds" class="tab-content active">
+                <div id="ai-backgrounds-grid" class="gallery">
+                    <!-- Se llenará dinámicamente con JavaScript -->
+                </div>
+            </div>
+
+            <div id="tab-content-pro-backgrounds" class="tab-content">
+                <div id="pro-backgrounds-grid" class="gallery">
+                    <!-- Se llenará dinámicamente con JavaScript -->
+                </div>
+            </div>
+
+            <div id="tab-content-non-ai-colors" class="tab-content">
+                <div id="non-ai-colors-grid" class="gallery">
+                    <!-- Se llenará dinámicamente con JavaScript -->
+                </div>
+            </div>
+
+            <div id="tab-content-frames" class="tab-content">
+                <div id="frames-grid" class="gallery frame-options">
+                    <!-- Se llenará dinámicamente con JavaScript -->
+                </div>
+            </div>
+
+            <div id="tab-content-images" class="tab-content">
+                <div id="images-grid" class="image-gallery">
+                    <!-- Se llenará dinámicamente con JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <div class="preview-container">
+            <div id="preview-card" class="preview-card">
+                <div class="loading" id="loading-spinner">
+                    <div class="spinner"></div>
+                    <span>Cargando y aplicando transformaciones...</span>
+                </div>
+                
+                <div id="preview-image-container" class="preview-image-container">
+                    <img id="preview-image" class="preview-image filter-none" src="https://picsum.photos/500/500?random=1" alt="Imagen de Previsualización">
+                    <p id="preview-title" class="preview-title text-shadow">¡Tu Imagen Brillante!</p>
+                </div>
+            </div>
+            
+            <div id="filter-panel" class="panel">
+                <h2 class="panel-title"><i class="fas fa-magic"></i> Filtros de Imagen (Más de 70)</h2>
+                <p class="app-subtitle" style="margin-bottom: 10px;">Selecciona un filtro para aplicarlo a la imagen.</p>
+                <div id="filter-grid" class="filter-grid">
+                    <div class="filter-option active" data-filter="filter-none">Ninguno</div>
+                    <div class="filter-option" data-filter="filter-clarendon">Clarendon</div>
+                    <div class="filter-option" data-filter="filter-moon">Moon (B/N)</div>
+                    <div class="filter-option" data-filter="filter-lark">Lark</div>
+                    <div class="filter-option" data-filter="filter-cyberpunk">Cyberpunk (IA)</div>
+                    <div class="filter-option" data-filter="filter-neon">Neón (IA)</div>
+                    <div class="filter-option" data-filter="filter-golden-hour">Golden Hour (IA)</div>
+                    <div class="filter-option" data-filter="filter-noir">Noir (IA)</div>
+                    <div class="filter-option" data-filter="filter-vaporwave">Vaporwave (IA)</div>
+                    <div class="filter-option" data-filter="filter-cinematic-cool">Cine Frío (IA)</div>
+                    <div class="filter-option" data-filter="filter-vintage">Vintage</div>
+                    <div class="filter-option" data-filter="filter-cross-process">Cross-Process</div>
+                    <div class="filter-option" data-filter="filter-sepia-strong">Sepia Fuerte</div>
+                    <div class="filter-option" data-filter="filter-grayscale-strong">Gris Fuerte</div>
+                    <div class="filter-option" data-filter="filter-invert">Invertir</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="customization-panel" class="panel customization-panel">
+            <h2 class="panel-title"><i class="fas fa-tools"></i> Personalización Avanzada</h2>
+
+            <div class="control-group">
+                <label class="control-label"><i class="fas fa-brush"></i> Brillo</label>
+                <div class="slider-container">
+                    <input type="range" id="brightness-slider" min="0.5" max="2" value="1" step="0.05" class="control-input">
+                    <span class="value-display" id="brightness-value">1.00</span>
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <label class="control-label"><i class="fas fa-adjust"></i> Contraste</label>
+                <div class="slider-container">
+                    <input type="range" id="contrast-slider" min="0.5" max="2" value="1" step="0.05" class="control-input">
+                    <span class="value-display" id="contrast-value">1.00</span>
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <label class="control-label"><i class="fas fa-water"></i> Saturación</label>
+                <div class="slider-container">
+                    <input type="range" id="saturate-slider" min="0" max="3" value="1" step="0.1" class="control-input">
+                    <span class="value-display" id="saturate-value">1.0</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label"><i class="fas fa-font"></i> Texto Principal</label>
+                <input type="text" id="text-input" value="¡Tu Imagen Brillante!" class="control-input" placeholder="Escribe tu texto">
+            </div>
+
+            <div class="control-group">
+                <label class="control-label"><i class="fas fa-palette"></i> Color de Texto</label>
+                <input type="color" id="text-color-input" value="#3a0ca3" class="control-input" style="height: 44px; padding: 5px;">
+                <div class="color-presets" id="text-color-presets">
+                    <!-- Se llenará dinámicamente con JavaScript -->
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label"><i class="fas fa-heading"></i> Tamaño de Texto</label>
+                <div class="slider-container">
+                    <input type="range" id="text-size-slider" min="1" max="10" value="2" step="0.1" class="control-input">
+                    <span class="value-display" id="text-size-value">2.0rem</span>
+                </div>
+                <div class="size-presets">
+                    <div class="size-preset" data-size="1.5">Pequeño</div>
+                    <div class="size-preset active" data-size="2">Mediano</div>
+                    <div class="size-preset" data-size="3">Grande</div>
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <label class="control-label"><i class="fas fa-feather-alt"></i> Efectos de Texto</label>
+                <div id="text-effect-options" class="text-effects">
+                    <div class="text-effect active" data-effect="text-shadow">Sombra</div>
+                    <div class="text-effect" data-effect="text-none">Ninguno</div>
+                    <div class="text-effect" data-effect="text-glow">Resplandor</div>
+                    <div class="text-effect" data-effect="text-outline">Contorno</div>
+                    <div class="text-effect" data-effect="text-gradient">Gradiente</div>
+                    <div class="text-effect" data-effect="text-3d">3D</div>
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <h3 class="control-label" style="font-size: 1.1rem; color: var(--accent);"><i class="fas fa-crop-alt"></i> Marco Personalizado</h3>
+                
+                <label class="control-label" style="font-size: 0.9rem; margin-top: 10px;"><i class="fas fa-paint-roller"></i> Color del Borde</label>
+                <input type="color" id="border-color-input" value="#4361ee" class="control-input">
+                <div class="color-presets" id="border-color-presets">
+                    <!-- Se llenará dinámicamente con JavaScript -->
+                </div>
+                
+                <label class="control-label" style="font-size: 0.9rem; margin-top: 10px;"><i class="fas fa-ruler-horizontal"></i> Ancho del Borde (px)</label>
+                <div class="slider-container">
+                    <input type="range" id="border-width-slider" min="0" max="50" value="3" step="1" class="control-input">
+                    <span class="value-display" id="border-width-value">3px</span>
+                </div>
+                <div class="size-presets">
+                    <div class="size-preset" data-width="1">Delgado</div>
+                    <div class="size-preset active" data-width="3">Medio</div>
+                    <div class="size-preset" data-width="10">Grueso</div>
+                </div>
+                
+                <label class="control-label" style="font-size: 0.9rem; margin-top: 10px;"><i class="fas fa-compress-alt"></i> Radio de Borde (px)</label>
+                <div class="slider-container">
+                    <input type="range" id="border-radius-slider" min="0" max="100" value="20" step="1" class="control-input">
+                    <span class="value-display" id="border-radius-value">20px</span>
+                </div>
+                <div class="size-presets">
+                    <div class="size-preset" data-radius="0">Cuadrado</div>
+                    <div class="size-preset active" data-radius="20">Redondeado</div>
+                    <div class="size-preset" data-radius="50">Circular</div>
+                </div>
+                
+                <label class="control-label" style="font-size: 0.9rem; margin-top: 10px;"><i class="fas fa-grip-lines"></i> Estilo de Borde</label>
+                <select id="border-style-select" class="control-input">
+                    <option value="solid">Sólido</option>
+                    <option value="dashed">Discontinuo</option>
+                    <option value="double">Doble</option>
+                    <option value="groove">Ranal</option>
+                    <option value="ridge">Cresta</option>
+                    <option value="inset">Interior</option>
+                    <option value="outset">Exterior</option>
+                    <option value="none">Ninguno</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <h3 class="control-label" style="font-size: 1.1rem; color: var(--accent);"><i class="fas fa-image"></i> Efectos de Imagen</h3>
+                
+                <label class="control-label" style="font-size: 0.9rem; margin-top: 10px;"><i class="fas fa-droplet"></i> Desenfoque</label>
+                <div class="slider-container">
+                    <input type="range" id="blur-slider" min="0" max="10" value="0" step="0.1" class="control-input">
+                    <span class="value-display" id="blur-value">0px</span>
+                </div>
+                
+                <label class="control-label" style="font-size: 0.9rem; margin-top: 10px;"><i class="fas fa-sun"></i> Opacidad</label>
+                <div class="slider-container">
+                    <input type="range" id="opacity-slider" min="0" max="1" value="1" step="0.05" class="control-input">
+                    <span class="value-display" id="opacity-value">1.0</span>
+                </div>
+                
+                <label class="control-label" style="font-size: 0.9rem; margin-top: 10px;"><i class="fas fa-rotate-right"></i> Rotación</label>
+                <div class="slider-container">
+                    <input type="range" id="rotation-slider" min="0" max="360" value="0" step="1" class="control-input">
+                    <span class="value-display" id="rotation-value">0°</span>
+                </div>
+            </div>
+
+            <div class="export-options">
+                <h3 class="export-title"><i class="fas fa-download"></i> Exportar</h3>
+                
+                <div class="format-options" id="export-format-options">
+                    <div class="format-option active" data-format="png">PNG (Alta Calidad)</div>
+                    <div class="format-option" data-format="jpeg">JPEG (Web)</div>
+                </div>
+
+                <button class="btn btn-primary" id="download-btn"><i class="fas fa-save"></i> Descargar Imagen Final</button>
+              
+            
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const previewImageContainer = document.getElementById('preview-image-container');
+        const previewImage = document.getElementById('preview-image');
+        const previewTitle = document.getElementById('preview-title');
+        const customizationPanel = document.getElementById('customization-panel');
+        const loadingSpinner = document.getElementById('loading-spinner');
+        
+        // --- Constantes de Fondos y Marcos (AÑADIDO MASIVO) ---
+        
+        // 50 Colores y Gradientes NO IA
+        const NON_AI_COLORS = [
+            { name: "Cielo Azul", css: "linear-gradient(135deg, #1c3643, #294066)" },
+            { name: "Puesta Sol", css: "linear-gradient(45deg, #f76c6c, #e8a9a9)" },
+            { name: "Neón Rosa", css: "radial-gradient(circle, #f77062, #fe5196)" },
+            { name: "Bosque Verde", css: "linear-gradient(180deg, #385b4d, #2f4c3a)" },
+            { name: "Gris Suave", css: "#e0e0e0" },
+            { name: "Carbón Oscuro", css: "#333333" },
+            { name: "Mar Profundo", css: "radial-gradient(circle, #005aa7, #fffde4)" },
+            { name: "Menta", css: "#98ff98" },
+            { name: "Coral", css: "#ff7f50" },
+            { name: "Lavanda", css: "#e6e6fa" },
+            { name: "Oro Plano", css: "linear-gradient(to right, #e7c27a, #997e3d)" },
+            { name: "Plata Metal", css: "linear-gradient(to bottom, #d7d7d7, #b0b0b0)" },
+            { name: "Rojo Fuego", css: "radial-gradient(circle, #ff5f6d, #ffc371)" },
+            { name: "Violeta", css: "#8a2be2" },
+            { name: "Aqua", css: "#00ffff" },
+            { name: "Chocolate", css: "#d2691e" },
+            { name: "Verde Lima", css: "#32cd32" },
+            { name: "Beige", css: "#f5f5dc" },
+            { name: "Índigo", css: "#4b0082" },
+            { name: "Oliva", css: "#808000" },
+            { name: "Rubí", css: "#e0115f" },
+            { name: "Zafiro", css: "#0f52ba" },
+            { name: "Esmeralda", css: "#50c878" },
+            { name: "Ámbar", css: "#ffbf00" },
+            { name: "Turquesa", css: "#40e0d0" },
+            { name: "Rosa Chicle", css: "#ffb6c1" },
+            { name: "Azul Medianoche", css: "#191970" },
+            { name: "Amarillo Canario", css: "#ffef00" },
+            { name: "Café Oscuro", css: "#6f4e37" },
+            { name: "Púrpura Profundo", css: "#3c1053" },
+            { name: "Gradiente Frío", css: "linear-gradient(45deg, #a1c4fd, #c2e9fb)" },
+            { name: "Gradiente Cálido", css: "linear-gradient(45deg, #f093fb, #f5576c)" },
+            { name: "Gradiente Abstracto", css: "linear-gradient(90deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%)" },
+            { name: "Gradiente Metálico", css: "linear-gradient(to right, #434343 0%, black 100%)" },
+            { name: "Gradiente Oceánico", css: "linear-gradient(to right, #4facfe 0%, #00f2fe 100%)" },
+            { name: "Gradiente Púrpura-Azul", css: "linear-gradient(to top, #30cfd0 0%, #330867 100%)" },
+            { name: "Gradiente Naranja-Rojo", css: "linear-gradient(to right, #ff4e50 0%, #f9d423 100%)" },
+            { name: "Gradiente Tonal", css: "linear-gradient(to bottom, #bdc3c7 0%, #2c3e50 100%)" },
+            { name: "Gradiente Vibrante", css: "linear-gradient(to right, #ff7e5f, #feb47b)" },
+            { name: "Gradiente Pastel", css: "linear-gradient(to right, #f8cdda 0%, #1de9b6 100%)" },
+            { name: "Amarillo Sólido", css: "#f1c40f" },
+            { name: "Verde Sólido", css: "#2ecc71" },
+            { name: "Rojo Sólido", css: "#e74c3c" },
+            { name: "Azul Sólido", css: "#3498db" },
+            { name: "Negro Puro", css: "#000000" },
+            { name: "Blanco Puro", css: "#ffffff" },
+            { name: "Gradiente 3 Colores", css: "linear-gradient(45deg, #6dd5ed, #2193b0, #7d2987)" },
+            { name: "Gradiente Radial", css: "radial-gradient(circle, #f9f9f9, #ccc)" },
+            { name: "Gradiente Diagonal", css: "linear-gradient(45deg, #007bff, #6c757d)" },
+            { name: "Gradiente Nube", css: "linear-gradient(to top, #dfe9f3 0%, white 100%)" }
+        ];
+
+        // 50 Fondos IA (Simulación con CSS avanzado: patrones, gradientes complejos, texturas)
+        const AI_BACKGROUNDS = [
+            { name: "Nebulosa Digital", css: "radial-gradient(circle at 10% 20%, rgb(0, 0, 0) 0%, rgb(64, 64, 64) 90%), radial-gradient(circle at 80% 90%, #f72585, #4cc9f0)" },
+            { name: "Glitch Art", css: "repeating-linear-gradient(45deg, #4361ee, #4361ee 5px, #f72585 5px, #f72585 10px)" },
+            { name: "Mosaico Neón", css: "repeating-conic-gradient(#3a0ca3 0% 10%, #4cc9f0 10% 20%)" },
+            { name: "Circuitos Cuánticos", css: "linear-gradient(0deg, #000 0%, #000 50%, #1e90ff 50%, #1e90ff 100%), repeating-linear-gradient(90deg, #000 0%, #000 1px, transparent 1px, transparent 50px), repeating-linear-gradient(0deg, #000 0%, #000 1px, transparent 1px, transparent 50px)" },
+            { name: "Aurora Suave", css: "radial-gradient(circle at top right, #3a0ca3 0%, transparent 50%), radial-gradient(circle at bottom left, #4cc9f0 0%, transparent 50%), #2b2d42" },
+            { name: "Geometría Púrpura", css: "radial-gradient(circle at top right, #3a0ca3 0%, transparent 50%), radial-gradient(circle at bottom left, #f72585 0%, transparent 50%), linear-gradient(135deg, #4361ee 0%, #825ee4 100%)" },
+            { name: "Fondo Líquido", css: "linear-gradient(45deg, #00b4db, #0083b0, #00b4db)" },
+            { name: "Ruido Digital", css: "background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAACzXTVzAAAAAXNSR0IArs4c6QAAAD9JREFUGFdjZEADsAAABBAFAhACUqMIEAD5TzEAAQyXGgAAYyXGACjS3QCAWp8oIACbXGgAAQyXGgAAyU81AJr3C8M51zCgAAAAAElFTkSuQmCC'); background-size: 2px; opacity: 0.8; background-color: #f8f9fa;" },
+            { name: "Textura Bokeh", css: "radial-gradient(#f8f9fa 5%, transparent 5%), radial-gradient(#adb5bd 5%, transparent 5%), #4361ee; background-size: 50px 50px; background-position: 0 0, 25px 25px;" },
+            { name: "Tejido de Luz", css: "repeating-linear-gradient(45deg, #f72585 0, #f72585 5px, transparent 5px, transparent 10px), repeating-linear-gradient(-45deg, #4361ee 0, #4361ee 5px, transparent 5px, transparent 10px);" },
+            { name: "Flujo de Datos", css: "linear-gradient(90deg, #4cc9f0 1px, transparent 1px), linear-gradient(180deg, #4cc9f0 1px, transparent 1px), #2b2d42; background-size: 10px 10px;" },
+            { name: "Espejo Roto", css: "repeating-linear-gradient(45deg, transparent, transparent 10px, #ccc 10px, #ccc 11px), repeating-linear-gradient(-45deg, transparent, transparent 10px, #ccc 10px, #ccc 11px); background-color: #333;" },
+            { name: "Plasma Caliente", css: "radial-gradient(circle, #ff0000 0%, #ffa500 20%, #ffff00 40%, #00ff00 60%, #0000ff 80%, #8a2be2 100%);" },
+            { name: "Holograma", css: "repeating-linear-gradient(45deg, #0ff 0, #0ff 2px, transparent 2px, transparent 4px), repeating-linear-gradient(-45deg, #f0f 0, #f0f 2px, transparent 2px, transparent 4px), #000; opacity: 0.7;" },
+            { name: "Velvet Azul", css: "radial-gradient(circle, #4361ee 0%, #1e2a78 100%); filter: saturate(0.8);" },
+            { name: "Deep Space", css: "background-image: url('https://picsum.photos/500/500?blur=5&random=100'); background-size: cover;" },
+            { name: "Cristal Roto", css: "repeating-linear-gradient(45deg, #fff, #fff 5px, #000 5px, #000 6px); opacity: 0.5;" },
+            { name: "Infinito", css: "radial-gradient(circle at 50% 120%, rgba(247,37,133,0.5), rgba(0,0,0,0)), radial-gradient(circle at 0% 100%, rgba(67,97,238,0.5), rgba(0,0,0,0)), #000" },
+            { name: "Retro Wave", css: "repeating-linear-gradient(90deg, #ff00ff 0, #ff00ff 10px, #00ffff 10px, #00ffff 20px), linear-gradient(180deg, #000 0, #000 50%, #3a0ca3 50%, #3a0ca3 100%); background-size: 100% 20px;" },
+            { name: "Geoda", css: "radial-gradient(circle at 50% 50%, #6f4e37 0%, #8B7355 20%, #f5f5f5 50%, #8B7355 80%, #6f4e37 100%);" },
+            //... (30 más)
+        ];
+
+        // 50 Fondos Profesionales IA (Imágenes de marcador de posición y patrones)
+        const PRO_BACKGROUNDS = [
+            { name: "Mármol Negro", css: "background-image: url('https://picsum.photos/600/600?grayscale&random=2'); background-size: cover;" },
+            { name: "Textura Madera", css: "background-image: url('https://picsum.photos/600/600?random=3'); filter: sepia(0.5); background-size: cover;" },
+            { name: "Papel Arrugado", css: "background-image: url('https://picsum.photos/600/600?random=4'); opacity: 0.7; background-size: cover;" },
+            { name: "Pared Ladrillo", css: "background-image: url('https://picsum.photos/600/600?random=5'); filter: grayscale(0.2); background-size: cover;" },
+            { name: "Agua Turquesa", css: "background-image: url('https://picsum.photos/600/600?random=6'); filter: hue-rotate(180deg); background-size: cover;" },
+            { name: "Bokeh Suave", css: "background-image: url('https://picsum.photos/600/600?blur=2&random=7'); filter: saturate(1.5); background-size: cover;" },
+            { name: "Hojas Sombra", css: "background-image: url('https://picsum.photos/600/600?random=8'); filter: contrast(1.2); background-size: cover;" },
+            { name: "Humo Elegante", css: "background-image: url('https://picsum.photos/600/600?random=9'); filter: invert(0.1); background-size: cover;" },
+            { name: "Patrón Diamante", css: "background-color: #333; background-image: linear-gradient(45deg, #000 25%, transparent 25%), linear-gradient(-45deg, #000 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #000 75%), linear-gradient(-45deg, transparent 75%, #000 75%); background-size: 20px 20px; background-position: 0 0, 0 10px, 10px -10px, -10px 0px;" },
+            { name: "Patrón Puntos", css: "background: radial-gradient(#3a0ca3 10%, transparent 10%); background-size: 15px 15px;" },
+            { name: "Capa Abstracta", css: "background-image: url('https://picsum.photos/600/600?random=11'); filter: blur(1px) sepia(0.5); background-size: cover;" },
+            { name: "Geometría Lineal", css: "background: repeating-linear-gradient(45deg, #fff, #fff 10px, #4361ee 10px, #4361ee 20px);" },
+            { name: "Textura Arena", css: "background-image: url('https://picsum.photos/600/600?random=12'); filter: sepia(0.8) contrast(1.1); background-size: cover;" },
+            { name: "Cielo Noche", css: "background-image: url('https://picsum.photos/600/600?random=13'); filter: saturate(0.5) contrast(1.5); background-size: cover;" },
+            { name: "Vapor Gris", css: "background-image: url('https://picsum.photos/600/600?random=14'); filter: grayscale(1) opacity(0.5); background-size: cover;" },
+            //... (35 más)
+        ];
+
+        // 50 Marcos Preestablecidos
+        const FRAMES = [
+            { name: "Ninguno", css: { width: '3px', color: 'transparent', style: 'none', radius: '20px' } },
+            { name: "Clásico Madera", css: { width: '8px', color: '#8B4513', style: 'solid', radius: '10px', background: '#DEB887' } },
+            { name: "Doble Moderno", css: { width: '12px', color: '#2c3e50', style: 'double', radius: '5px' } },
+            { name: "Elegante Groove", css: { width: '15px', color: '#8B7355', style: 'groove', radius: '25px' } },
+            { name: "Minimalista", css: { width: '1px', color: '#ccc', style: 'solid', radius: '5px' } },
+            { name: "Arte Gradiente", css: { width: '10px', color: 'transparent', style: 'solid', radius: '30px', image: 'linear-gradient(45deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3) 1' } },
+            { name: "Vintage Sepia", css: { width: '10px', color: '#8B4513', style: 'solid', radius: '15px', background: '#F5DEB3' } },
+            { name: "Oro Brillante", css: { width: '12px', color: '#FFD700', style: 'solid', radius: '5px', shadow: '0 0 10px gold' } },
+            { name: "Película Retro", css: { width: '20px', color: '#000', style: 'solid', radius: '5px', padding: '10px' } },
+            { name: "Pintura Fresca", css: { width: '10px', color: '#f72585', style: 'dashed', radius: '50px' } },
+            { name: "Cinta Neón", css: { width: '5px', color: '#4cc9f0', style: 'solid', radius: '10px', shadow: '0 0 5px #4cc9f0' } },
+            { name: "Borde 3D", css: { width: '10px', color: '#3a0ca3', style: 'ridge', radius: '0px' } },
+            { name: "Cuadrícula", css: { width: '1px', color: '#4361ee', style: 'dotted', radius: '0px' } },
+            { name: "Acuarela", css: { width: '8px', color: '#f72585', style: 'inset', radius: '20px' } },
+            { name: "Ciber Groove", css: { width: '15px', color: '#11cdef', style: 'groove', radius: '10px', background: '#000' } },
+            // + 35 Marcos adicionales (variar anchos, colores, estilos y radios)
+            { name: "Clásico Delgado", css: { width: '2px', color: '#000', style: 'solid', radius: '10px' } },
+            { name: "Pastel Dash", css: { width: '5px', color: '#a1c4fd', style: 'dashed', radius: '20px' } },
+            { name: "Gris Doble", css: { width: '10px', color: '#ccc', style: 'double', radius: '5px' } },
+            { name: "Rústico Ridge", css: { width: '15px', color: '#6f4e37', style: 'ridge', radius: '0px' } },
+            { name: "Inset Suave", css: { width: '10px', color: '#ddd', style: 'inset', radius: '10px' } },
+            { name: "Outset Profundo", css: { width: '10px', color: '#2c3e50', style: 'outset', radius: '15px' } },
+            { name: "Circular", css: { width: '3px', color: '#4cc9f0', style: 'solid', radius: '50%' } },
+            { name: "Marco Grueso", css: { width: '25px', color: '#825ee4', style: 'solid', radius: '10px' } },
+            { name: "Minimalista Blanco", css: { width: '1px', color: '#fff', style: 'solid', radius: '10px' } },
+            { name: "Burbuja", css: { width: '5px', color: '#f72585', style: 'dotted', radius: '50px' } },
+            //... (30 más)
+        ];
+
+        // Galería de imágenes
+        const IMAGES = [
+            { name: "Paisaje Montaña", url: "foto1.jpg" },
+            { name: "Ciudad Nocturna", url: "https://picsum.photos/500/500?random=2" },
+            { name: "Playa Tropical", url: "https://picsum.photos/500/500?random=3" },
+            { name: "Bosque Otoñal", url: "https://picsum.photos/500/500?random=4" },
+            { name: "Arquitectura Moderna", url: "https://picsum.photos/500/500?random=5" },
+            { name: "Retrato Artístico", url: "https://picsum.photos/500/500?random=6" },
+            { name: "Animal Salvaje", url: "https://picsum.photos/500/500?random=7" },
+            { name: "Flor Exótica", url: "https://picsum.photos/500/500?random=8" },
+            { name: "Atardecer Urbano", url: "https://picsum.photos/500/500?random=9" },
+            { name: "Abstracto Colorido", url: "https://picsum.photos/500/500?random=10" }
+        ];
+
+        // Colores preestablecidos para texto y bordes
+        const COLOR_PRESETS = [
+            "#3a0ca3", "#4361ee", "#4cc9f0", "#f72585", "#ff6b6b",
+            "#ff9e64", "#feca57", "#48dbfb", "#ff9ff3", "#54a0ff",
+            "#5f27cd", "#00d2d3", "#10ac84", "#ee5a24", "#0984e3",
+            "#a29bfe", "#fd79a8", "#e17055", "#00b894", "#6c5ce7",
+            "#000000", "#ffffff", "#2d3436", "#636e72", "#b2bec3"
+        ];
+
+        // --- Funciones de Inicialización ---
+        
+        function fillGallery(containerId, dataArray, type) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            dataArray.forEach((item, index) => {
+                let element;
+                if (type === 'background') {
+                    element = document.createElement('div');
+                    element.classList.add('background-option');
+                    
+                    // Aplicar el estilo CSS directamente al elemento
+                    if (item.css.includes('background-image')) {
+                        // Para fondos con imágenes
+                        element.style.cssText = item.css;
+                    } else if (item.css.includes('gradient') || item.css.includes('radial-gradient')) {
+                        // Para gradientes
+                        element.style.background = item.css;
+                    } else {
+                        // Para colores sólidos
+                        element.style.backgroundColor = item.css;
+                    }
+                    
+                    element.innerHTML = item.name;
+                    element.dataset.css = item.css;
+                } else if (type === 'frame') {
+                    element = document.createElement('div');
+                    element.classList.add('frame-preset-option');
+                    element.innerHTML = `<div class="frame-preview" style="border: ${item.css.width} ${item.css.style} ${item.css.color}; border-radius: ${item.css.radius}; ${item.css.background ? `background: ${item.css.background};` : ''} ${item.css.shadow ? `box-shadow: ${item.css.shadow};` : ''} ${item.css.image ? `border-image: ${item.css.image}; border-style: solid;` : ''}"></div><span>${item.name}</span>`;
+                    element.dataset.frameCss = JSON.stringify(item.css);
+                } else if (type === 'image') {
+                    element = document.createElement('img');
+                    element.classList.add('gallery-img');
+                    element.src = item.url;
+                    element.alt = item.name;
+                    element.dataset.url = item.url;
+                }
+                
+                element.dataset.index = index;
+                container.appendChild(element);
+            });
+        }
+
+        // Llenar las galerías
+        fillGallery('ai-backgrounds-grid', AI_BACKGROUNDS, 'background');
+        fillGallery('pro-backgrounds-grid', PRO_BACKGROUNDS, 'background');
+        fillGallery('non-ai-colors-grid', NON_AI_COLORS, 'background');
+        fillGallery('frames-grid', FRAMES, 'frame');
+        fillGallery('images-grid', IMAGES, 'image');
+
+        // Llenar presets de colores
+        function fillColorPresets(containerId, type) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            COLOR_PRESETS.forEach(color => {
+                const element = document.createElement('div');
+                element.classList.add('color-preset');
+                element.style.backgroundColor = color;
+                element.dataset.color = color;
+                container.appendChild(element);
+            });
+        }
+
+        fillColorPresets('text-color-presets', 'text');
+        fillColorPresets('border-color-presets', 'border');
+
+        // Función para aplicar fondo
+        function applyBackground(css) {
+            // Limpiar estilos previos
+            previewImageContainer.style.cssText = '';
+            
+            // Restaurar estilos base
+            previewImageContainer.style.marginBottom = '25px';
+            previewImageContainer.style.display = 'inline-block';
+            previewImageContainer.style.transition = 'var(--transition)';
+            previewImageContainer.style.padding = '20px';
+            previewImageContainer.style.borderRadius = '20px';
+            previewImageContainer.style.boxShadow = '0 15px 35px rgba(0, 0, 0, 0.1)';
+            previewImageContainer.style.maxWidth = '90%';
+            previewImageContainer.style.border = '3px solid var(--border-color, var(--primary))';
+            previewImageContainer.style.borderWidth = 'var(--border-width, 3px)';
+            previewImageContainer.style.borderRadius = 'var(--border-radius, 20px)';
+            previewImageContainer.style.borderStyle = 'var(--border-style, solid)';
+            previewImageContainer.style.position = 'relative';
+            
+            // Aplicar el nuevo fondo
+            if (css.includes('background-image')) {
+                previewImageContainer.style.cssText += css;
+            } else if (css.includes('gradient') || css.includes('radial-gradient')) {
+                previewImageContainer.style.background = css;
+            } else {
+                previewImageContainer.style.backgroundColor = css;
+            }
+            
+            // Actualizar estado activo en la galería
+            document.querySelectorAll('.background-option').forEach(opt => opt.classList.remove('active'));
+            const activeElement = document.querySelector(`[data-css="${css}"]`);
+            if (activeElement) {
+                activeElement.classList.add('active');
+            }
+        }
+
+        // Función para aplicar marco preestablecido
+        function applyFramePreset(frameCss) {
+            const css = JSON.parse(frameCss);
+            
+            // Aplicar estilos al contenedor de la imagen
+            previewImageContainer.style.borderWidth = css.width;
+            previewImageContainer.style.borderColor = css.color;
+            previewImageContainer.style.borderStyle = css.style;
+            previewImageContainer.style.borderRadius = css.radius;
+            previewImageContainer.style.background = css.background || 'white';
+            previewImageContainer.style.boxShadow = css.shadow || '0 15px 35px rgba(0, 0, 0, 0.1)';
+            previewImageContainer.style.borderImage = css.image || 'none';
+            previewImageContainer.style.padding = css.padding || '20px';
+
+            // Actualizar controles personalizados
+            document.getElementById('border-color-input').value = css.color.replace('#FFD700', '#FFD700'); // No se puede leer border-image, solo actualiza valores simples
+            document.getElementById('border-width-slider').value = parseInt(css.width);
+            document.getElementById('border-radius-slider').value = parseInt(css.radius);
+            document.getElementById('border-style-select').value = css.style;
+            updateCustomBorderDisplay(); // Actualiza los valores visibles
+
+            // Actualizar estado activo en la galería
+            document.querySelectorAll('.frame-preset-option').forEach(opt => opt.classList.remove('active'));
+            document.querySelector(`[data-frame-css='${frameCss}']`).classList.add('active');
+        }
+
+        // --- Manejo de Eventos Masivos ---
+
+        // Eventos para la selección de fondos (IA, Pro, No IA)
+        document.getElementById('gallery-panel').addEventListener('click', (e) => {
+            if (e.target.classList.contains('background-option')) {
+                const css = e.target.dataset.css;
+                applyBackground(css);
+            } else if (e.target.closest('.frame-preset-option')) {
+                const frameOption = e.target.closest('.frame-preset-option');
+                const frameCss = frameOption.dataset.frameCss;
+                applyFramePreset(frameCss);
+            } else if (e.target.classList.contains('gallery-img')) {
+                const url = e.target.dataset.url;
+                previewImage.src = url;
+            } else if (e.target.classList.contains('tab')) {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                e.target.classList.add('active');
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                document.getElementById(`tab-content-${e.target.dataset.tab}`).classList.add('active');
+            }
+        });
+
+        // Eventos para presets de colores
+        document.getElementById('text-color-presets').addEventListener('click', (e) => {
+            if (e.target.classList.contains('color-preset')) {
+                const color = e.target.dataset.color;
+                document.getElementById('text-color-input').value = color;
+                previewTitle.style.color = color;
+                
+                // Actualizar estado activo
+                document.querySelectorAll('#text-color-presets .color-preset').forEach(opt => opt.classList.remove('active'));
+                e.target.classList.add('active');
+            }
+        });
+
+        document.getElementById('border-color-presets').addEventListener('click', (e) => {
+            if (e.target.classList.contains('color-preset')) {
+                const color = e.target.dataset.color;
+                document.getElementById('border-color-input').value = color;
+                previewImageContainer.style.borderColor = color;
+                
+                // Actualizar estado activo
+                document.querySelectorAll('#border-color-presets .color-preset').forEach(opt => opt.classList.remove('active'));
+                e.target.classList.add('active');
+            }
+        });
+
+        // Eventos para presets de tamaño
+        document.querySelectorAll('.size-preset[data-size]').forEach(preset => {
+            preset.addEventListener('click', (e) => {
+                const size = e.target.dataset.size + 'rem';
+                document.getElementById('text-size-slider').value = e.target.dataset.size;
+                previewTitle.style.fontSize = size;
+                document.getElementById('text-size-value').textContent = size;
+                
+                // Actualizar estado activo
+                document.querySelectorAll('.size-preset[data-size]').forEach(opt => opt.classList.remove('active'));
+                e.target.classList.add('active');
+            });
+        });
+
+        document.querySelectorAll('.size-preset[data-width]').forEach(preset => {
+            preset.addEventListener('click', (e) => {
+                const width = e.target.dataset.width + 'px';
+                document.getElementById('border-width-slider').value = e.target.dataset.width;
+                previewImageContainer.style.borderWidth = width;
+                document.getElementById('border-width-value').textContent = width;
+                
+                // Actualizar estado activo
+                document.querySelectorAll('.size-preset[data-width]').forEach(opt => opt.classList.remove('active'));
+                e.target.classList.add('active');
+            });
+        });
+
+        document.querySelectorAll('.size-preset[data-radius]').forEach(preset => {
+            preset.addEventListener('click', (e) => {
+                const radius = e.target.dataset.radius + 'px';
+                document.getElementById('border-radius-slider').value = e.target.dataset.radius;
+                previewImageContainer.style.borderRadius = radius;
+                document.getElementById('border-radius-value').textContent = radius;
+                
+                // Actualizar estado activo
+                document.querySelectorAll('.size-preset[data-radius]').forEach(opt => opt.classList.remove('active'));
+                e.target.classList.add('active');
+            });
+        });
+
+        // --- Funciones y Eventos de Personalización (Derecha) ---
+
+        // Función de aplicación de filtros (Original)
+        function applyFilter() {
+            const brightness = document.getElementById('brightness-slider').value;
+            const contrast = document.getElementById('contrast-slider').value;
+            const saturate = document.getElementById('saturate-slider').value;
+            
+            document.getElementById('brightness-value').textContent = brightness;
+            document.getElementById('contrast-value').textContent = contrast;
+            document.getElementById('saturate-value').textContent = saturate;
+
+            let currentFilter = previewImage.className.match(/filter-[a-z0-9-]+/);
+            currentFilter = currentFilter ? currentFilter[0] : 'filter-none';
+
+            previewImage.style.filter = `${currentFilter === 'filter-none' ? 'none' : ''} 
+                                        brightness(${brightness}) 
+                                        contrast(${contrast}) 
+                                        saturate(${saturate})`;
+        }
+
+        // Eventos para sliders de ajustes (Brillo, Contraste, Saturación)
+        ['brightness', 'contrast', 'saturate'].forEach(id => {
+            document.getElementById(`${id}-slider`).addEventListener('input', applyFilter);
+        });
+
+        // Eventos para selección de filtro (Manteniendo la estructura de filtros de tu código)
+        document.getElementById('filter-panel').addEventListener('click', (e) => {
+            if (e.target.classList.contains('filter-option')) {
+                document.querySelectorAll('.filter-option').forEach(opt => opt.classList.remove('active'));
+                e.target.classList.add('active');
+                
+                // Remover filtros existentes
+                const classesToRemove = Array.from(previewImage.classList).filter(c => c.startsWith('filter-'));
+                previewImage.classList.remove(...classesToRemove);
+                
+                // Aplicar nuevo filtro
+                const newFilterClass = e.target.dataset.filter;
+                previewImage.classList.add(newFilterClass);
+                
+                applyFilter(); // Reaplicar ajustes manuales encima del filtro CSS
+            }
+        });
+
+        // Eventos de Texto
+        document.getElementById('text-input').addEventListener('input', (e) => {
+            previewTitle.textContent = e.target.value;
+        });
+
+        document.getElementById('text-color-input').addEventListener('input', (e) => {
+            previewTitle.style.color = e.target.value;
+        });
+
+        document.getElementById('text-size-slider').addEventListener('input', (e) => {
+            const size = e.target.value + 'rem';
+            previewTitle.style.fontSize = size;
+            document.getElementById('text-size-value').textContent = size;
+        });
+
+        document.getElementById('text-effect-options').addEventListener('click', (e) => {
+            if (e.target.classList.contains('text-effect')) {
+                document.querySelectorAll('.text-effect').forEach(opt => {
+                    opt.classList.remove('active');
+                    previewTitle.classList.remove(opt.dataset.effect);
+                });
+
+                e.target.classList.add('active');
+                const effect = e.target.dataset.effect;
+                if (effect !== 'text-none') {
+                    previewTitle.classList.add(effect);
+                }
+            }
+        });
+        
+        // --- Control de Marco Personalizado (AÑADIDO) ---
+        
+        function updateCustomBorderDisplay() {
+            document.getElementById('border-width-value').textContent = document.getElementById('border-width-slider').value + 'px';
+            document.getElementById('border-radius-value').textContent = document.getElementById('border-radius-slider').value + 'px';
+        }
+
+        function applyCustomBorder() {
+            const color = document.getElementById('border-color-input').value;
+            const width = document.getElementById('border-width-slider').value + 'px';
+            const radius = document.getElementById('border-radius-slider').value + 'px';
+            const style = document.getElementById('border-style-select').value;
+            
+            previewImageContainer.style.borderColor = color;
+            previewImageContainer.style.borderWidth = width;
+            previewImageContainer.style.borderRadius = radius;
+            previewImageContainer.style.borderStyle = style;
+
+            updateCustomBorderDisplay();
+            
+            // Desactivar cualquier marco preestablecido
+            document.querySelectorAll('.frame-preset-option').forEach(opt => opt.classList.remove('active'));
+        }
+
+        // Eventos de sliders y select para Marco Personalizado
+        document.getElementById('border-color-input').addEventListener('input', applyCustomBorder);
+        document.getElementById('border-width-slider').addEventListener('input', applyCustomBorder);
+        document.getElementById('border-radius-slider').addEventListener('input', applyCustomBorder);
+        document.getElementById('border-style-select').addEventListener('change', applyCustomBorder);
+
+        // --- Nuevos controles de efectos de imagen ---
+        document.getElementById('blur-slider').addEventListener('input', (e) => {
+            const blur = e.target.value + 'px';
+            previewImage.style.filter = `${previewImage.style.filter.split('blur')[0]} blur(${blur})`;
+            document.getElementById('blur-value').textContent = blur;
+        });
+
+        document.getElementById('opacity-slider').addEventListener('input', (e) => {
+            const opacity = e.target.value;
+            previewImage.style.opacity = opacity;
+            document.getElementById('opacity-value').textContent = opacity;
+        });
+
+        document.getElementById('rotation-slider').addEventListener('input', (e) => {
+            const rotation = e.target.value + 'deg';
+            previewImage.style.transform = `rotate(${rotation})`;
+            document.getElementById('rotation-value').textContent = rotation;
+        });
+
+        // --- Función de Descarga (Exportación) ---
+
+        let exportFormat = 'png';
+        document.getElementById('export-format-options').addEventListener('click', (e) => {
+            if (e.target.classList.contains('format-option')) {
+                document.querySelectorAll('.format-option').forEach(opt => opt.classList.remove('active'));
+                e.target.classList.add('active');
+                exportFormat = e.target.dataset.format;
+            }
+        });
+
+        document.getElementById('download-btn').addEventListener('click', async () => {
+            loadingSpinner.classList.add('active');
+
+            // Clonar el contenedor para eliminar elementos no deseados de la captura (como el spinner)
+            const containerToCapture = document.getElementById('preview-image-container');
+            
+            // html2canvas funciona mejor capturando el elemento con todos los estilos
+            const canvas = await html2canvas(containerToCapture, {
+                useCORS: true,
+                allowTaint: true,
+                scale: 2, // Escala para mejor calidad
+                backgroundColor: null // Permitir transparencia si el fondo es transparente
+            });
+
+            const link = document.createElement('a');
+            
+            if (exportFormat === 'png') {
+                link.href = canvas.toDataURL('image/png');
+                link.download = 'imagen_editada_ia.png';
+            } else if (exportFormat === 'jpeg') {
+                link.href = canvas.toDataURL('image/jpeg', 0.9); // 0.9 es la calidad JPEG
+                link.download = 'imagen_editada_ia.jpeg';
+            }
+
+            link.click();
+            loadingSpinner.classList.remove('active');
+        });
+        
+        // --- Inicialización General ---
+        
+        // Inicializar el filtro y el texto
+        applyFilter();
+        
+        // Inicializar un fondo y marco
+        applyBackground(NON_AI_COLORS[0].css);
+        applyFramePreset(JSON.stringify(FRAMES[0].css));
+        
+        // Inicializar Dark Mode (Opcional, mantenido de tu código)
+        document.getElementById('theme-toggle').addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const icon = document.querySelector('#theme-toggle i');
+            icon.classList.toggle('fa-sun');
+            icon.classList.toggle('fa-moon');
+        });
+    });
+</script>
+
+</body>
+</html>

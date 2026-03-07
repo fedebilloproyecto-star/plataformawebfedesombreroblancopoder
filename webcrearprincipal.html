@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plantillas Web Personalizables</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --primary: #7c3aed;
+        --secondary: #06d6a0;
+        --accent: #ff6b6b;
+        --dark: #1a1a2e;
+        --light: #f8fafc;
+        --gray: #64748b;
+        --transition: all 0.3s ease;
+        --font-main: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        --gradient-primary: linear-gradient(135deg, #7c3aed 0%, #4c1d95 100%);
+        --gradient-secondary: linear-gradient(135deg, #06d6a0 0%, #059669 100%);
+        --gradient-accent: linear-gradient(135deg, #ff6b6b 0%, #e11d48 100%);
+        --gradient-bg: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    }
+    
+    /* RESET COMPLETO - TODO CUADRADO */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: var(--font-main);
+        border-radius: 0 !important;
+    }
+    
+    html, body {
+        width: 100%;
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
+    
+    body {
+        color: var(--dark);
+        background: var(--gradient-bg);
+        line-height: 1.6;
+        font-size: 16px;
+        
+   border-radius: 10px;
+  max-width: 900px;
+  margin: 90px auto;
+    }
+    
+    /* CONTENEDOR PRINCIPAL - CUADRADO Y RESPONSIVE */
+    .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 15px;
+    }
+    
+    /* CONTENEDOR ESPECIAL DE 900px - COMPLETAMENTE CUADRADO */
+    .main-container {
+        max-width: 900px;
+        margin: 90px auto;
+        background: white;
+        border: 2px solid var(--dark);
+        padding: 0;
+        box-shadow: 8px 8px 0 var(--dark);
+    }
+    
+    /* BOTONES 100% CUADRADOS */
+    .btn {
+        display: inline-block;
+        padding: 12px 28px;
+        background: var(--gradient-primary);
+        color: white;
+        border-radius: 0;
+        font-weight: 600;
+        transition: var(--transition);
+        border: 2px solid var(--dark);
+        cursor: pointer;
+        font-size: 1em;
+        text-decoration: none;
+        text-align: center;
+        box-shadow: 3px 3px 0 var(--dark);
+        width: auto;
+    }
+    
+    .btn:hover {
+        background: var(--gradient-secondary);
+        transform: translateY(-2px);
+        box-shadow: 5px 5px 0 var(--dark);
+    }
+    
+    .btn-accent {
+        background: var(--gradient-accent);
+    }
+    
+    /* SECCIONES CUADRADAS */
+    .section {
+        padding: 60px 20px;
+        border-bottom: 2px solid var(--dark);
+    }
+    
+    .section:last-child {
+        border-bottom: none;
+    }
+    
+    .section-title {
+        text-align: center;
+        margin-bottom: 40px;
+        font-size: 2.5rem;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        padding: 10px;
+        border: 2px solid var(--dark);
+        margin-left: -20px;
+        margin-right: -20px;
+    }
+    
+    /* HEADER CUADRADO Y FIJO */
+    header {
+        background: white;
+        border-bottom: 3px solid var(--dark);
+        padding: 15px 0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        box-shadow: 0 3px 0 var(--dark);
+    }
+    
+    .header-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 15px;
+    }
+    
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .logo {
+        font-size: 1.8rem;
+        font-weight: 700;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        padding: 5px 10px;
+        border: 2px solid var(--dark);
+    }
+    
+    /* HERO SECTION - CUADRADO Y RESPONSIVE */
+    .hero {
+        padding: 100px 20px 80px;
+        background: var(--dark);
+        color: white;
+        text-align: center;
+        margin-top: 70px; /* Compensa el header fijo */
+    }
+    
+    .hero-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 30px;
+        border: 2px solid white;
+    }
+    
+    .hero-title {
+        font-size: 2.8rem;
+        margin-bottom: 20px;
+        line-height: 1.2;
+        padding: 15px;
+        border: 2px solid white;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+        padding: 15px;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+    
+    .hero-buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    /* PLANTILLAS CUADRADAS */
+    .templates-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+        margin: 0 -10px;
+    }
+    
+    .template-card {
+        background: white;
+        border: 2px solid var(--dark);
+        transition: var(--transition);
+        box-shadow: 5px 5px 0 var(--dark);
+        margin: 0 10px;
+    }
+    
+    .template-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 8px 8px 0 var(--dark);
+    }
+    
+    .template-img {
+        height: 200px;
+        background-size: cover;
+        background-position: center;
+        border-bottom: 2px solid var(--dark);
+    }
+    
+    .template-info {
+        padding: 20px;
+    }
+    
+    .template-title {
+        font-size: 1.4rem;
+        margin-bottom: 10px;
+        padding: 8px;
+        border-left: 4px solid var(--primary);
+    }
+    
+    .template-price {
+        font-size: 1.6rem;
+        font-weight: 700;
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 15px;
+        padding: 8px;
+        border: 1px solid var(--dark);
+        display: inline-block;
+    }
+    
+    .template-features {
+        list-style: none;
+        margin-bottom: 20px;
+    }
+    
+    .template-features li {
+        margin-bottom: 8px;
+        padding: 8px 0;
+        border-bottom: 1px solid #e2e8f0;
+        display: flex;
+        align-items: center;
+    }
+    
+    .template-features li:before {
+        content: "■";
+        color: var(--primary);
+        margin-right: 10px;
+        font-size: 1.2em;
+    }
+    
+    /* FOOTER CUADRADO */
+    .footer {
+        background: var(--dark);
+        color: white;
+        padding: 40px 20px 20px;
+        border-top: 3px solid white;
+    }
+    
+    .footer-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+        margin-bottom: 30px;
+    }
+    
+    .footer-column {
+        padding: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    .footer-logo {
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        background: var(--gradient-secondary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        padding: 5px;
+        border: 1px solid white;
+        display: inline-block;
+    }
+    
+    .footer-bottom {
+        text-align: center;
+        padding-top: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.3);
+        color: #cbd5e1;
+        font-size: 0.9rem;
+    }
+    
+    /* NAVEGACIÓN RESPONSIVE */
+    .nav-menu {
+        display: flex;
+        list-style: none;
+        gap: 15px;
+    }
+    
+    .nav-menu li a {
+        text-decoration: none;
+        color: var(--dark);
+        font-weight: 600;
+        padding: 8px 16px;
+        border: 2px solid var(--dark);
+        transition: var(--transition);
+        display: block;
+    }
+    
+    .nav-menu li a:hover {
+        background: var(--primary);
+        color: white;
+    }
+    
+    /* MOBILE FIRST - AJUSTES PARA CELULAR */
+    @media (max-width: 767px) {
+        .main-container {
+            max-width: 100%;
+            margin: 70px auto 20px;
+            border-left: none;
+            border-right: none;
+            box-shadow: none;
+        }
+        
+        .hero {
+            padding: 80px 15px 60px;
+            margin-top: 60px;
+        }
+        
+        .hero-title {
+            font-size: 2rem;
+            padding: 10px;
+        }
+        
+        .hero-subtitle {
+            font-size: 1rem;
+            padding: 10px;
+        }
+        
+        .hero-content {
+            padding: 20px;
+        }
+        
+        .hero-buttons {
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .hero-buttons .btn {
+            width: 100%;
+        }
+        
+        .section {
+            padding: 40px 15px;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            margin-left: -15px;
+            margin-right: -15px;
+            padding: 8px;
+        }
+        
+        .templates-grid {
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin: 0;
+        }
+        
+        .template-card {
+            margin: 0;
+        }
+        
+        .navbar {
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .nav-menu {
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .nav-menu li a {
+            padding: 6px 12px;
+            font-size: 0.9rem;
+        }
+        
+        .footer-container {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        
+        .footer-column {
+            padding: 15px;
+        }
+        
+        /* Asegurar que todo sea visible en móvil */
+        .container, .header-container {
+            padding: 0 10px;
+        }
+        
+        /* Evitar desbordamiento horizontal */
+        img, video, iframe {
+            max-width: 100%;
+            height: auto;
+        }
+    }
+    
+    /* TABLET */
+    @media (min-width: 768px) and (max-width: 1023px) {
+        .main-container {
+            max-width: 95%;
+            margin: 80px auto;
+        }
+        
+        .hero-title {
+            font-size: 2.4rem;
+        }
+        
+        .templates-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        
+        .nav-menu {
+            gap: 10px;
+        }
+        
+        .nav-menu li a {
+            padding: 6px 12px;
+        }
+    }
+    
+    /* PC */
+    @media (min-width: 1024px) {
+        .main-container {
+            max-width: 900px;
+            margin: 90px auto;
+        }
+        
+        .templates-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+    
+    /* ELEMENTOS FORM CUADRADOS */
+    input, textarea, select {
+        border: 2px solid var(--dark) !important;
+        padding: 12px !important;
+        width: 100%;
+        margin-bottom: 15px;
+        background: white;
+        font-size: 1rem;
+    }
+    
+    /* IMÁGENES CUADRADAS */
+    img {
+        border: 1px solid var(--dark);
+        display: block;
+        max-width: 100%;
+        height: auto;
+    }
+    
+    /* CARDS GENERALES */
+    .card {
+        border: 2px solid var(--dark);
+        padding: 20px;
+        margin-bottom: 20px;
+        background: white;
+        box-shadow: 3px 3px 0 var(--dark);
+    }
+    
+    /* UTILIDADES */
+    .text-center { text-align: center; }
+    .mt-20 { margin-top: 20px; }
+    .mb-20 { margin-bottom: 20px; }
+    .p-20 { padding: 20px; }
+    .w-100 { width: 100%; }
+    
+    /* Menú hamburguesa para móvil (opcional) */
+    .menu-toggle {
+        display: none;
+        background: none;
+        border: 2px solid var(--dark);
+        padding: 10px;
+        cursor: pointer;
+    }
+    
+    @media (max-width: 767px) {
+        .menu-toggle {
+            display: block;
+        }
+        
+        .nav-menu {
+            display: none;
+            flex-direction: column;
+            width: 100%;
+        }
+        
+        .nav-menu.active {
+            display: flex;
+        }
+    }
+/* ===== BOTÓN VOLVER ===== */
+.back-btn {
+    display: inline-block;
+    margin-top: 120px;     /* 🔥 separación grande del header */
+    margin-left: 20px;
+    padding: 12px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+/* Ícono */
+.back-btn i {
+    margin-right: 8px;
+}
+
+/* Hover */
+.back-btn:hover {
+    background-color: #43a047;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .back-btn {
+        margin-top: 100px;
+        font-size: 15px;
+        padding: 10px 16px;
+    }
+}
+
+
+</style>
+</head>
+<body>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+
+    <!-- Header -->
+    <header>
+        <div class="container navbar">
+            <a href="#" class="logo"> Me Dicen <span> : el Sombrero Blanco</span></a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1 class="hero-title">Crea tu Página Web Personalizada</h1>
+            <p class="hero-subtitle">Elige entre nuestras plantillas con diseño IA y crea una web única para tu negocio o proyecto personal sin necesidad de conocimientos técnicos.</p>
+            <div class="hero-buttons">
+                <a href="#templates" class="btn pulse">Ver Plantillas</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Plantillas -->
+    <section id="templates" class="section templates">
+        <div class="container">
+            <h2 class="section-title">Nuestras <span>Plantillas</span></h2>
+            <div class="templates-grid">
+             
+             
+       
+                    </div>
+                </div>
+                
+                <!-- Plantilla Premium -->
+                <div class="template-card floating" style="animation-delay: 1s;">
+                    <div class="template-img" style="background-image: url('https://images.unsplash.com/photo-1426604966848-d7adac402bff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1350&q=80');">
+                        <div class="template-overlay">
+                           
+                        </div>
+                    </div>
+                    <div class="template-info">
+                     
+                        <div class="template-price">Avanzado(Gratis)</div>
+                        <ul class="template-features">
+                            <li>Diseño profesional completo</li>
+                            <li>Panel de personalización avanzado</li>
+                            <li>Múltiples páginas y secciones</li>
+                            <li>Subida de imágenes personalizadas</li>
+                    
+                        </ul>
+                        <a href="creatuwebmedium.html" class="btn" style="width: 100%;">Usar Plantilla</a>
+                        <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                Volver atras
+            </a>
+       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-about">
+                    <h3 class="footer-logo">WebPersonalizable</h3>
+                    <p>Crea tu página web personalizada sin conocimientos técnicos. Elige entre nuestras plantillas y personaliza cada detalle.</p>
+                </div>
+            </div>
+       
+        </div>
+    </footer>
+
+ <script src="scriptwebprincipal.js"></script>
+    <script>
+        // Smooth scrolling para enlaces internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Efecto de aparición gradual para las tarjetas
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.template-card');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>

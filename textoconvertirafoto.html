@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor de Texto Avanzado con Descarga</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+             border-radius: 10px;
+  max-width: 1200px;
+  margin: 90px auto;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(to right, #2575fc, #6a11cb);
+            color: white;
+            padding: 25px 30px;
+            text-align: center;
+            border-bottom: 5px solid #ff7e5f;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .main-content {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 20px;
+            gap: 20px;
+        }
+        
+        .editor-section {
+            flex: 1;
+            min-width: 300px;
+            background-color: #f9f9f9;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 2px solid #eaeaea;
+        }
+        
+        .preview-section {
+            flex: 2;
+            min-width: 300px;
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 2px solid #eaeaea;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            color: #2575fc;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-title i {
+            color: #ff7e5f;
+        }
+        
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .control-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #444;
+            font-size: 0.9rem;
+        }
+        
+        select, input, button {
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        select:focus, input:focus {
+            outline: none;
+            border-color: #2575fc;
+            box-shadow: 0 0 0 3px rgba(37, 117, 252, 0.2);
+        }
+        
+        button {
+            background-color: #2575fc;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            background-color: #1a68e8;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(37, 117, 252, 0.3);
+        }
+        
+        button.download-btn {
+            background-color: #ff7e5f;
+            margin-top: 15px;
+        }
+        
+        button.download-btn:hover {
+            background-color: #ff6b4a;
+        }
+        
+        .color-picker {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .color-picker input {
+            padding: 0;
+            height: 40px;
+            width: 60px;
+            cursor: pointer;
+        }
+        
+        .text-editor {
+            flex-grow: 1;
+            margin-top: 10px;
+        }
+        
+        #textInput {
+            width: 100%;
+            min-height: 300px;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #ddd;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            resize: vertical;
+            background-color: #fff;
+            transition: border 0.3s;
+        }
+        
+        #textInput:focus {
+            border-color: #6a11cb;
+            outline: none;
+        }
+        
+        #textPreview {
+            width: 100%;
+            min-height: 400px;
+            padding: 25px;
+            border-radius: 10px;
+            border: 3px dashed #ddd;
+            background-color: #fff;
+            overflow-y: auto;
+            line-height: 1.6;
+            transition: all 0.3s;
+            flex-grow: 1;
+        }
+        
+        .download-area {
+            margin-top: 20px;
+            text-align: center;
+            padding: 20px;
+            background-color: #f0f7ff;
+            border-radius: 10px;
+            border: 2px solid #cce0ff;
+        }
+        
+        .download-area p {
+            margin-bottom: 15px;
+            color: #444;
+        }
+        
+        .char-count {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            color: #555;
+            border: 1px solid #eee;
+        }
+        
+        .instructions {
+            margin-top: 25px;
+            padding: 20px;
+            background-color: #f0f7ff;
+            border-radius: 10px;
+            border-left: 5px solid #2575fc;
+        }
+        
+        .instructions h3 {
+            color: #2575fc;
+            margin-bottom: 10px;
+        }
+        
+        .instructions ul {
+            padding-left: 20px;
+            color: #555;
+        }
+        
+        .instructions li {
+            margin-bottom: 8px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: white;
+            margin-top: 30px;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .controls {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-edit"></i> Editor de Texto Avanzado</h1>
+            <p class="subtitle">Escribe, personaliza y descarga tu texto con infinitos caracteres. Modifica colores, bordes, fondos y más.</p>
+        </header>
+        
+        <div class="main-content">
+            <section class="editor-section">
+                <h2 class="section-title"><i class="fas fa-sliders-h"></i> Controles de Estilo</h2>
+                
+                <div class="controls">
+                    <div class="control-group">
+                        <label for="fontSize">Tamaño de Fuente</label>
+                        <select id="fontSize">
+                            <option value="16px">Pequeño (16px)</option>
+                            <option value="20px" selected>Mediano (20px)</option>
+                            <option value="24px">Grande (24px)</option>
+                            <option value="32px">Muy Grande (32px)</option>
+                            <option value="48px">Extra Grande (48px)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="fontFamily">Fuente</label>
+                        <select id="fontFamily">
+                            <option value="Arial, sans-serif">Arial</option>
+                            <option value="'Times New Roman', serif" selected>Times New Roman</option>
+                            <option value="'Courier New', monospace">Courier New</option>
+                            <option value="Georgia, serif">Georgia</option>
+                            <option value="Verdana, sans-serif">Verdana</option>
+                            <option value="'Comic Sans MS', cursive">Comic Sans</option>
+                        </select>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="textColor">Color de Texto</label>
+                        <div class="color-picker">
+                            <input type="color" id="textColor" value="#333333">
+                            <span id="textColorValue">#333333</span>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="backgroundColor">Color de Fondo</label>
+                        <div class="color-picker">
+                            <input type="color" id="backgroundColor" value="#ffffff">
+                            <span id="backgroundColorValue">#FFFFFF</span>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="borderStyle">Estilo de Borde</label>
+                        <select id="borderStyle">
+                            <option value="none">Sin borde</option>
+                            <option value="solid" selected>Sólido</option>
+                            <option value="dashed">Discontinuo</option>
+                            <option value="dotted">Punteado</option>
+                            <option value="double">Doble</option>
+                            <option value="groove">Ranura</option>
+                        </select>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="borderColor">Color de Borde</label>
+                        <div class="color-picker">
+                            <input type="color" id="borderColor" value="#2575fc">
+                            <span id="borderColorValue">#2575FC</span>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="borderWidth">Grosor de Borde</label>
+                        <select id="borderWidth">
+                            <option value="1px">Fino (1px)</option>
+                            <option value="3px" selected>Mediano (3px)</option>
+                            <option value="5px">Grueso (5px)</option>
+                            <option value="8px">Muy Grueso (8px)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="textAlign">Alineación</label>
+                        <select id="textAlign">
+                            <option value="left">Izquierda</option>
+                            <option value="center" selected>Centro</option>
+                            <option value="right">Derecha</option>
+                            <option value="justify">Justificado</option>
+                        </select>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="fontWeight">Grosor de Fuente</label>
+                        <select id="fontWeight">
+                            <option value="normal">Normal</option>
+                            <option value="bold" selected>Negrita</option>
+                            <option value="lighter">Fina</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <button id="applyStyles">
+                    <i class="fas fa-paint-brush"></i> Aplicar Estilos
+                </button>
+                
+                <button id="resetStyles" class="download-btn">
+                    <i class="fas fa-redo"></i> Restablecer Estilos
+                </button>
+                
+                <div class="instructions">
+                    <h3><i class="fas fa-info-circle"></i> Instrucciones</h3>
+                    <ul>
+                        <li>Escribe tu texto en el área de edición</li>
+                        <li>Ajusta los estilos usando los controles</li>
+                        <li>Haz clic en "Aplicar Estilos" para ver los cambios</li>
+                        <li>Puedes escribir infinitos caracteres</li>
+                        <li>Descarga tu diseño como imagen</li>
+                    </ul>
+                </div>
+            </section>
+            
+            <section class="preview-section">
+                <h2 class="section-title"><i class="fas fa-eye"></i> Vista Previa</h2>
+                
+                <div class="text-editor">
+                    <textarea id="textInput" placeholder="Escribe tu texto aquí... Puedes escribir tantos caracteres como desees. ¡No hay límite!">¡Bienvenido al Editor de Texto Avanzado!
+
+Este es un ejemplo de texto que puedes modificar completamente.
+
+Características:
+• Cambia colores, fuentes y tamaños
+• Ajusta bordes y fondos
+• Alineación personalizada
+• Descarga el resultado como imagen
+• Sin límite de caracteres
+
+¡Diviértete personalizando tu texto!</textarea>
+                    
+                    <div class="char-count">
+                        <span id="charCount">0</span> caracteres escritos
+                    </div>
+                </div>
+                
+                <h2 class="section-title" style="margin-top: 30px;"><i class="fas fa-image"></i> Vista Previa del Diseño</h2>
+                
+                <div id="textPreview">
+                    Tu texto con estilos aparecerá aquí...
+                </div>
+                
+                <div class="download-area">
+                    <p>Cuando estés satisfecho con tu diseño, puedes descargarlo como imagen</p>
+                    <button id="downloadBtn" class="download-btn">
+                        <i class="fas fa-download"></i> Descargar como Imagen
+                    </button>
+                    <button class="back-btn" onclick="window.location.href='herramientamultimediapresentacion.html'">
+        <i class="fas fa-arrow-left"></i> Volver atras
+    </button>
+                </div>
+            </section>
+        </div>
+    </div>
+    
+    
+
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script>
+        // Referencias a elementos DOM
+        const textInput = document.getElementById('textInput');
+        const textPreview = document.getElementById('textPreview');
+        const fontSize = document.getElementById('fontSize');
+        const fontFamily = document.getElementById('fontFamily');
+        const textColor = document.getElementById('textColor');
+        const textColorValue = document.getElementById('textColorValue');
+        const backgroundColor = document.getElementById('backgroundColor');
+        const backgroundColorValue = document.getElementById('backgroundColorValue');
+        const borderStyle = document.getElementById('borderStyle');
+        const borderColor = document.getElementById('borderColor');
+        const borderColorValue = document.getElementById('borderColorValue');
+        const borderWidth = document.getElementById('borderWidth');
+        const textAlign = document.getElementById('textAlign');
+        const fontWeight = document.getElementById('fontWeight');
+        const applyStylesBtn = document.getElementById('applyStyles');
+        const resetStylesBtn = document.getElementById('resetStyles');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const charCount = document.getElementById('charCount');
+        
+        // Actualizar contador de caracteres
+        function updateCharCount() {
+            const count = textInput.value.length;
+            charCount.textContent = count.toLocaleString();
+            
+            // Cambiar color según la cantidad de caracteres
+            if (count > 10000) {
+                charCount.style.color = '#ff7e5f';
+            } else if (count > 5000) {
+                charCount.style.color = '#ffa500';
+            } else {
+                charCount.style.color = '#2575fc';
+            }
+        }
+        
+        // Inicializar contador de caracteres
+        updateCharCount();
+        textInput.addEventListener('input', updateCharCount);
+        
+        // Actualizar valores de color
+        textColor.addEventListener('input', function() {
+            textColorValue.textContent = this.value.toUpperCase();
+        });
+        
+        backgroundColor.addEventListener('input', function() {
+            backgroundColorValue.textContent = this.value.toUpperCase();
+        });
+        
+        borderColor.addEventListener('input', function() {
+            borderColorValue.textContent = this.value.toUpperCase();
+        });
+        
+        // Aplicar estilos al texto de vista previa
+        function applyStyles() {
+            const text = textInput.value || 'Escribe algo para ver la vista previa...';
+            
+            // Aplicar estilos al área de vista previa
+            textPreview.style.fontSize = fontSize.value;
+            textPreview.style.fontFamily = fontFamily.value;
+            textPreview.style.color = textColor.value;
+            textPreview.style.backgroundColor = backgroundColor.value;
+            textPreview.style.borderStyle = borderStyle.value;
+            textPreview.style.borderColor = borderColor.value;
+            textPreview.style.borderWidth = borderWidth.value;
+            textPreview.style.textAlign = textAlign.value;
+            textPreview.style.fontWeight = fontWeight.value;
+            textPreview.style.padding = '25px';
+            textPreview.style.borderRadius = '10px';
+            textPreview.style.whiteSpace = 'pre-wrap';
+            
+            // Mostrar el texto
+            textPreview.textContent = text;
+            
+            // Si el texto está vacío, mostrar un mensaje
+            if (!textInput.value.trim()) {
+                textPreview.textContent = 'Escribe algo para ver la vista previa...';
+                textPreview.style.color = '#888';
+                textPreview.style.fontStyle = 'italic';
+            } else {
+                textPreview.style.fontStyle = 'normal';
+            }
+        }
+        
+        // Restablecer estilos a valores predeterminados
+        function resetStyles() {
+            fontSize.value = '20px';
+            fontFamily.value = "'Times New Roman', serif";
+            textColor.value = '#333333';
+            textColorValue.textContent = '#333333';
+            backgroundColor.value = '#ffffff';
+            backgroundColorValue.textContent = '#FFFFFF';
+            borderStyle.value = 'solid';
+            borderColor.value = '#2575fc';
+            borderColorValue.textContent = '#2575FC';
+            borderWidth.value = '3px';
+            textAlign.value = 'center';
+            fontWeight.value = 'bold';
+            
+            applyStyles();
+        }
+        
+        // Descargar el diseño como imagen
+        async function downloadAsImage() {
+            try {
+                downloadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generando imagen...';
+                downloadBtn.disabled = true;
+                
+                // Usar html2canvas para capturar el contenido
+                const canvas = await html2canvas(textPreview, {
+                    backgroundColor: null,
+                    scale: 2, // Mayor resolución
+                    useCORS: true,
+                    logging: false
+                });
+                
+                // Crear un enlace para descargar la imagen
+                const link = document.createElement('a');
+                link.download = 'texto-personalizado.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+                
+                downloadBtn.innerHTML = '<i class="fas fa-download"></i> Descargar como Imagen';
+                downloadBtn.disabled = false;
+                
+                // Mostrar mensaje de éxito
+                alert('¡Imagen descargada con éxito!');
+            } catch (error) {
+                console.error('Error al descargar la imagen:', error);
+                alert('Hubo un error al generar la imagen. Inténtalo de nuevo.');
+                
+                downloadBtn.innerHTML = '<i class="fas fa-download"></i> Descargar como Imagen';
+                downloadBtn.disabled = false;
+            }
+        }
+        
+        // Configurar eventos
+        applyStylesBtn.addEventListener('click', applyStyles);
+        resetStylesBtn.addEventListener('click', resetStyles);
+        downloadBtn.addEventListener('click', downloadAsImage);
+        
+        // Aplicar estilos automáticamente al cambiar controles
+        const styleControls = [
+            fontSize, fontFamily, textColor, backgroundColor, 
+            borderStyle, borderColor, borderWidth, textAlign, fontWeight
+        ];
+        
+        styleControls.forEach(control => {
+            control.addEventListener('change', applyStyles);
+        });
+        
+        // Aplicar estilos al cargar la página
+        window.addEventListener('DOMContentLoaded', () => {
+            applyStyles();
+            updateCharCount();
+        });
+        
+        // Aplicar estilos en tiempo real mientras se escribe (con un pequeño retraso para rendimiento)
+        let typingTimer;
+        textInput.addEventListener('input', () => {
+            clearTimeout(typingTimer);
+            typingTimer = setTimeout(() => {
+                applyStyles();
+            }, 500);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplos de Marcos Frontend</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #61dafb;
+            color: #333;
+            line-height: 1.6;
+            
+   border-radius: 10px;
+  max-width: 1200px;
+  margin: 90px auto;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .framework-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .framework-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .framework-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-header {
+            padding: 1.5rem;
+            background: #6e8efb;
+            color: white;
+            text-align: center;
+        }
+        
+        .card-content {
+            padding: 1.5rem;
+        }
+        
+        .example-preview {
+            height: 150px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: #6e8efb;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: background 0.3s ease;
+            border: none;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+        
+        .btn:hover {
+            background: #5a77d8;
+        }
+        
+        .btn-secondary {
+            background: #a777e3;
+        }
+        
+        .btn-secondary:hover {
+            background: #8e5ed8;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+            background: #2d3748;
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .framework-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        /* Estilos específicos para los ejemplos */
+        .react-example {
+            background: #61dafb;
+            color: #282c34;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .vue-example {
+            background: #42b883;
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .angular-example {
+            background: #dd0031;
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .svelte-example {
+            background: #ff3e00;
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .ember-example {
+            background: #e04e39;
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+  /* Estilos para el botón */
+        .btn-back {
+            display: inline-block;
+            padding: 18px 36px;
+            font-size: 22px;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+            background: linear-gradient(45deg, #FF5722, #FF9800);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        /* Efecto al pasar el mouse */
+        .btn-back:hover {
+            background: linear-gradient(45deg, #E64A19, #F57C00);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        }
+
+        /* Efecto al hacer clic */
+        .btn-back:active {
+            transform: translateY(1px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+.btn-volver {
+    display: inline-block;
+    text-decoration: none;
+    background-color: #f1c40f; /* amarillo */
+    color: #000;
+    border: 2px solid #d4ac0d;
+    padding: 12px 24px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-volver:hover {
+    background-color: #000;
+    color: #f1c40f;
+    border-color: #000;
+}
+
+    </style>
+</head>
+<body>   
+   
+    <header>
+        <h1> Podrás ver los ejemplos de diseño y arte de cada marco creado y descargarlos como imágenes</h1>
+        
+    </header>
+    
+    <div class="container">
+        <div class="framework-grid">
+            <!-- Ejemplo 1: React -->
+            <div class="framework-card">
+                <div class="card-header">
+                    <h2> Líneas y Luz y Arte en Movimiento con Contrastes Sutiles:</h2>
+                </div>
+                <div class="card-content">
+                    <div class="example-preview">
+                        <div class="react-example">
+                        Luz, Forma y Movimiento
+                        </div>
+                    </div>
+                    <p> este marco resalta la armonía entre las formas y los contrastes de luz, creando una composición equilibrada que atrae la mirada y realza los matices más delicados de la obra. A través del juego sutil de luces y sombras, potencia la profundidad de la pieza y enfatiza con elegancia los detalles que la hacen única.</p>
+                   <button class="btn" onclick="window.location.href='ejemplomarco1.html'">Ver Ejemplo 1</button>
+                      <a href="creaccionmarco.html" class="btn-volver">⬅ Volver a atras </a>
+
+                </div>
+            </div>
+            
+            <!-- Ejemplo 2: Vue -->
+            <div class="framework-card">
+                <div class="card-header">
+                    <h2> Ritmo Luminoso </h2>
+                </div>
+                <div class="card-content">
+                    <div class="example-preview">
+                        <div class="vue-example">
+                           Armonía en Contraste con Ritmo Luminoso
+                        </div>
+                    </div>
+                    <p>  Las luces y sombras dialogan con las formas, generando un equilibrio perfecto. Este marco realza los detalles y potencia la expresión artística con delicadeza..</p>
+                     <button class="btn" onclick="window.location.href='ejemplomarco2.html '">Ver Ejemplo 2</button>
+                         <a href="creaccionmarco.html" class="btn-volver">⬅ Volver a atras </a>
+                </div>
+            </div>
+            
+            <!-- Ejemplo 3: Angular -->
+            <div class="framework-card">
+                <div class="card-header">
+                    <h2>Reflejos Solitarios  </h2>
+                </div>
+                <div class="card-content">
+                    <div class="example-preview">
+                        <div class="angular-example">
+                          Reflejos Solitarios y Sombras de Soledad
+                        </div>
+                    </div>
+                    <p> En la vida, cada sombra nos recuerda que  incluso en la soledad hay enseñanzas  que iluminan nuestro camino .</p>
+                 <button class="btn" onclick="window.location.href='ejemplomarco3.html '">Ver Ejemplo 3</button>
+                    <a href="creaccionmarco.html" class="btn-volver">⬅ Volver a atras </a>
+                </div>
+            </div>
+            
+            <!-- Ejemplo 4: Svelte -->
+            <div class="framework-card">
+                <div class="card-header">
+                    <h2> Lecciones de la Vida </h2>
+                </div>
+                <div class="card-content">
+                    <div class="example-preview">
+                        <div class="svelte-example">
+                            El Valor del Presente
+                        </div>
+                    </div>
+                    <p> La vida pasa rápido, como un río que nunca se detiene. Cada instante que vivimos es único y no vuelve, 
+                        por eso cada decisión y cada gesto define quiénes somos. El presente es lo único que tenemos,
+                        y depende de nosotros llenarlo de sentido</p>
+                  <button class="btn" onclick="window.location.href='ejemplomarco4.html '">Ver Ejemplo 4</button>
+                     <a href="creaccionmarco.html" class="btn-volver">⬅ Volver a atras </a>
+                </div>
+            </div>
+            
+            <!-- Ejemplo 5: Ember -->
+            <div class="framework-card">
+                <div class="card-header">
+                    <h2>  El Peso del Tiempo</h2>
+                </div>
+                <div class="card-content">
+                    <div class="example-preview">
+                        <div class="ember-example">
+                     Un Grito de Soberanía Colectiva
+                        </div>
+                    </div>
+                    <p> No habla solo del individuo, sino de la fuerza de una comunidad que despierta y rechaza toda forma de dominación.Porque nadie es un esclavo, y todos tenemos el poder de compartir conocimientos y aprendizajes. Todo con lleva distintos caminos de aprendizaje, y estos pueden compartirse, enseñarse y expandirse desde cualquier lugar: ya sea una aplicación, una página web, o una simple conversación hablando de tema de un trabajo laburo, en la escuela secundaria, primaria o en la universidad.  </p>
+                    <button class="btn" onclick="window.location.href='ejemplomarco5.html '">Ver Ejemplo 5</button>
+                       <a href="creaccionmarco.html" class="btn-volver">⬅ Volver a atras </a>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+    
+  
+    <script>
+        function navigateTo(framework) {
+            // Simulación de navegación a otra página
+            // En un caso real, aquí redirigirías a index.html con parámetros
+            alert(`Redirigiendo a la página de ${framework.toUpperCase()}...\n\nEn una implementación real, esto te llevaría a index.html con información específica.`);
+            
+            // Para una implementación real, podrías usar:
+            // window.location.href = `index.html?framework=${framework}`;
+        }
+        
+        // Efectos de animación al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.framework-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = 0;
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                
+                setTimeout(() => {
+                    card.style.opacity = 1;
+                    card.style.transform = 'translateY(0)';
+                }, 100 + (index * 150));
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual de Instrucciones - Editor de Imágenes Profesional</title>
+    <style>
+        :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #6b8cbc;
+            --accent-color: #ff7e5f;
+            --light-color: #f5f7fa;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --border-color: #ddd;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            
+   border-radius: 10px;
+  max-width: 1200px;
+  margin: 90px auto;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background-color 0.3s;
+        }
+        
+        .back-button:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .sidebar {
+            flex: 0 0 300px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            position: sticky;
+            top: 2rem;
+            height: fit-content;
+        }
+        
+        .sidebar h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+        
+        .toc {
+            list-style-type: none;
+        }
+        
+        .toc li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .toc a {
+            color: var(--text-color);
+            text-decoration: none;
+            display: block;
+            padding: 0.5rem;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        
+        .toc a:hover {
+            background-color: var(--light-color);
+            color: var(--primary-color);
+            padding-left: 1rem;
+        }
+        
+        .toc a.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .content {
+            flex: 1;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            padding: 2rem;
+        }
+        
+        .section {
+            margin-bottom: 3rem;
+            scroll-margin-top: 2rem;
+        }
+        
+        .section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .section h3 {
+            color: var(--secondary-color);
+            margin: 1.5rem 0 0.5rem;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .feature-card {
+            background-color: var(--light-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+        
+        .feature-icon {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        th {
+            background-color: var(--light-color);
+            color: var(--primary-color);
+        }
+        
+        tr:hover {
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+        
+        .tip-box {
+            background-color: #e8f4fd;
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .tip-box strong {
+            color: var(--primary-color);
+        }
+        
+        .method {
+            background-color: var(--light-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        
+        .method h4 {
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                position: static;
+                width: 100%;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        /* CSS */
+.footer-button {
+    display: inline-block;
+    padding: 12px 25px;        /* Tamaño del botón */
+    background-color: #4CAF50; /* Color de fondo */
+    color: white;              /* Color del texto */
+    font-size: 16px;           /* Tamaño del texto */
+    font-weight: bold;         /* Negrita */
+    text-decoration: none;     /* Quitar subrayado */
+    border-radius: 8px;        /* Bordes redondeados */
+    transition: background-color 0.3s, transform 0.2s; /* Efecto suave */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2); /* Sombra */
+}
+
+.footer-button:hover {
+    background-color: #45a049; /* Color al pasar el mouse */
+    transform: translateY(-2px); /* Levanta un poco */
+}
+
+    </style>
+</head>
+<body><a href="ManualinstruccionesArte.html" class="footer-button">
+volver atras
+       </a>
+    <header>
+     
+        <div class="header-content">
+            <h1>Editor de Imágenes Profesional</h1>
+            <p class="subtitle">Manual de Instrucciones Completo</p>
+        </div>
+    </header>
+
+  
+ 
+    <div class="container">
+        <aside class="sidebar">
+            <h2>Índice</h2>
+            <ul class="toc">
+                <li><a href="#introduccion" class="active">Introducción</a></li>
+                <li><a href="#carga-imagenes">Carga de Imágenes</a></li>
+                <li><a href="#interfaz-usuario">Interfaz de Usuario</a></li>
+                <li><a href="#ajustes-basicos">Ajustes Básicos</a></li>
+                <li><a href="#marcos-bordes">Marcos y Bordes</a></li>
+                <li><a href="#filtros-efectos">Filtros y Efectos</a></li>
+                <li><a href="#texto">Texto</a></li>
+                <li><a href="#herramienta-dibujo">Herramienta de Dibujo</a></li>
+                <li><a href="#funciones-avanzadas">Funciones Avanzadas</a></li>
+                <li><a href="#descarga-exportacion">Descarga y Exportación</a></li>
+                <li><a href="#consejos-trucos">Consejos y Trucos</a></li>
+            </ul>
+        </aside>
+        
+        <main class="content">
+            <section id="introduccion" class="section">
+                <h2>Introducción</h2>
+                <p>El Editor de Imágenes Profesional es una herramienta web completa que te permite editar y mejorar tus fotografías directamente desde el navegador. Con una interfaz intuitiva y funciones avanzadas, podrás realizar ajustes profesionales sin necesidad de software complejo.</p>
+                
+                <h3>Características principales</h3>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🎨</div>
+                        <h4>Ajustes de color y exposición</h4>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🖼️</div>
+                        <h4>Aplicación de filtros y efectos</h4>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">✏️</div>
+                        <h4>Adición de texto personalizado</h4>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🖌️</div>
+                        <h4>Herramientas de dibujo</h4>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📌</div>
+                        <h4>Marcos decorativos</h4>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">✂️</div>
+                        <h4>Funciones de recorte y marca de agua</h4>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⏪</div>
+                        <h4>Historial de cambios</h4>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="carga-imagenes" class="section">
+                <h2>Carga de Imágenes</h2>
+                
+                <div class="method">
+                    <h4>Método 1: Botón de carga</h4>
+                    <ol>
+                        <li>Haz clic en el botón "Cargar Imagen"</li>
+                        <li>Selecciona una imagen desde tu dispositivo</li>
+                        <li>La imagen aparecerá en el área de edición</li>
+                    </ol>
+                </div>
+                
+                <div class="method">
+                    <h4>Método 2: Arrastrar y soltar</h4>
+                    <ol>
+                        <li>Arrastra una imagen desde tu explorador de archivos</li>
+                        <li>Suéltala en el área marcada con bordes punteados</li>
+                        <li>La imagen se cargará automáticamente</li>
+                    </ol>
+                </div>
+                
+                <h3>Formatos soportados</h3>
+                <p>JPG, PNG, WEBP, GIF y otros formatos de imagen comunes.</p>
+            </section>
+            
+            <section id="interfaz-usuario" class="section">
+                <h2>Interfaz de Usuario</h2>
+                <p>El editor está organizado en dos secciones principales:</p>
+                
+                <h3>1. Área de Visualización (Izquierda)</h3>
+                <ul>
+                    <li>Muestra la imagen en tiempo real con todos los cambios aplicados</li>
+                    <li>Contiene controles para cargar y descargar imágenes</li>
+                    <li>Incluye botones de historial (Deshacer/Rehacer/Restablecer)</li>
+                </ul>
+                
+                <h3>2. Panel de Controles (Derecha)</h3>
+                <p>Organizado en pestañas para diferentes funciones:</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Pestaña</th>
+                            <th>Función</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Ajustes</strong></td>
+                            <td>Controles básicos de imagen</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Marcos</strong></td>
+                            <td>Bordes y efectos de marco</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Filtros</strong></td>
+                            <td>Efectos y presets</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Texto</strong></td>
+                            <td>Herramientas de texto</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Dibujar</strong></td>
+                            <td>Pincel y herramientas de dibujo</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Avanzado</strong></td>
+                            <td>Funciones avanzadas como recorte y marca de agua</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+            
+            <section id="ajustes-basicos" class="section">
+                <h2>Ajustes Básicos</h2>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Control</th>
+                            <th>Rango</th>
+                            <th>Descripción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Brillo</strong></td>
+                            <td>0-200%</td>
+                            <td>Controla la luminosidad general</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Contraste</strong></td>
+                            <td>0-200%</td>
+                            <td>Ajusta la diferencia entre luces y sombras</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Saturación</strong></td>
+                            <td>0-200%</td>
+                            <td>Controla la intensidad de los colores</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Vibración</strong></td>
+                            <td>0-200%</td>
+                            <td>Ajusta selectivamente la saturación</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Exposición</strong></td>
+                            <td>-100% a +100%</td>
+                            <td>Controla la cantidad de luz</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Temperatura</strong></td>
+                            <td>-100° a +100°</td>
+                            <td>Ajusta el balance de blancos</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Luces</strong></td>
+                            <td>-100% a +100%</td>
+                            <td>Controla las áreas claras</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sombras</strong></td>
+                            <td>-100% a +100%</td>
+                            <td>Controla las áreas oscuras</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Rotación</strong></td>
+                            <td>-180° a +180°</td>
+                            <td>Gira la imagen</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Escala</strong></td>
+                            <td>50-150%</td>
+                            <td>Cambia el tamaño de la imagen</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="tip-box">
+                    <strong>Consejo:</strong> Usa los valores porcentuales como referencia. 100% representa el estado original.
+                </div>
+            </section>
+            
+            <section id="marcos-bordes" class="section">
+                <h2>Marcos y Bordes</h2>
+                
+                <h3>Tipos de marcos disponibles</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Categoría</th>
+                            <th>Ejemplos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Sólidos</strong></td>
+                            <td>Negro, blanco, dorado, plateado</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Estilos clásicos</strong></td>
+                            <td>Polaroid, vintage, madera</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Efectos especiales</strong></td>
+                            <td>Neon, sombra, viñeta</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Bordes decorativos</strong></td>
+                            <td>Punteado, discontinuo, doble</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Estilos CSS</strong></td>
+                            <td>Ridge, inset, outset, groove</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h3>Efectos avanzados</h3>
+                <ul>
+                    <li>Esquinas redondeadas</li>
+                    <li>Sombra interna</li>
+                    <li>Borde con gradiente</li>
+                    <li>Tira de película</li>
+                    <li>Efecto estampado</li>
+                    <li>Borde rasgado</li>
+                </ul>
+                
+                <h3>Personalización</h3>
+                <ul>
+                    <li><strong>Color del marco:</strong> Selecciona cualquier color</li>
+                    <li><strong>Ancho del marco:</strong> De 0px a 50px</li>
+                </ul>
+                
+                <div class="tip-box">
+                    <strong>Uso:</strong> Haz clic en cualquier vista previa de marco para aplicarlo instantáneamente.
+                </div>
+            </section>
+            
+            <section id="filtros-efectos" class="section">
+                <h2>Filtros y Efectos</h2>
+                
+                <h3>Efectos básicos</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Efecto</th>
+                            <th>Descripción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Original</strong></td>
+                            <td>Sin efecto aplicado</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Blanco/Negro</strong></td>
+                            <td>Convierte a escala de grises</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sepia</strong></td>
+                            <td>Aplica tonos vintage</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Negativo</strong></td>
+                            <td>Invierte los colores</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Desenfoque</strong></td>
+                            <td>Aplica efecto de desenfoque</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tonalidad</strong></td>
+                            <td>Rota la gama de colores</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Vintage</strong></td>
+                            <td>Efecto retro</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Frío/Cálido</strong></td>
+                            <td>Ajusta la temperatura de color</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Enfocar</strong></td>
+                            <td>Mejora la nitidez</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Pixelar</strong></td>
+                            <td>Crea efecto pixelado</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Posterizar</strong></td>
+                            <td>Reduce el número de colores</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h3>Presets profesionales (inspirados en Instagram)</h3>
+                <p>Clarendon, Gingham, Moon, Lark, Reyes, Juno, Slumber, Crema, Ludwig, Aden, Perpetua, Amaro</p>
+                
+                <h3>Control de intensidad</h3>
+                <p>Usa el deslizador de "Intensidad del efecto" (0-100%) para ajustar la fuerza del filtro aplicado.</p>
+            </section>
+            
+            <section id="texto" class="section">
+                <h2>Texto</h2>
+                
+                <h3>Añadir y editar texto</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Propiedad</th>
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Contenido</strong></td>
+                            <td>Escribe tu texto en el campo correspondiente</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Fuente</strong></td>
+                            <td>Selecciona entre diferentes familias tipográficas</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Color</strong></td>
+                            <td>Elige el color del texto</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tamaño</strong></td>
+                            <td>De 10px a 100px</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Opacidad</strong></td>
+                            <td>Controla la transparencia (0-100%)</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h3>Alineación y estilo</h3>
+                <ul>
+                    <li><strong>Alineación:</strong> Izquierda, centro, derecha, justificado</li>
+                    <li><strong>Estilos:</strong> Negrita, cursiva, subrayado, sombra</li>
+                </ul>
+                
+                <h3>Fondo de texto</h3>
+                <ul>
+                    <li><strong>Color de fondo:</strong> Selecciona un color para el fondo del texto</li>
+                    <li><strong>Opacidad del fondo:</strong> Controla la transparencia del fondo (0-100%)</li>
+                </ul>
+                
+                <h3>Posicionamiento</h3>
+                <ul>
+                    <li><strong>Arrastrar y soltar:</strong> Haz clic en el texto y arrástralo a la posición deseada</li>
+                    <li>El texto se mantiene en su posición relativa al redimensionar la imagen</li>
+                </ul>
+            </section>
+            
+            <section id="herramienta-dibujo" class="section">
+                <h2>Herramienta de Dibujo</h2>
+                
+                <h3>Funcionalidades</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Propiedad</th>
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Color del pincel</strong></td>
+                            <td>Selecciona cualquier color</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tamaño del pincel</strong></td>
+                            <td>De 1px a 50px</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h3>Modos</h3>
+                <ul>
+                    <li><strong>Dibujar:</strong> Añade trazos con el color seleccionado</li>
+                    <li><strong>Borrar:</strong> Elimina partes del dibujo</li>
+                </ul>
+                
+                <h3>Uso</h3>
+                <ol>
+                    <li>Selecciona la pestaña "Dibujar"</li>
+                    <li>Elige el color y tamaño del pincel</li>
+                    <li>Selecciona el modo (dibujar o borrar)</li>
+                    <li>Haz clic y arrastra sobre la imagen para dibujar</li>
+                    <li>Usa "Limpiar Dibujo" para eliminar todos los trazos</li>
+                </ol>
+                
+                <div class="tip-box">
+                    <strong>Nota:</strong> Los trazos de dibujo se guardan en el historial y pueden deshacerse/rehacerse.
+                </div>
+            </section>
+            
+            <section id="funciones-avanzadas" class="section">
+                <h2>Funciones Avanzadas</h2>
+                
+                <h3>Recorte</h3>
+                <ul>
+                    <li><strong>Recorte X/Y:</strong> Controla la posición del área de recorte</li>
+                    <li><strong>Ancho/Alto de recorte:</strong> Define las dimensiones del recorte</li>
+                    <li>Los valores se expresan en porcentajes relativos al tamaño original</li>
+                </ul>
+                
+                <h3>Marca de agua</h3>
+                <h4>Configuración:</h4>
+                <ul>
+                    <li>Activa la marca de agua con el botón "Agregar marca de agua"</li>
+                    <li>Selecciona el tipo: Texto o Imagen</li>
+                </ul>
+                
+                <h4>Para marca de agua de texto:</h4>
+                <ul>
+                    <li>Introduce el texto deseado</li>
+                    <li>Selecciona color y tamaño</li>
+                    <li>Ajusta opacidad y escala</li>
+                </ul>
+                
+                <h4>Para marca de agua de imagen:</h4>
+                <ul>
+                    <li>Carga una imagen desde tu dispositivo</li>
+                    <li>Ajusta opacidad y escala</li>
+                </ul>
+                
+                <h4>Posicionamiento:</h4>
+                <ul>
+                    <li>Esquinas (superior/inferior izquierda/derecha)</li>
+                    <li>Centros (superior, central, inferior)</li>
+                    <li>Centros laterales (izquierda, derecha)</li>
+                    <li>Mosaico (repetido por toda la imagen)</li>
+                </ul>
+                
+                <h3>Calidad de imagen</h3>
+                <p>Controla la calidad de exportación para formatos JPEG y WEBP (10-100%)</p>
+            </section>
+            
+            <section id="descarga-exportacion" class="section">
+                <h2>Descarga y Exportación</h2>
+                
+                <h3>Proceso de descarga</h3>
+                <ol>
+                    <li>Haz clic en el botón "Descargar Imagen"</li>
+                    <li>Selecciona el formato deseado:
+                        <ul>
+                            <li><strong>PNG:</strong> Calidad sin pérdidas, soporta transparencia</li>
+                            <li><strong>JPEG:</strong> Compresión con pérdida, ideal para fotografías</li>
+                            <li><strong>WEBP:</strong> Formato moderno con buena compresión</li>
+                        </ul>
+                    </li>
+                    <li>La imagen se descargará con todos los ajustes aplicados</li>
+                </ol>
+                
+                <h3>Características de exportación</h3>
+                <ul>
+                    <li>Incluye todos los efectos, marcos, texto y dibujos</li>
+                    <li>Mantiene la máxima calidad posible según el formato</li>
+                    <li>El nombre por defecto es "edited_image.[formato]"</li>
+                </ul>
+            </section>
+            
+            <section id="consejos-trucos" class="section">
+                <h2>Consejos y Trucos</h2>
+                
+                <h3>Flujo de trabajo recomendado</h3>
+                <ol>
+                    <li>Carga la imagen</li>
+                    <li>Aplica ajustes básicos (brillo, contraste, etc.)</li>
+                    <li>Añade filtros o efectos</li>
+                    <li>Inserta texto si es necesario</li>
+                    <li>Aplica marco final</li>
+                    <li>Exporta en el formato adecuado</li>
+                </ol>
+                
+                <h3>Uso eficiente del historial</h3>
+                <ul>
+                    <li><strong>Deshacer (Ctrl+Z):</strong> Revierte el último cambio</li>
+                    <li><strong>Rehacer (Ctrl+Y):</strong> Restaura un cambio deshecho</li>
+                    <li><strong>Restablecer:</strong> Vuelve al estado original de la imagen</li>
+                </ul>
+                
+                <h3>Optimización de rendimiento</h3>
+                <ul>
+                    <li>Las imágenes muy grandes pueden ralentizar el editor</li>
+                    <li>Para mejores resultados, usa imágenes con resolución adecuada</li>
+                    <li>El editor mantiene la relación de aspecto original</li>
+                </ul>
+            </section>
+        </main>
+    </div>
+    
+ 
+    
+    <script>
+        // Navegación suave entre secciones
+        document.querySelectorAll('.toc a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remover clase activa de todos los enlaces
+                document.querySelectorAll('.toc a').forEach(a => {
+                    a.classList.remove('active');
+                });
+                
+                // Agregar clase activa al enlace clickeado
+                this.classList.add('active');
+                
+                // Desplazarse a la sección
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                
+                window.scrollTo({
+                    top: targetSection.offsetTop - 20,
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Actualizar enlace activo al hacer scroll
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('.section');
+            const navLinks = document.querySelectorAll('.toc a');
+            
+            let currentSection = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (window.scrollY >= sectionTop - 100) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentSection}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

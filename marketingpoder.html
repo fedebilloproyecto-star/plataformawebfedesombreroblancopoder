@@ -1,0 +1,1203 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diseñador Pro · Tarjeta Empresarial</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- html2canvas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- Biblioteca para generar QR (segura y liviana) -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(145deg, #f1c40f 0%, #3498db 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            max-width: 1200px;
+            margin: 90px auto;
+        }
+
+        .builder {
+            max-width: 1600px;
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            align-items: flex-start;
+            justify-content: center;
+        }
+
+        /* === PANEL DE CONTROL === */
+        .controls {
+            flex: 1 1 400px;
+            background: rgba(255, 255, 255, 0.97);
+            backdrop-filter: blur(12px);
+            border-radius: 40px;
+            padding: 2rem 1.8rem;
+            box-shadow: 0 30px 45px -20px rgba(0,0,0,0.7);
+            border: 1px solid rgba(255,255,255,0.9);
+            max-height: 90vh;
+            overflow-y: auto;
+            scrollbar-width: thin;
+        }
+
+        .header-mensaje {
+            background: linear-gradient(145deg, #ffffff, #f0f4ff);
+            border-radius: 30px;
+            padding: 1.8rem 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            border: 2px solid #c0392b;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .header-mensaje h3 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #1a1a2e;
+            line-height: 1.3;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header-mensaje p {
+            font-size: 1rem;
+            color: #2c3e50;
+            opacity: 0.9;
+        }
+        
+        .header-mensaje i {
+            color: #c0392b;
+            margin: 0 0.3rem;
+        }
+
+        .badge {
+            background: linear-gradient(145deg, #1a1a2e, #c0392b);
+            color: white;
+            padding: 0.3rem 1.2rem;
+            border-radius: 60px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 1.8rem;
+        }
+
+        .section-card {
+            background: rgba(245, 248, 255, 0.85);
+            border-radius: 30px;
+            padding: 1.5rem;
+            margin-bottom: 1.8rem;
+            box-shadow: 0 8px 18px -6px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.9);
+        }
+
+        .section-title {
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            color: #1a1a2e;
+            border-bottom: 2px solid #c0392b;
+            padding-bottom: 0.5rem;
+        }
+
+        .campo-texto {
+            margin-bottom: 1.2rem;
+        }
+
+        .campo-texto label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            color: #1a1a2e;
+            font-size: 0.9rem;
+        }
+
+        .campo-texto input, .campo-texto textarea {
+            width: 100%;
+            padding: 0.8rem 1.3rem;
+            border: 2px solid #d5dce5;
+            border-radius: 40px;
+            font-size: 0.95rem;
+            transition: 0.2s;
+            background: white;
+        }
+
+        .campo-texto input:focus, .campo-texto textarea:focus {
+            border-color: #c0392b;
+            outline: none;
+        }
+
+        /* Foto */
+        .photo-upload-section {
+            background: #e9f2fa;
+            border-radius: 30px;
+            padding: 1.5rem;
+            border: 2px dashed #c0392b;
+            margin-bottom: 1.8rem;
+        }
+
+        .photo-preview-container {
+            display: flex;
+            align-items: center;
+            gap: 1.8rem;
+            flex-wrap: wrap;
+        }
+
+        .user-photo-preview {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid white;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+            background: #cbd5e1;
+        }
+
+        .upload-btn {
+            background: white;
+            border: none;
+            border-radius: 60px;
+            padding: 0.8rem 1.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            box-shadow: 0 4px 12px rgba(192,57,43,0.3);
+            transition: 0.2s;
+        }
+
+        .upload-btn:hover {
+            background: #ffe6e6;
+            transform: scale(1.02);
+        }
+
+        /* Sliders */
+        .size-slider-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .size-slider {
+            width: 100%;
+            height: 10px;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #3498db, #c0392b);
+            -webkit-appearance: none;
+        }
+
+        .size-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: white;
+            border: 3px solid #1a1a2e;
+            cursor: pointer;
+        }
+
+        .size-value {
+            text-align: center;
+            font-weight: 600;
+        }
+
+        /* Colores */
+        .color-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .color-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: white;
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+        }
+
+        .color-row label {
+            min-width: 90px;
+            font-weight: 600;
+        }
+
+        .color-row input[type="color"] {
+            width: 50px;
+            height: 50px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            background: transparent;
+        }
+
+        .color-row input[type="color"]::-webkit-color-swatch {
+            border: 3px solid white;
+            border-radius: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+        }
+
+        /* Paleta IA */
+        .ia-palette-section {
+            background: #efe5fd;
+            border-radius: 30px;
+            padding: 1.5rem;
+            border: 2px solid #8e44ad;
+            margin-bottom: 1.8rem;
+        }
+
+        .ia-palette-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+
+        .ia-color-card {
+            background: white;
+            border-radius: 20px;
+            padding: 0.7rem 0.3rem;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 2px solid transparent;
+            text-align: center;
+        }
+
+        .ia-color-card.activo {
+            border-color: #8e44ad;
+            background: #f3ecff;
+        }
+
+        .ia-color-preview {
+            height: 45px;
+            border-radius: 12px;
+            margin-bottom: 0.3rem;
+        }
+
+        .ia-color-name {
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        /* Fondos de paisaje */
+        .landscape-section {
+            background: #d5e8d5;
+            border-radius: 30px;
+            padding: 1.5rem;
+            border: 2px solid #2e7d32;
+            margin-bottom: 1.8rem;
+        }
+        .landscape-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.7rem;
+            margin-top: 1rem;
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 0.3rem;
+        }
+        .landscape-option {
+            background: white;
+            border-radius: 18px;
+            padding: 0.5rem;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: 0.2s;
+            text-align: center;
+        }
+        .landscape-option.activo {
+            border-color: #2e7d32;
+            background: #ebf7eb;
+        }
+        .landscape-preview {
+            height: 60px;
+            border-radius: 12px;
+            margin-bottom: 0.3rem;
+            background-size: cover !important;
+            background-position: center !important;
+        }
+        .color-activo-btn {
+            background: #f0f0f0;
+            border: 2px solid #aaa;
+            border-radius: 40px;
+            padding: 0.6rem 1rem;
+            margin-top: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .color-activo-btn.activo {
+            background: #d4edda;
+            border-color: #2e7d32;
+        }
+
+        /* Marcos forma */
+        .border-section {
+            background: #ffe6f0;
+            border-radius: 30px;
+            padding: 1.5rem;
+            margin-bottom: 1.8rem;
+        }
+
+        .border-options {
+            display: flex;
+            gap: 0.8rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .border-style-btn {
+            flex: 1;
+            background: white;
+            border: none;
+            border-radius: 50px;
+            padding: 0.7rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .border-style-btn.activo {
+            border-color: #c0392b;
+            background: #ffe6e6;
+        }
+
+        /* 16 ESTILOS EXCLUSIVOS */
+        .ad-section {
+            background: #fff2e0;
+            border-radius: 30px;
+            padding: 1.5rem;
+            border: 2px solid #e67e22;
+            margin-bottom: 1.8rem;
+        }
+
+        .ad-borders-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.7rem;
+            margin-top: 1rem;
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 0.3rem;
+        }
+
+        .border-option {
+            background: white;
+            border-radius: 18px;
+            padding: 0.7rem 0.3rem;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: 0.2s;
+            text-align: center;
+            position: relative;
+        }
+
+        .border-option.activo {
+            border-color: #e67e22;
+            background: #ffefe0;
+        }
+
+        .border-option.favorito {
+            background: #fff9c4;
+            border-color: #f1c40f;
+        }
+
+        .border-preview {
+            height: 50px;
+            border-radius: 12px;
+            margin-bottom: 0.3rem;
+            background-size: cover !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            text-shadow: 1px 1px 2px black;
+            font-size: 0.7rem;
+        }
+
+        .favorito-icon {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            color: #f1c40f;
+            font-size: 1rem;
+            cursor: pointer;
+            z-index: 5;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            transition: 0.2s;
+        }
+
+        .favorito-icon:hover {
+            transform: scale(1.2);
+            color: #f39c12;
+        }
+
+        /* Botones */
+        .btn-download {
+            width: 100%;
+            background: #1a1a2e;
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 60px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            transition: 0.2s;
+            margin: 1rem 0 0.5rem;
+        }
+
+        .btn-download:hover {
+            background: #16213e;
+        }
+
+        #btnReset {
+            width: 100%;
+            background: #eaeef2;
+            border: none;
+            padding: 1rem;
+            border-radius: 60px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 0.5rem;
+        }
+
+        #btnMostrarFavoritos {
+            width: 100%;
+            background: #f1c40f;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 60px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            transition: 0.2s;
+            color: #1a1a2e;
+        }
+
+        /* === VISTA PREVIA === */
+        .preview-box {
+            flex: 1 1 550px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #cardContainer {
+            width: 100%;
+            max-width: 700px;
+            transition: border-radius 0.2s;
+        }
+
+        .contact-card {
+            background: #ffffff;
+            padding: 2rem;
+            border-radius: 48px;
+            box-shadow: 0 30px 40px -20px rgba(0,0,0,0.7);
+            text-align: center;
+            transition: all 0.2s;
+            border: 4px solid;
+            position: relative;
+            overflow: hidden;
+            background-size: cover !important;
+            background-position: center !important;
+        }
+
+        .card-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 60px;
+            margin: 0 auto 1rem;
+            overflow: hidden;
+            border: 4px solid white;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+            background: #cbd5e1;
+            transition: all 0.2s;
+        }
+
+        .card-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-title {
+            font-size: 2rem;
+            font-weight: 700;
+            word-break: break-word;
+            margin-bottom: 0.4rem;
+            text-shadow: 0 2px 4px rgba(255,255,255,0.5);
+        }
+
+        .card-desc {
+            font-size: 1.2rem;
+            margin: 0.3rem 0 1.3rem;
+            opacity: 0.95;
+        }
+
+        /* Nueva sección para QR y enlaces */
+        .qr-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 1.5rem 0 0.5rem;
+        }
+        
+        #qrCodeContainer {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 0.5rem;
+        }
+        
+        #qrCodeContainer canvas {
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: width 0.2s, height 0.2s;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .additional-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+
+        .link-button {
+            background: rgba(255,255,255,0.8);
+            backdrop-filter: blur(4px);
+            padding: 0.6rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: 1px solid rgba(0,0,0,0.1);
+            text-decoration: none;
+            color: inherit;
+            transition: 0.2s;
+        }
+        .link-button i {
+            font-size: 1rem;
+        }
+        .link-button:hover {
+            transform: scale(1.02);
+            background: rgba(255,255,255,0.95);
+        }
+
+        /* marcos */
+        .marco-redondo .contact-card { border-radius: 48px; }
+        .marco-recto .contact-card { border-radius: 16px; }
+        .marco-extremo .contact-card { border-radius: 90px; }
+
+        /* Estilos decorativos (16 estilos) - resumen corto */
+        .contact-card.ad-estilo1::before { content:'🔥'; position:absolute; top:10px; left:10px; background:#e74c3c; color:white; padding:0.2rem 1rem; border-radius:30px; font-size:0.8rem; font-weight:bold; z-index:10; }
+        .contact-card.ad-estilo2::before { content:'🎨'; position:absolute; top:10px; right:10px; background:#9b59b6; color:white; padding:0.2rem 1rem; border-radius:30px; }
+        .contact-card.ad-estilo3::before { content:'✨'; position:absolute; bottom:10px; left:10px; background:#f1c40f; color:#1a1a2e; padding:0.2rem 1rem; border-radius:30px; }
+        .contact-card.ad-estilo4::before { content:'🏆'; position:absolute; top:50%; left:0; transform:translateY(-50%); background:#e67e22; color:white; padding:0.2rem 0.8rem; writing-mode:vertical-rl; border-radius:0 12px 12px 0; }
+        .contact-card.ad-estilo5::before { content:'⚡'; position:absolute; top:-5px; left:-5px; right:-5px; bottom:-5px; border:8px dotted #3498db; display:flex; align-items:center; justify-content:center; background:rgba(52,152,219,0.1); color:#2980b9; font-weight:bold; font-size:1.3rem; opacity:0.3; }
+        .contact-card.ad-estilo6::before { content:'🌟'; position:absolute; bottom:0; left:0; right:0; background:linear-gradient(0deg,#27ae60,transparent); height:30px; display:flex; align-items:center; justify-content:center; color:white; }
+        .contact-card.ad-estilo7::before { content:'⭐'; position:absolute; top:0; left:0; right:0; background:linear-gradient(180deg,#f1c40f,transparent); height:40px; display:flex; align-items:center; justify-content:center; color:#1a1a2e; }
+        .contact-card.ad-estilo8 { border:10px solid transparent; border-image:repeating-linear-gradient(45deg,#e74c3c,#f39c12,#27ae60) 30 stretch; }
+        .contact-card.ad-estilo8::before { content:'🌈'; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); background:white; padding:0.3rem 1.5rem; border-radius:40px; font-weight:bold; color:#e74c3c; }
+        .contact-card.ad-estilo9 { background: linear-gradient(145deg,#2c3e50,#c0392b); }
+        .contact-card.ad-estilo9::before { content:'🌙'; position:absolute; bottom:10px; right:10px; background:#f1c40f; color:#1a1a2e; padding:0.2rem 1rem; border-radius:30px; }
+        .contact-card.ad-estilo10::before { content:'🌸'; position:absolute; top:0; left:0; background:#27ae60; color:white; padding:0.2rem 1rem; border-radius:0 0 30px 0; }
+        .contact-card.ad-estilo11 { border:8px ridge #e67e22; }
+        .contact-card.ad-estilo11::before { content:'🍂'; position:absolute; bottom:10px; left:50%; transform:translateX(-50%); background:#e67e22; color:white; padding:0.2rem 1.5rem; border-radius:40px; }
+        .contact-card.ad-estilo12::before { content:'❄️'; position:absolute; top:20px; left:20px; right:20px; bottom:20px; border:3px dashed #3498db; display:flex; align-items:center; justify-content:center; color:#3498db; font-weight:bold; border-radius:30px; }
+        .contact-card.ad-estilo13::before { content:'☀️'; position:absolute; top:-10px; left:50%; transform:translateX(-50%); background:#f39c12; color:white; padding:0.2rem 1.8rem; border-radius:0 0 30px 30px; }
+        .contact-card.ad-estilo14 { box-shadow:0 0 0 5px #f39c12,0 0 0 10px #e67e22,0 0 0 15px #d35400; }
+        .contact-card.ad-estilo14::before { content:'🎭'; position:absolute; top:10px; right:10px; background:#f39c12; color:white; padding:0.2rem 1rem; border-radius:30px; }
+        .contact-card.ad-estilo15 { border:10px double #16a085; }
+        .contact-card.ad-estilo15::before { content:'🌊'; position:absolute; bottom:0; left:0; right:0; background:#16a085; color:white; padding:0.3rem; text-align:center; }
+        .contact-card.ad-estilo16 { background: linear-gradient(145deg, #3a1c1c, #7a2e2e); border: 6px double #b8860b; box-shadow: 0 0 20px #b8860b; }
+        .contact-card.ad-estilo16::before { content: '⚔️ GUERRA ⚔️'; position: absolute; top: 5px; left: 50%; transform: translateX(-50%); background: #2d2d2d; color: #ffaa00; padding: 0.2rem 2rem; border-radius: 0 0 30px 30px; font-weight: 800; font-size: 1rem; letter-spacing: 3px; border-bottom: 2px solid #b8860b; border-left: 2px solid #b8860b; border-right: 2px solid #b8860b; z-index: 10; }
+        .contact-card.ad-estilo16::after { content: '💥🔥💥'; position: absolute; bottom: 5px; right: 5px; font-size: 1.2rem; opacity: 0.7; }
+    
+        .boton-volver {
+            display: inline-block;
+            padding: 20px 15px;
+            font-size: 20px;
+            font-weight: bold;
+            text-decoration: none;
+            color: black;
+            border-radius: 10px;
+            border-width: 12px;
+            border-style: solid;
+            border-color: red orange yellow green;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        .boton-volver:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            border-color: green yellow orange red;
+        }
+    </style>
+</head>
+<body>
+    <div class="builder">
+        <!-- PANEL DE CONTROL -->
+        <div class="controls">
+            <a href="inicioprincipalmarketingpremium.html" class="boton-volver">Volver al atras</a> 
+            
+            <div class="header-mensaje">
+                <h1>Hace tu propio Marketing digital</h1>
+                <h3><i class="fa-solid fa-pen-fancy"></i> Crea, publica y comparte <i class="fa-solid fa-share-nodes"></i></h3>
+                <p>tu publicidad con quien quieras, de forma rápida y sencilla.</p>
+                <div style="margin-top: 0.8rem;">
+                    <span class="badge" style="font-size:0.8rem;"><i class="fa-regular fa-star"></i> Color sólido opcional</span>
+                </div>
+            </div>
+
+            <!-- SECCIÓN TEXTO: EMPRESA + DESCRIPCIÓN (SIN TELÉFONO) -->
+            <div class="section-card">
+                <div class="section-title"><i class="fa-regular fa-building"></i> Datos de la empresa</div>
+                <div class="campo-texto"><label>Nombre de la empresa</label><input type="text" id="inputTitulo" value="Innovatec Solutions"></div>
+                <div class="campo-texto"><label>Descripción de la empresa</label><textarea id="inputDescripcion" rows="2">Tecnología e innovación · Soporte 24/7</textarea></div>
+            </div>
+
+            <!-- SECCIÓN ENLACE PRINCIPAL (WEB) -->
+            <div class="section-card">
+                <div class="section-title"><i class="fa-solid fa-link"></i> Enlace principal (QR)</div>
+                <div class="campo-texto"><label>URL del sitio web</label><input type="url" id="inputWebUrl" value="https://innovatec-solutions.com"></div>
+            </div>
+
+            <!-- SECCIÓN ENLACES ADICIONALES (hasta 3) -->
+            <div class="section-card">
+                <div class="section-title"><i class="fa-solid fa-plus-circle"></i> Enlaces adicionales (hasta 3)</div>
+                <div id="links-adicionales-container">
+                    <div class="campo-texto link-item"><label><i class="fa-brands fa-instagram"></i> Enlace 1</label><input type="url" id="link1" value="https://instagram.com/innovatec" placeholder="https://..."></div>
+                    <div class="campo-texto link-item"><label><i class="fa-brands fa-facebook"></i> Enlace 2</label><input type="url" id="link2" value="https://facebook.com/innovatec" placeholder="https://..."></div>
+                    <div class="campo-texto link-item"><label><i class="fa-brands fa-linkedin"></i> Enlace 3</label><input type="url" id="link3" value="https://linkedin.com/company/innovatec" placeholder="https://..."></div>
+                </div>
+                <p style="font-size:0.85rem;"><i class="fa-regular fa-lightbulb"></i> Se mostrarán como botones debajo del QR.</p>
+            </div>
+
+            <!-- FOTO + TAMAÑO -->
+            <div class="photo-upload-section">
+                <div class="section-title"><i class="fa-regular fa-images"></i> Foto / Logo de la empresa</div>
+                <div class="photo-preview-container">
+                    <img id="userPhoto" class="user-photo-preview" src="https://ui-avatars.com/api/?name=Innovatec&background=2c3e50&color=fff&size=200&bold=true" alt="preview">
+                    <div style="flex:1">
+                        <input type="file" id="photoInput" accept="image/*" style="display:none;">
+                        <button class="upload-btn" onclick="document.getElementById('photoInput').click()"><i class="fa-regular fa-image"></i> Subir foto</button>
+                    </div>
+                </div>
+                <div class="size-slider-container" style="margin-top:1.5rem">
+                    <label style="font-weight:600;"><i class="fa-solid fa-expand"></i> Tamaño de foto: <span id="sizeValue">120px</span></label>
+                    <input type="range" id="sizeSlider" class="size-slider" min="60" max="200" value="120" step="5">
+                </div>
+            </div>
+
+            <!-- TAMAÑO QR -->
+            <div class="photo-upload-section" style="background:#fef3d5; border-color:#e67e22;">
+                <div class="section-title"><i class="fa-solid fa-qrcode"></i> Tamaño del código QR</div>
+                <div class="size-slider-container">
+                    <label style="font-weight:600;">Ancho: <span id="qrSizeValue">120px</span></label>
+                    <input type="range" id="qrSizeSlider" class="size-slider" min="80" max="250" value="120" step="5">
+                </div>
+            </div>
+
+            <!-- COLORES PERSONALIZADOS -->
+            <div class="section-card" style="background:#e8f0fe">
+                <div class="section-title"><i class="fa-solid fa-palette"></i> Colores personalizados</div>
+                <div class="color-controls">
+                    <div class="color-row"><label>Fondo:</label><input type="color" id="colorFondo" value="#fafcff"></div>
+                    <div class="color-row"><label>Texto:</label><input type="color" id="colorTexto" value="#1a1a2e"></div>
+                    <div class="color-row"><label>Borde:</label><input type="color" id="colorBorde" value="#c0392b"></div>
+                </div>
+                <p style="font-size:0.85rem; margin-top:0.5rem; color:#555;"><i class="fa-solid fa-info-circle"></i> Todos los colores son personalizables</p>
+            </div>
+
+            <!-- FONDOS DE PAISAJE -->
+            <div class="landscape-section">
+                <div class="section-title"><i class="fa-solid fa-image"></i> Fondos de paisaje</div>
+                <div class="landscape-grid" id="landscapeGrid"></div>
+                <div class="color-activo-btn" id="btnUsarColor">
+                    <i class="fa-regular fa-circle"></i> Usar color sólido
+                </div>
+            </div>
+
+            <!-- PALETA IA -->
+            <div class="ia-palette-section">
+                <span class="badge" style="background:#8e44ad;"><i class="fa-solid fa-brain"></i> IA Recomienda (combinaciones)</span>
+                <div class="ia-palette-grid" id="iaPaletteGrid">
+                    <!-- se llenará con JS -->
+                </div>
+            </div>
+
+            <!-- MARCOS (FORMA) -->
+            <div class="border-section">
+                <div class="section-title"><i class="fa-regular fa-square"></i> Forma de tarjeta</div>
+                <div class="border-options">
+                    <button id="btnMarcoRedondo" class="border-style-btn activo"><i class="fa-regular fa-circle"></i> Redondo</button>
+                    <button id="btnMarcoRecto" class="border-style-btn"><i class="fa-regular fa-square"></i> Recto</button>
+                    <button id="btnMarcoExtremo" class="border-style-btn"><i class="fa-solid fa-egg"></i> Extra</button>
+                </div>
+            </div>
+
+            <!-- 16 ESTILOS EXCLUSIVOS CON FAVORITOS -->
+            <div class="ad-section">
+                <span class="badge" style="background:#e67e22;"><i class="fa-solid fa-star"></i> 16 ESTILOS</span>
+                <div class="ad-borders-grid" id="estilosGrid"></div>
+                <button id="btnMostrarFavoritos"><i class="fa-regular fa-star"></i> Mostrar solo favoritos</button>
+            </div>
+
+            <button class="btn-download" id="btnDescargar"><i class="fa-solid fa-camera"></i> Descargar PNG</button>
+            <button id="btnReset"><i class="fa-solid fa-rotate-left"></i> Restablecer todo</button>
+        </div>
+
+        <!-- VISTA PREVIA -->
+        <div class="preview-box">
+            <h3 style="color:white; margin-bottom:1rem;"><i class="fa-regular fa-id-card"></i> Vista previa</h3>
+            <div id="cardContainer" class="marco-redondo">
+                <div class="contact-card" id="tarjeta" style="background-color: #fafcff; color: #1a1a2e; border-color: #c0392b;">
+                    <div class="card-avatar" id="avatarContainer" style="width:120px; height:120px;">
+                        <img id="avatarImage" src="https://ui-avatars.com/api/?name=Innovatec&background=2c3e50&color=fff&size=200&bold=true" alt="avatar">
+                    </div>
+                    <div class="card-title" id="previewTitulo">Innovatec Solutions</div>
+                    <div class="card-desc" id="previewDescripcion">Tecnología e innovación · Soporte 24/7</div>
+                    
+                    <!-- QR + ENLACES -->
+                    <div class="qr-section">
+                        <div id="qrCodeContainer"></div>
+                        <div class="additional-links" id="additionalLinksContainer"></div>
+                    </div>
+                </div>
+            </div>
+            <p style="color:white; margin-top:1rem;"><i class="fa-regular fa-star"></i> Todos los colores son personalizables</p>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // Elementos principales
+            const tarjeta = document.getElementById('tarjeta');
+            const cardContainer = document.getElementById('cardContainer');
+            const avatarImage = document.getElementById('avatarImage');
+            const avatarContainer = document.getElementById('avatarContainer');
+            
+            // Texto preview
+            const previewTitulo = document.getElementById('previewTitulo');
+            const previewDesc = document.getElementById('previewDescripcion');
+            
+            // Inputs texto
+            const inpTitulo = document.getElementById('inputTitulo');
+            const inpDesc = document.getElementById('inputDescripcion');
+            const inpWebUrl = document.getElementById('inputWebUrl'); // URL para QR
+            
+            // Inputs enlaces adicionales
+            const linkInputs = [
+                document.getElementById('link1'),
+                document.getElementById('link2'),
+                document.getElementById('link3')
+            ];
+            
+            // Colores
+            const colorFondo = document.getElementById('colorFondo');
+            const colorTexto = document.getElementById('colorTexto');
+            const colorBorde = document.getElementById('colorBorde');
+            
+            // Botones forma
+            const btnRedondo = document.getElementById('btnMarcoRedondo');
+            const btnRecto = document.getElementById('btnMarcoRecto');
+            const btnExtremo = document.getElementById('btnMarcoExtremo');
+            
+            // Sliders tamaño
+            const sizeSlider = document.getElementById('sizeSlider');
+            const sizeValue = document.getElementById('sizeValue');
+            const qrSizeSlider = document.getElementById('qrSizeSlider');
+            const qrSizeValue = document.getElementById('qrSizeValue');
+            
+            // Foto
+            const photoInput = document.getElementById('photoInput');
+            
+            // Variables para paisajes
+            let paisajeActivo = null;
+            const landscapeGrid = document.getElementById('landscapeGrid');
+            const btnUsarColor = document.getElementById('btnUsarColor');
+            
+            // Lista de paisajes (con URLs funcionales)
+            const paisajes = [
+                { name: 'Playa Dorada', url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&auto=format' },
+                { name: 'Campo de Trigo', url: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=400&auto=format' },
+                { name: 'Desierto Arena', url: 'https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=400&auto=format' },
+                { name: 'Nieve Brillante', url: 'https://images.unsplash.com/photo-1483921020237-2ff51e8e4b22?w=400&auto=format' },
+                { name: 'Montaña Nevada', url: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400&auto=format' },
+                { name: 'Bosque Verde', url: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&auto=format' },
+                { name: 'Lago Sereno', url: 'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=400&auto=format' },
+                { name: 'Atardecer', url: 'https://images.unsplash.com/photo-1506815444479-bfdb1e96c566?w=400&auto=format' },
+                { name: 'Ciudad nocturna', url: 'https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=400&auto=format' }
+            ];
+            
+            // Generar paisajes
+            paisajes.forEach((p) => {
+                const div = document.createElement('div');
+                div.className = 'landscape-option';
+                div.dataset.url = p.url;
+                div.innerHTML = `<div class="landscape-preview" style="background-image: url('${p.url}');"></div><span>${p.name}</span>`;
+                div.addEventListener('click', function() {
+                    document.querySelectorAll('.landscape-option').forEach(opt => opt.classList.remove('activo'));
+                    div.classList.add('activo');
+                    btnUsarColor.classList.remove('activo');
+                    paisajeActivo = p.url;
+                    tarjeta.style.backgroundImage = `url('${p.url}')`;
+                    tarjeta.style.backgroundSize = 'cover';
+                    tarjeta.style.backgroundColor = 'transparent';
+                });
+                landscapeGrid.appendChild(div);
+            });
+            
+            btnUsarColor.addEventListener('click', function() {
+                document.querySelectorAll('.landscape-option').forEach(opt => opt.classList.remove('activo'));
+                btnUsarColor.classList.add('activo');
+                paisajeActivo = null;
+                tarjeta.style.backgroundImage = 'none';
+                tarjeta.style.backgroundColor = colorFondo.value;
+            });
+
+            // Lista de 16 estilos (incluye 'none')
+            const estilos = [
+                { id: 'none', nombre: 'Básico', preview: '#bdc3c7', icono: '📄' },
+                { id: 'estilo1', nombre: 'Limitada', preview: '#e74c3c', icono: '🔥' },
+                { id: 'estilo2', nombre: 'Arte', preview: '#9b59b6', icono: '🎨' },
+                { id: 'estilo3', nombre: 'Premium', preview: '#f1c40f', icono: '✨' },
+                { id: 'estilo4', nombre: 'VIP', preview: '#e67e22', icono: '🏆' },
+                { id: 'estilo5', nombre: 'Especial', preview: '#3498db', icono: '⚡' },
+                { id: 'estilo6', nombre: 'Lanzamiento', preview: '#27ae60', icono: '🌟' },
+                { id: 'estilo7', nombre: 'N.Colección', preview: '#f1c40f', icono: '⭐' },
+                { id: 'estilo8', nombre: 'Arcoíris', preview: 'linear-gradient(45deg,#e74c3c,#f39c12,#27ae60)', icono: '🌈' },
+                { id: 'estilo9', nombre: 'Nocturna', preview: '#2c3e50', icono: '🌙' },
+                { id: 'estilo10', nombre: 'Primavera', preview: '#27ae60', icono: '🌸' },
+                { id: 'estilo11', nombre: 'Otoño', preview: '#e67e22', icono: '🍂' },
+                { id: 'estilo12', nombre: 'Invierno', preview: '#3498db', icono: '❄️' },
+                { id: 'estilo13', nombre: 'Verano', preview: '#f39c12', icono: '☀️' },
+                { id: 'estilo14', nombre: 'Moderno', preview: '#f39c12', icono: '🎭' },
+                { id: 'estilo15', nombre: 'Marino', preview: '#16a085', icono: '🌊' },
+                { id: 'estilo16', nombre: '⚔️ GUERRA ⚔️', preview: '#7a2e2e', icono: '💥' }
+            ];
+
+            const estilosGrid = document.getElementById('estilosGrid');
+            let favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
+
+            function guardarFavoritos() {
+                localStorage.setItem('favoritos', JSON.stringify(favoritos));
+            }
+
+            function crearOpcionEstilo(estilo, mostrarSoloFavoritos = false) {
+                if (mostrarSoloFavoritos && !favoritos.includes(estilo.id) && estilo.id !== 'none') return null;
+                
+                const div = document.createElement('div');
+                div.className = 'border-option';
+                if (estilo.id === 'none' && !mostrarSoloFavoritos) div.classList.add('activo');
+                if (favoritos.includes(estilo.id)) div.classList.add('favorito');
+                div.dataset.ad = estilo.id;
+                
+                const previewDiv = document.createElement('div');
+                previewDiv.className = 'border-preview';
+                previewDiv.style.background = estilo.preview.includes('gradient') ? estilo.preview : estilo.preview;
+                previewDiv.textContent = estilo.icono;
+                
+                const nombreSpan = document.createElement('span');
+                nombreSpan.textContent = estilo.nombre;
+                
+                div.appendChild(previewDiv);
+                div.appendChild(nombreSpan);
+                
+                if (estilo.id !== 'none') {
+                    const favIcon = document.createElement('i');
+                    favIcon.className = `fa-star ${favoritos.includes(estilo.id) ? 'fa-solid' : 'fa-regular'} favorito-icon`;
+                    favIcon.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        if (favoritos.includes(estilo.id)) {
+                            favoritos = favoritos.filter(f => f !== estilo.id);
+                            favIcon.className = 'fa-regular fa-star favorito-icon';
+                            div.classList.remove('favorito');
+                        } else {
+                            favoritos.push(estilo.id);
+                            favIcon.className = 'fa-solid fa-star favorito-icon';
+                            div.classList.add('favorito');
+                        }
+                        guardarFavoritos();
+                    });
+                    div.appendChild(favIcon);
+                }
+                
+                div.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('favorito-icon')) return;
+                    document.querySelectorAll('.border-option').forEach(opt => opt.classList.remove('activo'));
+                    div.classList.add('activo');
+                    
+                    let clases = Array.from(tarjeta.classList).filter(c => c.startsWith('ad-estilo'));
+                    tarjeta.classList.remove(...clases);
+                    if (estilo.id !== 'none') tarjeta.classList.add(`ad-${estilo.id}`);
+                });
+                
+                return div;
+            }
+
+            function renderizarEstilos(mostrarSoloFavoritos = false) {
+                estilosGrid.innerHTML = '';
+                estilos.forEach(estilo => {
+                    const opt = crearOpcionEstilo(estilo, mostrarSoloFavoritos);
+                    if (opt) estilosGrid.appendChild(opt);
+                });
+            }
+            renderizarEstilos();
+
+            document.getElementById('btnMostrarFavoritos').addEventListener('click', function() {
+                const soloFav = this.classList.toggle('activo');
+                renderizarEstilos(soloFav);
+                this.innerHTML = soloFav ? '<i class="fa-solid fa-star"></i> Mostrar todos' : '<i class="fa-regular fa-star"></i> Mostrar solo favoritos';
+            });
+
+            // Función para generar QR y actualizar enlaces
+            function actualizarQRLinks() {
+                const url = inpWebUrl.value || 'https://ejemplo.com';
+                const qrContainer = document.getElementById('qrCodeContainer');
+                qrContainer.innerHTML = ''; // Limpiar
+                
+                // Generar QR con tamaño variable
+                const qrSize = parseInt(qrSizeSlider.value);
+                QRCode.toCanvas(document.createElement('canvas'), url, { 
+                    width: qrSize,
+                    margin: 1,
+                    color: { dark: '#000000', light: '#ffffff' }
+                }, (err, canvas) => {
+                    if (err) console.error(err);
+                    else {
+                        canvas.style.width = '100%';
+                        canvas.style.height = 'auto';
+                        canvas.style.maxWidth = qrSize + 'px';
+                        qrContainer.appendChild(canvas);
+                    }
+                });
+
+                // Actualizar enlaces adicionales
+                const linksContainer = document.getElementById('additionalLinksContainer');
+                linksContainer.innerHTML = '';
+                const iconMap = ['fa-brands fa-instagram', 'fa-brands fa-facebook', 'fa-brands fa-linkedin'];
+                linkInputs.forEach((input, index) => {
+                    if (input.value.trim() !== '') {
+                        const link = document.createElement('a');
+                        link.href = input.value.trim();
+                        link.target = '_blank';
+                        link.className = 'link-button';
+                        link.innerHTML = `<i class="${iconMap[index]}"></i> ${new URL(input.value).hostname.replace('www.', '')}`;
+                        linksContainer.appendChild(link);
+                    }
+                });
+            }
+
+            // Actualizar textos
+            function actualizarTexto() {
+                previewTitulo.textContent = inpTitulo.value || "Nombre de la empresa";
+                previewDesc.textContent = inpDesc.value || "Descripción de la empresa";
+                actualizarQRLinks();
+            }
+            
+            [inpTitulo, inpDesc, inpWebUrl, ...linkInputs].forEach(input => 
+                input.addEventListener('input', actualizarTexto)
+            );
+
+            // Actualizar colores
+            function actualizarColores() {
+                if (!paisajeActivo) tarjeta.style.backgroundColor = colorFondo.value;
+                tarjeta.style.color = colorTexto.value;
+                tarjeta.style.borderColor = colorBorde.value;
+                document.querySelectorAll('.contact-row i, .link-button').forEach(el => {
+                    el.style.color = colorTexto.value;
+                });
+            }
+            [colorFondo, colorTexto, colorBorde].forEach(input => input.addEventListener('input', actualizarColores));
+
+            // Paleta IA
+            const iaPaletteGrid = document.getElementById('iaPaletteGrid');
+            const paletas = [
+                { fondo: '#3498db', texto: '#ffffff', borde: '#2980b9', nombre: 'Profesional' },
+                { fondo: '#e74c3c', texto: '#ffffff', borde: '#c0392b', nombre: 'Premium' },
+                { fondo: '#27ae60', texto: '#ffffff', borde: '#229954', nombre: 'Naturaleza' },
+                { fondo: '#f39c12', texto: '#1a1a2e', borde: '#e67e22', nombre: 'Creativo' },
+                { fondo: '#9b59b6', texto: '#ffffff', borde: '#8e44ad', nombre: 'Elegante' },
+                { fondo: '#34495e', texto: '#ffffff', borde: '#2c3e50', nombre: 'Ejecutivo' }
+            ];
+            paletas.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'ia-color-card';
+                card.dataset.fondo = p.fondo;
+                card.dataset.texto = p.texto;
+                card.dataset.borde = p.borde;
+                card.innerHTML = `<div class="ia-color-preview" style="background:${p.fondo};"></div><span>${p.nombre}</span>`;
+                card.addEventListener('click', () => {
+                    document.querySelectorAll('.ia-color-card').forEach(c => c.classList.remove('activo'));
+                    card.classList.add('activo');
+                    
+                    paisajeActivo = null;
+                    tarjeta.style.backgroundImage = 'none';
+                    tarjeta.style.backgroundColor = p.fondo;
+                    tarjeta.style.color = p.texto;
+                    tarjeta.style.borderColor = p.borde;
+                    
+                    colorFondo.value = p.fondo;
+                    colorTexto.value = p.texto;
+                    colorBorde.value = p.borde;
+                    
+                    document.querySelectorAll('.landscape-option').forEach(opt => opt.classList.remove('activo'));
+                    btnUsarColor.classList.add('activo');
+                    
+                    document.querySelectorAll('.contact-row i, .link-button').forEach(el => {
+                        el.style.color = p.texto;
+                    });
+                });
+                iaPaletteGrid.appendChild(card);
+            });
+
+            // Sliders tamaño
+            sizeSlider.addEventListener('input', function() {
+                let val = this.value + 'px';
+                sizeValue.textContent = this.value + 'px';
+                avatarContainer.style.width = val;
+                avatarContainer.style.height = val;
+            });
+            
+            qrSizeSlider.addEventListener('input', function() {
+                qrSizeValue.textContent = this.value + 'px';
+                actualizarQRLinks(); // regenerar con nuevo tamaño
+            });
+
+            // Formas
+            btnRedondo.addEventListener('click', () => {
+                cardContainer.classList.remove('marco-recto', 'marco-extremo');
+                cardContainer.classList.add('marco-redondo');
+                [btnRedondo, btnRecto, btnExtremo].forEach(b => b.classList.remove('activo'));
+                btnRedondo.classList.add('activo');
+            });
+            btnRecto.addEventListener('click', () => {
+                cardContainer.classList.remove('marco-redondo', 'marco-extremo');
+                cardContainer.classList.add('marco-recto');
+                [btnRedondo, btnRecto, btnExtremo].forEach(b => b.classList.remove('activo'));
+                btnRecto.classList.add('activo');
+            });
+            btnExtremo.addEventListener('click', () => {
+                cardContainer.classList.remove('marco-redondo', 'marco-recto');
+                cardContainer.classList.add('marco-extremo');
+                [btnRedondo, btnRecto, btnExtremo].forEach(b => b.classList.remove('activo'));
+                btnExtremo.classList.add('activo');
+            });
+
+            // Foto
+            photoInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if(file) {
+                    const reader = new FileReader();
+                    reader.onload = event => avatarImage.src = event.target.result;
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Reset completo
+            document.getElementById('btnReset').addEventListener('click', () => {
+                inpTitulo.value = "Innovatec Solutions";
+                inpDesc.value = "Tecnología e innovación · Soporte 24/7";
+                inpWebUrl.value = "https://innovatec-solutions.com";
+                linkInputs[0].value = "https://instagram.com/innovatec";
+                linkInputs[1].value = "https://facebook.com/innovatec";
+                linkInputs[2].value = "https://linkedin.com/company/innovatec";
+                actualizarTexto();
+                
+                colorFondo.value = "#fafcff";
+                colorTexto.value = "#1a1a2e";
+                colorBorde.value = "#c0392b";
+                paisajeActivo = null;
+                tarjeta.style.backgroundImage = 'none';
+                tarjeta.style.backgroundColor = "#fafcff";
+                tarjeta.style.color = "#1a1a2e";
+                tarjeta.style.borderColor = "#c0392b";
+                
+                avatarImage.src = "https://ui-avatars.com/api/?name=Innovatec&background=2c3e50&color=fff&size=200&bold=true";
+                sizeSlider.value = 120;
+                sizeValue.textContent = "120px";
+                avatarContainer.style.width = "120px";
+                avatarContainer.style.height = "120px";
+                
+                qrSizeSlider.value = 120;
+                qrSizeValue.textContent = "120px";
+                actualizarQRLinks();
+                
+                cardContainer.classList.remove('marco-recto', 'marco-extremo');
+                cardContainer.classList.add('marco-redondo');
+                [btnRedondo, btnRecto, btnExtremo].forEach(b => b.classList.remove('activo'));
+                btnRedondo.classList.add('activo');
+                
+                document.querySelectorAll('.ia-color-card').forEach(c => c.classList.remove('activo'));
+                document.querySelectorAll('.landscape-option').forEach(opt => opt.classList.remove('activo'));
+                btnUsarColor.classList.add('activo');
+                
+                let clases = Array.from(tarjeta.classList).filter(c => c.startsWith('ad-estilo'));
+                tarjeta.classList.remove(...clases);
+                renderizarEstilos(false);
+                document.querySelectorAll('.border-option').forEach(opt => {
+                    if(opt.dataset.ad === 'none') opt.classList.add('activo');
+                });
+                
+                document.querySelectorAll('.contact-row i, .link-button').forEach(icon => {
+                    icon.style.color = "#1a1a2e";
+                });
+            });
+
+            // Descargar PNG
+            document.getElementById('btnDescargar').addEventListener('click', function() {
+                html2canvas(tarjeta, { scale: 3, backgroundColor: null, useCORS: true }).then(canvas => {
+                    const link = document.createElement('a');
+                    link.download = 'tarjeta-empresarial.png';
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                });
+            });
+
+            // Inicializar
+            actualizarTexto();
+            actualizarColores();
+            btnUsarColor.classList.add('activo');
+            // Generar QR inicial
+            actualizarQRLinks();
+        })();
+    </script>
+</body>
+</html>
+```

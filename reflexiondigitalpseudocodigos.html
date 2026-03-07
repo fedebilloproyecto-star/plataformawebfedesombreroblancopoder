@@ -1,0 +1,402 @@
+ <!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pseudocódigo Explicado - Diseño Profesional</title>
+<style>
+/* 1. FUENTE EXTERNA: Para mejor tipografía y estética profesional */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Roboto+Mono:wght@400;600&display=swap');
+
+/* ====== VARIABLES (Añadido nuevo color de fondo) ====== */
+
+
+/* ====== RESET Y BASE ====== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-gradient);
+    color: var(--dark);
+    line-height: 1.65;
+    min-height: 100vh;
+    padding: 20px;
+    background-color:khaki;
+        border-radius: 10px;
+  max-width: 700px;
+  margin: 90px auto;
+ 
+}
+/* Nuevo Contenedor para Limitar Ancho y Centrar Contenido */
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background-color: var(--light);
+    padding: 30px 40px;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+/* ====== TITULOS ====== */
+h1, h2 {
+    text-align: center;
+    color: var(--primary-dark);
+    text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+}
+h1 {
+    font-size: 3rem;
+    margin: 2rem 0;
+    position: relative;
+    letter-spacing: -0.5px;
+}
+h1::after {
+    content: '💡'; /* Pequeño icono en el divisor */
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: var(--secondary);
+    border-radius: 2px;
+    font-size: 0; /* Ocultar el texto del content */
+}
+h2 {
+    font-size: 2rem;
+    margin-top: 3rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #e5e7eb;
+    text-align: left; /* Títulos secundarios alineados a la izquierda */
+}
+
+/* ====== PARRAFOS ====== */
+p {
+    margin-bottom: 1.4rem;
+    font-size: 1.1rem;
+    color: var(--gray);
+}
+/* Énfasis en el primer párrafo */
+body > .container > p:first-of-type {
+    font-size: 1.25rem;
+    text-align: center;
+    color: var(--dark);
+    font-weight: 400;
+}
+
+/* ====== LISTA (Añadido efecto de elevación) ====== */
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+ul li {
+    margin: 12px 0;
+    padding-left: 35px;
+    position: relative;
+    font-size: 1.05rem;
+    color: var(--dark);
+    transition: transform var(--transition-speed) ease, color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+    border-radius: 8px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+ul li::before {
+    content: "🚀"; /* Nuevo icono más moderno */
+    position: absolute;
+    left: 0;
+    color: var(--secondary);
+    font-size: 1.2rem;
+}
+ul li:hover {
+    color: var(--primary-dark);
+    transform: translateX(8px);
+    background-color: #f7f9fd;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* ====== TABLA MODERNA (Mejorado el diseño para la legibilidad) ====== */
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 30px;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    transition: box-shadow var(--transition-speed) ease;
+}
+table:hover {
+    box-shadow: 0 10px 35px rgba(0,0,0,0.18);
+}
+th, td {
+    padding: 18px 22px;
+    text-align: left;
+    transition: background-color var(--transition-speed) ease, transform 0.2s ease;
+}
+th {
+    background: var(--primary); /* Fondo sólido */
+    color: black;
+    font-size: 1.15em;
+    font-weight: 600;
+    border-bottom: 4px solid var(--secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+td {
+    background-color: var(--light);
+    border-bottom: 1px solid #e5e7eb;
+    color: var(--dark);
+    font-size: 1.05rem;
+}
+tr:nth-child(even) td {
+    background-color: #f9fafb;
+}
+tr:hover td {
+    background-color: #eef2ff; /* Color de hover más sutil */
+}
+tr:hover .highlight { /* Eliminar el zoom para mantener la tabla fija */
+    background-color: #eef2ff;
+}
+tr.selected td {
+    background-color: #fffbeb !important; /* Amarillo más suave */
+    color: #b45309;
+    font-weight: 600;
+    border-left: 4px solid var(--accent); /* Borde de resalte */
+}
+
+/* ====== PSEUDOCÓDIGO (Alto contraste y tipografía mono) ====== */
+.pseudocode {
+    background: #1f2937; /* Fondo oscuro */
+    font-family: 'Roboto Mono', monospace;
+    color: black; /* Texto claro */
+    border-left: 8px solid var(--secondary);
+    padding: 25px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    line-height: 1.7;
+    transition: all var(--transition-speed) ease;
+    white-space: pre; /* Preservar espacios y saltos de línea */
+    overflow-x: auto; /* Scroll horizontal para líneas largas */
+}
+.pseudocode:hover {
+    transform: translateY(-8px) scale(1.005);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+}
+.pseudocode .keyword {
+    color: #fca5a5; /* Rojo muy claro para palabras clave */
+    font-weight: 700;
+}
+.pseudocode .function {
+    color: #60a5fa; /* Azul claro para funciones */
+}
+.pseudocode .string {
+    color: #4ade80; /* Verde brillante para strings */
+}
+.pseudocode .comment {
+    color: #9ca3af; /* Gris sutil para comentarios */
+    font-style: italic;
+}
+
+/* ====== TARJETAS DE IMPORTANCIA (Diseño de tarjeta prominente) ====== */
+.important {
+    background: var(--accent);
+    padding: 20px 25px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    margin: 30px 0;
+    font-weight: 600;
+    font-size: 1.15rem;
+    color: #78350f;
+    border-left: 8px solid #f97316;
+    transition: all var(--transition-speed) ease;
+}
+.important:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(252, 211, 77, 0.5);
+    cursor: default;
+}
+
+/* ====== BOTONES (Estilo de botón más sólido) ====== */
+.btn {
+    display: inline-block;
+    padding: 0.8rem 1.8rem;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 9999px; /* Píldora */
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 4px 10px rgba(79, 70, 229, 0.4);
+    transition: all var(--transition-speed) ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-right: 15px; /* Espacio entre botones */
+}
+.btn:hover {
+    background: var(--primary-dark);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(79, 70, 229, 0.6);
+}
+.btn-outline {
+    background: transparent;
+    border: 2px solid var(--secondary);
+    color: var(--secondary);
+    box-shadow: none;
+}
+.btn-outline:hover {
+    background: var(--secondary);
+    color: white;
+    box-shadow: 0 4px 10px rgba(219, 39, 119, 0.4);
+}
+
+/* Estilos para los nuevos botones en el cuerpo del HTML (ejemplo) */
+.button-group {
+    text-align: center;
+    margin: 40px 0;
+}
+
+/* ====== RESPONSIVE (Ajustes para móviles) ====== */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px 25px;
+    }
+    h1 {
+        font-size: 2.5rem;
+    }
+    h2 {
+        font-size: 1.7rem;
+    }
+    th, td {
+        padding: 14px 16px;
+        font-size: 0.95rem;
+    }
+    table, .pseudocode {
+        border-radius: 8px;
+    }
+    .btn {
+        display: block;
+        margin: 10px 0;
+        text-align: center;
+    }
+}
+/* Estilos del botón */
+.boton-volver {
+    background-color: #1E90FF; /* Color de fondo azul */
+    color: white; /* Color del texto */
+    border: 2px solid #104E8B; /* Borde azul oscuro */
+    border-radius: 12px; /* Bordes redondeados */
+    padding: 12px 24px; /* Espaciado interno */
+    font-size: 16px; /* Tamaño de letra */
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease; /* Animación suave */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2); /* Sombra */
+}
+
+/* Efecto al pasar el cursor */
+.boton-volver:hover {
+    background-color: #104E8B; /* Fondo más oscuro */
+    border-color: #1E90FF; /* Borde más claro */
+    transform: translateY(-2px); /* Pequeño movimiento hacia arriba */
+    box-shadow: 0 6px 8px rgba(0,0,0,0.3); /* Sombra más intensa */
+}
+
+/* Efecto al hacer clic */
+.boton-volver:active {
+    transform: translateY(0); /* Vuelve a la posición normal */
+    box-shadow: 0 3px 4px rgba(0,0,0,0.2);
+}
+</style>
+</head>
+<body>
+<button class="boton-volver" onclick="location.href='psicologiaportadaaprendeinicio.html'">Volver atrás</button>
+
+<h1>La Ciudad en Silencio: Sombras que Observan  </h1>
+<p>
+La soledad se extiende en cada rincón de la casa y del edificio, donde las paredes guardan un silencio pesado que nadie rompe. Los pasillos se alargan bajo una luz que parpadea, proyectando sombras que se mueven de forma extraña, como si tuvieran vida propia.En las calles, el aire denso arrastra hojas secas y papeles que giran y chocan contra los postes y las paredes de los edificios, produciendo ruidos inesperados que rompen el silencio absoluto. Los coches estacionados permanecen inmóviles, con vidrios empañados y carrocerías que reflejan sombras alargadas de formas que parecen observar desde dentro. Los escaparates vacíos reflejan figuras que se confunden con la oscuridad de la ciudad, como si alguien estuviera observando sin moverse. Cada sonido, desde un cristal que tintinea hasta un leve crujido en la madera, resuena con fuerza en el aire pesado, y la ciudad parece contener la respiración mientras la soledad permanece en cada esquina.
+
+</p>
+
+<p>El pseudocódigo es una manera sencilla de escribir los pasos que debe seguir un programa de computadora, usando palabras normales en lugar de un lenguaje de programación. Sirve para organizar ideas antes de escribir un programa, permite que cualquiera pueda entender los pasos, incluso sin saber programar, y muestra las decisiones y repeticiones que debe realizar un proceso.</p>
+
+<table>
+<tr>
+    <th>Paso</th>
+    <th>Descripción</th>
+</tr>
+<tr>
+    <td class="highlight">Primer paso</td>
+    <td>Analiza tu texto:<br>
+        "Una persona fue al centro a comprar ropa y luego la regaló a la vecina."
+    </td>
+</tr>
+<tr>
+    <td class="highlight">Segundo paso</td>
+    <td>Para ser fácil, distinguí parte por parte:<br>
+        <strong>Problema:</strong> La vecina no tiene ropa nueva.<br>
+        <strong>Acción:</strong> La persona va al centro, compra ropa y se la regala.<br>
+        <strong>Resultado:</strong> La vecina recibe la ropa nueva.
+    </td>
+</tr>
+<tr>
+    <td class="highlight">Tercer paso</td>
+    <td class="pseudocode">
+// Inicio
+// Problema: la vecina no tiene ropa nueva
+Definir persona, vecina, ropa
+
+Escribir "La persona nota que la vecina no tiene ropa nueva"
+
+// Acción
+Escribir "La persona va al centro"
+Escribir "Compra ropa"
+Escribir "Regala la ropa a la vecina"
+
+// Resultado
+Escribir "La vecina recibe la ropa nueva"
+// Fin
+    </td>
+</tr>
+</table>
+
+<h2>Reflexión sobre el pseudocódigo y la mente</h2>
+<p class="important">Hacer un pseudocódigo requiere pensar mucho, pero también demuestra el valor de la inteligencia en todo lo que hacemos. Algunas personas dicen "no puedo", pero en realidad no lo intentan.</p>
+
+<p>Esto sucede incluso con profesores de materias como Biología, Química, Educación Física y con profesionales de áreas como Contabilidad, que muchas veces no se animan a hacer pseudocódigos. Si lo intentan practicar desde el pseudocódigo, pueden desarrollar más su inteligencia emocional y fortalecer su salud mental.</p>
+
+<ul>
+<li>¿Por qué a veces decimos "no puedo" sin haberlo intentado?</li>
+<li>¿Qué significa tener una mentalidad positiva frente a los desafíos?</li>
+<li>¿Cómo influye la forma de pensar en nuestra salud mental?</li>
+<li>¿Qué papel cumple la inteligencia emocional en la vida diaria?</li>
+<li>¿De qué manera los pensamientos negativos afectan nuestro bienestar?</li>
+<li>¿Cómo podemos entrenar la mente para mantener la calma?</li>
+<li>¿Qué cosas te ayudan a sentirte mentalmente fuerte?</li>
+<li>¿Por qué es importante cuidar tanto la mente como el cuerpo?</li>
+<li>¿Qué aprendemos cuando nos equivocamos?</li>
+<li>¿Cómo puede la reflexión ayudarnos a tomar mejores decisiones?</li>
+<li>¿Qué relación existe entre el pensamiento y las emociones?</li>
+<li>¿Qué hábitos pueden mejorar tu equilibrio mental y emocional?</li>
+<li>¿Por qué la paciencia y la empatía son signos de inteligencia?</li>
+<li>¿Qué te motiva a seguir adelante cuando algo parece difícil?</li>
+<li>¿Cómo podrías cuidar mejor tu salud mental todos los días?</li>
+</ul>
+
+<script>
+// Resaltar fila seleccionada
+const filas = document.querySelectorAll("table tr");
+filas.forEach(fila => {
+    fila.addEventListener("click", () => {
+        filas.forEach(f => f.classList.remove("selected"));
+        fila.classList.add("selected");
+    });
+});
+</script>
+
+</body>
+</html>

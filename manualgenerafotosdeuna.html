@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manual de 5 Pasos - Guía de Usuario</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* =============================
+     ESTILOS GLOBALES
+  ============================== */
+  :root {
+    --primary: #0078d4;
+    --secondary: #00b4d8;
+    --accent: #2ecc71;
+    --light: #f5faff;
+    --dark: #333;
+    --shadow: 0 5px 15px rgba(0,0,0,0.1);
+    --transition: all 0.3s ease;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: "Poppins", "Segoe UI", Arial, sans-serif;
+    background: linear-gradient(135deg, #e3f2fd, #ffffff);
+    margin: 0;
+    padding: 0;
+    color: var(--dark);
+    line-height: 1.6;
+    
+   border-radius: 10px;
+  max-width: 1200px;
+  margin: 90px auto;
+  }
+
+  h1 {
+    text-align: center;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    color: white;
+    padding: 25px;
+    margin: 0;
+    font-size: 2.2em;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  h1::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transform: translateX(-100%);
+    animation: shimmer 3s infinite;
+  }
+
+  @keyframes shimmer {
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  .container {
+    width: 90%;
+    max-width: 950px;
+    margin: 40px auto;
+    padding-bottom: 60px;
+  }
+
+  /* =============================
+     BOTÓN VOLVER A INDEX
+  ============================== */
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    margin: 20px 0;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    text-decoration: none;
+  }
+
+  .back-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  }
+
+  .back-btn i {
+    margin-right: 8px;
+  }
+
+  /* =============================
+     TARJETAS (TABLAS MEJORADAS)
+  ============================== */
+  .card {
+    width: 100%;
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 35px;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    position: relative;
+    border: 1px solid rgba(0,0,0,0.05);
+  }
+
+  .card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+  }
+
+  .card-header {
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    color: white;
+    padding: 20px;
+    font-size: 20px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card-header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s;
+  }
+
+  .card:hover .card-header::before {
+    transform: translateX(100%);
+  }
+
+  .card-body {
+    padding: 25px;
+    font-size: 16px;
+    color: #444;
+  }
+
+  .card-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    margin-right: 12px;
+    font-weight: 700;
+  }
+
+  /* =============================
+     CAJAS DESTACADAS
+  ============================== */
+  .highlight-box {
+    background: var(--light);
+    border-left: 5px solid var(--primary);
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 8px;
+    font-size: 15px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .highlight-box::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 100%;
+    background: var(--primary);
+  }
+
+  .highlight-box.success {
+    background: #e8f5e9;
+    border-left-color: var(--accent);
+  }
+
+  .highlight-box.success::before {
+    background: var(--accent);
+  }
+
+  .highlight-box i {
+    margin-right: 8px;
+    color: var(--primary);
+  }
+
+  .highlight-box.success i {
+    color: var(--accent);
+  }
+
+  /* =============================
+     LISTAS MEJORADAS
+  ============================== */
+  .step-list {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .step-list li {
+    margin-bottom: 12px;
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .step-list li i {
+    color: var(--primary);
+    margin-right: 10px;
+    margin-top: 3px;
+    font-size: 18px;
+  }
+
+  /* =============================
+     EXPLICACIÓN VISUAL
+  ============================== */
+  .explanation-box {
+    background: #fff9e6;
+    border: 2px solid #ffd166;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+    position: relative;
+  }
+
+  .explanation-box::before {
+    content: "💡";
+    position: absolute;
+    top: -15px;
+    left: 20px;
+    background: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 18px;
+    border: 2px solid #ffd166;
+  }
+
+  .explanation-grid {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin: 15px 0;
+    gap: 15px;
+  }
+
+  .explanation-item {
+    text-align: center;
+    flex: 1;
+    min-width: 150px;
+    padding: 15px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  }
+
+  .explanation-item i {
+    font-size: 24px;
+    color: var(--primary);
+    margin-bottom: 8px;
+  }
+
+  /* =============================
+     ICONOS Y DETALLES
+  ============================== */
+  .icon {
+    margin-right: 8px;
+  }
+
+  b {
+    color: var(--primary);
+    font-weight: 600;
+  }
+
+  /* =============================
+     BOTÓN ARRIBA (JS)
+  ============================== */
+  #topBtn {
+    display: none;
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    z-index: 99;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    border: none;
+    outline: none;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    font-size: 22px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    transition: var(--transition);
+  }
+
+  #topBtn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  }
+
+  /* =============================
+     RESPONSIVE DESIGN
+  ============================== */
+  @media (max-width: 768px) {
+    h1 {
+      font-size: 1.8em;
+      padding: 20px;
+    }
+    
+    .card-header {
+      font-size: 18px;
+      padding: 18px;
+    }
+    
+    .card-body {
+      padding: 20px;
+      font-size: 15px;
+    }
+    
+    .container {
+      width: 95%;
+      margin: 20px auto;
+    }
+    
+    #topBtn {
+      width: 50px;
+      height: 50px;
+      font-size: 18px;
+      bottom: 20px;
+      right: 20px;
+    }
+
+    .explanation-grid {
+      flex-direction: column;
+    }
+  }
+
+  @media (max-width: 480px) {
+    h1 {
+      font-size: 1.5em;
+      padding: 15px;
+    }
+    
+    .card-header {
+      font-size: 16px;
+      padding: 15px;
+    }
+    
+    .card-body {
+      padding: 15px;
+    }
+    
+    .back-btn {
+      padding: 10px 16px;
+      font-size: 14px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<h1><i class="fas fa-book-open"></i> MANUAL DE USO - 5 PASOS FÁCILES</h1>
+
+<div class="container">
+  <!-- Botón para volver al index -->
+  <a href="ManualinstruccionesArte.html" class="back-btn">
+    <i class="fas fa-arrow-left"></i> Volver a atras
+  </a>
+
+  <!-- PASO 1 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-number">1</span>
+      <i class="fas fa-upload icon"></i> PASO 1: SUBE TU LOGO
+    </div>
+    <div class="card-body">
+      <ul class="step-list">
+        <li><i class="fas fa-search"></i> Busca la sección <b>"Imagen de Entrada"</b>.</li>
+        <li><i class="fas fa-mouse-pointer"></i> Haz clic en <b>"Seleccionar archivo"</b>.</li>
+        <li><i class="fas fa-folder-open"></i> Elige el logo desde tu computadora.</li>
+      </ul>
+      <div class="highlight-box">
+        <i class="fas fa-lightbulb"></i> <b>Consejo:</b> Verás una vista previa del logo al subirlo.
+      </div>
+    </div>
+  </div>
+
+  <!-- PASO 2 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-number">2</span>
+      <i class="fas fa-cogs icon"></i> PASO 2: CONFIGURA LA REPETICIÓN
+    </div>
+    <div class="card-body">
+      <p>Ajusta cuántas veces se repetirá tu logo:</p>
+      
+      <div class="explanation-box">
+        <p><strong>La foto que subiste será la que se repita varias veces.</strong></p>
+        <div class="explanation-grid">
+          <div class="explanation-item">
+            <i class="fas fa-arrow-down"></i>
+            <h4>FILAS</h4>
+            <p>Define cuántas veces se repite <strong>hacia abajo</strong></p>
+          </div>
+          <div class="explanation-item">
+            <i class="fas fa-arrow-right"></i>
+            <h4>COLUMNAS</h4>
+            <p>Define cuántas veces se repite <strong>hacia los lados</strong></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="highlight-box">
+        <i class="fas fa-calculator"></i> <b>Ejemplo:</b><br>
+        8 filas x 8 columnas = 64 logos<br>
+        3 filas x 3 columnas = 9 logos
+      </div>
+    </div>
+  </div>
+
+  <!-- PASO 3 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-number">3</span>
+      <i class="fas fa-palette icon"></i> PASO 3: ELIGE LOS COLORES
+    </div>
+    <div class="card-body">
+      <ul class="step-list">
+        <li><i class="fas fa-fill-drip"></i> <b>Color de fondo:</b> elige el color detrás del logo.</li>
+        <li><i class="fas fa-palette"></i> <b>Paleta de colores:</b> haz clic en cualquier color para aplicarlo.</li>
+      </ul>
+      <div class="highlight-box">
+        <i class="fas fa-lightbulb"></i> Prueba diferentes combinaciones hasta encontrar tu estilo.
+      </div>
+    </div>
+  </div>
+
+  <!-- PASO 4 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-number">4</span>
+      <i class="fas fa-th-large icon"></i> PASO 4: PATRONES PREDEFINIDOS (OPCIONAL)
+    </div>
+    <div class="card-body">
+      <p>En la sección <b>"Patrones Predefinidos"</b> encontrarás 3 tipos:</p>
+      <ul class="step-list">
+        <li><i class="fas fa-square-full"></i> <b>Sólidos:</b> colores planos.</li>
+        <li><i class="fas fa-gradient"></i> <b>Gradientes:</b> mezclas suaves de color.</li>
+        <li><i class="fas fa-th"></i> <b>Texturas:</b> rayas, puntos o cuadros.</li>
+      </ul>
+      <div class="highlight-box">
+        <i class="fas fa-magic"></i> <b>Consejo:</b> Haz clic en un patrón para aplicarlo automáticamente.
+      </div>
+    </div>
+  </div>
+
+  <!-- PASO 5 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-number">5</span>
+      <i class="fas fa-download icon"></i> PASO 5: GUARDA Y DESCARGA TU DISEÑO
+    </div>
+    <div class="card-body">
+      <p>Cuando tu diseño esté listo, elige un formato para descargarlo:</p>
+      <ul class="step-list">
+        <li><i class="fas fa-file-image"></i> <b>PNG:</b> ideal para usar en páginas web.</li>
+        <li><i class="fas fa-file-image"></i> <b>JPG:</b> perfecto para fotos o redes sociales.</li>
+        <li><i class="fas fa-file-pdf"></i> <b>PDF:</b> recomendado para impresión.</li>
+      </ul>
+      <div class="highlight-box success">
+        <i class="fas fa-check-circle"></i> <b>Haz clic</b> en el formato deseado para guardar tu diseño.
+      </div>
+    </div>
+  </div>
+
+
+
+<!-- BOTÓN VOLVER ARRIBA -->
+<button onclick="topFunction()" id="topBtn" title="Volver arriba">
+  <i class="fas fa-chevron-up"></i>
+</button>
+
+<script>
+  // Mostrar botón al hacer scroll
+  window.onscroll = function() {scrollFunction()};
+  function scrollFunction() {
+    const btn = document.getElementById("topBtn");
+    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+      btn.style.display = "block";
+    } else {
+      btn.style.display = "none";
+    }
+  }
+
+  // Subir al inicio
+  function topFunction() {
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+
+  // Mensaje en consola
+  console.log("✅ Manual interactivo cargado correctamente");
+</script>
+
+</body>
+</html>

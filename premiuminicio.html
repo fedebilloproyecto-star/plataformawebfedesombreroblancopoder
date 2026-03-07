@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acceso Premium | Pago y Activación</title>
+  <!-- Font Awesome 6 (iconos) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background: radial-gradient(circle at 10% 30%, #0b1f3b, #163a5e);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      line-height: 1.5;
+    }
+
+    /* tarjeta principal vidriada */
+    .premium-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      width: 100%;
+      max-width: 1200px;
+      border-radius: 2.5rem;
+      padding: 2.8rem 2.5rem;
+      box-shadow: 0 30px 50px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    /* Botón volver atrás */
+    .back-button {
+      position: absolute;
+      top: 1.5rem;
+      left: 1.5rem;
+      background: white;
+      color: #1e3c72;
+      border: none;
+      border-radius: 50px;
+      padding: 0.7rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      border: 1px solid #dbe1ed;
+      z-index: 10;
+    }
+
+    .back-button:hover {
+      background: #f0f6ff;
+      transform: translateX(-3px);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    }
+
+    .back-button i {
+      font-size: 1rem;
+    }
+
+    /* decoración sutil con gradiente */
+    .premium-card h1 {
+      font-size: 2.5rem;
+      font-weight: 600;
+      background: linear-gradient(145deg, #1f3a6b, #153155);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      border-left: 5px solid #2a5c9e;
+      padding-left: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .premium-card h1 i {
+      background: #1e3c72;
+      padding: 0.5rem;
+      border-radius: 50%;
+      color: white;
+      font-size: 1.8rem;
+      box-shadow: 0 8px 18px rgba(0,40,80,0.3);
+    }
+
+    /* párrafos con íconos grandes y coloridos */
+    p {
+      color: #203349;
+      margin-bottom: 1.3rem;
+      font-size: 1.05rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.8rem;
+    }
+
+    p i {
+      color: #2a5c9e;
+      font-size: 1.3rem;
+      margin-top: 0.2rem;
+      min-width: 1.8rem;
+      text-align: center;
+    }
+
+    /* lista de beneficios con ÍCONOS y FOTOS debajo */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      background: #f0f6ff;
+      padding: 2rem;
+      border-radius: 2rem;
+      margin: 2rem 0 1.8rem 0;
+      border: 1px solid #d2e0ff;
+    }
+
+    .feature-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 0.8rem;
+      font-weight: 600;
+      color: #102a44;
+      background: white;
+      padding: 1.5rem 1rem 1.5rem 1rem;
+      border-radius: 1.8rem;
+      box-shadow: 0 8px 18px rgba(0,30,60,0.12);
+      transition: 0.2s;
+      border: 3px solid; /* el color se aplica individualmente */
+    }
+
+    .feature-item:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 15px 25px rgba(0,30,80,0.2);
+    }
+
+    /* ícono grande redondeado */
+    .feature-icon {
+      width: 90px;
+      height: 90px;
+      border-radius: 30px;
+      background: #f5f9ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      margin-bottom: 0.2rem;
+      border: 3px solid currentColor;
+      transition: 0.2s;
+      color: inherit;
+    }
+
+    /* contenedor de la foto que funciona como enlace */
+    .photo-link {
+      display: block;
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      margin: 0.5rem 0;
+      border: 3px solid transparent;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .photo-link:hover {
+      transform: scale(1.02);
+      opacity: 0.9;
+    }
+
+    .photo-link img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      display: block;
+      border-radius: 14px;
+    }
+
+    .feature-item span {
+      font-size: 1.1rem;
+      background: rgba(0,0,0,0.02);
+      padding: 0.3rem 1rem;
+      border-radius: 40px;
+      margin-top: 0.2rem;
+    }
+
+    /* colores de borde individuales para cada item */
+    .color1 { border-color: #FF6B6B; }  /* rojo coral */
+    .color2 { border-color: #4ECDC4; }  /* turquesa */
+    .color3 { border-color: #FFB347; }  /* naranja */
+    .color4 { border-color: #A06AB4; }  /* púrpura */
+    .color5 { border-color: #3B9AE1; }  /* azul brillante */
+    .color6 { border-color: #F4A261; }  /* dorado */
+    .color7 { border-color: #6A994E; }  /* verde */
+    .color8 { border-color: #E5989B; }  /* rosa empolvado */
+
+    .color1 .feature-icon { border-color: #FF6B6B; color: #FF6B6B; }
+    .color2 .feature-icon { border-color: #4ECDC4; color: #4ECDC4; }
+    .color3 .feature-icon { border-color: #FFB347; color: #FFB347; }
+    .color4 .feature-icon { border-color: #A06AB4; color: #A06AB4; }
+    .color5 .feature-icon { border-color: #3B9AE1; color: #3B9AE1; }
+    .color6 .feature-icon { border-color: #F4A261; color: #F4A261; }
+    .color7 .feature-icon { border-color: #6A994E; color: #6A994E; }
+    .color8 .feature-icon { border-color: #E5989B; color: #E5989B; }
+
+    /* caja de pago con íconos */
+    .payment-box {
+      background: white;
+      border-radius: 2rem;
+      padding: 2rem 2rem 1.8rem;
+      box-shadow: 0 15px 30px rgba(18, 38, 68, 0.2);
+      margin: 2rem 0;
+      border: 1px solid rgba(42, 82, 152, 0.2);
+    }
+
+    .payment-box h3 {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #0d2c52;
+      font-size: 1.4rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .payment-box h3 i {
+      font-size: 1.8rem;
+      color: #009ee3;
+    }
+
+    .payment-highlight {
+      background: #f0f6ff;
+      border-left: 4px solid #009ee3;
+      padding: 1.2rem 1.5rem;
+      border-radius: 1.2rem;
+      margin: 1.2rem 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .payment-highlight i {
+      font-size: 2.2rem;
+      color: #009ee3;
+    }
+
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      margin: 1.5rem 0;
+    }
+
+    .step-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 1.1rem;
+    }
+
+    .step-number {
+      background: #1e3c72;
+      color: white;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    /* sección de contacto con nombre obligatorio e íconos */
+    .contact-section {
+      background: #f0f6ff;
+      border-radius: 1.8rem;
+      padding: 1.8rem 2rem;
+      margin: 1rem 0;
+      border: 1px solid #bdd0ff;
+    }
+
+    .contact-section h3 {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #0d2c52;
+      font-size: 1.4rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .contact-section h3 i {
+      font-size: 1.8rem;
+      color: #1e4f85;
+    }
+
+    .name-input-container {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .name-input-container i {
+      font-size: 1.5rem;
+      color: #2a5c9e;
+      background: white;
+      padding: 0.8rem;
+      border-radius: 50%;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .name-input-container input {
+      flex: 2 1 250px;
+      padding: 1rem 1.4rem;
+      border: 2px solid #dbe1ed;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      outline: none;
+      transition: 0.2s;
+      background: white;
+    }
+
+    .name-input-container input:focus {
+      border-color: #2a5c9e;
+      box-shadow: 0 0 0 4px rgba(42, 92, 158, 0.2);
+    }
+
+    .btn-whatsapp {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+      background: #25D366;
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.2rem;
+      transition: 0.2s;
+      border: 1px solid #20b859;
+      box-shadow: 0 6px 14px rgba(37, 211, 102, 0.3);
+      width: 100%;
+    }
+
+    .btn-whatsapp i {
+      font-size: 1.6rem;
+    }
+
+    .btn-whatsapp:hover {
+      background: #20b859;
+      transform: translateY(-3px);
+      box-shadow: 0 15px 20px rgba(0, 100, 40, 0.3);
+    }
+
+    .btn-whatsapp.disabled {
+      opacity: 0.5;
+      pointer-events: none;
+      background: #7f8c8d;
+      border-color: #5f6b6c;
+    }
+
+    .small-note {
+      font-size: 0.9rem;
+      color: #30557a;
+      margin-top: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .small-note i {
+      font-size: 1rem;
+      color: #1e4f85;
+    }
+
+    .access-box {
+      background: #e8f0fe;
+      border-radius: 1.5rem;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .access-box label {
+      font-weight: 600;
+      font-size: 1.2rem;
+      color: #0d2c52;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 1rem;
+    }
+
+    .access-box label i {
+      font-size: 1.4rem;
+      color: #1e4f85;
+    }
+
+    .input-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .input-group input {
+      flex: 2 1 250px;
+      padding: 1rem 1.4rem;
+      border: 2px solid #dbe1ed;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      outline: none;
+      transition: 0.2s;
+      background: white;
+    }
+
+    .input-group input:focus {
+      border-color: #2a5c9e;
+      box-shadow: 0 0 0 4px rgba(42, 92, 158, 0.2);
+    }
+
+    .btn-premium {
+      background: linear-gradient(115deg, #1d3e70, #143159);
+      border: none;
+      color: white;
+      padding: 1rem 2.2rem;
+      border-radius: 50px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: 0 8px 18px rgba(17, 45, 90, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      flex: 1 0 auto;
+      justify-content: center;
+    }
+
+    .btn-premium i {
+      font-size: 1.3rem;
+    }
+
+    .btn-premium:hover {
+      background: linear-gradient(115deg, #1b3670, #0f294f);
+      transform: scale(1.02);
+      box-shadow: 0 12px 24px rgba(7, 27, 60, 0.5);
+    }
+
+    .legal-note {
+      font-size: 0.85rem;
+      color: #4d6079;
+      margin-top: 2rem;
+      border-top: 1px dashed #b3c7e5;
+      padding-top: 1.2rem;
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .legal-note i {
+      color: #1e4d8f;
+      font-size: 1rem;
+    }
+
+    /* responsividad */
+    @media (max-width: 650px) {
+      .premium-card {
+        padding: 1.8rem 1.2rem;
+      }
+      .premium-card h1 {
+        font-size: 1.9rem;
+        padding-left: 1rem;
+        margin-top: 2rem;
+      }
+      .feature-icon {
+        width: 70px;
+        height: 70px;
+        font-size: 2.2rem;
+      }
+      .photo-link img {
+        height: 110px;
+      }
+      .back-button {
+        top: 1rem;
+        left: 1rem;
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+      }
+    }
+table{
+    border-collapse: collapse;
+    width:600px;
+    background:white;
+    box-shadow:0 0 10px rgba(0,0,0,0.2);
+}
+
+th, td{
+    border:1px solid #ddd;
+    padding:12px;
+    text-align:center;
+}
+
+th{
+    background:#333;
+    color:white;
+}
+
+tr:nth-child(even){
+    background:#f2f2f2;
+}
+
+button{
+    padding:8px 14px;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+    color:white;
+}
+
+.whatsapp{
+    background:#25D366;
+}
+
+.pago{
+    background:#009ee3;
+}
+
+.imagen-premium {
+    border: 5px solid #ff6600;       /* borde naranja */
+    border-radius: 15px;             /* esquinas redondeadas */
+    box-shadow: 4px 4px 10px rgba(0,0,0,0.3); /* sombra */
+    width: 300px;                     /* ancho fijo opcional */
+    height: auto;                     /* mantener proporción */
+    display: block;
+    margin: 20px auto;                /* centrar horizontalmente */
+    transition: transform 0.3s;       /* animación al pasar el mouse */
+}
+
+.imagen-premium:hover {
+    transform: scale(1.05);           /* pequeño zoom al pasar el mouse */
+}
+
+  </style>
+</head>
+<body>
+  <div class="premium-card">
+   
+    <!-- Botón volver atrás -->
+    <button class="back-button" onclick="window.location.href='index.html'">
+      <i class="fas fa-arrow-left"></i> Volver atrás
+    </button>
+    <h1>
+      <i class="fas fa-crown"></i> 
+      Bienvenido al nivel Premium
+    </h1>
+<a href="fotopremiumparte1.png" target="_blank">
+    <img src="fotopremiumparte1.png" alt="Imagen premium" class="imagen-premium">
+</a>
+    <!-- mensaje de agradecimiento + confianza con ícono -->
+    <p>
+      <i class="fas fa-heart" style="color:#c41e3a; font-size: 1.6rem;"></i>
+      <span>Gracias por confiar en nosotros. Tu preferencia nos impulsa a mejorar cada día, brindándote un espacio exclusivo, respetuoso y lleno de herramientas pensadas para ti.</span>
+    </p>
+
+    <!-- descripción del plan premium -->
+    <p>
+      <i class="fas fa-star"></i>
+      <span>Plan Premium con acceso exclusivo. Al adquirirlo obtienes herramientas creativas avanzadas, generación de diseños profesionales y descargas ilimitadas. Tu experiencia y privacidad están protegidas.</span>
+  
+  
+    </p>
+<table>
+<tr>
+<th>Paso</th>
+<th>Instrucción</th>
+<th>Acción</th>
+</tr>
+
+<tr>
+<td>1</td>
+<td>Habla al WhatsApp del administrador</td>
+<td><button class="whatsapp" onclick="contactar()">Abrir WhatsApp</button></td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>Paga con Mercado Pago</td>
+<td><button class="pago" onclick="pagar()">Ir a pagar</button></td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>Envía el comprobante del pago al administrador</td>
+<td><button class="whatsapp" onclick="enviarComprobante()">Enviar comprobante</button></td>
+</tr>
+
+<tr>
+<td>4</td>
+<td>El administrador te dará la contraseña para acceder al Premium</td>
+<td>Esperar contraseña</td>
+</tr>
+
+</table>
+
+    <!-- Grid de beneficios con ÍCONOS arriba y FOTOS debajo (las fotos son enlaces) -->
+    <div class="feature-grid">
+      <!-- Crea anuncios -->
+      <div class="feature-item color1">
+        <div class="feature-icon">
+          <i class="fas fa-bullhorn"></i>
+        </div>
+        <!-- Foto que al hacer clic abre la imagen en grande -->
+        <a href="creatupublicacionanuncio.jpg" target="_blank" class="photo-link">
+          <img src="creatupublicacionanuncio.jpg" alt="Ejemplo anuncio" onerror="this.src='https://via.placeholder.com/300x200?text=Anuncio'">
+        </a>
+        <span>Crea anuncios y publicidad</span>
+      </div>
+      
+      <!-- Dibujo avanzado -->
+      <div class="feature-item color2">
+        <div class="feature-icon">
+          <i class="fas fa-draw-polygon"></i>
+        </div>
+        <a href="fotodibujos.png" target="_blank" class="photo-link">
+          <img src="fotodibujos.png" alt="Ejemplo dibujo avanzado" onerror="this.src='https://via.placeholder.com/300x200?text=Dibujo+Avanzado'">
+        </a>
+        <span> Crea tu dibujo avanzado</span>
+      </div>
+      
+      
+   
+      <!-- Logos profesionales -->
+      <div class="feature-item color4">
+        <div class="feature-icon">
+          <i class="fas fa-paint-brush"></i>
+        </div>
+        <a href="creatupropiologo.jpg" target="_blank" class="photo-link">
+          <img src="creatupropiologo.jpg" alt="Ejemplo logo" onerror="this.src='https://via.placeholder.com/300x200?text=Logo'">
+        </a>
+        <span>Crea tu logo profesional</span>
+      </div>
+      
+      <!-- Foto a video -->
+      <div class="feature-item color5">
+        <div class="feature-icon">
+          <i class="fas fa-video"></i>
+        </div>
+        <a href="premiumfotoconvierteavideo.jpg" target="_blank" class="photo-link">
+          <img src="premiumfotoconvierteavideo.jpg" alt="Ejemplo foto a video" onerror="this.src='https://via.placeholder.com/300x200?text=Foto+a+video'">
+        </a>
+        <span>Foto a video</span>
+      </div>
+      
+   
+      
+      <!-- Decoraciones -->
+      <div class="feature-item color7">
+        <div class="feature-icon">
+          <i class="fas fa-magic"></i>
+        </div>
+        <a href="decoracion.png" target="_blank" class="photo-link">
+          <img src="decoracion.png" alt="Ejemplo decoración" onerror="this.src='https://via.placeholder.com/300x200?text=Decoracion'">
+        </a>
+        <span>Decoraciones</span>
+      </div>
+      
+      <!-- Estilo Paint PRO -->
+      <div class="feature-item color8">
+        <div class="feature-icon">
+          <i class="fas fa-palette"></i>
+        </div>
+        <a href="haztupropiodibujo.jpg" target="_blank" class="photo-link">
+          <img src="haztupropiodibujo.jpg" alt="Ejemplo paint pro" onerror="this.src='https://via.placeholder.com/300x200?text=Paint+PRO'">
+        </a>
+        <span>Estilo Paint PRO</span>
+      </div>
+    </div>
+
+    <!-- SECCIÓN: Contactar al administrador (con texto actualizado) -->
+    <div class="contact-section">
+      <h3>
+        <i class="fas fa-id-card"></i>
+        Contactar al administrador
+      </h3>
+      <p style="margin-bottom: 0.8rem; display: block;">
+        <i class="fas fa-info-circle" style="font-size: 1.2rem;"></i> 
+        <span>Para obtener el acceso, primero indícanos tu nombre (solo necesitamos saber quién eres). Luego haz clic en WhatsApp y envía el mensaje.</span>
+      </p>
+      
+      <!-- Campo obligatorio: nombre con ícono -->
+      <div class="name-input-container">
+        <i class="fas fa-user"></i>
+        <input type="text" id="userName" placeholder="Tu nombre (obligatorio)" autocomplete="off">
+      </div>
+
+      <!-- Botón de WhatsApp con mensaje de consulta de precio -->
+      <a id="whatsappLink" href="#" target="_blank" class="btn-whatsapp disabled" onclick="return enviarWhatsApp()">
+        <i class="fab fa-whatsapp"></i> Consultar precio por WhatsApp
+      </a>
+      <div class="small-note">
+        <i class="fas fa-lock-open"></i> 
+        Mensaje: <em>"Hola, soy [nombre]. Quiero acceder al Premium. ¿Cuál sería el precio para acceder?"</em>
+      </div>
+    </div>
+
+    <!-- caja de acceso con contraseña (para cuando ya tienen la clave) con ícono -->
+    <div class="access-box">
+      <label>
+        <i class="fas fa-lock"></i>
+        ¿Ya tienes tu contraseña? Ingresa aquí
+      </label>
+      <div class="input-group">
+        <i class="fas fa-key" style="font-size: 1.5rem; color: #1e4f85;"></i>
+        <input type="password" id="password" placeholder="Contraseña personal" autocomplete="off">
+        <button class="btn-premium" onclick="acceder()">
+          <i class="fas fa-arrow-right-to-bracket"></i> Acceder
+        </button>
+      </div>
+      <div style="font-size: 0.9rem; margin-top: 0.8rem; color: #30557a; display: flex; align-items: center; gap: 0.3rem;">
+        <i class="fas fa-clock"></i> La contraseña se envía luego de verificar el pago
+      </div>
+    </div>
+
+    <!-- mensaje de privacidad y datos personales con ícono -->
+    <div class="legal-note">
+      <i class="fas fa-shield-alt"></i>
+      <span>Tus datos personales están protegidos con total confidencialidad, cumpliendo la normativa vigente.</span>
+
+  
+<a href="fotopremiumparte2.jpg" target="_blank">
+    <img src="fotopremiumparte2.jpg" alt="Imagen premium" class="imagen-premium">
+</a>
+
+  </div>
+  </div>
+  <script>
+    // Función para acceder con contraseña
+    function acceder() {
+      const pass = document.getElementById("password").value.trim();
+      if (pass === "veranopremium2026blanco") {
+        window.location.href = "bievenidospremium.html";
+      } else {
+        alert("🔐 Contraseña incorrecta. Por favor, intenta nuevamente.");
+      }
+    }
+
+    // Permitir acceder con tecla "Enter" desde el input de contraseña
+    document.getElementById("password").addEventListener("keypress", function(e) {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        acceder();
+      }
+    });
+
+    // Función para habilitar/deshabilitar el enlace de WhatsApp según el nombre
+    const nameInput = document.getElementById('userName');
+    const whatsappBtn = document.getElementById('whatsappLink');
+
+    function updateWhatsAppLink() {
+      const nombre = nameInput.value.trim();
+      if (nombre === '') {
+        whatsappBtn.classList.add('disabled');
+        whatsappBtn.href = '#';
+      } else {
+        whatsappBtn.classList.remove('disabled');
+        // Número de WhatsApp
+        const telefono = '543624838162';
+        // Mensaje: "Hola, soy [nombre]. Quiero acceder al Premium. ¿Cuál sería el precio para acceder?"
+        const mensaje = `Hola, soy ${nombre}. Quiero acceder al Premium. ¿Cuál sería el precio para acceder?`;
+        const url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
+        whatsappBtn.href = url;
+      }
+    }
+
+    // Escuchar cambios en el campo nombre
+    nameInput.addEventListener('input', updateWhatsAppLink);
+    nameInput.addEventListener('change', updateWhatsAppLink);
+
+    // Prevenir que el enlace se active si está deshabilitado
+    window.enviarWhatsApp = function() {
+      if (whatsappBtn.classList.contains('disabled')) {
+        alert('✋ Por favor, ingresa tu nombre antes de contactar al administrador.');
+        return false;
+      }
+      return true;
+    };
+
+    // Inicializar estado al cargar la página
+    updateWhatsAppLink();
+  </script>
+</body>
+</html>

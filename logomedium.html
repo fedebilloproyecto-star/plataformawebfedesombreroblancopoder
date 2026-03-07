@@ -1,0 +1,2132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Diseñador de Logos PRO - Editor Avanzado</title>
+
+  <!-- Fonts & icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Orbitron&family=Pacifico&family=Poppins:wght@400;600;700&family=Bebas+Neue&family=Lobster&family=Raleway&family=Righteous&family=Abril+Fatface&family=Playfair+Display&family=Roboto+Condensed&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root{
+      --card-bg: rgba(30, 30, 45, 0.95);
+      --muted: #aaa;
+      --radius: 24px;
+      --panel-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --neon-pink: #ff00ff;
+      --neon-blue: #00ffff;
+      --neon-green: #00ff95;
+      --neon-yellow: #ffea00;
+      --neon-purple: #9d4dff;
+      --neon-orange: #ff6b35;
+      --neon-red: #ff0057;
+      --glass-bg: rgba(255, 255, 255, 0.08);
+      --glass-border: rgba(255, 255, 255, 0.18);
+    }
+
+    *{box-sizing:border-box; margin:0; padding:0;}
+    body{
+      margin:0;
+      font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(135deg,#0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+      color:#fff;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      min-height:100vh;
+      padding:25px;
+      display:flex;
+      justify-content:center;
+      position: relative;
+      overflow-x: hidden;
+    
+      
+   border-radius: 10px;
+  max-width: 1300px;
+  margin: 90px auto;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 230, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(100, 220, 255, 0.08) 0%, transparent 50%);
+      z-index: -1;
+    }
+
+    .container{
+      width:100%;
+      max-width:1800px;
+      display:flex;
+      flex-direction:column;
+      gap:35px;
+      align-items:center;
+    }
+
+    header{
+      width:100%;
+      margin-bottom: 25px;
+      text-align: center;
+      padding: 40px;
+      background: rgba(255,255,255,0.05);
+      border-radius: var(--radius);
+      backdrop-filter: blur(25px);
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(90deg, var(--neon-pink), var(--neon-blue), var(--neon-green), var(--neon-yellow));
+    }
+
+    header h1{
+      margin:0 0 20px 0;
+      font-size:52px;
+      display:flex;
+      align-items:center;
+      justify-content: center;
+      gap:25px;
+      background: linear-gradient(90deg, var(--neon-pink), var(--neon-blue), var(--neon-green), var(--neon-yellow), var(--neon-purple), var(--neon-orange));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: colorShift 8s linear infinite;
+      text-shadow: 0 0 30px rgba(255,255,255,0.3);
+      font-weight:900;
+      letter-spacing: 0.5px;
+    }
+
+    @keyframes colorShift {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+
+    header p{
+      margin:0;
+      color:#ddd;
+      font-size:22px;
+      max-width: 1000px;
+      margin: 0 auto;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    .subtitle {
+      color: #aaa;
+      font-size: 16px;
+      margin-top: 15px;
+      font-weight: 400;
+    }
+
+    .main-content{
+      display:grid;
+      grid-template-columns: 1fr 500px;
+      gap:40px;
+      width:100%;
+      align-items:start;
+    }
+
+    .panel {
+      background: var(--glass-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--panel-shadow);
+      padding:35px;
+      backdrop-filter: blur(25px);
+      border: 1px solid var(--glass-border);
+      transition: transform 0.3s ease;
+    }
+
+    .panel:hover {
+      transform: translateY(-5px);
+    }
+
+    .creator-panel{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:25px;
+      align-items:center;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .creator-panel .full-width{
+      grid-column: 1 / span 2;
+    }
+
+    label{ 
+      font-size:16px; 
+      color:#eee; 
+      display:block; 
+      margin-bottom:12px; 
+      font-weight:700; 
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    label i {
+      color: var(--neon-blue);
+      width: 20px;
+      text-align: center;
+    }
+
+    input[type="file"]{ 
+      font-size:15px; 
+      padding: 15px;
+      border-radius: 12px;
+      background: rgba(0,0,0,0.3);
+      border: 2px dashed rgba(255,255,255,0.2);
+      color: #fff;
+      width: 100%;
+      cursor: pointer;
+    }
+
+    input[type="file"]::file-selector-button {
+      background: var(--neon-blue);
+      color: #000;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-right: 15px;
+    }
+
+    input[type="text"], select, input[type="color"]{
+      width:100%;
+      padding:18px 22px;
+      border-radius:18px;
+      border:2px solid rgba(255,255,255,0.2);
+      font-size:16px;
+      background:rgba(0,0,0,0.4);
+      color: white;
+      transition: all 0.3s ease;
+    }
+
+    input[type="text"]:focus, select:focus{
+      border-color: var(--neon-blue);
+      box-shadow: 0 0 25px rgba(0,255,255,0.5);
+      outline: none;
+      background: rgba(0,0,0,0.6);
+    }
+
+    input[type="color"] {
+      height: 65px;
+      cursor: pointer;
+      border-radius: 15px;
+      border: 3px solid rgba(255,255,255,0.3);
+    }
+
+    .preview-area{
+      background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1350&q=80');
+      background-size: cover;
+      background-position: center;
+      border-radius:30px;
+      padding:60px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      min-height:700px;
+      box-shadow: 0 30px 70px rgba(0,0,0,0.7);
+      text-align:center;
+      position:relative;
+      overflow: hidden;
+      border: 3px solid transparent;
+      transition: all 0.5s ease;
+    }
+
+    .preview-area::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.03) 50%, transparent 70%);
+      animation: shine 8s infinite linear;
+    }
+
+    @keyframes shine {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .preview-area img{
+      width:320px;
+      height:320px;
+      object-fit:cover;
+      border-radius:25px;
+      margin-bottom:35px;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+      background:linear-gradient(180deg,#fff,#f7f7f7);
+      z-index: 1;
+      position: relative;
+      filter: drop-shadow(0 0 30px rgba(255,255,255,0.8));
+      transition: all 0.4s ease;
+      border: 3px solid transparent;
+    }
+
+    .preview-area h3{
+      margin:0;
+      font-size:42px;
+      font-weight:900;
+      letter-spacing:1.5px;
+      transition: all .3s ease;
+      word-break:break-word;
+      z-index: 1;
+      position: relative;
+      padding: 15px 25px;
+      border-radius: 20px;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(10px);
+      max-width: 100%;
+    }
+
+    .preview-label {
+      position:absolute; 
+      right:20px; 
+      top:20px; 
+      font-size:14px; 
+      color:#fff; 
+      background: rgba(0,0,0,0.7); 
+      padding: 8px 16px; 
+      border-radius: 12px; 
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.2);
+      font-weight: 600;
+    }
+
+    .controls-row{
+      display:flex;
+      gap:20px;
+      align-items:center;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:15px;
+      justify-content:center;
+      padding:20px 30px;
+      border-radius:18px;
+      border:none;
+      cursor:pointer;
+      font-weight:800;
+      font-size:18px;
+      box-shadow: none;
+      transition:transform .3s ease, box-shadow .4s ease, background .3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.6s;
+    }
+
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    .btn.primary{
+      background: linear-gradient(90deg, var(--neon-green), var(--neon-blue));
+      color:#000;
+      font-weight: 900;
+    }
+
+    .btn.ghost{
+      background:transparent;
+      border:3px solid rgba(255,255,255,0.3);
+      color:#fff;
+    }
+
+    .btn:hover{
+      transform: translateY(-8px) scale(1.05);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.7);
+    }
+
+    .btn.primary:hover {
+      background: linear-gradient(90deg, var(--neon-pink), var(--neon-yellow));
+    }
+
+    .btn.ghost:hover {
+      background: rgba(255,255,255,0.15);
+      border-color: var(--neon-blue);
+    }
+
+    .small{
+      font-size:15px;
+      padding:16px 24px;
+    }
+
+    /* Effects */
+    .effect-neon{
+      color: #fff;
+      text-shadow:
+        0 0 20px var(--neon-pink),
+        0 0 40px var(--neon-blue),
+        0 0 60px var(--neon-green),
+        0 0 80px var(--neon-pink);
+      animation: neon-pulse 2.5s infinite alternate;
+    }
+
+    @keyframes neon-pulse {
+      from {
+        text-shadow:
+          0 0 20px var(--neon-pink),
+          0 0 40px var(--neon-blue),
+          0 0 60px var(--neon-green),
+          0 0 80px var(--neon-pink);
+      }
+      to {
+        text-shadow:
+          0 0 15px var(--neon-pink),
+          0 0 30px var(--neon-blue),
+          0 0 45px var(--neon-green),
+          0 0 60px var(--neon-pink);
+      }
+    }
+
+    .effect-glow{
+      color: #fff;
+      text-shadow: 
+        0 0 40px rgba(79,70,229,1), 
+        0 0 70px rgba(6,182,212,0.9),
+        0 0 100px rgba(120,115,245,0.7);
+    }
+
+    .effect-retro{
+      color:#fff;
+      font-family: "Courier New", Courier, monospace;
+      text-shadow: 8px 8px 0 var(--neon-yellow), -8px -8px 0 var(--neon-green);
+      transform: skewX(-10deg);
+      background: linear-gradient(45deg, var(--neon-pink), var(--neon-blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 2px;
+    }
+
+    .effect-3d{
+      color: #fff;
+      text-shadow: 
+        6px 6px 0 #999,
+        12px 12px 0 #777,
+        18px 18px 0 #555;
+      transform: perspective(500px) rotateX(15deg);
+    }
+
+    .effect-gradient{
+      background: linear-gradient(45deg, var(--neon-pink), var(--neon-blue), var(--neon-green), var(--neon-yellow));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradient-shift 4s ease infinite;
+      background-size: 300% 300%;
+      font-weight: 900;
+    }
+
+    @keyframes gradient-shift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Nuevos efectos */
+    .effect-gold{
+      color: #ffd700;
+      text-shadow: 
+        0 0 20px rgba(255, 215, 0, 0.8),
+        0 0 40px rgba(255, 215, 0, 0.6),
+        0 0 60px rgba(255, 215, 0, 0.4);
+      background: linear-gradient(to right, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .effect-metal{
+      color: #e0e0e0;
+      text-shadow: 
+        0 1px 0 #ccc,
+        0 2px 0 #c9c9c9,
+        0 3px 0 #bbb,
+        0 4px 0 #b9b9b9,
+        0 5px 0 #aaa,
+        0 6px 1px rgba(0,0,0,.1),
+        0 0 5px rgba(0,0,0,.1),
+        0 1px 3px rgba(0,0,0,.3),
+        0 3px 5px rgba(0,0,0,.2),
+        0 5px 10px rgba(0,0,0,.25);
+    }
+
+    .effect-water{
+      color: #00ffff;
+      text-shadow: 
+        0 0 20px rgba(0, 255, 255, 0.7),
+        0 0 40px rgba(0, 255, 255, 0.5),
+        0 0 60px rgba(0, 255, 255, 0.3);
+      background: linear-gradient(to bottom, #00ffff, #0080ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: water-flow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes water-flow {
+      0% { background-position: 0% 0%; }
+      100% { background-position: 100% 100%; }
+    }
+
+    /* Additional Controls */
+    .additional-controls {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px;
+      margin-top: 25px;
+    }
+
+    .control-with-range {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .range-value {
+      font-size: 16px;
+      color: #fff;
+      text-align: center;
+      background: rgba(0,0,0,0.5);
+      padding: 10px 15px;
+      border-radius: 12px;
+      font-weight: 700;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    input[type="range"] {
+      width: 100%;
+      height: 12px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.1);
+      outline: none;
+      -webkit-appearance: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--neon-blue);
+      cursor: pointer;
+      box-shadow: 0 0 20px var(--neon-blue);
+      border: 3px solid white;
+    }
+
+    /* Image Size Controls */
+    .image-size-controls {
+      margin-top: 25px;
+      padding: 25px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 20px;
+      border: 2px solid rgba(255,255,255,0.1);
+    }
+
+    .image-size-controls h4 {
+      margin: 0 0 20px 0;
+      color: var(--neon-green);
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .size-presets {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 15px;
+    }
+
+    .size-preset {
+      padding: 12px 18px;
+      border: none;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.1);
+      color: white;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      flex: 1;
+      min-width: 100px;
+      font-weight: 700;
+    }
+
+    .size-preset:hover {
+      background: var(--neon-blue);
+      transform: translateY(-3px);
+    }
+
+    .size-preset.active {
+      background: var(--neon-green);
+      box-shadow: 0 0 15px var(--neon-green);
+    }
+
+    /* AI Suggestions */
+    .ai-suggestions {
+      margin-top: 30px;
+      padding: 30px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 20px;
+      border: 2px solid rgba(255,255,255,0.18);
+    }
+
+    .ai-suggestions h4 {
+      margin: 0 0 25px 0;
+      color: var(--neon-green);
+      font-size: 22px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .suggestion-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      max-height: 220px;
+      overflow-y: auto;
+      padding: 20px;
+      background: rgba(0,0,0,0.4);
+      border-radius: 15px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .suggestion-btn {
+      padding: 14px 20px;
+      border: none;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.12);
+      color: white;
+      cursor: pointer;
+      font-size: 15px;
+      transition: all 0.3s ease;
+      flex: 1;
+      min-width: 140px;
+      font-weight: 700;
+    }
+
+    .suggestion-btn:hover {
+      background: var(--neon-pink);
+      transform: translateY(-5px) scale(1.08);
+      box-shadow: 0 10px 25px rgba(255,0,255,0.6);
+    }
+
+    /* Background Patterns */
+    .background-section {
+      margin-top: 30px;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 20px;
+      color: var(--neon-yellow);
+      margin-bottom: 20px;
+    }
+
+    .background-patterns {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      margin-top: 20px;
+      max-height: 300px;
+      overflow-y: auto;
+      padding: 20px;
+      background: rgba(0,0,0,0.4);
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .pattern-option {
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: 12px;
+      cursor: pointer;
+      border: 3px solid transparent;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .pattern-option:hover {
+      transform: scale(1.15);
+      box-shadow: 0 0 25px rgba(255,255,255,0.5);
+    }
+
+    .pattern-option.active {
+      border-color: var(--neon-yellow);
+      box-shadow: 0 0 25px var(--neon-yellow);
+      transform: scale(1.12);
+    }
+
+    .pattern-number {
+      position: absolute;
+      bottom: 6px;
+      right: 6px;
+      background: rgba(0,0,0,0.85);
+      color: white;
+      font-size: 12px;
+      padding: 5px 8px;
+      border-radius: 8px;
+      font-weight: 900;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .pattern-label {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: rgba(0,0,0,0.85);
+      color: white;
+      font-size: 10px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-weight: 700;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    /* Download Options */
+    .download-options {
+      margin-top: 30px;
+      padding: 30px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 20px;
+      border: 2px solid rgba(255,255,255,0.18);
+    }
+
+    .download-options h4 {
+      margin: 0 0 25px 0;
+      color: var(--neon-orange);
+      font-size: 22px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .format-buttons {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .format-btn {
+      padding: 16px 24px;
+      border: none;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.12);
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      flex: 1;
+      min-width: 110px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .format-btn:hover {
+      background: var(--neon-orange);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(255,107,53,0.5);
+    }
+
+    .format-btn.active {
+      background: var(--neon-green);
+      box-shadow: 0 0 20px var(--neon-green);
+    }
+
+    /* Frame Styles */
+    .frame-options {
+      margin-top: 30px;
+      padding: 30px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 20px;
+      border: 2px solid rgba(255,255,255,0.18);
+    }
+
+    .frame-options h4 {
+      margin: 0 0 25px 0;
+      color: var(--neon-purple);
+      font-size: 22px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .frame-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .frame-btn {
+      padding: 14px 18px;
+      border: none;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.12);
+      color: white;
+      cursor: pointer;
+      font-size: 15px;
+      transition: all 0.3s ease;
+      flex: 1;
+      min-width: 90px;
+      font-weight: 700;
+    }
+
+    .frame-btn:hover {
+      background: var(--neon-purple);
+      transform: translateY(-4px);
+      box-shadow: 0 6px 15px rgba(157, 77, 255, 0.4);
+    }
+
+    .frame-btn.active {
+      background: var(--neon-purple);
+      box-shadow: 0 0 15px var(--neon-purple);
+    }
+
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 12px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(255,255,255,0.1);
+      border-radius: 15px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--neon-blue);
+      border-radius: 15px;
+      border: 2px solid rgba(0,0,0,0.2);
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--neon-pink);
+    }
+
+    /* Loading overlay */
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.9);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .loading-spinner {
+      width: 80px;
+      height: 80px;
+      border: 8px solid rgba(255,255,255,0.1);
+      border-top: 8px solid var(--neon-green);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    .loading-text {
+      color: white;
+      font-size: 24px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Color Palettes */
+    .color-palettes {
+      margin-top: 25px;
+      padding: 25px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 20px;
+      border: 2px solid rgba(255,255,255,0.1);
+    }
+
+    .color-palettes h4 {
+      margin: 0 0 20px 0;
+      color: var(--neon-red);
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .palette-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      margin-top: 15px;
+    }
+
+    .palette-item {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      cursor: pointer;
+      padding: 12px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.05);
+      transition: all 0.3s ease;
+    }
+
+    .palette-item:hover {
+      transform: translateY(-5px);
+      background: rgba(255,255,255,0.1);
+    }
+
+    .palette-colors {
+      display: flex;
+      height: 40px;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .palette-color {
+      flex: 1;
+      height: 100%;
+    }
+
+    .palette-name {
+      text-align: center;
+      font-size: 12px;
+      color: #ccc;
+      font-weight: 600;
+    }
+
+    /* Responsive */
+    @media (max-width:1400px){
+      .main-content{ 
+        grid-template-columns: 1fr; 
+        padding:20px; 
+        gap: 30px;
+      }
+      .preview-area{ 
+        min-height:600px;
+        order: -1;
+      }
+      .background-patterns {
+        grid-template-columns: repeat(4, 1fr);
+      }
+      .creator-panel {
+        max-height: none;
+      }
+    }
+
+    @media (max-width:992px){
+      .background-patterns {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .palette-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .suggestion-buttons {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .additional-controls {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width:768px){
+      .background-patterns {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .palette-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .format-buttons, .frame-buttons {
+        flex-direction: column;
+      }
+      .creator-panel {
+        grid-template-columns: 1fr;
+      }
+      .creator-panel .full-width{
+        grid-column: 1;
+      }
+      header h2 {
+        font-size: 36px;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .preview-area {
+        padding: 30px;
+      }
+      .preview-area img {
+        width: 250px;
+        height: 250px;
+      }
+      .preview-area h3 {
+        font-size: 32px;
+      }
+    }
+    
+    .back-btn {
+      background-color: #f1c40f;
+      color: #000;
+      border: 2px solid #d4ac0d;
+      padding: 12px 26px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 8px;
+      margin: 30px 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .back-btn:hover {
+      background-color: #000;
+      color: #f1c40f;
+      border-color: #000;
+      transform: translateX(-4px);
+    }
+
+    .back-btn:active {
+      transform: scale(0.96);
+    }
+
+  </style>
+</head>
+<body>
+  
+  <!-- Loading Overlay -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-spinner"></div>
+    <div class="loading-text" id="loadingText">Generando imagen de alta calidad...</div>
+  </div>
+
+  <div class="container">
+    <header>
+      <h2><i class="fa-solid fa-crown"></i> Logo  Premium(El sombrero blanco)<i class="fa-solid fa-gem"></i></h2>
+      <p>Editor Avanzado de Logos - Control Total sobre Tamaños, Fondos y Efectos</p>
+      <div class="subtitle">Crea logos profesionales con más de 50 fondos de paisajes y controles de tamaño avanzados</div>
+    </header>
+    
+    <button class="back-btn" onclick="window.location.href='principiprincipallogo.html'">
+      <i class="fas fa-arrow-left"></i> Volver a atras
+    </button>
+
+    <div class="main-content">
+      <!-- Panel de controles -->
+      <div class="panel creator-panel">
+        <div class="full-width">
+          <label for="logoImage"><i class="fas fa-cloud-upload-alt"></i> Subir imagen personalizada</label>
+          <input id="logoImage" type="file" accept="image/*">
+        </div>
+
+        <div class="full-width">
+          <label for="logoText"><i class="fas fa-font"></i> Texto del logo</label>
+          <input id="logoText" type="text" placeholder="Ej: Mi Marca Premium" value="Mi Logo Pro">
+        </div>
+
+        <div>
+          <label for="bgColor"><i class="fas fa-fill-drip"></i> Color de fondo</label>
+          <input id="bgColor" type="color" value="#7873f5">
+        </div>
+
+        <div>
+          <label for="textColor"><i class="fas fa-palette"></i> Color de texto</label>
+          <input id="textColor" type="color" value="#ffffff">
+        </div>
+
+        <!-- CONTROLES DE TAMAÑO DE IMAGEN -->
+        <div class="full-width image-size-controls">
+          <h4><i class="fas fa-expand-alt"></i> Tamaño de la Imagen</h4>
+          <div class="additional-controls">
+            <div class="control-with-range">
+              <label for="imageWidth"><i class="fas fa-arrows-alt-h"></i> Ancho (px)</label>
+              <input type="range" id="imageWidth" min="100" max="500" value="320">
+              <div class="range-value" id="imageWidthValue">320px</div>
+            </div>
+            
+            <div class="control-with-range">
+              <label for="imageHeight"><i class="fas fa-arrows-alt-v"></i> Alto (px)</label>
+              <input type="range" id="imageHeight" min="100" max="500" value="320">
+              <div class="range-value" id="imageHeightValue">320px</div>
+            </div>
+          </div>
+          
+          <h4 style="margin-top: 20px;"><i class="fas fa-th"></i> Tamaños Predefinidos</h4>
+          <div class="size-presets">
+            <button class="size-preset" data-size="small">Pequeño (200x200)</button>
+            <button class="size-preset active" data-size="medium">Mediano (320x320)</button>
+            <button class="size-preset" data-size="large">Grande (400x400)</button>
+            <button class="size-preset" data-size="square">Cuadrado (300x300)</button>
+            <button class="size-preset" data-size="rect">Rectángulo (400x250)</button>
+            <button class="size-preset" data-size="wide">Ancho (450x200)</button>
+          </div>
+        </div>
+
+        <div>
+          <label for="fontSelect"><i class="fas fa-text-height"></i> Familia de fuente</label>
+          <select id="fontSelect">
+            <option value="'Poppins', sans-serif">Poppins (Moderno)</option>
+            <option value="'Montserrat', sans-serif">Montserrat (Elegante)</option>
+            <option value="'Orbitron', sans-serif">Orbitron (Tecnológico)</option>
+            <option value="'Pacifico', cursive">Pacifico (Creativo)</option>
+            <option value="'Courier New', monospace">Courier New (Retro)</option>
+            <option value="'Bebas Neue', sans-serif">Bebas Neue (Bold)</option>
+            <option value="'Lobster', cursive">Lobster (Divertido)</option>
+            <option value="'Raleway', sans-serif">Raleway (Profesional)</option>
+            <option value="'Righteous', cursive">Righteous (Energético)</option>
+            <option value="'Abril Fatface', cursive">Abril Fatface (Lujo)</option>
+            <option value="'Playfair Display', serif">Playfair Display (Clásico)</option>
+            <option value="'Roboto Condensed', sans-serif">Roboto Condensed (Minimalista)</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="styleSelect"><i class="fas fa-magic"></i> Efecto de texto</label>
+          <select id="styleSelect">
+            <option value="none">Normal</option>
+            <option value="neon">Neón Brillante</option>
+            <option value="glow">Brillo Intenso</option>
+            <option value="glitch">Efecto Glitch</option>
+            <option value="retro">Estilo Retro</option>
+            <option value="3d">3D Profundo</option>
+            <option value="gradient">Gradiente Animado</option>
+            <option value="gold">Efecto Oro</option>
+            <option value="metal">Efecto Metálico</option>
+            <option value="water">Efecto Agua</option>
+          </select>
+        </div>
+
+        <div class="full-width additional-controls">
+          <div class="control-with-range">
+            <label for="textSize"><i class="fas fa-text-height"></i> Tamaño texto</label>
+            <input type="range" id="textSize" min="1" max="5" step="0.1" value="3.2">
+            <div class="range-value" id="textSizeValue">3.2rem</div>
+          </div>
+          
+          <div class="control-with-range">
+            <label for="shadowIntensity"><i class="fas fa-cloud"></i> Sombra imagen</label>
+            <input type="range" id="shadowIntensity" min="0" max="30" value="20">
+            <div class="range-value" id="shadowValue">20px</div>
+          </div>
+
+          <div class="control-with-range">
+            <label for="borderRadius"><i class="fas fa-square"></i> Bordes imagen</label>
+            <input type="range" id="borderRadius" min="0" max="40" value="20">
+            <div class="range-value" id="borderRadiusValue">20px</div>
+          </div>
+
+          <div class="control-with-range">
+            <label for="rotation"><i class="fas fa-sync-alt"></i> Rotación imagen</label>
+            <input type="range" id="rotation" min="-20" max="20" value="0">
+            <div class="range-value" id="rotationValue">0°</div>
+          </div>
+        </div>
+
+        <!-- PALETAS DE COLORES -->
+        <div class="full-width color-palettes">
+          <h4><i class="fas fa-palette"></i> Paletas de Colores Profesionales</h4>
+          <div class="palette-grid" id="colorPalettes">
+            <!-- Las paletas se generarán con JavaScript -->
+          </div>
+        </div>
+
+        <!-- 40 Fondos de Paisajes (Aumentado a 40) -->
+        <div class="full-width background-section">
+          <div class="section-title">
+            <i class="fas fa-mountain-sun"></i> 40 Fondos de Paisajes Premium
+          </div>
+          <div class="background-patterns" id="backgroundPatterns">
+            <!-- Los 40 fondos de paisajes se generarán con JavaScript -->
+          </div>
+        </div>
+
+        <!-- Marcos Personalizables -->
+        <div class="full-width frame-options">
+          <h4><i class="fas fa-crop-alt"></i> Marcos y Bordes Premium</h4>
+          <div class="frame-buttons" id="frameButtons">
+            <button class="frame-btn active" data-frame="none">Sin Marco</button>
+            <button class="frame-btn" data-frame="solid">Sólido Elegante</button>
+            <button class="frame-btn" data-frame="dashed">Punteado Moderno</button>
+            <button class="frame-btn" data-frame="double">Doble Línea</button>
+            <button class="frame-btn" data-frame="gradient">Gradiente</button>
+            <button class="frame-btn" data-frame="neon">Borde Neón</button>
+            <button class="frame-btn" data-frame="ornate">Ornamental</button>
+            <button class="frame-btn" data-frame="metallic">Metálico</button>
+            <button class="frame-btn" data-frame="dotted">Punteado Fino</button>
+            <button class="frame-btn" data-frame="shadow">Sombra Externa</button>
+          </div>
+        </div>
+
+        <!-- 50 Sugerencias de IA -->
+        <div class="full-width ai-suggestions">
+          <h4><i class="fas fa-robot"></i> 60 Sugerencias de IA Avanzadas</h4>
+          <div class="suggestion-buttons" id="suggestionButtons">
+            <!-- Las 60 sugerencias se generarán con JavaScript -->
+          </div>
+        </div>
+
+        <!-- Opciones de Descarga -->
+        <div class="full-width download-options">
+          <h4><i class="fas fa-download"></i> Descargar en Formato</h4>
+          <div class="format-buttons">
+            <button class="format-btn active" data-format="png">
+              <i class="fas fa-file-image"></i> PNG (Alta Calidad)
+            </button>
+            <button class="format-btn" data-format="jpg">
+              <i class="fas fa-file-image"></i> JPG (Optimizado)
+            </button>
+            <button class="format-btn" data-format="webp">
+              <i class="fas fa-file-image"></i> WEBP (Moderno)
+            </button>
+            <button class="format-btn" data-format="svg">
+              <i class="fas fa-file-code"></i> SVG (Vectorial)
+            </button>
+            <button class="format-btn" data-format="pdf">
+              <i class="fas fa-file-pdf"></i> PDF (Impresión)
+            </button>
+          </div>
+        </div>
+
+        <div class="full-width" style="display:flex; gap:20px; justify-content:space-between; align-items:center; margin-top: 30px;">
+          <button id="downloadBtn" class="btn primary"><i class="fas fa-download"></i> Descargar Logo Pro</button>
+          <div style="display: flex; gap: 15px;">
+            <button id="randomBgBtn" class="btn ghost small"><i class="fas fa-random"></i> Aleatorio</button>
+            <button id="clearBtn" class="btn ghost small"><i class="fas fa-broom"></i> Limpiar Todo</button>
+            <button id="savePresetBtn" class="btn ghost small"><i class="fas fa-save"></i> Guardar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Área de vista previa -->
+      <div class="panel preview-area" id="preview">
+        <div id="previewContent">
+          <img id="previewImg" src="https://via.placeholder.com/400x400/7873f5/ffffff?text=LOGO" alt="Vista previa" crossorigin="anonymous">
+          <h3 id="previewText" data-text="Mi Logo Pro">Mi Logo Pro</h3>
+        </div>
+        <div class="preview-label">VISTA PREVIA PROFESIONAL</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- html2canvas actualizado -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <script>
+    // Elementos
+    const previewImg = document.getElementById('previewImg');
+    const previewText = document.getElementById('previewText');
+    const logoImageInput = document.getElementById('logoImage');
+    const logoTextInput = document.getElementById('logoText');
+    const bgColorInput = document.getElementById('bgColor');
+    const textColorInput = document.getElementById('textColor');
+    const fontSelect = document.getElementById('fontSelect');
+    const styleSelect = document.getElementById('styleSelect');
+    const textSizeInput = document.getElementById('textSize');
+    const textSizeValue = document.getElementById('textSizeValue');
+    const shadowIntensityInput = document.getElementById('shadowIntensity');
+    const shadowValue = document.getElementById('shadowValue');
+    const borderRadiusInput = document.getElementById('borderRadius');
+    const borderRadiusValue = document.getElementById('borderRadiusValue');
+    const rotationInput = document.getElementById('rotation');
+    const rotationValue = document.getElementById('rotationValue');
+    const imageWidthInput = document.getElementById('imageWidth');
+    const imageWidthValue = document.getElementById('imageWidthValue');
+    const imageHeightInput = document.getElementById('imageHeight');
+    const imageHeightValue = document.getElementById('imageHeightValue');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const randomBgBtn = document.getElementById('randomBgBtn');
+    const savePresetBtn = document.getElementById('savePresetBtn');
+    const backgroundPatterns = document.getElementById('backgroundPatterns');
+    const suggestionButtons = document.getElementById('suggestionButtons');
+    const colorPalettes = document.getElementById('colorPalettes');
+    const formatButtons = document.querySelectorAll('.format-btn');
+    const frameButtons = document.querySelectorAll('.frame-btn');
+    const sizePresets = document.querySelectorAll('.size-preset');
+    const previewBox = document.getElementById('preview');
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    const loadingText = document.getElementById('loadingText');
+
+    // Variables globales
+    let selectedFormat = 'png';
+    let currentFrame = 'none';
+    let uploadedImageUrl = null;
+
+    // 40 Fondos de paisajes espectaculares (URLs de Unsplash) - Aumentado a 40
+    const landscapeBackgrounds = [
+      {url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', name: 'Montañas'},
+      {url: 'https://images.unsplash.com/photo-1439066615861-d1af74d74000?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', name: 'Lago'},
+      {url: 'https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', name: 'Bosque'},
+      {url: 'https://images.unsplash.com/photo-1475924156734-496f6cac6ec1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', name: 'Océano'},
+      {url: 'https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', name: 'Campo'},
+      {url: 'https://images.unsplash.com/photo-1501854140801-50d01698950b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', name: 'Atardecer'},
+      {url: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', name: 'Ciudad'},
+      {url: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', name: 'Aurora'},
+      {url: 'https://images.unsplash.com/photo-1426604966848-d7adac402bff?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', name: 'Cascada'},
+      {url: 'https://images.unsplash.com/photo-1476820865390-c52aeebb9891?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', name: 'Neblina'},
+      {url: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', name: 'Desierto'},
+      {url: 'https://images.unsplash.com/photo-1511497584788-876760111969?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', name: 'Aurora Boreal'},
+      {url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', name: 'Cumbre'},
+      {url: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', name: 'Reflejos'},
+      {url: 'https://images.unsplash.com/photo-1439066615861-d1af74d74000?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', name: 'Calma'},
+      {url: 'https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', name: 'Verde'},
+      {url: 'https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', name: 'Místico'},
+      {url: 'https://images.unsplash.com/photo-1475924156734-496f6cac6ec1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', name: 'Olas'},
+      {url: 'https://images.unsplash.com/photo-1501854140801-50d01698950b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', name: 'Dorado'},
+      {url: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', name: 'Urbano'},
+      // 20 fondos adicionales
+      {url: 'https://images.unsplash.com/photo-1505144808419-1957a94ca61e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', name: 'Montañas Nevadas'},
+      {url: 'https://images.unsplash.com/photo-1439853949127-fa647821eba0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', name: 'Bosque Otoñal'},
+      {url: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', name: 'Campo Lavanda'},
+      {url: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', name: 'Paisaje Natural'},
+      {url: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', name: 'Montañas Nubes'},
+      {url: 'https://images.unsplash.com/photo-1493246507139-91e8fad9978e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', name: 'Camino Bosque'},
+      {url: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', name: 'Cielo Estrellado'},
+      {url: 'https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', name: 'Playa Tropical'},
+      {url: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', name: 'Lago Montañas'},
+      {url: 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', name: 'Costa Roca'},
+      {url: 'https://images.unsplash.com/photo-1506260408121-e353d10b87c7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', name: 'Parque Nacional'},
+      {url: 'https://images.unsplash.com/photo-1475924156734-496f6cac6ec1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', name: 'Olas Mar'},
+      {url: 'https://images.unsplash.com/photo-1505142468610-359e7d316be0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', name: 'Atardecer Montaña'},
+      {url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', name: 'Cumbres Nevadas'},
+      {url: 'https://images.unsplash.com/photo-1493246507139-91e8fad9978e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', name: 'Sendero Bosque'},
+      {url: 'https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', name: 'Campos Verdes'},
+      {url: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', name: 'Nubes Montaña'},
+      {url: 'https://images.unsplash.com/photo-1501854140801-50d01698950b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', name: 'Atardecer Dorado'},
+      {url: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', name: 'Galaxia'},
+      {url: 'https://images.unsplash.com/photo-1439853949127-fa647821eba0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80', name: 'Bosque Mágico'}
+    ];
+
+    // 60 Sugerencias de IA mejoradas
+    const aiSuggestions = [
+      "Moderno", "Elegante", "Tecnológico", "Creativo", "Minimalista", 
+      "Vibrante", "Profesional", "Lujo", "Futurista", "Clásico",
+      "Deportivo", "Juvenil", "Femenino", "Masculino", "Natural",
+      "Orgánico", "Artístico", "Gamer", "Musical", "Gourmet",
+      "Viajes", "Moda", "Belleza", "Salud", "Fitness",
+      "Educación", "Finanzas", "Tech", "Startup", "Corporativo",
+      "Premium", "Económico", "Ecológico", "Sostenible", "Retro",
+      "Vintage", "Nostálgico", "Innovador", "Dinámico", "Serio",
+      "Divertido", "Colorido", "Monocromático", "Audaz", "Delicado",
+      "Fuerte", "Suave", "Energético", "Lujoso", "Exclusivo",
+      "Elegante", "Futurista", "Creativo", "Innovador", "Dinámico",
+      "Serio", "Divertido", "Colorido", "Audaz", "Delicado"
+    ];
+
+    // Paletas de colores profesionales
+    const colorPalettesData = [
+      {name: "Neón Vibrante", colors: ["#FF00FF", "#00FFFF", "#00FF95", "#FFEA00"]},
+      {name: "Otoño", colors: ["#FF6B35", "#F7C59F", "#EFEFD0", "#004E89"]},
+      {name: "Mar Profundo", colors: ["#1A535C", "#4ECDC4", "#F7FFF7", "#FF6B6B"]},
+      {name: "Moderno Gris", colors: ["#2D3047", "#93B7BE", "#E0CA3C", "#A799B7"]},
+      {name: "Tropical", colors: ["#FF9F1C", "#FFBF69", "#FFFFFF", "#CBF3F0"]},
+      {name: "Elegante Oro", colors: ["#000000", "#D4AF37", "#FFFFFF", "#C0C0C0"]},
+      {name: "Fiesta", colors: ["#FF1654", "#247BA0", "#70C1B3", "#B2DBBF"]},
+      {name: "Naturaleza", colors: ["#2A9D8F", "#E9C46A", "#F4A261", "#E76F51"]},
+      {name: "Nocturno", colors: ["#0D1B2A", "#1B263B", "#415A77", "#778DA9"]},
+      {name: "Pastel", colors: ["#FFB4A2", "#E5989B", "#B5838D", "#6D6875"]}
+    ];
+
+    // Generar los 40 fondos de paisajes
+    landscapeBackgrounds.forEach((bg, index) => {
+      const pattern = document.createElement('div');
+      pattern.className = `pattern-option ${index === 0 ? 'active' : ''}`;
+      pattern.style.backgroundImage = `url('${bg.url}')`;
+      pattern.dataset.pattern = `landscape${index + 1}`;
+      
+      const number = document.createElement('div');
+      number.className = 'pattern-number';
+      number.textContent = index + 1;
+      
+      const label = document.createElement('div');
+      label.className = 'pattern-label';
+      label.textContent = bg.name;
+      
+      pattern.appendChild(number);
+      pattern.appendChild(label);
+      backgroundPatterns.appendChild(pattern);
+    });
+
+    // Generar las paletas de colores
+    colorPalettesData.forEach((palette, index) => {
+      const paletteItem = document.createElement('div');
+      paletteItem.className = 'palette-item';
+      paletteItem.dataset.palette = index;
+      
+      const colorsDiv = document.createElement('div');
+      colorsDiv.className = 'palette-colors';
+      
+      palette.colors.forEach(color => {
+        const colorDiv = document.createElement('div');
+        colorDiv.className = 'palette-color';
+        colorDiv.style.backgroundColor = color;
+        colorsDiv.appendChild(colorDiv);
+      });
+      
+      const nameDiv = document.createElement('div');
+      nameDiv.className = 'palette-name';
+      nameDiv.textContent = palette.name;
+      
+      paletteItem.appendChild(colorsDiv);
+      paletteItem.appendChild(nameDiv);
+      colorPalettes.appendChild(paletteItem);
+    });
+
+    // Generar las 60 sugerencias de IA
+    aiSuggestions.forEach((suggestion, index) => {
+      const button = document.createElement('button');
+      button.className = 'suggestion-btn';
+      button.textContent = suggestion;
+      button.dataset.suggestion = suggestion.toLowerCase();
+      suggestionButtons.appendChild(button);
+    });
+
+    // Función para cargar imagen desde URL
+    function loadImageFromUrl(url) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.crossOrigin = 'Anonymous';
+        img.onload = () => resolve(img);
+        img.onerror = reject;
+        img.src = url;
+      });
+    }
+
+    // Selección de formato
+    formatButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        formatButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        selectedFormat = btn.dataset.format;
+      });
+    });
+
+    // Selección de marco
+    frameButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        frameButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFrame = btn.dataset.frame;
+        applyFrameStyle(currentFrame);
+      });
+    });
+
+    // Selección de tamaño predefinido
+    sizePresets.forEach(btn => {
+      btn.addEventListener('click', () => {
+        sizePresets.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        const size = btn.dataset.size;
+        switch(size) {
+          case 'small':
+            previewImg.style.width = '200px';
+            previewImg.style.height = '200px';
+            imageWidthInput.value = 200;
+            imageHeightInput.value = 200;
+            imageWidthValue.textContent = '200px';
+            imageHeightValue.textContent = '200px';
+            break;
+          case 'medium':
+            previewImg.style.width = '320px';
+            previewImg.style.height = '320px';
+            imageWidthInput.value = 320;
+            imageHeightInput.value = 320;
+            imageWidthValue.textContent = '320px';
+            imageHeightValue.textContent = '320px';
+            break;
+          case 'large':
+            previewImg.style.width = '400px';
+            previewImg.style.height = '400px';
+            imageWidthInput.value = 400;
+            imageHeightInput.value = 400;
+            imageWidthValue.textContent = '400px';
+            imageHeightValue.textContent = '400px';
+            break;
+          case 'square':
+            previewImg.style.width = '300px';
+            previewImg.style.height = '300px';
+            imageWidthInput.value = 300;
+            imageHeightInput.value = 300;
+            imageWidthValue.textContent = '300px';
+            imageHeightValue.textContent = '300px';
+            break;
+          case 'rect':
+            previewImg.style.width = '400px';
+            previewImg.style.height = '250px';
+            imageWidthInput.value = 400;
+            imageHeightInput.value = 250;
+            imageWidthValue.textContent = '400px';
+            imageHeightValue.textContent = '250px';
+            break;
+          case 'wide':
+            previewImg.style.width = '450px';
+            previewImg.style.height = '200px';
+            imageWidthInput.value = 450;
+            imageHeightInput.value = 200;
+            imageWidthValue.textContent = '450px';
+            imageHeightValue.textContent = '200px';
+            break;
+        }
+      });
+    });
+
+    // Aplicar estilo de marco mejorado
+    function applyFrameStyle(frame) {
+      // Resetear estilos
+      previewBox.style.border = '3px solid transparent';
+      previewBox.style.boxShadow = '0 30px 70px rgba(0,0,0,0.7)';
+      previewBox.style.borderImage = 'none';
+      
+      switch(frame) {
+        case 'solid':
+          previewBox.style.border = '6px solid #ffffff';
+          previewBox.style.boxShadow = '0 30px 70px rgba(0,0,0,0.7), 0 0 40px rgba(255,255,255,0.4)';
+          break;
+        case 'dashed':
+          previewBox.style.border = '5px dashed #ffffff';
+          previewBox.style.borderRadius = '35px';
+          break;
+        case 'double':
+          previewBox.style.border = '10px double #ffffff';
+          break;
+        case 'gradient':
+          previewBox.style.border = '6px solid';
+          previewBox.style.borderImage = 'linear-gradient(45deg, #ff00ff, #00ffff, #00ff95) 1';
+          previewBox.style.boxShadow = '0 30px 70px rgba(0,0,0,0.7), 0 0 40px rgba(0,255,255,0.5)';
+          break;
+        case 'neon':
+          previewBox.style.border = '4px solid #00ffff';
+          previewBox.style.boxShadow = '0 30px 70px rgba(0,0,0,0.7), 0 0 40px rgba(0,255,255,0.8), inset 0 0 20px rgba(0,255,255,0.3)';
+          break;
+        case 'ornate':
+          previewBox.style.border = '8px solid transparent';
+          previewBox.style.borderImage = 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'75\' height=\'75\'%3E%3Cpath d=\'M0,0 L75,0 L75,75 L0,75 Z\' fill=\'none\' stroke=\'%23FFFFFF\' stroke-width=\'5\' stroke-dasharray=\'10,5\'/%3E%3C/svg%3E") 20% round';
+          break;
+        case 'metallic':
+          previewBox.style.border = '8px solid';
+          previewBox.style.borderImage = 'linear-gradient(45deg, #b5b5b5, #e0e0e0, #b5b5b5) 1';
+          previewBox.style.boxShadow = '0 30px 70px rgba(0,0,0,0.7), inset 0 0 30px rgba(255,255,255,0.2)';
+          break;
+        case 'dotted':
+          previewBox.style.border = '5px dotted #ffffff';
+          previewBox.style.borderRadius = '40px';
+          break;
+        case 'shadow':
+          previewBox.style.border = 'none';
+          previewBox.style.boxShadow = '0 30px 70px rgba(0,0,0,0.7), 0 0 100px rgba(255,255,255,0.2)';
+          break;
+        case 'none':
+        default:
+          previewBox.style.border = '3px solid transparent';
+          previewBox.style.borderRadius = '30px';
+          break;
+      }
+    }
+
+    // Subir imagen -> usar como preview
+    logoImageInput.addEventListener('change', (e) => {
+      const f = e.target.files[0];
+      if (!f) return;
+      const r = new FileReader();
+      r.onload = (ev) => {
+        uploadedImageUrl = ev.target.result;
+        previewImg.src = uploadedImageUrl;
+      };
+      r.readAsDataURL(f);
+    });
+
+    // Texto
+    logoTextInput.addEventListener('input', (e) => {
+      const v = e.target.value.trim() || 'Mi Logo Pro';
+      previewText.textContent = v;
+      previewText.dataset.text = v;
+    });
+
+    // Fondo preview (color sólido)
+    bgColorInput.addEventListener('input', (e) => {
+      previewBox.style.background = `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), ${e.target.value}`;
+      document.querySelectorAll('.pattern-option').forEach(pattern => pattern.classList.remove('active'));
+    });
+
+    // Color texto
+    textColorInput.addEventListener('input', (e) => {
+      previewText.style.color = e.target.value;
+    });
+
+    // Fuente
+    fontSelect.addEventListener('change', (e) => {
+      previewText.style.fontFamily = e.target.value;
+    });
+
+    // Tamaño de texto
+    textSizeInput.addEventListener('input', (e) => {
+      const size = e.target.value;
+      previewText.style.fontSize = `${size}rem`;
+      textSizeValue.textContent = `${size}rem`;
+    });
+
+    // Ancho de imagen
+    imageWidthInput.addEventListener('input', (e) => {
+      const width = e.target.value;
+      previewImg.style.width = `${width}px`;
+      imageWidthValue.textContent = `${width}px`;
+    });
+
+    // Alto de imagen
+    imageHeightInput.addEventListener('input', (e) => {
+      const height = e.target.value;
+      previewImg.style.height = `${height}px`;
+      imageHeightValue.textContent = `${height}px`;
+    });
+
+    // Intensidad de sombra
+    shadowIntensityInput.addEventListener('input', (e) => {
+      const intensity = e.target.value;
+      previewImg.style.filter = `drop-shadow(0 0 ${intensity}px rgba(255,255,255,0.9))`;
+      shadowValue.textContent = `${intensity}px`;
+    });
+
+    // Border radius
+    borderRadiusInput.addEventListener('input', (e) => {
+      const radius = e.target.value;
+      previewImg.style.borderRadius = `${radius}px`;
+      borderRadiusValue.textContent = `${radius}px`;
+    });
+
+    // Rotación
+    rotationInput.addEventListener('input', (e) => {
+      const rotation = e.target.value;
+      previewImg.style.transform = `rotate(${rotation}deg)`;
+      rotationValue.textContent = `${rotation}°`;
+    });
+
+    // Estilos / efectos
+    function applyEffect(effect){
+      previewText.classList.remove('effect-neon','effect-glow','effect-glitch','effect-retro','effect-3d','effect-gradient','effect-gold','effect-metal','effect-water');
+      previewText.style.transform = '';
+      previewText.style.letterSpacing = '';
+      
+      if(effect === 'neon') previewText.classList.add('effect-neon');
+      if(effect === 'glow') previewText.classList.add('effect-glow');
+      if(effect === 'glitch') {
+        previewText.classList.add('effect-glitch');
+        previewText.dataset.text = previewText.textContent;
+      }
+      if(effect === 'retro') previewText.classList.add('effect-retro');
+      if(effect === '3d') previewText.classList.add('effect-3d');
+      if(effect === 'gradient') previewText.classList.add('effect-gradient');
+      if(effect === 'gold') previewText.classList.add('effect-gold');
+      if(effect === 'metal') previewText.classList.add('effect-metal');
+      if(effect === 'water') previewText.classList.add('effect-water');
+    }
+
+    styleSelect.addEventListener('change', (e) => applyEffect(e.target.value));
+
+    // Patrones de fondo (paisajes)
+    document.querySelectorAll('.pattern-option').forEach(pattern => {
+      pattern.addEventListener('click', () => {
+        document.querySelectorAll('.pattern-option').forEach(p => p.classList.remove('active'));
+        pattern.classList.add('active');
+        const bgImage = pattern.style.backgroundImage;
+        previewBox.style.background = `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), ${bgImage}`;
+        previewBox.style.backgroundSize = 'cover';
+        previewBox.style.backgroundPosition = 'center';
+      });
+    });
+
+    // Paletas de colores
+    document.querySelectorAll('.palette-item').forEach((item, index) => {
+      item.addEventListener('click', () => {
+        const palette = colorPalettesData[index];
+        // Aplicar el primer color de la paleta como color de fondo
+        bgColorInput.value = palette.colors[0];
+        previewBox.style.background = `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), ${palette.colors[0]}`;
+        
+        // Aplicar el último color como color de texto
+        textColorInput.value = palette.colors[palette.colors.length - 1];
+        previewText.style.color = palette.colors[palette.colors.length - 1];
+        
+        document.querySelectorAll('.pattern-option').forEach(pattern => pattern.classList.remove('active'));
+      });
+    });
+
+    // Fondo aleatorio
+    randomBgBtn.addEventListener('click', () => {
+      const randomIndex = Math.floor(Math.random() * landscapeBackgrounds.length);
+      const randomBg = landscapeBackgrounds[randomIndex];
+      previewBox.style.background = `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('${randomBg.url}')`;
+      previewBox.style.backgroundSize = 'cover';
+      previewBox.style.backgroundPosition = 'center';
+      
+      // Actualizar patrón activo
+      document.querySelectorAll('.pattern-option').forEach((pattern, index) => {
+        if (index === randomIndex) {
+          pattern.classList.add('active');
+        } else {
+          pattern.classList.remove('active');
+        }
+      });
+      
+      // También aplicar un estilo aleatorio
+      const randomStyle = ['neon', 'glow', 'gradient', '3d', 'gold', 'metal', 'water'][Math.floor(Math.random() * 7)];
+      styleSelect.value = randomStyle;
+      applyEffect(randomStyle);
+      
+      // Tamaño aleatorio
+      const randomSize = ['small', 'medium', 'large', 'square', 'rect', 'wide'][Math.floor(Math.random() * 6)];
+      sizePresets.forEach((btn, i) => {
+        if (btn.dataset.size === randomSize) {
+          btn.click();
+        }
+      });
+    });
+
+    // Sugerencias de IA
+    document.querySelectorAll('.suggestion-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const suggestion = btn.getAttribute('data-suggestion');
+        applyAISuggestion(suggestion);
+      });
+    });
+
+    // Función mejorada para aplicar sugerencias de IA
+    function applyAISuggestion(suggestion) {
+      const styles = {
+        moderno: {
+          background: 'linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(https://images.unsplash.com/photo-1518837695005-2083093ee35b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80)',
+          font: "'Montserrat', sans-serif",
+          size: '3.2rem',
+          color: '#ffffff',
+          effect: 'none',
+          bgSize: 'cover',
+          imageSize: 'medium'
+        },
+        elegante: {
+          background: 'linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(https://images.unsplash.com/photo-1501854140801-50d01698950b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80)',
+          font: "'Playfair Display', serif",
+          size: '3.4rem',
+          color: '#f8f8f8',
+          effect: 'glow',
+          bgSize: 'cover',
+          imageSize: 'medium'
+        },
+        tecnologico: {
+          background: 'linear-gradient(135deg, #0f2027, #203a43, #2c5364)',
+          font: "'Orbitron', sans-serif",
+          size: '2.8rem',
+          color: '#00ffff',
+          effect: 'neon',
+          bgSize: 'auto',
+          imageSize: 'rect'
+        },
+        creativo: {
+          background: 'linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80)',
+          font: "'Lobster', cursive",
+          size: '3.5rem',
+          color: '#ffd700',
+          effect: 'none',
+          bgSize: 'cover',
+          imageSize: 'square'
+        },
+        minimalista: {
+          background: 'linear-gradient(135deg, #f5f7fa, #c3cfe2)',
+          font: "'Poppins', sans-serif",
+          size: '2.6rem',
+          color: '#333333',
+          effect: 'none',
+          bgSize: 'auto',
+          imageSize: 'small'
+        },
+        vibrante: {
+          background: 'linear-gradient(135deg, #ff00cc, #333399)',
+          font: "'Bebas Neue', sans-serif",
+          size: '3.6rem',
+          color: '#ffea00',
+          effect: 'glitch',
+          bgSize: 'auto',
+          imageSize: 'large'
+        },
+        profesional: {
+          background: 'linear-gradient(135deg, #2c3e50, #4ca1af)',
+          font: "'Raleway', sans-serif",
+          size: '3rem',
+          color: '#ffffff',
+          effect: 'none',
+          bgSize: 'auto',
+          imageSize: 'wide'
+        },
+        lujo: {
+          background: 'linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(https://images.unsplash.com/photo-1511497584788-876760111969?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80)',
+          font: "'Abril Fatface', cursive",
+          size: '3.2rem',
+          color: '#FFD700',
+          effect: 'gold',
+          bgSize: 'cover',
+          imageSize: 'medium'
+        },
+        futurista: {
+          background: 'linear-gradient(135deg, #00b4db, #0083b0)',
+          font: "'Orbitron', sans-serif",
+          size: '3rem',
+          color: '#00ff95',
+          effect: 'neon',
+          bgSize: 'auto',
+          imageSize: 'rect'
+        },
+        clasico: {
+          background: 'linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80)',
+          font: "'Times New Roman', serif",
+          size: '3.2rem',
+          color: '#F5F5DC',
+          effect: 'none',
+          bgSize: 'cover',
+          imageSize: 'square'
+        }
+      };
+
+      const style = styles[suggestion] || styles.moderno;
+      
+      previewBox.style.background = style.background;
+      previewBox.style.backgroundSize = style.bgSize;
+      previewBox.style.backgroundPosition = 'center';
+      previewText.style.fontFamily = style.font;
+      previewText.style.fontSize = style.size;
+      previewText.style.color = style.color;
+      applyEffect(style.effect);
+      
+      // Aplicar tamaño de imagen
+      sizePresets.forEach(btn => {
+        if (btn.dataset.size === style.imageSize) {
+          btn.click();
+        }
+      });
+      
+      // Actualizar controles
+      textSizeInput.value = parseFloat(style.size);
+      textSizeValue.textContent = style.size;
+      styleSelect.value = style.effect;
+      fontSelect.value = style.font;
+      
+      // Buscar y activar el patrón correspondiente si es un fondo de paisaje
+      document.querySelectorAll('.pattern-option').forEach(pattern => pattern.classList.remove('active'));
+    }
+
+    // Guardar preset
+    savePresetBtn.addEventListener('click', () => {
+      const preset = {
+        text: previewText.textContent,
+        textColor: previewText.style.color,
+        fontSize: previewText.style.fontSize,
+        fontFamily: previewText.style.fontFamily,
+        effect: styleSelect.value,
+        imageSize: {
+          width: previewImg.style.width,
+          height: previewImg.style.height
+        },
+        background: previewBox.style.background,
+        frame: currentFrame
+      };
+      
+      localStorage.setItem('logoPreset', JSON.stringify(preset));
+      
+      // Mostrar confirmación
+      const originalText = savePresetBtn.innerHTML;
+      savePresetBtn.innerHTML = '<i class="fas fa-check"></i> Guardado';
+      savePresetBtn.style.background = 'linear-gradient(90deg, var(--neon-green), #00cc66)';
+      
+      setTimeout(() => {
+        savePresetBtn.innerHTML = originalText;
+        savePresetBtn.style.background = 'transparent';
+      }, 2000);
+    });
+
+    // Limpiar selección
+    clearBtn.addEventListener('click', () => {
+      previewImg.src = 'https://via.placeholder.com/400x400/7873f5/ffffff?text=LOGO';
+      uploadedImageUrl = null;
+      previewText.textContent = 'Mi Logo Pro';
+      previewText.dataset.text = previewText.textContent;
+      logoTextInput.value = 'Mi Logo Pro';
+      previewBox.style.background = `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('${landscapeBackgrounds[0].url}')`;
+      previewBox.style.backgroundSize = 'cover';
+      previewBox.style.backgroundPosition = 'center';
+      
+      document.querySelectorAll('.pattern-option')[0].classList.add('active');
+      document.querySelectorAll('.pattern-option').forEach((p, i) => {
+        if (i !== 0) p.classList.remove('active');
+      });
+      
+      applyFrameStyle('none');
+      frameButtons[0].classList.add('active');
+      frameButtons.forEach((b, i) => {
+        if (i !== 0) b.classList.remove('active');
+      });
+      
+      // Restablecer controles de tamaño
+      previewImg.style.width = '320px';
+      previewImg.style.height = '320px';
+      imageWidthInput.value = 320;
+      imageHeightInput.value = 320;
+      imageWidthValue.textContent = '320px';
+      imageHeightValue.textContent = '320px';
+      
+      sizePresets[1].classList.add('active');
+      sizePresets.forEach((btn, i) => {
+        if (i !== 1) btn.classList.remove('active');
+      });
+      
+      // Restablecer otros valores
+      textSizeInput.value = 3.2;
+      textSizeValue.textContent = '3.2rem';
+      previewText.style.fontSize = '3.2rem';
+      fontSelect.value = "'Poppins', sans-serif";
+      previewText.style.fontFamily = "'Poppins', sans-serif";
+      styleSelect.value = 'none';
+      applyEffect('none');
+      bgColorInput.value = '#7873f5';
+      textColorInput.value = '#ffffff';
+      shadowIntensityInput.value = 20;
+      shadowValue.textContent = '20px';
+      borderRadiusInput.value = 20;
+      borderRadiusValue.textContent = '20px';
+      rotationInput.value = 0;
+      rotationValue.textContent = '0°';
+    });
+
+    // Función mejorada para descargar
+    async function downloadLogo() {
+      const scale = 3;
+      const fileName = (previewText.textContent || 'logo_pro').replace(/\s+/g,'_').toLowerCase();
+      
+      loadingOverlay.style.display = 'flex';
+      loadingText.textContent = 'Preparando descarga...';
+      
+      try {
+        // Crear un canvas separado para mejor compatibilidad
+        const tempDiv = document.createElement('div');
+        tempDiv.style.position = 'absolute';
+        tempDiv.style.left = '-9999px';
+        tempDiv.style.top = '0';
+        tempDiv.style.width = previewBox.offsetWidth + 'px';
+        tempDiv.style.height = previewBox.offsetHeight + 'px';
+        tempDiv.style.background = previewBox.style.background;
+        tempDiv.style.border = previewBox.style.border;
+        tempDiv.style.borderRadius = previewBox.style.borderRadius;
+        tempDiv.style.overflow = 'hidden';
+        
+        // Clonar el contenido
+        const contentClone = document.getElementById('previewContent').cloneNode(true);
+        tempDiv.appendChild(contentClone);
+        document.body.appendChild(tempDiv);
+        
+        loadingText.textContent = 'Generando imagen de alta calidad...';
+        
+        const canvas = await html2canvas(tempDiv, {
+          backgroundColor: null,
+          scale: scale,
+          useCORS: true,
+          logging: false,
+          imageTimeout: 10000,
+          removeContainer: true,
+          foreignObjectRendering: false,
+          allowTaint: false
+        });
+        
+        document.body.removeChild(tempDiv);
+        
+        let mimeType, extension;
+        
+        switch(selectedFormat) {
+          case 'jpg':
+            mimeType = 'image/jpeg';
+            extension = 'jpg';
+            break;
+          case 'webp':
+            mimeType = 'image/webp';
+            extension = 'webp';
+            break;
+          case 'svg':
+          case 'pdf':
+            // Para SVG y PDF, creamos un fallback a PNG
+            alert(`Para exportar a ${selectedFormat.toUpperCase()} se necesita una librería adicional. Descargando como PNG en su lugar.`);
+            mimeType = 'image/png';
+            extension = 'png';
+            break;
+          case 'png':
+          default:
+            mimeType = 'image/png';
+            extension = 'png';
+            break;
+        }
+        
+        loadingText.textContent = 'Creando archivo de descarga...';
+        
+        const dataUrl = canvas.toDataURL(mimeType, 1.0);
+        const link = document.createElement('a');
+        link.href = dataUrl;
+        link.download = `${fileName}_pro.${extension}`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        // Mostrar mensaje de éxito
+        const originalText = downloadBtn.innerHTML;
+        downloadBtn.innerHTML = `<i class="fas fa-check-circle"></i> ¡${extension.toUpperCase()} Descargado!`;
+        downloadBtn.style.background = 'linear-gradient(90deg, var(--neon-green), #00cc66)';
+        
+        setTimeout(() => {
+          downloadBtn.innerHTML = originalText;
+          downloadBtn.style.background = 'linear-gradient(90deg, var(--neon-green), var(--neon-blue))';
+        }, 2500);
+        
+      } catch (error) {
+        console.error('Error al descargar:', error);
+        alert('Error al generar la imagen. Intenta con una imagen local o verifica tu conexión.');
+      } finally {
+        loadingOverlay.style.display = 'none';
+      }
+    }
+
+    // Descargar en múltiples formatos
+    downloadBtn.addEventListener('click', downloadLogo);
+
+    // Pre-cargar imágenes importantes
+    function preloadImages() {
+      const imagesToPreload = [
+        'https://via.placeholder.com/400x400/7873f5/ffffff?text=LOGO',
+        landscapeBackgrounds[0].url,
+        landscapeBackgrounds[1].url,
+        landscapeBackgrounds[2].url
+      ];
+      
+      imagesToPreload.forEach(url => {
+        const img = new Image();
+        img.src = url;
+      });
+    }
+
+    // Cargar preset guardado
+    function loadSavedPreset() {
+      const savedPreset = localStorage.getItem('logoPreset');
+      if (savedPreset) {
+        try {
+          const preset = JSON.parse(savedPreset);
+          previewText.textContent = preset.text;
+          previewText.style.color = preset.textColor;
+          previewText.style.fontSize = preset.fontSize;
+          previewText.style.fontFamily = preset.fontFamily;
+          logoTextInput.value = preset.text;
+          previewBox.style.background = preset.background;
+          
+          // Aplicar tamaño de imagen
+          if (preset.imageSize) {
+            previewImg.style.width = preset.imageSize.width;
+            previewImg.style.height = preset.imageSize.height;
+          }
+          
+          // Aplicar marco
+          if (preset.frame) {
+            applyFrameStyle(preset.frame);
+            frameButtons.forEach(btn => {
+              if (btn.dataset.frame === preset.frame) {
+                btn.classList.add('active');
+              } else {
+                btn.classList.remove('active');
+              }
+            });
+          }
+          
+          alert('Preset cargado correctamente!');
+        } catch (error) {
+          console.error('Error al cargar preset:', error);
+        }
+      }
+    }
+
+    // Inicial: aplicar valores por defecto
+    (function init(){
+      preloadImages();
+      previewBox.style.background = `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('${landscapeBackgrounds[0].url}')`;
+      previewBox.style.backgroundSize = 'cover';
+      previewBox.style.backgroundPosition = 'center';
+      previewText.style.color = textColorInput.value;
+      previewText.style.fontFamily = fontSelect.value;
+      previewText.dataset.text = previewText.textContent;
+      applyEffect(styleSelect.value);
+      textSizeValue.textContent = `${textSizeInput.value}rem`;
+      shadowValue.textContent = `${shadowIntensityInput.value}px`;
+      borderRadiusValue.textContent = `${borderRadiusInput.value}px`;
+      rotationValue.textContent = `${rotationInput.value}°`;
+      imageWidthValue.textContent = `${imageWidthInput.value}px`;
+      imageHeightValue.textContent = `${imageHeightInput.value}px`;
+      applyFrameStyle('none');
+      
+      // Cargar preset si existe
+      loadSavedPreset();
+      
+      // Añadir efecto de entrada
+      document.querySelectorAll('.panel').forEach((panel, index) => {
+        panel.style.animation = `fadeInUp 0.6s ease ${index * 0.1}s both`;
+      });
+    })();
+
+    // Añadir keyframes para animación de entrada
+    const styleSheet = document.createElement('style');
+    styleSheet.textContent = `
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    `;
+    document.head.appendChild(styleSheet);
+  </script>
+</body>
+</html>

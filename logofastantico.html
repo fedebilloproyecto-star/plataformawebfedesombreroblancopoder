@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>LogoStudio MEGA · 50+ estilos y efectos</title>
+    <!-- Fuentes e íconos -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Montserrat:wght@900&family=Press+Start+2P&family=Syne:wght@800&family=Roboto&family=Open+Sans&family=Lato&family=Poppins&family=Oswald&family=Raleway&family=Ubuntu&family=Comic+Neue&family=Impact&family=Georgia&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #eef2f6;
+            color: #0f172a;
+            display: flex;
+            flex-direction: column;
+            height: 100dvh;
+            overflow: hidden;
+            
+   border-radius: 10px;
+  max-width: 900px;
+  margin: 90px auto;
+        }
+        /* panel superior desplazable (ahora con más controles) */
+        .controls-panel {
+            width: 100%;
+            background: #ffffff;
+            border-bottom: 1px solid #cbd5e1;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            max-height: 58%;
+            padding-bottom: env(safe-area-inset-bottom, 12px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+        }
+        .panel-header {
+            padding: 14px 16px;
+            background: #f8fafc;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 800;
+            color: #4f46e5;
+            border-bottom: 1px solid #e2e8f0;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            font-size: 1.1rem;
+        }
+        .volver-colorido {
+            display: inline-block;
+            margin: 12px 16px 8px;
+            padding: 12px 22px;
+            background: #f0f8ff;
+            color: #1e293b;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 60px;
+            border: 3px solid;
+            border-color: #e74c3c #3498db #2ecc71 #f1c40f;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+            width: fit-content;
+            font-size: 1rem;
+        }
+        .panel-content {
+            padding: 0.8rem 1rem 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+        .section-title {
+            font-size: 0.8rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: #475569;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 6px;
+            margin-top: 0.2rem;
+            letter-spacing: 0.3px;
+        }
+        .grid-5 { display: grid; grid-template-columns: repeat(5,1fr); gap: 8px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
+        .grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 8px; }
+        
+        .color-option-frame, .color-option-text {
+            aspect-ratio: 1;
+            border-radius: 22px;
+            border: 3px solid transparent;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+            cursor: pointer;
+            min-height: 58px;
+        }
+        .selected { border-color: white; box-shadow: 0 0 0 3px #4f46e5; }
+
+        .icon-option {
+            aspect-ratio: 1;
+            background: #f1f5f9;
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            min-height: 68px;
+        }
+        .icon-option.selected { background: #e0e7ff; border-color: #4f46e5; }
+
+        .font-option {
+            background: #f1f5f9;
+            border-radius: 40px;
+            padding: 14px 2px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 13px;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+        .style-btn, .landscape-btn, .extra-effect-btn {
+            background: linear-gradient(145deg, #4f46e5, #7c3aed);
+            color: white;
+            border: none;
+            border-radius: 40px;
+            padding: 14px 0;
+            font-weight: 700;
+            font-size: 0.7rem;
+            box-shadow: 0 6px 12px rgba(79,70,229,0.3);
+            cursor: pointer;
+            transition: 0.15s;
+            min-height: 58px;
+        }
+        .extra-effect-btn { background: #0f172a; color: white; }
+        .btn-ai {
+            background: linear-gradient(145deg, #ff0080, #b32cd0);
+            color: white;
+            border: none;
+            border-radius: 40px;
+            padding: 14px 16px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        input, select {
+            padding: 16px 18px;
+            border-radius: 50px;
+            border: 1px solid #cbd5e1;
+            font-size: 1rem;
+            background: #f9f9fc;
+            width: 100%;
+        }
+        .row-flex {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .row-flex > * { flex: 1 1 40%; }
+
+        /* preview area */
+        .workspace {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+            background: #e2e8f0;
+            background-image: radial-gradient(circle at 20px 20px, #cbd5e1 1.5px, transparent 1px);
+            background-size: 30px 30px;
+        }
+        .canvas-container {
+            width: 100%;
+            max-width: 360px;
+            aspect-ratio: 1/1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #logoFrame {
+            width: 100%;
+            height: 100%;
+            background: white;
+            border-radius: 28px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+            transition: box-shadow 0.2s, transform 0.2s, border-radius 0.2s;
+        }
+        #userBgImage {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            z-index: 1;
+            filter: blur(8px) brightness(0.9);
+        }
+        #logoContents {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            z-index: 3;
+            padding: 20px;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 48px;
+            border: 1px solid rgba(255,255,255,0.4);
+            max-width: 90%;
+            transition: background 0.2s, backdrop-filter 0.2s, border-radius 0.2s;
+        }
+        #logoIcon { filter: drop-shadow(0 4px 6px #00000020); }
+        #logoText { text-transform: uppercase; text-shadow: 2px 2px 5px rgba(0,0,0,0.15); margin:0; }
+
+        /* nuevos extras */
+        .extra-switch-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 8px;
+        }
+        .extra-switch-grid label {
+            background: #eef2f6;
+            padding: 12px 18px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            flex: 1 0 40%;
+        }
+        .badge-new {
+            background: #ef4444;
+            color: white;
+            font-size: 0.6rem;
+            padding: 3px 8px;
+            border-radius: 40px;
+            margin-left: 8px;
+        }
+        hr { border: 0.5px solid #ddd; margin: 6px 0; }
+    </style>
+</head>
+<body>
+    <aside class="controls-panel">
+        <div class="panel-header"><i data-lucide="sparkles"></i> LogoStudio MEGA · 50+ efectos</div>
+        <a href="principiprincipallogo.html" class="volver-colorido">← Volver atrás</a>
+        <div class="panel-content">
+            <!-- TEXTO PRINCIPAL -->
+            <div class="section-title">✏️ 1. Texto marca</div>
+            <input type="text" id="inText" value="SOLARIS" maxlength="14">
+
+            <!-- 16 ICONOS + TAMAÑOS -->
+            <div class="section-title">🔣 2. Iconos IA (16)</div>
+            <div class="grid-4" id="iconGrid"></div>
+            <div class="row-flex">
+                <div><label>📏 Tamaño icono</label><input type="range" id="inIconSize" min="30" max="140" value="75"></div>
+                <div><label>🔤 Tamaño texto</label><input type="range" id="inTextSize" min="20" max="100" value="50"></div>
+            </div>
+
+            <!-- COLOR TEXTO 15 -->
+            <div class="section-title">🎨 3. Colores texto IA (15)</div>
+            <div class="grid-5" id="colorGridText"></div>
+
+            <!-- 15 TIPOGRAFIAS -->
+            <div class="section-title">📝 4. Tipografías (15)</div>
+            <div class="grid-3" id="fontGrid"></div>
+
+            <!-- 20 COLORES MARCO + PERSONALIZADO -->
+            <div class="section-title">🖼️ 5. 20 fondos marco IA</div>
+            <div class="grid-5" id="frameColorGrid"></div>
+            <div class="row-flex">
+                <input type="color" id="customFrameColor" value="#ffffff" style="height:60px; flex:2;">
+                <button class="btn-ai" onclick="applyCustomFrameColor()">Aplicar</button>
+            </div>
+
+            <!-- FORMA MARCO (extra) -->
+            <div class="section-title">🔲 6. Forma marco</div>
+            <select id="inFrameShape">
+                <option value="24px">Redondeado</option><option value="50%">Círculo</option><option value="0">Cuadrado</option>
+                <option value="40px 0">Redondeado izq</option><option value="0 40px">Redondeado der</option>
+                <option value="40px 40px 0 0">Superior</option><option value="0 0 40px 40px">Inferior</option>
+            </select>
+
+            <!-- SUBIR IMAGEN + PAISAJES (6) -->
+            <div class="section-title">🌄 7. Imagen fondo / Paisajes IA</div>
+            <input type="file" id="inUserImg" accept="image/*">
+            <div class="grid-3">
+                <button class="landscape-btn" onclick="applyIALandscape('montaña',this)">🏔️ Montaña</button>
+                <button class="landscape-btn" onclick="applyIALandscape('playa',this)">🏖️ Playa</button>
+                <button class="landscape-btn" onclick="applyIALandscape('bosque',this)">🌲 Bosque</button>
+                <button class="landscape-btn" onclick="applyIALandscape('ciudad',this)">🌃 Ciudad</button>
+                <button class="landscape-btn" onclick="applyIALandscape('espacio',this)">🚀 Espacio</button>
+                <button class="landscape-btn" onclick="applyIALandscape('atardecer',this)">🌅 Atardecer</button>
+            </div>
+
+            <!-- 20 ESTILOS ESPECIALES IA -->
+            <div class="section-title">⚡ 8. 20 estilos especiales IA</div>
+            <div class="grid-4" id="stylesGrid"></div>
+
+            <!-- ========== NUEVAS EXTRAS (15+ funciones extra) ========== -->
+            <div class="section-title">✨ NUEVO · 15 efectos avanzados</div>
+            
+            <!-- SOMBRA / BRILLO -->
+            <div class="grid-2">
+                <div><label>💡 Sombra caja</label><input type="range" id="shadowIntensity" min="0" max="40" value="18"></div>
+                <div><label>✨ Brillo texto</label><input type="range" id="textGlow" min="0" max="30" value="0"></div>
+            </div>
+            <!-- OPACIDAD DEL CONTENEDOR -->
+            <div><label>🔆 Opacidad contenedor</label><input type="range" id="bgContentOpacity" min="0.1" max="1" step="0.05" value="0.25"></div>
+            
+            <!-- BORDE : ancho y color (selector rápido) -->
+            <div class="row-flex">
+                <div><label>📦 Borde ancho</label><input type="range" id="borderWidth" min="0" max="12" value="0"></div>
+                <div><label>🎨 Color borde</label><input type="color" id="borderColor" value="#4f46e5"></div>
+            </div>
+
+            <!-- DEGRADADO MARCO (2 colores) -->
+            <div class="section-title" style="margin-top:0;">🌈 Degradado marco (fondo)</div>
+            <div class="row-flex">
+                <input type="color" id="grad1" value="#4f46e5"><input type="color" id="grad2" value="#f472b6">
+                <button class="btn-ai" onclick="applyGradient()">Aplicar grad</button>
+            </div>
+            
+            <!-- ROTACIÓN LOGO (texto+icono) -->
+            <div><label>🔄 Rotar contenido (grados)</label><input type="range" id="rotateContent" min="-30" max="30" value="0"></div>
+            
+            <!-- EFECTOS DE TEXTO EXTRA: subrayado, cursiva, mayúsculas fijas -->
+            <div class="extra-switch-grid">
+                <label><input type="checkbox" id="boldText"> Negrita</label>
+                <label><input type="checkbox" id="italicText"> Cursiva</label>
+                <label><input type="checkbox" id="underlineText"> Subrayado</label>
+                <label><input type="checkbox" id="uppercaseFixed"> TODO MAYÚS</label>
+            </div>
+
+            <!-- ESPACIADO LETRAS Y LÍNEA -->
+            <div class="row-flex">
+                <div><label>📏 Espaciado</label><input type="range" id="letterSpacing" min="-2" max="10" value="0"></div>
+                <div><label>↕️ Línea (gap)</label><input type="range" id="flexGap" min="0" max="40" value="12"></div>
+            </div>
+
+            <!-- FILTROS EXTRA EN MARCO (blanco y negro, sepia, etc) -->
+            <div class="grid-3">
+                <button class="extra-effect-btn" onclick="applyFilter('grayscale(1)')">⚫ B/N</button>
+                <button class="extra-effect-btn" onclick="applyFilter('sepia(0.8)')">🟫 Sepia</button>
+                <button class="extra-effect-btn" onclick="applyFilter('invert(1)')">🔲 Invertir</button>
+                <button class="extra-effect-btn" onclick="applyFilter('none')">🔄 Normal</button>
+                <button class="extra-effect-btn" onclick="applyFilter('contrast(2)')">🎚️ Alto contraste</button>
+                <button class="extra-effect-btn" onclick="applyFilter('blur(2px)')">💧 Desenfoque</button>
+            </div>
+
+            <!-- DESCARGA -->
+            <button class="btn-ai" onclick="downloadProfessionalLogo()" style="margin-top: 24px; padding: 18px; font-size: 1.2rem;"><i data-lucide="download"></i> DESCARGAR PNG (HD)</button>
+        </div>
+    </aside>
+
+    <main class="workspace">
+        <div class="canvas-container" id="finalCanvas">
+            <div id="logoFrame">
+                <img id="userBgImage" src="#">
+                <div id="logoContents">
+                    <div id="iconHolder"><i id="logoIcon" data-lucide="rocket"></i></div>
+                    <h1 id="logoText">SOLARIS</h1>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        (function() {
+            // ----- Datos originales -----
+            const iconsList = ['rocket','atom','brain-circuit','shield-check','leaf','crown','diamond','flame','gem','heart','star','sun','moon','zap','cloud','droplet'];
+            const textColors = [
+                { name:'Neón', color:'#ff0080' }, { name:'Rosa', color:'#ff6b6b' }, { name:'Naranja', color:'#ff9f43' },
+                { name:'Dorado', color:'#feca57' }, { name:'Verde', color:'#1dd1a1' }, { name:'Menta', color:'#10ac84' },
+                { name:'Turquesa', color:'#0abde3' }, { name:'Azul', color:'#54a0ff' }, { name:'Índigo', color:'#5f27cd' },
+                { name:'Púrpura', color:'#9b59b6' }, { name:'Violeta', color:'#8e44ad' }, { name:'Lavanda', color:'#9b59b6' },
+                { name:'Fucsia', color:'#e84342' }, { name:'Coral', color:'#ff7675' }, { name:'Oro', color:'#f39c12' }
+            ];
+            const frameColors = [
+                { name:'Blanco', color:'#ffffff' }, { name:'Negro', color:'#1a1a1a' }, { name:'Gris', color:'#e0e0e0' },
+                { name:'Oro', color:'#ffd700' }, { name:'Rosa', color:'#ffb6c1' }, { name:'Azul', color:'#87ceeb' },
+                { name:'Menta', color:'#98fb98' }, { name:'Lavanda', color:'#e6e6fa' }, { name:'Terracota', color:'#e2725b' },
+                { name:'Mostaza', color:'#ffdb58' }, { name:'Turquesa', color:'#40e0d0' }, { name:'Coral', color:'#ff7f50' },
+                { name:'Lila', color:'#c8a2c8' }, { name:'Oliva', color:'#808000' }, { name:'Burdeos', color:'#800020' },
+                { name:'Marino', color:'#000080' }, { name:'Esmeralda', color:'#50c878' }, { name:'Rubí', color:'#e0115f' },
+                { name:'Zafiro', color:'#0f52ba' }, { name:'Amatista', color:'#9966cc' }
+            ];
+            const aiStyles = ['Normal','Neón','Metal','Glitch','Sketch','Rainbow','Fire','Ice','3D','Retro','Minimal','Gold','Silver','Wood','Marble','Space','Candy','Ocean','Sunset','Gaming','Luxury','Cyber'];
+            const fontsList = [
+                { name:'Arial', family:'Arial, sans-serif' }, { name:'Inter', family:"'Inter', sans-serif" },
+                { name:'Montserrat', family:"'Montserrat', sans-serif" }, { name:'Syne', family:"'Syne', sans-serif" },
+                { name:'Press Start', family:"'Press Start 2P', cursive" }, { name:'Roboto', family:"'Roboto', sans-serif" },
+                { name:'Open Sans', family:"'Open Sans', sans-serif" }, { name:'Lato', family:"'Lato', sans-serif" },
+                { name:'Poppins', family:"'Poppins', sans-serif" }, { name:'Oswald', family:"'Oswald', sans-serif" },
+                { name:'Raleway', family:"'Raleway', sans-serif" }, { name:'Ubuntu', family:"'Ubuntu', sans-serif" },
+                { name:'Comic Sans', family:"'Comic Sans MS', cursive" }, { name:'Impact', family:"Impact, sans-serif" },
+                { name:'Georgia', family:"Georgia, serif" }
+            ];
+            const landscapeImages = {
+                montaña:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600',
+                playa:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600',
+                bosque:'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600',
+                ciudad:'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=600',
+                espacio:'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600',
+                atardecer:'https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?w=600'
+            };
+
+            // ----- Referencias DOM -----
+            const ui = {
+                inText: document.getElementById('inText'),
+                inIconSize: document.getElementById('inIconSize'),
+                inTextSize: document.getElementById('inTextSize'),
+                inFrameShape: document.getElementById('inFrameShape'),
+                inUserImg: document.getElementById('inUserImg'),
+                customFrameColor: document.getElementById('customFrameColor'),
+                // nuevos
+                shadowIntensity: document.getElementById('shadowIntensity'),
+                textGlow: document.getElementById('textGlow'),
+                bgContentOpacity: document.getElementById('bgContentOpacity'),
+                borderWidth: document.getElementById('borderWidth'),
+                borderColor: document.getElementById('borderColor'),
+                rotateContent: document.getElementById('rotateContent'),
+                boldText: document.getElementById('boldText'),
+                italicText: document.getElementById('italicText'),
+                underlineText: document.getElementById('underlineText'),
+                uppercaseFixed: document.getElementById('uppercaseFixed'),
+                letterSpacing: document.getElementById('letterSpacing'),
+                flexGap: document.getElementById('flexGap'),
+                grad1: document.getElementById('grad1'),
+                grad2: document.getElementById('grad2'),
+            };
+            const logo = {
+                frame: document.getElementById('logoFrame'),
+                text: document.getElementById('logoText'),
+                iconHolder: document.getElementById('iconHolder'),
+                userImg: document.getElementById('userBgImage'),
+                logoContents: document.getElementById('logoContents'),
+            };
+
+            // estado
+            let currentIcon = 'rocket', currentTextColor = '#ff0080', currentFrameColor = '#ffffff', currentFont = 'Arial, sans-serif';
+            let currentFilter = 'none';
+
+            // render inicial
+            function fillGrids() {
+                const iconGrid = document.getElementById('iconGrid');
+                iconsList.forEach(icon => {
+                    let d = document.createElement('div');
+                    d.className = 'icon-option' + (icon==='rocket'?' selected':'');
+                    d.innerHTML = `<i data-lucide="${icon}"></i>`;
+                    d.onclick = function() { document.querySelectorAll('.icon-option').forEach(x=>x.classList.remove('selected')); this.classList.add('selected'); currentIcon = icon; updatePreview(); };
+                    iconGrid.appendChild(d);
+                });
+                const colorTextGrid = document.getElementById('colorGridText');
+                textColors.forEach((c,i) => {
+                    let d = document.createElement('div');
+                    d.className = 'color-option-text' + (i===0?' selected':'');
+                    d.style.backgroundColor = c.color;
+                    d.onclick = function() { document.querySelectorAll('.color-option-text').forEach(x=>x.classList.remove('selected')); this.classList.add('selected'); currentTextColor = c.color; updatePreview(); };
+                    colorTextGrid.appendChild(d);
+                });
+                const frameGrid = document.getElementById('frameColorGrid');
+                frameColors.forEach((c,i) => {
+                    let d = document.createElement('div');
+                    d.className = 'color-option-frame' + (i===0?' selected':'');
+                    d.style.backgroundColor = c.color;
+                    d.onclick = function() { 
+                        document.querySelectorAll('.color-option-frame').forEach(x=>x.classList.remove('selected')); this.classList.add('selected'); 
+                        currentFrameColor = c.color; logo.userImg.style.opacity='0'; logo.userImg.src='#'; updatePreview(); 
+                    };
+                    frameGrid.appendChild(d);
+                });
+                const fontGrid = document.getElementById('fontGrid');
+                fontsList.forEach((f,i) => {
+                    let d = document.createElement('div');
+                    d.className = 'font-option' + (f.name==='Arial'?' selected':'');
+                    d.textContent = f.name; d.style.fontFamily = f.family;
+                    d.onclick = function() { document.querySelectorAll('.font-option').forEach(x=>x.classList.remove('selected')); this.classList.add('selected'); currentFont = f.family; updatePreview(); };
+                    fontGrid.appendChild(d);
+                });
+                const stylesGrid = document.getElementById('stylesGrid');
+                aiStyles.forEach(st => {
+                    let b = document.createElement('button');
+                    b.className = 'style-btn' + (st==='Normal'?' selected':'');
+                    b.textContent = st;
+                    b.onclick = function() { document.querySelectorAll('.style-btn').forEach(x=>x.classList.remove('selected')); this.classList.add('selected'); applyAiStyle(st.toLowerCase()); };
+                    stylesGrid.appendChild(b);
+                });
+            }
+
+            function applyAiStyle(style) {
+                const cls = ['style-neon','style-metal','style-glitch','style-sketch','style-rainbow','style-fire','style-ice','style-3d','style-retro','style-minimal','style-gold','style-silver','style-wood','style-marble','style-space','style-candy','style-ocean','style-sunset','style-gaming','style-luxury','style-cyber'];
+                cls.forEach(c => logo.frame.classList.remove(c));
+                if(style!=='normal') logo.frame.classList.add('style-'+style);
+            }
+
+            window.applyCustomFrameColor = function() {
+                currentFrameColor = ui.customFrameColor.value;
+                document.querySelectorAll('.color-option-frame').forEach(x=>x.classList.remove('selected'));
+                logo.userImg.style.opacity='0'; logo.userImg.src='#'; updatePreview();
+            };
+            window.applyIALandscape = function(type, el) {
+                document.querySelectorAll('.landscape-btn').forEach(x=>x.classList.remove('selected'));
+                el.classList.add('selected');
+                logo.userImg.src = landscapeImages[type];
+                logo.userImg.style.opacity = '1';
+                logo.frame.style.backgroundColor = 'transparent';
+                document.querySelectorAll('.color-option-frame').forEach(x=>x.classList.remove('selected'));
+                updatePreview();
+            };
+            window.applyGradient = function() {
+                let g1 = ui.grad1.value, g2 = ui.grad2.value;
+                logo.frame.style.background = `linear-gradient(145deg, ${g1}, ${g2})`;
+                logo.userImg.style.opacity = '0';  // quitar imagen si existe
+                document.querySelectorAll('.color-option-frame').forEach(x=>x.classList.remove('selected'));
+                currentFrameColor = 'custom';
+            };
+            window.applyFilter = function(f) {
+                currentFilter = f;
+                logo.frame.style.filter = f;
+            };
+
+            // Función de actualización maestra (incluye todos los extras)
+            function updatePreview() {
+                logo.text.innerText = ui.inText.value || "MARCA";
+                logo.text.style.color = currentTextColor;
+                logo.text.style.fontFamily = currentFont;
+                logo.text.style.fontSize = ui.inTextSize.value + "px";
+                // icono
+                logo.iconHolder.innerHTML = `<i id="logoIcon" data-lucide="${currentIcon}" stroke-width="1.5"></i>`;
+                lucide.createIcons();
+                let newIcon = document.getElementById('logoIcon');
+                newIcon.style.stroke = currentTextColor;
+                newIcon.style.width = ui.inIconSize.value + "px";
+                newIcon.style.height = ui.inIconSize.value + "px";
+
+                // forma marco
+                logo.frame.style.borderRadius = ui.inFrameShape.value;
+                if (!logo.userImg.src || logo.userImg.style.opacity === '0' || logo.userImg.src === '#') {
+                    if (currentFrameColor !== 'custom') logo.frame.style.backgroundColor = currentFrameColor;
+                }
+                // sombra caja
+                let s = ui.shadowIntensity.value;
+                logo.frame.style.boxShadow = `0 ${s/2}px ${s}px rgba(0,0,0,0.2)`;
+                // brillo texto
+                let glow = ui.textGlow.value;
+                logo.text.style.textShadow = glow>0? `0 0 ${glow}px ${currentTextColor}` : '2px 2px 5px rgba(0,0,0,0.15)';
+                // opacidad contenedor
+                logo.logoContents.style.background = `rgba(255,255,255,${ui.bgContentOpacity.value})`;
+                // borde contenedor
+                let bw = ui.borderWidth.value;
+                if(bw>0) {
+                    logo.logoContents.style.border = `${bw}px solid ${ui.borderColor.value}`;
+                } else {
+                    logo.logoContents.style.border = '1px solid rgba(255,255,255,0.4)';
+                }
+                // rotación contenido
+                logo.logoContents.style.transform = `rotate(${ui.rotateContent.value}deg)`;
+                // estilos texto
+                logo.text.style.fontWeight = ui.boldText.checked ? '800' : '600';
+                logo.text.style.fontStyle = ui.italicText.checked ? 'italic' : 'normal';
+                logo.text.style.textDecoration = ui.underlineText.checked ? 'underline' : 'none';
+                logo.text.style.textTransform = ui.uppercaseFixed.checked ? 'uppercase' : 'none';
+                logo.text.style.letterSpacing = ui.letterSpacing.value + 'px';
+                logo.logoContents.style.gap = ui.flexGap.value + 'px';
+                // filtro extra si no se ha aplicado por botón
+                // pero evitamos pisar si se usó botón de filtro, lo manejamos aparte.
+            }
+
+            // eventos slider/input
+            ui.inText.addEventListener('input', updatePreview);
+            ui.inIconSize.addEventListener('input', updatePreview);
+            ui.inTextSize.addEventListener('input', updatePreview);
+            ui.inFrameShape.addEventListener('change', updatePreview);
+            ui.shadowIntensity.addEventListener('input', updatePreview);
+            ui.textGlow.addEventListener('input', updatePreview);
+            ui.bgContentOpacity.addEventListener('input', updatePreview);
+            ui.borderWidth.addEventListener('input', updatePreview);
+            ui.borderColor.addEventListener('input', updatePreview);
+            ui.rotateContent.addEventListener('input', updatePreview);
+            ui.boldText.addEventListener('change', updatePreview);
+            ui.italicText.addEventListener('change', updatePreview);
+            ui.underlineText.addEventListener('change', updatePreview);
+            ui.uppercaseFixed.addEventListener('change', updatePreview);
+            ui.letterSpacing.addEventListener('input', updatePreview);
+            ui.flexGap.addEventListener('input', updatePreview);
+
+            ui.inUserImg.addEventListener('change', function(e) {
+                let f = e.target.files[0];
+                if(f) {
+                    let r = new FileReader();
+                    r.onload = ev => { logo.userImg.src = ev.target.result; logo.userImg.style.opacity='1'; logo.frame.style.background='transparent'; updatePreview(); };
+                    r.readAsDataURL(f);
+                }
+            });
+
+            window.downloadProfessionalLogo = async function() {
+                const canvas = await html2canvas(document.getElementById('finalCanvas'), { scale:2.5, backgroundColor:null, useCORS:true });
+                let link = document.createElement('a');
+                link.download = `logo-${ui.inText.value}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            };
+
+            fillGrids();
+            lucide.createIcons();
+            updatePreview();
+        })();
+    </script>
+</body>
+</html>
