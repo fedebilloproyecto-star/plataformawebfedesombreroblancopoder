@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparativo Ahorro vs Inversión</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+                border-radius: 10px;
+  max-width: 1100px;
+  margin: 90px auto;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .comparison-section, .calculator-section {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .section-title {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: var(--light-color);
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .results {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: var(--light-color);
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .results.active {
+            display: block;
+        }
+        
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .result-value {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .formula-section {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .formula-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .formula {
+            font-family: 'Courier New', monospace;
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+        
+        .symbols-table {
+            margin-top: 20px;
+        }
+        
+        .symbols-table th {
+            background-color: var(--dark-color);
+            color: white;
+        }
+        
+        .highlight {
+            background-color: #fff9c4;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        
+        .note {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 10px;
+            font-style: italic;
+        }
+        
+        .visualization {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .chart-container {
+            height: 200px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            margin-top: 15px;
+        }
+        
+        .chart-bar {
+            width: 40px;
+            background: linear-gradient(to top, var(--secondary-color), #2980b9);
+            border-radius: 3px 3px 0 0;
+            position: relative;
+        }
+        
+        .chart-label {
+            position: absolute;
+            bottom: -25px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+/* Solo estilos para el botón "Volver atrás" */
+.back-button {
+  display: inline-block;
+  padding: 10px 18px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 2px solid #333;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  user-select: none;
+}
+
+/* Efecto al pasar el ratón */
+.back-button:hover,
+.back-button:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+  text-decoration: none;
+  outline: none;
+}
+
+/* Efecto al hacer clic */
+.back-button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Comparativo Ahorro vs Inversión</h1>
+            <p class="subtitle">Comprende las diferencias y calcula tu crecimiento financiero</p>
+        </header>
+        <a href="principal.html" class="back-button" aria-label="Volver atrás">Volver atrás</a>
+        <div class="content">
+            <section class="comparison-section">
+                <h2 class="section-title">Cuadro Comparativo</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Aspecto</th>
+                            <th>Ahorro</th>
+                            <th>Inversión</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Definición</strong></td>
+                            <td>Guardar una parte del dinero actual para usarlo en el futuro.</td>
+                            <td>Usar el dinero con el fin de obtener ganancias o rendimientos.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Objetivo principal</strong></td>
+                            <td>Proteger el dinero y disponer de él cuando se necesite.</td>
+                            <td>Hacer que el dinero crezca y genere rentabilidad.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Riesgo</strong></td>
+                            <td>Bajo o nulo. El dinero no se pierde, pero puede perder valor con la inflación.</td>
+                            <td>Medio o alto. Existe posibilidad de pérdida, pero también de mayor ganancia.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Rentabilidad</strong></td>
+                            <td>Baja o nula (a veces solo mantiene el valor del dinero).</td>
+                            <td>Media o alta, dependiendo del tipo de inversión.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Liquidez (disponibilidad del dinero)</strong></td>
+                            <td>Alta: se puede retirar fácilmente.</td>
+                            <td>Variable: algunas inversiones requieren mantener el dinero un tiempo mínimo.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Plazo</strong></td>
+                            <td>Corto o mediano plazo.</td>
+                            <td>Generalmente mediano o largo plazo.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ejemplo común</strong></td>
+                            <td>Guardar dinero en una cuenta de ahorro.</td>
+                            <td>Comprar acciones, bonos, criptomonedas, o invertir en un fondo.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Protección contra la inflación</strong></td>
+                            <td>No protege (el dinero puede perder valor con el tiempo).</td>
+                            <td>Puede superar la inflación y aumentar el poder adquisitivo.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Interés generado</strong></td>
+                            <td>Generalmente bajo o fijo.</td>
+                            <td>Puede ser variable y más alto.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Participación del usuario</strong></td>
+                            <td>Pasiva: solo se deposita dinero.</td>
+                            <td>Activa: se requiere análisis, decisiones y seguimiento.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Fórmula aplicada</strong></td>
+                            <td>VF = P(1 + i)^n (si solo hay capital inicial).</td>
+                            <td>VF = P(1+i)^n + A × [(1+i)^n - 1] / i (si hay aportes periódicos).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ejemplo numérico</strong></td>
+                            <td>Ahorrar $1.000 por mes sin interés durante 5 años = $60.000.</td>
+                            <td>Invertir $1.000 por mes con 5% anual = $66.315.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Conclusión</strong></td>
+                            <td>El ahorro conserva dinero.</td>
+                            <td>La inversión lo hace crecer.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="formula-section">
+                    <h3 class="formula-title">Fórmula del Valor Futuro con Aportes Periódicos</h3>
+                    <div class="formula">
+                        VF = P(1+i)^n + A × [(1+i)^n - 1] / i
+                    </div>
+                    <p class="note">Donde VF es el Valor Futuro, P es el Capital Inicial, i es la Tasa de Interés por período, n es el Número de períodos, y A es el Aporte periódico.</p>
+                </div>
+                
+                <h3 class="section-title">Símbolos y Variables</h3>
+                <table class="symbols-table">
+                    <thead>
+                        <tr>
+                            <th>Símbolo</th>
+                            <th>Nombre completo</th>
+                            <th>Significado o descripción</th>
+                            <th>Función dentro de la fórmula</th>
+                            <th>Ejemplo práctico</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>VF</strong></td>
+                            <td>Valor Futuro</td>
+                            <td>Cantidad total que se tendrá al final del período, sumando intereses y aportes.</td>
+                            <td>Muestra el resultado final del ahorro o inversión.</td>
+                            <td>Si VF = $18.288 → eso es lo que tendrás después de 5 años.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>P</strong></td>
+                            <td>Capital inicial</td>
+                            <td>Monto de dinero con el que se inicia la inversión o ahorro.</td>
+                            <td>Es la base que se multiplica y genera intereses.</td>
+                            <td>Invertís $10.000 hoy.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>i</strong></td>
+                            <td>Tasa de interés por período</td>
+                            <td>Porcentaje que indica la rentabilidad o ganancia sobre el dinero.</td>
+                            <td>Determina cuánto crece el dinero por cada período.</td>
+                            <td>i = 5% anual = 0.05</td>
+                        </tr>
+                        <tr>
+                            <td><strong>n</strong></td>
+                            <td>Número de períodos</td>
+                            <td>Cantidad de veces que se aplica la tasa de interés (años, meses, etc.).</td>
+                            <td>Indica el tiempo durante el cual se aplica el interés.</td>
+                            <td>n = 5 años</td>
+                        </tr>
+                        <tr>
+                            <td><strong>A</strong></td>
+                            <td>Aporte periódico</td>
+                            <td>Monto que se agrega regularmente (mensual, anual, etc.) durante el período.</td>
+                            <td>Suma dinero nuevo a la inversión, generando más intereses.</td>
+                            <td>A = $1.000 por mes</td>
+                        </tr>
+                        <tr>
+                            <td><strong>(1 + i)^n</strong></td>
+                            <td>Factor de capitalización</td>
+                            <td>Representa el crecimiento del dinero debido a los intereses compuestos.</td>
+                            <td>Multiplica el capital inicial para proyectarlo al futuro.</td>
+                            <td>(1.05)^5 = 1.2763</td>
+                        </tr>
+                        <tr>
+                            <td><strong>((1+i)^n - 1)/i</strong></td>
+                            <td>Factor de anualidad acumulada</td>
+                            <td>Valor futuro de una serie de pagos periódicos iguales.</td>
+                            <td>Calcula cuánto valen los aportes periódicos acumulados con interés.</td>
+                            <td>Si i=0.05 y n=5 → 5.5256</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Interés compuesto</strong></td>
+                            <td>—</td>
+                            <td>Interés que se genera sobre el capital <strong>y sobre los intereses anteriores</strong>.</td>
+                            <td>Hace que el dinero crezca de manera <strong>exponencial</strong>.</td>
+                            <td>$10.000 al 5% anual → 10.500, 11.025, 11.576, etc.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Período</strong></td>
+                            <td>—</td>
+                            <td>Intervalo de tiempo en el cual se aplica la tasa (mensual, anual...).</td>
+                            <td>Define cómo se repite el cálculo del interés.</td>
+                            <td>Cada año, cada mes, etc.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tasa efectiva</strong></td>
+                            <td>—</td>
+                            <td>Tasa real que se gana en un año considerando capitalización.</td>
+                            <td>Permite comparar distintas inversiones.</td>
+                            <td>5% anual efectivo ≈ 0.407% mensual.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+            
+            <section class="calculator-section">
+                <h2 class="section-title">Calculadora Financiera</h2>
+                <p>Utiliza esta calculadora para proyectar el crecimiento de tus ahorros o inversiones aplicando la fórmula del valor futuro.</p>
+                
+                <form id="calculator-form">
+                    <div class="form-group">
+                        <label for="initial-capital">Capital Inicial (P)</label>
+                        <input type="number" id="initial-capital" placeholder="Ej: 10000" min="0" step="any" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="periodic-contribution">Aporte Periódico (A)</label>
+                        <input type="number" id="periodic-contribution" placeholder="Ej: 1000" min="0" step="any" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contribution-frequency">Frecuencia de Aporte</label>
+                        <select id="contribution-frequency">
+                            <option value="12">Mensual</option>
+                            <option value="4">Trimestral</option>
+                            <option value="2">Semestral</option>
+                            <option value="1">Anual</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="interest-rate">Tasa de Interés Anual (%)</label>
+                        <input type="number" id="interest-rate" placeholder="Ej: 5" min="0" step="any" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="time-period">Período de Tiempo (años)</label>
+                        <input type="number" id="time-period" placeholder="Ej: 5" min="1" step="any" required>
+                    </div>
+                    
+                    <button type="submit" class="btn">Calcular Valor Futuro</button>
+                </form>
+                
+                <div id="results" class="results">
+                    <h3 class="section-title">Resultados</h3>
+                    <div class="result-item">
+                        <span>Valor Futuro (VF):</span>
+                        <span id="future-value" class="result-value">$0</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Total de Aportes:</span>
+                        <span id="total-contributions" class="result-value">$0</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Intereses Generados:</span>
+                        <span id="interest-earned" class="result-value">$0</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Rentabilidad:</span>
+                        <span id="return-rate" class="result-value">0%</span>
+                    </div>
+                    
+                    <div class="visualization">
+                        <h4>Comparación: Ahorro vs Inversión</h4>
+                        <div class="chart-container" id="chart">
+                            <!-- Las barras del gráfico se generarán aquí -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('calculator-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Obtener valores del formulario
+            const P = parseFloat(document.getElementById('initial-capital').value) || 0;
+            const A = parseFloat(document.getElementById('periodic-contribution').value) || 0;
+            const frequency = parseInt(document.getElementById('contribution-frequency').value);
+            const annualRate = parseFloat(document.getElementById('interest-rate').value) / 100;
+            const years = parseInt(document.getElementById('time-period').value);
+            
+            // Calcular número total de períodos
+            const n = years * frequency;
+            
+            // Calcular tasa de interés por período
+            const i = annualRate / frequency;
+            
+            // Calcular valor futuro
+            let VF;
+            
+            if (i === 0) {
+                // Si no hay interés, cálculo simple (ahorro)
+                VF = P + (A * n);
+            } else {
+                // Aplicar fórmula completa (inversión)
+                const factor1 = Math.pow(1 + i, n);
+                const factor2 = (factor1 - 1) / i;
+                
+                VF = (P * factor1) + (A * factor2);
+            }
+            
+            // Calcular otros valores
+            const totalContributions = P + (A * n);
+            const interestEarned = VF - totalContributions;
+            const returnRate = ((VF - totalContributions) / totalContributions * 100).toFixed(2);
+            
+            // Mostrar resultados
+            document.getElementById('future-value').textContent = `$${VF.toFixed(2)}`;
+            document.getElementById('total-contributions').textContent = `$${totalContributions.toFixed(2)}`;
+            document.getElementById('interest-earned').textContent = `$${interestEarned.toFixed(2)}`;
+            document.getElementById('return-rate').textContent = `${returnRate}%`;
+            
+            // Crear visualización comparativa
+            createComparisonChart(totalContributions, VF, interestEarned);
+            
+            // Mostrar sección de resultados
+            document.getElementById('results').classList.add('active');
+        });
+        
+        function createComparisonChart(totalContributions, futureValue, interestEarned) {
+            const chart = document.getElementById('chart');
+            chart.innerHTML = '';
+            
+            // Calcular alturas relativas para las barras
+            const maxValue = Math.max(totalContributions, futureValue);
+            const barHeight1 = (totalContributions / maxValue) * 180;
+            const barHeight2 = (futureValue / maxValue) * 180;
+            
+            // Crear barra de ahorro (sin interés)
+            const bar1 = document.createElement('div');
+            bar1.className = 'chart-bar';
+            bar1.style.height = `${barHeight1}px`;
+            bar1.innerHTML = `<div class="chart-label">Ahorro</div>`;
+            chart.appendChild(bar1);
+            
+            // Crear barra de inversión (con interés)
+            const bar2 = document.createElement('div');
+            bar2.className = 'chart-bar';
+            bar2.style.height = `${barHeight2}px`;
+            bar2.innerHTML = `<div class="chart-label">Inversión</div>`;
+            chart.appendChild(bar2);
+            
+            // Añadir valores a las barras
+            const value1 = document.createElement('div');
+            value1.style.position = 'absolute';
+            value1.style.top = '-25px';
+            value1.style.left = '0';
+            value1.style.right = '0';
+            value1.style.textAlign = 'center';
+            value1.style.fontSize = '0.8rem';
+            value1.textContent = `$${totalContributions.toFixed(0)}`;
+            bar1.appendChild(value1);
+            
+            const value2 = document.createElement('div');
+            value2.style.position = 'absolute';
+            value2.style.top = '-25px';
+            value2.style.left = '0';
+            value2.style.right = '0';
+            value2.style.textAlign = 'center';
+            value2.style.fontSize = '0.8rem';
+            value2.textContent = `$${futureValue.toFixed(0)}`;
+            bar2.appendChild(value2);
+        }
+    </script>
+</body>
+</html>

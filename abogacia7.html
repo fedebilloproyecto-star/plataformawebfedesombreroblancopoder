@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Normativas de Protección al Médico en Argentina</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+                border-radius: 10px;
+  max-width: 900px;
+  margin: 90px auto;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .intro {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .filter-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .filter-btn.active, .filter-btn:hover {
+            background-color: var(--secondary-color);
+            color: white;
+            border-color: var(--secondary-color);
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+        
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            position: sticky;
+            top: 0;
+        }
+        
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .ley-general {
+            background-color: rgba(52, 152, 219, 0.1);
+        }
+        
+        .ley-especifica {
+            background-color: rgba(46, 204, 113, 0.1);
+        }
+        
+        .resolucion-tecnica {
+            background-color: rgba(241, 196, 15, 0.1);
+        }
+        
+        .norma-numero {
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        .norma-nombre {
+            font-weight: 600;
+        }
+        
+        .conclusion {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+            }
+            
+            .filter-buttons {
+                justify-content: center;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+        /* Solo estilos para el botón "Volver atrás" */
+.back-button {
+  display: inline-block;
+  padding: 10px 18px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 2px solid #333;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  user-select: none;
+}
+
+/* Efecto al pasar el ratón */
+.back-button:hover,
+.back-button:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+  text-decoration: none;
+  outline: none;
+}
+
+/* Efecto al hacer clic */
+.back-button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Normativas de Protección al Médico en Argentina</h1>
+            <p class="subtitle">Cuadro comparativo de leyes y resoluciones que garantizan la seguridad y derechos del personal médico</p>
+        <a href="aprendeprincipalconocimientosabogacia.html" class="back-button" aria-label="Volver atrás">Volver atrás</a>
+  
+        </div>
+    </header>
+    
+    <main class="container">
+        <section class="intro">
+            <p>En Argentina, la protección del médico como trabajador no se encuentra en una sola ley, sino en un <strong>marco normativo integral</strong> que incluye la Ley de Contrato de Trabajo, la Ley de Riesgos del Trabajo y una serie de resoluciones técnicas específicas de la Superintendencia de Riesgos del Trabajo (SRT).</p>
+            <p>Este cuadro comparativo presenta las principales normativas que protegen al médico en su ámbito laboral, con ejemplos concretos de aplicación.</p>
+        </section>
+        
+        <section class="controls">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Buscar normativa, descripción o ejemplo...">
+            </div>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">Todas</button>
+                <button class="filter-btn" data-filter="ley-general">Leyes Generales</button>
+                <button class="filter-btn" data-filter="ley-especifica">Leyes Específicas</button>
+                <button class="filter-btn" data-filter="resolucion-tecnica">Resoluciones Técnicas</button>
+            </div>
+        </section>
+        
+        <section class="table-container">
+            <table id="normativasTable">
+                <thead>
+                    <tr>
+                        <th>N°</th>
+                        <th>Normativa</th>
+                        <th>Ámbito / Tipo</th>
+                        <th>Descripción General</th>
+                        <th>Ejemplo de Aplicación para el Médico</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Las filas se generarán con JavaScript -->
+                </tbody>
+            </table>
+        </section>
+        
+        <section class="conclusion">
+            <h2>Conclusión clave</h2>
+            <p>La protección del médico es un <strong>derecho integral</strong>. No depende de una sola ley, sino de la aplicación combinada de:</p>
+            <ol>
+                <li><strong>Leyes generales</strong> (LCT y LRT) que establecen los derechos básicos y el sistema de cobertura.</li>
+                <li><strong>Resoluciones técnicas específicas</strong> (de la SRT) que detallan <em>cómo</em> debe implementarse la seguridad en cada aspecto concreto del trabajo en salud.</li>
+            </ol>
+            <p>El empleador (clínica, hospital, sanatorio) es el principal responsable de cumplir estas normas. El médico tiene el derecho de trabajar en un ambiente seguro y la obligación de seguir los protocolos establecidos.</p>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>Información recopilada para fines educativos. Consulte siempre las fuentes oficiales para aplicación práctica.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Datos de las normativas
+        const normativas = [
+            {
+                numero: "A",
+                nombre: "Ley de Contrato de Trabajo N° 20.744",
+                tipo: "Ley General (Derecho Laboral)",
+                descripcion: "Establece los derechos y obligaciones básicos de todo trabajador en relación de dependencia.",
+                ejemplo: "Derecho a jornada laboral limitada, descansos, vacaciones pagas, indemnización por despido, estabilidad (en algunos casos).",
+                clase: "ley-general"
+            },
+            {
+                numero: "B",
+                nombre: "Ley de Riesgos del Trabajo N° 24.557",
+                tipo: "Ley Específica (Seguridad Social)",
+                descripcion: "Crea el Sistema de Riesgos del Trabajo. Obliga a los empleadores a asegurar a sus trabajadores contra accidentes y enfermedades profesionales. Establece las Aseguradoras de Riesgos del Trabajo (ART).",
+                ejemplo: "Protección fundamental. Si un médico se pincha con una aguja (accidente) o desarrolla una lumbalgia por malas posturas (enfermedad profesional), la ART debe cubrir su tratamiento y rehabilitación.",
+                clase: "ley-especifica"
+            },
+            {
+                numero: "1",
+                nombre: "Resolución SRT 523/2007",
+                tipo: "Resolución Técnica (SGSST)",
+                descripcion: "Exige la implementación de un Sistema de Gestión de Seguridad y Salud en el Trabajo en todos los lugares de trabajo.",
+                ejemplo: "El hospital debe tener un programa documentado de prevención de riesgos, con responsables, capacitación anual y procedimientos seguros para todas las tareas (ej: protocolo de cirugía segura).",
+                clase: "resolucion-tecnica"
+            },
+            {
+                numero: "2",
+                nombre: "Resolución SRT 900/2015",
+                tipo: "Resolución Técnica (Vigilancia)",
+                descripcion: "Establece la obligatoriedad del Control Médico Preventivo de la Salud de los trabajadores.",
+                ejemplo: "Exámenes de salud pre-ocupacionales, periódicos y post-incapacidad para todo el personal de salud. Ejemplo: evaluar el estado inmunológico de un médico antes de asignarlo a infectología.",
+                clase: "resolucion-tecnica"
+            },
+            {
+                numero: "3",
+                nombre: "Resolución SRT 295/2015",
+                tipo: "Resolución Técnica (Seguridad)",
+                descripcion: "Reglamenta las condiciones de seguridad para las actividades de la construcción.",
+                ejemplo: "Aplicable cuando hay reformas o ampliaciones en el hospital. Garantiza que el personal médico no esté expuesto a riesgos de la obra (caídas, escombros, polvo).",
+                clase: "resolucion-tecnica"
+            },
+            {
+                numero: "4",
+                nombre: "Resolución SRT 59/2011",
+                tipo: "Resolución Técnica (Bioseguridad)",
+                descripcion: "Establece medidas preventivas para tareas con exposición a agentes biológicos.",
+                ejemplo: "Es crucial para médicos. Obliga al uso de Elementos de Protección Personal (EPP) como guantes, barbijos, camisolines, y al cumplimiento de protocolos de esterilización y descarte de material punzocortante.",
+                clase: "resolucion-tecnica"
+            },
+            {
+                numero: "5",
+                nombre: "Resolución SRT 901/2015",
+                tipo: "Resolución Técnica (Enf. Profesionales)",
+                descripcion: "Crea el 'Programa de Prevención de Enfermedades Profesionales' para las actividades de mayor riesgo.",
+                ejemplo: "El hospital debe tener un programa específico para prevenir enfermedades comunes en médicos: estrés, burnout, enfermedades por exposición a radiaciones, etc.",
+                clase: "resolucion-tecnica"
+            },
+            {
+                numero: "6",
+                nombre: "Resolución SRT 678/2013",
+                tipo: "Resolución Técnica (Higiene)",
+                descripcion: "Fija los límites de exposición al ruido en el trabajo y las medidas de protección.",
+                ejemplo: "Aplicable en áreas de alto ruido como salas de resonadores magnéticos o plantas de generadores, donde el médico debe usar protección auditiva.",
+                clase: "resolucion-tecnica"
+            },
+            {
+                numero: "7",
+                nombre: "Resolución SRT 220/2005",
+                tipo: "Resolución Técnica (Listado)",
+                descripcion: "Aprueba el listado de enfermedades profesionales, indicando qué dolencias se consideran causadas por el trabajo.",
+                ejemplo: "Define, por ejemplo, que la tuberculosis en un personal de salud es una enfermedad profesional, facilitando la cobertura de la ART.",
+                clase: "resolucion-tecnica"
+            },
+            {
+                numero: "8",
+                nombre: "Resolución SRT 461/2011",
+                tipo: "Resolución Técnica (Seguridad)",
+                descripcion: "Regula los trabajos en espacios confinados (tanques, silos, cámaras).",
+                ejemplo: "Aplicable al personal de mantenimiento o técnicos que deban ingresar a salas de máquinas o tanques subterráneos del hospital.",
+                clase: "resolucion-tecnica"
+            },
+            {
+                numero: "9",
+                nombre: "Resolución SRT 299/2011",
+                tipo: "Resolución Técnica (Higiene)",
+                descripcion: "Complementa a la 678/2013, detallando la metodología de evaluación del riesgo por ruido.",
+                ejemplo: "Se usa para medir el nivel de ruido en áreas como terapia intensiva (donde hay alarmas constantes) y determinar si se superan los límites legales.",
+                clase: "resolucion-tecnica"
+            },
+            {
+                numero: "10",
+                nombre: "Resolución SRT 85/2012",
+                tipo: "Resolución Técnica (Higiene)",
+                descripcion: "Establece los límites de exposición a carga térmica (calor/frío) y las medidas preventivas.",
+                ejemplo: "Asegura condiciones térmicas adecuadas en quirófanos (que suelen estar muy fríos) o en áreas de lavandería del hospital (muy calurosas).",
+                clase: "resolucion-tecnica"
+            }
+        ];
+
+        // Función para renderizar la tabla
+        function renderTable(data) {
+            const tbody = document.querySelector('#normativasTable tbody');
+            tbody.innerHTML = '';
+            
+            data.forEach(normativa => {
+                const row = document.createElement('tr');
+                row.className = normativa.clase;
+                
+                row.innerHTML = `
+                    <td class="norma-numero">${normativa.numero}</td>
+                    <td class="norma-nombre">${normativa.nombre}</td>
+                    <td>${normativa.tipo}</td>
+                    <td>${normativa.descripcion}</td>
+                    <td>${normativa.ejemplo}</td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        // Función para filtrar y buscar
+        function filterTable() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
+            
+            const filteredData = normativas.filter(normativa => {
+                const matchesSearch = 
+                    normativa.nombre.toLowerCase().includes(searchTerm) ||
+                    normativa.tipo.toLowerCase().includes(searchTerm) ||
+                    normativa.descripcion.toLowerCase().includes(searchTerm) ||
+                    normativa.ejemplo.toLowerCase().includes(searchTerm);
+                
+                const matchesFilter = 
+                    activeFilter === 'all' || 
+                    normativa.clase === activeFilter;
+                
+                return matchesSearch && matchesFilter;
+            });
+            
+            renderTable(filteredData);
+        }
+
+        // Inicializar la tabla
+        document.addEventListener('DOMContentLoaded', () => {
+            renderTable(normativas);
+            
+            // Event listeners para búsqueda
+            document.getElementById('searchInput').addEventListener('input', filterTable);
+            
+            // Event listeners para filtros
+            document.querySelectorAll('.filter-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    filterTable();
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1931 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>200 Materias de Derecho</title>
+    <style>
+/* Variables de color para el tema neón */
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #0ff0fc; /* Cian neón */
+    --accent-color: #ff00ff;   /* Magenta neón */
+    --light-color: #f0f8ff;    /* Azul claro */
+    --dark-color: #0a1128;     /* Azul noche */
+    --success-color: #00ff7f;  /* Verde neón */
+    --neon-glow: 0 0 10px rgba(0, 255, 255, 0.8),
+                 0 0 20px rgba(0, 255, 255, 0.6),
+                 0 0 30px rgba(0, 255, 255, 0.4);
+}
+
+/* Reset básico para asegurar la consistencia entre navegadores */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #0a1128 0%, #1a1a2e 100%);
+    color: #f0f8ff;
+    line-height: 1.6;
+    min-height: 100vh;
+        border-radius: 10px;
+  max-width: 900px;
+  margin: 90px auto;
+}
+
+header {
+    background-color: rgba(10, 17, 40, 0.8);
+    color: var(--secondary-color);
+    padding: 2rem 0;
+    text-align: center;
+    box-shadow: var(--neon-glow);
+    border-bottom: 1px solid var(--secondary-color);
+    backdrop-filter: blur(5px);
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 5px var(--secondary-color);
+}
+
+/* Contenedor principal para centrar el contenido */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Sección de búsqueda y filtros */
+.search-filter {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    box-shadow: var(--neon-glow);
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    backdrop-filter: blur(5px);
+}
+
+.search-box,
+.filter-box {
+    flex: 1;
+    min-width: 250px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: var(--secondary-color);
+    text-shadow: 0 0 3px var(--secondary-color);
+}
+
+input[type="text"],
+select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--secondary-color);
+    border-radius: 4px;
+    font-size: 1rem;
+    background-color: rgba(10, 17, 40, 0.7);
+    color: var(--light-color);
+    transition: box-shadow 0.3s ease;
+}
+
+input[type="text"]:focus,
+select:focus {
+    outline: none;
+    box-shadow: 0 0 10px var(--secondary-color);
+}
+
+/* Contenedor para las tarjetas de las materias */
+.subjects-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 25px;
+    margin-bottom: 3rem;
+}
+
+/* Estilos para cada tarjeta de materia */
+.subject-card {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 255, 255, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+}
+
+.subject-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px var(--secondary-color);
+}
+
+/* Encabezado de la tarjeta */
+.subject-header {
+    background: linear-gradient(90deg, rgba(15, 240, 252, 0.3) 0%, rgba(255, 0, 255, 0.3) 100%);
+    color: white;
+    padding: 1.2rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-shadow: 0 0 5px var(--secondary-color);
+    border-bottom: 1px solid var(--secondary-color);
+}
+
+/* Cuerpo de la tarjeta */
+.subject-body {
+    padding: 1.5rem;
+}
+
+/* Descripción de la materia */
+.subject-description {
+    margin-bottom: 1rem;
+    color: #f0f8ff;
+}
+
+/* Sección de leyes asociadas */
+.subject-laws {
+    background-color: rgba(15, 240, 252, 0.1);
+    padding: 1rem;
+    border-radius: 4px;
+    border: 1px dashed var(--secondary-color);
+}
+
+.subject-laws h4 {
+    margin-bottom: 0.8rem;
+    color: var(--secondary-color);
+    text-shadow: 0 0 3px var(--secondary-color);
+}
+
+.law-item {
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: #f0f8ff;
+    padding-left: 10px;
+    border-left: 2px solid var(--accent-color);
+}
+
+/* Footer de la página */
+footer {
+    background-color: rgba(10, 17, 40, 0.8);
+    color: var(--secondary-color);
+    text-align: center;
+    padding: 2rem 0;
+    margin-top: 3rem;
+    box-shadow: 0 -5px 15px rgba(0, 255, 255, 0.2);
+    border-top: 1px solid var(--secondary-color);
+    text-shadow: 0 0 3px var(--secondary-color);
+}
+
+/* Mensaje cuando no se encuentran resultados */
+.no-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 2rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 255, 255, 0.2);
+    border: 1px solid var(--secondary-color);
+    color: var(--secondary-color);
+}
+
+/* Media query para diseño responsive */
+@media (max-width: 768px) {
+    .subjects-container {
+        grid-template-columns: 1fr;
+    }
+
+    .search-filter {
+        flex-direction: column;
+    }
+}
+
+/* Estilo para el contenedor del botón neón */
+.button-container {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    background-color: rgba(15, 240, 252, 0.1);
+    box-shadow: var(--neon-glow);
+    padding: 10px;
+    transition: all 0.3s ease;
+    border: 1px solid var(--secondary-color);
+}
+
+.button-container:hover {
+    background-color: rgba(15, 240, 252, 0.2);
+    box-shadow: 0 0 20px var(--secondary-color);
+}
+
+/* Estilo para el botón neón */
+.my-button {
+    background: linear-gradient(45deg, var(--secondary-color), var(--accent-color));
+    color: white;
+    border: none;
+    padding: 15px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    width: 80px;
+    height: 80px;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+.my-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 20px var(--secondary-color),
+                0 0 30px var(--accent-color);
+}
+
+.my-button:active {
+    transform: translateY(1px);
+    box-shadow: 0 0 10px var(--secondary-color);
+}
+
+.my-button:focus {
+    outline: none;
+    box-shadow: 0 0 15px var(--secondary-color),
+                0 0 25px var(--accent-color);
+}
+
+/* Efectos de neón para títulos y elementos importantes */
+.neon-text {
+    text-shadow: 0 0 5px var(--secondary-color),
+                 0 0 10px var(--secondary-color),
+                 0 0 20px var(--secondary-color);
+    color: white;
+}
+
+.neon-accent {
+    text-shadow: 0 0 5px var(--accent-color),
+                 0 0 10px var(--accent-color);
+    color: white;
+}
+.btn-atras {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #f0f0f0;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-decoration: none;
+  font-family: Arial, sans-serif;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.btn-atras:hover {
+  background-color: #e0e0e0;
+}
+
+.btn-atras:active {
+  background-color: #d0d0d0;
+  transform: scale(0.98);
+}
+ 
+    .siguientes-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4285F4;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .siguientes-btn:hover {
+            background-color: #3367D6;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .siguientes-btn:active {
+            background-color: #2A56C6;
+            transform: translateY(1px);
+        }
+/* Solo estilos para el botón "Volver atrás" */
+.back-button {
+  display: inline-block;
+  padding: 10px 18px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 2px solid #333;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  user-select: none;
+}
+
+/* Efecto al pasar el ratón */
+.back-button:hover,
+.back-button:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+  text-decoration: none;
+  outline: none;
+}
+
+/* Efecto al hacer clic */
+.back-button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+    </style>
+</head>
+<body>
+  
+    <header>
+        <div class="container">
+             <a href="aprendeprincipalconocimientosabogacia.html" class="back-button" aria-label="Volver atrás">Volver atrás</a>
+  
+            <h1>200 Materias de Derecho</h1>
+            <p>Descripciones y leyes asociadas a cada materia jurídica</p>
+        </div>
+        <div>
+          
+          </div>
+          
+          
+    </header>
+  
+    
+    <main class="container">
+        <div class="search-filter">
+            <div class="search-box">
+                <label for="search">Buscar materia:</label>
+                <input type="text" id="search" placeholder="Escribe para buscar...">
+            </div>
+            <div class="filter-box">
+                <label for="filter">Filtrar por área:</label>
+                <select id="filter">
+                    <option value="all">Todas las áreas</option>
+                    <option value="civil">Derecho Civil</option>
+                    <option value="penal">Derecho Penal</option>
+                    <option value="laboral">Derecho Laboral</option>
+                    <option value="mercantil">Derecho Mercantil</option>
+                    <option value="administrativo">Derecho Administrativo</option>
+                    <option value="constitucional">Derecho Constitucional</option>
+                    <option value="internacional">Derecho Internacional</option>
+                    <option value="tributario">Derecho Tributario</option>
+                    <option value="procesal">Derecho Procesal</option>
+                    <option value="familia">Derecho de Familia</option>
+                    <option value="tecnologico">Derecho Tecnológico</option>
+                    <option value="ambiental">Derecho Ambiental</option>
+                    <option value="propiedad">Propiedad Intelectual</option>
+               
+                </select>
+            </div>
+        </div>
+   
+    
+        <div class="subjects-container" id="subjectsContainer">
+            <!-- Las materias se cargarán aquí dinámicamente -->
+        </div>
+    </main>
+
+    <script>
+
+
+        // Base de datos de materias de derecho
+        const subjects = [
+            {
+                title: "Derecho Civil I (Personas)",
+                description: "Estudia las personas físicas y jurídicas, su capacidad jurídica, domicilio, estado civil y los derechos de la personalidad.",
+                laws: ["Código Civil", "Ley de Registro Civil", "Ley de Nacionalidad"],
+                area: "civil",
+                year: "2023"
+            },
+            {
+                title: "Derecho Civil II (Familia)",
+                description: "Regula las relaciones familiares, matrimonio, divorcio, filiación, patria potestad, alimentos y tutelas.",
+                laws: ["Código Civil", "Ley de Matrimonio Civil", "Ley de Violencia Intrafamiliar"],
+                area: "civil",
+                year: "2023"
+            },
+            {
+                title: "Derecho Civil III (Sucesiones)",
+                description: "Norma la sucesión por causa de muerte, testamentos, legados, herencias y la partición de bienes.",
+                laws: ["Código Civil", "Ley de Procedimientos Sucesorios"],
+                area: "civil",
+                year: "2023"
+            },
+            {
+                title: "Derecho Civil IV (Obligaciones y Contratos)",
+                description: "Estudia las fuentes de las obligaciones, los distintos tipos de contratos y sus efectos jurídicos.",
+                laws: ["Código Civil", "Ley de Protección al Consumidor"],
+                area: "civil",
+                year: "2023"
+            },
+            {
+                title: "Derecho Penal I (Parte General)",
+                description: "Analiza los principios del derecho penal, la teoría del delito, la imputabilidad y las penas.",
+                laws: ["Código Penal", "Ley de Responsabilidad Penal Juvenil"],
+                area: "penal",
+                year: "2023"
+            },
+            {
+                title: "Derecho Penal II (Parte Especial)",
+                description: "Estudia los delitos en particular, sus elementos y las penas correspondientes a cada uno.",
+                laws: ["Código Penal", "Ley contra el Lavado de Dinero"],
+                area: "penal",
+                year: "2023"
+            },
+            {
+                title: "Derecho Laboral Individual",
+                description: "Regula las relaciones individuales de trabajo, contrato laboral, derechos y obligaciones de empleadores y trabajadores.",
+                laws: ["Código de Trabajo", "Ley de Riesgos del Trabajo", "Ley de Jornada Laboral"],
+                area: "laboral",
+                year: "2023"
+            },
+            {
+                title: "Derecho Laboral Colectivo",
+                description: "Norma las relaciones colectivas de trabajo, sindicatos, convenciones colectivas y conflictos laborales.",
+                laws: ["Código de Trabajo", "Ley de Asociaciones Sindicales", "Ley de Negociación Colectiva"],
+                area: "laboral",
+                year: "2023"
+            },
+            {
+                title: "Derecho Mercantil I (Actos de Comercio)",
+                description: "Estudia los actos de comercio, los comerciantes y las obligaciones mercantiles.",
+                laws: ["Código de Comercio", "Ley de Sociedades Comerciales"],
+                area: "mercantil",
+                year: "2023"
+            },
+            {
+                title: "Derecho Mercantil II (Sociedades)",
+                description: "Regula los distintos tipos societarios, su constitución, funcionamiento y disolución.",
+                laws: ["Ley de Sociedades Comerciales", "Código de Comercio"],
+                area: "mercantil",
+                year: "2023"
+            },
+            {
+                title: "Derecho Administrativo I",
+                description: "Estudia la organización administrativa, los actos administrativos y el procedimiento administrativo.",
+                laws: ["Ley Orgánica de la Administración Pública", "Ley de Procedimiento Administrativo"],
+                area: "administrativo",
+                year: "2023"
+            },
+            {
+                title: "Derecho Constitucional",
+                description: "Analiza la estructura del Estado, los derechos fundamentales y el control de constitucionalidad.",
+                laws: ["Constitución Nacional", "Ley Orgánica del Tribunal Constitucional"],
+                area: "constitucional",
+                year: "2023"
+            },
+            {
+                title: "Derecho Internacional Público",
+                description: "Regula las relaciones entre Estados y organismos internacionales, tratados y solución de controversias.",
+                laws: ["Carta de las Naciones Unidas", "Convención de Viena sobre Derecho de los Tratados"],
+                area: "internacional",
+                year: "2023"
+            },
+            {
+                title: "Derecho Tributario",
+                description: "Estudia las normas que regulan los tributos, impuestos y la relación fisco-contribuyente.",
+                laws: ["Código Tributario", "Ley del Impuesto sobre la Renta", "Ley del IVA"],
+                area: "tributario",
+                year: "2023"
+            },
+            {
+                title: "Derecho Procesal Civil",
+                description: "Norma el proceso judicial civil, las etapas procesales y los medios de impugnación.",
+                laws: ["Código Procesal Civil", "Ley de Enjuiciamiento Civil"],
+                area: "procesal",
+                year: "2023"
+            },
+            {
+                title: "Derecho Procesal Penal",
+                description: "Regula el proceso penal, garantías procesales, etapas y recursos.",
+                laws: ["Código Procesal Penal", "Ley de Juicios Orales"],
+                area: "procesal",
+                year: "2023"
+            },
+            {
+                title: "Derecho de Daños y Responsabilidad Civil",
+                description: "Estudia la responsabilidad extracontractual, indemnización de daños y perjuicios.",
+                laws: ["Código Civil", "Ley de Tránsito y Seguridad Vial"],
+                area: "civil",
+                year: "2023"
+            },
+            {
+                title: "Derecho de Propiedad Intelectual",
+                description: "Protege las creaciones intelectuales, derechos de autor, patentes y marcas.",
+                laws: ["Ley de Propiedad Intelectual", "Ley de Marcas", "Ley de Patentes"],
+                area: "propiedad",
+                year: "2023"
+            },
+            {
+                title: "Derecho Ambiental",
+                description: "Regula la protección del medio ambiente, recursos naturales y desarrollo sostenible.",
+                laws: ["Ley General del Ambiente", "Ley de Bosques", "Ley de Residuos Peligrosos"],
+                area: "ambiental",
+                year: "2023"
+            },
+            {
+                title: "Derecho Informático",
+                description: "Norma las relaciones jurídicas derivadas del uso de tecnologías de información.",
+                laws: ["Ley de Protección de Datos Personales", "Ley de Delitos Informáticos"],
+                area: "tecnologico",
+                year: "2023"
+            },
+            {
+                title: "Derecho Bancario y Financiero",
+                description: "Regula la actividad bancaria, mercados financieros y operaciones de crédito.",
+                laws: ["Ley de Entidades Financieras", "Ley del Banco Central", "Ley de Cheques"],
+                area: "mercantil",
+                year: "2023"
+            },
+            {
+                title: "Derecho de Seguros",
+                description: "Estudia el contrato de seguro, principios y regulación de la actividad aseguradora.",
+                laws: ["Ley de Contrato de Seguro", "Ley de Superintendencia de Seguros"],
+                area: "mercantil",
+                year: "2023"
+            },
+            {
+                title: "Derecho Aeronáutico",
+                description: "Regula la navegación aérea, responsabilidad de transportistas y espacio aéreo.",
+                laws: ["Código Aeronáutico", "Convención de Chicago"],
+                area: "internacional",
+                year: "2023"
+            },
+            {
+                title: "Derecho Marítimo",
+                description: "Norma la navegación marítima, transporte, averías y accidentes en el mar.",
+                laws: ["Código de Comercio (Libro III)", "Convenciones Internacionales Marítimas"],
+                area: "internacional",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Competencia",
+                description: "Regula la competencia en el mercado, prácticas restrictivas y defensa del consumidor.",
+                laws: ["Ley de Defensa de la Competencia", "Ley de Protección al Consumidor"],
+                area: "mercantil",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Energía",
+                description: "Estudia la regulación del sector energético, hidrocarburos y energías renovables.",
+                laws: ["Ley de Hidrocarburos", "Ley de Energías Renovables"],
+                area: "administrativo",
+                year: "2023"
+            },
+            {
+                title: "Derecho Minero",
+                description: "Regula la exploración, explotación y aprovechamiento de recursos mineros.",
+                laws: ["Código de Minería", "Ley de Inversiones Mineras"],
+                area: "administrativo",
+                year: "2023"
+            },
+            {
+                title: "Derecho Agrario",
+                description: "Norma las relaciones jurídicas derivadas de la actividad agraria y tenencia de la tierra.",
+                laws: ["Ley Agraria", "Ley de Arrendamientos Rurales"],
+                area: "administrativo",
+                year: "2023"
+            },
+            {
+                title: "Derecho Sanitario",
+                description: "Regula el sistema de salud, derechos de los pacientes y responsabilidad médica.",
+                laws: ["Ley General de Salud", "Ley de Derechos del Paciente"],
+                area: "administrativo",
+                year: "2023"
+            },
+            {
+                title: "Derecho Educativo",
+                description: "Estudia el marco jurídico del sistema educativo, derechos y obligaciones de los actores.",
+                laws: ["Ley General de Educación", "Ley Universitaria"],
+                area: "administrativo",
+                year: "2023"
+            },
+            {
+                title: "Derecho Municipal",
+                description: "Regula la organización y competencias de los gobiernos locales.",
+                laws: ["Ley Orgánica de Municipalidades", "Código Tributario Municipal"],
+                area: "administrativo",
+                year: "2023"
+            },
+            {
+                title: "Derecho Notarial y Registral",
+                description: "Norma la función notarial y los sistemas registrales de propiedad y otros derechos.",
+                laws: ["Ley del Notariado", "Ley de Registros Públicos"],
+                area: "civil",
+                year: "2023"
+            },
+            {
+                title: "Derecho Deportivo",
+                description: "Regula la organización deportiva, derechos de los deportistas y eventos deportivos.",
+                laws: ["Ley del Deporte", "Ley contra la Violencia en el Deporte"],
+                area: "administrativo",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Comunicación",
+                description: "Estudia el marco jurídico de los medios de comunicación y libertad de expresión.",
+                laws: ["Ley de Prensa", "Ley de Radio y Televisión"],
+                area: "constitucional",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Cultura",
+                description: "Norma la protección del patrimonio cultural y las actividades artísticas.",
+                laws: ["Ley de Patrimonio Cultural", "Ley de Mecenazgo"],
+                area: "administrativo",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Seguridad Social",
+                description: "Regula los sistemas de previsión social, pensiones y coberturas sociales.",
+                laws: ["Ley de Seguridad Social", "Ley de Jubilaciones y Pensiones"],
+                area: "laboral",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Discapacidad",
+                description: "Protege los derechos de las personas con discapacidad y promueve su inclusión.",
+                laws: ["Ley General de la Persona con Discapacidad", "Convención sobre Derechos de Personas con Discapacidad"],
+                area: "constitucional",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Niñez y Adolescencia",
+                description: "Establece el sistema de protección integral de los derechos de niños y adolescentes.",
+                laws: ["Código de la Niñez y Adolescencia", "Ley de Protección Integral"],
+                area: "familia",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Vejez",
+                description: "Protege los derechos de las personas adultas mayores y establece políticas públicas.",
+                laws: ["Ley de la Persona Adulta Mayor", "Ley de Pensiones No Contributivas"],
+                area: "constitucional",
+                year: "2023"
+            },
+            {
+                title: "Derecho de Género",
+                description: "Promueve la igualdad de género y protege contra la discriminación y violencia.",
+                laws: ["Ley de Igualdad de Género", "Ley contra la Violencia de Género"],
+                area: "constitucional",
+                year: "2023"
+            },
+            {
+                title: "Derecho Indígena",
+                description: "Reconoce y protege los derechos de los pueblos originarios y sus comunidades.",
+                laws: ["Ley de Comunidades Indígenas", "Convenio 169 OIT"],
+                area: "constitucional",
+                year: "2023"
+            },
+            {
+                title: "Derecho Migratorio",
+                description: "Regula la entrada, permanencia y salida de personas del territorio nacional.",
+                laws: ["Ley de Migraciones", "Ley de Refugiados"],
+                area: "administrativo",
+                year: "2023"
+            },
+            {
+                title: "Derecho Consular",
+                description: "Norma las funciones consulares, protección de nacionales en el exterior.",
+                laws: ["Convención de Viena sobre Relaciones Consulares", "Ley del Servicio Exterior"],
+                area: "internacional",
+                year: "2023"
+            },
+            {
+                title: "Derecho Diplomático",
+                description: "Regula las relaciones diplomáticas entre Estados y la inmunidad diplomática.",
+                laws: ["Convención de Viena sobre Relaciones Diplomáticas", "Ley del Servicio Exterior"],
+                area: "internacional",
+                year: "2023"
+            },
+            {
+                title: "Derecho del Espacio Ultraterrestre",
+                description: "Norma las actividades en el espacio exterior y la utilización de satélites.",
+                laws: ["Tratado del Espacio Ultraterrestre", "Ley Nacional de Actividades Espaciales"],
+                area: "internacional",
+                year: "2023"
+            },
+            {
+                title: "Derecho Antártico",
+                description: "Regula las actividades en el continente antártico y la protección de su ecosistema.",
+                laws: ["Tratado Antártico", "Ley de Protección del Medio Ambiente Antártico"],
+                area: "internacional",
+                year: "2023"
+            },
+            {
+                title: "Derecho del Mar",
+                description: "Establece los derechos y obligaciones de los Estados en los espacios marítimos.",
+                laws: ["Convención de las Naciones Unidas sobre el Derecho del Mar", "Ley de Espacios Marítimos"],
+                area: "internacional",
+                year: "2023"
+            },
+            {
+                title: "Derecho de los Tratados",
+                description: "Regula la celebración, aplicación y terminación de los tratados internacionales.",
+                laws: ["Convención de Viena sobre el Derecho de los Tratados", "Ley de Aprobación de Tratados"],
+                area: "internacional",
+                year: "2023"
+            },
+            {
+                title: "Derecho Humanitario Internacional",
+                description: "Establece normas para la protección de personas en conflictos armados.",
+                laws: ["Convenios de Ginebra", "Protocolos Adicionales"],
+                area: "internacional",
+                year: "2023"
+            },
+            {
+                title: "Derecho Penal Internacional",
+                description: "Regula la responsabilidad penal por crímenes internacionales y la CPI.",
+                laws: ["Estatuto de Roma de la CPI", "Convención contra el Genocidio"],
+                area: "internacional",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Integración",
+                description: "Estudia los procesos de integración regional y sus instituciones.",
+                laws: ["Tratado de la Unión Europea", "Tratado de Asunción (MERCOSUR)"],
+                area: "internacional",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Unión Europea",
+                description: "Regula el funcionamiento de la UE y su ordenamiento jurídico.",
+                laws: ["Tratado de Funcionamiento de la UE", "Carta de Derechos Fundamentales de la UE"],
+                area: "internacional",
+                year: "2023"
+            },
+            {
+                title: "Derecho Comparado",
+                description: "Método de estudio que analiza las diferencias y similitudes entre sistemas jurídicos.",
+                laws: [],
+                area: "internacional",
+                year: "2023"
+            },
+            {
+                title: "Derecho Romano",
+                description: "Estudia el sistema jurídico de la antigua Roma como base del derecho occidental.",
+                laws: ["Corpus Iuris Civilis", "Leyes de las XII Tablas"],
+                area: "civil",
+                year: "2023"
+            },
+            {
+                title: "Historia del Derecho",
+                description: "Analiza el desarrollo histórico de las instituciones y sistemas jurídicos.",
+                laws: [],
+                area: "constitucional",
+                year: "2023"
+            },
+            {
+                title: "Filosofía del Derecho",
+                description: "Examina los fundamentos filosóficos del derecho, justicia y validez de las normas.",
+                laws: [],
+                area: "constitucional",
+                year: "2023"
+            },
+            {
+                title: "Sociología Jurídica",
+                description: "Estudia el derecho como fenómeno social y su interacción con la sociedad.",
+                laws: [],
+                area: "constitucional",
+                year: "2023"
+            },
+            {
+                title: "Teoría General del Derecho",
+                description: "Analiza los conceptos fundamentales del derecho como norma, sanción y validez.",
+                laws: [],
+                area: "constitucional",
+                year: "2023"
+            },
+            {
+                title: "Hermenéutica Jurídica",
+                description: "Estudia los métodos de interpretación de las normas jurídicas.",
+                laws: [],
+                area: "constitucional",
+                year: "2023"
+            },
+            {
+                title: "Argumentación Jurídica",
+                description: "Examina las técnicas de construcción de argumentos en el derecho.",
+                laws: [],
+                area: "constitucional",
+                year: "2023"
+            },
+            {
+                title: "Derecho y Literatura",
+                description: "Analiza las relaciones entre el derecho y las producciones literarias.",
+                laws: [],
+                area: "constitucional",
+                year: "2023"
+            },
+            {
+                title: "Derecho y Economía",
+                description: "Estudia las relaciones entre el sistema jurídico y el sistema económico.",
+                laws: [],
+                area: "constitucional",
+                year: "2023"
+            },
+            {
+                title: "Derecho y Psicología",
+                description: "Examina las interacciones entre el derecho y el comportamiento humano.",
+                laws: [],
+                area: "constitucional",
+                year: "2023"
+            },
+            {
+                title: "Derecho y Antropología",
+                description: "Analiza el derecho desde la perspectiva cultural y antropológica.",
+                laws: [],
+                area: "constitucional",
+                year: "2023"
+            },
+            {
+                title: "Bioética y Derecho",
+                description: "Estudia los problemas éticos de las ciencias de la vida desde la perspectiva jurídica.",
+                laws: ["Ley de Investigación Biomédica", "Ley de Reproducción Asistida"],
+                area: "constitucional",
+                year: "2023"
+            },
+            {
+                title: "Derecho Genético",
+                description: "Regula las implicaciones jurídicas de los avances en genética humana.",
+                laws: ["Ley de Ingeniería Genética", "Ley de Datos Genéticos"],
+                area: "tecnologico",
+                year: "2023"
+            },
+            {
+                title: "Derecho Médico",
+                description: "Norma las relaciones médico-paciente y la responsabilidad profesional médica.",
+                laws: ["Ley de Ejercicio de la Medicina", "Ley de Derechos del Paciente"],
+                area: "administrativo",
+                year: "2023"
+            },
+            {
+                title: "Derecho Farmacéutico",
+                description: "Regula la producción, distribución y comercialización de medicamentos.",
+                laws: ["Ley de Medicamentos", "Ley de Farmacias"],
+                area: "administrativo",
+                year: "2023"
+            },
+            {
+                title: "Derecho Alimentario",
+                description: "Establece normas sobre seguridad e higiene de los alimentos.",
+                laws: ["Ley de Seguridad Alimentaria", "Código Alimentario"],
+                area: "administrativo",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Publicidad",
+                description: "Regula la actividad publicitaria y protege contra la publicidad engañosa.",
+                laws: ["Ley General de Publicidad", "Ley de Competencia Desleal"],
+                area: "mercantil",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Moda",
+                description: "Norma aspectos jurídicos de la industria de la moda y diseño.",
+                laws: ["Ley de Propiedad Industrial", "Ley de Diseños y Modelos"],
+                area: "propiedad",
+                year: "2023"
+            },
+            {
+                title: "Derecho del Entretenimiento",
+                description: "Regula aspectos jurídicos de la industria del entretenimiento y espectáculos.",
+                laws: ["Ley del Espectáculo Público", "Ley de Mecenazgo Cultural"],
+                area: "administrativo",
+                year: "2023"
+            },
+            {
+                title: "Derecho del Arte",
+                description: "Estudia aspectos jurídicos relacionados con obras de arte y bienes culturales.",
+                laws: ["Ley de Patrimonio Cultural", "Ley de Derecho de Seguimiento"],
+                area: "propiedad",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Música",
+                description: "Regula los aspectos jurídicos de la creación, interpretación y difusión musical.",
+                laws: ["Ley de Propiedad Intelectual", "Ley de Sociedades de Gestión Colectiva"],
+                area: "propiedad",
+                year: "2023"
+            },
+            {
+                title: "Derecho Cinematográfico",
+                description: "Norma la producción, distribución y exhibición de obras cinematográficas.",
+                laws: ["Ley de Cine", "Ley de Mecenazgo"],
+                area: "propiedad",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Radio y Televisión",
+                description: "Regula la radiodifusión y los contenidos audiovisuales.",
+                laws: ["Ley de Servicios de Comunicación Audiovisual", "Ley de Televisión Digital"],
+                area: "administrativo",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Prensa",
+                description: "Establece el marco jurídico de la actividad periodística y libertad de prensa.",
+                laws: ["Ley de Prensa", "Ley de Acceso a la Información Pública"],
+                area: "constitucional",
+                year: "2023"
+            },
+            {
+                title: "Derecho de las Telecomunicaciones",
+                description: "Regula los servicios de telecomunicaciones y espectro radioeléctrico.",
+                laws: ["Ley General de Telecomunicaciones", "Ley de Neutralidad de la Red"],
+                area: "administrativo",
+                year: "2023"
+            },
+            {
+                title: "Derecho de Internet",
+                description: "Norma las relaciones jurídicas en el entorno digital y la red internet.",
+                laws: ["Ley de Comercio Electrónico", "Ley de Servicios de la Sociedad de la Información"],
+                area: "tecnologico",
+                year: "2023"
+            },
+            {
+                title: "Derecho de las Redes Sociales",
+                description: "Regula los aspectos jurídicos del uso de plataformas de redes sociales.",
+                laws: ["Ley de Protección de Datos", "Ley de Delitos Informáticos"],
+                area: "tecnologico",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Inteligencia Artificial",
+                description: "Estudia los desafíos jurídicos planteados por el desarrollo de la IA.",
+                laws: ["Reglamento Europeo de IA", "Ley de Robótica"],
+                area: "tecnologico",
+                year: "2023"
+            },
+            {
+                title: "Derecho de los Robots",
+                description: "Examina el estatuto jurídico de los robots y sistemas autónomos.",
+                laws: ["Resolución del Parlamento Europeo sobre Robótica"],
+                area: "tecnologico",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Ciberseguridad",
+                description: "Regula la protección de sistemas informáticos y datos frente a ciberataques.",
+                laws: ["Ley de Ciberseguridad", "Ley de Delitos Informáticos"],
+                area: "tecnologico",
+                year: "2023"
+            },
+            {
+                title: "Derecho de los Videojuegos",
+                description: "Norma aspectos jurídicos de la industria de los videojuegos y e-sports.",
+                laws: ["Ley de Propiedad Intelectual", "Ley de Protección de Datos"],
+                area: "tecnologico",
+                year: "2023"
+            },
+            {
+                title: "Derecho del Software",
+                description: "Regula la creación, licencia y distribución de programas informáticos.",
+                laws: ["Ley de Propiedad Intelectual", "Ley de Patentes"],
+                area: "tecnologico",
+                year: "2023"
+            },
+            {
+                title: "Derecho del Hardware",
+                description: "Norma aspectos legales relacionados con la fabricación y venta de dispositivos electrónicos.",
+                laws: ["Ley de Protección al Consumidor", "Normativas de Seguridad Electrónica"],
+                area: "tecnologico",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Biotecnología",
+                description: "Regula las implicaciones jurídicas de la investigación y desarrollo biotecnológico.",
+                laws: ["Ley de Bioseguridad", "Ley de Patentes"],
+                area: "tecnologico",
+                year: "2023"
+            },
+            {
+                title: "Derecho Espacial Comercial",
+                description: "Norma las actividades comerciales en el espacio ultraterrestre.",
+                laws: ["Ley Nacional de Actividades Espaciales", "Acuerdos Internacionales Espaciales"],
+                area: "internacional",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Nanotecnología",
+                description: "Estudia los desafíos legales y éticos de la manipulación a nanoescala.",
+                laws: ["Normativas de Seguridad y Salud", "Leyes de Patentes"],
+                area: "tecnologico",
+                year: "2023"
+            },
+            {
+                title: "Derecho del Turismo",
+                description: "Regula la actividad turística, derechos de los turistas y prestadores de servicios.",
+                laws: ["Ley General de Turismo", "Ley de Defensa del Consumidor"],
+                area: "administrativo",
+                year: "2023"
+            },
+            {
+                title: "Derecho del Transporte",
+                description: "Norma el transporte terrestre, aéreo y acuático de personas y mercancías.",
+                laws: ["Ley de Transporte Terrestre", "Código Aeronáutico", "Código de Comercio (Transporte Marítimo)"],
+                area: "administrativo",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Construcción",
+                description: "Regula los contratos de obra, licencias de construcción y responsabilidad de los agentes.",
+                laws: ["Código Civil", "Ley de Ordenación de la Edificación"],
+                area: "civil",
+                year: "2023"
+            },
+            {
+                title: "Derecho Inmobiliario",
+                description: "Norma la propiedad de bienes inmuebles, compraventa, arrendamiento y derechos reales.",
+                laws: ["Código Civil", "Ley Hipotecaria", "Ley de Arrendamientos Urbanos"],
+                area: "civil",
+                year: "2023"
+            },
+            {
+                title: "Derecho de Aguas",
+                description: "Regula el uso y aprovechamiento de los recursos hídricos.",
+                laws: ["Ley de Aguas", "Reglamentos de Cuenca"],
+                area: "ambiental",
+                year: "2023"
+            },
+            {
+                title: "Derecho Forestal",
+                description: "Norma la gestión y conservación de los bosques y recursos forestales.",
+                laws: ["Ley de Bosques", "Ley de Conservación de la Naturaleza"],
+                area: "ambiental",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Fauna",
+                description: "Regula la protección y conservación de las especies animales.",
+                laws: ["Ley de Protección de la Fauna", "Convenios Internacionales sobre Vida Silvestre"],
+                area: "ambiental",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Energía Nuclear",
+                description: "Norma las actividades relacionadas con la energía nuclear y la seguridad radiológica.",
+                laws: ["Ley de Energía Nuclear", "Tratados Internacionales sobre Energía Nuclear"],
+                area: "administrativo",
+                year: "2023"
+            },
+            {
+                title: "Derecho de los Hidrocarburos",
+                description: "Regula la exploración, explotación, transporte y comercialización de petróleo y gas.",
+                laws: ["Ley de Hidrocarburos", "Ley de Inversiones en el Sector Hidrocarburos"],
+                area: "administrativo",
+                year: "2023"
+            },
+            {
+                title: "Derecho de las Energías Renovables",
+                description: "Promueve y regula el desarrollo y uso de fuentes de energía renovable.",
+                laws: ["Ley de Energías Renovables", "Incentivos Fiscales para Energías Limpias"],
+                area: "administrativo",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Minería",
+                description: "Regula la exploración, extracción y procesamiento de minerales.",
+                laws: ["Código de Minería", "Ley de Protección Ambiental de la Actividad Minera"],
+                area: "administrativo",
+                year: "2023"
+            },
+            {
+                title: "Derecho del Comercio Internacional",
+                description: "Norma las transacciones comerciales entre países y las organizaciones internacionales de comercio.",
+                laws: ["Acuerdos de la OMC", "Tratados Bilaterales de Inversión"],
+                area: "internacional",
+                year: "2023"
+            },
+            {
+                title: "Derecho Aduanero",
+                description: "Regula el tráfico de mercancías a través de las fronteras y los regímenes aduaneros.",
+                laws: ["Código Aduanero", "Aranceles de Importación y Exportación"],
+                area: "administrativo",
+                year: "2023"
+            },
+            {
+                title: "Derecho de los Seguros y Reaseguros",
+                description: "Regula la actividad aseguradora y el contrato de reaseguro.",
+                laws: ["Ley de Contrato de Seguro", "Ley de Entidades de Seguros y Reaseguros"],
+                area: "mercantil",
+                year: "2023"
+            },
+            {
+                title: "Derecho de los Títulos Valores",
+                description: "Estudia los pagarés, letras de cambio, cheques y otros instrumentos de crédito.",
+                laws: ["Ley General de Títulos y Operaciones de Crédito", "Código de Comercio"],
+                area: "mercantil",
+                year: "2023"
+            },
+            {
+                title: "Derecho Concursal",
+                description: "Regula los procedimientos de quiebra y concurso mercantil.",
+                laws: ["Ley de Concursos Mercantiles", "Código de Comercio"],
+                area: "mercantil",
+                year: "2023"
+            },
+            {
+                title: "Derecho Societario Comparado",
+                description: "Analiza las diferentes formas de sociedades comerciales en distintos ordenamientos jurídicos.",
+                laws: [],
+                area: "mercantil",
+                year: "2023"
+            },
+            {
+                title: "Derecho Bursátil",
+                description: "Regula el mercado de valores, las bolsas y la oferta pública de acciones.",
+                laws: ["Ley del Mercado de Valores", "Regulaciones de la Comisión Nacional de Valores"],
+                area: "mercantil",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Propiedad Industrial",
+                description: "Protege las patentes, marcas, diseños industriales y otros signos distintivos.",
+                laws: ["Ley de Propiedad Industrial", "Tratados Internacionales sobre Propiedad Intelectual"],
+                area: "propiedad",
+                year: "2023"
+            },
+            {
+                title: "Derecho de Autor y Derechos Conexos",
+                description: "Protege las obras literarias y artísticas, así como los derechos de intérpretes, productores y organismos de radiodifusión.",
+                laws: ["Ley de Derecho de Autor", "Tratados Internacionales sobre Derecho de Autor"],
+                area: "propiedad",
+                year: "2023"
+            },
+            {
+                title: "Derecho de las Obtenciones Vegetales",
+                description: "Protege las nuevas variedades vegetales.",
+                laws: ["Ley de Protección de Obtenciones Vegetales", "Convenio UPOV"],
+                area: "propiedad",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Competencia Desleal",
+                description: "Prohíbe las prácticas comerciales desleales y protege la libre competencia.",
+                laws: ["Ley de Competencia Desleal", "Ley de Defensa de la Competencia"],
+                area: "mercantil",
+                year: "2023"
+            },
+            {
+                title: "Derecho del Consumidor",
+                description: "Protege los derechos de los consumidores y regula las relaciones de consumo.",
+                laws: ["Ley de Protección al Consumidor", "Normativas sobre Publicidad Engañosa"],
+                area: "mercantil",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Publicidad y el Marketing",
+                description: "Regula las prácticas publicitarias y de marketing.",
+                laws: ["Ley General de Publicidad", "Códigos de Ética Publicitaria"],
+                area: "mercantil",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Franquicia",
+                description: "Regula los contratos de franquicia y la transferencia de know-how.",
+                laws: ["Legislación sobre Contratos", "Leyes de Propiedad Industrial"],
+                area: "mercantil",
+                year: "2023"
+            },
+            {
+                title: "Derecho del Comercio Electrónico",
+                description: "Norma las transacciones comerciales realizadas a través de medios electrónicos.",
+                laws: ["Ley de Comercio Electrónico", "Ley de Firma Electrónica"],
+                area: "tecnologico",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Protección de Datos Personales",
+                description: "Regula el tratamiento de datos personales y garantiza los derechos de los titulares.",
+                laws: ["Ley de Protección de Datos Personales", "Reglamento General de Protección de Datos (GDPR)"],
+                area: "tecnologico",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Ciberdelincuencia",
+                description: "Tipifica y sanciona los delitos cometidos a través de medios informáticos.",
+                laws: ["Ley de Delitos Informáticos", "Convenio de Budapest sobre Ciberdelincuencia"],
+                area: "penal",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Administración Pública",
+                description: "Estudia la organización, funcionamiento y control de la administración pública.",
+                laws: ["Ley Orgánica de la Administración Pública", "Ley de Procedimiento Administrativo Común"],
+                area: "administrativo",
+                year: "2023"
+            },
+            {
+                title: "Derecho del Procedimiento Administrativo",
+                description: "Regula las etapas y garantías del procedimiento administrativo.",
+                laws: ["Ley de Procedimiento Administrativo", "Jurisprudencia Contencioso-Administrativa"],
+                area: "administrativo",
+                year: "2023"
+            },
+            {
+                title: "Derecho del Empleo Público",
+                description: "Norma las relaciones laborales de los empleados públicos.",
+                laws: ["Ley del Estatuto Básico del Empleado Público", "Leyes de Función Pública Autonómicas"],
+                area: "administrativo",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Contratación Pública",
+                description: "Regula los contratos celebrados por las entidades del sector público.",
+                laws: ["Ley de Contratos del Sector Público", "Directivas Europeas de Contratación"],
+                area: "administrativo",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Expropiación Forzosa",
+                description: "Regula el procedimiento y las garantías en los casos de expropiación por causa de utilidad pública.",
+                laws: ["Ley de Expropiación Forzosa", "Jurisprudencia del Tribunal Supremo"],
+                area: "administrativo",
+                year: "2023"
+            },
+            {
+                title: "Derecho Urbanístico",
+                description: "Regula el uso del suelo, la planificación urbana y las licencias de edificación.",
+                laws: ["Ley de Suelo y Rehabilitación Urbana", "Planes de Ordenación Urbana"],
+                area: "administrativo",
+                year: "2023"
+            },
+            {
+                title: "Derecho Ambiental Internacional",
+                description: "Regula la protección del medio ambiente a nivel global y las relaciones entre estados en materia ambiental.",
+                laws: ["Convenio de París sobre el Cambio Climático", "Convenio sobre la Diversidad Biológica"],
+                area: "internacional",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Responsabilidad del Estado",
+                description: "Estudia los supuestos y el régimen de responsabilidad patrimonial de la administración pública.",
+                laws: ["Ley de Régimen Jurídico del Sector Público", "Jurisprudencia Contencioso-Administrativa"],
+                area: "administrativo",
+                year: "2023"
+            },
+            {
+                title: "Derecho Procesal Constitucional",
+                description: "Regula los mecanismos de protección de los derechos fundamentales y el control de constitucionalidad de las leyes.",
+                laws: ["Ley Orgánica del Tribunal Constitucional", "Jurisprudencia del Tribunal Constitucional"],
+                area: "procesal",
+                year: "2023"
+            },
+            {
+                title: "Derecho Procesal Laboral",
+                description: "Norma el procedimiento judicial en los conflictos laborales.",
+                laws: ["Ley de Procedimiento Laboral", "Jurisprudencia Social"],
+                area: "procesal",
+                year: "2023"
+            },
+            {
+                title: "Derecho Procesal Contencioso-Administrativo",
+                description: "Regula el proceso judicial frente a la administración pública.",
+                laws: ["Ley de la Jurisdicción Contencioso-Administrativa", "Jurisprudencia del Tribunal Supremo"],
+                area: "procesal",
+                year: "2023"
+            },
+            {
+                title: "Derecho de Arbitraje",
+                description: "Regula el procedimiento de resolución de conflictos a través del arbitraje.",
+                laws: ["Ley de Arbitraje", "Convenio de Nueva York sobre Reconocimiento y Ejecución de Laudos Arbitrales Extranjeros"],
+                area: "procesal",
+                year: "2023"
+            },
+            {
+                title: "Derecho de Mediación",
+                description: "Estudia los métodos alternativos de resolución de conflictos a través de la mediación.",
+                laws: ["Ley de Mediación en Asuntos Civiles y Mercantiles", "Normativas Autonómicas sobre Mediación"],
+                area: "procesal",
+                year: "2023"
+            },
+            {
+                title: "Derecho de Familia Internacional",
+                description: "Regula los aspectos de derecho de familia con elementos extranjeros.",
+                laws: ["Convenios Internacionales sobre Derecho de Familia", "Normativa de Derecho Internacional Privado"],
+                area: "internacional",
+                year: "2023"
+            },
+            {
+                title: "Derecho de Sucesiones Internacional",
+                description: "Norma los aspectos de derecho de sucesiones con elementos extranjeros.",
+                laws: ["Reglamento Europeo de Sucesiones", "Normativa de Derecho Internacional Privado"],
+                area: "internacional",
+                year: "2023"
+            },
+            {
+                title: "Derecho Penal Económico",
+                description: "Tipifica y sanciona los delitos económicos y financieros.",
+                laws: ["Código Penal", "Leyes Especiales sobre Delitos Económicos"],
+                area: "penal",
+                year: "2023"
+            },
+            {
+                title: "Derecho Penal Tributario",
+                description: "Tipifica y sanciona los delitos contra la Hacienda Pública.",
+                laws: ["Código Penal", "Ley General Tributaria"],
+                area: "penal",
+                year: "2023"
+            },
+            {
+                title: "Criminología",
+                description: "Estudia el fenómeno del delito, sus causas, formas y consecuencias.",
+                laws: [],
+                area: "penal",
+                year: "2023"
+            },
+            {
+                title: "Derecho Penitenciario",
+                description: "Regula la ejecución de las penas privativas de libertad y las medidas de seguridad.",
+                laws: ["Ley Orgánica General Penitenciaria", "Reglamento Penitenciario"],
+                area: "penal",
+                year: "2023"
+            },
+            {
+                title: "Justicia Restaurativa",
+                description: "Estudia los modelos de justicia que buscan la reparación del daño a la víctima y la reintegración del infractor.",
+                laws: [],
+                area: "penal",
+                year: "2023"
+            },
+            {
+                title: "Derecho Militar",
+                description: "Regula la organización, funciones y disciplina de las fuerzas armadas.",
+                laws: ["Código Penal Militar", "Ley de la Jurisdicción Militar"],
+                area: "administrativo",
+                year: "2023"
+            },
+            {
+                title: "Derecho Eclesiástico del Estado",
+                description: "Regula las relaciones entre el Estado y las confesiones religiosas.",
+                laws: ["Acuerdos con las Confesiones Religiosas", "Ley Orgánica de Libertad Religiosa"],
+                area: "constitucional",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Unión Europea (Instituciones)",
+                description: "Estudia la estructura y el funcionamiento de las instituciones de la Unión Europea.",
+                laws: ["Tratado de la Unión Europea", "Tratado de Funcionamiento de la Unión Europea"],
+                area: "internacional",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Unión Europea (Mercado Interior)",
+                description: "Regula la libre circulación de mercancías, personas, servicios y capitales en la Unión Europea.",
+                laws: ["Directivas y Reglamentos del Mercado Interior"],
+                area: "internacional",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Competencia de la Unión Europea",
+                description: "Prohíbe los acuerdos restrictivos de la competencia, el abuso de posición dominante y regula las concentraciones empresariales.",
+                laws: ["Artículos 101 y 102 del TFUE", "Reglamentos de la Comisión Europea"],
+                area: "internacional",
+                year: "2023"
+            },
+            {
+                title: "Derecho Internacional Privado",
+                description: "Determina la ley aplicable y la jurisdicción competente en casos con elementos extranjeros.",
+                laws: ["Normativa Nacional de Derecho Internacional Privado", "Convenios Internacionales"],
+                area: "internacional",
+                year: "2023"
+            },
+            {
+                title: "Derechos Humanos",
+                description: "Estudia los derechos fundamentales de la persona reconocidos a nivel nacional e internacional.",
+                laws: ["Constitución Nacional", "Declaración Universal de Derechos Humanos", "Pactos Internacionales de Derechos Humanos"],
+                area: "constitucional",
+                year: "2023"
+            },
+            {
+                title: "Derecho Constitucional Comparado",
+                description: "Analiza las diferentes estructuras constitucionales y sistemas de protección de derechos en distintos países.",
+                laws: [],
+                area: "constitucional",
+                year: "2023"
+            },
+            {
+                title: "Teoría de la Constitución",
+                description: "Estudia los conceptos fundamentales del derecho constitucional y la interpretación constitucional.",
+                laws: [],
+                area: "constitucional",
+                year: "2023"
+            },
+            {
+                title: "Derecho Parlamentario",
+                description: "Regula la organización y el funcionamiento de los parlamentos.",
+                laws: ["Reglamentos Parlamentarios", "Leyes Orgánicas de Régimen Electoral General"],
+                area: "constitucional",
+                year: "2023"
+            },
+            {
+                title: "Derecho Electoral",
+                description: "Regula el sistema electoral y los procesos de votación.",
+                laws: ["Ley Orgánica de Régimen Electoral General", "Jurisprudencia del Tribunal Constitucional"],
+                area: "constitucional",
+                year: "2023"
+            },
+            {
+                title: "Derecho de Asilo y Refugio",
+                description: "Regula la protección de personas que huyen de persecución o violencia.",
+                laws: ["Ley de Asilo", "Convención sobre el Estatuto de los Refugiados"],
+                area: "internacional",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Nacionalidad",
+                description: "Regula la adquisición, conservación y pérdida de la nacionalidad.",
+                laws: ["Ley de Nacionalidad", "Convenios Internacionales sobre Nacionalidad"],
+                area: "constitucional",
+                year: "2023"
+            },
+            {
+                title: "Derecho de Extranjería",
+                description: "Regula la situación jurídica de los extranjeros en el territorio nacional.",
+                laws: ["Ley de Extranjería", "Reglamento de Extranjería"],
+                area: "administrativo",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Función Pública Internacional",
+                description: "Regula el estatuto jurídico de los funcionarios de organizaciones internacionales.",
+                laws: ["Estatutos del Personal de Organizaciones Internacionales"],
+                area: "internacional",
+                year: "2023"
+            },
+            {
+                title: "Derecho de las Organizaciones Internacionales",
+                description: "Estudia la creación, funcionamiento y competencias de las organizaciones internacionales.",
+                laws: ["Tratados Constitutivos de Organizaciones Internacionales"],
+                area: "internacional",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Integración Económica",
+                description: "Analiza los procesos de integración económica regional y sus efectos jurídicos.",
+                laws: ["Tratados de Integración Económica (TLCAN, MERCOSUR, etc.)"],
+                area: "internacional",
+                year: "2023"
+            },
+            {
+                title: "Derecho del Desarrollo",
+                description: "Estudia los aspectos jurídicos relacionados con el desarrollo sostenible y la cooperación internacional.",
+                laws: ["Declaraciones y Programas de Naciones Unidas sobre Desarrollo"],
+                area: "internacional",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Propiedad Intelectual en la Era Digital",
+                description: "Regula los derechos de autor y la propiedad industrial en el entorno digital.",
+                laws: ["Ley de Propiedad Intelectual", "Directivas Europeas sobre Derecho de Autor en el Mercado Único Digital"],
+                area: "propiedad",
+                year: "2023"
+            },
+            {
+                title: "Derecho del Blockchain y las Criptomonedas",
+                description: "Estudia los desafíos jurídicos de la tecnología blockchain y las monedas digitales.",
+                laws: ["Legislación sobre Criptoactivos (en desarrollo en varias jurisdicciones)"],
+                area: "tecnologico",
+                year: "2023"
+            },
+            {
+                title: "Derecho de los Contratos Inteligentes (Smart Contracts)",
+                description: "Analiza la validez y ejecución jurídica de los contratos basados en tecnología blockchain.",
+                laws: ["Legislación sobre Contratos Electrónicos", "Principios de Derecho Contractual"],
+                area: "tecnologico",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Realidad Virtual y Aumentada",
+                description: "Estudia las implicaciones legales del uso de tecnologías de realidad virtual y aumentada.",
+                laws: ["Leyes de Protección de Datos", "Leyes de Propiedad Intelectual"],
+                area: "tecnologico",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Impresión 3D",
+                description: "Examina los aspectos jurídicos relacionados con la fabricación aditiva y la impresión 3D.",
+                laws: ["Leyes de Propiedad Intelectual", "Leyes de Responsabilidad por Productos Defectuosos"],
+                area: "tecnologico",
+                year: "2023"
+            },
+            {
+                title: "Derecho de los Drones",
+                description: "Regula el uso de vehículos aéreos no tripulados y su impacto legal.",
+                laws: ["Regulaciones de Aviación Civil", "Leyes de Protección de la Privacidad"],
+                area: "administrativo",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Robótica Avanzada",
+                description: "Estudia las cuestiones jurídicas y éticas de los robots con inteligencia artificial avanzada.",
+                laws: ["Debates y Propuestas Legislativas sobre Robótica e IA"],
+                area: "tecnologico",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Salud Digital",
+                description: "Regula el uso de tecnologías digitales en el ámbito de la salud.",
+                laws: ["Leyes de Protección de Datos de Salud", "Regulaciones de Telemedicina"],
+                area: "tecnologico",
+                year: "2023"
+            },
+            {
+                title: "Derecho del Deporte Electrónico (eSports)",
+                description: "Norma los aspectos legales de las competiciones de videojuegos profesionales.",
+                laws: ["Leyes de Contratos Deportivos", "Regulaciones de Competiciones Electrónicas"],
+                area: "administrativo",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Moda Sostenible",
+                description: "Estudia las regulaciones y los aspectos jurídicos de la moda ética y sostenible.",
+                laws: ["Legislación Ambiental", "Normativas sobre Etiquetado y Transparencia"],
+                area: "ambiental",
+                year: "2023"
+            },
+            {
+                title: "Derecho del Arte y la Tecnología",
+                description: "Analiza la intersección entre la creación artística y las nuevas tecnologías.",
+                laws: ["Leyes de Propiedad Intelectual", "Legislación sobre Patrimonio Digital"],
+                area: "propiedad",
+                year: "2023"
+            },
+            {
+                title: "Derecho del Patrimonio Cultural Digital",
+                description: "Regula la conservación y el acceso al patrimonio cultural en formato digital.",
+                laws: ["Leyes de Patrimonio Cultural", "Leyes de Derecho de Autor"],
+                area: "propiedad",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Gobernanza de Internet",
+                description: "Estudia los mecanismos de regulación y gestión de la red global de internet.",
+                laws: ["Debates y Foros sobre Gobernanza de Internet"],
+                area: "internacional",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Neutralidad de la Red",
+                description: "Garantiza que los proveedores de internet traten todo el tráfico de datos por igual.",
+                laws: ["Leyes de Neutralidad de la Red (en diferentes jurisdicciones)"],
+                area: "administrativo",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Privacidad en Línea",
+                description: "Protege la privacidad de los usuarios en el entorno digital.",
+                laws: ["Leyes de Protección de Datos", "Regulaciones sobre Cookies y Rastreo en Línea"],
+                area: "tecnologico",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Reputación en Línea",
+                description: "Regula la protección de la reputación de personas y empresas en internet.",
+                laws: ["Leyes sobre Difamación e Injuria", "Legislación sobre Protección de Datos"],
+                area: "civil",
+                year: "2023"
+            },
+            {
+                title: "Derecho del Olvido Digital",
+                description: "Estudia el derecho de las personas a que se elimine información personal de internet.",
+                laws: ["Reglamento General de Protección de Datos (GDPR)"],
+                area: "tecnologico",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Inteligencia Artificial y la Responsabilidad Civil",
+                description: "Analiza quién es responsable por los daños causados por sistemas de IA.",
+                laws: ["Debates y Propuestas Legislativas sobre Responsabilidad por IA"],
+                area: "civil",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Inteligencia Artificial y el Derecho Penal",
+                description: "Estudia cómo la IA impacta en la comisión y persecución de delitos.",
+                laws: ["Legislación sobre Delitos Informáticos", "Debates sobre la Responsabilidad Penal de la IA"],
+                area: "penal",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Fiscalidad Digital",
+                description: "Regula la tributación de las actividades económicas en el entorno digital.",
+                laws: ["Normativas sobre Impuestos Digitales (en desarrollo en varias jurisdicciones)"],
+                area: "tributario",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Banca Digital",
+                description: "Norma los servicios bancarios y financieros ofrecidos a través de plataformas digitales.",
+                laws: ["Leyes de Entidades Financieras", "Regulaciones sobre Banca en Línea"],
+                area: "mercantil",
+                year: "2023"
+            },
+            {
+                title: "Derecho de los Contratos de Plataforma",
+                description: "Regula las relaciones jurídicas entre usuarios y plataformas digitales.",
+                laws: ["Legislación sobre Contratos Electrónicos", "Leyes de Protección al Consumidor"],
+                area: "mercantil",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Economía Colaborativa",
+                description: "Estudia los aspectos legales de modelos de negocio como Airbnb y Uber.",
+                laws: ["Regulaciones Sectoriales (en desarrollo en varias jurisdicciones)"],
+                area: "mercantil",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Publicidad Digital",
+                description: "Regula la publicidad y el marketing en entornos digitales.",
+                laws: ["Leyes de Publicidad", "Regulaciones sobre Publicidad en Línea y Protección de Datos"],
+                area: "mercantil",
+                year: "2023"
+            },
+            {
+                title: "Derecho del Marketing de Influencia",
+                description: "Norma las relaciones entre marcas e influencers en redes sociales.",
+                laws: ["Códigos de Conducta Publicitaria", "Leyes de Protección al Consumidor"],
+                area: "mercantil",
+                year: "2023"
+            },
+            {
+                title: "Derecho de los Eventos Virtuales",
+                description: "Regula los aspectos legales de la organización y participación en eventos en línea.",
+                laws: ["Legislación sobre Contratos", "Leyes de Propiedad Intelectual"],
+                area: "mercantil",
+                year: "2023"
+            },
+            {
+                title: "Derecho del Teletrabajo",
+                description: "Norma las condiciones laborales y los derechos de los trabajadores a distancia.",
+                laws: ["Legislación Laboral", "Acuerdos y Convenios Colectivos sobre Teletrabajo"],
+                area: "laboral",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Desconexión Digital",
+                description: "Reconoce el derecho de los trabajadores a no responder comunicaciones fuera de su horario laboral.",
+                laws: ["Legislación Laboral (en desarrollo en varias jurisdicciones)", "Acuerdos y Convenios Colectivos"],
+                area: "laboral",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Formación Profesional en el Entorno Digital",
+                description: "Regula la educación y capacitación en línea.",
+                laws: ["Leyes de Educación", "Normativas sobre Formación a Distancia"],
+                area: "administrativo",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Accesibilidad Digital",
+                description: "Garantiza el acceso a las tecnologías de la información y la comunicación para personas con discapacidad.",
+                laws: ["Leyes de Discapacidad", "Normativas sobre Accesibilidad Web"],
+                area: "constitucional",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Protección de Menores en el Entorno Digital",
+                description: "Establece medidas para proteger a niños y adolescentes en internet.",
+                laws: ["Leyes de Protección de la Infancia", "Legislación sobre Contenidos Perjudiciales en Línea"],
+                area: "familia",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Violencia de Género Digital",
+                description: "Tipifica y sanciona las formas de violencia de género que se manifiestan a través de medios digitales.",
+                laws: ["Leyes contra la Violencia de Género", "Leyes de Delitos Informáticos"],
+                area: "penal",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Inteligencia Artificial en la Administración Pública",
+                description: "Regula el uso de la IA por parte de las entidades gubernamentales.",
+                laws: ["Legislación sobre Administración Electrónica", "Debates y Directrices sobre el Uso de IA en el Sector Público"],
+                area: "administrativo",
+                year: "2023"
+            },
+            {
+                title: "Derecho de los Datos Abiertos Gubernamentales",
+                description: "Fomenta la publicación y reutilización de datos del sector público.",
+                laws: ["Leyes de Transparencia y Acceso a la Información Pública", "Directivas sobre Datos Abiertos"],
+                area: "administrativo",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Identidad Digital",
+                description: "Regula la identificación y autenticación de personas en el entorno digital.",
+                laws: ["Leyes de Firma Electrónica", "Regulaciones sobre Identificación Digital"],
+                area: "tecnologico",
+                year: "2023"
+            },
+            {
+                title: "Derecho de los Registros Públicos Digitales",
+                description: "Norma la digitalización de los registros de propiedad y otros.",
+                laws: ["Leyes de Registros Públicos", "Normativas sobre Documentos Electrónicos"],
+                area: "civil",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Justicia Digital",
+                description: "Estudia el uso de tecnologías en la administración de justicia.",
+                laws: ["Leyes de Enjuiciamiento Civil y Penal (con reformas digitales)", "Normativas sobre Expediente Judicial Electrónico"],
+                area: "procesal",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Mediación y el Arbitraje en Línea",
+                description: "Regula la resolución de conflictos a través de medios digitales.",
+                laws: ["Leyes de Mediación y Arbitraje", "Plataformas de Resolución de Disputas en Línea"],
+                area: "procesal",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Prueba Electrónica",
+                description: "Estudia la validez y la admisión de pruebas digitales en procesos judiciales.",
+                laws: ["Leyes de Enjuiciamiento Civil y Penal", "Leyes de Firma Electrónica"],
+                area: "procesal",
+                year: "2023"
+            },
+            {
+                title: "Derecho de los Documentos Electrónicos",
+                description: "Regula la validez jurídica y la conservación de documentos digitales.",
+                laws: ["Leyes de Firma Electrónica", "Normativas sobre Archivo Digital"],
+                area: "tecnologico",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Ciberdiplomacia",
+                description: "Estudia las relaciones internacionales y la política exterior en el ciberespacio.",
+                laws: ["Debates y Estrategias de Ciberseguridad Internacional"],
+                area: "internacional",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Guerra Cibernética",
+                description: "Analiza las normas y principios del derecho internacional aplicables a los conflictos en el ciberespacio.",
+                laws: ["Derecho Internacional Humanitario", "Debates sobre la Aplicación del Derecho de la Guerra al Ciberespacio"],
+                area: "internacional",
+                year: "2023"
+            },
+            {
+                title: "Derecho del Espacio Cibernético como Nuevo Dominio",
+                description: "Examina la conceptualización jurídica del ciberespacio y su gobernanza.",
+                laws: ["Debates y Propuestas sobre la Regulación del Ciberespacio"],
+                area: "internacional",
+                year: "2023"
+            },
+            {
+                title: "Derecho de la Protección de Infraestructuras Críticas Digitales",
+                description: "Regula la seguridad de los sistemas informáticos esenciales para el funcionamiento del Estado y la economía.",
+                laws: ["Leyes de Ciberseguridad", "Normativas sobre Protección de Infraestructuras Críticas"],
+                area: "administrativo",
+                year: "2023"
+            }
+        ];
+
+        const subjectsContainer = document.getElementById('subjectsContainer');
+        const searchInput = document.getElementById('search');
+        const filterSelect = document.getElementById('filter');
+
+        /**
+         * Muestra las materias en el contenedor
+         * @param {Array} subjectList - Lista de materias a mostrar
+         */
+        function displaySubjects(subjectList) {
+            subjectsContainer.innerHTML = ''; // Limpiar el contenedor
+
+            if (subjectList.length === 0) {
+                subjectsContainer.innerHTML = `
+                    <div class="no-results">
+                        <h3>No se encontraron materias</h3>
+                        <p>No hay materias que coincidan con tu búsqueda o filtro.</p>
+                    </div>`;
+                return;
+            }
+
+            subjectList.forEach(subject => {
+                const card = document.createElement('div');
+                card.classList.add('subject-card');
+
+                const header = document.createElement('div');
+                header.classList.add('subject-header');
+                header.textContent = subject.title;
+
+                const body = document.createElement('div');
+                body.classList.add('subject-body');
+
+                const description = document.createElement('p');
+                description.classList.add('subject-description');
+                description.textContent = subject.description;
+
+                // Añadir información de año si existe
+                if (subject.year) {
+                    const yearInfo = document.createElement('p');
+                    yearInfo.classList.add('subject-year');
+                    yearInfo.textContent = `Actualizado: ${subject.year}`;
+                    body.appendChild(yearInfo);
+                }
+
+                const lawsDiv = document.createElement('div');
+                lawsDiv.classList.add('subject-laws');
+                const lawsTitle = document.createElement('h4');
+                lawsTitle.textContent = 'Leyes Asociadas:';
+                lawsDiv.appendChild(lawsTitle);
+
+                if (subject.laws && subject.laws.length > 0) {
+                    const lawsList = document.createElement('ul');
+                    subject.laws.forEach(law => {
+                        const listItem = document.createElement('li');
+                        listItem.classList.add('law-item');
+                        
+                        // Buscar si la ley tiene un artículo específico
+                        if (law.includes("Art.")) {
+                            const parts = law.split("Art.");
+                            listItem.innerHTML = `<strong>${parts[0]}</strong> Art.${parts[1]}`;
+                        } else {
+                            listItem.textContent = law;
+                        }
+                        
+                        lawsList.appendChild(listItem);
+                    });
+                    lawsDiv.appendChild(lawsList);
+                } else {
+                    const noLaws = document.createElement('p');
+                    noLaws.textContent = 'No se especifican leyes asociadas.';
+                    lawsDiv.appendChild(noLaws);
+                }
+
+                body.appendChild(description);
+                body.appendChild(lawsDiv);
+                card.appendChild(header);
+                card.appendChild(body);
+                subjectsContainer.appendChild(card);
+            });
+        }
+
+        /**
+         * Filtra las materias según el término de búsqueda y el área seleccionada
+         */
+        function filterSubjects() {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            const filterArea = filterSelect.value;
+
+            const filteredSubjects = subjects.filter(subject => {
+                const titleMatch = subject.title.toLowerCase().includes(searchTerm);
+                const descriptionMatch = subject.description.toLowerCase().includes(searchTerm);
+                const lawsMatch = subject.laws?.some(law => law.toLowerCase().includes(searchTerm)) || false;
+                const areaMatch = filterArea === 'all' || subject.area === filterArea;
+
+                return (titleMatch || descriptionMatch || lawsMatch) && areaMatch;
+            });
+
+            displaySubjects(filteredSubjects);
+        }
+
+        // Event listeners
+        searchInput.addEventListener('input', filterSubjects);
+        filterSelect.addEventListener('change', filterSubjects);
+
+        // Mostrar todas las materias al cargar la página
+        displaySubjects(subjects);
+
+        // Función para inicializar el filtrado
+        function initialize() {
+            // Puedes añadir aquí lógica adicional de inicialización si es necesario
+            filterSubjects();
+        }
+
+        // Inicializar la aplicación cuando el DOM esté cargado
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initialize);
+        } else {
+            initialize();
+        }
+    </script>
+</body>
+</html>

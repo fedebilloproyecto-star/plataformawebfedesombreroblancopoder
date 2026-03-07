@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Empresarial Completa</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark-color);
+            line-height: 1.6;
+                border-radius: 10px;
+  max-width: 900px;
+  margin: 90px auto;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 25px 0;
+            text-align: center;
+            border-radius: 10px 10px 0 0;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .calculator-container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 25px;
+        }
+        
+        @media (max-width: 768px) {
+            .calculator-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .calculator-types {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            height: fit-content;
+        }
+        
+        .calculator-types h2 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--light-color);
+            padding-bottom: 10px;
+        }
+        
+        .calculator-list {
+            list-style: none;
+        }
+        
+        .calculator-list li {
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: var(--light-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        .calculator-list li:hover {
+            background-color: var(--secondary-color);
+            color: white;
+            transform: translateX(5px);
+        }
+        
+        .calculator-list li.active {
+            background-color: var(--secondary-color);
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+        }
+        
+        .calculator-icon {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .calculator-content {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+        }
+        
+        .calculator-title {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--light-color);
+            display: flex;
+            align-items: center;
+        }
+        
+        .calculator-icon-large {
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .calculator-description {
+            margin-bottom: 20px;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        .calculator-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        @media (max-width: 576px) {
+            .calculator-form {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        
+        .btn {
+            color: white;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-calculate {
+            background-color: var(--secondary-color);
+            grid-column: 1 / -1;
+            margin-top: 10px;
+        }
+        
+        .btn-calculate:hover {
+            background-color: #2980b9;
+            box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+        }
+        
+        .btn-reset {
+            background-color: var(--dark-color);
+            grid-column: 1 / -1;
+            margin-top: 10px;
+        }
+        
+        .btn-reset:hover {
+            background-color: #2c3e50;
+        }
+        
+        .btn-icon {
+            margin-right: 8px;
+        }
+        
+        .results {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: var(--light-color);
+            border-radius: 8px;
+            display: none;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .results h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .result-item:last-child {
+            border-bottom: none;
+        }
+        
+        .result-label {
+            font-weight: 600;
+        }
+        
+        .result-value {
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .result-total {
+            font-size: 1.2rem;
+            color: var(--success-color);
+            font-weight: bold;
+        }
+        
+        .result-warning {
+            font-size: 1.2rem;
+            color: var(--warning-color);
+            font-weight: bold;
+        }
+        
+        .result-danger {
+            font-size: 1.2rem;
+            color: var(--danger-color);
+            font-weight: bold;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: var(--dark-color);
+            font-size: 0.9rem;
+            border-top: 1px solid #ddd;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .summary-box {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--success-color);
+        }
+        
+        .summary-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .summary-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .summary-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .summary-label {
+            font-size: 0.9rem;
+            color: var(--dark-color);
+        }
+        
+        .summary-value {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: var(--secondary-color);
+        }
+        
+        .alert {
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            display: none;
+        }
+        
+        .alert-danger {
+            background-color: rgba(231, 76, 60, 0.1);
+            border-left: 4px solid var(--danger-color);
+            color: var(--danger-color);
+        }
+        
+        .alert-warning {
+            background-color: rgba(243, 156, 18, 0.1);
+            border-left: 4px solid var(--warning-color);
+            color: var(--warning-color);
+        }
+        .colorful-button {
+    padding: 15px 25px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    
+    background-size: 400% 400%;
+    color:black;
+    text-align: center;
+    transition: all 0.4s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.colorful-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+@keyframes gradientAnimation {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+}
+
+.colorful-button {
+    animation: gradientAnimation 5s ease infinite;
+}
+/* Solo estilos para el botón "Volver atrás" - no hay reglas para body */
+.back-button {
+  display: inline-block;
+  padding: 10px 18px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 2px solid #333;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  user-select: none;
+}
+
+/* Efecto al pasar el ratón */
+.back-button:hover,
+.back-button:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+  text-decoration: none;
+  outline: none;
+}
+
+/* Efecto al hacer clic */
+.back-button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+
+/* Variante pequeña si quieres un botón más discreto */
+.back-button.small {
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 6px;
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Calculadora Empresarial</h1>
+            <p class="subtitle">Herramienta completa para cálculos financieros y empresariales</p>
+        </header>
+  
+ <a href="principal.html" class="back-button" aria-label="Volver atrás">Volver atrás</a>
+        <div class="calculator-container">
+            <div class="calculator-types">
+                <h2>Tipos de Cálculo</h2>
+                <ul class="calculator-list">
+                    <li class="active" data-calc="profit-margin">
+                        <span class="calculator-icon">💰</span> Margen de Beneficio
+                    </li>
+                    <li data-calc="break-even">
+                        <span class="calculator-icon">⚖️</span> Punto de Equilibrio
+                    </li>
+                    <li data-calc="roi">
+                        <span class="calculator-icon">📈</span> Retorno de Inversión (ROI)
+                    </li>
+                    <li data-calc="loan">
+                        <span class="calculator-icon">🏦</span> Préstamos y Financiación
+                    </li>
+                    <li data-calc="price-calc">
+                        <span class="calculator-icon">🏷️</span> Cálculo de Precios
+                    </li>
+                    <li data-calc="cash-flow">
+                        <span class="calculator-icon">💸</span> Flujo de Caja
+                    </li>
+                    <li data-calc="tax-calc">
+                        <span class="calculator-icon">🧾</span> Cálculo de Impuestos
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="calculator-content">
+                <div id="profit-margin" class="calculator active">
+                    <h2 class="calculator-title">
+                        <span class="calculator-icon-large">💰</span> Margen de Beneficio
+                    </h2>
+                    <p class="calculator-description">Calcula el margen de beneficio basado en costos e ingresos para determinar la rentabilidad de tus productos o servicios.</p>
+                    
+                    <form class="calculator-form" id="profit-margin-form">
+                        <div class="form-group">
+                            <label for="cost-price">Precio de Costo ($)</label>
+                            <input type="number" id="cost-price" step="0.01" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="selling-price">Precio de Venta ($)</label>
+                            <input type="number" id="selling-price" step="0.01" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="units-sold">Unidades Vendidas</label>
+                            <input type="number" id="units-sold" value="1" min="1">
+                        </div>
+                        
+                        <button type="submit" class="btn btn-calculate">
+                            <span class="btn-icon">📊</span> Calcular Margen
+                        </button>
+                        
+                        <button type="button" class="btn btn-reset" id="profit-margin-reset">
+                            <span class="btn-icon">🔄</span> Limpiar
+                        </button>
+                    </form>
+                    
+                    <div class="results" id="profit-margin-results">
+                        <h3>
+                            <span class="calculator-icon-large">📊</span> Resultados
+                        </h3>
+                        <div class="summary-box">
+                            <div class="summary-title">Resumen de Rentabilidad</div>
+                            <div class="summary-content">
+                                <div class="summary-item">
+                                    <span class="summary-label">Margen de Beneficio</span>
+                                    <span class="summary-value" id="profit-margin-value">0%</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Beneficio por Unidad</span>
+                                    <span class="summary-value" id="profit-per-unit">$0</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Beneficio Total</span>
+                                    <span class="summary-value" id="profit-total">$0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="break-even" class="calculator hidden">
+                    <h2 class="calculator-title">
+                        <span class="calculator-icon-large">⚖️</span> Punto de Equilibrio
+                    </h2>
+                    <p class="calculator-description">Determina cuántas unidades necesitas vender para cubrir todos tus costos y comenzar a generar ganancias.</p>
+                    
+                    <form class="calculator-form" id="break-even-form">
+                        <div class="form-group">
+                            <label for="fixed-costs">Costos Fijos ($)</label>
+                            <input type="number" id="fixed-costs" step="0.01" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="variable-costs">Costos Variables por Unidad ($)</label>
+                            <input type="number" id="variable-costs" step="0.01" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="selling-price-be">Precio de Venta por Unidad ($)</label>
+                            <input type="number" id="selling-price-be" step="0.01" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-calculate">
+                            <span class="btn-icon">📊</span> Calcular Punto de Equilibrio
+                        </button>
+                        
+                        <button type="button" class="btn btn-reset" id="break-even-reset">
+                            <span class="btn-icon">🔄</span> Limpiar
+                        </button>
+                    </form>
+                    
+                    <div class="alert alert-danger" id="break-even-alert"></div>
+                    
+                    <div class="results" id="break-even-results">
+                        <h3>
+                            <span class="calculator-icon-large">📊</span> Resultados
+                        </h3>
+                        <div class="summary-box">
+                            <div class="summary-title">Punto de Equilibrio</div>
+                            <div class="summary-content">
+                                <div class="summary-item">
+                                    <span class="summary-label">Unidades a Vender</span>
+                                    <span class="summary-value" id="break-even-units">0</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Ingresos Necesarios</span>
+                                    <span class="summary-value" id="break-even-revenue">$0</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Margen de Contribución</span>
+                                    <span class="summary-value" id="contribution-margin">$0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="roi" class="calculator hidden">
+                    <h2 class="calculator-title">
+                        <span class="calculator-icon-large">📈</span> Retorno de Inversión (ROI)
+                    </h2>
+                    <p class="calculator-description">Calcula el retorno sobre la inversión realizada para evaluar la eficiencia de una inversión.</p>
+                    
+                    <form class="calculator-form" id="roi-form">
+                        <div class="form-group">
+                            <label for="investment-amount">Monto de la Inversión ($)</label>
+                            <input type="number" id="investment-amount" step="0.01" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="net-profit">Beneficio Neto ($)</label>
+                            <input type="number" id="net-profit" step="0.01" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="investment-period">Período de Inversión (años)</label>
+                            <input type="number" id="investment-period" value="1" min="1">
+                        </div>
+                        
+                        <button type="submit" class="btn btn-calculate">
+                            <span class="btn-icon">📊</span> Calcular ROI
+                        </button>
+                        
+                        <button type="button" class="btn btn-reset" id="roi-reset">
+                            <span class="btn-icon">🔄</span> Limpiar
+                        </button>
+                    </form>
+                    
+                    <div class="results" id="roi-results">
+                        <h3>
+                            <span class="calculator-icon-large">📊</span> Resultados
+                        </h3>
+                        <div class="summary-box">
+                            <div class="summary-title">Retorno de Inversión</div>
+                            <div class="summary-content">
+                                <div class="summary-item">
+                                    <span class="summary-label">ROI Total</span>
+                                    <span class="summary-value" id="roi-value">0%</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">ROI Anual</span>
+                                    <span class="summary-value" id="roi-annual">0%</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Retorno Total</span>
+                                    <span class="summary-value" id="total-return">$0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="loan" class="calculator hidden">
+                    <h2 class="calculator-title">
+                        <span class="calculator-icon-large">🏦</span> Préstamos y Financiación
+                    </h2>
+                    <p class="calculator-description">Calcula los pagos mensuales de un préstamo y el costo total del financiamiento.</p>
+                    
+                    <form class="calculator-form" id="loan-form">
+                        <div class="form-group">
+                            <label for="loan-amount">Monto del Préstamo ($)</label>
+                            <input type="number" id="loan-amount" step="0.01" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="interest-rate">Tasa de Interés Anual (%)</label>
+                            <input type="number" id="interest-rate" step="0.01" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="loan-term">Plazo del Préstamo (años)</label>
+                            <input type="number" id="loan-term" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-calculate">
+                            <span class="btn-icon">📊</span> Calcular Pago Mensual
+                        </button>
+                        
+                        <button type="button" class="btn btn-reset" id="loan-reset">
+                            <span class="btn-icon">🔄</span> Limpiar
+                        </button>
+                    </form>
+                    
+                    <div class="results" id="loan-results">
+                        <h3>
+                            <span class="calculator-icon-large">📊</span> Resultados
+                        </h3>
+                        <div class="summary-box">
+                            <div class="summary-title">Detalles del Préstamo</div>
+                            <div class="summary-content">
+                                <div class="summary-item">
+                                    <span class="summary-label">Pago Mensual</span>
+                                    <span class="summary-value" id="monthly-payment">$0</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Total a Pagar</span>
+                                    <span class="summary-value" id="total-payment">$0</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Interés Total</span>
+                                    <span class="summary-value" id="total-interest">$0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="price-calc" class="calculator hidden">
+                    <h2 class="calculator-title">
+                        <span class="calculator-icon-large">🏷️</span> Cálculo de Precios
+                    </h2>
+                    <p class="calculator-description">Determina el precio de venta óptimo considerando costos, márgenes de beneficio y estrategias de precios.</p>
+                    
+                    <form class="calculator-form" id="price-calc-form">
+                        <div class="form-group">
+                            <label for="product-cost">Costo del Producto ($)</label>
+                            <input type="number" id="product-cost" step="0.01" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="desired-margin">Margen de Beneficio Deseado (%)</label>
+                            <input type="number" id="desired-margin" step="0.01" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="additional-costs">Costos Adicionales ($)</label>
+                            <input type="number" id="additional-costs" step="0.01" value="0">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="competitor-price">Precio de Competencia ($)</label>
+                            <input type="number" id="competitor-price" step="0.01">
+                        </div>
+                        
+                        <button type="submit" class="btn btn-calculate">
+                            <span class="btn-icon">📊</span> Calcular Precio
+                        </button>
+                        
+                        <button type="button" class="btn btn-reset" id="price-calc-reset">
+                            <span class="btn-icon">🔄</span> Limpiar
+                        </button>
+                    </form>
+                    
+                    <div class="results" id="price-calc-results">
+                        <h3>
+                            <span class="calculator-icon-large">📊</span> Resultados
+                        </h3>
+                        <div class="summary-box">
+                            <div class="summary-title">Estrategias de Precio</div>
+                            <div class="summary-content">
+                                <div class="summary-item">
+                                    <span class="summary-label">Precio por Costo+</span>
+                                    <span class="summary-value" id="cost-plus-price">$0</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Precio por Valor</span>
+                                    <span class="summary-value" id="value-price">$0</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Precio Competitivo</span>
+                                    <span class="summary-value" id="competitive-price">$0</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Precio Recomendado:</span>
+                            <span class="result-value result-total" id="recommended-price">$0</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="cash-flow" class="calculator hidden">
+                    <h2 class="calculator-title">
+                        <span class="calculator-icon-large">💸</span> Flujo de Caja
+                    </h2>
+                    <p class="calculator-description">Proyecta y analiza el flujo de caja de tu negocio para una mejor gestión financiera.</p>
+                    
+                    <form class="calculator-form" id="cash-flow-form">
+                        <div class="form-group">
+                            <label for="initial-cash">Efectivo Inicial ($)</label>
+                            <input type="number" id="initial-cash" step="0.01" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="monthly-income">Ingresos Mensuales ($)</label>
+                            <input type="number" id="monthly-income" step="0.01" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="monthly-expenses">Gastos Mensuales ($)</label>
+                            <input type="number" id="monthly-expenses" step="0.01" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="projection-period">Período de Proyección (meses)</label>
+                            <input type="number" id="projection-period" value="12" min="1" max="60">
+                        </div>
+                        
+                        <button type="submit" class="btn btn-calculate">
+                            <span class="btn-icon">📊</span> Calcular Flujo de Caja
+                        </button>
+                        
+                        <button type="button" class="btn btn-reset" id="cash-flow-reset">
+                            <span class="btn-icon">🔄</span> Limpiar
+                        </button>
+                    </form>
+                    
+                    <div class="results" id="cash-flow-results">
+                        <h3>
+                            <span class="calculator-icon-large">📊</span> Resultados
+                        </h3>
+                        <div class="summary-box">
+                            <div class="summary-title">Proyección de Flujo de Caja</div>
+                            <div class="summary-content">
+                                <div class="summary-item">
+                                    <span class="summary-label">Flujo Neto Mensual</span>
+                                    <span class="summary-value" id="monthly-net-cash">$0</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Efectivo Final</span>
+                                    <span class="summary-value" id="ending-cash">$0</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Meses de Reserva</span>
+                                    <span class="summary-value" id="cash-reserve">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="tax-calc" class="calculator hidden">
+                    <h2 class="calculator-title">
+                        <span class="calculator-icon-large">🧾</span> Cálculo de Impuestos
+                    </h2>
+                    <p class="calculator-description">Calcula tus obligaciones tributarias y planifica para la temporada de impuestos.</p>
+                    
+                    <form class="calculator-form" id="tax-calc-form">
+                        <div class="form-group">
+                            <label for="annual-income">Ingreso Anual ($)</label>
+                            <input type="number" id="annual-income" step="0.01" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="business-expenses">Gastos Deducibles ($)</label>
+                            <input type="number" id="business-expenses" step="0.01" value="0">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="tax-rate">Tasa de Impuesto (%)</label>
+                            <input type="number" id="tax-rate" step="0.01" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="tax-credits">Créditos Fiscales ($)</label>
+                            <input type="number" id="tax-credits" step="0.01" value="0">
+                        </div>
+                        
+                        <button type="submit" class="btn btn-calculate">
+                            <span class="btn-icon">📊</span> Calcular Impuestos
+                        </button>
+                        
+                        <button type="button" class="btn btn-reset" id="tax-calc-reset">
+                            <span class="btn-icon">🔄</span> Limpiar
+                        </button>
+                    </form>
+                    
+                    <div class="results" id="tax-calc-results">
+                        <h3>
+                            <span class="calculator-icon-large">📊</span> Resultados
+                        </h3>
+                        <div class="summary-box">
+                            <div class="summary-title">Resumen de Impuestos</div>
+                            <div class="summary-content">
+                                <div class="summary-item">
+                                    <span class="summary-label">Ingreso Gravable</span>
+                                    <span class="summary-value" id="taxable-income">$0</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Impuesto a Pagar</span>
+                                    <span class="summary-value" id="tax-amount">$0</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Impuesto después de Créditos</span>
+                                    <span class="summary-value" id="tax-after-credits">$0</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Ingreso Neto después de Impuestos:</span>
+                            <span class="result-value result-total" id="net-income-after-tax">$0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <button class="colorful-button" onclick="location.href='explicaciontodo.html'">
+    Ver la teoría junto con la práctica en cada explicación ✅
+</button>
+       
+    </div>
+
+    <script>
+        // Función de formato a moneda (con 2 decimales y signo $)
+        const formatCurrency = (number) => `$${(Math.round(number * 100) / 100).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+        // Función para cambiar de calculadora
+        document.querySelectorAll('.calculator-list li').forEach(item => {
+            item.addEventListener('click', function() {
+                // Quitar 'active' de todas las listas
+                document.querySelectorAll('.calculator-list li').forEach(li => li.classList.remove('active'));
+                // Ocultar todas las calculadoras
+                document.querySelectorAll('.calculator').forEach(calc => calc.classList.add('hidden'));
+                document.querySelectorAll('.results').forEach(res => res.style.display = 'none');
+                document.querySelectorAll('.alert').forEach(alert => alert.style.display = 'none');
+
+                // Mostrar la calculadora seleccionada
+                const calcId = this.getAttribute('data-calc');
+                document.getElementById(calcId).classList.remove('hidden');
+                this.classList.add('active');
+            });
+        });
+
+        // Función para resetear formularios
+        function setupResetButtons() {
+            // Botón de reset para Margen de Beneficio
+            document.getElementById('profit-margin-reset').addEventListener('click', function() {
+                document.getElementById('profit-margin-form').reset();
+                document.getElementById('profit-margin-results').style.display = 'none';
+            });
+            
+            // Botón de reset para Punto de Equilibrio
+            document.getElementById('break-even-reset').addEventListener('click', function() {
+                document.getElementById('break-even-form').reset();
+                document.getElementById('break-even-results').style.display = 'none';
+                document.getElementById('break-even-alert').style.display = 'none';
+            });
+            
+            // Botón de reset para ROI
+            document.getElementById('roi-reset').addEventListener('click', function() {
+                document.getElementById('roi-form').reset();
+                document.getElementById('roi-results').style.display = 'none';
+            });
+            
+            // Botón de reset para Préstamos
+            document.getElementById('loan-reset').addEventListener('click', function() {
+                document.getElementById('loan-form').reset();
+                document.getElementById('loan-results').style.display = 'none';
+            });
+            
+            // Botón de reset para Cálculo de Precios
+            document.getElementById('price-calc-reset').addEventListener('click', function() {
+                document.getElementById('price-calc-form').reset();
+                document.getElementById('price-calc-results').style.display = 'none';
+            });
+            
+            // Botón de reset para Flujo de Caja
+            document.getElementById('cash-flow-reset').addEventListener('click', function() {
+                document.getElementById('cash-flow-form').reset();
+                document.getElementById('cash-flow-results').style.display = 'none';
+            });
+            
+            // Botón de reset para Impuestos
+            document.getElementById('tax-calc-reset').addEventListener('click', function() {
+                document.getElementById('tax-calc-form').reset();
+                document.getElementById('tax-calc-results').style.display = 'none';
+            });
+        }
+
+        // Inicializar botones de reset
+        setupResetButtons();
+
+        // 1. Calculadora de Margen de Beneficio (Profit Margin)
+        document.getElementById('profit-margin-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const costo = parseFloat(document.getElementById('cost-price').value);
+            const venta = parseFloat(document.getElementById('selling-price').value);
+            const unidades = parseInt(document.getElementById('units-sold').value);
+
+            if (isNaN(costo) || isNaN(venta) || venta <= 0 || costo < 0 || unidades <= 0) {
+                alert("Por favor, introduce valores válidos.");
+                return;
+            }
+
+            const beneficio_unidad = venta - costo;
+            const beneficio_total = beneficio_unidad * unidades;
+            const margen_beneficio = ((venta - costo) / venta) * 100;
+
+            document.getElementById('profit-margin-value').textContent = `${margen_beneficio.toFixed(2)}%`;
+            document.getElementById('profit-per-unit').textContent = formatCurrency(beneficio_unidad);
+            document.getElementById('profit-total').textContent = formatCurrency(beneficio_total);
+            document.getElementById('profit-margin-results').style.display = 'block';
+        });
+
+        // 2. Calculadora de Punto de Equilibrio (Break Even) - MEJORADA
+        document.getElementById('break-even-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const costos_fijos = parseFloat(document.getElementById('fixed-costs').value);
+            const costos_variables = parseFloat(document.getElementById('variable-costs').value);
+            const precio_venta_be = parseFloat(document.getElementById('selling-price-be').value);
+
+            if (isNaN(costos_fijos) || isNaN(costos_variables) || isNaN(precio_venta_be) || costos_fijos < 0 || precio_venta_be < 0 || costos_variables < 0) {
+                alert("Por favor, introduce valores numéricos válidos (mayores o iguales a cero).");
+                return;
+            }
+
+            const margen_contribucion_unidad = precio_venta_be - costos_variables;
+            const alertElement = document.getElementById('break-even-alert');
+            
+            // Ocultar alerta y resultados previos
+            alertElement.style.display = 'none';
+            document.getElementById('break-even-results').style.display = 'none';
+
+            let punto_equilibrio_unidades = 0;
+            let punto_equilibrio_ingresos = 0;
+            let showAlert = false;
+            let alertMessage = "";
+
+            if (margen_contribucion_unidad > 0) {
+                // Caso normal: El precio de venta cubre el costo variable.
+                punto_equilibrio_unidades = costos_fijos / margen_contribucion_unidad;
+                punto_equilibrio_ingresos = punto_equilibrio_unidades * precio_venta_be;
+                
+                document.getElementById('break-even-units').textContent = Math.ceil(punto_equilibrio_unidades).toLocaleString('es-AR');
+                document.getElementById('break-even-revenue').textContent = formatCurrency(punto_equilibrio_ingresos);
+                document.getElementById('contribution-margin').textContent = formatCurrency(margen_contribucion_unidad);
+
+            } else if (margen_contribucion_unidad === 0 && costos_fijos > 0) {
+                // Caso especial 1: Costo Variable = Precio de Venta. El margen de contribución es 0.
+                // Es imposible cubrir costos fijos, no hay punto de equilibrio.
+                document.getElementById('break-even-units').textContent = "IMPOSIBLE";
+                document.getElementById('break-even-revenue').textContent = "IMPOSIBLE";
+                document.getElementById('contribution-margin').textContent = formatCurrency(margen_contribucion_unidad);
+                showAlert = true;
+                alertMessage = "El margen de contribución es cero. No es posible alcanzar el punto de equilibrio porque cada unidad vendida no genera ganancia para cubrir costos fijos.";
+
+            } else if (margen_contribucion_unidad < 0) {
+                // Caso especial 2: Costo Variable > Precio de Venta. Pérdida por unidad.
+                // Es imposible alcanzar el punto de equilibrio.
+                document.getElementById('break-even-units').textContent = "IMPOSIBLE";
+                document.getElementById('break-even-revenue').textContent = "IMPOSIBLE";
+                document.getElementById('contribution-margin').textContent = formatCurrency(margen_contribucion_unidad);
+                showAlert = true;
+                alertMessage = "El margen de contribución es negativo. Cada unidad vendida genera pérdidas. No es posible alcanzar el punto de equilibrio.";
+                
+            } else if (costos_fijos === 0) {
+                // Caso especial 3: Costos Fijos son 0. El punto de equilibrio es 0 unidades.
+                document.getElementById('break-even-units').textContent = "0";
+                document.getElementById('break-even-revenue').textContent = formatCurrency(0);
+                document.getElementById('contribution-margin').textContent = formatCurrency(margen_contribucion_unidad);
+            }
+
+            // Mostrar alerta si es necesario
+            if (showAlert) {
+                alertElement.textContent = alertMessage;
+                alertElement.style.display = 'block';
+            }
+
+            // Mostrar resultados
+            document.getElementById('break-even-results').style.display = 'block';
+        });
+
+        // 3. Calculadora de ROI (Return On Investment)
+        document.getElementById('roi-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const inversion = parseFloat(document.getElementById('investment-amount').value);
+            const beneficio_neto = parseFloat(document.getElementById('net-profit').value);
+            const periodo = parseFloat(document.getElementById('investment-period').value);
+
+            if (isNaN(inversion) || isNaN(beneficio_neto) || isNaN(periodo) || inversion <= 0 || periodo <= 0) {
+                alert("Por favor, introduce valores válidos (Inversión y Período deben ser mayores a cero).");
+                return;
+            }
+
+            const roi_total = ((beneficio_neto - inversion) / inversion) * 100;
+            const retorno_total = beneficio_neto - inversion;
+            const roi_anual = roi_total / periodo;
+
+            document.getElementById('roi-value').textContent = `${roi_total.toFixed(2)}%`;
+            document.getElementById('roi-annual').textContent = `${roi_anual.toFixed(2)}%`;
+            document.getElementById('total-return').textContent = formatCurrency(retorno_total);
+            document.getElementById('roi-results').style.display = 'block';
+        });
+
+        // 4. Calculadora de Préstamos (Loan)
+        document.getElementById('loan-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const monto = parseFloat(document.getElementById('loan-amount').value);
+            const tasa_anual = parseFloat(document.getElementById('interest-rate').value) / 100;
+            const plazo_años = parseFloat(document.getElementById('loan-term').value);
+
+            if (isNaN(monto) || isNaN(tasa_anual) || isNaN(plazo_años) || monto <= 0 || plazo_años <= 0) {
+                alert("Por favor, introduce valores válidos.");
+                return;
+            }
+
+            const tasa_mensual = tasa_anual / 12;
+            const numero_pagos = plazo_años * 12;
+            let pago_mensual = 0;
+
+            if (tasa_mensual > 0) {
+                pago_mensual = monto * (tasa_mensual * Math.pow(1 + tasa_mensual, numero_pagos)) / (Math.pow(1 + tasa_mensual, numero_pagos) - 1);
+            } else {
+                pago_mensual = monto / numero_pagos; // Caso de interés 0
+            }
+
+            const total_pagar = pago_mensual * numero_pagos;
+            const total_interes = total_pagar - monto;
+
+            document.getElementById('monthly-payment').textContent = formatCurrency(pago_mensual);
+            document.getElementById('total-payment').textContent = formatCurrency(total_pagar);
+            document.getElementById('total-interest').textContent = formatCurrency(total_interes);
+            document.getElementById('loan-results').style.display = 'block';
+        });
+
+        // 5. Calculadora de Precios (Price Calc)
+        document.getElementById('price-calc-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const costo_producto = parseFloat(document.getElementById('product-cost').value);
+            const margen_deseado_perc = parseFloat(document.getElementById('desired-margin').value);
+            const costos_adicionales = parseFloat(document.getElementById('additional-costs').value || 0);
+            const precio_competencia = parseFloat(document.getElementById('competitor-price').value || 0);
+
+            if (isNaN(costo_producto) || isNaN(margen_deseado_perc) || costo_producto < 0 || margen_deseado_perc < 0) {
+                alert("Por favor, introduce costos y márgenes válidos.");
+                return;
+            }
+
+            const costo_total = costo_producto + costos_adicionales;
+            const margen_deseado_decimal = margen_deseado_perc / 100;
+
+            // Precio por Costo+ (Markup Pricing)
+            // Precio = Costo Total / (1 - Margen Deseado)
+            const precio_costo_plus = costo_total / (1 - margen_deseado_decimal);
+
+            // Precio por Valor (Aquí simulamos una pequeña prima sobre Costo+)
+            const precio_valor = precio_costo_plus * 1.10; // Ejemplo: 10% más que el Costo+
+
+            // Precio Competitivo (Basado en el input del usuario)
+            let precio_competitivo = precio_competencia > 0 ? precio_competencia * 0.95 : precio_costo_plus; // Ejemplo: 5% menos que la competencia o el Costo+ si no hay competencia
+
+            // Precio Recomendado (El más bajo de los dos precios calculados, o el costo+ si es el más sensato)
+            let precio_recomendado = precio_costo_plus;
+            if (precio_competencia > 0 && precio_competencia < precio_costo_plus) {
+                precio_recomendado = precio_competencia;
+            } else {
+                 precio_recomendado = precio_costo_plus;
+            }
+
+            document.getElementById('cost-plus-price').textContent = formatCurrency(precio_costo_plus);
+            document.getElementById('value-price').textContent = formatCurrency(precio_valor);
+            document.getElementById('competitive-price').textContent = formatCurrency(precio_competitivo);
+            document.getElementById('recommended-price').textContent = formatCurrency(precio_recomendado);
+            document.getElementById('price-calc-results').style.display = 'block';
+        });
+
+        // 6. Calculadora de Flujo de Caja (Cash Flow)
+        document.getElementById('cash-flow-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const efectivo_inicial = parseFloat(document.getElementById('initial-cash').value);
+            const ingresos_mensuales = parseFloat(document.getElementById('monthly-income').value);
+            const gastos_mensuales = parseFloat(document.getElementById('monthly-expenses').value);
+            const periodo_meses = parseInt(document.getElementById('projection-period').value);
+
+            if (isNaN(efectivo_inicial) || isNaN(ingresos_mensuales) || isNaN(gastos_mensuales) || isNaN(periodo_meses) || periodo_meses <= 0) {
+                alert("Por favor, introduce valores válidos.");
+                return;
+            }
+
+            const flujo_neto_mensual = ingresos_mensuales - gastos_mensuales;
+            const efectivo_final = efectivo_inicial + (flujo_neto_mensual * periodo_meses);
+            
+            // Meses de reserva: Cuánto tiempo puede sobrevivir el negocio con el efectivo inicial si los ingresos se detienen.
+            let meses_reserva = 0;
+            if (gastos_mensuales > 0) {
+                meses_reserva = efectivo_inicial / gastos_mensuales;
+            }
+
+            document.getElementById('monthly-net-cash').textContent = formatCurrency(flujo_neto_mensual);
+            document.getElementById('ending-cash').textContent = formatCurrency(efectivo_final);
+            document.getElementById('cash-reserve').textContent = `${meses_reserva.toFixed(1)}`;
+            document.getElementById('cash-flow-results').style.display = 'block';
+        });
+
+        // 7. Calculadora de Impuestos (Tax Calc)
+        document.getElementById('tax-calc-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const ingreso_anual = parseFloat(document.getElementById('annual-income').value);
+            const gastos_deducibles = parseFloat(document.getElementById('business-expenses').value || 0);
+            const tasa_impuesto_perc = parseFloat(document.getElementById('tax-rate').value);
+            const creditos_fiscales = parseFloat(document.getElementById('tax-credits').value || 0);
+
+            if (isNaN(ingreso_anual) || isNaN(tasa_impuesto_perc) || ingreso_anual < 0 || tasa_impuesto_perc < 0) {
+                alert("Por favor, introduce valores válidos para Ingreso Anual y Tasa de Impuesto.");
+                return;
+            }
+
+            const ingreso_gravable = ingreso_anual - gastos_deducibles;
+            const tasa_impuesto_decimal = tasa_impuesto_perc / 100;
+            const impuesto_a_pagar = ingreso_gravable * tasa_impuesto_decimal;
+            const impuesto_despues_creditos = Math.max(0, impuesto_a_pagar - creditos_fiscales);
+            const ingreso_neto_final = ingreso_anual - impuesto_despues_creditos;
+
+            document.getElementById('taxable-income').textContent = formatCurrency(ingreso_gravable);
+            document.getElementById('tax-amount').textContent = formatCurrency(impuesto_a_pagar);
+            document.getElementById('tax-after-credits').textContent = formatCurrency(impuesto_despues_creditos);
+            document.getElementById('net-income-after-tax').textContent = formatCurrency(ingreso_neto_final);
+            document.getElementById('tax-calc-results').style.display = 'block';
+        });
+    </script>
+</body>
+</html>

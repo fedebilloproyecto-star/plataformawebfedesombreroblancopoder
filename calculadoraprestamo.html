@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Préstamos - Explicación Completa</title>
+    <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #2c3e50;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --info: #17a2b8;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+                border-radius: 10px;
+    max-width: 1100px;
+  margin: 90px auto;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        h2 {
+            color: var(--secondary);
+            margin: 25px 0 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary);
+        }
+        
+        h3 {
+            color: var(--secondary);
+            margin: 20px 0 10px;
+        }
+        
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        @media (max-width: 900px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .calculator, .comparison {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+        }
+        
+        .results {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: var(--light);
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .results.active {
+            display: block;
+        }
+        
+        .result-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        @media (max-width: 600px) {
+            .result-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .result-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border-left: 4px solid var(--primary);
+        }
+        
+        .result-title {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .result-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+        
+        .result-explanation {
+            font-size: 14px;
+            color: #555;
+            line-height: 1.4;
+        }
+        
+        .explanation-detail {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid var(--info);
+        }
+        
+        .explanation-item {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #ddd;
+        }
+        
+        .explanation-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .explanation-title {
+            font-weight: 600;
+            color: var(--secondary);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .explanation-title i {
+            margin-right: 8px;
+            color: var(--info);
+        }
+        
+        .explanation-content {
+            color: #555;
+            line-height: 1.5;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: var(--primary);
+            color: white;
+            position: sticky;
+            top: 0;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        tr:hover {
+            background-color: #e9ecef;
+        }
+        
+        .symbol {
+            font-weight: bold;
+            color: var(--accent);
+        }
+        
+        .formula {
+            font-family: monospace;
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        
+        .highlight {
+            background-color: #fff3cd;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid var(--warning);
+            margin: 20px 0;
+        }
+        
+        .error {
+            color: var(--accent);
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .error.active {
+            display: block;
+        }
+        
+        .info-icon {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            background-color: var(--info);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 18px;
+            font-size: 12px;
+            margin-left: 8px;
+            cursor: help;
+        }
+/* Solo estilos para el botón "Volver atrás" */
+.back-button {
+  display: inline-block;
+  padding: 10px 18px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 2px solid #333;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  user-select: none;
+}
+
+/* Efecto al pasar el ratón */
+.back-button:hover,
+.back-button:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+  text-decoration: none;
+  outline: none;
+}
+
+/* Efecto al hacer clic */
+.back-button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Calculadora de Préstamos</h1>
+            <p>Comprende los términos y calcula tu pago mensual con explicaciones detalladas</p>
+        </header>
+        <a href="principal.html" class="back-button" aria-label="Volver atrás">Volver atrás</a>
+        <div class="content">
+            <section class="comparison">
+                <h2>Cuadro Comparativo de Términos de Préstamos</h2>
+                <div class="highlight">
+                    <p><strong>Fórmula para calcular el pago mensual:</strong></p>
+                    <p class="formula">PM = P × [i(1+i)^n] / [(1+i)^n - 1]</p>
+                </div>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Símbolo</th>
+                            <th>Nombre completo</th>
+                            <th>Significado técnico</th>
+                            <th>Cómo se obtiene o calcula</th>
+                            <th>Unidad o tipo de dato</th>
+                            <th>Representa en la vida real</th>
+                            <th>Ejemplo práctico</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="symbol">PM</td>
+                            <td>Pago mensual (o cuota fija)</td>
+                            <td>Monto fijo que se paga periódicamente durante el préstamo</td>
+                            <td>Se calcula con toda la fórmula</td>
+                            <td>Moneda (por ejemplo, pesos o dólares)</td>
+                            <td>Lo que abonás cada mes al banco (incluye capital + intereses)</td>
+                            <td>$3.323</td>
+                        </tr>
+                        <tr>
+                            <td class="symbol">P</td>
+                            <td>Principal o monto del préstamo</td>
+                            <td>Cantidad total de dinero prestada por la entidad financiera</td>
+                            <td>Lo define el contrato del préstamo</td>
+                            <td>Moneda</td>
+                            <td>El dinero que recibís al inicio</td>
+                            <td>$100.000</td>
+                        </tr>
+                        <tr>
+                            <td class="symbol">i</td>
+                            <td>Tasa de interés por período</td>
+                            <td>Porcentaje que se cobra por usar el dinero prestado en cada período</td>
+                            <td>Tasa anual / cantidad de períodos al año</td>
+                            <td>Número decimal (no porcentaje)</td>
+                            <td>El "precio" del dinero prestado en cada mes</td>
+                            <td>12% anual ÷ 12 = <strong>0.01</strong> mensual</td>
+                        </tr>
+                        <tr>
+                            <td class="symbol">n</td>
+                            <td>Número total de períodos</td>
+                            <td>Total de pagos o cuotas a realizar</td>
+                            <td>Años × pagos por año</td>
+                            <td>Número entero</td>
+                            <td>Cuántas cuotas pagás en total</td>
+                            <td>3 años × 12 meses = <strong>36 cuotas</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="symbol">(1 + i)^n</td>
+                            <td>Factor de capitalización</td>
+                            <td>Muestra cuánto crece el dinero por los intereses acumulados</td>
+                            <td>Se eleva 1+i a la potencia n</td>
+                            <td>Número decimal</td>
+                            <td>Cuánto "aumenta" el dinero por el interés compuesto</td>
+                            <td>(1.01)^36 = 1.43077</td>
+                        </tr>
+                        <tr>
+                            <td class="symbol">i(1 + i)^n</td>
+                            <td>Parte del numerador</td>
+                            <td>Ajusta el crecimiento del interés para el cálculo del pago</td>
+                            <td>Multiplica tasa por factor de capitalización</td>
+                            <td>Número decimal</td>
+                            <td>Mide la parte proporcional de interés en el cálculo</td>
+                            <td>0.01 × 1.43077 = 0.0143077</td>
+                        </tr>
+                        <tr>
+                            <td class="symbol">(1 + i)^n - 1</td>
+                            <td>Parte del denominador</td>
+                            <td>Ajusta el crecimiento para mantener la cuota constante</td>
+                            <td>Resta 1 al factor de capitalización</td>
+                            <td>Número decimal</td>
+                            <td>Mide el "exceso" del crecimiento del dinero por el interés</td>
+                            <td>1.43077 - 1 = 0.43077</td>
+                        </tr>
+                        <tr>
+                            <td class="symbol">[i(1+i)^n / (1+i)^n - 1]</td>
+                            <td>Factor de amortización</td>
+                            <td>Factor que convierte el monto prestado en cuotas fijas</td>
+                            <td>División del numerador por el denominador</td>
+                            <td>Número decimal</td>
+                            <td>Indica qué parte del préstamo se paga en cada período</td>
+                            <td>0.0143077 ÷ 0.43077 = 0.03323</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+            
+            <section class="calculator">
+                <h2>Calculadora de Préstamos</h2>
+                <p>Ingresa los valores manualmente para calcular tu pago mensual:</p>
+                
+                <form id="loan-form">
+                    <div class="form-group">
+                        <label for="principal">Monto del préstamo (P)</label>
+                        <input type="number" id="principal" placeholder="Ej: 100000" min="1" required>
+                        <div class="error" id="principal-error">Por favor ingresa un monto válido</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="interest-rate">Tasa de interés anual (%)</label>
+                        <input type="number" id="interest-rate" placeholder="Ej: 12" step="0.01" min="0.01" required>
+                        <div class="error" id="interest-error">Por favor ingresa una tasa de interés válida</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="loan-term">Plazo del préstamo (años)</label>
+                        <input type="number" id="loan-term" placeholder="Ej: 3" min="1" max="50" required>
+                        <div class="error" id="term-error">Por favor ingresa un plazo válido</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="payments-per-year">Pagos por año</label>
+                        <select id="payments-per-year">
+                            <option value="12">Mensual (12)</option>
+                            <option value="4">Trimestral (4)</option>
+                            <option value="2">Semestral (2)</option>
+                            <option value="1">Anual (1)</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit">Calcular Pago</button>
+                </form>
+                
+                <div class="results" id="results">
+                    <h3>Resultados del Cálculo</h3>
+                    
+                    <div class="result-grid">
+                        <div class="result-card">
+                            <div class="result-title">Pago por período</div>
+                            <div class="result-value" id="payment-result">-</div>
+                            <div class="result-explanation">Monto fijo a pagar en cada período (cuota)</div>
+                        </div>
+                        
+                        <div class="result-card">
+                            <div class="result-title">Total a pagar</div>
+                            <div class="result-value" id="total-payment">-</div>
+                            <div class="result-explanation">Suma de todos los pagos durante el préstamo</div>
+                        </div>
+                        
+                        <div class="result-card">
+                            <div class="result-title">Total de intereses</div>
+                            <div class="result-value" id="total-interest">-</div>
+                            <div class="result-explanation">Costo adicional por pedir prestado el dinero</div>
+                        </div>
+                        
+                        <div class="result-card">
+                            <div class="result-title">Número de pagos</div>
+                            <div class="result-value" id="total-payments">-</div>
+                            <div class="result-explanation">Cantidad total de cuotas a lo largo del préstamo</div>
+                        </div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-title">Tasa por período</div>
+                        <div class="result-value" id="period-rate">-</div>
+                        <div class="result-explanation">Tasa de interés aplicada en cada período de pago</div>
+                    </div>
+                    
+                    <div class="explanation-detail">
+                        <h3>Explicación Detallada de los Resultados</h3>
+                        
+                        <div class="explanation-item">
+                            <div class="explanation-title">
+                                <span>Pago por período (Cuota)</span>
+                            </div>
+                            <div class="explanation-content">
+                                <p>Este es el monto fijo que deberás pagar en cada período (mensual, trimestral, etc.). Incluye:</p>
+                                <ul>
+                                    <li><strong>Parte de capital:</strong> Porción que reduce tu deuda original</li>
+                                    <li><strong>Parte de intereses:</strong> Costo del préstamo en ese período</li>
+                                </ul>
+                                <p>En las primeras cuotas, pagarás más intereses y menos capital. Con el tiempo, esta proporción se invertirá.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="explanation-item">
+                            <div class="explanation-title">
+                                <span>Total a pagar</span>
+                            </div>
+                            <div class="explanation-content">
+                                <p>Es la suma de todas las cuotas que pagarás durante la vida del préstamo. Se calcula como:</p>
+                                <p class="formula">Total a pagar = Pago por período × Número total de pagos</p>
+                                <p>Este monto siempre será mayor que el préstamo original debido a los intereses.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="explanation-item">
+                            <div class="explanation-title">
+                                <span>Total de intereses</span>
+                            </div>
+                            <div class="explanation-content">
+                                <p>Representa el costo real del préstamo, es decir, cuánto extra pagas por haber tomado el dinero prestado. Se calcula como:</p>
+                                <p class="formula">Total de intereses = Total a pagar - Monto del préstamo</p>
+                                <p>Este valor te ayuda a comparar diferentes opciones de préstamo y entender el costo financiero real.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="explanation-item">
+                            <div class="explanation-title">
+                                <span>Número de pagos</span>
+                            </div>
+                            <div class="explanation-content">
+                                <p>Es la cantidad total de cuotas que pagarás hasta completar el préstamo. Se calcula como:</p>
+                                <p class="formula">Número de pagos = Años del préstamo × Pagos por año</p>
+                                <p>Un plazo más largo significa más pagos pero cuotas más pequeñas, aunque pagarás más intereses en total.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="explanation-item">
+                            <div class="explanation-title">
+                                <span>Tasa por período</span>
+                            </div>
+                            <div class="explanation-content">
+                                <p>Es la tasa de interés aplicada en cada período de pago. Se calcula dividiendo la tasa anual entre el número de períodos por año:</p>
+                                <p class="formula">Tasa por período = Tasa anual ÷ Pagos por año</p>
+                                <p>Esta tasa es la que realmente se aplica a tu saldo pendiente en cada cuota para calcular los intereses.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loan-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Ocultar errores previos
+            document.querySelectorAll('.error').forEach(error => {
+                error.classList.remove('active');
+            });
+            
+            // Obtener valores del formulario
+            const principal = parseFloat(document.getElementById('principal').value);
+            const annualInterestRate = parseFloat(document.getElementById('interest-rate').value);
+            const years = parseFloat(document.getElementById('loan-term').value);
+            const paymentsPerYear = parseInt(document.getElementById('payments-per-year').value);
+            
+            // Validaciones
+            let isValid = true;
+            
+            if (isNaN(principal) || principal <= 0) {
+                document.getElementById('principal-error').classList.add('active');
+                isValid = false;
+            }
+            
+            if (isNaN(annualInterestRate) || annualInterestRate <= 0) {
+                document.getElementById('interest-error').classList.add('active');
+                isValid = false;
+            }
+            
+            if (isNaN(years) || years <= 0) {
+                document.getElementById('term-error').classList.add('active');
+                isValid = false;
+            }
+            
+            if (!isValid) return;
+            
+            // Calcular valores
+            const totalPayments = years * paymentsPerYear;
+            const periodInterestRate = (annualInterestRate / 100) / paymentsPerYear;
+            
+            // Calcular pago mensual usando la fórmula de amortización
+            const numerator = periodInterestRate * Math.pow(1 + periodInterestRate, totalPayments);
+            const denominator = Math.pow(1 + periodInterestRate, totalPayments) - 1;
+            const payment = principal * (numerator / denominator);
+            
+            // Calcular totales
+            const totalPayment = payment * totalPayments;
+            const totalInterest = totalPayment - principal;
+            
+            // Mostrar resultados
+            document.getElementById('payment-result').textContent = formatCurrency(payment);
+            document.getElementById('total-payment').textContent = formatCurrency(totalPayment);
+            document.getElementById('total-interest').textContent = formatCurrency(totalInterest);
+            document.getElementById('total-payments').textContent = totalPayments;
+            document.getElementById('period-rate').textContent = (periodInterestRate * 100).toFixed(4) + '%';
+            
+            // Mostrar sección de resultados
+            document.getElementById('results').classList.add('active');
+        });
+        
+        function formatCurrency(amount) {
+            return '$' + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        }
+    </script>
+</body>
+</html>

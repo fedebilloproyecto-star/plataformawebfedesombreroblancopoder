@@ -1,0 +1,2399 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Jurídica Integral - 50 Herramientas</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #34495e;
+            --success: #2ecc71;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: aquamarine;
+            color: var(--dark);
+            line-height: 1.6;
+            color:black;
+                border-radius: 10px;
+  max-width: 900px;
+  margin: 90px auto;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .tabs {
+            display: flex;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            overflow-x: auto; 
+            white-space: nowrap;
+        }
+        
+        .tab {
+            flex-shrink: 0; 
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            min-width: 180px;
+            border-right: 1px solid var(--light);
+        }
+        
+        .tab.active {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .tab:hover:not(.active) {
+            background-color: var(--light);
+        }
+        
+        .calculator-section {
+            display: none;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+        
+        .calculator-section.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        button {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: var(--primary);
+        }
+        
+        .result {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background-color: var(--light);
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .result h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .formula-explanation {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary);
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .formula {
+            font-family: 'Courier New', monospace;
+            background-color: #2c3e50;
+            color: white;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 1rem;
+            color: var(--dark);
+            font-size: 0.9rem;
+        }
+        
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        @media (max-width: 1200px) {
+            .tabs {
+                overflow-x: scroll;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+/* Solo estilos para el botón "Volver atrás" */
+.back-button {
+  display: inline-block;
+  padding: 10px 18px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 2px solid #333;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  user-select: none;
+}
+
+/* Efecto al pasar el ratón */
+.back-button:hover,
+.back-button:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+  text-decoration: none;
+  outline: none;
+}
+
+/* Efecto al hacer clic */
+.back-button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Calculos de abogacia</h1>
+            <p class="subtitle">50 Herramientas matemáticas sobre de abogacia </p>
+             <a href="aprendeprincipalconocimientosabogacia.html" class="back-button" aria-label="Volver atrás">Volver atrás</a>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="tabs">
+            <div class="tab active" data-tab="pension">1. Pensión Alimenticia</div>
+            <div class="tab" data-tab="division">2. División Patrimonial</div>
+            <div class="tab" data-tab="custodia">3. Régimen de Custodia</div>
+            <div class="tab" data-tab="compensatoria">4. Compensación Económica</div>
+            <div class="tab" data-tab="filiacion">5. Probabilidad de Filiación</div>
+            <div class="tab" data-tab="matrimonial">6. Cálculo de Plazos Matrimoniales</div>
+            <div class="tab" data-tab="adopcion">7. Idoneidad para Adopción</div>
+            <div class="tab" data-tab="violencia">8. Evaluación de Riesgo de Violencia</div>
+            <div class="tab" data-tab="sucesiones">9. Porción Sucesoria</div>
+            <div class="tab" data-tab="legitima">10. Cálculo de Legítima Hereditaria</div>
+            
+            <div class="tab" data-tab="ciberseguridad">11. Costo de Brecha de Seguridad</div>
+            <div class="tab" data-tab="propiedad">12. Valoración de Propiedad Intelectual</div>
+            <div class="tab" data-tab="delito-informatico">13. Cómputo de Pena Informática</div>
+            <div class="tab" data-tab="privacidad">14. Multa por Infracción de Privacidad</div>
+            <div class="tab" data-tab="licencias">15. Cálculo de Regalías por Licencias</div>
+            <div class="tab" data-tab="blockchain">16. Valoración de Evidencia Blockchain</div>
+            <div class="tab" data-tab="e-commerce">17. Rescisión de Contrato E-Commerce</div>
+            <div class="tab" data-tab="forense">18. Tiempo de Análisis Forense Digital</div>
+            <div class="tab" data-tab="proteccion-datos">19. Factor de Riesgo de Datos</div>
+            <div class="tab" data-tab="firmas">20. Validez Probatoria de Firmas Digitales</div>
+
+            <div class="tab" data-tab="intereses">21. Cálculo de Intereses Moratorios</div>
+            <div class="tab" data-tab="clausulas">22. Multa por Cláusula Penal</div>
+            <div class="tab" data-tab="prescripcion">23. Cómputo de Prescripción Civil</div>
+            <div class="tab" data-tab="vicios">24. Valor de Redhibición por Vicios</div>
+            <div class="tab" data-tab="desalojo">25. Plazo de Desalojo</div>
+            <div class="tab" data-tab="hipotecario">26. Cuota Hipotecaria Legal</div>
+            <div class="tab" data-tab="compraventa">27. Ajuste de Precio de Compraventa</div>
+            <div class="tab" data-tab="daños-patrimonial">28. Daño Patrimonial Cuantificable</div>
+            <div class="tab" data-tab="responsabilidad">29. Porcentaje de Responsabilidad Civil</div>
+            <div class="tab" data-tab="garantias">30. Ejecución de Garantías</div>
+
+            <div class="tab" data-tab="indemnizacion-laboral">31. Indemnización por Despido</div>
+            <div class="tab" data-tab="vacaciones">32. Días de Vacaciones Proporcionales</div>
+            <div class="tab" data-tab="horas-extra">33. Cálculo de Horas Extras</div>
+            <div class="tab" data-tab="salario">34. Ajuste por Salario Mínimo</div>
+            <div class="tab" data-tab="jubilacion-base">35. Base de Cálculo de Jubilación</div>
+            <div class="tab" data-tab="accidente">36. Porcentaje de Incapacidad Laboral</div>
+            <div class="tab" data-tab="aportes">37. Cálculo de Aportes Sociales</div>
+            <div class="tab" data-tab="sindical">38. Cuota Sindical Retroactiva</div>
+            <div class="tab" data-tab="preaviso">39. Monto de Preaviso Omitido</div>
+            <div class="tab" data-tab="riesgos">40. Evaluación de Riesgos Laborales</div>
+
+            <div class="tab" data-tab="impuestos">41. Cálculo de Impuestos Retroactivos</div>
+            <div class="tab" data-tab="multas">42. Reducción de Multas Fiscales</div>
+            <div class="tab" data-tab="expropiacion">43. Valor de Expropiación Forzosa</div>
+            <div class="tab" data-tab="plazos-admin">44. Cómputo de Plazos Administrativos</div>
+            <div class="tab" data-tab="recurrencia">45. Tasa de Recurrencia Administrativa</div>
+            <div class="tab" data-tab="tasa-interes-fiscal">46. Tasa de Interés Fiscal</div>
+            <div class="tab" data-tab="licitaciones">47. Puntuación de Licitaciones Públicas</div>
+            <div class="tab" data-tab="servicios-publicos">48. Ajuste de Tarifas de Servicios Públicos</div>
+            <div class="tab" data-tab="regulacion">49. Costo de Cumplimiento Regulatorio</div>
+            <div class="tab" data-tab="aduanas">50. Valoración Aduanera</div>
+        </div>
+        
+        <section id="pension" class="calculator-section active">
+            <h2>1. Calculadora de Pensión Alimenticia</h2>
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="ingreso-obligado">Ingresos del Obligado ($):</label>
+                    <input type="number" id="ingreso-obligado" placeholder="Ingreso mensual">
+                </div>
+                <div class="form-group">
+                    <label for="ingreso-beneficiario">Ingresos del Beneficiario ($):</label>
+                    <input type="number" id="ingreso-beneficiario" placeholder="Ingreso mensual" value="0">
+                </div>
+            </div>
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="num-hijos">Número de Hijos:</label>
+                    <input type="number" id="num-hijos" min="1" value="1">
+                </div>
+                <div class="form-group">
+                    <label for="gastos-especiales">Gastos Especiales ($):</label>
+                    <input type="number" id="gastos-especiales" placeholder="Gastos médicos, educativos, etc." value="0">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="porcentaje-ley">Porcentaje según Jurisprudencia (%):</label>
+                <select id="porcentaje-ley">
+                    <option value="15">15% (1 hijo)</option>
+                    <option value="20">20% (2 hijos)</option>
+                    <option value="25">25% (3 hijos)</option>
+                    <option value="30">30% (4+ hijos)</option>
+                </select>
+            </div>
+            <button data-calc-id="pension">Calcular Pensión</button>
+            
+            <div id="resultado-pension" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="pension-mensual"></p>
+                <p id="pension-anual"></p>
+                <p id="porcentaje-aplicado"></p>
+            </div>
+            
+            <div class="formula-explanation">
+                <h3>Fórmula de Cálculo</h3>
+                <div class="formula">
+                    Pensión Mensual = [(Ingresos Obligado - Ingresos Beneficiario) × Porcentaje Jurisprudencial] + Gastos Especiales
+                </div>
+            </div>
+        </section>
+        
+        <section id="division" class="calculator-section">
+            <h2>2. Calculadora de División Patrimonial</h2>
+            <div class="form-group">
+                <label for="valor-bienes">Valor Total de Bienes Gananciales ($):</label>
+                <input type="number" id="valor-bienes" placeholder="Valor total del patrimonio ganancial">
+            </div>
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="deudas">Deudas Conjuntas ($):</label>
+                    <input type="number" id="deudas" placeholder="Deudas a descontar" value="0">
+                </div>
+                <div class="form-group">
+                    <label for="bienes-propios">Bienes Propios de Cada Parte ($):</label>
+                    <input type="number" id="bienes-propios" placeholder="Bienes excluidos de la sociedad" value="0">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="num-partes">Número de Partes:</label>
+                <input type="number" id="num-partes" min="2" value="2">
+            </div>
+            <button data-calc-id="division">Calcular División</button>
+            
+            <div id="resultado-division" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="patrimonio-neto"></p>
+                <p id="valor-parte"></p>
+                <p id="distribucion-partes"></p>
+            </div>
+            
+            <div class="formula-explanation">
+                <h3>Fórmula de Cálculo</h3>
+                <div class="formula">
+                    Patrimonio Neto = Valor Bienes Gananciales - Deudas Conjuntas - Bienes Propios
+                    <br>
+                    Valor por Parte = Patrimonio Neto ÷ Número de Partes
+                </div>
+            </div>
+        </section>
+        
+        <section id="custodia" class="calculator-section">
+            <h2>3. Régimen de Custodia</h2>
+            <div class="form-group">
+                <label for="factor-economico-custodia">Factor Económico (0 a 10):</label>
+                <input type="number" id="factor-economico-custodia" min="0" max="10" value="5" placeholder="Estabilidad económica">
+            </div>
+            <div class="form-group">
+                <label for="factor-cuidado-custodia">Factor de Cuidado Primario (0 a 10):</label>
+                <input type="number" id="factor-cuidado-custodia" min="0" max="10" value="7" placeholder="Tiempo dedicado al cuidado">
+            </div>
+            <button data-calc-id="custodia">Evaluar Factor de Idoneidad</button>
+            
+            <div id="resultado-custodia" class="result">
+                <h3>Resultado de la Evaluación</h3>
+                <p id="factor-idoneidad"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual</h3>
+                <div class="formula">
+                    Factor Idoneidad = (Factor Económico + Factor Cuidado Primario) / 2
+                </div>
+            </div>
+        </section>
+
+        <section id="compensatoria" class="calculator-section">
+            <h2>4. Compensación Económica</h2>
+            <div class="form-group">
+                <label for="perdida-ingreso">Pérdida de Ingreso Anual Estimada ($):</label>
+                <input type="number" id="perdida-ingreso" value="10000" placeholder="Ingreso anual que se dejó de percibir">
+            </div>
+            <div class="form-group">
+                <label for="anos-matrimonio">Años de Matrimonio:</label>
+                <input type="number" id="anos-matrimonio" value="10" placeholder="Duración del vínculo">
+            </div>
+            <button data-calc-id="compensatoria">Calcular Compensación Estimada</button>
+            
+            <div id="resultado-compensatoria" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="compensacion-estimada"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual</h3>
+                <div class="formula">
+                    Compensación Estimada = Pérdida Ingreso Anual × Años de Matrimonio × 0.25 (Factor Judicial)
+                </div>
+            </div>
+        </section>
+
+        <section id="filiacion" class="calculator-section">
+            <h2>5. Probabilidad de Filiación</h2>
+            <div class="form-group">
+                <label for="prob-prueba-adn">Probabilidad Prueba ADN (%):</label>
+                <input type="number" id="prob-prueba-adn" placeholder="Probabilidad de exclusión" min="0" max="100" value="99.9">
+            </div>
+            <div class="form-group">
+                <label for="prob-antecedentes">Probabilidad Antecedentes (0 a 1):</label>
+                <input type="number" id="prob-antecedentes" placeholder="Probabilidad Pre-ADN" min="0" max="1" step="0.01" value="0.5">
+            </div>
+            <button data-calc-id="filiacion">Calcular Probabilidad Total (Bayes Simplificado)</button>
+            
+            <div id="resultado-filiacion" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="prob-total-filiacion"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual (Factor Probatorio)</h3>
+                <div class="formula">
+                    Probabilidad Total = (Probabilidad Prueba ADN / 100) × Probabilidad Antecedentes
+                </div>
+            </div>
+        </section>
+        
+        <section id="matrimonial" class="calculator-section">
+            <h2>6. Cálculo de Plazos Matrimoniales</h2>
+            <div class="form-group">
+                <label for="fecha-hecho">Fecha de Inicio del Vínculo (Días):</label>
+                <input type="number" id="fecha-hecho" value="1000" placeholder="Días transcurridos">
+            </div>
+            <div class="form-group">
+                <label for="plazo-legal">Plazo Legal a Considerar (Días):</label>
+                <input type="number" id="plazo-legal" value="365" placeholder="Plazo de caducidad o prescripción">
+            </div>
+            <button data-calc-id="matrimonial">Calcular Días Restantes</button>
+            
+            <div id="resultado-matrimonial" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="dias-restantes"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual</h3>
+                <div class="formula">
+                    Días Restantes = Plazo Legal - Días Transcurridos
+                </div>
+            </div>
+        </section>
+
+        <section id="adopcion" class="calculator-section">
+            <h2>7. Idoneidad para Adopción</h2>
+            <div class="form-group">
+                <label for="factor-ingreso-adopcion">Ingresos Mensuales Mínimos ($):</label>
+                <input type="number" id="factor-ingreso-adopcion" value="2000" placeholder="Ingreso mensual en miles">
+            </div>
+            <div class="form-group">
+                <label for="factor-psicologico">Puntaje Psicológico (0 a 100):</label>
+                <input type="number" id="factor-psicologico" value="85" placeholder="Estabilidad emocional">
+            </div>
+            <button data-calc-id="adopcion">Evaluar Factor de Idoneidad</button>
+            
+            <div id="resultado-adopcion" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="idoneidad-adopcion"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual</h3>
+                <div class="formula">
+                    Puntaje Idoneidad = Ingresos (miles) + Puntaje Psicológico
+                </div>
+            </div>
+        </section>
+
+        <section id="violencia" class="calculator-section">
+            <h2>8. Evaluación de Riesgo de Violencia</h2>
+            <div class="form-group">
+                <label for="num-episodios">Número de Episodios de Violencia:</label>
+                <input type="number" id="num-episodios" value="3" placeholder="Número de incidentes">
+            </div>
+            <div class="form-group">
+                <label for="gravedad-maxima">Gravedad Máxima (1 a 10):</label>
+                <input type="number" id="gravedad-maxima" value="8" placeholder="Puntaje de gravedad del último incidente">
+            </div>
+            <button data-calc-id="violencia">Calcular Nivel de Riesgo</button>
+            
+            <div id="resultado-violencia" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="nivel-riesgo"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual</h3>
+                <div class="formula">
+                    Nivel de Riesgo = (Número de Episodios × Gravedad Máxima) / 10
+                </div>
+            </div>
+        </section>
+
+        <section id="sucesiones" class="calculator-section">
+            <h2>9. Porción Sucesoria</h2>
+            <div class="form-group">
+                <label for="valor-herencia">Valor Total de la Herencia ($):</label>
+                <input type="number" id="valor-herencia" value="100000" placeholder="Valor total de los bienes">
+            </div>
+            <div class="form-group">
+                <label for="num-herederos">Número de Herederos Forzosos:</label>
+                <input type="number" id="num-herederos" value="3" placeholder="Hijos, cónyuge, etc.">
+            </div>
+            <button data-calc-id="sucesiones">Calcular Porción por Heredero</button>
+            
+            <div id="resultado-sucesiones" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="porcion-heredero"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual</h3>
+                <div class="formula">
+                    Porción por Heredero = (Valor Total de la Herencia × 0.7) / Número de Herederos
+                </div>
+            </div>
+        </section>
+
+        <section id="legitima" class="calculator-section">
+            <h2>10. Cálculo de Legítima Hereditaria</h2>
+            <div class="form-group">
+                <label for="valor-patrimonio-neto">Patrimonio Neto del Causante ($):</label>
+                <input type="number" id="valor-patrimonio-neto" value="80000" placeholder="Valor del patrimonio">
+            </div>
+            <div class="form-group">
+                <label for="factor-legitima">Factor Legal de Legítima (%):</label>
+                <input type="number" id="factor-legitima" value="66.6" placeholder="Porcentaje legal aplicable (e.g., 2/3)">
+            </div>
+            <button data-calc-id="legitima">Calcular Valor de la Legítima</button>
+            
+            <div id="resultado-legitima" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="valor-legitima"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual</h3>
+                <div class="formula">
+                    Valor Legítima = Patrimonio Neto × (Factor Legal de Legítima / 100)
+                </div>
+            </div>
+        </section>
+
+        <section id="ciberseguridad" class="calculator-section">
+            <h2>11. Costo de Brecha de Seguridad</h2>
+            <div class="form-group">
+                <label for="num-registros-afectados">N° de Registros Afectados:</label>
+                <input type="number" id="num-registros-afectados" value="5000" placeholder="Registros de usuarios, clientes, etc.">
+            </div>
+            <div class="form-group">
+                <label for="costo-por-registro">Costo Promedio por Registro ($):</label>
+                <input type="number" id="costo-por-registro" value="150" placeholder="Costo por unidad de registro afectado">
+            </div>
+            <button data-calc-id="ciberseguridad">Estimar Costo Total</button>
+            
+            <div id="resultado-ciberseguridad" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="costo-total-brecha"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual</h3>
+                <div class="formula">
+                    Costo Total = Registros Afectados × Costo Promedio por Registro
+                </div>
+            </div>
+        </section>
+        
+        <section id="propiedad" class="calculator-section">
+            <h2>12. Valoración de Propiedad Intelectual</h2>
+            <div class="form-group">
+                <label for="ingresos-anuales-pi">Ingresos Anuales Generados ($):</label>
+                <input type="number" id="ingresos-anuales-pi" value="50000" placeholder="Ingresos del software/patente">
+            </div>
+            <div class="form-group">
+                <label for="factor-riesgo-pi">Factor de Riesgo de Mercado (0.1 a 0.5):</label>
+                <input type="number" id="factor-riesgo-pi" value="0.2" min="0.1" max="0.5" step="0.01" placeholder="Riesgo de obsolescencia">
+            </div>
+            <button data-calc-id="propiedad">Valorar PI (Método de Ingresos Simplificado)</button>
+            
+            <div id="resultado-propiedad" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="valor-pi"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual</h3>
+                <div class="formula">
+                    Valor PI = Ingresos Anuales / Factor de Riesgo de Mercado
+                </div>
+            </div>
+        </section>
+
+        <section id="delito-informatico" class="calculator-section">
+            <h2>13. Cómputo de Pena Informática</h2>
+            <div class="form-group">
+                <label for="pena-base-meses">Pena Base Mínima (Meses):</label>
+                <input type="number" id="pena-base-meses" value="12" placeholder="Pena mínima legal">
+            </div>
+            <div class="form-group">
+                <label for="factor-agravante">Factor Agravante (1 a 3):</label>
+                <input type="number" id="factor-agravante" value="1.5" min="1" max="3" step="0.1" placeholder="Multiplicador por daño grave">
+            </div>
+            <button data-calc-id="delito-informatico">Calcular Pena Ajustada (Meses)</button>
+            
+            <div id="resultado-delito-informatico" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="pena-ajustada"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual</h3>
+                <div class="formula">
+                    Pena Ajustada = Pena Base × Factor Agravante
+                </div>
+            </div>
+        </section>
+        
+        <section id="privacidad" class="calculator-section">
+            <h2>14. Multa por Infracción de Privacidad</h2>
+            <div class="form-group">
+                <label for="facturacion-anual">Facturación Anual de la Empresa ($):</label>
+                <input type="number" id="facturacion-anual" value="1000000" placeholder="Facturación en el último ejercicio">
+            </div>
+            <div class="form-group">
+                <label for="porcentaje-multa">Porcentaje Legal Máximo de Multa (%):</label>
+                <input type="number" id="porcentaje-multa" value="4" min="0.1" max="10" step="0.1" placeholder="Según normativa (e.g., GDPR)">
+            </div>
+            <button data-calc-id="privacidad">Calcular Multa Máxima</button>
+            
+            <div id="resultado-privacidad" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="multa-maxima"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual</h3>
+                <div class="formula">
+                    Multa Máxima = Facturación Anual × (Porcentaje Legal Máximo / 100)
+                </div>
+            </div>
+        </section>
+
+        <section id="licencias" class="calculator-section">
+            <h2>15. Cálculo de Regalías por Licencias</h2>
+            <div class="form-group">
+                <label for="ingreso-bruto-licencia">Ingreso Bruto de Venta de Licencias ($):</label>
+                <input type="number" id="ingreso-bruto-licencia" value="25000" placeholder="Ventas generadas por el producto">
+            </div>
+            <div class="form-group">
+                <label for="tasa-regalia">Tasa de Regalía Acordada (%):</label>
+                <input type="number" id="tasa-regalia" value="15" min="1" max="50" placeholder="Porcentaje del acuerdo">
+            </div>
+            <button data-calc-id="licencias">Calcular Regalía Neta</button>
+            
+            <div id="resultado-licencias" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="regalia-neta"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual</h3>
+                <div class="formula">
+                    Regalía Neta = Ingreso Bruto × (Tasa de Regalía / 100)
+                </div>
+            </div>
+        </section>
+
+        <section id="blockchain" class="calculator-section">
+            <h2>16. Valoración de Evidencia Blockchain</h2>
+            <div class="form-group">
+                <label for="factor-inmutabilidad">Factor de Inmutabilidad (0.5 a 1):</label>
+                <input type="number" id="factor-inmutabilidad" value="0.9" min="0.5" max="1" step="0.01" placeholder="Seguridad de la cadena">
+            </div>
+            <div class="form-group">
+                <label for="factor-rastreabilidad">Factor de Rastreabilidad (0.5 a 1):</label>
+                <input type="number" id="factor-rastreabilidad" value="0.8" min="0.5" max="1" step="0.01" placeholder="Facilidad para verificar la transacción">
+            </div>
+            <button data-calc-id="blockchain">Calcular Factor de Peso Probatorio</button>
+            
+            <div id="resultado-blockchain" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="peso-probatorio-blockchain"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual</h3>
+                <div class="formula">
+                    Peso Probatorio = (Factor Inmutabilidad + Factor Rastreabilidad) / 2
+                </div>
+            </div>
+        </section>
+
+        <section id="e-commerce" class="calculator-section">
+            <h2>17. Rescisión de Contrato E-Commerce</h2>
+            <div class="form-group">
+                <label for="valor-contrato-ecommerce">Valor Total del Contrato ($):</label>
+                <input type="number" id="valor-contrato-ecommerce" value="5000" placeholder="Costo total de la compra o servicio">
+            </div>
+            <div class="form-group">
+                <label for="porcentaje-penalizacion">Porcentaje de Penalización por Ley (%):</label>
+                <input type="number" id="porcentaje-penalizacion" value="10" min="0" max="30" placeholder="Penalización por arrepentimiento tardío">
+            </div>
+            <button data-calc-id="e-commerce">Calcular Monto de Penalización</button>
+            
+            <div id="resultado-e-commerce" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="penalizacion-ecommerce"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual</h3>
+                <div class="formula">
+                    Monto Penalización = Valor Contrato × (Porcentaje Penalización / 100)
+                </div>
+            </div>
+        </section>
+
+        <section id="forense" class="calculator-section">
+            <h2>18. Tiempo de Análisis Forense Digital</h2>
+            <div class="form-group">
+                <label for="volumen-datos-tb">Volumen de Datos a Analizar (TB):</label>
+                <input type="number" id="volumen-datos-tb" value="5" placeholder="Terabytes de información">
+            </div>
+            <div class="form-group">
+                <label for="horas-por-tb">Horas Promedio de Análisis por TB:</label>
+                <input type="number" id="horas-por-tb" value="80" placeholder="Estimación de horas de trabajo">
+            </div>
+            <button data-calc-id="forense">Estimar Horas Totales</button>
+            
+            <div id="resultado-forense" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="horas-totales-forense"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual</h3>
+                <div class="formula">
+                    Horas Totales = Volumen de Datos (TB) × Horas Promedio por TB
+                </div>
+            </div>
+        </section>
+
+        <section id="proteccion-datos" class="calculator-section">
+            <h2>19. Factor de Riesgo de Datos</h2>
+            <div class="form-group">
+                <label for="factor-sensibilidad">Factor de Sensibilidad del Dato (1 a 10):</label>
+                <input type="number" id="factor-sensibilidad" value="9" min="1" max="10" placeholder="Datos sensibles (salud, financieros)">
+            </div>
+            <div class="form-group">
+                <label for="factor-volumen">Factor de Volumen de Datos (1 a 10):</label>
+                <input type="number" id="factor-volumen" value="7" min="1" max="10" placeholder="Cantidad de registros">
+            </div>
+            <button data-calc-id="proteccion-datos">Calcular Nivel de Riesgo (DPIA Simplificado)</button>
+            
+            <div id="resultado-proteccion-datos" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="nivel-riesgo-datos"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual</h3>
+                <div class="formula">
+                    Nivel de Riesgo = Factor Sensibilidad × Factor Volumen
+                </div>
+            </div>
+        </section>
+
+        <section id="firmas" class="calculator-section">
+            <h2>20. Validez Probatoria de Firmas Digitales</h2>
+            <div class="form-group">
+                <label for="factor-certificado">Factor Certificado (0.5 a 1):</label>
+                <input type="number" id="factor-certificado" value="1" min="0.5" max="1" step="0.01" placeholder="Uso de certificado reconocido">
+            </div>
+            <div class="form-group">
+                <label for="factor-autenticacion">Factor Autenticación (0.5 a 1):</label>
+                <input type="number" id="factor-autenticacion" value="0.7" min="0.5" max="1" step="0.01" placeholder="Método de identificación del firmante">
+            </div>
+            <button data-calc-id="firmas">Evaluar Peso Probatorio</button>
+            
+            <div id="resultado-firmas" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="peso-probatorio-firma"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual</h3>
+                <div class="formula">
+                    Peso Probatorio = Factor Certificado + Factor Autenticación
+                </div>
+            </div>
+        </section>
+
+        <section id="intereses" class="calculator-section">
+            <h2>21. Cálculo de Intereses Moratorios</h2>
+            <div class="form-group">
+                <label for="capital-adeudado">Capital Adeudado ($):</label>
+                <input type="number" id="capital-adeudado" value="10000" placeholder="Monto original de la deuda">
+            </div>
+            <div class="form-group">
+                <label for="tasa-interes-moratorio">Tasa de Interés Mensual (%):</label>
+                <input type="number" id="tasa-interes-moratorio" value="1.5" min="0.1" max="10" step="0.1" placeholder="Tasa legal o contractual">
+            </div>
+            <div class="form-group">
+                <label for="meses-mora">Meses de Mora:</label>
+                <input type="number" id="meses-mora" value="6" min="1" placeholder="Tiempo transcurrido en mora">
+            </div>
+            <button data-calc-id="intereses">Calcular Intereses Totales (Simple)</button>
+            
+            <div id="resultado-intereses" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="intereses-totales"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual (Interés Simple)</h3>
+                <div class="formula">
+                    Intereses Totales = Capital Adeudado × (Tasa Mensual / 100) × Meses de Mora
+                </div>
+            </div>
+        </section>
+
+        <section id="clausulas" class="calculator-section">
+            <h2>22. Multa por Cláusula Penal</h2>
+            <div class="form-group">
+                <label for="valor-obligacion-principal">Valor de la Obligación Principal ($):</label>
+                <input type="number" id="valor-obligacion-principal" value="50000" placeholder="Monto total del contrato">
+            </div>
+            <div class="form-group">
+                <label for="porcentaje-clausula-penal">Porcentaje de Cláusula Penal (%):</label>
+                <input type="number" id="porcentaje-clausula-penal" value="5" min="1" max="30" placeholder="Porcentaje establecido en el contrato">
+            </div>
+            <button data-calc-id="clausulas">Calcular Multa</button>
+            
+            <div id="resultado-clausulas" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="multa-clausula-penal"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual</h3>
+                <div class="formula">
+                    Monto Multa = Valor Obligación Principal × (Porcentaje Cláusula Penal / 100)
+                </div>
+            </div>
+        </section>
+
+        <section id="prescripcion" class="calculator-section">
+            <h2>23. Cómputo de Prescripción Civil</h2>
+            <div class="form-group">
+                <label for="plazo-legal-prescripcion">Plazo Legal de Prescripción (Días):</label>
+                <input type="number" id="plazo-legal-prescripcion" value="730" placeholder="Plazo legal (e.g., 2 años)">
+            </div>
+            <div class="form-group">
+                <label for="dias-transcurridos-prescripcion">Días Transcurridos desde el Hecho:</label>
+                <input type="number" id="dias-transcurridos-prescripcion" value="500" placeholder="Días ya transcurridos">
+            </div>
+            <button data-calc-id="prescripcion">Calcular Días Faltantes</button>
+            
+            <div id="resultado-prescripcion" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="dias-faltantes-prescripcion"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual</h3>
+                <div class="formula">
+                    Días Faltantes = Plazo Legal - Días Transcurridos
+                </div>
+            </div>
+        </section>
+
+        <section id="vicios" class="calculator-section">
+            <h2>24. Valor de Redhibición por Vicios</h2>
+            <div class="form-group">
+                <label for="precio-compra-bien">Precio de Compra del Bien ($):</label>
+                <input type="number" id="precio-compra-bien" value="20000" placeholder="Costo del producto o inmueble">
+            </div>
+            <div class="form-group">
+                <label for="porcentaje-depreciacion">Porcentaje de Depreciación por Vicio (%):</label>
+                <input type="number" id="porcentaje-depreciacion" value="20" min="1" max="100" placeholder="Estimación del valor perdido">
+            </div>
+            <button data-calc-id="vicios">Calcular Valor a Reducir</button>
+            
+            <div id="resultado-vicios" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="valor-redhibicion"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual</h3>
+                <div class="formula">
+                    Valor Redhibición = Precio de Compra × (Porcentaje Depreciación / 100)
+                </div>
+            </div>
+        </section>
+
+        <section id="desalojo" class="calculator-section">
+            <h2>25. Plazo de Desalojo</h2>
+            <div class="form-group">
+                <label for="plazo-legal-desalojo">Plazo Legal Mínimo (Días):</label>
+                <input type="number" id="plazo-legal-desalojo" value="90" placeholder="Plazo legal (e.g., por falta de pago)">
+            </div>
+            <div class="form-group">
+                <label for="factor-complejidad-desalojo">Factor de Complejidad (1 a 3):</label>
+                <input type="number" id="factor-complejidad-desalojo" value="1.5" min="1" max="3" step="0.1" placeholder="Multiplicador por defensa u oposición">
+            </div>
+            <button data-calc-id="desalojo">Estimar Plazo Total (Días)</button>
+            
+            <div id="resultado-desalojo" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="plazo-estimado-desalojo"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual</h3>
+                <div class="formula">
+                    Plazo Estimado = Plazo Legal Mínimo × Factor de Complejidad
+                </div>
+            </div>
+        </section>
+
+        <section id="hipotecario" class="calculator-section">
+            <h2>26. Cuota Hipotecaria Legal</h2>
+            <div class="form-group">
+                <label for="ingreso-mensual-hipoteca">Ingreso Mensual del Deudor ($):</label>
+                <input type="number" id="ingreso-mensual-hipoteca" value="3000" placeholder="Ingreso neto del solicitante">
+            </div>
+            <div class="form-group">
+                <label for="porcentaje-maximo-cuota">Porcentaje Máximo de Cuota Legal (%):</label>
+                <input type="number" id="porcentaje-maximo-cuota" value="30" min="10" max="40" placeholder="Porcentaje máximo que puede afectar el ingreso">
+            </div>
+            <button data-calc-id="hipotecario">Calcular Cuota Máxima Legal</button>
+            
+            <div id="resultado-hipotecario" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="cuota-maxima-legal"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual</h3>
+                <div class="formula">
+                    Cuota Máxima Legal = Ingreso Mensual × (Porcentaje Máximo / 100)
+                </div>
+            </div>
+        </section>
+
+        <section id="compraventa" class="calculator-section">
+            <h2>27. Ajuste de Precio de Compraventa</h2>
+            <div class="form-group">
+                <label for="precio-original-compraventa">Precio Original de Compraventa ($):</label>
+                <input type="number" id="precio-original-compraventa" value="150000" placeholder="Monto inicial del acuerdo">
+            </div>
+            <div class="form-group">
+                <label for="indice-ajuste">Índice de Ajuste (1.00 = Sin Ajuste):</label>
+                <input type="number" id="indice-ajuste" value="1.05" min="1" step="0.01" placeholder="Índice inflacionario o contractual">
+            </div>
+            <button data-calc-id="compraventa">Calcular Precio Ajustado</button>
+            
+            <div id="resultado-compraventa" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="precio-ajustado"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual</h3>
+                <div class="formula">
+                    Precio Ajustado = Precio Original × Índice de Ajuste
+                </div>
+            </div>
+        </section>
+
+        <section id="daños-patrimonial" class="calculator-section">
+            <h2>28. Daño Patrimonial Cuantificable</h2>
+            <div class="form-group">
+                <label for="dano-emergente">Daño Emergente (Costo de Reparación) ($):</label>
+                <input type="number" id="dano-emergente" value="5000" placeholder="Gastos directos por el daño">
+            </div>
+            <div class="form-group">
+                <label for="lucro-cesante-dano">Lucro Cesante (Ganancia Perdida) ($):</label>
+                <input type="number" id="lucro-cesante-dano" value="2000" placeholder="Ganancia que se dejó de percibir">
+            </div>
+            <button data-calc-id="daños-patrimonial">Calcular Daño Patrimonial Total</button>
+            
+            <div id="resultado-daños-patrimonial" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="dano-patrimonial-total"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual</h3>
+                <div class="formula">
+                    Daño Patrimonial Total = Daño Emergente + Lucro Cesante
+                </div>
+            </div>
+        </section>
+
+        <section id="responsabilidad" class="calculator-section">
+            <h2>29. Porcentaje de Responsabilidad Civil</h2>
+            <div class="form-group">
+                <label for="factor-culpa-parte1">Factor de Culpa Parte 1 (0 a 100):</label>
+                <input type="number" id="factor-culpa-parte1" value="60" min="0" max="100" placeholder="Grado de culpa o negligencia">
+            </div>
+            <div class="form-group">
+                <label for="factor-culpa-parte2">Factor de Culpa Parte 2 (0 a 100):</label>
+                <input type="number" id="factor-culpa-parte2" value="40" min="0" max="100" placeholder="Grado de culpa o negligencia">
+            </div>
+            <button data-calc-id="responsabilidad">Ponderar Responsabilidad</button>
+            
+            <div id="resultado-responsabilidad" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="responsabilidad-final"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual (Responsabilidad Concurrente)</h3>
+                <div class="formula">
+                    Porcentaje Parte 1 = Factor Culpa Parte 1 / (Factor Culpa Parte 1 + Factor Culpa Parte 2)
+                </div>
+            </div>
+        </section>
+
+        <section id="garantias" class="calculator-section">
+            <h2>30. Ejecución de Garantías</h2>
+            <div class="form-group">
+                <label for="monto-deuda-garantia">Monto de la Deuda Garantizada ($):</label>
+                <input type="number" id="monto-deuda-garantia" value="80000" placeholder="Capital pendiente">
+            </div>
+            <div class="form-group">
+                <label for="valor-ejecucion-garantia">Valor Estimado del Bien en Ejecución ($):</label>
+                <input type="number" id="valor-ejecucion-garantia" value="100000" placeholder="Valor de subasta o mercado">
+            </div>
+            <button data-calc-id="garantias">Calcular Remanente (o Falta de Pago)</button>
+            
+            <div id="resultado-garantias" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="remanente-garantia"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual</h3>
+                <div class="formula">
+                    Remanente/Falta de Pago = Valor del Bien en Ejecución - Monto de la Deuda
+                </div>
+            </div>
+        </section>
+
+        <section id="indemnizacion-laboral" class="calculator-section">
+            <h2>31. Indemnización por Despido</h2>
+            <div class="form-group">
+                <label for="mejor-salario">Mejor Salario Mensual ($):</label>
+                <input type="number" id="mejor-salario" value="2500" placeholder="Mejor remuneración del último año">
+            </div>
+            <div class="form-group">
+                <label for="anos-servicio">Años de Servicio (Antigüedad):</label>
+                <input type="number" id="anos-servicio" value="5" min="1" placeholder="Antigüedad del trabajador">
+            </div>
+            <button data-calc-id="indemnizacion-laboral">Calcular Indemnización Básica</button>
+            
+            <div id="resultado-indemnizacion-laboral" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="indemnizacion-basica"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual (Simple por Antigüedad)</h3>
+                <div class="formula">
+                    Indemnización = Mejor Salario × Años de Servicio
+                </div>
+            </div>
+        </section>
+
+        <section id="vacaciones" class="calculator-section">
+            <h2>32. Días de Vacaciones Proporcionales</h2>
+            <div class="form-group">
+                <label for="dias-trabajados-vacaciones">Días Trabajados en el Año:</label>
+                <input type="number" id="dias-trabajados-vacaciones" value="180" min="1" max="365" placeholder="Días trabajados">
+            </div>
+            <div class="form-group">
+                <label for="dias-vacaciones-anuales">Días de Vacaciones Anuales por Ley:</label>
+                <input type="number" id="dias-vacaciones-anuales" value="14" min="1" max="30" placeholder="Total de días según antigüedad">
+            </div>
+            <button data-calc-id="vacaciones">Calcular Días Proporcionales</button>
+            
+            <div id="resultado-vacaciones" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="dias-proporcionales"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual</h3>
+                <div class="formula">
+                    Días Proporcionales = (Días Trabajados / 365) × Días de Vacaciones Anuales
+                </div>
+            </div>
+        </section>
+
+        <section id="horas-extra" class="calculator-section">
+            <h2>33. Cálculo de Horas Extras</h2>
+            <div class="form-group">
+                <label for="salario-hora">Salario por Hora Normal ($):</label>
+                <input type="number" id="salario-hora" value="15" placeholder="Cálculo del salario por hora">
+            </div>
+            <div class="form-group">
+                <label for="num-horas-extra">Número de Horas Extras Trabajadas:</label>
+                <input type="number" id="num-horas-extra" value="10" placeholder="Horas extras en el período">
+            </div>
+            <div class="form-group">
+                <label for="factor-hora-extra">Factor de Recargo (e.g., 1.5, 2.0):</label>
+                <input type="number" id="factor-hora-extra" value="1.5" min="1" step="0.1" placeholder="50% o 100% de recargo">
+            </div>
+            <button data-calc-id="horas-extra">Calcular Valor Total de Horas Extras</button>
+            
+            <div id="resultado-horas-extra" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="valor-horas-extra"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual</h3>
+                <div class="formula">
+                    Valor Total = Salario por Hora × Número Horas Extras × Factor de Recargo
+                </div>
+            </div>
+        </section>
+
+        <section id="salario" class="calculator-section">
+            <h2>34. Ajuste por Salario Mínimo</h2>
+            <div class="form-group">
+                <label for="salario-actual">Salario Mensual Actual ($):</label>
+                <input type="number" id="salario-actual" value="800" placeholder="Remuneración actual">
+            </div>
+            <div class="form-group">
+                <label for="salario-minimo">Salario Mínimo Legal Vigente ($):</label>
+                <input type="number" id="salario-minimo" value="1000" placeholder="Monto mínimo por ley">
+            </div>
+            <button data-calc-id="salario">Calcular Ajuste Requerido</button>
+            
+            <div id="resultado-salario" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="ajuste-requerido"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual</h3>
+                <div class="formula">
+                    Ajuste Requerido = Salario Mínimo - Salario Actual
+                </div>
+            </div>
+        </section>
+
+        <section id="jubilacion-base" class="calculator-section">
+            <h2>35. Base de Cálculo de Jubilación</h2>
+            <div class="form-group">
+                <label for="promedio-salarios">Promedio de Salarios Ajustados (Últimos 10 años) ($):</label>
+                <input type="number" id="promedio-salarios" value="3000" placeholder="Promedio de ingresos">
+            </div>
+            <div class="form-group">
+                <label for="factor-anos-aporte">Factor Años de Aporte (0.1 a 1.0):</label>
+                <input type="number" id="factor-anos-aporte" value="0.9" min="0.1" max="1" step="0.1" placeholder="Cercanía a los años requeridos">
+            </div>
+            <button data-calc-id="jubilacion-base">Calcular Base de Haberes</button>
+            
+            <div id="resultado-jubilacion-base" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="base-haberes"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual</h3>
+                <div class="formula">
+                    Base de Haberes = Promedio de Salarios × Factor Años de Aporte
+                </div>
+            </div>
+        </section>
+
+        <section id="accidente" class="calculator-section">
+            <h2>36. Porcentaje de Incapacidad Laboral</h2>
+            <div class="form-group">
+                <label for="puntaje-baremo">Puntaje Médico (Baremo) (%):</label>
+                <input type="number" id="puntaje-baremo" value="30" min="0" max="100" placeholder="Puntaje médico según tablas">
+            </div>
+            <div class="form-group">
+                <label for="factor-edad-accidente">Factor de Edad (0.8 a 1.2):</label>
+                <input type="number" id="factor-edad-accidente" value="1.1" min="0.8" max="1.2" step="0.1" placeholder="Ajuste por edad del trabajador">
+            </div>
+            <button data-calc-id="accidente">Calcular Porcentaje Final de Incapacidad</button>
+            
+            <div id="resultado-accidente" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="incapacidad-final"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual</h3>
+                <div class="formula">
+                    Incapacidad Final = Puntaje Baremo × Factor de Edad
+                </div>
+            </div>
+        </section>
+
+        <section id="aportes" class="calculator-section">
+            <h2>37. Cálculo de Aportes Sociales</h2>
+            <div class="form-group">
+                <label for="salario-bruto-aportes">Salario Bruto Mensual ($):</label>
+                <input type="number" id="salario-bruto-aportes" value="3500" placeholder="Remuneración antes de deducciones">
+            </div>
+            <div class="form-group">
+                <label for="tasa-aporte-trabajador">Tasa de Aporte Trabajador (%):</label>
+                <input type="number" id="tasa-aporte-trabajador" value="11" min="5" max="20" placeholder="Porcentaje de deducción">
+            </div>
+            <button data-calc-id="aportes">Calcular Monto de Aporte</button>
+            
+            <div id="resultado-aportes" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="monto-aporte-social"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual</h3>
+                <div class="formula">
+                    Monto Aporte = Salario Bruto × (Tasa de Aporte Trabajador / 100)
+                </div>
+            </div>
+        </section>
+
+        <section id="sindical" class="calculator-section">
+            <h2>38. Cuota Sindical Retroactiva</h2>
+            <div class="form-group">
+                <label for="monto-cuota-mensual">Monto Mensual de la Cuota Sindical ($):</label>
+                <input type="number" id="monto-cuota-mensual" value="50" placeholder="Valor mensual de la cuota">
+            </div>
+            <div class="form-group">
+                <label for="meses-retroactivos">Meses Retroactivos a Cobrar:</label>
+                <input type="number" id="meses-retroactivos" value="12" min="1" placeholder="Período de reclamo">
+            </div>
+            <button data-calc-id="sindical">Calcular Total Retroactivo</button>
+            
+            <div id="resultado-sindical" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="total-cuota-retroactiva"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual</h3>
+                <div class="formula">
+                    Total Retroactivo = Monto Cuota Mensual × Meses Retroactivos
+                </div>
+            </div>
+        </section>
+
+        <section id="preaviso" class="calculator-section">
+            <h2>39. Monto de Preaviso Omitido</h2>
+            <div class="form-group">
+                <label for="salario-preaviso">Salario Mensual del Trabajador ($):</label>
+                <input type="number" id="salario-preaviso" value="2000" placeholder="Salario a considerar">
+            </div>
+            <div class="form-group">
+                <label for="meses-preaviso">Meses de Preaviso Obligatorio:</label>
+                <input type="number" id="meses-preaviso" value="2" min="1" max="3" placeholder="Meses según antigüedad">
+            </div>
+            <button data-calc-id="preaviso">Calcular Indemnización por Preaviso</button>
+            
+            <div id="resultado-preaviso" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="monto-preaviso"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual</h3>
+                <div class="formula">
+                    Monto Preaviso = Salario Mensual × Meses de Preaviso
+                </div>
+            </div>
+        </section>
+
+        <section id="riesgos" class="calculator-section">
+            <h2>40. Evaluación de Riesgos Laborales</h2>
+            <div class="form-group">
+                <label for="factor-probabilidad-riesgo">Factor de Probabilidad (1 a 5):</label>
+                <input type="number" id="factor-probabilidad-riesgo" value="3" min="1" max="5" placeholder="Probabilidad de que ocurra el riesgo">
+            </div>
+            <div class="form-group">
+                <label for="factor-severidad-riesgo">Factor de Severidad (1 a 5):</label>
+                <input type="number" id="factor-severidad-riesgo" value="4" min="1" max="5" placeholder="Consecuencia si ocurre el riesgo">
+            </div>
+            <button data-calc-id="riesgos">Calcular Nivel de Riesgo Total</button>
+            
+            <div id="resultado-riesgos" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="nivel-riesgo-laboral"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual</h3>
+                <div class="formula">
+                    Nivel de Riesgo = Factor Probabilidad × Factor Severidad
+                </div>
+            </div>
+        </section>
+
+        <section id="impuestos" class="calculator-section">
+            <h2>41. Cálculo de Impuestos Retroactivos</h2>
+            <div class="form-group">
+                <label for="impuesto-original">Monto de Impuesto Originalmente Adeudado ($):</label>
+                <input type="number" id="impuesto-original" value="1000" placeholder="Monto base">
+            </div>
+            <div class="form-group">
+                <label for="factor-ajuste-inflacionario">Factor de Ajuste Inflacionario (1.00 = Sin Ajuste):</label>
+                <input type="number" id="factor-ajuste-inflacionario" value="1.2" min="1" step="0.01" placeholder="Ajuste por inflación del período">
+            </div>
+            <button data-calc-id="impuestos">Calcular Impuesto Ajustado</button>
+            
+            <div id="resultado-impuestos" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="impuesto-ajustado"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual</h3>
+                <div class="formula">
+                    Impuesto Ajustado = Impuesto Original × Factor de Ajuste
+                </div>
+            </div>
+        </section>
+
+        <section id="multas" class="calculator-section">
+            <h2>42. Reducción de Multas Fiscales</h2>
+            <div class="form-group">
+                <label for="monto-multa-fiscal">Monto de la Multa Fiscal Inicial ($):</label>
+                <input type="number" id="monto-multa-fiscal" value="5000" placeholder="Monto inicial de la sanción">
+            </div>
+            <div class="form-group">
+                <label for="porcentaje-reduccion">Porcentaje de Reducción por Pronto Pago (%):</label>
+                <input type="number" id="porcentaje-reduccion" value="30" min="0" max="50" placeholder="Beneficio por pago anticipado">
+            </div>
+            <button data-calc-id="multas">Calcular Monto Final a Pagar</button>
+            
+            <div id="resultado-multas" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="multa-final"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual</h3>
+                <div class="formula">
+                    Monto Final = Monto Multa Inicial × (1 - (Porcentaje Reducción / 100))
+                </div>
+            </div>
+        </section>
+
+        <section id="expropiacion" class="calculator-section">
+            <h2>43. Valor de Expropiación Forzosa</h2>
+            <div class="form-group">
+                <label for="valor-mercado-expropiacion">Valor de Mercado del Bien ($):</label>
+                <input type="number" id="valor-mercado-expropiacion" value="200000" placeholder="Valor de tasación">
+            </div>
+            <div class="form-group">
+                <label for="porcentaje-indemnizacion-extra">Porcentaje de Indemnización Extra Legal (%):</label>
+                <input type="number" id="porcentaje-indemnizacion-extra" value="10" min="0" max="30" placeholder="Porcentaje por daño moral, perjuicio, etc.">
+            </div>
+            <button data-calc-id="expropiacion">Calcular Valor Total de Indemnización</button>
+            
+            <div id="resultado-expropiacion" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="valor-total-indemnizacion"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual</h3>
+                <div class="formula">
+                    Valor Total = Valor de Mercado × (1 + (Porcentaje Indemnización Extra / 100))
+                </div>
+            </div>
+        </section>
+
+        <section id="plazos-admin" class="calculator-section">
+            <h2>44. Cómputo de Plazos Administrativos</h2>
+            <div class="form-group">
+                <label for="fecha-notificacion">Día de Notificación (Número de Día):</label>
+                <input type="number" id="fecha-notificacion" value="1" min="1" max="31" placeholder="Día del mes">
+            </div>
+            <div class="form-group">
+                <label for="dias-habiles-plazo">Días Hábiles del Plazo:</label>
+                <input type="number" id="dias-habiles-plazo" value="10" min="1" placeholder="Días hábiles que otorga la ley">
+            </div>
+            <button data-calc-id="plazos-admin">Calcular Día Final Estimado (Simple)</button>
+            
+            <div id="resultado-plazos-admin" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="dia-final-plazo"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual (Muy Simplificada)</h3>
+                <div class="formula">
+                    Día Final Estimado = Día de Notificación + Días Hábiles del Plazo + 5 (Aproximación de días no hábiles)
+                </div>
+            </div>
+        </section>
+
+        <section id="recurrencia" class="calculator-section">
+            <h2>45. Tasa de Recurrencia Administrativa</h2>
+            <div class="form-group">
+                <label for="recursos-favorables">Número de Recursos Favorables:</label>
+                <input type="number" id="recursos-favorables" value="8" placeholder="Recursos ganados">
+            </div>
+            <div class="form-group">
+                <label for="recursos-totales">Número Total de Recursos Presentados:</label>
+                <input type="number" id="recursos-totales" value="12" placeholder="Total de recursos">
+            </div>
+            <button data-calc-id="recurrencia">Calcular Tasa de Éxito (%)</button>
+            
+            <div id="resultado-recurrencia" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="tasa-exito-recursos"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual</h3>
+                <div class="formula">
+                    Tasa de Éxito = (Recursos Favorables / Recursos Totales) × 100
+                </div>
+            </div>
+        </section>
+
+        <section id="tasa-interes-fiscal" class="calculator-section">
+            <h2>46. Tasa de Interés Fiscal</h2>
+            <div class="form-group">
+                <label for="deuda-fiscal">Monto de la Deuda Fiscal ($):</label>
+                <input type="number" id="deuda-fiscal" value="5000" placeholder="Monto principal adeudado">
+            </div>
+            <div class="form-group">
+                <label for="tasa-interes-mensual-fiscal">Tasa de Interés Fiscal Mensual (%):</label>
+                <input type="number" id="tasa-interes-mensual-fiscal" value="2.5" min="0.1" max="10" step="0.1" placeholder="Tasa legal de la administración">
+            </div>
+            <div class="form-group">
+                <label for="meses-atraso-fiscal">Meses de Atraso:</label>
+                <input type="number" id="meses-atraso-fiscal" value="4" min="1" placeholder="Tiempo de mora">
+            </div>
+            <button data-calc-id="tasa-interes-fiscal">Calcular Intereses Totales</button>
+            
+            <div id="resultado-tasa-interes-fiscal" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="intereses-fiscales"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual (Interés Simple)</h3>
+                <div class="formula">
+                    Intereses Totales = Deuda Fiscal × (Tasa Mensual / 100) × Meses de Atraso
+                </div>
+            </div>
+        </section>
+
+        <section id="licitaciones" class="calculator-section">
+            <h2>47. Puntuación de Licitaciones Públicas</h2>
+            <div class="form-group">
+                <label for="puntaje-tecnico">Puntaje de Oferta Técnica (0 a 60):</label>
+                <input type="number" id="puntaje-tecnico" value="50" min="0" max="60" placeholder="Cumplimiento de requisitos técnicos">
+            </div>
+            <div class="form-group">
+                <label for="puntaje-economico">Puntaje de Oferta Económica (0 a 40):</label>
+                <input type="number" id="puntaje-economico" value="35" min="0" max="40" placeholder="Valor de la oferta económica">
+            </div>
+            <button data-calc-id="licitaciones">Calcular Puntuación Total</button>
+            
+            <div id="resultado-licitaciones" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="puntuacion-total-licitacion"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual</h3>
+                <div class="formula">
+                    Puntuación Total = Puntaje Técnico + Puntaje Económico
+                </div>
+            </div>
+        </section>
+
+        <section id="servicios-publicos" class="calculator-section">
+            <h2>48. Ajuste de Tarifas de Servicios Públicos</h2>
+            <div class="form-group">
+                <label for="tarifa-base">Tarifa Base Mensual ($):</label>
+                <input type="number" id="tarifa-base" value="100" placeholder="Valor actual de la tarifa">
+            </div>
+            <div class="form-group">
+                <label for="porcentaje-ajuste-tarifario">Porcentaje de Ajuste por Inflación o Costos (%):</label>
+                <input type="number" id="porcentaje-ajuste-tarifario" value="15" min="0" max="50" placeholder="Incremento autorizado o propuesto">
+            </div>
+            <button data-calc-id="servicios-publicos">Calcular Nueva Tarifa</button>
+            
+            <div id="resultado-servicios-publicos" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="nueva-tarifa"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual</h3>
+                <div class="formula">
+                    Nueva Tarifa = Tarifa Base × (1 + (Porcentaje Ajuste / 100))
+                </div>
+            </div>
+        </section>
+
+        <section id="regulacion" class="calculator-section">
+            <h2>49. Costo de Cumplimiento Regulatorio</h2>
+            <div class="form-group">
+                <label for="horas-legales-cumplimiento">Horas Hombre Legales Requeridas:</label>
+                <input type="number" id="horas-legales-cumplimiento" value="80" placeholder="Horas de trabajo de abogados/consultores">
+            </div>
+            <div class="form-group">
+                <label for="costo-hora-profesional">Costo por Hora Profesional ($):</label>
+                <input type="number" id="costo-hora-profesional" value="50" placeholder="Costo por hora del personal involucrado">
+            </div>
+            <button data-calc-id="regulacion">Estimar Costo Total de Cumplimiento</button>
+            
+            <div id="resultado-regulacion" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="costo-total-cumplimiento"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual</h3>
+                <div class="formula">
+                    Costo Total = Horas Hombre Legales × Costo por Hora Profesional
+                </div>
+            </div>
+        </section>
+
+        <section id="aduanas" class="calculator-section">
+            <h2>50. Valoración Aduanera</h2>
+            <div class="form-group">
+                <label for="valor-factura-cif">Valor de Factura (CIF) ($):</label>
+                <input type="number" id="valor-factura-cif" value="10000" placeholder="Costo, Seguro y Flete">
+            </div>
+            <div class="form-group">
+                <label for="porcentaje-arancel">Porcentaje de Arancel Aplicable (%):</label>
+                <input type="number" id="porcentaje-arancel" value="10" min="0" max="50" placeholder="Tasa arancelaria">
+            </div>
+            <button data-calc-id="aduanas">Calcular Valor Total Aduanero</button>
+            
+            <div id="resultado-aduanas" class="result">
+                <h3>Resultado del Cálculo</h3>
+                <p id="valor-total-aduanero"></p>
+            </div>
+            <div class="formula-explanation">
+                <h3>Fórmula Conceptual</h3>
+                <div class="formula">
+                    Valor Total Aduanero = Valor Factura CIF × (1 + (Porcentaje Arancel / 100))
+                </div>
+            </div>
+        </section>
+
+    </div>
+    
+ 
+
+    <script>
+        // Funcionalidad de pestañas
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.calculator-section').forEach(s => s.classList.remove('active'));
+                
+                tab.classList.add('active');
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // Función Genérica para Capturar el Clic en cualquier botón "Calcular"
+        document.querySelectorAll('button[data-calc-id]').forEach(button => {
+            button.addEventListener('click', () => {
+                const calcId = button.getAttribute('data-calc-id');
+                
+                // Mapear el ID a la función de cálculo específica
+                switch (calcId) {
+                    case 'pension':
+                        calcularPension();
+                        break;
+                    case 'division':
+                        calcularDivision();
+                        break;
+                    case 'honorarios':
+                        calcularHonorarios();
+                        break;
+                    case 'estadistica':
+                        calcularEstadistica();
+                        break;
+                    case 'probabilidad':
+                        calcularProbabilidad();
+                        break;
+                    case 'custodia':
+                        calcularCustodia();
+                        break;
+                    case 'compensatoria':
+                        calcularCompensatoria();
+                        break;
+                    case 'filiacion':
+                        calcularFiliacion();
+                        break;
+                    case 'matrimonial':
+                        calcularMatrimonial();
+                        break;
+                    case 'adopcion':
+                        calcularAdopcion();
+                        break;
+                    case 'violencia':
+                        calcularViolencia();
+                        break;
+                    case 'sucesiones':
+                        calcularSucesiones();
+                        break;
+                    case 'legitima':
+                        calcularLegitima();
+                        break;
+                    case 'ciberseguridad':
+                        calcularCiberseguridad();
+                        break;
+                    case 'propiedad':
+                        calcularPropiedad();
+                        break;
+                    case 'delito-informatico':
+                        calcularDelitoInformatico();
+                        break;
+                    case 'privacidad':
+                        calcularPrivacidad();
+                        break;
+                    case 'licencias':
+                        calcularLicencias();
+                        break;
+                    case 'blockchain':
+                        calcularBlockchain();
+                        break;
+                    case 'e-commerce':
+                        calcularECommerce();
+                        break;
+                    case 'forense':
+                        calcularForense();
+                        break;
+                    case 'proteccion-datos':
+                        calcularProteccionDatos();
+                        break;
+                    case 'firmas':
+                        calcularFirmas();
+                        break;
+                    case 'intereses':
+                        calcularIntereses();
+                        break;
+                    case 'clausulas':
+                        calcularClausulas();
+                        break;
+                    case 'prescripcion':
+                        calcularPrescripcion();
+                        break;
+                    case 'vicios':
+                        calcularVicios();
+                        break;
+                    case 'desalojo':
+                        calcularDesalojo();
+                        break;
+                    case 'hipotecario':
+                        calcularHipotecario();
+                        break;
+                    case 'compraventa':
+                        calcularCompraventa();
+                        break;
+                    case 'daños-patrimonial':
+                        calcularDanoPatrimonial();
+                        break;
+                    case 'responsabilidad':
+                        calcularResponsabilidad();
+                        break;
+                    case 'garantias':
+                        calcularGarantias();
+                        break;
+                    case 'indemnizacion-laboral':
+                        calcularIndemnizacionLaboral();
+                        break;
+                    case 'vacaciones':
+                        calcularVacaciones();
+                        break;
+                    case 'horas-extra':
+                        calcularHorasExtra();
+                        break;
+                    case 'salario':
+                        calcularSalario();
+                        break;
+                    case 'jubilacion-base':
+                        calcularJubilacionBase();
+                        break;
+                    case 'accidente':
+                        calcularAccidente();
+                        break;
+                    case 'aportes':
+                        calcularAportes();
+                        break;
+                    case 'sindical':
+                        calcularSindical();
+                        break;
+                    case 'preaviso':
+                        calcularPreaviso();
+                        break;
+                    case 'riesgos':
+                        calcularRiesgos();
+                        break;
+                    case 'impuestos':
+                        calcularImpuestos();
+                        break;
+                    case 'multas':
+                        calcularMultas();
+                        break;
+                    case 'expropiacion':
+                        calcularExpropiacion();
+                        break;
+                    case 'plazos-admin':
+                        calcularPlazosAdmin();
+                        break;
+                    case 'recurrencia':
+                        calcularRecurrencia();
+                        break;
+                    case 'tasa-interes-fiscal':
+                        calcularTasaInteresFiscal();
+                        break;
+                    case 'licitaciones':
+                        calcularLicitaciones();
+                        break;
+                    case 'servicios-publicos':
+                        calcularServiciosPublicos();
+                        break;
+                    case 'regulacion':
+                        calcularRegulacion();
+                        break;
+                    case 'aduanas':
+                        calcularAduanas();
+                        break;
+                    default:
+                        alert('Calculadora no implementada.');
+                }
+
+                // Mostrar el resultado después de cualquier cálculo
+                document.getElementById('resultado-' + calcId).style.display = 'block';
+            });
+        });
+
+
+        // ** LÓGICA DE LAS 50 CALCULADORAS FUNCIONALES **
+        
+        // Función auxiliar para obtener valor numérico o 0
+        const getVal = (id) => parseFloat(document.getElementById(id)?.value) || 0;
+
+        // 1. Pensión Alimenticia (Original)
+        function calcularPension() {
+            const ingresoObligado = getVal('ingreso-obligado');
+            const ingresoBeneficiario = getVal('ingreso-beneficiario');
+            const numHijos = getVal('num-hijos');
+            const gastosEspeciales = getVal('gastos-especiales');
+            const porcentaje = getVal('porcentaje-ley') / 100;
+            
+            if (!ingresoObligado || !numHijos) {
+                alert('Por favor, complete Ingresos del Obligado y Número de Hijos.');
+                document.getElementById('resultado-pension').style.display = 'none';
+                return;
+            }
+            
+            const baseCalculo = ingresoObligado - ingresoBeneficiario;
+            const pensionMensual = (baseCalculo * porcentaje) + gastosEspeciales;
+            const pensionAnual = pensionMensual * 12;
+            
+            document.getElementById('pension-mensual').textContent = `Pensión Mensual: $${pensionMensual.toFixed(2)}`;
+            document.getElementById('pension-anual').textContent = `Pensión Anual: $${pensionAnual.toFixed(2)}`;
+            document.getElementById('porcentaje-aplicado').textContent = `Porcentaje aplicado: ${(porcentaje * 100).toFixed(0)}%`;
+        }
+        
+        // 2. División Patrimonial (Original)
+        function calcularDivision() {
+            const valorBienes = getVal('valor-bienes');
+            const deudas = getVal('deudas');
+            const bienesPropios = getVal('bienes-propios');
+            const numPartes = getVal('num-partes');
+            
+            if (!valorBienes || numPartes < 1) {
+                alert('Por favor, complete el Valor Total de Bienes Gananciales y Número de Partes (>0).');
+                document.getElementById('resultado-division').style.display = 'none';
+                return;
+            }
+            
+            const patrimonioNeto = valorBienes - deudas - bienesPropios;
+            const valorParte = patrimonioNeto / numPartes;
+            
+            document.getElementById('patrimonio-neto').textContent = `Patrimonio Neto: $${patrimonioNeto.toFixed(2)}`;
+            document.getElementById('valor-parte').textContent = `Valor por Parte: $${valorParte.toFixed(2)}`;
+            document.getElementById('distribucion-partes').textContent = `Distribución: ${numPartes} partes de $${valorParte.toFixed(2)} cada una`;
+        }
+
+        // 3. Régimen de Custodia (Simple)
+        function calcularCustodia() {
+            const factorEconomico = getVal('factor-economico-custodia');
+            const factorCuidado = getVal('factor-cuidado-custodia');
+            
+            const factorIdoneidad = (factorEconomico + factorCuidado) / 2;
+            let resultadoTexto = factorIdoneidad > 7.5 ? "Alto (Recomendación favorable)." : 
+                                 factorIdoneidad > 5 ? "Medio (Necesita evaluación adicional)." : "Bajo (Riesgo alto).";
+            
+            document.getElementById('factor-idoneidad').textContent = `Factor de Idoneidad: ${factorIdoneidad.toFixed(1)}/10. ${resultadoTexto}`;
+        }
+        
+        // 4. Compensación Económica (Simple)
+        function calcularCompensatoria() {
+            const perdidaIngreso = getVal('perdida-ingreso');
+            const anosMatrimonio = getVal('anos-matrimonio');
+            
+            const compensacion = perdidaIngreso * anosMatrimonio * 0.25;
+            
+            document.getElementById('compensacion-estimada').textContent = `Compensación Estimada: $${compensacion.toFixed(2)}`;
+        }
+
+        // 5. Probabilidad de Filiación (Simple)
+        function calcularFiliacion() {
+            const probPruebaAdn = getVal('prob-prueba-adn') / 100;
+            const probAntecedentes = getVal('prob-antecedentes');
+            
+            const probTotal = probPruebaAdn * probAntecedentes;
+            
+            document.getElementById('prob-total-filiacion').textContent = `Probabilidad Total: ${(probTotal * 100).toFixed(2)}%`;
+        }
+
+        // 6. Plazos Matrimoniales (Simple)
+        function calcularMatrimonial() {
+            const diasTranscurridos = getVal('fecha-hecho');
+            const plazoLegal = getVal('plazo-legal');
+            
+            const diasRestantes = plazoLegal - diasTranscurridos;
+            let resultadoTexto = diasRestantes > 0 ? `${diasRestantes.toFixed(0)} días restantes.` : `¡Plazo Vencido hace ${Math.abs(diasRestantes).toFixed(0)} días!`;
+            
+            document.getElementById('dias-restantes').textContent = `Días Faltantes: ${resultadoTexto}`;
+        }
+
+        // 7. Idoneidad para Adopción (Simple)
+        function calcularAdopcion() {
+            const factorIngreso = getVal('factor-ingreso-adopcion');
+            const factorPsicologico = getVal('factor-psicologico');
+            
+            const puntajeIdoneidad = factorIngreso + factorPsicologico;
+            let resultadoTexto = puntajeIdoneidad > 100 ? "Alto (Idoneidad Favorable)." : "Medio-Bajo (Necesita justificar ingresos o evaluación psicológica).";
+
+            document.getElementById('idoneidad-adopcion').textContent = `Puntaje de Idoneidad: ${puntajeIdoneidad.toFixed(0)}. ${resultadoTexto}`;
+        }
+        
+        // 8. Evaluación de Riesgo de Violencia (Simple)
+        function calcularViolencia() {
+            const numEpisodios = getVal('num-episodios');
+            const gravedadMaxima = getVal('gravedad-maxima');
+            
+            const nivelRiesgo = (numEpisodios * gravedadMaxima) / 10;
+            let resultadoTexto = nivelRiesgo >= 2.5 ? "Riesgo Alto." : nivelRiesgo >= 1 ? "Riesgo Moderado." : "Riesgo Bajo.";
+            
+            document.getElementById('nivel-riesgo').textContent = `Nivel de Riesgo (1-50): ${nivelRiesgo.toFixed(1)}. ${resultadoTexto}`;
+        }
+
+        // 9. Porción Sucesoria (Simple)
+        function calcularSucesiones() {
+            const valorHerencia = getVal('valor-herencia');
+            const numHerederos = getVal('num-herederos');
+            
+            if (numHerederos === 0) {
+                alert('El número de herederos debe ser mayor a cero.');
+                return;
+            }
+            
+            const porcionHeredero = (valorHerencia * 0.7) / numHerederos; // 70% como masa partible
+            
+            document.getElementById('porcion-heredero').textContent = `Porción Estimada por Heredero: $${porcionHeredero.toFixed(2)}`;
+        }
+
+        // 10. Cálculo de Legítima Hereditaria (Simple)
+        function calcularLegitima() {
+            const valorPatrimonioNeto = getVal('valor-patrimonio-neto');
+            const factorLegitima = getVal('factor-legitima') / 100;
+            
+            const valorLegitima = valorPatrimonioNeto * factorLegitima;
+            
+            document.getElementById('valor-legitima').textContent = `Valor de la Legítima: $${valorLegitima.toFixed(2)}`;
+        }
+
+        // 11. Costo de Brecha de Seguridad (Simple)
+        function calcularCiberseguridad() {
+            const numRegistros = getVal('num-registros-afectados');
+            const costoPorRegistro = getVal('costo-por-registro');
+            
+            const costoTotal = numRegistros * costoPorRegistro;
+            
+            document.getElementById('costo-total-brecha').textContent = `Costo Total Estimado: $${costoTotal.toFixed(2)}`;
+        }
+
+        // 12. Valoración de Propiedad Intelectual (Simple)
+        function calcularPropiedad() {
+            const ingresosAnuales = getVal('ingresos-anuales-pi');
+            const factorRiesgo = getVal('factor-riesgo-pi');
+            
+            if (factorRiesgo === 0) {
+                alert('El factor de riesgo no puede ser cero.');
+                return;
+            }
+            
+            const valorPI = ingresosAnuales / factorRiesgo;
+            
+            document.getElementById('valor-pi').textContent = `Valoración Aproximada de PI: $${valorPI.toFixed(2)}`;
+        }
+
+        // 13. Cómputo de Pena Informática (Simple)
+        function calcularDelitoInformatico() {
+            const penaBase = getVal('pena-base-meses');
+            const factorAgravante = getVal('factor-agravante');
+            
+            const penaAjustada = penaBase * factorAgravante;
+            
+            document.getElementById('pena-ajustada').textContent = `Pena Ajustada: ${penaAjustada.toFixed(1)} meses`;
+        }
+
+        // 14. Multa por Infracción de Privacidad (Simple)
+        function calcularPrivacidad() {
+            const facturacionAnual = getVal('facturacion-anual');
+            const porcentajeMulta = getVal('porcentaje-multa') / 100;
+            
+            const multaMaxima = facturacionAnual * porcentajeMulta;
+            
+            document.getElementById('multa-maxima').textContent = `Multa Máxima Estimada: $${multaMaxima.toFixed(2)}`;
+        }
+
+        // 15. Cálculo de Regalías por Licencias (Simple)
+        function calcularLicencias() {
+            const ingresoBruto = getVal('ingreso-bruto-licencia');
+            const tasaRegalia = getVal('tasa-regalia') / 100;
+            
+            const regaliaNeta = ingresoBruto * tasaRegalia;
+            
+            document.getElementById('regalia-neta').textContent = `Regalía Neta: $${regaliaNeta.toFixed(2)}`;
+        }
+
+        // 16. Valoración de Evidencia Blockchain (Simple)
+        function calcularBlockchain() {
+            const factorInmutabilidad = getVal('factor-inmutabilidad');
+            const factorRastreabilidad = getVal('factor-rastreabilidad');
+            
+            const pesoProbatorio = (factorInmutabilidad + factorRastreabilidad) / 2;
+            let resultadoTexto = pesoProbatorio > 0.8 ? "Alto Peso Probatorio." : "Medio-Bajo Peso Probatorio.";
+            
+            document.getElementById('peso-probatorio-blockchain').textContent = `Peso Probatorio: ${pesoProbatorio.toFixed(2)}. ${resultadoTexto}`;
+        }
+
+        // 17. Rescisión de Contrato E-Commerce (Simple)
+        function calcularECommerce() {
+            const valorContrato = getVal('valor-contrato-ecommerce');
+            const porcentajePenalizacion = getVal('porcentaje-penalizacion') / 100;
+            
+            const penalizacion = valorContrato * porcentajePenalizacion;
+            
+            document.getElementById('penalizacion-ecommerce').textContent = `Monto de Penalización: $${penalizacion.toFixed(2)}`;
+        }
+
+        // 18. Tiempo de Análisis Forense Digital (Simple)
+        function calcularForense() {
+            const volumenDatos = getVal('volumen-datos-tb');
+            const horasPorTb = getVal('horas-por-tb');
+            
+            const horasTotales = volumenDatos * horasPorTb;
+            
+            document.getElementById('horas-totales-forense').textContent = `Horas Totales Estimadas: ${horasTotales.toFixed(0)} horas`;
+        }
+
+        // 19. Factor de Riesgo de Datos (Simple)
+        function calcularProteccionDatos() {
+            const factorSensibilidad = getVal('factor-sensibilidad');
+            const factorVolumen = getVal('factor-volumen');
+            
+            const nivelRiesgo = factorSensibilidad * factorVolumen;
+            let resultadoTexto = nivelRiesgo >= 50 ? "Riesgo CRÍTICO (DPIA Obligatoria)." : "Riesgo Alto.";
+
+            document.getElementById('nivel-riesgo-datos').textContent = `Nivel de Riesgo (1-100): ${nivelRiesgo.toFixed(0)}. ${resultadoTexto}`;
+        }
+
+        // 20. Validez Probatoria de Firmas Digitales (Simple)
+        function calcularFirmas() {
+            const factorCertificado = getVal('factor-certificado');
+            const factorAutenticacion = getVal('factor-autenticacion');
+            
+            const pesoProbatorio = factorCertificado + factorAutenticacion;
+            let resultadoTexto = pesoProbatorio >= 1.8 ? "Validez Máxima (Firma Avanzada/Calificada)." : "Validez Media.";
+            
+            document.getElementById('peso-probatorio-firma').textContent = `Peso Probatorio (0 a 2): ${pesoProbatorio.toFixed(2)}. ${resultadoTexto}`;
+        }
+
+        // 21. Cálculo de Intereses Moratorios (Simple)
+        function calcularIntereses() {
+            const capitalAdeudado = getVal('capital-adeudado');
+            const tasaInteres = getVal('tasa-interes-moratorio') / 100;
+            const mesesMora = getVal('meses-mora');
+            
+            const interesesTotales = capitalAdeudado * tasaInteres * mesesMora;
+            
+            document.getElementById('intereses-totales').textContent = `Intereses Totales (Simple): $${interesesTotales.toFixed(2)}`;
+        }
+
+        // 22. Multa por Cláusula Penal (Simple)
+        function calcularClausulas() {
+            const valorObligacion = getVal('valor-obligacion-principal');
+            const porcentajePenal = getVal('porcentaje-clausula-penal') / 100;
+            
+            const multa = valorObligacion * porcentajePenal;
+            
+            document.getElementById('multa-clausula-penal').textContent = `Monto de la Multa: $${multa.toFixed(2)}`;
+        }
+
+        // 23. Cómputo de Prescripción Civil (Simple)
+        function calcularPrescripcion() {
+            const plazoLegal = getVal('plazo-legal-prescripcion');
+            const diasTranscurridos = getVal('dias-transcurridos-prescripcion');
+            
+            const diasFaltantes = plazoLegal - diasTranscurridos;
+            let resultadoTexto = diasFaltantes > 0 ? `${diasFaltantes.toFixed(0)} días restantes.` : `¡Prescripción Consumada hace ${Math.abs(diasFaltantes).toFixed(0)} días!`;
+            
+            document.getElementById('dias-faltantes-prescripcion').textContent = `Días Faltantes para Prescripción: ${resultadoTexto}`;
+        }
+
+        // 24. Valor de Redhibición por Vicios (Simple)
+        function calcularVicios() {
+            const precioCompra = getVal('precio-compra-bien');
+            const porcentajeDepreciacion = getVal('porcentaje-depreciacion') / 100;
+            
+            const valorRedhibicion = precioCompra * porcentajeDepreciacion;
+            
+            document.getElementById('valor-redhibicion').textContent = `Valor a Reducir por Vicio: $${valorRedhibicion.toFixed(2)}`;
+        }
+
+        // 25. Plazo de Desalojo (Simple)
+        function calcularDesalojo() {
+            const plazoLegal = getVal('plazo-legal-desalojo');
+            const factorComplejidad = getVal('factor-complejidad-desalojo');
+            
+            const plazoEstimado = plazoLegal * factorComplejidad;
+            
+            document.getElementById('plazo-estimado-desalojo').textContent = `Plazo Estimado Total: ${plazoEstimado.toFixed(0)} días`;
+        }
+
+        // 26. Cuota Hipotecaria Legal (Simple)
+        function calcularHipotecario() {
+            const ingresoMensual = getVal('ingreso-mensual-hipoteca');
+            const porcentajeMaximo = getVal('porcentaje-maximo-cuota') / 100;
+            
+            const cuotaMaxima = ingresoMensual * porcentajeMaximo;
+            
+            document.getElementById('cuota-maxima-legal').textContent = `Cuota Máxima Legal: $${cuotaMaxima.toFixed(2)}`;
+        }
+
+        // 27. Ajuste de Precio de Compraventa (Simple)
+        function calcularCompraventa() {
+            const precioOriginal = getVal('precio-original-compraventa');
+            const indiceAjuste = getVal('indice-ajuste');
+            
+            const precioAjustado = precioOriginal * indiceAjuste;
+            
+            document.getElementById('precio-ajustado').textContent = `Precio Ajustado Final: $${precioAjustado.toFixed(2)}`;
+        }
+
+        // 28. Daño Patrimonial Cuantificable (Simple)
+        function calcularDanoPatrimonial() {
+            const danoEmergente = getVal('dano-emergente');
+            const lucroCesante = getVal('lucro-cesante-dano');
+            
+            const danoTotal = danoEmergente + lucroCesante;
+            
+            document.getElementById('dano-patrimonial-total').textContent = `Daño Patrimonial Total: $${danoTotal.toFixed(2)}`;
+        }
+
+        // 29. Porcentaje de Responsabilidad Civil (Simple)
+        function calcularResponsabilidad() {
+            const factorParte1 = getVal('factor-culpa-parte1');
+            const factorParte2 = getVal('factor-culpa-parte2');
+            
+            const sumaFactores = factorParte1 + factorParte2;
+            if (sumaFactores === 0) {
+                alert('Debe haber alguna culpa asignada.');
+                return;
+            }
+            
+            const porcentajeParte1 = (factorParte1 / sumaFactores) * 100;
+            const porcentajeParte2 = (factorParte2 / sumaFactores) * 100;
+            
+            document.getElementById('responsabilidad-final').textContent = `Responsabilidad Parte 1: ${porcentajeParte1.toFixed(0)}% | Responsabilidad Parte 2: ${porcentajeParte2.toFixed(0)}%`;
+        }
+
+        // 30. Ejecución de Garantías (Simple)
+        function calcularGarantias() {
+            const montoDeuda = getVal('monto-deuda-garantia');
+            const valorEjecucion = getVal('valor-ejecucion-garantia');
+            
+            const diferencia = valorEjecucion - montoDeuda;
+            let resultadoTexto;
+            
+            if (diferencia > 0) {
+                resultadoTexto = `Remanente para el deudor: $${diferencia.toFixed(2)}`;
+            } else if (diferencia < 0) {
+                resultadoTexto = `Falta de Pago (Deuda Pendiente): $${Math.abs(diferencia).toFixed(2)}`;
+            } else {
+                resultadoTexto = `Deuda Salda (Diferencia: $0.00)`;
+            }
+            
+            document.getElementById('remanente-garantia').textContent = resultadoTexto;
+        }
+        
+        // 31. Indemnización por Despido (Simple)
+        function calcularIndemnizacionLaboral() {
+            const mejorSalario = getVal('mejor-salario');
+            const anosServicio = getVal('anos-servicio');
+            
+            const indemnizacion = mejorSalario * anosServicio;
+            
+            document.getElementById('indemnizacion-basica').textContent = `Indemnización Básica: $${indemnizacion.toFixed(2)}`;
+        }
+
+        // 32. Días de Vacaciones Proporcionales (Simple)
+        function calcularVacaciones() {
+            const diasTrabajados = getVal('dias-trabajados-vacaciones');
+            const diasVacacionesAnuales = getVal('dias-vacaciones-anuales');
+            
+            const diasProporcionales = (diasTrabajados / 365) * diasVacacionesAnuales;
+            
+            document.getElementById('dias-proporcionales').textContent = `Días Proporcionales a Pagar: ${diasProporcionales.toFixed(1)} días`;
+        }
+
+        // 33. Cálculo de Horas Extras (Simple)
+        function calcularHorasExtra() {
+            const salarioHora = getVal('salario-hora');
+            const numHorasExtra = getVal('num-horas-extra');
+            const factorHoraExtra = getVal('factor-hora-extra');
+            
+            const valorTotal = salarioHora * numHorasExtra * factorHoraExtra;
+            
+            document.getElementById('valor-horas-extra').textContent = `Valor Total de Horas Extras: $${valorTotal.toFixed(2)}`;
+        }
+
+        // 34. Ajuste por Salario Mínimo (Simple)
+        function calcularSalario() {
+            const salarioActual = getVal('salario-actual');
+            const salarioMinimo = getVal('salario-minimo');
+            
+            const ajusteRequerido = salarioMinimo - salarioActual;
+            let resultadoTexto = ajusteRequerido > 0 ? `Ajuste Requerido: $${ajusteRequerido.toFixed(2)}` : "Salario Mínimo Cumplido.";
+            
+            document.getElementById('ajuste-requerido').textContent = resultadoTexto;
+        }
+
+        // 35. Base de Cálculo de Jubilación (Simple)
+        function calcularJubilacionBase() {
+            const promedioSalarios = getVal('promedio-salarios');
+            const factorAnosAporte = getVal('factor-anos-aporte');
+            
+            const baseHaberes = promedioSalarios * factorAnosAporte;
+            
+            document.getElementById('base-haberes').textContent = `Base de Haberes Estimada: $${baseHaberes.toFixed(2)}`;
+        }
+
+        // 36. Porcentaje de Incapacidad Laboral (Simple)
+        function calcularAccidente() {
+            const puntajeBaremo = getVal('puntaje-baremo');
+            const factorEdad = getVal('factor-edad-accidente');
+            
+            const incapacidadFinal = puntajeBaremo * factorEdad;
+            
+            document.getElementById('incapacidad-final').textContent = `Porcentaje Final de Incapacidad: ${incapacidadFinal.toFixed(1)}%`;
+        }
+
+        // 37. Cálculo de Aportes Sociales (Simple)
+        function calcularAportes() {
+            const salarioBruto = getVal('salario-bruto-aportes');
+            const tasaAporte = getVal('tasa-aporte-trabajador') / 100;
+            
+            const montoAporte = salarioBruto * tasaAporte;
+            
+            document.getElementById('monto-aporte-social').textContent = `Monto de Aporte a Deducir: $${montoAporte.toFixed(2)}`;
+        }
+
+        // 38. Cuota Sindical Retroactiva (Simple)
+        function calcularSindical() {
+            const montoCuota = getVal('monto-cuota-mensual');
+            const mesesRetroactivos = getVal('meses-retroactivos');
+            
+            const totalRetroactivo = montoCuota * mesesRetroactivos;
+            
+            document.getElementById('total-cuota-retroactiva').textContent = `Total Retroactivo de Cuotas: $${totalRetroactivo.toFixed(2)}`;
+        }
+
+        // 39. Monto de Preaviso Omitido (Simple)
+        function calcularPreaviso() {
+            const salarioPreaviso = getVal('salario-preaviso');
+            const mesesPreaviso = getVal('meses-preaviso');
+            
+            const montoPreaviso = salarioPreaviso * mesesPreaviso;
+            
+            document.getElementById('monto-preaviso').textContent = `Indemnización por Preaviso Omitido: $${montoPreaviso.toFixed(2)}`;
+        }
+
+        // 40. Evaluación de Riesgos Laborales (Simple)
+        function calcularRiesgos() {
+            const factorProbabilidad = getVal('factor-probabilidad-riesgo');
+            const factorSeveridad = getVal('factor-severidad-riesgo');
+            
+            const nivelRiesgo = factorProbabilidad * factorSeveridad;
+            let resultadoTexto = nivelRiesgo >= 15 ? "Riesgo Inaceptable." : "Riesgo Moderado/Bajo.";
+            
+            document.getElementById('nivel-riesgo-laboral').textContent = `Nivel de Riesgo (1-25): ${nivelRiesgo.toFixed(0)}. ${resultadoTexto}`;
+        }
+
+        // 41. Cálculo de Impuestos Retroactivos (Simple)
+        function calcularImpuestos() {
+            const impuestoOriginal = getVal('impuesto-original');
+            const factorAjuste = getVal('factor-ajuste-inflacionario');
+            
+            const impuestoAjustado = impuestoOriginal * factorAjuste;
+            
+            document.getElementById('impuesto-ajustado').textContent = `Impuesto Ajustado por Período: $${impuestoAjustado.toFixed(2)}`;
+        }
+
+        // 42. Reducción de Multas Fiscales (Simple)
+        function calcularMultas() {
+            const montoMulta = getVal('monto-multa-fiscal');
+            const porcentajeReduccion = getVal('porcentaje-reduccion') / 100;
+            
+            const multaFinal = montoMulta * (1 - porcentajeReduccion);
+            
+            document.getElementById('multa-final').textContent = `Monto Final a Pagar: $${multaFinal.toFixed(2)}`;
+        }
+
+        // 43. Valor de Expropiación Forzosa (Simple)
+        function calcularExpropiacion() {
+            const valorMercado = getVal('valor-mercado-expropiacion');
+            const porcentajeExtra = getVal('porcentaje-indemnizacion-extra') / 100;
+            
+            const valorTotal = valorMercado * (1 + porcentajeExtra);
+            
+            document.getElementById('valor-total-indemnizacion').textContent = `Valor Total de Indemnización: $${valorTotal.toFixed(2)}`;
+        }
+
+        // 44. Cómputo de Plazos Administrativos (Simple, conceptual)
+        function calcularPlazosAdmin() {
+            const diaNotificacion = getVal('fecha-notificacion');
+            const diasHabiles = getVal('dias-habiles-plazo');
+            
+            // Fórmula conceptual y MUY simplificada (asume 5 días no hábiles)
+            const diaFinalEstimado = diaNotificacion + diasHabiles + 5; 
+            
+            document.getElementById('dia-final-plazo').textContent = `Día Final Estimado (del mes): Día ${diaFinalEstimado.toFixed(0)}`;
+        }
+
+        // 45. Tasa de Recurrencia Administrativa (Simple)
+        function calcularRecurrencia() {
+            const recursosFavorables = getVal('recursos-favorables');
+            const recursosTotales = getVal('recursos-totales');
+            
+            if (recursosTotales === 0) {
+                alert('El número total de recursos debe ser mayor a cero.');
+                return;
+            }
+            
+            const tasaExito = (recursosFavorables / recursosTotales) * 100;
+            
+            document.getElementById('tasa-exito-recursos').textContent = `Tasa de Éxito en Recursos: ${tasaExito.toFixed(1)}%`;
+        }
+
+        // 46. Tasa de Interés Fiscal (Simple)
+        function calcularTasaInteresFiscal() {
+            const deudaFiscal = getVal('deuda-fiscal');
+            const tasaInteres = getVal('tasa-interes-mensual-fiscal') / 100;
+            const mesesAtraso = getVal('meses-atraso-fiscal');
+            
+            const interesesTotales = deudaFiscal * tasaInteres * mesesAtraso;
+            
+            document.getElementById('intereses-fiscales').textContent = `Intereses Fiscales Totales (Simple): $${interesesTotales.toFixed(2)}`;
+        }
+
+        // 47. Puntuación de Licitaciones Públicas (Simple)
+        function calcularLicitaciones() {
+            const puntajeTecnico = getVal('puntaje-tecnico');
+            const puntajeEconomico = getVal('puntaje-economico');
+            
+            const puntuacionTotal = puntajeTecnico + puntajeEconomico;
+            let resultadoTexto = puntuacionTotal >= 85 ? "Oferta Altamente Competitiva." : "Oferta Competitiva Media.";
+
+            document.getElementById('puntuacion-total-licitacion').textContent = `Puntuación Total (0-100): ${puntuacionTotal.toFixed(0)}. ${resultadoTexto}`;
+        }
+
+        // 48. Ajuste de Tarifas de Servicios Públicos (Simple)
+        function calcularServiciosPublicos() {
+            const tarifaBase = getVal('tarifa-base');
+            const porcentajeAjuste = getVal('porcentaje-ajuste-tarifario') / 100;
+            
+            const nuevaTarifa = tarifaBase * (1 + porcentajeAjuste);
+            
+            document.getElementById('nueva-tarifa').textContent = `Nueva Tarifa Estimada: $${nuevaTarifa.toFixed(2)}`;
+        }
+
+        // 49. Costo de Cumplimiento Regulatorio (Simple)
+        function calcularRegulacion() {
+            const horasLegales = getVal('horas-legales-cumplimiento');
+            const costoHora = getVal('costo-hora-profesional');
+            
+            const costoTotal = horasLegales * costoHora;
+            
+            document.getElementById('costo-total-cumplimiento').textContent = `Costo Total Estimado: $${costoTotal.toFixed(2)}`;
+        }
+
+        // 50. Valoración Aduanera (Simple)
+        function calcularAduanas() {
+            const valorFactura = getVal('valor-factura-cif');
+            const porcentajeArancel = getVal('porcentaje-arancel') / 100;
+            
+            const valorTotalAduanero = valorFactura * (1 + porcentajeArancel);
+            
+            document.getElementById('valor-total-aduanero').textContent = `Valor Total Aduanero (Base Imponible): $${valorTotalAduanero.toFixed(2)}`;
+        }
+
+        // 3. Calculadora de Honorarios (Original, renombrada)
+        function calcularHonorarios() {
+            const valorCausa = getVal('valor-causa');
+            const complejidad = parseFloat(document.getElementById('complejidad').value);
+            const resultado = parseFloat(document.getElementById('resultado').value);
+            const porcentajeHonorarios = getVal('porcentaje-honorarios') / 100;
+            
+            if (!valorCausa) {
+                alert('Por favor, complete el valor de la causa.');
+                document.getElementById('resultado-honorarios').style.display = 'none';
+                return;
+            }
+            
+            const honorariosBase = valorCausa * porcentajeHonorarios;
+            const honorariosAjustados = honorariosBase * complejidad;
+            const honorariosFinales = honorariosAjustados * resultado;
+            
+            document.getElementById('honorarios-base').textContent = `Honorarios Base: $${honorariosBase.toFixed(2)}`;
+            document.getElementById('honorarios-ajustados').textContent = `Ajustados por Complejidad: $${honorariosAjustados.toFixed(2)}`;
+            document.getElementById('honorarios-finales').textContent = `Honorarios Finales: $${honorariosFinales.toFixed(2)}`;
+        }
+
+        // 4. Calculadora de Estadística Legal (Original, renombrada)
+        function calcularEstadistica() {
+            const casosFavorables = getVal('casos-favorables');
+            const casosTotales = getVal('casos-totales');
+            const zValue = parseFloat(document.getElementById('intervalo-confianza').value);
+            
+            if (casosTotales <= 0 || casosFavorables > casosTotales) {
+                alert('Ingrese valores válidos (Total de casos > 0 y Favorables <= Totales).');
+                document.getElementById('resultado-estadistica').style.display = 'none';
+                return;
+            }
+            
+            const tasaExito = (casosFavorables / casosTotales) * 100;
+            const p = casosFavorables / casosTotales;
+            const errorEstandar = Math.sqrt(p * (1 - p) / casosTotales);
+            const margenError = zValue * errorEstandar;
+            const intervaloInferior = Math.max(0, (p - margenError) * 100); 
+            const intervaloSuperior = Math.min(100, (p + margenError) * 100); 
+            const nivelConfianza = document.getElementById('intervalo-confianza').options[document.getElementById('intervalo-confianza').selectedIndex].text;
+
+            document.getElementById('tasa-exito').textContent = `Tasa de Éxito: ${tasaExito.toFixed(2)}%`;
+            document.getElementById('intervalo-confianza-resultado').textContent = 
+                `Intervalo de Confianza (${nivelConfianza}): [${intervaloInferior.toFixed(2)}%, ${intervaloSuperior.toFixed(2)}%]`;
+            
+            let interpretacion = tasaExito > 70 ? "Alta tasa de éxito." : tasaExito > 50 ? "Moderada tasa de éxito." : "Baja tasa de éxito.";
+            document.getElementById('interpretacion-resultado').textContent = `Interpretación: ${interpretacion}`;
+        }
+
+        // 5. Calculadora de Probabilidad Probatoria (Original, renombrada)
+        function calcularProbabilidad() {
+            const pIndicios = getVal('probabilidad-indicios');
+            const pPruebas = getVal('probabilidad-pruebas');
+            const pTestigos = getVal('probabilidad-testigos');
+            const wIndicios = getVal('peso-indicios');
+            const wPruebas = getVal('peso-pruebas');
+            const wTestigos = getVal('peso-testigos');
+
+            const sumaPesos = wIndicios + wPruebas + wTestigos;
+            if (sumaPesos === 0) {
+                alert('La suma de los pesos no puede ser cero.');
+                document.getElementById('resultado-probabilidad').style.display = 'none';
+                return;
+            }
+
+            const probabilidadPonderada = (pIndicios * wIndicios + pPruebas * wPruebas + pTestigos * wTestigos) / sumaPesos;
+            
+            const probabilidadTotal = Math.min(100, Math.max(0, probabilidadPonderada));
+
+            document.getElementById('probabilidad-total').textContent = `Probabilidad Probatoria Total: ${probabilidadTotal.toFixed(2)}%`;
+
+            let evaluacion = probabilidadTotal >= 80 ? "Muy Alta (Fuerte convicción judicial)." : "Media-Alta.";
+            document.getElementById('evaluacion-probatoria').textContent = `Evaluación Probatoria: ${evaluacion}`;
+
+            let recomendacion = probabilidadTotal < 60 ? "Recomendación: Buscar pruebas adicionales." : "Recomendación: Proceder con confianza.";
+            document.getElementById('recomendacion-accion').textContent = recomendacion;
+        }
+
+        // Inicializa la primera pestaña al cargar la página (para que la lógica de JS funcione al inicio)
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('pension').classList.add('active');
+            document.querySelector('.tab[data-tab="pension"]').classList.add('active');
+        });
+    </script>
+</body>
+</html>

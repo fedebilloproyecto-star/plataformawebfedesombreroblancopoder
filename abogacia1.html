@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cuadro Comparativo Normativas SST en Ámbito Médico</title>
+<style>
+  /* Reset básico */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 20px;
+    background: #f9f9f9;
+    color: #333;
+  }
+  h1 {
+    text-align: center;
+    margin-bottom: 15px;
+    color: #2c3e50;
+  }
+  .container {
+    max-width: 1100px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+  th, td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    vertical-align: top;
+    word-wrap: break-word;
+  }
+  th {
+    background-color: #2980b9;
+    color: white;
+    text-align: left;
+  }
+  tbody tr:nth-child(even) {
+    background-color: #f2f6fc;
+  }
+  /* Responsive */
+  @media (max-width: 768px) {
+    table, thead, tbody, th, td, tr {
+      display: block;
+    }
+    thead tr {
+      display: none;
+    }
+    tbody tr {
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 10px;
+      background: #fff;
+    }
+    tbody td {
+      border: none;
+      padding: 8px 10px;
+      position: relative;
+      padding-left: 50%;
+      text-align: left;
+    }
+    tbody td::before {
+      position: absolute;
+      top: 8px;
+      left: 15px;
+      width: 45%;
+      white-space: nowrap;
+      font-weight: 700;
+      content: attr(data-label);
+      color: #2980b9;
+    }
+  }
+
+  /* Botón para filtrar */
+  .search-container {
+    text-align: right;
+    margin-bottom: 15px;
+  }
+  input[type="text"] {
+    padding: 8px 12px;
+    width: 250px;
+    border: 1.5px solid #2980b9;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  /* Solo estilos para el botón "Volver atrás" */
+.back-button {
+  display: inline-block;
+  padding: 10px 18px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 2px solid #333;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  user-select: none;
+}
+
+/* Efecto al pasar el ratón */
+.back-button:hover,
+.back-button:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+  text-decoration: none;
+  outline: none;
+}
+
+/* Efecto al hacer clic */
+.back-button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Cuadro Comparativo Normativas SST en Ámbito Médico</h1><a href="aprendeprincipalconocimientosabogacia.html" class="back-button" aria-label="Volver atrás">Volver atrás</a>
+  <div class="search-container">
+    <input type="text" id="searchInput" placeholder="Buscar por norma o aplicación..." />
+  </div>
+  <table id="normativasTable">
+    <thead>
+      <tr>
+        <th>Norma / Convenio / Directiva</th>
+        <th>Descripción</th>
+        <th>Aplicación en ámbito médico</th>
+        <th>Ejemplos concretos</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td data-label="Norma / Convenio">Convenio OIT Nº 155 – Seguridad y salud de los trabajadores</td>
+        <td data-label="Descripción">Establece principios generales para prevenir accidentes y daños a la salud en el trabajo.</td>
+        <td data-label="Aplicación">Base legal para implementar políticas de SST en hospitales y clínicas.</td>
+        <td data-label="Ejemplos">Programas de control de infecciones y bioseguridad para el personal médico.</td>
+      </tr>
+      <tr>
+        <td data-label="Norma / Convenio">Convenio OIT Nº 187 – Marco promocional para la seguridad y salud</td>
+        <td data-label="Descripción">Promueve mejoras continuas de la seguridad y salud en el trabajo a través de sistemas nacionales.</td>
+        <td data-label="Aplicación">Impulsa la creación de planes nacionales de SST para el sector salud.</td>
+        <td data-label="Ejemplos">Evaluaciones regulares de riesgos en hospitales públicos.</td>
+      </tr>
+      <tr>
+        <td data-label="Norma / Convenio">Convenio OIT Nº 161 – Servicios de salud ocupacional</td>
+        <td data-label="Descripción">Regula la organización de servicios de salud ocupacional.</td>
+        <td data-label="Aplicación">Obliga a contar con servicios médicos para trabajadores de la salud.</td>
+        <td data-label="Ejemplos">Clínicas internas para empleados en grandes hospitales.</td>
+      </tr>
+      <tr>
+        <td data-label="Norma / Convenio">Norma ISO 45001 – Gestión de SST</td>
+        <td data-label="Descripción">Establece requisitos para un sistema de gestión de SST que mejore el desempeño organizacional.</td>
+        <td data-label="Aplicación">Sistema para prevenir accidentes y enfermedades laborales en instituciones médicas.</td>
+        <td data-label="Ejemplos">Implementación de protocolos para manejo seguro de sustancias biológicas.</td>
+      </tr>
+      <tr>
+        <td data-label="Norma / Convenio">Norma IRAM 3800 – Gestión de SST (Argentina)</td>
+        <td data-label="Descripción">Norma argentina que alinea los requisitos de SST con ISO 45001.</td>
+        <td data-label="Aplicación">Aplicación nacional para centros de salud públicos y privados.</td>
+        <td data-label="Ejemplos">Auditorías internas en clínicas privadas argentinas para mejorar la SST.</td>
+      </tr>
+      <tr>
+        <td data-label="Norma / Convenio">Directiva 89/391/CEE – Seguridad y salud en el trabajo (UE)</td>
+        <td data-label="Descripción">Norma marco europea que obliga a los empleadores a garantizar la SST.</td>
+        <td data-label="Aplicación">Referente legal para hospitales en la UE.</td>
+        <td data-label="Ejemplos">Equipos de protección obligatorios para personal en quirófanos.</td>
+      </tr>
+      <tr>
+        <td data-label="Norma / Convenio">Norma OSHA 29 CFR 1910 – Regulación de SST (EE.UU.)</td>
+        <td data-label="Descripción">Normas detalladas sobre seguridad laboral en EE.UU.</td>
+        <td data-label="Aplicación">Regula aspectos clave en hospitales como manejo de químicos y ergonomía.</td>
+        <td data-label="Ejemplos">Protocolos OSHA para exposición a sangre en personal médico.</td>
+      </tr>
+      <tr>
+        <td data-label="Norma / Convenio">Reglamento Sanitario Internacional (RSI) – OMS</td>
+        <td data-label="Descripción">Marco legal internacional para prevenir la propagación de enfermedades.</td>
+        <td data-label="Aplicación">Define protocolos ante emergencias sanitarias en centros médicos.</td>
+        <td data-label="Ejemplos">Acciones hospitalarias ante brotes de enfermedades infecciosas.</td>
+      </tr>
+      <tr>
+        <td data-label="Norma / Convenio">Convenio Marco para el Control del Tabaco – OMS</td>
+        <td data-label="Descripción">Tratado para reducir el consumo de tabaco y la exposición al humo.</td>
+        <td data-label="Aplicación">Aplica en entornos de salud para promover espacios libres de humo.</td>
+        <td data-label="Ejemplos">Prohibición de fumar en hospitales y campañas de cesación tabáquica para pacientes.</td>
+      </tr>
+      <tr>
+        <td data-label="Norma / Convenio">Norma ISO 14001 – Gestión ambiental</td>
+        <td data-label="Descripción">Norma para sistemas de gestión ambiental.</td>
+        <td data-label="Aplicación">Relacionada con riesgos laborales por residuos hospitalarios o sustancias peligrosas.</td>
+        <td data-label="Ejemplos">Plan de manejo de residuos patológicos en hospitales.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<script>
+  // Función para filtrar tabla por texto ingresado en el input
+  const searchInput = document.getElementById('searchInput');
+  const table = document.getElementById('normativasTable');
+  const tbody = table.tBodies[0];
+
+  searchInput.addEventListener('input', function() {
+    const filter = this.value.toLowerCase();
+
+    for (const row of tbody.rows) {
+      const cellsText = Array.from(row.cells)
+        .map(td => td.textContent.toLowerCase())
+        .join(' ');
+      
+      row.style.display = cellsText.includes(filter) ? '' : 'none';
+    }
+  });
+</script>
+
+</body>
+</html>

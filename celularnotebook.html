@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulador Tech - Documental</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --neon-blue: #00ffff;
+      --neon-pink: #ff00ff;
+      --neon-purple: #9d00ff;
+      --neon-green: #00ff99;
+      --dark-bg: #0a0a20;
+      --glass-bg: rgba(255, 255, 255, 0.1);
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--dark-bg);
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-image: 
+        radial-gradient(circle at 20% 30%, rgba(157, 0, 255, 0.15) 0%, transparent 30%),
+        radial-gradient(circle at 80% 70%, rgba(0, 255, 153, 0.15) 0%, transparent 30%);
+            border-radius: 10px;
+  max-width: 900px;
+  margin: 90px auto;
+    }
+
+    header {
+      text-align: center;
+      padding: 20px;
+      width: 100%;
+      background: rgba(10, 10, 30, 0.8);
+      border-bottom: 1px solid var(--neon-blue);
+    }
+
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.5rem;
+      background: linear-gradient(90deg, var(--neon-pink), var(--neon-blue));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      color: var(--neon-blue);
+      margin-bottom: 20px;
+    }
+
+    .devices-container {
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 30px;
+      width: 100%;
+      max-width: 1400px;
+    }
+
+    /* NOTEBOOK STYLES - MEJORADO */
+    .notebook {
+      width: 800px;
+      height: 550px;
+      background: rgba(20, 20, 50, 0.8);
+      border-radius: 15px;
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+      position: relative;
+      overflow: hidden;
+      border: 2px solid var(--neon-blue);
+      backdrop-filter: blur(5px);
+    }
+
+    .desktop {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    .desktop-icons {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 20px;
+      padding: 30px;
+    }
+
+    .desktop-icon {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .desktop-icon img {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+      margin-bottom: 10px;
+      filter: drop-shadow(0 0 5px var(--neon-blue));
+      transition: all 0.3s ease;
+    }
+
+    .desktop-icon span {
+      color: white;
+      font-size: 14px;
+      text-shadow: 0 0 5px var(--neon-blue);
+    }
+
+    .desktop-icon:hover {
+      transform: translateY(-5px);
+    }
+
+    .desktop-icon:hover img {
+      filter: drop-shadow(0 0 10px var(--neon-pink));
+    }
+
+    .taskbar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 40px;
+      background: rgba(10, 10, 30, 0.9);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      border-top: 1px solid rgba(0, 255, 255, 0.3);
+    }
+
+    .clock {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 14px;
+      color: var(--neon-blue);
+    }
+
+    /* APP WINDOWS - MEJORADO */
+    .app-window {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      max-height: 80vh;
+      background: rgba(30, 30, 60, 0.95);
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+      border: 1px solid var(--neon-blue);
+      display: none;
+      z-index: 10;
+      overflow-y: auto;
+    }
+
+    .window-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(0, 255, 255, 0.3);
+    }
+
+    .window-title {
+      font-family: 'Orbitron', sans-serif;
+      color: var(--neon-blue);
+      font-size: 20px;
+    }
+
+    .close-btn {
+      background: rgba(255, 0, 0, 0.5);
+      color: white;
+      border: none;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .close-btn:hover {
+      background: rgba(255, 0, 0, 0.8);
+      transform: rotate(90deg);
+    }
+
+    .window-content {
+      margin-bottom: 20px;
+    }
+
+    .feature-list {
+      list-style: none;
+      margin: 20px 0;
+    }
+
+    .feature-item {
+      padding: 10px;
+      margin-bottom: 10px;
+      background: rgba(0, 0, 0, 0.3);
+      border-left: 3px solid var(--neon-blue);
+    }
+
+    .component-item {
+      background: rgba(40, 40, 80, 0.5);
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border-left: 4px solid var(--neon-purple);
+    }
+
+    .component-name {
+      color: var(--neon-green);
+      font-family: 'Orbitron', sans-serif;
+      margin-bottom: 5px;
+    }
+
+    /* MOBILE STYLES - MEJORADO CON MÁS APPS */
+    .mobile {
+      width: 300px;
+      height: 550px;
+      background: rgba(20, 20, 50, 0.8);
+      border-radius: 30px;
+      box-shadow: 0 0 30px rgba(255, 0, 255, 0.3);
+      position: relative;
+      overflow: hidden;
+      border: 2px solid var(--neon-pink);
+    }
+
+    .mobile-screen {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .status-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 30px;
+      background: rgba(10, 10, 30, 0.9);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 15px;
+      font-size: 12px;
+      color: var(--neon-pink);
+      font-family: 'Orbitron', sans-serif;
+      z-index: 5;
+    }
+
+    .app-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      padding: 50px 15px 15px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .mobile-app {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-app img {
+      width: 45px;
+      height: 45px;
+      margin-bottom: 8px;
+      filter: drop-shadow(0 0 5px var(--neon-pink));
+      transition: all 0.3s ease;
+    }
+
+    .mobile-app span {
+      color: white;
+      font-size: 11px;
+      text-align: center;
+      text-shadow: 0 0 3px var(--neon-pink);
+    }
+
+    .mobile-app:hover {
+      transform: scale(1.1);
+    }
+    
+    .mobile-app:hover img {
+      filter: drop-shadow(0 0 10px var(--neon-blue));
+    }
+
+    /* Mobile App Windows - MEJORADO */
+    .mobile-app-window {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(30, 30, 60, 0.98);
+      padding: 40px 15px 15px;
+      display: none;
+      z-index: 10;
+      overflow-y: auto;
+      animation: fadeIn 0.3s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    .mobile-window-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255, 0, 255, 0.3);
+    }
+    
+    .mobile-window-title {
+      font-family: 'Orbitron', sans-serif;
+      color: var(--neon-pink);
+      font-size: 16px;
+    }
+    
+    .mobile-close-btn {
+      background: rgba(255, 0, 0, 0.5);
+      color: white;
+      border: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .mobile-close-btn:hover {
+      background: rgba(255, 0, 0, 0.8);
+      transform: rotate(90deg);
+    }
+    
+    .mobile-feature-item {
+      padding: 8px;
+      margin-bottom: 8px;
+      background: rgba(0, 0, 0, 0.3);
+      border-left: 3px solid var(--neon-pink);
+      font-size: 12px;
+    }
+
+    /* COMPONENTS SECTION */
+    .components-section {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 30px;
+    }
+
+    .components-title {
+      color: var(--neon-blue);
+      font-family: 'Orbitron', sans-serif;
+      margin-bottom: 20px;
+      text-align: center;
+      font-size: 28px;
+    }
+
+    .device-components {
+      margin-bottom: 40px;
+    }
+
+    .device-title {
+      color: var(--neon-pink);
+      font-family: 'Orbitron', sans-serif;
+      margin-bottom: 15px;
+      border-bottom: 1px solid var(--neon-pink);
+      padding-bottom: 5px;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 1200px) {
+      .devices-container {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .notebook {
+        width: 95%;
+        height: 500px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+      
+      .app-window {
+        width: 95%;
+      }
+      
+      .desktop-icons {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    .back-button {
+  padding: 10px 20px;
+  background-color: #4a6baf;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.back-button:hover {
+  background-color: #3a5a9f;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.back-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 3px rgba(0,0,0,0.2);
+}
+/* Solo estilos para el botón "Volver atrás" */
+.back-button {
+  display: inline-block;
+  padding: 10px 18px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 2px solid #333;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  user-select: none;
+}
+
+/* Efecto al pasar el ratón */
+.back-button:hover,
+.back-button:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+  text-decoration: none;
+  outline: none;
+}
+
+/* Efecto al hacer clic */
+.back-button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+
+
+  </style>
+</head>
+<body>
+ <a href="tecnologiaguiaportadainicio.html" class="back-button" aria-label="Volver atrás">Volver atrás</a>
+  <header>
+    <h1> Sobre notebook y celular </h1>
+    <p class="subtitle">Explora algunas características sobre celular y notebook</p>
+  </header>
+  
+  <div class="devices-container">
+    <!-- NOTEBOOK MEJORADA CON MÁS APLICACIONES -->
+    <div class="notebook">
+      <div class="desktop">
+        <div class="desktop-icons">
+          <div class="desktop-icon" onclick="openApp('notepad')">
+            <img src="https://img.icons8.com/fluency/48/clipboard.png" alt="Notas">
+            <span>Bloc de notas</span>
+          </div>
+          
+          <div class="desktop-icon" onclick="openApp('calculator')">
+            <img src="https://img.icons8.com/fluency/48/calculator.png" alt="Calculadora">
+            <span>Calculadora</span>
+          </div>
+          
+          <div class="desktop-icon" onclick="openApp('browser')">
+            <img src="https://img.icons8.com/fluency/48/google-chrome.png" alt="Navegador">
+            <span>Navegador</span>
+          </div>
+          
+          <div class="desktop-icon" onclick="openApp('music')">
+            <img src="https://img.icons8.com/fluency/48/music.png" alt="Música">
+            <span>Reproductor</span>
+          </div>
+          
+          <div class="desktop-icon" onclick="openApp('camera')">
+            <img src="https://img.icons8.com/fluency/48/camera.png" alt="Cámara">
+            <span>Cámara</span>
+          </div>
+          
+          <div class="desktop-icon" onclick="openApp('components')">
+            <img src="https://img.icons8.com/fluency/48/electronics.png" alt="Componentes">
+            <span>Componentes</span>
+          </div>
+          
+          <div class="desktop-icon" onclick="openApp('outlook')">
+            <img src="https://img.icons8.com/fluency/48/microsoft-outlook-2019.png" alt="Outlook">
+            <span>Outlook</span>
+          </div>
+          
+          <div class="desktop-icon" onclick="openApp('onedrive')">
+            <img src="https://img.icons8.com/fluency/48/onedrive.png" alt="OneDrive">
+            <span>OneDrive</span>
+          </div>
+          
+          <div class="desktop-icon" onclick="openApp('twitter')">
+            <img src="https://img.icons8.com/color/48/twitter.png" alt="Twitter">
+            <span>Twitter</span>
+          </div>
+          
+          <div class="desktop-icon" onclick="openApp('drive')">
+            <img src="https://img.icons8.com/color/48/google-drive.png" alt="Google Drive">
+            <span>Google Drive</span>
+          </div>
+        </div>
+        
+        <div class="taskbar">
+          <div class="clock" id="clock">00:00</div>
+        </div>
+      </div>
+      
+      <!-- App Windows - MEJORADO CON MÁS APLICACIONES -->
+      <div class="app-window" id="notepad">
+        <div class="window-header">
+          <h3 class="window-title">Bloc de notas - Características</h3>
+          <button class="close-btn" onclick="closeApp('notepad')">×</button>
+        </div>
+        <div class="window-content">
+          <ul class="feature-list">
+            <li class="feature-item">Editor de texto plano con soporte para múltiples formatos</li>
+            <li class="feature-item">Capacidad de guardar y cargar documentos</li>
+            <li class="feature-item">Búsqueda y reemplazo de texto</li>
+            <li class="feature-item">Soporte para diferentes codificaciones de texto</li>
+            <li class="feature-item">Integración con el portapapeles del sistema</li>
+            <li class="feature-item">Soporte para múltiples pestañas</li>
+            <li class="feature-item">Resaltado de sintaxis para programación</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="app-window" id="calculator">
+        <div class="window-header">
+          <h3 class="window-title">Calculadora - Características</h3>
+          <button class="close-btn" onclick="closeApp('calculator')">×</button>
+        </div>
+        <div class="window-content">
+          <ul class="feature-list">
+            <li class="feature-item">Operaciones aritméticas básicas (+, -, ×, ÷)</li>
+            <li class="feature-item">Cálculo de porcentajes</li>
+            <li class="feature-item">Funciones científicas (raíz cuadrada, potencias)</li>
+            <li class="feature-item">Memoria para almacenar resultados</li>
+            <li class="feature-item">Historial de operaciones recientes</li>
+            <li class="feature-item">Modo programador con conversión entre sistemas numéricos</li>
+            <li class="feature-item">Gráficos de funciones matemáticas</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="app-window" id="browser">
+        <div class="window-header">
+          <h3 class="window-title">Navegador Web - Características</h3>
+          <button class="close-btn" onclick="closeApp('browser')">×</button>
+        </div>
+        <div class="window-content">
+          <ul class="feature-list">
+            <li class="feature-item">Motor de renderizado WebKit/Blink</li>
+            <li class="feature-item">Soporte para HTML5, CSS3 y JavaScript</li>
+            <li class="feature-item">Pestañas múltiples para navegación simultánea</li>
+            <li class="feature-item">Marcadores y historial de navegación</li>
+            <li class="feature-item">Modo incógnito para navegación privada</li>
+            <li class="feature-item">Sincronización con la nube</li>
+            <li class="feature-item">Extensión de navegador para funcionalidades adicionales</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="app-window" id="music">
+        <div class="window-header">
+          <h3 class="window-title">Reproductor de Música - Características</h3>
+          <button class="close-btn" onclick="closeApp('music')">×</button>
+        </div>
+        <div class="window-content">
+          <ul class="feature-list">
+            <li class="feature-item">Soporte para múltiples formatos (MP3, WAV, FLAC, AAC)</li>
+            <li class="feature-item">Ecualizador con presets personalizables</li>
+            <li class="feature-item">Creación y gestión de listas de reproducción</li>
+            <li class="feature-item">Visualizador de espectro de audio</li>
+            <li class="feature-item">Integración con biblioteca multimedia</li>
+            <li class="feature-item">Soporte para streaming online</li>
+            <li class="feature-item">Letras de canciones sincronizadas</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="app-window" id="camera">
+        <div class="window-header">
+          <h3 class="window-title">Cámara - Características</h3>
+          <button class="close-btn" onclick="closeApp('camera')">×</button>
+        </div>
+        <div class="window-content">
+          <ul class="feature-list">
+            <li class="feature-item">Resolución de hasta 12MP con ajustes manuales</li>
+            <li class="feature-item">Modos de disparo (automático, deportes, nocturno, retrato)</li>
+            <li class="feature-item">Balance de blancos y ajuste de exposición</li>
+            <li class="feature-item">Enfoque automático y manual</li>
+            <li class="feature-item">Galería integrada con organización por fechas</li>
+            <li class="feature-item">Edición básica de fotos (recortar, rotar, ajustes)</li>
+            <li class="feature-item">Soporte para RAW y HDR</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="app-window" id="outlook">
+        <div class="window-header">
+          <h3 class="window-title">Microsoft Outlook - Características</h3>
+          <button class="close-btn" onclick="closeApp('outlook')">×</button>
+        </div>
+        <div class="window-content">
+          <ul class="feature-list">
+            <li class="feature-item">Gestión de correo electrónico profesional</li>
+            <li class="feature-item">Calendario integrado para gestión de tiempo</li>
+            <li class="feature-item">Contactos y agenda</li>
+            <li class="feature-item">Bandeja de entrada inteligente con filtros</li>
+            <li class="feature-item">Integración con Microsoft 365</li>
+            <li class="feature-item">Búsqueda avanzada con filtros</li>
+            <li class="feature-item">Soporte para múltiples cuentas</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="app-window" id="onedrive">
+        <div class="window-header">
+          <h3 class="window-title">Microsoft OneDrive - Características</h3>
+          <button class="close-btn" onclick="closeApp('onedrive')">×</button>
+        </div>
+        <div class="window-content">
+          <ul class="feature-list">
+            <li class="feature-item">Almacenamiento en la nube seguro</li>
+            <li class="feature-item">Sincronización de archivos entre dispositivos</li>
+            <li class="feature-item">Compartición de archivos y carpetas</li>
+            <li class="feature-item">Historial de versiones de documentos</li>
+            <li class="feature-item">Integración con Office Online</li>
+            <li class="feature-item">Cifrado de datos en tránsito y en reposo</li>
+            <li class="feature-item">Soporte para trabajo colaborativo</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="app-window" id="twitter">
+        <div class="window-header">
+          <h3 class="window-title">Twitter - Características</h3>
+          <button class="close-btn" onclick="closeApp('twitter')">×</button>
+        </div>
+        <div class="window-content">
+          <ul class="feature-list">
+            <li class="feature-item">Publicación de tweets (280 caracteres)</li>
+            <li class="feature-item">Timeline personalizado</li>
+            <li class="feature-item">Mensajes directos</li>
+            <li class="feature-item">Listas de usuarios</li>
+            <li class="feature-item">Soporte para imágenes, videos y GIFs</li>
+            <li class="feature-item">Notificaciones en tiempo real</li>
+            <li class="feature-item">Análisis de engagement</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="app-window" id="drive">
+        <div class="window-header">
+          <h3 class="window-title">Google Drive - Características</h3>
+          <button class="close-btn" onclick="closeApp('drive')">×</button>
+        </div>
+        <div class="window-content">
+          <ul class="feature-list">
+            <li class="feature-item">15GB de almacenamiento gratuito</li>
+            <li class="feature-item">Sincronización automática entre dispositivos</li>
+            <li class="feature-item">Acceso desde cualquier navegador</li>
+            <li class="feature-item">Integración con Google Docs, Sheets y Slides</li>
+            <li class="feature-item">Compartición avanzada de archivos</li>
+            <li class="feature-item">Búsqueda potente con filtros</li>
+            <li class="feature-item">Soporte para trabajo colaborativo en tiempo real</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="app-window" id="components">
+        <div class="window-header">
+          <h3 class="window-title">Componentes Internos</h3>
+          <button class="close-btn" onclick="closeApp('components')">×</button>
+        </div>
+        <div class="window-content">
+          <div class="device-components">
+            <h4 class="device-title">Notebook Avanzada</h4>
+            
+            <div class="component-item">
+              <div class="component-name">CPU (Procesador)</div>
+              <p>Intel Core i9-12900H de 14 núcleos (6 Performance + 8 Efficient) hasta 5.0GHz con 24MB de cache</p>
+            </div>
+            
+            <div class="component-item">
+              <div class="component-name">GPU (Tarjeta Gráfica)</div>
+              <p>NVIDIA RTX 3080 Ti con 16GB GDDR6 y soporte para DLSS y Ray Tracing</p>
+            </div>
+            
+            <div class="component-item">
+              <div class="component-name">RAM</div>
+              <p>32GB DDR5 a 4800MHz en configuración dual-channel (ampliable hasta 64GB)</p>
+            </div>
+            
+            <div class="component-item">
+              <div class="component-name">Almacenamiento</div>
+              <p>1TB SSD NVMe PCIe 4.0 con velocidades de 7000/5000 MB/s (lectura/escritura) + ranura adicional para expansión</p>
+            </div>
+            
+            <div class="component-item">
+              <div class="component-name">Placa Madre</div>
+              <p>Chipset Z690 con soporte para PCIe 5.0, Thunderbolt 4 y WiFi 6E</p>
+            </div>
+            
+            <div class="component-item">
+              <div class="component-name">Pantalla</div>
+              <p>16" QHD+ (2560×1600) IPS 240Hz con 100% DCI-P3 y HDR1000</p>
+            </div>
+            
+            <div class="component-item">
+              <div class="component-name">Refrigeración</div>
+              <p>Sistema de vapor chamber dual fan con 4 salidas de aire y 5 heat pipes</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- MOBILE - MEJORADO CON MÁS APLICACIONES -->
+    <div class="mobile">
+      <div class="mobile-screen">
+        <div class="status-bar">
+          <span id="mobile-clock">00:00</span>
+          <span>📶 5G</span>
+        </div>
+        
+        <div class="app-grid">
+          <div class="mobile-app" onclick="openMobileApp('whatsapp')">
+            <img src="https://img.icons8.com/color/48/whatsapp.png" alt="WhatsApp">
+            <span>WhatsApp</span>
+          </div>
+          
+          <div class="mobile-app" onclick="openMobileApp('youtube')">
+            <img src="https://img.icons8.com/color/48/youtube-play.png" alt="YouTube">
+            <span>YouTube</span>
+          </div>
+          
+          <div class="mobile-app" onclick="openMobileApp('instagram')">
+            <img src="https://img.icons8.com/color/48/instagram-new.png" alt="Instagram">
+            <span>Instagram</span>
+          </div>
+          
+          <div class="mobile-app" onclick="openMobileApp('facebook')">
+            <img src="https://img.icons8.com/color/48/facebook.png" alt="Facebook">
+            <span>Facebook</span>
+          </div>
+          
+          <div class="mobile-app" onclick="openMobileApp('camera')">
+            <img src="https://img.icons8.com/color/48/camera.png" alt="Cámara">
+            <span>Cámara</span>
+          </div>
+          
+          <div class="mobile-app" onclick="openMobileApp('components')">
+            <img src="https://img.icons8.com/color/48/electronics.png" alt="Componentes">
+            <span>Componentes</span>
+          </div>
+          
+          <div class="mobile-app" onclick="openMobileApp('outlook')">
+            <img src="https://img.icons8.com/color/48/microsoft-outlook-2019.png" alt="Outlook">
+            <span>Outlook</span>
+          </div>
+          
+          <div class="mobile-app" onclick="openMobileApp('onedrive')">
+            <img src="https://img.icons8.com/color/48/onedrive.png" alt="OneDrive">
+            <span>OneDrive</span>
+          </div>
+          
+          <div class="mobile-app" onclick="openMobileApp('twitter')">
+            <img src="https://img.icons8.com/color/48/twitter.png" alt="Twitter">
+            <span>Twitter</span>
+          </div>
+          
+          <div class="mobile-app" onclick="openMobileApp('drive')">
+            <img src="https://img.icons8.com/color/48/google-drive.png" alt="Google Drive">
+            <span>Drive</span>
+          </div>
+          
+          <div class="mobile-app" onclick="openMobileApp('maps')">
+            <img src="https://img.icons8.com/color/48/google-maps.png" alt="Maps">
+            <span>Maps</span>
+          </div>
+          
+          <div class="mobile-app" onclick="openMobileApp('photos')">
+            <img src="https://img.icons8.com/color/48/google-photos.png" alt="Photos">
+            <span>Photos</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Mobile Apps - MEJORADO CON MÁS APLICACIONES -->
+      <div class="mobile-app-window" id="whatsapp-app">
+        <div class="mobile-window-header">
+          <h3 class="mobile-window-title">WhatsApp - Características</h3>
+          <button class="mobile-close-btn" onclick="closeMobileApp('whatsapp')">×</button>
+        </div>
+        <div class="window-content">
+          <ul class="feature-list">
+            <li class="mobile-feature-item">Mensajería instantánea con cifrado end-to-end</li>
+            <li class="mobile-feature-item">Llamadas y videollamadas individuales y grupales</li>
+            <li class="mobile-feature-item">Compartir imágenes, videos y documentos</li>
+            <li class="mobile-feature-item">Estado y mensajes temporales</li>
+            <li class="mobile-feature-item">Sincronización multiplataforma</li>
+            <li class="mobile-feature-item">Copias de seguridad en la nube</li>
+            <li class="mobile-feature-item">WhatsApp Web para uso en computadoras</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="mobile-app-window" id="youtube-app">
+        <div class="mobile-window-header">
+          <h3 class="mobile-window-title">YouTube - Características</h3>
+          <button class="mobile-close-btn" onclick="closeMobileApp('youtube')">×</button>
+        </div>
+        <div class="window-content">
+          <ul class="feature-list">
+            <li class="mobile-feature-item">Reproducción de videos en hasta 4K HDR</li>
+            <li class="mobile-feature-item">Soporte para modo Picture-in-Picture</li>
+            <li class="mobile-feature-item">Descargas para ver sin conexión</li>
+            <li class="mobile-feature-item">Recomendaciones personalizadas</li>
+            <li class="mobile-feature-item">Suscripciones y notificaciones</li>
+            <li class="mobile-feature-item">YouTube Premium sin anuncios</li>
+            <li class="mobile-feature-item">YouTube Music integrado</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="mobile-app-window" id="instagram-app">
+        <div class="mobile-window-header">
+          <h3 class="mobile-window-title">Instagram - Características</h3>
+          <button class="mobile-close-btn" onclick="closeMobileApp('instagram')">×</button>
+        </div>
+        <div class="window-content">
+          <ul class="feature-list">
+            <li class="mobile-feature-item">Publicación de fotos y videos con filtros</li>
+            <li class="mobile-feature-item">Historias temporales con efectos AR</li>
+            <li class="mobile-feature-item">IGTV para videos largos</li>
+            <li class="mobile-feature-item">Reels para videos cortos estilo TikTok</li>
+            <li class="mobile-feature-item">Mensajería directa integrada</li>
+            <li class="mobile-feature-item">Tienda y compras integradas</li>
+            <li class="mobile-feature-item">Análisis de engagement para cuentas profesionales</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="mobile-app-window" id="facebook-app">
+        <div class="mobile-window-header">
+          <h3 class="mobile-window-title">Facebook - Características</h3>
+          <button class="mobile-close-btn" onclick="closeMobileApp('facebook')">×</button>
+        </div>
+        <div class="window-content">
+          <ul class="feature-list">
+            <li class="mobile-feature-item">News Feed con algoritmo personalizado</li>
+            <li class="mobile-feature-item">Grupos y páginas para comunidades</li>
+            <li class="mobile-feature-item">Facebook Live para transmisiones en vivo</li>
+            <li class="mobile-feature-item">Marketplace para compras locales</li>
+            <li class="mobile-feature-item">Eventos y recordatorios</li>
+            <li class="mobile-feature-item">Facebook Dating para citas</li>
+            <li class="mobile-feature-item">Portal para video llamadas</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="mobile-app-window" id="camera-app">
+        <div class="mobile-window-header">
+          <h3 class="mobile-window-title">Cámara - Características</h3>
+          <button class="mobile-close-btn" onclick="closeMobileApp('camera')">×</button>
+        </div>
+        <div class="window-content">
+          <ul class="feature-list">
+            <li class="mobile-feature-item">Sistema triple cámara: 108MP (principal) + 12MP (ultra wide) + 10MP (telefoto 3x)</li>
+            <li class="mobile-feature-item">Grabación 8K a 30fps y 4K a 120fps</li>
+            <li class="mobile-feature-item">Estabilización óptica de imagen (OIS)</li>
+            <li class="mobile-feature-item">Modo noche mejorado con IA</li>
+            <li class="mobile-feature-item">HDR10+ para mayor rango dinámico</li>
+            <li class="mobile-feature-item">Modo retrato con efecto bokeh ajustable</li>
+            <li class="mobile-feature-item">Edición profesional integrada</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="mobile-app-window" id="outlook-app">
+        <div class="mobile-window-header">
+          <h3 class="mobile-window-title">Outlook - Características</h3>
+          <button class="mobile-close-btn" onclick="closeMobileApp('outlook')">×</button>
+        </div>
+        <div class="window-content">
+          <ul class="feature-list">
+            <li class="mobile-feature-item">Gestión de correo electrónico profesional</li>
+            <li class="mobile-feature-item">Calendario integrado para gestión de tiempo</li>
+            <li class="mobile-feature-item">Contactos y agenda</li>
+            <li class="mobile-feature-item">Bandeja de entrada inteligente con filtros</li>
+            <li class="mobile-feature-item">Integración con Microsoft 365</li>
+            <li class="mobile-feature-item">Búsqueda avanzada con filtros</li>
+            <li class="mobile-feature-item">Soporte para múltiples cuentas</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="mobile-app-window" id="onedrive-app">
+        <div class="mobile-window-header">
+          <h3 class="mobile-window-title">OneDrive - Características</h3>
+          <button class="mobile-close-btn" onclick="closeMobileApp('onedrive')">×</button>
+        </div>
+        <div class="window-content">
+          <ul class="feature-list">
+            <li class="mobile-feature-item">5GB de almacenamiento gratuito (ampliable)</li>
+            <li class="mobile-feature-item">Sincronización automática de fotos</li>
+            <li class="mobile-feature-item">Acceso offline a archivos seleccionados</li>
+            <li class="mobile-feature-item">Escaneo de documentos con la cámara</li>
+            <li class="mobile-feature-item">Compartición segura de archivos</li>
+            <li class="mobile-feature-item">Integración con Office Mobile</li>
+            <li class="mobile-feature-item">Cifrado de extremo a extremo</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="mobile-app-window" id="twitter-app">
+        <div class="mobile-window-header">
+          <h3 class="mobile-window-title">Twitter - Características</h3>
+          <button class="mobile-close-btn" onclick="closeMobileApp('twitter')">×</button>
+        </div>
+        <div class="window-content">
+          <ul class="feature-list">
+            <li class="mobile-feature-item">Tweets de hasta 280 caracteres</li>
+            <li class="mobile-feature-item">Fleets (historias temporales)</li>
+            <li class="mobile-feature-item">Spaces para audio en vivo</li>
+            <li class="mobile-feature-item">Listas personalizadas</li>
+            <li class="mobile-feature-item">Modo oscuro personalizable</li>
+            <li class="mobile-feature-item">Twitter Blue con funciones premium</li>
+            <li class="mobile-feature-item">Análisis de tweets para cuentas profesionales</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="mobile-app-window" id="drive-app">
+        <div class="mobile-window-header">
+          <h3 class="mobile-window-title">Google Drive - Características</h3>
+          <button class="mobile-close-btn" onclick="closeMobileApp('drive')">×</button>
+        </div>
+        <div class="window-content">
+          <ul class="feature-list">
+            <li class="mobile-feature-item">15GB de almacenamiento gratuito compartido</li>
+            <li class="mobile-feature-item">Escaneo de documentos con la cámara</li>
+            <li class="mobile-feature-item">Acceso offline a archivos importantes</li>
+            <li class="mobile-feature-item">Búsqueda por contenido en imágenes/PDFs</li>
+            <li class="mobile-feature-item">Integración con Google Fotos</li>
+            <li class="mobile-feature-item">Compartición avanzada con permisos</li>
+            <li class="mobile-feature-item">Protección con verificación en dos pasos</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="mobile-app-window" id="maps-app">
+        <div class="mobile-window-header">
+          <h3 class="mobile-window-title">Google Maps - Características</h3>
+          <button class="mobile-close-btn" onclick="closeMobileApp('maps')">×</button>
+        </div>
+        <div class="window-content">
+          <ul class="feature-list">
+            <li class="mobile-feature-item">Navegación GPS con voz</li>
+            <li class="mobile-feature-item">Tráfico en tiempo real</li>
+            <li class="mobile-feature-item">Información de transporte público</li>
+            <li class="mobile-feature-item">Reseñas y fotos de lugares</li>
+            <li class="mobile-feature-item">Mapas offline descargables</li>
+            <li class="mobile-feature-item">Street View integrado</li>
+            <li class="mobile-feature-item">Compartición de ubicación en tiempo real</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="mobile-app-window" id="photos-app">
+        <div class="mobile-window-header">
+          <h3 class="mobile-window-title">Google Photos - Características</h3>
+          <button class="mobile-close-btn" onclick="closeMobileApp('photos')">×</button>
+        </div>
+        <div class="window-content">
+          <ul class="feature-list">
+            <li class="mobile-feature-item">Almacenamiento ilimitado de fotos (calidad alta)</li>
+            <li class="mobile-feature-item">Búsqueda inteligente por personas, lugares y cosas</li>
+            <li class="mobile-feature-item">Creación automática de álbumes y collages</li>
+            <li class="mobile-feature-item">Edición avanzada integrada</li>
+            <li class="mobile-feature-item">Compartición fácil con enlaces</li>
+            <li class="mobile-feature-item">Memorias automáticas con música</li>
+            <li class="mobile-feature-item">Soporte para Live Photos y videos</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="mobile-app-window" id="components-app">
+        <div class="mobile-window-header">
+          <h3 class="mobile-window-title">Componentes Internos</h3>
+          <button class="mobile-close-btn" onclick="closeMobileApp('components')">×</button>
+        </div>
+        <div class="window-content">
+          <div class="device-components">
+            <h4 class="device-title">Smartphone Flagship</h4>
+            
+            <div class="component-item">
+              <div class="component-name">SoC (System on Chip)</div>
+              <p>Snapdragon 8 Gen 2 de 4nm con CPU Octa-core (1x3.2GHz + 4x2.8GHz + 3x2.0GHz) y GPU Adreno 740</p>
+            </div>
+            
+            <div class="component-item">
+              <div class="component-name">Memoria RAM</div>
+              <p>12GB LPDDR5X + RAM virtual de hasta 8GB adicionales</p>
+            </div>
+            
+            <div class="component-item">
+              <div class="component-name">Almacenamiento</div>
+              <p>256GB UFS 4.0 con velocidades de 4200/2800 MB/s (lectura/escritura)</p>
+            </div>
+            
+            <div class="component-item">
+              <div class="component-name">Pantalla</div>
+              <p>6.7" Dynamic AMOLED 2X QHD+ (3200×1440) con LTPO 1-120Hz, 1500 nits y protección Gorilla Glass Victus 2</p>
+            </div>
+            
+            <div class="component-item">
+              <div class="component-name">Batería</div>
+              <p>5000mAh con carga rápida de 65W, carga inalámbrica de 15W y carga reversible de 5W</p>
+            </div>
+            
+            <div class="component-item">
+              <div class="component-name">Cámaras</div>
+              <p>Triple sistema: Principal 200MP OIS, Ultra Wide 50MP y Telefoto 10MP con zoom óptico 3x</p>
+            </div>
+            
+            <div class="component-item">
+              <div class="component-name">Conectividad</div>
+              <p>5G Sub-6GHz/mmWave, WiFi 6E, Bluetooth 5.3, NFC, UWB y GPS dual-band</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+
+  <script>
+    // Clock
+    function updateClock() {
+      const now = new Date();
+      const timeString = now.toTimeString().substring(0, 5);
+      document.getElementById('clock').textContent = timeString;
+      document.getElementById('mobile-clock').textContent = timeString;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+    
+    // App Manager
+    let currentApp = null;
+    
+    function openApp(appId) {
+      if(currentApp) closeApp(currentApp);
+      document.getElementById(appId).style.display = 'block';
+      currentApp = appId;
+    }
+    
+    function closeApp(appId) {
+      document.getElementById(appId).style.display = 'none';
+      if(currentApp === appId) currentApp = null;
+    }
+    
+    // Mobile App Manager - MEJORADO
+    let currentMobileApp = null;
+    
+    function openMobileApp(appId) {
+      if(currentMobileApp) closeMobileApp(currentMobileApp);
+      document.getElementById(appId + '-app').style.display = 'block';
+      currentMobileApp = appId;
+    }
+    
+    function closeMobileApp(appId) {
+      document.getElementById(appId + '-app').style.display = 'none';
+      if(currentMobileApp === appId) currentMobileApp = null;
+    }
+  </script>
+</body>
+</html>

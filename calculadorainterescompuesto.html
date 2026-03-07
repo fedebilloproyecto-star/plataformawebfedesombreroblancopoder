@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Interés Compuesto</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+                border-radius: 10px;
+    max-width: 1100px;
+  margin: 90px auto;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .calculator-section {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-section {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #2575fc;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+
+        input:focus, select:focus {
+            border-color: #2575fc;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(37, 117, 252, 0.2);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            width: 100%;
+            font-weight: 600;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .results {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .results.active {
+            display: block;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eaeaea;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .result-label {
+            font-weight: 600;
+            color: #555;
+        }
+
+        .result-value {
+            font-weight: 700;
+            color: #2575fc;
+            font-size: 1.1rem;
+        }
+
+        .chart-container {
+            margin-top: 30px;
+            height: 300px;
+            position: relative;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eaeaea;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: #555;
+        }
+
+        tr:hover {
+            background-color: #f5f7fa;
+        }
+
+        .symbol-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .symbol-table th, .symbol-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border: 1px solid #eaeaea;
+        }
+
+        .symbol-table th {
+            background-color: #2575fc;
+            color: white;
+        }
+
+        .symbol-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #777;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                flex-direction: column;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+
+     /* Solo estilos para el botón "Volver atrás" */
+.back-button {
+  display: inline-block;
+  padding: 10px 18px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 2px solid #333;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  user-select: none;
+}
+
+/* Efecto al pasar el ratón */
+.back-button:hover,
+.back-button:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+  text-decoration: none;
+  outline: none;
+}
+
+/* Efecto al hacer clic */
+.back-button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}   
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Calculadora de Interés Compuesto</h1>
+            <p class="subtitle">Calcula cómo tu dinero puede crecer con el tiempo</p>
+        </header>
+<a href="principal.html" class="back-button" aria-label="Volver atrás">Volver atrás</a>
+        <div class="content">
+            <section class="calculator-section">
+                <h2>Calculadora</h2>
+                <form id="compound-interest-form">
+                    <div class="form-group">
+                        <label for="capital-inicial">Capital Inicial (CI)</label>
+                        <input type="number" id="capital-inicial" placeholder="Ej: 1000" min="0" step="0.01" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="tasa-interes">Tasa de Interés Anual (i)</label>
+                        <input type="number" id="tasa-interes" placeholder="Ej: 5 para 5%" min="0" step="0.01" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="periodos">Número de Períodos (n)</label>
+                        <input type="number" id="periodos" placeholder="Ej: 10 para 10 años" min="1" step="1" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="tipo-periodo">Tipo de Período</label>
+                        <select id="tipo-periodo">
+                            <option value="anual">Años</option>
+                            <option value="mensual">Meses</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="aporte-adicional">Aporte Periódico Adicional (opcional)</label>
+                        <input type="number" id="aporte-adicional" placeholder="Ej: 100" min="0" step="0.01">
+                    </div>
+                    
+                    <button type="submit" class="btn">Calcular Interés Compuesto</button>
+                </form>
+                
+                <div id="results" class="results">
+                    <h3>Resultados</h3>
+                    <div class="result-item">
+                        <span class="result-label">Capital Final (CF):</span>
+                        <span class="result-value" id="capital-final">$0.00</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Intereses Ganados:</span>
+                        <span class="result-value" id="intereses-ganados">$0.00</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Capital Total Invertido:</span>
+                        <span class="result-value" id="capital-total-invertido">$0.00</span>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <canvas id="interest-chart"></canvas>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="info-section">
+                <h2>Información sobre Interés Compuesto</h2>
+                <p>El interés compuesto es el interés calculado sobre el capital inicial y también sobre los intereses acumulados de períodos anteriores. Es el concepto de "ganar intereses sobre intereses".</p>
+                
+                <h3>Fórmula del Interés Compuesto</h3>
+                <p>La fórmula básica para calcular el interés compuesto es:</p>
+                <p style="text-align: center; font-size: 1.2rem; margin: 15px 0; font-weight: bold;">
+                    CF = CI × (1 + i)<sup>n</sup>
+                </p>
+                
+                <h3>Símbolos y Significados</h3>
+                <table class="symbol-table">
+                    <tr>
+                        <th>Símbolo</th>
+                        <th>Significado</th>
+                        <th>Explicación</th>
+                    </tr>
+                    <tr>
+                        <td><strong>CF</strong></td>
+                        <td>Capital Final</td>
+                        <td>Es el monto total al final del período, incluyendo el capital inicial y los intereses acumulados.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CI</strong></td>
+                        <td>Capital Inicial</td>
+                        <td>Es la cantidad de dinero con la que se empieza la inversión o préstamo.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>i</strong></td>
+                        <td>Tasa de interés</td>
+                        <td>Es el porcentaje de interés aplicado en cada período (expresado en decimal, por ejemplo 5% = 0.05).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>n</strong></td>
+                        <td>Número de períodos</td>
+                        <td>Es la cantidad de períodos (años, meses, etc.) durante los cuales se aplicará el interés compuesto.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>(1 + i)<sup>n</sup></strong></td>
+                        <td>Factor de capitalización</td>
+                        <td>Representa cómo el interés se acumula sobre el capital inicial durante cada período. Elevarlo a la n refleja la acumulación a lo largo de n períodos.</td>
+                    </tr>
+                </table>
+                
+                <h3>Ejemplo Práctico</h3>
+                <p>Si inviertes $1,000 a una tasa de interés anual del 5% durante 10 años:</p>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>CI = $1,000</li>
+                    <li>i = 0.05 (5%)</li>
+                    <li>n = 10 años</li>
+                    <li>CF = 1000 × (1 + 0.05)<sup>10</sup> = $1,628.89</li>
+                </ul>
+                <p>Al final de los 10 años, tu inversión habrá crecido a $1,628.89, ganando $628.89 en intereses.</p>
+            </section>
+        </div>
+        
+    
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('compound-interest-form');
+            const results = document.getElementById('results');
+            const capitalFinalElement = document.getElementById('capital-final');
+            const interesesGanadosElement = document.getElementById('intereses-ganados');
+            const capitalTotalInvertidoElement = document.getElementById('capital-total-invertido');
+            let chart = null;
+            
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Obtener valores del formulario
+                const capitalInicial = parseFloat(document.getElementById('capital-inicial').value);
+                const tasaInteres = parseFloat(document.getElementById('tasa-interes').value) / 100;
+                let periodos = parseInt(document.getElementById('periodos').value);
+                const tipoPeriodo = document.getElementById('tipo-periodo').value;
+                const aporteAdicional = parseFloat(document.getElementById('aporte-adicional').value) || 0;
+                
+                // Ajustar según el tipo de período
+                if (tipoPeriodo === 'mensual') {
+                    periodos = periodos / 12; // Convertir meses a años para cálculo
+                }
+                
+                // Calcular interés compuesto
+                const capitalFinal = capitalInicial * Math.pow(1 + tasaInteres, periodos);
+                const interesesGanados = capitalFinal - capitalInicial;
+                const capitalTotalInvertido = capitalInicial + (aporteAdicional * periodos);
+                
+                // Mostrar resultados
+                capitalFinalElement.textContent = '$' + capitalFinal.toFixed(2);
+                interesesGanadosElement.textContent = '$' + interesesGanados.toFixed(2);
+                capitalTotalInvertidoElement.textContent = '$' + capitalTotalInvertido.toFixed(2);
+                
+                // Mostrar sección de resultados
+                results.classList.add('active');
+                
+                // Crear o actualizar gráfico
+                crearGrafico(capitalInicial, tasaInteres, periodos);
+            });
+            
+            function crearGrafico(capitalInicial, tasaInteres, periodos) {
+                const ctx = document.getElementById('interest-chart').getContext('2d');
+                
+                // Destruir gráfico anterior si existe
+                if (chart) {
+                    chart.destroy();
+                }
+                
+                // Generar datos para el gráfico
+                const labels = [];
+                const dataCapital = [];
+                const dataIntereses = [];
+                
+                for (let i = 0; i <= periodos; i++) {
+                    labels.push(`Año ${i}`);
+                    const valor = capitalInicial * Math.pow(1 + tasaInteres, i);
+                    dataCapital.push(capitalInicial);
+                    dataIntereses.push(valor - capitalInicial);
+                }
+                
+                // Crear nuevo gráfico
+                chart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: 'Capital Inicial',
+                                data: dataCapital,
+                                backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                                borderColor: 'rgba(54, 162, 235, 1)',
+                                borderWidth: 1
+                            },
+                            {
+                                label: 'Intereses Acumulados',
+                                data: dataIntereses,
+                                backgroundColor: 'rgba(75, 192, 192, 0.7)',
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                stacked: true,
+                                title: {
+                                    display: true,
+                                    text: 'Años'
+                                }
+                            },
+                            y: {
+                                stacked: true,
+                                title: {
+                                    display: true,
+                                    text: 'Valor ($)'
+                                },
+                                beginAtZero: true
+                            }
+                        },
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Crecimiento del Capital con Interés Compuesto'
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        const value = context.raw;
+                                        return `$${value.toFixed(2)}`;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

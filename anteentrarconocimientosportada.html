@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Multidisciplinario</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* ===== RESET Y CONFIGURACIÓN GENERAL ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-color: #3498db;
+      --secondary-color: #2ecc71;
+      --accent-color: #9b59b6;
+      --dark-bg: rgba(0, 0, 0, 0.85);
+      --card-bg: rgba(255, 255, 255, 0.1);
+      --text-light: rgba(255, 255, 255, 0.9);
+      --transition-fast: 0.3s ease;
+      --transition-medium: 0.5s ease;
+      --transition-slow: 0.8s ease;
+      --shadow-light: 0 5px 15px rgba(0, 0, 0, 0.2);
+      --shadow-medium: 0 10px 30px rgba(0, 0, 0, 0.3);
+      --shadow-heavy: 0 20px 50px rgba(0, 0, 0, 0.4);
+      --border-radius: 20px;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: #ffffff;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+      background: #000;
+    }
+
+    /* ===== FONDO ORIGINAL DE MONTAÑAS ===== */
+    .fondo-montanas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      background: 
+        linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.9)),
+        url('https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      filter: brightness(0.9) contrast(1.1);
+      animation: fondoEntrada 2s ease-out;
+    }
+
+    @keyframes fondoEntrada {
+      from {
+        opacity: 0;
+        transform: scale(1.1);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    /* Efecto de luces sutiles para montañas */
+    .luces-montanas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      background: 
+        radial-gradient(circle at 30% 20%, rgba(255, 255, 200, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 70% 80%, rgba(200, 220, 255, 0.03) 0%, transparent 50%);
+      animation: brilloMontanas 10s infinite alternate;
+    }
+
+    @keyframes brilloMontanas {
+      0%, 100% {
+        opacity: 0.3;
+      }
+      50% {
+        opacity: 0.6;
+      }
+    }
+
+    /* ===== CONTENEDOR PRINCIPAL ===== */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      position: relative;
+      z-index: 1;
+      animation: contenidoEntrada 1s ease-out 0.5s both;
+    }
+
+    @keyframes contenidoEntrada {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ===== ENCABEZADO MEJORADO ===== */
+    .header {
+      text-align: center;
+      padding: 60px 20px 40px;
+      margin-bottom: 40px;
+      position: relative;
+    }
+
+    .header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(200px, 80%);
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+      border-radius: 2px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      margin-bottom: 30px;
+      color: #ffffff;
+      text-shadow: var(--shadow-medium);
+    }
+
+    .logo i {
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      color: var(--primary-color);
+      animation: latido 3s infinite;
+    }
+
+    @keyframes latido {
+      0%, 100% { 
+        transform: scale(1); 
+        color: var(--primary-color);
+      }
+      50% { 
+        transform: scale(1.15); 
+        color: var(--secondary-color);
+      }
+    }
+
+    .main-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 700;
+      margin-bottom: 20px;
+      background: linear-gradient(45deg, #fff, var(--primary-color), #fff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
+      animation: tituloBrillo 4s infinite alternate;
+    }
+
+    @keyframes tituloBrillo {
+      0% {
+        background-position: 0% 50%;
+      }
+      100% {
+        background-position: 100% 50%;
+      }
+    }
+
+    .subtitle {
+      font-size: clamp(1rem, 3vw, 1.3rem);
+      font-weight: 300;
+      max-width: 700px;
+      margin: 0 auto;
+      color: var(--text-light);
+      line-height: 1.6;
+      opacity: 0.9;
+    }
+
+    /* ===== BOTÓN VOLVER ===== */
+    .btn-volver {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 25px;
+      background: linear-gradient(135deg, var(--primary-color), #2980b9);
+      color: white;
+      text-decoration: none;
+      border-radius: 50px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 500;
+      transition: all var(--transition-fast);
+      margin-bottom: 30px;
+      border: 2px solid transparent;
+      box-shadow: var(--shadow-light);
+    }
+
+    .btn-volver:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-medium);
+      background: linear-gradient(135deg, #2980b9, var(--primary-color));
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    /* ===== TARJETAS MEJORADAS ===== */
+    .cards-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 30px;
+      margin-bottom: 60px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: var(--border-radius);
+      padding: 30px;
+      cursor: pointer;
+      transition: all var(--transition-medium);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: var(--shadow-medium);
+      min-height: 350px;
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--transition-medium);
+    }
+
+    .card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+      transform: translateX(-100%);
+      transition: transform 0.6s;
+    }
+
+    .card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .card:hover::after {
+      transform: translateX(100%);
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: var(--shadow-heavy);
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .card-content {
+      position: relative;
+      z-index: 1;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .card-icon {
+      font-size: clamp(2.5rem, 5vw, 3rem);
+      margin-bottom: 20px;
+      text-align: center;
+      transition: transform var(--transition-medium);
+      color: var(--primary-color);
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card:hover .card-icon {
+      transform: scale(1.2) rotate(5deg);
+    }
+
+    .card-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(1.5rem, 3vw, 1.8rem);
+      font-weight: 600;
+      margin-bottom: 15px;
+      text-align: center;
+      color: #ffffff;
+      line-height: 1.3;
+    }
+
+    .card-description {
+      font-size: clamp(0.9rem, 2vw, 1rem);
+      line-height: 1.6;
+      margin-bottom: 20px;
+      color: var(--text-light);
+      flex-grow: 1;
+      opacity: 0.9;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: auto;
+    }
+
+    .card-action {
+      font-weight: 600;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all var(--transition-fast);
+      padding: 10px 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+    }
+
+    .card:hover .card-action {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateX(5px);
+      padding-right: 25px;
+    }
+
+    /* ===== PIE DE PÁGINA MEJORADO ===== */
+    .footer {
+      text-align: center;
+      padding: 40px 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+      margin-top: 60px;
+      border-radius: var(--border-radius) var(--border-radius) 0 0;
+    }
+
+    .footer p {
+      margin-bottom: 20px;
+      color: var(--text-light);
+      font-size: 0.9rem;
+      line-height: 1.6;
+      opacity: 0.8;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: #ffffff;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all var(--transition-fast);
+      font-size: 0.9rem;
+      padding: 8px 15px;
+      border-radius: 50px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-links a:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-light);
+    }
+
+    /* ===== PANTALLA DE CARGA ORIGINAL (FONDO CLARO) ===== */
+    .loading {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+
+    .loading.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    /* Fondo de paisaje claro y productivo para el loading */
+    .loading::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        linear-gradient(rgba(245, 247, 250, 0.9), rgba(195, 207, 226, 0.9)),
+        url('https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+      background-size: cover;
+      background-position: center;
+      filter: brightness(1.1) contrast(1.1);
+      z-index: -1;
+    }
+
+    /* Elementos decorativos en el loading */
+    .loading-decorations {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: -1;
+    }
+
+    .loading-decoration {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      animation: flotarCarga 15s infinite linear;
+    }
+
+    @keyframes flotarCarga {
+      0% {
+        transform: translateY(100vh) translateX(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.5;
+      }
+      90% {
+        opacity: 0.5;
+      }
+      100% {
+        transform: translateY(-100px) translateX(calc(100vw * var(--x-multiplier)));
+        opacity: 0;
+      }
+    }
+
+    .loader {
+      width: 80px;
+      height: 80px;
+      border: 4px solid rgba(52, 152, 219, 0.2);
+      border-top: 4px solid #3498db;
+      border-right: 4px solid #2ecc71;
+      border-bottom: 4px solid #f39c12;
+      border-left: 4px solid #9b59b6;
+      border-radius: 50%;
+      animation: spin 1.5s linear infinite;
+      margin-bottom: 25px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .loading-content {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      animation: contenidoAparece 1s ease-out;
+    }
+
+    @keyframes contenidoAparece {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .loading-text {
+      font-size: 1.3rem;
+      color: #2c3e50;
+      margin-bottom: 15px;
+      font-weight: 600;
+      text-shadow: none;
+    }
+
+    .loading-subtext {
+      font-size: 1rem;
+      color: #7f8c8d;
+      margin-bottom: 25px;
+      font-weight: 400;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: rgba(189, 195, 199, 0.3);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 20px;
+    }
+
+    .progress {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #3498db, #2ecc71);
+      border-radius: 4px;
+      animation: progressAnimation 2s ease-in-out;
+    }
+
+    @keyframes progressAnimation {
+      0% { width: 0%; }
+      20% { width: 25%; }
+      40% { width: 50%; }
+      60% { width: 75%; }
+      80% { width: 90%; }
+      100% { width: 100%; }
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* ===== RESPONSIVO OPTIMIZADO ===== */
+    @media (max-width: 1200px) {
+      .container {
+        padding: 15px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .cards-container {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+        margin: 0 auto 40px;
+      }
+      
+      .card {
+        min-height: 320px;
+        padding: 25px;
+      }
+      
+      .header {
+        padding: 40px 15px 30px;
+      }
+      
+      .footer-links {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+      }
+      
+      .loading-content {
+        padding: 30px;
+        max-width: 350px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        padding: 20px;
+        min-height: 300px;
+      }
+      
+      .card-icon {
+        font-size: 2.5rem;
+      }
+      
+      .card-title {
+        font-size: 1.5rem;
+      }
+      
+      .header {
+        padding: 30px 15px 20px;
+      }
+      
+      .loading-content {
+        padding: 20px;
+        max-width: 250px;
+      }
+      
+      .loading-text {
+        font-size: 1.1rem;
+      }
+      
+      .loader {
+        width: 60px;
+        height: 60px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Pantalla de carga original (fondo claro) -->
+  <div class="loading" id="loading">
+    <div class="loading-decorations" id="loadingDecorations"></div>
+    <div class="loading-content">
+      <div class="loader"></div>
+      <div class="loading-text">INICIANDO PORTAL MULTIDISCIPLINARIO</div>
+      <div class="loading-subtext">Preparando recursos especializados...</div>
+      <div class="progress-bar">
+        <div class="progress"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fondo original de montañas -->
+  <div class="fondo-montanas"></div>
+
+  <!-- Efecto de luces sutiles para montañas -->
+  <div class="luces-montanas"></div>
+
+  <div class="container">
+    <!-- Encabezado con logo y título -->
+    <header class="header">
+      <div class="logo">
+        <i class="fas fa-globe-americas"></i>
+        <span>Portal Multidisciplinario</span>
+      </div>
+      <h1 class="main-title">Explora el Conocimiento</h1>
+      <p class="subtitle">Descubre diferentes áreas del saber con contenido especializado y recursos actualizados en un entorno inspirador</p>
+    </header>
+    
+    <a href="Webconocimientosprincipal.html" class="btn-volver">
+      <i class="fas fa-arrow-left"></i> Volver al Inicio
+    </a>
+
+    <!-- Contenido principal con tarjetas de opciones -->
+    <main class="main-content">
+      <div class="cards-container">
+        <!-- Tarjeta Psicología -->
+        <a href="psicologiaportadaaprendeinicio.html" class="card">
+          <div class="card-content">
+            <div class="card-icon">
+              <i class="fas fa-brain"></i>
+            </div>
+            <h3 class="card-title">Psicología</h3>
+            <p class="card-description">
+              Sumérgete en el estudio de la mente humana. Explora teorías psicológicas, técnicas terapéuticas y herramientas para el desarrollo personal.
+            </p>
+            <div class="card-footer">
+              <span class="card-action">Explorar <i class="fas fa-arrow-right"></i></span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Tarjeta Abogacía -->
+        <a href="aprendeprincipalconocimientosabogacia.html" class="card">
+          <div class="card-content">
+            <div class="card-icon">
+              <i class="fas fa-balance-scale"></i>
+            </div>
+            <h3 class="card-title">Abogacía</h3>
+            <p class="card-description">
+              Adéntrate en el mundo del derecho. Descubre principios legales, casos emblemáticos y el funcionamiento de sistemas judiciales.
+            </p>
+            <div class="card-footer">
+              <span class="card-action">Explorar <i class="fas fa-arrow-right"></i></span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Tarjeta Contabilidad -->
+        <a href="aprendeportalcontablidad.html" class="card">
+          <div class="card-content">
+            <div class="card-icon">
+              <i class="fas fa-calculator"></i>
+            </div>
+            <h3 class="card-title">Contabilidad</h3>
+            <p class="card-description">
+              Domina los principios financieros y contables esenciales para la gestión empresarial y el análisis económico.
+            </p>
+            <div class="card-footer">
+              <span class="card-action">Explorar <i class="fas fa-arrow-right"></i></span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Tarjeta Tecnología -->
+        <a href="tecnologiaguiaportadainicio.html" class="card">
+          <div class="card-content">
+            <div class="card-icon">
+              <i class="fas fa-laptop-code"></i>
+            </div>
+            <h3 class="card-title">Tecnología</h3>
+            <p class="card-description">
+              Explora el mundo digital: programación, desarrollo web, inteligencia artificial y las últimas innovaciones tecnológicas.
+            </p>
+            <div class="card-footer">
+              <span class="card-action">Explorar <i class="fas fa-arrow-right"></i></span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Tarjeta Educación Sexual -->
+        <a href="inicioapreidzajeeducacionsexual.html" class="card">
+          <div class="card-content">
+            <div class="card-icon">
+              <i class="fas fa-heart"></i>
+            </div>
+            <h3 class="card-title">Educación Sexual</h3>
+            <p class="card-description">
+              valores  y respeto  sobre la sexualidad.
+            </p>
+            <div class="card-footer">
+              <span class="card-action">Explorar <i class="fas fa-arrow-right"></i></span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Tarjeta Guía de Carreras -->
+        <a href="inicioaprendeguiacatalogo.html" class="card">
+          <div class="card-content">
+            <div class="card-icon">
+              <i class="fas fa-graduation-cap"></i>
+            </div>
+            <h3 class="card-title">Guía de Carreras</h3>
+            <p class="card-description">
+              Lista detallada de aprendizajes y conocimientos que se adquieren en cada carrera profesional. Encuentra tu vocación.
+            </p>
+            <div class="card-footer">
+              <span class="card-action">Explorar <i class="fas fa-arrow-right"></i></span>
+            </div>
+          </div>
+        </a>
+       <!-- Tarjeta Sociologia  -->
+        <a href="iniciosociologiaaprende.html" class="card">
+          <div class="card-content">
+            <div class="card-icon">
+              <i class="fas fa-graduation-cap"></i>
+            </div>
+            <h3 class="card-title">Sociologia</h3>
+            <p class="card-description">
+             La sociología es la ciencia social que estudia la sociedad y las relaciones entre las personas. Se centra en la forma en que se organiza la vida social, el papel de las normas, la cultura y los valores, así como el comportamiento humano y la evolución de la sociedad.
+            </p>
+            <div class="card-footer">
+              <span class="card-action">Explorar <i class="fas fa-arrow-right"></i></span>
+            </div>
+          </div>
+        </a>
+
+      </div>
+    </main>
+
+ 
+   
+  </div>
+
+  <script>
+    // Función para crear decoraciones en el loading
+    function crearDecoracionesLoading() {
+      const contenedor = document.getElementById('loadingDecorations');
+      const numDecoraciones = 20;
+      
+      for (let i = 0; i < numDecoraciones; i++) {
+        const decoracion = document.createElement('div');
+        decoracion.classList.add('loading-decoration');
+        
+        // Tamaño aleatorio entre 2px y 10px
+        const tamaño = Math.random() * 8 + 2;
+        decoracion.style.width = `${tamaño}px`;
+        decoracion.style.height = `${tamaño}px`;
+        
+        // Posición inicial aleatoria
+        decoracion.style.left = `${Math.random() * 100}%`;
+        
+        // Retraso de animación aleatorio
+        decoracion.style.animationDelay = `${Math.random() * 5}s`;
+        
+        // Duración de animación aleatoria
+        const duracion = Math.random() * 10 + 10;
+        decoracion.style.animationDuration = `${duracion}s`;
+        
+        // Multiplicador para dirección X
+        decoracion.style.setProperty('--x-multiplier', (Math.random() - 0.5) * 2);
+        
+        // Opacidad variable
+        decoracion.style.opacity = Math.random() * 0.5 + 0.2;
+        
+        // Color aleatorio claro
+        const colores = [
+          'rgba(52, 152, 219, 0.6)', // Azul
+          'rgba(46, 204, 113, 0.6)', // Verde
+          'rgba(155, 89, 182, 0.6)', // Púrpura
+          'rgba(243, 156, 18, 0.6)', // Naranja
+          'rgba(149, 165, 166, 0.6)' // Gris
+        ];
+        decoracion.style.background = colores[Math.floor(Math.random() * colores.length)];
+        
+        contenedor.appendChild(decoracion);
+      }
+    }
+
+    // Función para simular progreso de carga
+    function simularProgreso() {
+      const elementos = [
+        'Cargando módulos de Psicología...',
+        'Inicializando recursos de Abogacía...',
+        'Preparando datos de Contabilidad...',
+        'Configurando Tecnología...',
+        'Optimizando interfaz...',
+        'Verificando conexión...',
+        '¡Listo para explorar!'
+      ];
+      
+      let elementoActual = 0;
+      const subtexto = document.querySelector('.loading-subtext');
+      const progressBar = document.querySelector('.progress');
+      
+      // Cambiar texto cada 400ms
+      const intervalo = setInterval(() => {
+        if (elementoActual < elementos.length - 1) {
+          subtexto.textContent = elementos[elementoActual];
+          elementoActual++;
+        } else {
+          clearInterval(intervalo);
+          subtexto.textContent = elementos[elementos.length - 1];
+        }
+      }, 400);
+    }
+
+    // Inicialización
+    document.addEventListener('DOMContentLoaded', function() {
+      // Crear decoraciones para el loading
+      crearDecoracionesLoading();
+      
+      // Simular progreso de carga
+      simularProgreso();
+      
+      // Ocultar pantalla de carga después de 2.5 segundos
+      setTimeout(() => {
+        document.getElementById('loading').classList.add('hidden');
+      }, 2500);
+      
+      // Efectos para tarjetas
+      const tarjetas = document.querySelectorAll('.card');
+      tarjetas.forEach(tarjeta => {
+        tarjeta.addEventListener('mouseenter', () => {
+          tarjeta.style.transform = 'translateY(-10px) scale(1.02)';
+        });
+        
+        tarjeta.addEventListener('mouseleave', () => {
+          tarjeta.style.transform = 'translateY(0) scale(1)';
+        });
+      });
+    });
+
+    // Función para mostrar notificaciones
+    function mostrarNotificacion(mensaje) {
+      const notificacion = document.createElement('div');
+      notificacion.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: rgba(0, 0, 0, 0.9);
+        color: #ffffff;
+        padding: 15px 25px;
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        transform: translateX(100%);
+        opacity: 0;
+        transition: all 0.5s ease;
+        max-width: 300px;
+        font-weight: 500;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+        border-left: 4px solid var(--primary-color);
+      `;
+      notificacion.textContent = mensaje;
+      
+      document.body.appendChild(notificacion);
+      
+      // Mostrar notificación
+      setTimeout(() => {
+        notificacion.style.transform = 'translateX(0)';
+        notificacion.style.opacity = '1';
+      }, 100);
+      
+      // Ocultar y eliminar después de 3 segundos
+      setTimeout(() => {
+        notificacion.style.transform = 'translateX(100%)';
+        notificacion.style.opacity = '0';
+        
+        setTimeout(() => {
+          document.body.removeChild(notificacion);
+        }, 500);
+      }, 3000);
+    }
+
+    // Mensaje de bienvenida después de cargar
+    setTimeout(() => {
+      mostrarNotificacion('¡Bienvenido al Portal Multidisciplinario!');
+    }, 3000);
+  </script>
+</body>
+</html>

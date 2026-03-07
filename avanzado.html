@@ -1,0 +1,1594 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Portadas IA Pro Max</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/7.1.0/docx.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pptxgenjs/3.7.0/pptxgen.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #6e48aa;
+            --secondary-color: #9d50bb;
+            --text-color: #333;
+            --shadow-color: rgba(0,0,0,0.2);
+        }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #f5f7fa;
+            margin: 0;
+            padding: 20px;
+            color: var(--text-color);
+            overflow-x: hidden;
+               border-radius: 10px;
+  max-width: 1200px;
+  margin: 90px auto;
+        }
+        .container {
+            display: flex;
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+        .editor-panel {
+            flex: 1;
+            min-width: 450px;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .preview-panel {
+            flex: 1;
+            min-width: 450px;
+            position: relative;
+        }
+        #cover {
+            width: 100%;
+            height: 800px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px var(--shadow-color);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #555;
+            font-size: 16px;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s;
+            background-color: #f9f9f9;
+        }
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(110, 72, 170, 0.2);
+            background-color: white;
+        }
+        button {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            margin: 10px 5px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px var(--shadow-color);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        button:active {
+            transform: translateY(1px);
+        }
+        .style-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
+        }
+        .style-option {
+            width: 100%;
+            height: 70px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 3px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+        .style-option:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px var(--shadow-color);
+        }
+        .style-option.selected {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px white, 0 0 0 5px var(--primary-color);
+        }
+        .style-option::after {
+            content: attr(data-name);
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            font-size: 10px;
+            padding: 3px;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .style-option:hover::after {
+            opacity: 1;
+        }
+        .cover-title {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-align: center;
+            z-index: 10;
+            font-family: 'Montserrat', sans-serif;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            line-height: 1.2;
+            max-width: 90%;
+            padding: 0 20px;
+        }
+        .cover-subtitle {
+            font-size: 26px;
+            text-align: center;
+            margin-bottom: 50px;
+            z-index: 10;
+            font-weight: 300;
+            max-width: 80%;
+            line-height: 1.4;
+            padding: 0 20px;
+        }
+        .cover-info {
+            position: absolute;
+            bottom: 50px;
+            width: 80%;
+            text-align: center;
+            background: rgba(255,255,255,0.85);
+            padding: 25px;
+            border-radius: 15px;
+            z-index: 10;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            backdrop-filter: blur(5px);
+        }
+        .cover-info p {
+            margin: 10px 0;
+            font-size: 18px;
+        }
+        .ai-pattern {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0.15;
+            z-index: 1;
+            pointer-events: none;
+        }
+        .matrix-effect {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="1" height="1" x="50" y="50" fill="%23000"/></svg>');
+            background-size: 5px 5px;
+            opacity: 0.1;
+            z-index: 1;
+        }
+        .glitch-effect {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(0deg, transparent 48%, rgba(255,0,0,0.1) 49%, rgba(255,0,0,0.1) 51%, transparent 52%),
+                        linear-gradient(90deg, transparent 48%, rgba(0,255,0,0.1) 49%, rgba(0,255,0,0.1) 51%, transparent 52%);
+            background-size: 10px 10px;
+            animation: glitch 0.5s infinite;
+            z-index: 2;
+            opacity: 0;
+        }
+        .neural-network {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(110, 72, 170, 0.2) 0%, transparent 20%),
+                radial-gradient(circle at 80% 70%, rgba(157, 80, 187, 0.2) 0%, transparent 20%),
+                linear-gradient(45deg, transparent 49%, rgba(110, 72, 170, 0.1) 50%, transparent 51%),
+                linear-gradient(-45deg, transparent 49%, rgba(157, 80, 187, 0.1) 50%, transparent 51%);
+            background-size: 50px 50px;
+            z-index: 1;
+        }
+        .tech-grid {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(0deg, transparent 95%, rgba(0,0,0,0.05) 96%),
+                linear-gradient(90deg, transparent 95%, rgba(0,0,0,0.05) 96%);
+            background-size: 30px 30px;
+            z-index: 1;
+        }
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.6);
+            animation: float 15s infinite linear;
+        }
+        .holographic-effect {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, 
+                rgba(255,0,255,0.05) 0%, 
+                rgba(0,255,255,0.05) 50%, 
+                rgba(255,255,0,0.05) 100%);
+            z-index: 1;
+            opacity: 0;
+        }
+        .circuit-lines {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(90deg, transparent 65%, rgba(0,255,0,0.03) 65%, rgba(0,255,0,0.03) 66%, transparent 66%),
+                linear-gradient(0deg, transparent 65%, rgba(0,255,0,0.03) 65%, rgba(0,255,0,0.03) 66%, transparent 66%);
+            background-size: 50px 50px;
+            z-index: 1;
+            opacity: 0;
+        }
+        .binary-code {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            opacity: 0;
+            font-family: monospace;
+            color: rgba(0,255,0,0.3);
+            font-size: 16px;
+        }
+        .binary-line {
+            position: absolute;
+            white-space: nowrap;
+            animation: binaryScroll 20s linear infinite;
+        }
+        .watermark {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 0;
+            opacity: 0.05;
+            font-size: 200px;
+            font-weight: bold;
+            color: white;
+            pointer-events: none;
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+        }
+        .logo-container {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo-icon {
+            font-size: 30px;
+        }
+        .logo-text {
+            font-size: 20px;
+            font-weight: bold;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .title-decoration {
+            position: absolute;
+            width: 100px;
+            height: 4px;
+            background: white;
+            border-radius: 2px;
+            z-index: 10;
+            opacity: 0.7;
+        }
+        .download-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 30px;
+            justify-content: center;
+        }
+        .download-btn {
+            flex: 1;
+            min-width: 200px;
+        }
+        .advanced-options {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        .toggle-advanced {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 15px;
+            padding: 8px 0;
+        }
+        .advanced-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        .advanced-content.show {
+            display: block;
+        }
+        .effect-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .effect-btn {
+            background: #f0f0f0;
+            color: #333;
+            border: 1px solid #ddd;
+            padding: 10px 15px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .effect-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        .slider-container {
+            margin: 20px 0;
+        }
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        .range-slider {
+            width: 100%;
+            height: 8px;
+            -webkit-appearance: none;
+            background: #e0e0e0;
+            border-radius: 4px;
+            outline: none;
+        }
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .range-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 5px var(--primary-color);
+        }
+        .color-picker {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 15px 0;
+        }
+        .color-preview {
+            width: 30px;
+            height: 30px;
+            border-radius: 6px;
+            border: 2px solid #ddd;
+            cursor: pointer;
+        }
+        .font-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .font-option {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+        .font-option:hover {
+            border-color: var(--primary-color);
+            background: #f9f5ff;
+        }
+        .font-option.selected {
+            border-color: var(--primary-color);
+            background: #f0e6ff;
+            font-weight: bold;
+        }
+        .template-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .template-item {
+            border: 2px solid #eee;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .template-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border-color: var(--primary-color);
+        }
+        .template-preview {
+            height: 100px;
+            background-size: cover;
+            background-position: center;
+        }
+        .template-name {
+            padding: 10px;
+            text-align: center;
+            font-size: 14px;
+            background: #f9f9f9;
+        }
+        .size-options {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .size-option {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .size-option:hover {
+            border-color: var(--primary-color);
+        }
+        .size-option.selected {
+            border-color: var(--primary-color);
+            background: #f0e6ff;
+            font-weight: bold;
+        }
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .notification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        .loading-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+        .loading-text {
+            color: white;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(0); opacity: 0; }
+            20% { transform: translate(-2px, 2px); opacity: 0.1; }
+            40% { transform: translate(2px, -2px); opacity: 0.2; }
+            60% { transform: translate(-2px, 0); opacity: 0.1; }
+            80% { transform: translate(2px, 0); opacity: 0.2; }
+            100% { transform: translate(0); opacity: 0; }
+        }
+        @keyframes float {
+            0% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(20px); opacity: 0; }
+        }
+        @keyframes binaryScroll {
+            0% { transform: translateY(100%); }
+            100% { transform: translateY(-100%); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .container {
+                flex-direction: column;
+            }
+            .editor-panel, .preview-panel {
+                min-width: 100%;
+            }
+            #cover {
+                height: 600px;
+            }
+            .cover-title {
+                font-size: 36px;
+            }
+            .cover-subtitle {
+                font-size: 22px;
+            }
+        }
+        @media (max-width: 576px) {
+            body {
+                padding: 15px;
+            }
+            .editor-panel {
+                padding: 20px;
+            }
+            #cover {
+                height: 500px;
+            }
+            .cover-title {
+                font-size: 28px;
+            }
+            .cover-subtitle {
+                font-size: 18px;
+                margin-bottom: 30px;
+            }
+            .cover-info {
+                padding: 15px;
+                bottom: 30px;
+            }
+            .cover-info p {
+                font-size: 16px;
+            }
+            button {
+                padding: 12px 20px;
+                font-size: 14px;
+            }
+            .style-options {
+                grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            }
+            .style-option {
+                height: 60px;
+            }
+        }
+
+        .btn-volver {
+  background-color: #1e88e5;      /* Color de fondo */
+  color: white;                   /* Color del texto */
+  padding: 12px 24px;             /* Espacio interno */
+  border: 2px solid #0d47a1;      /* Marco */
+  border-radius: 10px;            /* Bordes redondeados */
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+}
+
+/* Cuando pasas el mouse */
+.btn-volver:hover {
+  background-color: #0d47a1;
+  border-color: #08306b;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+}
+
+/* Cuando haces clic */
+.btn-volver:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+}
+
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center; margin-bottom: 30px; color: var(--primary-color); font-size: 36px; font-family: 'Montserrat', sans-serif;">
+        
+    </h1>
+    
+    <div class="container">
+        <div class="editor-panel">
+            <div class="form-group">
+                <label>Título Principal</label>
+                <input type="text" id="title" value="INFORME FINAL DE INVESTIGACIÓN" placeholder="Ej: Tesis Doctoral en Biología Molecular">
+            </div>
+            <div class="form-group">
+                <label>Subtítulo</label>
+                <input type="text" id="subtitle" value="Aplicación de Redes Neuronales en Medicina" placeholder="Ej: Análisis de Datos Genómicos con IA">
+            </div>
+            <div class="form-group">
+                <label>Nombre Completo</label>
+                <input type="text" id="name" value="María González López" placeholder="Ej: Juan Pérez Martínez">
+            </div>
+            <div class="form-group">
+                <label>Institución/Universidad</label>
+                <input type="text" id="institution" value="Universidad Tecnológica Nacional" placeholder="Ej: Universidad de Buenos Aires">
+            </div>
+            <div class="form-group">
+                <label>Materia/Asignatura</label>
+                <input type="text" id="subject" value="Inteligencia Artificial Avanzada" placeholder="Ej: Biología Computacional">
+            </div>
+            <div class="form-group">
+                <label>Fecha</label>
+                <input type="date" id="date">
+            </div>
+           
+            
+            <div class="form-group">
+                <label>Estilo de Portada</label>
+                <div class="style-options">
+                    <div class="style-option selected" data-name="Púrpura" style="background: linear-gradient(135deg, #6e48aa, #9d50bb);" onclick="applyStyle('gradient-purple', this)"></div>
+                    <div class="style-option" data-name="Oscuro" style="background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);" onclick="applyStyle('gradient-dark', this)"></div>
+                    <div class="style-option" data-name="Verde" style="background: linear-gradient(135deg, #11998e, #38ef7d);" onclick="applyStyle('gradient-green', this)"></div>
+                    <div class="style-option" data-name="Naranja" style="background: linear-gradient(135deg, #f12711, #f5af19);" onclick="applyStyle('gradient-orange', this)"></div>
+                    <div class="style-option" data-name="Atardecer" style="background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);" onclick="applyStyle('gradient-sunset', this)"></div>
+                    <div class="style-option" data-name="Azul" style="background: linear-gradient(135deg, #5433ff, #20bdff, #a5fecb);" onclick="applyStyle('gradient-blue', this)"></div>
+                    <div class="style-option" data-name="Rosa" style="background: linear-gradient(135deg, #ff00cc, #333399);" onclick="applyStyle('gradient-pink', this)"></div>
+                    <div class="style-option" data-name="Negro" style="background: linear-gradient(135deg, #000000, #434343);" onclick="applyStyle('gradient-black', this)"></div>
+                    <div class="style-option" data-name="Real" style="background: linear-gradient(135deg, #1e3c72, #2a5298);" onclick="applyStyle('gradient-royal', this)"></div>
+                    <div class="style-option" data-name="Lavanda" style="background: linear-gradient(135deg, #614385, #516395);" onclick="applyStyle('gradient-lavender', this)"></div>
+                    <div class="style-option" data-name="Coral" style="background: linear-gradient(135deg, #ff7e5f, #feb47b);" onclick="applyStyle('gradient-coral', this)"></div>
+                    <div class="style-option" data-name="Esmeralda" style="background: linear-gradient(135deg, #00b09b, #96c93d);" onclick="applyStyle('gradient-emerald', this)"></div>
+                    <div class="style-option" data-name="Frambuesa" style="background: linear-gradient(135deg, #8e0e00, #1f1c18);" onclick="applyStyle('gradient-raspberry', this)"></div>
+                    <div class="style-option" data-name="Océano" style="background: linear-gradient(135deg, #00d2ff, #3a7bd5);" onclick="applyStyle('gradient-ocean', this)"></div>
+                    <div class="style-option" data-name="Sangre" style="background: linear-gradient(135deg, #f85032, #e73827);" onclick="applyStyle('gradient-blood', this)"></div>
+                    <div class="style-option" data-name="Menta" style="background: linear-gradient(135deg, #0cebeb, #20e3b2, #29ffc6);" onclick="applyStyle('gradient-mint', this)"></div>
+                    <div class="style-option" data-name="Aurora" style="background: linear-gradient(135deg, #ff5f6d, #ffc371);" onclick="applyStyle('gradient-aurora', this)"></div>
+                    <div class="style-option" data-name="Metálico" style="background: linear-gradient(135deg, #abbaab, #ffffff);" onclick="applyStyle('gradient-metal', this)"></div>
+                    <div class="style-option" data-name="Cielo" style="background: linear-gradient(135deg, #56ccf2, #2f80ed);" onclick="applyStyle('gradient-sky', this)"></div>
+                    <div class="style-option" data-name="Atardecer 2" style="background: linear-gradient(135deg, #ff416c, #ff4b2b);" onclick="applyStyle('gradient-sunset2', this)"></div>
+                </div>
+            </div>
+            
+            <button class="toggle-advanced" onclick="toggleAdvanced()">
+                <span id="advanced-icon">▶</span> Opciones avanzadas
+            </button>
+            
+            <div class="advanced-options">
+                <div class="advanced-content" id="advanced-content">
+                    <div class="form-group">
+                        <label>Fuente del texto</label>
+                        <div class="font-selector">
+                            <div class="font-option selected" style="font-family: 'Montserrat', sans-serif;" onclick="applyFont('Montserrat')">Montserrat</div>
+                            <div class="font-option" style="font-family: 'Roboto', sans-serif;" onclick="applyFont('Roboto')">Roboto</div>
+                            <div class="font-option" style="font-family: 'Arial', sans-serif;" onclick="applyFont('Arial')">Arial</div>
+                            <div class="font-option" style="font-family: 'Times New Roman', serif;" onclick="applyFont('Times New Roman')">Times New Roman</div>
+                            <div class="font-option" style="font-family: 'Courier New', monospace;" onclick="applyFont('Courier New')">Courier New</div>
+                            <div class="font-option" style="font-family: 'Georgia', serif;" onclick="applyFont('Georgia')">Georgia</div>
+                            <div class="font-option" style="font-family: 'Verdana', sans-serif;" onclick="applyFont('Verdana')">Verdana</div>
+                            <div class="font-option" style="font-family: 'Palatino', serif;" onclick="applyFont('Palatino')">Palatino</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Tamaño de portada</label>
+                        <div class="size-options">
+                            <div class="size-option selected" onclick="setCoverSize('a4')">A4 (210×297mm)</div>
+                            <div class="size-option" onclick="setCoverSize('letter')">Letter (216×279mm)</div>
+                            <div class="size-option" onclick="setCoverSize('square')">Cuadrado (300×300mm)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Color del texto</label>
+                        <div class="color-picker">
+                            <input type="color" id="text-color" value="#ffffff" onchange="updateTextColor(this.value)">
+                            <div class="color-preview" id="text-color-preview" style="background: #ffffff;"></div>
+                            <button onclick="resetTextColor()">Resetear</button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Efectos de IA</label>
+                        <div class="effect-options">
+                            <button class="effect-btn" id="matrix-btn" onclick="toggleEffect('matrix')">
+                                <span id="matrix-icon">☑</span> Matriz Digital
+                            </button>
+                            <button class="effect-btn" id="neural-btn" onclick="toggleEffect('neural')">
+                                <span id="neural-icon">☐</span> Red Neuronal
+                            </button>
+                            <button class="effect-btn" id="glitch-btn" onclick="toggleEffect('glitch')">
+                                <span id="glitch-icon">☐</span> Efecto Glitch
+                            </button>
+                            <button class="effect-btn" id="circuit-btn" onclick="toggleEffect('circuit')">
+                                <span id="circuit-icon">☐</span> Circuitos
+                            </button>
+                            <button class="effect-btn" id="binary-btn" onclick="toggleEffect('binary')">
+                                <span id="binary-icon">☐</span> Código Binario
+                            </button>
+                            <button class="effect-btn" id="holographic-btn" onclick="toggleEffect('holographic')">
+                                <span id="holographic-icon">☐</span> Holográfico
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Intensidad de efectos</label>
+                        <div class="slider-container">
+                            <div class="slider-label">
+                                <span>Suave</span>
+                                <span>Intenso</span>
+                            </div>
+                            <input type="range" min="1" max="10" value="5" class="range-slider" id="effect-intensity" oninput="updateEffectIntensity(this.value)">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Plantillas predefinidas</label>
+                        <div class="template-gallery">
+                            <div class="template-item" onclick="applyTemplate('academic')">
+                                <div class="template-preview" style="background: linear-gradient(135deg, #1e3c72, #2a5298);"></div>
+                                <div class="template-name">Académico Clásico</div>
+                            </div>
+                            <div class="template-item" onclick="applyTemplate('tech')">
+                                <div class="template-preview" style="background: linear-gradient(135deg, #0f2027, #203a43);"></div>
+                                <div class="template-name">Tecnológico</div>
+                            </div>
+                            <div class="template-item" onclick="applyTemplate('business')">
+                                <div class="template-preview" style="background: linear-gradient(135deg, #000000, #434343);"></div>
+                                <div class="template-name">Empresarial</div>
+                            </div>
+                            <div class="template-item" onclick="applyTemplate('creative')">
+                                <div class="template-preview" style="background: linear-gradient(135deg, #ff00cc, #333399);"></div>
+                                <div class="template-name">Creativo</div>
+                            </div>
+                            <div class="template-item" onclick="applyTemplate('medical')">
+                                <div class="template-preview" style="background: linear-gradient(135deg, #11998e, #38ef7d);"></div>
+                                <div class="template-name">Médico</div>
+                            </div>
+                            <div class="template-item" onclick="applyTemplate('legal')">
+                                <div class="template-preview" style="background: linear-gradient(135deg, #614385, #516395);"></div>
+                                <div class="template-name">Legal</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="display: flex; gap: 10px; margin-top: 25px;">
+                <button onclick="updateCover()" style="flex: 1;">🔄 Actualizar Vista Previa</button>
+                <button onclick="randomDesign()" style="flex: 1; background: linear-gradient(135deg, #ff5f6d, #ffc371);">🎲 Diseño Aleatorio</button>
+            </div>
+            
+            <div class="download-options">
+                <button onclick="downloadImage()" class="download-btn">📸 Descargar como Imagen (PNG)</button>
+                  <button class="btn-volver" onclick="window.location.href='portadainiciopresentacion.html '">
+  ⬅ Volver atrás
+</button>
+            </div>
+        </div>
+        
+        <div class="preview-panel">
+            <div id="cover">
+                <!-- Efectos de IA -->
+                <div id="matrix-effect" class="matrix-effect" style="display: none;"></div>
+                <div id="neural-network" class="neural-network" style="display: none;"></div>
+                <div id="glitch-effect" class="glitch-effect" style="display: none;"></div>
+                <div id="circuit-lines" class="circuit-lines" style="display: none;"></div>
+                <div id="binary-code" class="binary-code" style="display: none;"></div>
+                <div id="holographic-effect" class="holographic-effect" style="display: none;"></div>
+                <div id="tech-grid" class="tech-grid"></div>
+                <div class="particles" id="particles"></div>
+                <div class="watermark" id="watermark"></div>
+                
+              
+                <!-- Decoración del título -->
+                <div class="title-decoration" id="title-decoration"></div>
+                
+                <!-- Contenido -->
+                <h1 class="cover-title" id="cover-title">INFORME FINAL DE INVESTIGACIÓN</h1>
+                <p class="cover-subtitle" id="cover-subtitle">Aplicación de Redes Neuronales en Medicina</p>
+                
+                <!-- Información -->
+                <div class="cover-info">
+                    <p id="cover-name"><strong>Nombre:</strong> María González López</p>
+                    <p id="cover-institution"><strong>Institución:</strong> Universidad Tecnológica Nacional</p>
+                    <p id="cover-subject"><strong>Materia:</strong> Inteligencia Artificial Avanzada</p>
+                    <p id="cover-date"><strong>Fecha:</strong> <span id="date-display">14/06/2024</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="notification" id="notification">
+        <span id="notification-message">Portada generada con éxito!</span>
+    </div>
+    
+    <div class="loading-overlay" id="loading-overlay">
+        <div style="text-align: center;">
+            <div class="spinner"></div>
+            <div class="loading-text" id="loading-text">Generando portada...</div>
+        </div>
+    </div>
+
+    <script>
+        // Variables globales mejoradas
+        let currentStyle = 'gradient-purple';
+        let currentFont = 'Montserrat';
+        let currentSize = 'a4';
+        let textColor = '#ffffff';
+        let effectIntensity = 5;
+        
+        const activeEffects = {
+            matrix: true,
+            neural: false,
+            glitch: false,
+            circuit: false,
+            binary: false,
+            holographic: false
+        };
+        
+        // Inicialización mejorada
+        document.addEventListener('DOMContentLoaded', function() {
+            // Establecer fecha actual
+            const today = new Date();
+            document.getElementById('date').valueAsDate = today;
+            document.getElementById('date-display').textContent = formatDate(today);
+            
+            // Configurar eventos
+            document.getElementById('title').addEventListener('input', updateCover);
+            document.getElementById('subtitle').addEventListener('input', updateCover);
+            document.getElementById('name').addEventListener('input', updateCover);
+            document.getElementById('institution').addEventListener('input', updateCover);
+            document.getElementById('subject').addEventListener('input', updateCover);
+            document.getElementById('date').addEventListener('change', updateCover);
+            document.getElementById('doc-type').addEventListener('change', updateCover);
+            
+            // Inicializar partículas
+            initParticles();
+            
+            // Inicializar código binario
+            initBinaryCode();
+            
+            // Actualizar vista inicial
+            updateCover();
+            
+            // Mostrar notificación de bienvenida
+            setTimeout(() => {
+                showNotification('Bienvenido al Generador de Portadas IA Pro!');
+            }, 1000);
+        });
+        
+        // Función para formatear fecha
+        function formatDate(date) {
+            const day = date.getDate().toString().padStart(2, '0');
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const year = date.getFullYear();
+            return `${day}/${month}/${year}`;
+        }
+        
+        // Función para actualizar la vista previa
+        function updateCover() {
+            const title = document.getElementById('title').value || "TÍTULO DEL DOCUMENTO";
+            const subtitle = document.getElementById('subtitle').value || "Subtítulo descriptivo del documento";
+            const name = document.getElementById('name').value || "Nombre del Autor";
+            const institution = document.getElementById('institution').value || "Institución/Empresa";
+            const subject = document.getElementById('subject').value || "Materia/Área de Estudio";
+            const dateInput = document.getElementById('date');
+            const date = dateInput.value ? new Date(dateInput.value) : new Date();
+            
+            document.getElementById('cover-title').textContent = title;
+            document.getElementById('cover-subtitle').textContent = subtitle;
+            document.getElementById('cover-name').innerHTML = `<strong>Nombre:</strong> ${name}`;
+            document.getElementById('cover-institution').innerHTML = `<strong>Institución:</strong> ${institution}`;
+            document.getElementById('cover-subject').innerHTML = `<strong>Materia:</strong> ${subject}`;
+            document.getElementById('date-display').textContent = formatDate(date);
+            
+            // Actualizar marca de agua según el tipo de documento
+            updateWatermark();
+            
+            // Aplicar efectos actuales
+            applyStyle(currentStyle);
+            updateEffects();
+            applyFont(currentFont);
+            setCoverSize(currentSize);
+            updateTextColor(textColor);
+        }
+        
+        // Función para actualizar la marca de agua
+        function updateWatermark() {
+            const docType = document.getElementById('doc-type').value;
+            const watermark = document.getElementById('watermark');
+            
+            switch(docType) {
+                case 'academic':
+                    watermark.textContent = 'ACADÉMICO';
+                    break;
+                case 'business':
+                    watermark.textContent = 'EMPRESARIAL';
+                    break;
+                case 'tech':
+                    watermark.textContent = 'TECNOLOGÍA';
+                    break;
+                case 'creative':
+                    watermark.textContent = 'CREATIVO';
+                    break;
+                case 'medical':
+                    watermark.textContent = 'MÉDICO';
+                    break;
+                case 'legal':
+                    watermark.textContent = 'LEGAL';
+                    break;
+                default:
+                    watermark.textContent = 'DOCUMENTO';
+            }
+        }
+        
+        // Función para aplicar estilo seleccionado
+        function applyStyle(style, element = null) {
+            currentStyle = style;
+            const cover = document.getElementById('cover');
+            
+            // Resetear selección de estilos
+            document.querySelectorAll('.style-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            // Seleccionar el estilo actual
+            if (element) {
+                element.classList.add('selected');
+            } else {
+                const styleElement = document.querySelector(`.style-option[onclick*="${style}"]`);
+                if (styleElement) styleElement.classList.add('selected');
+            }
+            
+            // Aplicar estilos según selección
+            switch(style) {
+                case 'gradient-purple':
+                    cover.style.background = 'linear-gradient(135deg, #6e48aa, #9d50bb)';
+                    setTextColor('white');
+                    break;
+                case 'gradient-dark':
+                    cover.style.background = 'linear-gradient(135deg, #0f2027, #203a43, #2c5364)';
+                    setTextColor('white');
+                    break;
+                case 'gradient-green':
+                    cover.style.background = 'linear-gradient(135deg, #11998e, #38ef7d)';
+                    setTextColor('#333');
+                    break;
+                case 'gradient-orange':
+                    cover.style.background = 'linear-gradient(135deg, #f12711, #f5af19)';
+                    setTextColor('#333');
+                    break;
+                case 'gradient-sunset':
+                    cover.style.background = 'linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d)';
+                    setTextColor('white');
+                    break;
+                case 'gradient-blue':
+                    cover.style.background = 'linear-gradient(135deg, #5433ff, #20bdff, #a5fecb)';
+                    setTextColor('#333');
+                    break;
+                case 'gradient-pink':
+                    cover.style.background = 'linear-gradient(135deg, #ff00cc, #333399)';
+                    setTextColor('white');
+                    break;
+                case 'gradient-black':
+                    cover.style.background = 'linear-gradient(135deg, #000000, #434343)';
+                    setTextColor('white');
+                    break;
+                case 'gradient-royal':
+                    cover.style.background = 'linear-gradient(135deg, #1e3c72, #2a5298)';
+                    setTextColor('white');
+                    break;
+                case 'gradient-lavender':
+                    cover.style.background = 'linear-gradient(135deg, #614385, #516395)';
+                    setTextColor('white');
+                    break;
+                case 'gradient-coral':
+                    cover.style.background = 'linear-gradient(135deg, #ff7e5f, #feb47b)';
+                    setTextColor('#333');
+                    break;
+                case 'gradient-emerald':
+                    cover.style.background = 'linear-gradient(135deg, #00b09b, #96c93d)';
+                    setTextColor('#333');
+                    break;
+                case 'gradient-raspberry':
+                    cover.style.background = 'linear-gradient(135deg, #8e0e00, #1f1c18)';
+                    setTextColor('white');
+                    break;
+                case 'gradient-ocean':
+                    cover.style.background = 'linear-gradient(135deg, #00d2ff, #3a7bd5)';
+                    setTextColor('white');
+                    break;
+                case 'gradient-blood':
+                    cover.style.background = 'linear-gradient(135deg, #f85032, #e73827)';
+                    setTextColor('white');
+                    break;
+                case 'gradient-mint':
+                    cover.style.background = 'linear-gradient(135deg, #0cebeb, #20e3b2, #29ffc6)';
+                    setTextColor('#333');
+                    break;
+                case 'gradient-aurora':
+                    cover.style.background = 'linear-gradient(135deg, #ff5f6d, #ffc371)';
+                    setTextColor('#333');
+                    break;
+                case 'gradient-metal':
+                    cover.style.background = 'linear-gradient(135deg, #abbaab, #ffffff)';
+                    setTextColor('#333');
+                    break;
+                case 'gradient-sky':
+                    cover.style.background = 'linear-gradient(135deg, #56ccf2, #2f80ed)';
+                    setTextColor('white');
+                    break;
+                case 'gradient-sunset2':
+                    cover.style.background = 'linear-gradient(135deg, #ff416c, #ff4b2b)';
+                    setTextColor('white');
+                    break;
+            }
+            
+            // Actualizar la decoración del título
+            updateTitleDecoration();
+        }
+        
+        // Función para actualizar la decoración del título
+        function updateTitleDecoration() {
+            const decoration = document.getElementById('title-decoration');
+            const titleColor = document.getElementById('cover-title').style.color;
+            
+            decoration.style.background = titleColor;
+            decoration.style.opacity = '0.7';
+        }
+        
+        // Función para aplicar fuente seleccionada
+        function applyFont(font) {
+            currentFont = font;
+            const title = document.getElementById('cover-title');
+            const subtitle = document.getElementById('cover-subtitle');
+            const info = document.querySelector('.cover-info');
+            
+            // Resetear selección de fuentes
+            document.querySelectorAll('.font-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            // Seleccionar la fuente actual
+            document.querySelector(`.font-option[style*="${font}"]`).classList.add('selected');
+            
+            // Aplicar fuente
+            title.style.fontFamily = font;
+            subtitle.style.fontFamily = font;
+            info.style.fontFamily = font;
+            
+            // Ajustar tamaño según la fuente para mejor legibilidad
+            if (font === 'Courier New') {
+                title.style.fontSize = '42px';
+                subtitle.style.fontSize = '22px';
+            } else if (font === 'Times New Roman' || font === 'Georgia') {
+                title.style.fontSize = '44px';
+                subtitle.style.fontSize = '24px';
+            } else {
+                title.style.fontSize = '48px';
+                subtitle.style.fontSize = '26px';
+            }
+        }
+        
+        // Función para establecer el tamaño de la portada
+        function setCoverSize(size) {
+            currentSize = size;
+            const cover = document.getElementById('cover');
+            
+            // Resetear selección de tamaños
+            document.querySelectorAll('.size-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            // Seleccionar el tamaño actual
+            document.querySelector(`.size-option[onclick*="${size}"]`).classList.add('selected');
+            
+            // Aplicar tamaño
+            switch(size) {
+                case 'a4':
+                    cover.style.width = '100%';
+                    cover.style.height = '800px';
+                    cover.style.maxWidth = '595px';
+                    break;
+                case 'letter':
+                    cover.style.width = '100%';
+                    cover.style.height = '750px';
+                    cover.style.maxWidth = '612px';
+                    break;
+                case 'square':
+                    cover.style.width = '100%';
+                    cover.style.height = '800px';
+                    cover.style.maxWidth = '800px';
+                    break;
+            }
+        }
+        
+        // Función para establecer color de texto
+        function setTextColor(color) {
+            textColor = color;
+            document.getElementById('cover-title').style.color = color;
+            document.getElementById('cover-subtitle').style.color = color;
+            
+            // Ajustar color del fondo de info según contraste
+            const infoBox = document.querySelector('.cover-info');
+            if (color === 'white' || color === '#ffffff') {
+                infoBox.style.background = 'rgba(0,0,0,0.7)';
+                infoBox.style.color = 'white';
+                infoBox.querySelectorAll('strong').forEach(el => {
+                    el.style.color = '#ffffff';
+                });
+            } else {
+                infoBox.style.background = 'rgba(255,255,255,0.85)';
+                infoBox.style.color = '#333';
+                infoBox.querySelectorAll('strong').forEach(el => {
+                    el.style.color = '#333';
+                });
+            }
+            
+            // Actualizar el selector de color
+            document.getElementById('text-color').value = color;
+            document.getElementById('text-color-preview').style.background = color;
+            
+            // Actualizar la decoración del título
+            updateTitleDecoration();
+        }
+        
+        // Función para actualizar color de texto desde el selector
+        function updateTextColor(color) {
+            setTextColor(color);
+            document.getElementById('text-color-preview').style.background = color;
+        }
+        
+        // Función para resetear color de texto
+        function resetTextColor() {
+            const currentBg = document.getElementById('cover').style.background;
+            
+            // Determinar si el fondo es claro u oscuro
+            if (currentBg.includes('ffffff') || currentBg.includes('feb47b') || currentBg.includes('96c93d') || 
+                currentBg.includes('a5fecb') || currentBg.includes('38ef7d') || currentBg.includes('f5af19')) {
+                setTextColor('#333333');
+            } else {
+                setTextColor('#ffffff');
+            }
+        }
+        
+        // Función para alternar opciones avanzadas
+        function toggleAdvanced() {
+            const content = document.getElementById('advanced-content');
+            const icon = document.getElementById('advanced-icon');
+            
+            content.classList.toggle('show');
+            icon.textContent = content.classList.contains('show') ? '▼' : '▶';
+        }
+        
+        // Función para alternar efectos de IA
+        function toggleEffect(effect) {
+            activeEffects[effect] = !activeEffects[effect];
+            
+            // Actualizar botón
+            const btn = document.getElementById(`${effect}-btn`);
+            const icon = document.getElementById(`${effect}-icon`);
+            
+            if (activeEffects[effect]) {
+                btn.classList.add('active');
+                icon.textContent = '☑';
+            } else {
+                btn.classList.remove('active');
+                icon.textContent = '☐';
+            }
+            
+            updateEffects();
+        }
+        
+        // Función para actualizar intensidad de efectos
+        function updateEffectIntensity(value) {
+            effectIntensity = parseInt(value);
+            updateEffects();
+        }
+        
+        // Función para actualizar efectos visibles
+        function updateEffects() {
+            // Efecto de matriz
+            const matrixEffect = document.getElementById('matrix-effect');
+            matrixEffect.style.display = activeEffects.matrix ? 'block' : 'none';
+            matrixEffect.style.opacity = (effectIntensity / 15).toString();
+            
+            // Red neuronal
+            const neuralEffect = document.getElementById('neural-network');
+            neuralEffect.style.display = activeEffects.neural ? 'block' : 'none';
+            neuralEffect.style.opacity = (effectIntensity / 12).toString();
+            
+            // Efecto glitch
+            const glitchEffect = document.getElementById('glitch-effect');
+            glitchEffect.style.display = activeEffects.gitch ? 'block' : 'none';
+            glitchEffect.style.animationDuration = `${1.5 - (effectIntensity / 15)}s`;
+            
+            // Circuitos
+            const circuitEffect = document.getElementById('circuit-lines');
+            circuitEffect.style.display = activeEffects.circuit ? 'block' : 'none';
+            circuitEffect.style.opacity = (effectIntensity / 15).toString();
+            
+            // Código binario
+            const binaryEffect = document.getElementById('binary-code');
+            binaryEffect.style.display = activeEffects.binary ? 'block' : 'none';
+            binaryEffect.style.opacity = (effectIntensity / 20).toString();
+            
+            // Efecto holográfico
+            const holographicEffect = document.getElementById('holographic-effect');
+            holographicEffect.style.display = activeEffects.holographic ? 'block' : 'none';
+            holographicEffect.style.opacity = (effectIntensity / 15).toString();
+            
+            // Actualizar partículas según intensidad
+            updateParticles();
+        }
+        
+        // Función para inicializar partículas
+        function initParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Tamaño aleatorio entre 1px y 5px
+                const size = Math.random() * 4 + 1;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Posición inicial aleatoria
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.bottom = `-10px`;
+                
+                // Retraso de animación aleatorio
+                particle.style.animationDelay = `${Math.random() * 15}s`;
+                particle.style.animationDuration = `${Math.random() * 10 + 10}s`;
+                
+                // Opacidad aleatoria
+                particle.style.opacity = Math.random() * 0.6 + 0.1;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Función para actualizar partículas según intensidad
+        function updateParticles() {
+            const particles = document.querySelectorAll('.particle');
+            const intensity = activeEffects.matrix || activeEffects.neural ? effectIntensity : 0;
+            
+            particles.forEach(particle => {
+                particle.style.opacity = `${intensity / 20}`;
+            });
+        }
+        
+        // Función para inicializar código binario
+        function initBinaryCode() {
+            const binaryContainer = document.getElementById('binary-code');
+            const lineCount = 50;
+            
+            for (let i = 0; i < lineCount; i++) {
+                const line = document.createElement('div');
+                line.classList.add('binary-line');
+                
+                // Generar línea de código binario aleatorio
+                let binaryText = '';
+                const length = Math.floor(Math.random() * 30) + 20;
+                for (let j = 0; j < length; j++) {
+                    binaryText += Math.random() > 0.5 ? '1' : '0';
+                    // Añadir espacios aleatorios
+                    if (Math.random() > 0.8) binaryText += ' ';
+                }
+                
+                line.textContent = binaryText;
+                
+                // Posición horizontal aleatoria
+                line.style.left = `${Math.random() * 100}%`;
+                
+                // Retraso de animación aleatorio
+                line.style.animationDelay = `${Math.random() * 5}s`;
+                line.style.animationDuration = `${Math.random() * 15 + 10}s`;
+                
+                binaryContainer.appendChild(line);
+            }
+        }
+        
+        // Función para mostrar notificación
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            const messageElement = document.getElementById('notification-message');
+            
+            messageElement.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Función para mostrar carga
+        function showLoading(message) {
+            const overlay = document.getElementById('loading-overlay');
+            const text = document.getElementById('loading-text');
+            
+            text.textContent = message || 'Generando portada...';
+            overlay.classList.add('active');
+        }
+        
+        // Función para ocultar carga
+        function hideLoading() {
+            const overlay = document.getElementById('loading-overlay');
+            overlay.classList.remove('active');
+        }
+        
+        // Función para descargar como imagen PNG con tamaño adecuado
+        function downloadImage() {
+            showLoading('Preparando imagen PNG...');
+            
+            const cover = document.getElementById('cover');
+            const originalWidth = cover.offsetWidth;
+            const originalHeight = cover.offsetHeight;
+            
+            // Definir el tamaño deseado para la imagen PNG (A4 en píxeles a 300dpi)
+            const targetWidth = 2480;  // 210mm a 300dpi
+            const targetHeight = 3508; // 297mm a 300dpi
+            
+            // Calcular la escala necesaria
+            const scaleX = targetWidth / originalWidth;
+            const scaleY = targetHeight / originalHeight;
+            const scale = Math.max(scaleX, scaleY);
+            
+            // Configurar html2canvas con las opciones adecuadas
+            const options = {
+                scale: scale,
+                width: originalWidth,
+                height: originalHeight,
+                logging: false,
+                useCORS: true,
+                allowTaint: true,
+                backgroundColor: null, // Fondo transparente
+                windowWidth: originalWidth,
+                windowHeight: originalHeight
+            };
+            
+            setTimeout(() => {
+                html2canvas(cover, options).then(canvas => {
+                    // Crear enlace de descarga
+                    const link = document.createElement('a');
+                    link.download = `portada-${new Date().toISOString().slice(0,10)}.png`;
+                    link.href = canvas.toDataURL('image/png', 1.0);
+                    link.click();
+                    
+                    hideLoading();
+                    showNotification('Portada descargada como imagen PNG!');
+                }).catch(err => {
+                    console.error('Error al generar imagen:', err);
+                    hideLoading();
+                    showNotification('Error al generar imagen');
+                });
+            }, 500);
+        }
+        
+        // Función para descargar como PDF
+        function downloadPDF() {
+            showLoading('Generando documento PDF...');
+            
+            const cover = document.getElementById('cover');
+            const originalWidth = cover.offsetWidth;
+            const originalHeight = cover.offsetHeight;
+            
+            // Escalar para mejor calidad de PDF
+            const scale = 2; // Escala de 2x para mejor calidad
+            cover.style.width = `${originalWidth * scale}px`;
+            cover.style.height = `${originalHeight * scale}px`;
+            
+            setTimeout(() => {
+                html2canvas(cover, {
+                    scale: 1,
+                    logging: false,
+                    useCORS: true,
+                    allowTaint: true
+                }).then(canvas => {
+                    // Restaurar tamaño original
+                    cover.style.width = `${originalWidth}px`;
+                    cover.style.height = `${originalHeight}px`;
+                    
+                    // Crear PDF
+                    const { jsPDF } = window.jspdf;
+                    const pdf = new jsPDF({
+                        orientation: originalWidth > originalHeight ? 'landscape' : 'portrait',
+                        unit: 'px',
+                        format: [originalWidth, originalHeight]
+                    });
+                    
+                    pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, originalWidth, originalHeight);
+                    pdf.save(`Portada_${new Date().toISOString().slice(0,10)}.pdf`);
+                    
+                    hideLoading();
+                    showNotification('Portada descargada como PDF!');
+                }).catch(err => {
+                    console.error('Error al generar PDF:', err);
+                    hideLoading();
+                    showNotification('Error al generar PDF');
+                    
+                    // Restaurar tamaño original en caso de error
+                    cover.style.width = `${originalWidth}px`;
+                    cover.style.height = `${originalHeight}px`;
+                });
+            }, 500);
+        }
+        
+        // Función para aplicar plantilla predefinida
+        function applyTemplate(template) {
+            switch(template) {
+                case 'academic':
+                    applyStyle('gradient-royal');
+                    applyFont('Times New Roman');
+                    document.getElementById('doc-type').value = 'academic';
+                    break;
+                case 'tech':
+                    applyStyle('gradient-dark');
+                    applyFont('Roboto');
+                    document.getElementById('doc-type').value = 'tech';
+                    toggleEffect('matrix');
+                    toggleEffect('binary');
+                    break;
+                case 'business':
+                    applyStyle('gradient-black');
+                    applyFont('Arial');
+                    document.getElementById('doc-type').value = 'business';
+                    break;
+                case 'creative':
+                    applyStyle('gradient-pink');
+                    applyFont('Montserrat');
+                    document.getElementById('doc-type').value = 'creative';
+                    break;
+                case 'medical':
+                    applyStyle('gradient-emerald');
+                    applyFont('Georgia');
+                    document.getElementById('doc-type').value = 'medical';
+                    break;
+                case 'legal':
+                    applyStyle('gradient-lavender');
+                    applyFont('Palatino');
+                    document.getElementById('doc-type').value = 'legal';
+                    break;
+            }
+            
+            updateCover();
+            showNotification(`Plantilla ${template} aplicada!`);
+        }
+        
+        // Función para generar diseño aleatorio
+        function randomDesign() {
+            // Estilos aleatorios
+            const styles = [
+                'gradient-purple', 'gradient-dark', 'gradient-green', 'gradient-orange',
+                'gradient-sunset', 'gradient-blue', 'gradient-pink', 'gradient-black',
+                'gradient-royal', 'gradient-lavender', 'gradient-coral', 'gradient-emerald',
+                'gradient-raspberry', 'gradient-ocean', 'gradient-blood', 'gradient-mint',
+                'gradient-aurora', 'gradient-metal', 'gradient-sky', 'gradient-sunset2'
+            ];
+            const randomStyle = styles[Math.floor(Math.random() * styles.length)];
+            
+            // Fuentes aleatorias
+            const fonts = ['Montserrat', 'Roboto', 'Arial', 'Times New Roman', 'Courier New', 'Georgia', 'Verdana', 'Palatino'];
+            const randomFont = fonts[Math.floor(Math.random() * fonts.length)];
+            
+            // Tipos de documento aleatorios
+            const docTypes = ['academic', 'business', 'tech', 'creative', 'medical', 'legal'];
+            const randomDocType = docTypes[Math.floor(Math.random() * docTypes.length)];
+            
+            // Efectos aleatorios (entre 1 y 3 efectos activos)
+            const allEffects = ['matrix', 'neural', 'glitch', 'circuit', 'binary', 'holographic'];
+            
+            // Desactivar todos los efectos primero
+            Object.keys(activeEffects).forEach(effect => {
+                if (activeEffects[effect]) toggleEffect(effect);
+            });
+            
+            // Activar efectos aleatorios
+            const effectCount = Math.floor(Math.random() * 3) + 1;
+            for (let i = 0; i < effectCount; i++) {
+                const randomEffect = allEffects[Math.floor(Math.random() * allEffects.length)];
+                if (!activeEffects[randomEffect]) toggleEffect(randomEffect);
+            }
+            
+            // Aplicar configuración aleatoria
+            applyStyle(randomStyle);
+            applyFont(randomFont);
+            document.getElementById('doc-type').value = randomDocType;
+            document.getElementById('effect-intensity').value = Math.floor(Math.random() * 10) + 1;
+            effectIntensity = parseInt(document.getElementById('effect-intensity').value);
+            
+            updateCover();
+            showNotification('Diseño aleatorio generado!');
+        }
+    </script>
+</body>
+</html>

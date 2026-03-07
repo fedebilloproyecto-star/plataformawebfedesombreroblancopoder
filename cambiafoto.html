@@ -1,0 +1,3252 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor de Imágenes Profesional</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    /* --- CSS Styling (style.css content) --- */
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+    
+    :root {
+        --primary-color: #4CAF50; /* Green */
+        --primary-dark: #388E3C;
+        --secondary-color: #2196F3; /* Blue */
+        --accent-color: #FFC107; /* Amber */
+        --background-dark: #2c3e50; /* Dark blue-grey */
+        --background-light: #ecf0f1; /* Light grey */
+        --text-color-dark: #333;
+        --text-color-light: #ecf0f1;
+        --card-background: #ffffff;
+        --border-color: #ddd;
+        --shadow-light: rgba(0, 0, 0, 0.1);
+        --shadow-dark: rgba(0, 0, 0, 0.2);
+        --primary: #4CAF50;
+        --secondary: #2196F3;
+        --dark: #333;
+        --light: #f9f9f9;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: var(--background-light);
+        color: var(--text-color-dark);
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        min-height: 100vh;
+        overflow-y: auto;
+        line-height: 1.6;
+          border-radius: 10px;
+  max-width: 1200px;
+  margin: 90px auto;
+    }
+
+    /* App Container Styles */
+    .app-container {
+        background-color: var(--card-background);
+        border-radius: 12px;
+        box-shadow: 0 10px 30px var(--shadow-dark);
+        width: 95%;
+        max-width: 1400px;
+        margin: 30px auto;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        min-height: calc(100vh - 60px);
+    }
+
+    .app-header {
+        background-color: var(--primary-color);
+        color: var(--text-color-light);
+        padding: 25px 30px;
+        text-align: center;
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+    }
+
+    .app-title {
+        margin: 0;
+        font-size: 2.5em;
+        font-weight: 700;
+    }
+
+    .app-subtitle {
+        margin: 5px 0 0;
+        font-size: 1.1em;
+        opacity: 0.9;
+    }
+
+    .editor-container {
+        display: flex;
+        flex-wrap: wrap;
+        flex-grow: 1;
+        padding: 20px;
+        gap: 20px;
+    }
+
+    /* Image Section Styles */
+    .image-section {
+        flex: 2;
+        min-width: 400px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px;
+        background-color: var(--background-dark);
+        border-radius: 8px;
+        box-shadow: inset 0 0 10px var(--shadow-dark);
+        align-items: center;
+        justify-content: center;
+    }
+
+    .image-container {
+        width: 100%;
+        max-width: 700px;
+        height: 450px;
+        background-color: #333;
+        border: 3px dashed var(--border-color);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        position: relative;
+        border-radius: 8px;
+        box-shadow: 0 5px 15px var(--shadow-dark);
+    }
+
+    #imageCanvas, #imagePreview {
+        max-width: 100%;
+        max-height: 100%;
+        display: block;
+        object-fit: contain;
+    }
+
+    .text-overlay, #textOverlay {
+        position: absolute;
+        color: #fff;
+        font-size: 24px;
+        font-family: Arial, sans-serif;
+        padding: 5px 10px;
+        cursor: grab;
+        user-select: none;
+        white-space: pre-wrap;
+        word-break: break-word;
+        text-align: center;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        border-radius: 4px;
+        background-color: rgba(0, 0, 0, 0);
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    }
+
+    .upload-area {
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    /* Button Styles */
+    .upload-btn, .download-btn, .history-btn, .effect-btn, .align-btn, .toggle-advanced, button, .boton-derecha {
+        background-color: var(--primary-color);
+        color: var(--text-color-light);
+        border: none;
+        padding: 12px 20px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 1em;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        white-space: nowrap;
+        text-decoration: none;
+    }
+
+    .upload-btn:hover, .download-btn:hover, .history-btn:hover, .effect-btn:hover, 
+    .align-btn:hover, .toggle-advanced:hover, button:hover, .boton-derecha:hover {
+        background-color: var(--primary-dark);
+        transform: translateY(-2px);
+    }
+
+    .upload-btn:active, .download-btn:active, .history-btn:active, .effect-btn:active, 
+    .align-btn:active, .toggle-advanced:active, button:active, .boton-derecha:active {
+        transform: translateY(0);
+    }
+
+    .download-options {
+        display: flex;
+        gap: 10px;
+    }
+
+    .download-format-select, select {
+        padding: 10px 15px;
+        border-radius: 6px;
+        border: 1px solid var(--border-color);
+        background-color: var(--card-background);
+        color: var(--text-color-dark);
+        font-size: 1em;
+        cursor: pointer;
+        transition: border-color 0.3s ease;
+    }
+
+    .download-format-select:hover, select:hover {
+        border-color: var(--primary-color);
+    }
+
+    .history-controls {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+        justify-content: center;
+    }
+
+    .history-btn[disabled] {
+        opacity: 0.5;
+        cursor: not-allowed;
+        background-color: #666;
+    }
+
+    /* Controls Section Styles */
+    .controls-section, .controls {
+        flex: 1;
+        min-width: 300px;
+        background-color: var(--card-background);
+        border-radius: 8px;
+        box-shadow: 0 5px 15px var(--shadow-light);
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        overflow-y: auto;
+        max-height: 80vh;
+    }
+
+    .tabs, .tab-buttons {
+        display: flex;
+        justify-content: space-around;
+        border-bottom: 1px solid var(--border-color);
+        margin-bottom: 20px;
+    }
+
+    .tab-btn {
+        flex-grow: 1;
+        background-color: transparent;
+        border: none;
+        padding: 15px 10px;
+        font-size: 1.1em;
+        font-weight: 500;
+        color: var(--text-color-dark);
+        cursor: pointer;
+        transition: color 0.3s ease, border-bottom 0.3s ease;
+        border-bottom: 3px solid transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .tab-btn:hover {
+        color: var(--primary-color);
+    }
+
+    .tab-btn.active {
+        color: var(--primary-color);
+        border-bottom-color: var(--primary-color);
+        font-weight: 700;
+        background: var(--primary);
+        color: white;
+    }
+
+    .tab-content {
+        display: none;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .tab-content.active {
+        display: flex;
+    }
+
+    /* Control Group Styles */
+    .control-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-bottom: 15px;
+    }
+
+    .control-group label {
+        font-weight: 500;
+        color: var(--text-color-dark);
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    .slider-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    input[type="range"] {
+        flex-grow: 1;
+        -webkit-appearance: none;
+        appearance: none;
+        height: 8px;
+        background: #d3d3d3;
+        outline: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.2s ease-in-out;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: var(--primary-color);
+        cursor: grab;
+        box-shadow: 0 2px 5px var(--shadow-light);
+        transition: background 0.2s ease-in-out;
+    }
+
+    input[type="range"]::-webkit-slider-thumb:hover {
+        background: var(--primary-dark);
+    }
+
+    input[type="range"]::-moz-range-thumb {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: var(--primary-color);
+        cursor: grab;
+        box-shadow: 0 2px 5px var(--shadow-light);
+        transition: background 0.2s ease-in-out;
+    }
+
+    input[type="range"]::-moz-range-thumb:hover {
+        background: var(--primary-dark);
+    }
+
+    .value-display {
+        min-width: 50px;
+        text-align: right;
+        font-weight: 500;
+        color: var(--primary-color);
+    }
+
+    input[type="text"],
+    input[type="color"],
+    select {
+        padding: 10px 12px;
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        font-size: 1em;
+        color: var(--text-color-dark);
+        background-color: var(--background-light);
+        transition: border-color 0.3s ease;
+        width: 100%;
+    }
+
+    input[type="text"]:focus,
+    input[type="color"]:focus,
+    select:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+    }
+
+    /* Frame and Effect Options */
+    .frame-options, .effect-options, .filter-presets {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .frame-option, .effect-btn, .filter-preset {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        cursor: pointer;
+        padding: 8px;
+        border-radius: 8px;
+        border: 2px solid transparent;
+        transition: all 0.2s;
+        text-align: center;
+        height: 60px;
+        justify-content: center;
+        background: #f5f5f5;
+    }
+
+    .frame-option:hover, .effect-btn:hover, .filter-preset:hover {
+        background-color: var(--background-light);
+        border-color: var(--primary-color);
+        transform: scale(1.05);
+    }
+
+    .frame-option.active, .effect-btn.active, .filter-preset.active {
+        border-color: var(--primary-color);
+        background-color: rgba(76, 175, 80, 0.1);
+    }
+
+    .frame-preview {
+        width: 60px;
+        height: 60px;
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+        margin-bottom: 5px;
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 0.8em;
+        color: #555;
+        overflow: hidden;
+    }
+
+    /* Specific frame styles for previews */
+    .polaroid-preview { background: white; padding: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    .vintage-preview { border: 8px solid #8B4513; background: #f5e7d3; }
+    .wood-preview { border: 10px solid #DEB887; background: #DEB887; }
+    .gold-preview { border: 8px solid #FFD700; background: #FFF9C4; }
+    .silver-preview { border: 8px solid #C0C0C0; background: #F5F5F5; }
+    .neon-preview { border: 3px solid #00FFFF; box-shadow: 0 0 5px #00FFFF; }
+    .dotted-preview { border: 5px dotted #333; }
+    .dashed-preview { border: 5px dashed #333; }
+    .double-preview { border: 5px double #333; }
+    .ridge-preview { border: 10px ridge #8B4513; }
+    .inset-preview { border: 10px inset #555; }
+    .outset-preview { border: 10px outset #555; }
+    .groove-preview { border: 10px groove #8B4513; }
+    .fancy-preview { border: 5px solid transparent; border-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50"><path d="M0,0 L50,0 L50,50 L0,50 Z" fill="none" stroke="%238B4513" stroke-width="5"/></svg>') 20 stretch; }
+    .handdrawn-preview { border: 2px solid black; border-radius: 50% / 10% 90% 10% 90%; transform: rotate(-2deg); }
+    .shadow-preview { box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.4); }
+    .vignette-preview { box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.9); }
+    .rounded-corners-preview { border: 1px solid var(--border-color); border-radius: 15px; }
+    .inner-shadow-preview { box-shadow: inset 0 0 10px rgba(0,0,0,0.7); }
+    .gradient-border-preview { border: 5px solid transparent; border-image: linear-gradient(45deg, #f06, #09f) 1; }
+    .film-strip-preview { background-color: #333; border: 2px solid #555; }
+    .stamped-preview { background-color: #f0f0f0; border: 2px dashed #999; }
+    .torn-edge-preview { background-color: #eee; border: 1px solid #ccc; }
+
+    .effect-icon {
+        font-size: 1.8em;
+        margin-bottom: 5px;
+        color: var(--secondary-color);
+    }
+
+    .filter-preset .preset-thumbnail {
+        width: 60px;
+        height: 60px;
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+        margin-bottom: 5px;
+        background-image: url('https://placehold.co/60x60/cccccc/333333?text=Preview');
+        background-size: cover;
+        background-position: center;
+        box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    }
+
+    .preset-name {
+        font-size: 0.9em;
+        color: var(--text-color-dark);
+    }
+
+    /* Text Controls */
+    .text-controls {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 10px;
+    }
+
+    .text-align-options {
+        display: flex;
+        gap: 5px;
+    }
+
+    .align-btn {
+        padding: 10px 15px;
+        font-size: 1.1em;
+        background-color: #eee;
+        color: #555;
+    }
+
+    .align-btn.active {
+        background-color: var(--secondary-color);
+        color: var(--text-color-light);
+    }
+
+    .drawing-mode-options {
+        display: flex;
+        gap: 5px;
+    }
+
+    .advanced-options {
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 15px;
+        margin-top: 15px;
+        background-color: var(--background-light);
+    }
+
+    .watermark-controls {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+        margin-top: 10px;
+    }
+
+    .watermark-preview {
+        width: 80px;
+        height: 80px;
+        border: 1px dashed var(--border-color);
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        border-radius: 4px;
+    }
+
+    /* Footer Styles */
+    .app-footer {
+        background-color: var(--background-dark);
+        color: var(--text-color-light);
+        padding: 20px;
+        text-align: center;
+        font-size: 0.9em;
+        border-bottom-left-radius: 12px;
+        border-bottom-right-radius: 12px;
+        margin-top: auto;
+    }
+
+    /* Loading Overlay */
+    .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        visibility: hidden;
+        opacity: 0;
+        transition: visibility 0s, opacity 0.3s linear;
+    }
+
+    .loading-overlay.visible {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    .loading-spinner {
+        border: 8px solid #f3f3f3;
+        border-top: 8px solid var(--primary-color);
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    /* Notification */
+    .notification {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: rgba(0, 0, 0, 0.8);
+        color: #fff;
+        padding: 12px 25px;
+        border-radius: 8px;
+        font-size: 1em;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+        z-index: 1001;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .notification.show {
+        opacity: 1;
+        visibility: visible;
+        transition: opacity 0.3s ease, visibility 0s linear 0s;
+    }
+
+    /* Neon Demo Box Styles */
+    .demo-box {
+        width: 80%;
+        height: 60%;
+        padding: 20px;
+        background-color: #222;
+        color: #fff;
+        border-radius: 10px;
+        text-align: center;
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+        box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+    }
+
+    .demo-box::before {
+        content: '';
+        position: absolute;
+        top: -10px;
+        left: -10px;
+        width: calc(100% + 20px);
+        height: calc(100% + 20px);
+        border: 5px solid transparent;
+        border-radius: 10px;
+        background: linear-gradient(45deg, #39FF14, #FF0066, #FF6600);
+        background-clip: border-box;
+        filter: blur(10px);
+        z-index: -1;
+        animation: neonBorderPulse 2s infinite alternate;
+    }
+
+    @keyframes neonBorderPulse {
+        0% {
+            box-shadow: 0 0 20px rgba(57, 255, 20, 0.7), 0 0 30px rgba(255, 0, 102, 0.7), 0 0 40px rgba(255, 102, 0, 0.7);
+        }
+        50% {
+            box-shadow: 0 0 30px rgba(57, 255, 20, 1), 0 0 50px rgba(255, 0, 102, 1), 0 0 70px rgba(255, 102, 0, 1);
+        }
+        100% {
+            box-shadow: 0 0 20px rgba(57, 255, 20, 0.7), 0 0 30px rgba(255, 0, 102, 0.7), 0 0 40px rgba(255, 102, 0, 0.7);
+        }
+    }
+
+    .demo-box h1 {
+        font-size: 3rem;
+        font-weight: bold;
+        color: #FF0066;
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 5px;
+        text-shadow: 
+            0 0 10px #FF0066,
+            0 0 20px #FF0066,
+            0 0 30px #FF0066,
+            0 0 40px #FF6600,
+            0 0 50px #39FF14;
+    }
+
+    .demo-box p {
+        font-size: 1.5rem;
+        color: #FFF;
+        margin-top: 20px;
+        font-style: italic;
+    }
+
+    body::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(45deg, #39FF14, #FF0066, #FF6600);
+        filter: blur(50px);
+        z-index: -2;
+        animation: backgroundAnimation 10s ease-in-out infinite;
+    }
+
+    @keyframes backgroundAnimation {
+        0% {
+            transform: scale(1.1);
+            opacity: 0.6;
+        }
+        50% {
+            transform: scale(1.2);
+            opacity: 1;
+        }
+        100% {
+            transform: scale(1.1);
+            opacity: 0.6;
+        }
+    }
+
+    /* Heading Styles */
+    h1 {
+        font-family: 'Arial', sans-serif;
+        color: #000000;
+        font-size: 2.5rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        text-align: center;
+        line-height: 1.2;
+        margin: 20px 0;
+        padding: 15px;
+        background-color: #f8f8f8;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+
+    h1:hover {
+        color: #fff;
+        background-color: #333;
+        transform: scale(1.05);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Container Styles */
+    .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .editor {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    /* Right Button Styles */
+    .boton-derecha {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        text-decoration: none;
+        font-size: 16px;
+    }
+    
+    .boton-derecha:hover {
+        background-color: #45a049;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 900px) {
+        .editor-container, .editor {
+            flex-direction: column;
+        }
+
+        .image-section, .controls-section, .image-section, .controls {
+            min-width: unset;
+            width: 100%;
+        }
+
+        .image-container {
+            height: 350px;
+        }
+
+        .tabs, .tab-buttons {
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            flex-basis: 50%;
+        }
+
+        .demo-box {
+            width: 90%;
+            height: 70%;
+        }
+
+        .demo-box h1 {
+            font-size: 2rem;
+        }
+
+        .demo-box p {
+            font-size: 1.2rem;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .app-title {
+            font-size: 2em;
+        }
+
+        .app-subtitle {
+            font-size: 0.9em;
+        }
+
+        .upload-area, .history-controls {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .upload-btn, .download-btn, .history-btn, .download-format-select {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .download-options {
+            flex-direction: column;
+            width: 100%;
+            gap: 5px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            padding: 8px;
+        }
+
+        .demo-box h1 {
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+        }
+
+        .demo-box p {
+            font-size: 1rem;
+        }
+    }
+    .btn-volver {
+    display: inline-block;
+    text-decoration: none;
+    background-color: #f1c40f; /* amarillo */
+    color: #000;
+    border: 2px solid #d4ac0d;
+    padding: 12px 24px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-volver:hover {
+    background-color: #000;
+    color: #f1c40f;
+    border-color: #000;
+}
+
+</style>
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <h1 class="app-title">Editor de Imágenes Profesional</h1>
+            <p class="app-subtitle">Edita, mejora y personaliza tus fotos con herramientas avanzadas</p>
+        </header>
+
+        <div class="editor-container">
+            <div class="image-section">
+                <div class="image-container" id="dropZone">
+                    <canvas id="imageCanvas"></canvas>
+                    <div id="textOverlay" contenteditable="true" class="text-overlay">Texto aquí</div>
+                </div>
+                
+                <div class="upload-area">
+                    <input type="file" id="imageUpload" accept="image/*" style="display: none;">
+                    <button class="upload-btn" id="uploadBtn">
+                        <i class="fas fa-upload"></i> Cargar Imagen
+                    </button>
+                    <a href="herramientaselementosdearte.html" class="btn-volver">⬅ Volver</a>
+
+                    <div class="download-options">
+                        <button class="download-btn" id="downloadBtn">
+                            <i class="fas fa-download"></i> Descargar Imagen
+                        </button>
+                        <select id="downloadFormat" class="download-format-select">
+                            <option value="png">PNG</option>
+                            <option value="jpeg">JPEG</option>
+                            <option value="webp">WEBP</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="history-controls">
+                    <button class="history-btn" id="undoBtn" disabled>
+                        <i class="fas fa-undo"></i> Deshacer
+                    </button>
+                    <button class="history-btn" id="redoBtn" disabled>
+                        <i class="fas fa-redo"></i> Rehacer
+                    </button>
+                    <button class="history-btn" id="resetBtn">
+                        <i class="fas fa-trash-alt"></i> Restablecer
+                    </button>
+                </div>
+            </div>
+
+            <div class="controls-section">
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="adjust">
+                        <i class="fas fa-sliders-h"></i> Ajustes
+                    </button>
+                    <button class="tab-btn" data-tab="frames">
+                        <i class="fas fa-border-style"></i> Marcos
+                    </button>
+                    <button class="tab-btn" data-tab="effects">
+                        <i class="fas fa-magic"></i> Filtros
+                    </button>
+                    <button class="tab-btn" data-tab="text">
+                        <i class="fas fa-font"></i> Texto
+                    </button>
+                    <button class="tab-btn" data-tab="draw">
+                        <i class="fas fa-paint-brush"></i> Dibujar
+                    </button>
+                    <button class="tab-btn" data-tab="advanced">
+                        <i class="fas fa-cogs"></i> Avanzado
+                    </button>
+                </div>
+
+                <div id="adjust" class="tab-content active">
+                    <div class="control-group">
+                        <label for="brightness">Brillo</label>
+                        <div class="slider-container">
+                            <input type="range" id="brightness" min="0" max="200" value="100">
+                            <span class="value-display" id="brightnessValue">100%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="contrast">Contraste</label>
+                        <div class="slider-container">
+                            <input type="range" id="contrast" min="0" max="200" value="100">
+                            <span class="value-display" id="contrastValue">100%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="saturation">Saturación</label>
+                        <div class="slider-container">
+                            <input type="range" id="saturation" min="0" max="200" value="100">
+                            <span class="value-display" id="saturationValue">100%</span>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="vibrance">Vibración</label>
+                        <div class="slider-container">
+                            <input type="range" id="vibrance" min="0" max="200" value="100">
+                            <span class="value-display" id="vibranceValue">100%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="exposure">Exposición</label>
+                        <div class="slider-container">
+                            <input type="range" id="exposure" min="-100" max="100" value="0">
+                            <span class="value-display" id="exposureValue">0%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="temperature">Temperatura</label>
+                        <div class="slider-container">
+                            <input type="range" id="temperature" min="-100" max="100" value="0">
+                            <span class="value-display" id="temperatureValue">0%</span>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="highlights">Luces</label>
+                        <div class="slider-container">
+                            <input type="range" id="highlights" min="-100" max="100" value="0">
+                            <span class="value-display" id="highlightsValue">0%</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="shadows">Sombras</label>
+                        <div class="slider-container">
+                            <input type="range" id="shadows" min="-100" max="100" value="0">
+                            <span class="value-display" id="shadowsValue">0%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="rotation">Rotación</label>
+                        <div class="slider-container">
+                            <input type="range" id="rotation" min="-180" max="180" value="0">
+                            <span class="value-display" id="rotationValue">0°</span>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="scale">Escala</label>
+                        <div class="slider-container">
+                            <input type="range" id="scale" min="50" max="150" value="100">
+                            <span class="value-display" id="scaleValue">100%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="frames" class="tab-content">
+                    <div class="frame-options">
+                        <div class="frame-option" data-frame="none">
+                            <div class="frame-preview">Sin marco</div>
+                        </div>
+                        <div class="frame-option" data-frame="solid-black">
+                            <div class="frame-preview" style="border: 10px solid #000;"></div>
+                        </div>
+                        <div class="frame-option" data-frame="solid-white">
+                            <div class="frame-preview" style="border: 10px solid #fff; background: #333;"></div>
+                        </div>
+                        <div class="frame-option" data-frame="polaroid">
+                            <div class="frame-preview polaroid-preview"></div>
+                        </div>
+                        <div class="frame-option" data-frame="vintage">
+                            <div class="frame-preview vintage-preview"></div>
+                        </div>
+                        <div class="frame-option" data-frame="wood">
+                            <div class="frame-preview wood-preview"></div>
+                        </div>
+                        <div class="frame-option" data-frame="gold">
+                            <div class="frame-preview gold-preview"></div>
+                        </div>
+                        <div class="frame-option" data-frame="silver">
+                            <div class="frame-preview silver-preview"></div>
+                        </div>
+                        <div class="frame-option" data-frame="neon">
+                            <div class="frame-preview neon-preview"></div>
+                        </div>
+                        <div class="frame-option" data-frame="dotted">
+                            <div class="frame-preview dotted-preview"></div>
+                        </div>
+                        <div class="frame-option" data-frame="dashed">
+                            <div class="frame-preview dashed-preview"></div>
+                        </div>
+                        <div class="frame-option" data-frame="double">
+                            <div class="frame-preview double-preview"></div>
+                        </div>
+                        <div class="frame-option" data-frame="ridge">
+                            <div class="frame-preview ridge-preview"></div>
+                        </div>
+                        <div class="frame-option" data-frame="inset">
+                            <div class="frame-preview inset-preview"></div>
+                        </div>
+                        <div class="frame-option" data-frame="outset">
+                            <div class="frame-preview outset-preview"></div>
+                        </div>
+                        <div class="frame-option" data-frame="groove">
+                            <div class="frame-preview groove-preview"></div>
+                        </div>
+                        <div class="frame-option" data-frame="fancy">
+                            <div class="frame-preview fancy-preview"></div>
+                        </div>
+                        <div class="frame-option" data-frame="handdrawn">
+                            <div class="frame-preview handdrawn-preview"></div>
+                        </div>
+                        <div class="frame-option" data-frame="shadow">
+                            <div class="frame-preview shadow-preview"></div>
+                        </div>
+                        <div class="frame-option" data-frame="vignette">
+                            <div class="frame-preview vignette-preview"></div>
+                        </div>
+                        <div class="frame-option" data-frame="rounded-corners">
+                            <div class="frame-preview rounded-corners-preview"></div>
+                            <div class="preset-name">Redondeado</div>
+                        </div>
+                        <div class="frame-option" data-frame="inner-shadow">
+                            <div class="frame-preview inner-shadow-preview"></div>
+                            <div class="preset-name">Sombra Interna</div>
+                        </div>
+                        <div class="frame-option" data-frame="gradient-border">
+                            <div class="frame-preview gradient-border-preview"></div>
+                            <div class="preset-name">Borde Gradiente</div>
+                        </div>
+                        <div class="frame-option" data-frame="film-strip">
+                            <div class="frame-preview film-strip-preview"></div>
+                            <div class="preset-name">Tira de Película</div>
+                        </div>
+                        <div class="frame-option" data-frame="stamped">
+                            <div class="frame-preview stamped-preview"></div>
+                            <div class="preset-name">Estampado</div>
+                        </div>
+                        <div class="frame-option" data-frame="torn-edge">
+                            <div class="frame-preview torn-edge-preview"></div>
+                            <div class="preset-name">Borde Rasgado</div>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="frameColor">Color del marco:</label>
+                        <input type="color" id="frameColor" value="#000000">
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="frameWidth">Ancho del marco:</label>
+                        <div class="slider-container">
+                            <input type="range" id="frameWidth" min="0" max="50" value="0">
+                            <span class="value-display" id="frameWidthValue">0px</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="effects" class="tab-content">
+                    <div class="effect-options">
+                        <button class="effect-btn" data-effect="none">
+                            <i class="fas fa-image effect-icon"></i>
+                            Original
+                        </button>
+                        <button class="effect-btn" data-effect="grayscale">
+                            <i class="fas fa-moon effect-icon"></i>
+                            Blanco/Negro
+                        </button>
+                        <button class="effect-btn" data-effect="sepia">
+                            <i class="fas fa-book effect-icon"></i>
+                            Sepia
+                        </button>
+                        <button class="effect-btn" data-effect="invert">
+                            <i class="fas fa-adjust effect-icon"></i>
+                            Negativo
+                        </button>
+                        <button class="effect-btn" data-effect="blur">
+                            <i class="fas fa-eye-slash effect-icon"></i>
+                            Desenfoque
+                        </button>
+                        <button class="effect-btn" data-effect="hue-rotate">
+                            <i class="fas fa-palette effect-icon"></i>
+                            Tonalidad
+                        </button>
+                        <button class="effect-btn" data-effect="vintage">
+                            <i class="fas fa-camera-retro effect-icon"></i>
+                            Vintage
+                        </button>
+                        <button class="effect-btn" data-effect="cool">
+                            <i class="fas fa-snowflake effect-icon"></i>
+                            Frío
+                        </button>
+                        <button class="effect-btn" data-effect="warm">
+                            <i class="fas fa-sun effect-icon"></i>
+                            Cálido
+                        </button>
+                        <button class="effect-btn" data-effect="sharpen">
+                            <i class="fas fa-search-plus effect-icon"></i>
+                            Enfocar
+                        </button>
+                        <button class="effect-btn" data-effect="pixelate">
+                            <i class="fas fa-th-large effect-icon"></i>
+                            Pixelar
+                        </button>
+                        <button class="effect-btn" data-effect="posterize">
+                            <i class="fas fa-th effect-icon"></i>
+                            Posterizar
+                        </button>
+                    </div>
+                    
+                    <div class="filter-presets">
+                        <!-- Thumbnails for filter presets will be generated here by JS -->
+                        <div class="filter-preset" data-preset="none">
+                            <div class="preset-thumbnail"></div>
+                            <div class="preset-name">Ninguno</div>
+                        </div>
+                        <div class="filter-preset" data-preset="clarendon">
+                            <div class="preset-thumbnail"></div>
+                            <div class="preset-name">Clarendon</div>
+                        </div>
+                        <div class="filter-preset" data-preset="gingham">
+                            <div class="preset-thumbnail"></div>
+                            <div class="preset-name">Gingham</div>
+                        </div>
+                        <div class="filter-preset" data-preset="moon">
+                            <div class="preset-thumbnail"></div>
+                            <div class="preset-name">Luna</div>
+                        </div>
+                        <div class="filter-preset" data-preset="lark">
+                            <div class="preset-thumbnail"></div>
+                            <div class="preset-name">Lark</div>
+                        </div>
+                        <div class="filter-preset" data-preset="reyes">
+                            <div class="preset-thumbnail"></div>
+                            <div class="preset-name">Reyes</div>
+                        </div>
+                        <div class="filter-preset" data-preset="juno">
+                            <div class="preset-thumbnail"></div>
+                            <div class="preset-name">Juno</div>
+                        </div>
+                        <div class="filter-preset" data-preset="slumber">
+                            <div class="preset-thumbnail"></div>
+                            <div class="preset-name">Slumber</div>
+                        </div>
+                        <div class="filter-preset" data-preset="crema">
+                            <div class="preset-thumbnail"></div>
+                            <div class="preset-name">Crema</div>
+                        </div>
+                        <div class="filter-preset" data-preset="ludwig">
+                            <div class="preset-thumbnail"></div>
+                            <div class="preset-name">Ludwig</div>
+                        </div>
+                        <div class="filter-preset" data-preset="aden">
+                            <div class="preset-thumbnail"></div>
+                            <div class="preset-name">Aden</div>
+                        </div>
+                        <div class="filter-preset" data-preset="perpetua">
+                            <div class="preset-thumbnail"></div>
+                            <div class="preset-name">Perpetua</div>
+                        </div>
+                        <div class="filter-preset" data-preset="amaro">
+                            <div class="preset-thumbnail"></div>
+                            <div class="preset-name">Amaro</div>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="effectIntensity">Intensidad del efecto:</label>
+                        <div class="slider-container">
+                            <input type="range" id="effectIntensity" min="0" max="100" value="50">
+                            <span class="value-display" id="effectIntensityValue">50%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="text" class="tab-content">
+                    <div class="control-group">
+                        <label for="textInput">Texto:</label>
+                        <input type="text" id="textInput" value="Texto aquí">
+                    </div>
+                    
+                    <div class="text-controls">
+                        <div class="control-group">
+                            <label for="fontFamily">Fuente:</label>
+                            <select id="fontFamily">
+                                <option value="Arial">Arial</option>
+                                <option value="Times New Roman">Times New Roman</option>
+                                <option value="Courier New">Courier New</option>
+                                <option value="Georgia">Georgia</option>
+                                <option value="Verdana">Verdana</option>
+                                <option value="Impact">Impact</option>
+                                <option value="Comic Sans MS">Comic Sans</option>
+                                <option value="Palatino">Palatino</option>
+                                <option value="Garamond">Garamond</option>
+                                <option value="Brush Script MT">Brush Script</option>
+                            </select>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label for="textColor">Color:</label>
+                            <input type="color" id="textColor" value="#ffffff">
+                        </div>
+                    </div>
+                    
+                    <div class="text-controls">
+                        <div class="control-group">
+                            <label for="fontSize">Tamaño:</label>
+                            <div class="slider-container">
+                                <input type="range" id="fontSize" min="10" max="100" value="24">
+                                <span class="value-display" id="fontSizeValue">24px</span>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label for="textOpacity">Opacidad:</label>
+                            <div class="slider-container">
+                                <input type="range" id="textOpacity" min="0" max="100" value="100">
+                                <span class="value-display" id="textOpacityValue">100%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label>Alineación:</label>
+                        <div class="text-align-options">
+                            <button class="align-btn" data-align="left"><i class="fas fa-align-left"></i></button>
+                            <button class="align-btn" data-align="center"><i class="fas fa-align-center"></i></button>
+                            <button class="align-btn" data-align="right"><i class="fas fa-align-right"></i></button>
+                            <button class="align-btn" data-align="justify"><i class="fas fa-align-justify"></i></button>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label>Estilo:</label>
+                        <div class="text-align-options">
+                            <button class="align-btn" data-style="bold"><i class="fas fa-bold"></i></button>
+                            <button class="align-btn" data-style="italic"><i class="fas fa-italic"></i></button>
+                            <button class="align-btn" data-style="underline"><i class="fas fa-underline"></i></button>
+                            <button class="align-btn" data-style="shadow"><i class="fas fa-font"></i> S</button>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="textBackground">Fondo de texto:</label>
+                        <input type="color" id="textBackground" value="#000000">
+                        <div class="slider-container">
+                            <input type="range" id="textBgOpacity" min="0" max="100" value="0">
+                            <span class="value-display" id="textBgOpacityValue">0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="draw" class="tab-content">
+                    <div class="control-group">
+                        <label for="brushColor">Color del pincel:</label>
+                        <input type="color" id="brushColor" value="#ff0000">
+                    </div>
+                    <div class="control-group">
+                        <label for="brushSize">Tamaño del pincel:</label>
+                        <div class="slider-container">
+                            <input type="range" id="brushSize" min="1" max="50" value="5">
+                            <span class="value-display" id="brushSizeValue">5px</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label>Modo:</label>
+                        <div class="drawing-mode-options">
+                            <button class="align-btn active" data-draw-mode="draw"><i class="fas fa-pencil-alt"></i> Dibujar</button>
+                            <button class="align-btn" data-draw-mode="erase"><i class="fas fa-eraser"></i> Borrar</button>
+                        </div>
+                    </div>
+                    <button class="effect-btn" id="clearDrawingBtn">
+                        <i class="fas fa-times-circle"></i> Limpiar Dibujo
+                    </button>
+                </div>
+
+                <div id="advanced" class="tab-content">
+                    <div class="control-group">
+                        <label for="cropX">Recorte X:</label>
+                        <div class="slider-container">
+                            <input type="range" id="cropX" min="0" max="100" value="0">
+                            <span class="value-display" id="cropXValue">0%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="cropY">Recorte Y:</label>
+                        <div class="slider-container">
+                            <input type="range" id="cropY" min="0" max="100" value="0">
+                            <span class="value-display" id="cropYValue">0%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="cropWidth">Ancho de recorte:</label>
+                        <div class="slider-container">
+                            <input type="range" id="cropWidth" min="0" max="100" value="100">
+                            <span class="value-display" id="cropWidthValue">100%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="cropHeight">Alto de recorte:</label>
+                        <div class="slider-container">
+                            <input type="range" id="cropHeight" min="0" max="100" value="100">
+                            <span class="value-display" id="cropHeightValue">100%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="imageQuality">Calidad de imagen (JPEG/WEBP):</label>
+                        <div class="slider-container">
+                            <input type="range" id="imageQuality" min="10" max="100" value="90">
+                            <span class="value-display" id="imageQualityValue">90%</span>
+                        </div>
+                    </div>
+                    
+                    <button class="toggle-advanced" id="toggleWatermark">
+                        <i class="fas fa-plus"></i> Agregar marca de agua
+                    </button>
+                    
+                    <div class="advanced-options" id="watermarkOptions" style="display: none;">
+                        <div class="control-group">
+                            <label for="watermarkType">Tipo de marca:</label>
+                            <select id="watermarkType">
+                                <option value="text">Texto</option>
+                                <option value="image">Imagen</option>
+                            </select>
+                        </div>
+                        
+                        <div id="watermarkTextControls">
+                            <div class="control-group">
+                                <label for="watermarkText">Texto:</label>
+                                <input type="text" id="watermarkText" value="Marca de agua">
+                            </div>
+                            
+                            <div class="control-group">
+                                <label for="watermarkTextColor">Color:</label>
+                                <input type="color" id="watermarkTextColor" value="#ffffff">
+                            </div>
+                            
+                            <div class="control-group">
+                                <label for="watermarkTextSize">Tamaño:</label>
+                                <div class="slider-container">
+                                    <input type="range" id="watermarkTextSize" min="10" max="50" value="20">
+                                    <span class="value-display" id="watermarkTextSizeValue">20px</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="watermarkImageControls" style="display: none;">
+                            <div class="control-group">
+                                <label for="watermarkImageUpload">Imagen:</label>
+                                <input type="file" id="watermarkImageUpload" accept="image/*" style="display: none;">
+                                <button class="upload-btn" id="uploadWatermarkBtn">
+                                    <i class="fas fa-upload"></i> Seleccionar imagen
+                                </button>
+                            </div>
+                            
+                            <div class="watermark-controls">
+                                <div class="watermark-preview" id="watermarkPreview"></div>
+                                
+                                <div>
+                                    <div class="control-group">
+                                        <label for="watermarkOpacity">Opacidad:</label>
+                                        <div class="slider-container">
+                                            <input type="range" id="watermarkOpacity" min="0" max="100" value="50">
+                                            <span class="value-display" id="watermarkOpacityValue">50%</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="control-group">
+                                        <label for="watermarkScale">Escala:</label>
+                                        <div class="slider-container">
+                                            <input type="range" id="watermarkScale" min="10" max="200" value="100">
+                                            <span class="value-display" id="watermarkScaleValue">100%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <label for="watermarkPosition">Posición:</label>
+                            <select id="watermarkPosition">
+                                <option value="top-left">Superior izquierda</option>
+                                <option value="top-center">Superior centro</option>
+                                <option value="top-right">Superior derecha</option>
+                                <option value="center-left">Centro izquierda</option>
+                                <option value="center">Centro</option>
+                                <option value="center-right">Centro derecha</option>
+                                <option value="bottom-left">Inferior izquierda</option>
+                                <option value="bottom-center">Inferior centro</option>
+                                <option value="bottom-right">Inferior derecha</option>
+                                <option value="tiled">Mosaico</option>
+                            </select>
+                        </div>
+                        
+                        <button class="effect-btn" id="applyWatermarkBtn">
+                            <i class="fas fa-check"></i> Aplicar marca de agua
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+       
+    </div>
+
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <div class="notification" id="notification"></div>
+
+    <script>
+        /* --- JavaScript Logic (script.js content) --- */
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Elementos del DOM ---
+            const imageUpload = document.getElementById('imageUpload');
+            const uploadBtn = document.getElementById('uploadBtn');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const downloadFormat = document.getElementById('downloadFormat');
+            const undoBtn = document.getElementById('undoBtn');
+            const redoBtn = document.getElementById('redoBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const dropZone = document.getElementById('dropZone'); // El contenedor principal para arrastrar y soltar
+            const imageCanvas = document.getElementById('imageCanvas');
+            const ctx = imageCanvas.getContext('2d');
+            const textOverlay = document.getElementById('textOverlay');
+
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            const brightnessSlider = document.getElementById('brightness');
+            const contrastSlider = document.getElementById('contrast');
+            const saturationSlider = document.getElementById('saturation');
+            const vibranceSlider = document.getElementById('vibrance'); // Nuevo
+            const exposureSlider = document.getElementById('exposure');
+            const temperatureSlider = document.getElementById('temperature');
+            const highlightsSlider = document.getElementById('highlights'); // Nuevo
+            const shadowsSlider = document.getElementById('shadows');     // Nuevo
+            const rotationSlider = document.getElementById('rotation');
+            const scaleSlider = document.getElementById('scale');
+
+            const brightnessValue = document.getElementById('brightnessValue');
+            const contrastValue = document.getElementById('contrastValue');
+            const saturationValue = document.getElementById('saturationValue');
+            const vibranceValue = document.getElementById('vibranceValue'); // Nuevo
+            const exposureValue = document.getElementById('exposureValue');
+            const temperatureValue = document.getElementById('temperatureValue');
+            const highlightsValue = document.getElementById('highlightsValue'); // Nuevo
+            const shadowsValue = document.getElementById('shadowsValue');     // Nuevo
+            const rotationValue = document.getElementById('rotationValue');
+            const scaleValue = document.getElementById('scaleValue');
+
+            const frameOptions = document.querySelectorAll('.frame-option');
+            const frameColorInput = document.getElementById('frameColor');
+            const frameWidthSlider = document.getElementById('frameWidth');
+            const frameWidthValue = document.getElementById('frameWidthValue');
+
+            const effectButtons = document.querySelectorAll('.effect-btn');
+            const filterPresets = document.querySelectorAll('.filter-preset');
+            const effectIntensitySlider = document.getElementById('effectIntensity');
+            const effectIntensityValue = document.getElementById('effectIntensityValue');
+
+            const textInput = document.getElementById('textInput');
+            const fontFamilySelect = document.getElementById('fontFamily');
+            const textColorInput = document.getElementById('textColor');
+            const fontSizeSlider = document.getElementById('fontSize');
+            const fontSizeValue = document.getElementById('fontSizeValue');
+            const textOpacitySlider = document.getElementById('textOpacity');
+            const textOpacityValue = document.getElementById('textOpacityValue');
+            const textAlignButtons = document.querySelectorAll('#text .text-align-options .align-btn');
+            const textStyleButtons = document.querySelectorAll('#text .text-align-options [data-style]');
+            const textBackgroundInput = document.getElementById('textBackground');
+            const textBgOpacitySlider = document.getElementById('textBgOpacity');
+            const textBgOpacityValue = document.getElementById('textBgOpacityValue');
+
+            // Drawing controls
+            const brushColorInput = document.getElementById('brushColor'); // Nuevo
+            const brushSizeSlider = document.getElementById('brushSize');   // Nuevo
+            const brushSizeValue = document.getElementById('brushSizeValue'); // Nuevo
+            const drawingModeButtons = document.querySelectorAll('.drawing-mode-options .align-btn'); // Nuevo
+            const clearDrawingBtn = document.getElementById('clearDrawingBtn'); // Nuevo
+
+            const cropXSlider = document.getElementById('cropX');
+            const cropYSlider = document.getElementById('cropY');
+            const cropWidthSlider = document.getElementById('cropWidth');
+            const cropHeightSlider = document.getElementById('cropHeight');
+            const cropXValue = document.getElementById('cropXValue');
+            const cropYValue = document.getElementById('cropYValue');
+            const cropWidthValue = document.getElementById('cropWidthValue');
+            const cropHeightValue = document.getElementById('cropHeightValue');
+            const imageQualitySlider = document.getElementById('imageQuality');
+            const imageQualityValue = document.getElementById('imageQualityValue');
+
+            const toggleWatermarkBtn = document.getElementById('toggleWatermark');
+            const watermarkOptions = document.getElementById('watermarkOptions');
+            const watermarkTypeSelect = document.getElementById('watermarkType');
+            const watermarkTextControls = document.getElementById('watermarkTextControls');
+            const watermarkImageControls = document.getElementById('watermarkImageControls');
+            const watermarkTextInput = document.getElementById('watermarkText');
+            const watermarkTextColorInput = document.getElementById('watermarkTextColor');
+            const watermarkTextSizeSlider = document.getElementById('watermarkTextSize');
+            const watermarkTextSizeValue = document.getElementById('watermarkTextSizeValue');
+            const watermarkImageUpload = document.getElementById('watermarkImageUpload');
+            const uploadWatermarkBtn = document.getElementById('uploadWatermarkBtn');
+            const watermarkPreview = document.getElementById('watermarkPreview');
+            const watermarkOpacitySlider = document.getElementById('watermarkOpacity');
+            const watermarkOpacityValue = document.getElementById('watermarkOpacityValue');
+            const watermarkScaleSlider = document.getElementById('watermarkScale');
+            const watermarkScaleValue = document = document.getElementById('watermarkScaleValue');
+            const watermarkPositionSelect = document.getElementById('watermarkPosition');
+            const applyWatermarkBtn = document.getElementById('applyWatermarkBtn');
+
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            const notificationElem = document.getElementById('notification');
+
+            // --- Variables de estado ---
+            let originalImage = new Image(); // La imagen original cargada
+            let currentImageBlob = null; // Blob de la imagen para restaurar el estado
+            let imageLoaded = false;
+            let history = []; // Almacena estados de ajustes para deshacer/rehacer
+            let historyIndex = -1;
+
+            // Drawing state
+            let isDrawing = false;
+            let lastX = 0;
+            let lastY = 0;
+            let drawingMode = 'draw'; // 'draw' or 'erase'
+            let drawingHistory = []; // Stores strokes: [{color, size, mode, points: [{x, y}, ...]}, ...]
+
+            // Objeto con todos los ajustes actuales
+            const adjustments = {
+                brightness: 100,
+                contrast: 100,
+                saturation: 100,
+                vibrance: 100, // Nuevo
+                exposure: 0,
+                temperature: 0,
+                highlights: 0, // Nuevo
+                shadows: 0,    // Nuevo
+                rotation: 0,
+                scale: 100,
+                frame: {
+                    type: 'none',
+                    color: '#000000',
+                    width: 0
+                },
+                effect: 'none',
+                effectIntensity: 50,
+                text: {
+                    content: 'Texto aquí',
+                    fontFamily: 'Arial',
+                    color: '#ffffff',
+                    size: 24,
+                    opacity: 100,
+                    align: 'center',
+                    bold: false,
+                    italic: false,
+                    underline: false,
+                    shadow: false,
+                    background: '#000000',
+                    bgOpacity: 0,
+                    x: '50%', // Posición relativa del texto en el contenedor
+                    y: '50%'
+                },
+                crop: {
+                    x: 0, y: 0, width: 100, height: 100 // Porcentajes del tamaño original
+                },
+                watermark: {
+                    active: false,
+                    type: 'text',
+                    text: 'Marca de agua',
+                    textColor: '#ffffff',
+                    textSize: 20,
+                    image: null, // Almacena la URL de datos de la imagen de marca de agua
+                    opacity: 50,
+                    scale: 100,
+                    position: 'bottom-right'
+                },
+                drawing: { // New drawing state
+                    brushColor: '#ff0000',
+                    brushSize: 5,
+                    mode: 'draw'
+                }
+            };
+
+            let isDraggingText = false;
+            let textOffsetX, textOffsetY; // Desplazamiento del puntero al arrastrar el texto
+
+            // --- Funciones de utilidad ---
+            function showLoading() {
+                loadingOverlay.classList.add('visible');
+            }
+
+            function hideLoading() {
+                loadingOverlay.classList.remove('visible');
+            }
+
+            function showNotification(message, type = 'info', duration = 3000) {
+                notificationElem.textContent = message;
+                notificationElem.className = `notification show ${type}`; // Add type for styling (e.g., 'error', 'success')
+                setTimeout(() => {
+                    notificationElem.classList.remove('show');
+                    notificationElem.classList.remove(type);
+                }, duration);
+            }
+
+            function updateSliderValue(slider, valueDisplay, unit = '') {
+                valueDisplay.textContent = `${slider.value}${unit}`;
+            }
+
+            // Guarda el estado actual de los ajustes en el historial
+            function saveState() {
+                const MAX_HISTORY = 20; // Limita el historial para evitar problemas de memoria
+                if (history.length > MAX_HISTORY) {
+                    history.shift(); // Elimina el estado más antiguo
+                    historyIndex--;
+                }
+
+                history = history.slice(0, historyIndex + 1); // Borra el historial de "rehacer"
+                // Deep copy adjustments and drawingHistory
+                history.push({
+                    adjustments: JSON.parse(JSON.stringify(adjustments)),
+                    drawingHistory: JSON.parse(JSON.stringify(drawingHistory))
+                });
+                historyIndex = history.length - 1;
+                updateHistoryButtons();
+            }
+
+            // Carga un estado del historial
+            function loadState(index) {
+                if (index >= 0 && index < history.length) {
+                    const state = history[index];
+                    Object.assign(adjustments, JSON.parse(JSON.stringify(state.adjustments))); // Restaura los ajustes
+                    drawingHistory = JSON.parse(JSON.stringify(state.drawingHistory)); // Restaura el historial de dibujo
+                    historyIndex = index;
+                    applyAllAdjustmentsToUI(); // Actualiza la UI con los ajustes cargados
+                    drawImage(); // Redibuja la imagen con el estado restaurado
+                    updateHistoryButtons();
+                }
+            }
+
+            // Actualiza el estado de los botones Deshacer/Rehacer
+            function updateHistoryButtons() {
+                undoBtn.disabled = historyIndex <= 0;
+                redoBtn.disabled = historyIndex >= history.length - 1;
+            }
+
+            // Restablece todos los ajustes a sus valores predeterminados
+            function resetAdjustments() {
+                Object.assign(adjustments, {
+                    brightness: 100,
+                    contrast: 100,
+                    saturation: 100,
+                    vibrance: 100,
+                    exposure: 0,
+                    temperature: 0,
+                    highlights: 0,
+                    shadows: 0,
+                    rotation: 0,
+                    scale: 100,
+                    frame: { type: 'none', color: '#000000', width: 0 },
+                    effect: 'none',
+                    effectIntensity: 50,
+                    text: {
+                        content: 'Texto aquí',
+                        fontFamily: 'Arial',
+                        color: '#ffffff',
+                        size: 24,
+                        opacity: 100,
+                        align: 'center',
+                        bold: false,
+                        italic: false,
+                        underline: false,
+                        shadow: false,
+                        background: '#000000',
+                        bgOpacity: 0,
+                        x: '50%',
+                        y: '50%'
+                    },
+                    crop: { x: 0, y: 0, width: 100, height: 100 },
+                    watermark: {
+                        active: false,
+                        type: 'text',
+                        text: 'Marca de agua',
+                        textColor: '#ffffff',
+                        textSize: 20,
+                        image: null,
+                        opacity: 50,
+                        scale: 100,
+                        position: 'bottom-right'
+                    },
+                    drawing: {
+                        brushColor: '#ff0000',
+                        brushSize: 5,
+                        mode: 'draw'
+                    }
+                });
+                drawingHistory = []; // Clear drawing history
+                applyAllAdjustmentsToUI();
+                drawImage();
+                saveState(); // Guarda el estado de restablecimiento en el historial
+                showNotification('Todos los ajustes han sido restablecidos.');
+            }
+
+            // Aplica todos los ajustes del objeto `adjustments` a la UI
+            function applyAllAdjustmentsToUI() {
+                brightnessSlider.value = adjustments.brightness;
+                contrastSlider.value = adjustments.contrast;
+                saturationSlider.value = adjustments.saturation;
+                vibranceSlider.value = adjustments.vibrance;
+                exposureSlider.value = adjustments.exposure;
+                temperatureSlider.value = adjustments.temperature;
+                highlightsSlider.value = adjustments.highlights;
+                shadowsSlider.value = adjustments.shadows;
+                rotationSlider.value = adjustments.rotation;
+                scaleSlider.value = adjustments.scale;
+
+                updateSliderValue(brightnessSlider, brightnessValue, '%');
+                updateSliderValue(contrastSlider, contrastValue, '%');
+                updateSliderValue(saturationSlider, saturationValue, '%');
+                updateSliderValue(vibranceSlider, vibranceValue, '%');
+                updateSliderValue(exposureSlider, exposureValue, '%');
+                updateSliderValue(temperatureSlider, temperatureValue, '°');
+                updateSliderValue(highlightsSlider, highlightsValue, '%');
+                updateSliderValue(shadowsSlider, shadowsValue, '%');
+                updateSliderValue(rotationSlider, rotationValue, '°');
+                updateSliderValue(scaleSlider, scaleValue, '%');
+
+                // Marcos
+                frameOptions.forEach(option => {
+                    option.classList.toggle('active', option.dataset.frame === adjustments.frame.type);
+                });
+                frameColorInput.value = adjustments.frame.color;
+                frameWidthSlider.value = adjustments.frame.width;
+                updateSliderValue(frameWidthSlider, frameWidthValue, 'px');
+
+                // Efectos/Filtros
+                effectButtons.forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.effect === adjustments.effect);
+                });
+                filterPresets.forEach(preset => {
+                    preset.classList.toggle('active', preset.dataset.preset === adjustments.effect);
+                });
+                effectIntensitySlider.value = adjustments.effectIntensity;
+                updateSliderValue(effectIntensitySlider, effectIntensityValue, '%');
+
+                // Texto
+                textInput.value = adjustments.text.content;
+                textOverlay.textContent = adjustments.text.content;
+                fontFamilySelect.value = adjustments.text.fontFamily;
+                textColorInput.value = adjustments.text.color;
+                fontSizeSlider.value = adjustments.text.size;
+                textOpacitySlider.value = adjustments.text.opacity;
+                textBackgroundInput.value = adjustments.text.background;
+                textBgOpacitySlider.value = adjustments.text.bgOpacity;
+
+                updateSliderValue(fontSizeSlider, fontSizeValue, 'px');
+                updateSliderValue(textOpacitySlider, textOpacityValue, '%');
+                updateSliderValue(textBgOpacitySlider, textBgOpacityValue, '%');
+
+                // Aplica estilos CSS al textOverlay
+                textOverlay.style.fontFamily = adjustments.text.fontFamily;
+                textOverlay.style.color = adjustments.text.color;
+                textOverlay.style.fontSize = `${adjustments.text.size}px`;
+                textOverlay.style.opacity = adjustments.text.opacity / 100;
+                textOverlay.style.textAlign = adjustments.text.align;
+                textOverlay.style.fontWeight = adjustments.text.bold ? 'bold' : 'normal';
+                textOverlay.style.fontStyle = adjustments.text.italic ? 'italic' : 'normal';
+                textOverlay.style.textDecoration = adjustments.text.underline ? 'underline' : 'none';
+                textOverlay.style.textShadow = adjustments.text.shadow ? '2px 2px 4px rgba(0,0,0,0.5)' : 'none';
+                
+                const bgColor = hexToRgba(adjustments.text.background, adjustments.text.bgOpacity / 100);
+                textOverlay.style.backgroundColor = bgColor;
+
+                // Actualiza botones de alineación y estilo
+                textAlignButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.align === adjustments.text.align));
+                textStyleButtons.forEach(btn => {
+                    const style = btn.dataset.style;
+                    if (style === 'bold') btn.classList.toggle('active', adjustments.text.bold);
+                    if (style === 'italic') btn.classList.toggle('active', adjustments.text.italic);
+                    if (style === 'underline') btn.classList.toggle('active', adjustments.text.underline);
+                    if (style === 'shadow') btn.classList.toggle('active', adjustments.text.shadow);
+                });
+
+                // Dibujo
+                brushColorInput.value = adjustments.drawing.brushColor;
+                brushSizeSlider.value = adjustments.drawing.brushSize;
+                updateSliderValue(brushSizeSlider, brushSizeValue, 'px');
+                drawingModeButtons.forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.drawMode === adjustments.drawing.mode);
+                });
+
+                // Recorte
+                cropXSlider.value = adjustments.crop.x;
+                cropYSlider.value = adjustments.crop.y;
+                cropWidthSlider.value = adjustments.crop.width;
+                cropHeightSlider.value = adjustments.crop.height;
+
+                updateSliderValue(cropXSlider, cropXValue, '%');
+                updateSliderValue(cropYSlider, cropYValue, '%');
+                updateSliderValue(cropWidthSlider, cropWidthValue, '%');
+                updateSliderValue(cropHeightSlider, cropHeightValue, '%');
+
+                imageQualitySlider.value = adjustments.imageQuality || 90; // Default if not set
+                updateSliderValue(imageQualitySlider, imageQualityValue, '%');
+
+                // Marca de agua
+                watermarkOptions.style.display = adjustments.watermark.active ? 'block' : 'none';
+                watermarkTypeSelect.value = adjustments.watermark.type;
+                watermarkTextControls.style.display = adjustments.watermark.type === 'text' ? 'block' : 'none';
+                watermarkImageControls.style.display = adjustments.watermark.type === 'image' ? 'block' : 'none';
+
+                watermarkTextInput.value = adjustments.watermark.text;
+                watermarkTextColorInput.value = adjustments.watermark.textColor;
+                watermarkTextSizeSlider.value = adjustments.watermark.textSize;
+                updateSliderValue(watermarkTextSizeSlider, watermarkTextSizeValue, 'px');
+
+                if (adjustments.watermark.image) {
+                    watermarkPreview.style.backgroundImage = `url(${adjustments.watermark.image})`;
+                } else {
+                    watermarkPreview.style.backgroundImage = 'none';
+                }
+                watermarkOpacitySlider.value = adjustments.watermark.opacity;
+                watermarkScaleSlider.value = adjustments.watermark.scale;
+                watermarkPositionSelect.value = adjustments.watermark.position;
+                updateSliderValue(watermarkOpacitySlider, watermarkOpacityValue, '%');
+                updateSliderValue(watermarkScaleSlider, watermarkScaleValue, '%');
+            }
+
+            // Convierte HEX a RGBA
+            function hexToRgba(hex, alpha) {
+                let r = 0, g = 0, b = 0;
+                // 3 digits
+                if (hex.length == 4) {
+                    r = parseInt(hex[1] + hex[1], 16);
+                    g = parseInt(hex[2] + hex[2], 16);
+                    b = parseInt(hex[3] + hex[3], 16);
+                }
+                // 6 digits
+                else if (hex.length == 7) {
+                    r = parseInt(hex.substring(1, 3), 16);
+                    g = parseInt(hex.substring(3, 5), 16);
+                    b = parseInt(hex.substring(5, 7), 16);
+                }
+                return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+            }
+
+
+            // --- Carga de imagen y configuración del Canvas ---
+            function loadImage(file) {
+                if (file && file.type.startsWith('image/')) {
+                    showLoading();
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        originalImage.onload = () => {
+                            // Guarda el blob original para el restablecimiento completo
+                            fetch(originalImage.src)
+                                .then(res => res.blob())
+                                .then(blob => {
+                                    currentImageBlob = blob;
+                                    resetAdjustments(); // Restablece los ajustes al cargar una nueva imagen
+                                    imageLoaded = true;
+                                    saveState(); // Guarda el estado inicial
+                                    drawImage(); // Dibuja la imagen inicial
+                                    hideLoading();
+                                    showNotification('Imagen cargada correctamente.', 'success');
+                                })
+                                .catch(error => {
+                                    console.error('Error al obtener el blob de la imagen:', error);
+                                    hideLoading();
+                                    showNotification('Error al procesar la imagen.', 'error');
+                                });
+                        };
+                        originalImage.onerror = () => {
+                            hideLoading();
+                            showNotification('Error al cargar la imagen. Asegúrate de que es un archivo de imagen válido.', 'error');
+                        };
+                        originalImage.src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    showNotification('Por favor, selecciona un archivo de imagen válido.', 'error');
+                }
+            }
+
+            // --- Funciones de dibujo en el Canvas ---
+            function drawImage() {
+                if (!imageLoaded) {
+                    ctx.clearRect(0, 0, imageCanvas.width, imageCanvas.height);
+                    // Dibuja un mensaje de placeholder si no hay imagen
+                    ctx.fillStyle = '#ccc';
+                    ctx.fillRect(0, 0, imageCanvas.width, imageCanvas.height);
+                    ctx.fillStyle = '#555';
+                    ctx.font = '20px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText('Carga una imagen aquí', imageCanvas.width / 2, imageCanvas.height / 2);
+                    return;
+                }
+
+                showLoading();
+
+                // Crear un canvas temporal para aplicar filtros y transformaciones a la imagen base
+                const tempCanvas = document.createElement('canvas');
+                const tempCtx = tempCanvas.getContext('2d');
+
+                // Aplicar recorte al original para el lienzo temporal
+                const croppedWidth = originalImage.naturalWidth * (adjustments.crop.width / 100);
+                const croppedHeight = originalImage.naturalHeight * (adjustments.crop.height / 100);
+                const croppedX = originalImage.naturalWidth * (adjustments.crop.x / 100);
+                const croppedY = originalImage.naturalHeight * (adjustments.crop.y / 100);
+
+                tempCanvas.width = croppedWidth;
+                tempCanvas.height = croppedHeight;
+
+                tempCtx.drawImage(originalImage, croppedX, croppedY, croppedWidth, croppedHeight, 0, 0, croppedWidth, croppedHeight);
+
+                // Aplica filtros CSS al contexto temporal
+                let filterString = `brightness(${adjustments.brightness}%) ` +
+                                   `contrast(${adjustments.contrast}%) ` +
+                                   `saturate(${adjustments.saturation}%) ` +
+                                   `hue-rotate(${adjustments.temperature}deg) ` + // Temperatura como hue-rotate
+                                   `grayscale(${adjustments.effect === 'grayscale' ? 100 : 0}%) ` +
+                                   `sepia(${adjustments.effect === 'sepia' ? 100 : 0}%) ` +
+                                   `invert(${adjustments.effect === 'invert' ? 100 : 0}%) ` +
+                                   `blur(${adjustments.effect === 'blur' ? adjustments.effectIntensity / 10 : 0}px) `;
+
+                // Aplicar filtros preestablecidos (aproximaciones CSS)
+                switch (adjustments.effect) {
+                    case 'vintage':
+                        filterString += `sepia(50%) saturate(150%) contrast(120%) brightness(90%) `;
+                        break;
+                    case 'cool':
+                        filterString += `brightness(110%) contrast(110%) hue-rotate(200deg) saturate(150%) `;
+                        break;
+                    case 'warm':
+                        filterString += `brightness(110%) contrast(110%) hue-rotate(-20deg) saturate(150%) `;
+                        break;
+                    case 'sharpen':
+                        // Sharpening con CSS es limitado. Se puede simular con un ligero contraste y brillo.
+                        filterString += `contrast(105%) brightness(105%) `;
+                        break;
+                    case 'pixelate':
+                        // Pixelate y Posterize se aplican después de drawImage con manipulacion de píxeles
+                        break;
+                    case 'posterize':
+                        // Pixelate y Posterize se aplican después de drawImage con manipulacion de píxeles
+                        break;
+                    case 'clarendon':
+                        filterString += 'contrast(1.2) saturate(1.35)';
+                        break;
+                    case 'gingham':
+                        filterString += 'brightness(1.05) hue-rotate(-10deg)';
+                        break;
+                    case 'moon':
+                        filterString += 'grayscale(1) contrast(1.1) brightness(1.1)';
+                        break;
+                    case 'lark':
+                        filterString += 'contrast(0.9) brightness(1.1) saturate(1.2)';
+                        break;
+                    case 'reyes':
+                        filterString += 'sepia(0.22) brightness(1.1) contrast(0.85) saturate(0.75)';
+                        break;
+                    case 'juno':
+                        filterString += 'contrast(1.2) saturate(1.8) hue-rotate(-15deg)';
+                        break;
+                    case 'slumber':
+                        filterString += 'brightness(1.05) saturate(0.65)';
+                        break;
+                    case 'crema':
+                        filterString += 'sepia(0.15) brightness(1.05) contrast(0.9) saturate(1.2)';
+                        break;
+                    case 'ludwig':
+                        filterString += 'brightness(1.05) contrast(1.2) saturate(1.05)';
+                        break;
+                    case 'aden':
+                        filterString += 'brightness(1.15) contrast(0.9) saturate(1.4)';
+                        break;
+                    case 'perpetua':
+                        filterString += 'brightness(1.05) contrast(1.1)';
+                        break;
+                    case 'amaro':
+                        filterString += 'brightness(1.1) contrast(0.9) saturate(1.5)';
+                        break;
+                    default:
+                        break;
+                }
+
+                tempCtx.filter = filterString;
+                tempCtx.drawImage(originalImage, croppedX, croppedY, croppedWidth, croppedHeight, 0, 0, croppedWidth, croppedHeight);
+
+                // Aplicar efectos de píxeles si son necesarios (después de dibujar la imagen filtrada)
+                if (adjustments.effect === 'pixelate') {
+                    applyPixelateEffect(tempCtx, tempCanvas.width, tempCanvas.height, adjustments.effectIntensity);
+                } else if (adjustments.effect === 'posterize') {
+                    applyPosterizeEffect(tempCtx, tempCanvas.width, tempCanvas.height, adjustments.effectIntensity);
+                }
+
+                // Aplicar Vibrance, Highlights, Shadows (requiere manipulación de píxeles)
+                applyVibranceHighlightsShadows(tempCtx, tempCanvas.width, tempCanvas.height, adjustments.vibrance, adjustments.highlights, adjustments.shadows);
+
+
+                // Ajusta el tamaño del canvas principal para la visualización
+                // Mantener la relación de aspecto y ajustarse al contenedor
+                const containerWidth = dropZone.clientWidth;
+                const containerHeight = dropZone.clientHeight;
+
+                let displayWidth = croppedWidth;
+                let displayHeight = croppedHeight;
+
+                // Aplicar rotación para calcular el tamaño del canvas
+                if (adjustments.rotation % 180 !== 0) {
+                    // Si está rotado 90 o 270 grados, intercambiar ancho y alto
+                    [displayWidth, displayHeight] = [displayHeight, displayWidth];
+                }
+
+                // Aplicar escala
+                displayWidth *= (adjustments.scale / 100);
+                displayHeight *= (adjustments.scale / 100);
+
+                // Escalar para que quepa en el contenedor
+                const ratio = Math.min(containerWidth / displayWidth, containerHeight / displayHeight);
+                imageCanvas.width = displayWidth * ratio;
+                imageCanvas.height = displayHeight * ratio;
+
+                ctx.clearRect(0, 0, imageCanvas.width, imageCanvas.height);
+                ctx.save(); // Guarda el estado del contexto antes de las transformaciones
+
+                // Traslada al centro del canvas para rotación y escalado
+                ctx.translate(imageCanvas.width / 2, imageCanvas.height / 2);
+
+                // Aplica rotación
+                ctx.rotate(adjustments.rotation * Math.PI / 180);
+
+                // Dibuja la imagen del canvas temporal al canvas principal
+                ctx.drawImage(tempCanvas, -imageCanvas.width / (2 * ratio), -imageCanvas.height / (2 * ratio), imageCanvas.width / ratio, imageCanvas.height / ratio);
+
+                ctx.restore(); // Restaura el estado del contexto
+
+                // Dibuja el marco directamente en el canvas principal
+                drawFrameOnCanvas(ctx, imageCanvas.width, imageCanvas.height, adjustments.frame.type, adjustments.frame.color, adjustments.frame.width);
+
+                // Dibuja la marca de agua (si está activa)
+                if (adjustments.watermark.active) {
+                    drawWatermarkOnCanvas(ctx, imageCanvas.width, imageCanvas.height);
+                }
+
+                // Dibuja los trazos de dibujo
+                drawAllStrokes(ctx);
+
+                // Aplica los estilos del textOverlay al div y lo posiciona
+                textOverlay.style.fontFamily = adjustments.text.fontFamily;
+                textOverlay.style.color = adjustments.text.color;
+                textOverlay.style.fontSize = `${adjustments.text.size}px`;
+                textOverlay.style.opacity = adjustments.text.opacity / 100;
+                textOverlay.style.textAlign = adjustments.text.align;
+                textOverlay.style.fontWeight = adjustments.text.bold ? 'bold' : 'normal';
+                textOverlay.style.fontStyle = adjustments.text.italic ? 'italic' : 'normal';
+                textOverlay.style.textDecoration = adjustments.text.underline ? 'underline' : 'none';
+                textOverlay.style.textShadow = adjustments.text.shadow ? '2px 2px 4px rgba(0,0,0,0.5)' : 'none';
+                
+                const bgColor = hexToRgba(adjustments.text.background, adjustments.text.bgOpacity / 100);
+                textOverlay.style.backgroundColor = bgColor;
+
+                // Posiciona el texto overlay
+                // Las posiciones x, y del texto son relativas al contenedor de la imagen
+                const containerRect = dropZone.getBoundingClientRect();
+                const textX = (parseFloat(adjustments.text.x) / 100) * containerRect.width;
+                const textY = (parseFloat(adjustments.text.y) / 100) * containerRect.height;
+                
+                textOverlay.style.left = `${textX}px`;
+                textOverlay.style.top = `${textY}px`;
+                textOverlay.style.transform = `translate(-50%, -50%)`; // Centra el texto en su punto (x,y)
+
+                hideLoading();
+            }
+
+            // --- Funciones para efectos de píxeles (aproximaciones simples) ---
+            function applyPixelateEffect(context, width, height, intensity) {
+                const pixelSize = Math.max(1, Math.floor(intensity / 10)); // Tamaño del píxel basado en la intensidad
+                const imageData = context.getImageData(0, 0, width, height);
+                const data = imageData.data;
+
+                for (let y = 0; y < height; y += pixelSize) {
+                    for (let x = 0; x < width; x += pixelSize) {
+                        // Obtener el color del píxel superior izquierdo del bloque
+                        const i = ((y * width) + x) * 4;
+                        const r = data[i];
+                        const g = data[i + 1];
+                        const b = data[i + 2];
+                        const a = data[i + 3];
+
+                        // Rellenar todo el bloque con este color
+                        for (let py = 0; py < pixelSize; py++) {
+                            for (let px = 0; px < pixelSize; px++) {
+                                const targetX = x + px;
+                                const targetY = y + py;
+                                if (targetX < width && targetY < height) {
+                                    const targetI = ((targetY * width) + targetX) * 4;
+                                    data[targetI] = r;
+                                    data[targetI + 1] = g;
+                                    data[targetI + 2] = b;
+                                    data[targetI + 3] = a;
+                                }
+                            }
+                        }
+                    }
+                }
+                context.putImageData(imageData, 0, 0);
+            }
+
+            function applyPosterizeEffect(context, width, height, intensity) {
+                const levels = Math.max(2, Math.floor(intensity / 10)); // Número de niveles de color
+                const imageData = context.getImageData(0, 0, width, height);
+                const data = imageData.data;
+                const factor = 255 / (levels - 1);
+
+                for (let i = 0; i < data.length; i += 4) {
+                    data[i] = Math.floor(Math.floor(data[i] / factor) * factor);     // Red
+                    data[i + 1] = Math.floor(Math.floor(data[i + 1] / factor) * factor); // Green
+                    data[i + 2] = Math.floor(Math.floor(data[i + 2] / factor) * factor); // Blue
+                }
+                context.putImageData(imageData, 0, 0);
+            }
+
+            // Función para aplicar Vibrance, Highlights y Shadows
+            function applyVibranceHighlightsShadows(context, width, height, vibrance, highlights, shadows) {
+                const imageData = context.getImageData(0, 0, width, height);
+                const data = imageData.data;
+
+                const vibranceFactor = (vibrance - 100) / 100; // -1 to 1
+                const highlightsFactor = highlights / 100;     // -1 to 1
+                const shadowsFactor = shadows / 100;         // -1 to 1
+
+                for (let i = 0; i < data.length; i += 4) {
+                    let r = data[i];
+                    let g = data[i + 1];
+                    let b = data[i + 2];
+
+                    // Apply Vibrance (simple approximation)
+                    const max = Math.max(r, g, b);
+                    const avg = (r + g + b) / 3;
+                    const amount = Math.abs(max - avg) * 2 * vibranceFactor;
+                    r += (r > avg ? 1 : -1) * amount;
+                    g += (g > avg ? 1 : -1) * amount;
+                    b += (b > avg ? 1 : -1) * amount;
+
+                    // Apply Highlights (simple approximation)
+                    if (highlightsFactor !== 0) {
+                        const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+                        if (luminance > 0.5) { // Only affect brighter areas
+                            const highlightAdjust = (luminance - 0.5) * 2 * highlightsFactor * 255;
+                            r += highlightAdjust;
+                            g += highlightAdjust;
+                            b += highlightAdjust;
+                        }
+                    }
+
+                    // Apply Shadows (simple approximation)
+                    if (shadowsFactor !== 0) {
+                        const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+                        if (luminance < 0.5) { // Only affect darker areas
+                            const shadowAdjust = (0.5 - luminance) * 2 * shadowsFactor * 255;
+                            r += shadowAdjust;
+                            g += shadowAdjust;
+                            b += shadowAdjust;
+                        }
+                    }
+
+                    data[i] = Math.min(255, Math.max(0, r));
+                    data[i + 1] = Math.min(255, Math.max(0, g));
+                    data[i + 2] = Math.min(255, Math.max(0, b));
+                }
+                context.putImageData(imageData, 0, 0);
+            }
+
+
+            // --- Funciones de Marcos (dibujo en canvas) ---
+            function drawFrameOnCanvas(canvasContext, canvasWidth, canvasHeight, frameType, frameColor, frameWidth) {
+                if (frameType === 'none' || frameWidth === 0) {
+                    return; // No dibujar marco
+                }
+
+                canvasContext.save(); // Guarda el estado del contexto
+
+                // Ajusta el contexto para dibujar el marco alrededor de la imagen ya dibujada
+                // El marco se dibujará en el área exterior del contenido actual
+                const borderOffset = frameWidth / 2; // Para que el borde se dibuje centrado en la línea
+
+                canvasContext.strokeStyle = frameColor;
+                canvasContext.lineWidth = frameWidth;
+
+                switch (frameType) {
+                    case 'solid-black':
+                    case 'solid-white':
+                        canvasContext.strokeRect(borderOffset, borderOffset, canvasWidth - frameWidth, canvasHeight - frameWidth);
+                        break;
+                    case 'polaroid':
+                        // Para Polaroid, dibujamos un fondo blanco y una sombra
+                        canvasContext.fillStyle = 'white';
+                        canvasContext.fillRect(0, 0, canvasWidth, canvasHeight);
+                        // La imagen ya está dibujada, así que solo agregamos la sombra
+                        canvasContext.shadowColor = 'rgba(0,0,0,0.5)';
+                        canvasContext.shadowBlur = 10;
+                        canvasContext.shadowOffsetX = 5;
+                        canvasContext.shadowOffsetY = 5;
+                        // Dibujar un rectángulo transparente para aplicar la sombra al "marco"
+                        canvasContext.fillRect(0, 0, canvasWidth, canvasHeight);
+                        break;
+                    case 'vintage':
+                        canvasContext.strokeStyle = '#8B4513';
+                        canvasContext.lineWidth = frameWidth;
+                        canvasContext.strokeRect(borderOffset, borderOffset, canvasWidth - frameWidth, canvasHeight - frameWidth);
+                        break;
+                    case 'wood':
+                        canvasContext.strokeStyle = '#DEB887';
+                        canvasContext.lineWidth = frameWidth;
+                        canvasContext.strokeRect(borderOffset, borderOffset, canvasWidth - frameWidth, canvasHeight - frameWidth);
+                        break;
+                    case 'gold':
+                        canvasContext.strokeStyle = '#FFD700';
+                        canvasContext.lineWidth = frameWidth;
+                        canvasContext.strokeRect(borderOffset, borderOffset, canvasWidth - frameWidth, canvasHeight - frameWidth);
+                        break;
+                    case 'silver':
+                        canvasContext.strokeStyle = '#C0C0C0';
+                        canvasContext.lineWidth = frameWidth;
+                        canvasContext.strokeRect(borderOffset, borderOffset, canvasWidth - frameWidth, canvasHeight - frameWidth);
+                        break;
+                    case 'neon':
+                        canvasContext.strokeStyle = frameColor;
+                        canvasContext.lineWidth = frameWidth / 3;
+                        canvasContext.shadowColor = frameColor;
+                        canvasContext.shadowBlur = frameWidth;
+                        canvasContext.strokeRect(borderOffset, borderOffset, canvasWidth - frameWidth, canvasHeight - frameWidth);
+                        break;
+                    case 'dotted':
+                        canvasContext.setLineDash([frameWidth, frameWidth]);
+                        canvasContext.strokeRect(borderOffset, borderOffset, canvasWidth - frameWidth, canvasHeight - frameWidth);
+                        canvasContext.setLineDash([]); // Reset line dash
+                        break;
+                    case 'dashed':
+                        canvasContext.setLineDash([frameWidth * 2, frameWidth]);
+                        canvasContext.strokeRect(borderOffset, borderOffset, canvasWidth - frameWidth, canvasHeight - frameWidth);
+                        canvasContext.setLineDash([]); // Reset line dash
+                        break;
+                    case 'double':
+                        canvasContext.lineWidth = frameWidth / 3;
+                        canvasContext.strokeRect(borderOffset + frameWidth / 3, borderOffset + frameWidth / 3, canvasWidth - frameWidth - frameWidth / 3, canvasHeight - frameWidth - frameWidth / 3);
+                        canvasContext.strokeRect(borderOffset - frameWidth / 3, borderOffset - frameWidth / 3, canvasWidth - frameWidth + frameWidth / 3, canvasHeight - frameWidth + frameWidth / 3);
+                        break;
+                    case 'ridge':
+                        // Simulación de ridge con múltiples trazos
+                        canvasContext.lineWidth = frameWidth / 2;
+                        canvasContext.strokeStyle = 'rgba(0,0,0,0.3)';
+                        canvasContext.strokeRect(borderOffset, borderOffset, canvasWidth - frameWidth, canvasHeight - frameWidth);
+                        canvasContext.strokeStyle = 'rgba(255,255,255,0.3)';
+                        canvasContext.strokeRect(borderOffset + frameWidth / 4, borderOffset + frameWidth / 4, canvasWidth - frameWidth - frameWidth / 2, canvasHeight - frameWidth - frameWidth / 2);
+                        break;
+                    case 'inset':
+                        // Simulación de inset
+                        canvasContext.lineWidth = frameWidth;
+                        canvasContext.strokeStyle = 'rgba(0,0,0,0.5)';
+                        canvasContext.strokeRect(borderOffset, borderOffset, canvasWidth - frameWidth, canvasHeight - frameWidth);
+                        break;
+                    case 'outset':
+                        // Simulación de outset
+                        canvasContext.lineWidth = frameWidth;
+                        canvasContext.strokeStyle = 'rgba(255,255,255,0.5)';
+                        canvasContext.strokeRect(borderOffset, borderOffset, canvasWidth - frameWidth, canvasHeight - frameWidth);
+                        break;
+                    case 'groove':
+                        // Simulación de groove
+                        canvasContext.lineWidth = frameWidth / 2;
+                        canvasContext.strokeStyle = 'rgba(255,255,255,0.3)';
+                        canvasContext.strokeRect(borderOffset, borderOffset, canvasWidth - frameWidth, canvasHeight - frameWidth);
+                        canvasContext.strokeStyle = 'rgba(0,0,0,0.3)';
+                        canvasContext.strokeRect(borderOffset + frameWidth / 4, borderOffset + frameWidth / 4, canvasWidth - frameWidth - frameWidth / 2, canvasHeight - frameWidth - frameWidth / 2);
+                        break;
+                    case 'fancy':
+                        // Dibujar un marco SVG complejo (simplificado, para un SVG real se necesitaría un parser)
+                        canvasContext.strokeStyle = frameColor;
+                        canvasContext.lineWidth = 5; // Ancho fijo para fancy
+                        canvasContext.beginPath();
+                        canvasContext.moveTo(0, 0);
+                        canvasContext.lineTo(canvasWidth, 0);
+                        canvasContext.lineTo(canvasWidth, canvasHeight);
+                        canvasContext.lineTo(0, canvasHeight);
+                        canvasContext.closePath();
+                        canvasContext.stroke();
+                        break;
+                    case 'handdrawn':
+                        canvasContext.strokeStyle = 'black';
+                        canvasContext.lineWidth = 2;
+                        canvasContext.beginPath();
+                        canvasContext.ellipse(canvasWidth / 2, canvasHeight / 2, canvasWidth / 2 - frameWidth, canvasHeight / 2 - frameWidth, -2 * Math.PI / 180, 0, 2 * Math.PI);
+                        canvasContext.stroke();
+                        break;
+                    case 'shadow':
+                        canvasContext.shadowColor = 'rgba(0,0,0,0.5)';
+                        canvasContext.shadowBlur = frameWidth * 2;
+                        canvasContext.shadowOffsetX = frameWidth;
+                        canvasContext.shadowOffsetY = frameWidth;
+                        // Dibuja un rectángulo transparente para aplicar la sombra al "marco"
+                        canvasContext.fillStyle = 'transparent';
+                        canvasContext.fillRect(0, 0, canvasWidth, canvasHeight);
+                        break;
+                    case 'vignette':
+                        const gradient = canvasContext.createRadialGradient(canvasWidth / 2, canvasHeight / 2, Math.min(canvasWidth, canvasHeight) / 4, canvasWidth / 2, canvasHeight / 2, Math.min(canvasWidth, canvasHeight) / 2);
+                        gradient.addColorStop(0, 'rgba(0,0,0,0)');
+                        gradient.addColorStop(1, 'rgba(0,0,0,0.7)');
+                        canvasContext.fillStyle = gradient;
+                        canvasContext.fillRect(0, 0, canvasWidth, canvasHeight);
+                        break;
+                    case 'rounded-corners':
+                        canvasContext.strokeStyle = frameColor;
+                        canvasContext.lineWidth = frameWidth;
+                        const radius = 15; // Radio fijo para las esquinas redondeadas
+                        canvasContext.beginPath();
+                        canvasContext.moveTo(borderOffset + radius, borderOffset);
+                        canvasContext.lineTo(canvasWidth - borderOffset - radius, borderOffset);
+                        canvasContext.arcTo(canvasWidth - borderOffset, borderOffset, canvasWidth - borderOffset, borderOffset + radius, radius);
+                        canvasContext.lineTo(canvasWidth - borderOffset, canvasHeight - borderOffset - radius);
+                        canvasContext.arcTo(canvasWidth - borderOffset, canvasHeight - borderOffset, canvasWidth - borderOffset - radius, canvasHeight - borderOffset, radius);
+                        canvasContext.lineTo(borderOffset + radius, canvasHeight - borderOffset);
+                        canvasContext.arcTo(borderOffset, canvasHeight - borderOffset, borderOffset, canvasHeight - borderOffset - radius, radius);
+                        canvasContext.lineTo(borderOffset, borderOffset + radius);
+                        canvasContext.arcTo(borderOffset, borderOffset, borderOffset + radius, borderOffset, radius);
+                        canvasContext.closePath();
+                        canvasContext.stroke();
+                        break;
+                    case 'inner-shadow':
+                        canvasContext.shadowColor = frameColor; // Usar el color del marco para la sombra
+                        canvasContext.shadowBlur = frameWidth * 2;
+                        canvasContext.shadowOffsetX = 0;
+                        canvasContext.shadowOffsetY = 0;
+                        canvasContext.fillStyle = 'transparent'; // Para que la sombra se vea
+                        canvasContext.fillRect(0, 0, canvasWidth, canvasHeight);
+                        break;
+                    case 'gradient-border':
+                        const gradientBorder = canvasContext.createLinearGradient(0, 0, canvasWidth, canvasHeight);
+                        gradientBorder.addColorStop(0, '#f06');
+                        gradientBorder.addColorStop(1, '#09f');
+                        canvasContext.strokeStyle = gradientBorder;
+                        canvasContext.lineWidth = frameWidth;
+                        canvasContext.strokeRect(borderOffset, borderOffset, canvasWidth - frameWidth, canvasHeight - frameWidth);
+                        break;
+                    case 'film-strip':
+                        canvasContext.fillStyle = '#333';
+                        canvasContext.fillRect(0, 0, canvasWidth, canvasHeight);
+                        const toothWidth = 10;
+                        const toothHeight = 20;
+                        const spacing = 15;
+                        // Top teeth
+                        for (let x = 0; x < canvasWidth; x += (toothWidth + spacing)) {
+                            canvasContext.fillRect(x, 0, toothWidth, toothHeight);
+                        }
+                        // Bottom teeth
+                        for (let x = 0; x < canvasWidth; x += (toothWidth + spacing)) {
+                            canvasContext.fillRect(x, canvasHeight - toothHeight, toothWidth, toothHeight);
+                        }
+                        // Inner border
+                        canvasContext.strokeStyle = '#555';
+                        canvasContext.lineWidth = 2;
+                        canvasContext.strokeRect(toothWidth / 2, toothHeight, canvasWidth - toothWidth, canvasHeight - toothHeight * 2);
+                        break;
+                    case 'stamped':
+                        canvasContext.strokeStyle = frameColor;
+                        canvasContext.lineWidth = frameWidth;
+                        canvasContext.setLineDash([frameWidth * 0.8, frameWidth * 0.5]); // dashed line
+                        canvasContext.lineDashOffset = 0;
+                        canvasContext.strokeRect(borderOffset, borderOffset, canvasWidth - frameWidth, canvasHeight - frameWidth);
+                        canvasContext.setLineDash([]); // Reset line dash
+                        break;
+                    case 'torn-edge':
+                        canvasContext.strokeStyle = frameColor;
+                        canvasContext.lineWidth = frameWidth / 2;
+                        canvasContext.beginPath();
+                        // Top edge (torn)
+                        canvasContext.moveTo(0, frameWidth / 2);
+                        for (let x = 0; x < canvasWidth; x += 10) {
+                            canvasContext.lineTo(x, frameWidth / 2 + Math.sin(x / 20) * (frameWidth / 4));
+                        }
+                        canvasContext.lineTo(canvasWidth, frameWidth / 2);
+                        // Right edge
+                        canvasContext.lineTo(canvasWidth - frameWidth / 2, canvasHeight);
+                        // Bottom edge (torn)
+                        for (let x = canvasWidth; x > 0; x -= 10) {
+                            canvasContext.lineTo(x, canvasHeight - frameWidth / 2 + Math.sin(x / 20) * (frameWidth / 4));
+                        }
+                        canvasContext.lineTo(0, canvasHeight - frameWidth / 2);
+                        // Left edge
+                        canvasContext.lineTo(frameWidth / 2, 0);
+                        canvasContext.closePath();
+                        canvasContext.stroke();
+                        break;
+                    default:
+                        break;
+                }
+                canvasContext.restore(); // Restaura el estado del contexto
+            }
+
+            // --- Funciones de Marca de Agua (dibujo en canvas) ---
+            function drawWatermarkOnCanvas(canvasContext, canvasWidth, canvasHeight) {
+                if (!adjustments.watermark.active) return;
+
+                canvasContext.save();
+                canvasContext.globalAlpha = adjustments.watermark.opacity / 100;
+                const watermarkScale = adjustments.watermark.scale / 100;
+
+                // Calcula la posición de la marca de agua
+                let wmX = 0, wmY = 0;
+                const padding = 20; // Padding desde los bordes
+
+                // Determina el tamaño de la marca de agua para el cálculo de posición
+                let wmContentWidth, wmContentHeight;
+                if (adjustments.watermark.type === 'text') {
+                    canvasContext.font = `${adjustments.watermark.textSize * watermarkScale}px ${adjustments.text.fontFamily}`;
+                    const metrics = canvasContext.measureText(adjustments.watermark.text);
+                    wmContentWidth = metrics.width;
+                    wmContentHeight = adjustments.watermark.textSize * watermarkScale; // Aproximación
+                } else if (adjustments.watermark.image) {
+                    const tempImg = new Image();
+                    tempImg.src = adjustments.watermark.image;
+                    wmContentWidth = tempImg.naturalWidth * watermarkScale;
+                    wmContentHeight = tempImg.naturalHeight * watermarkScale;
+                } else {
+                    wmContentWidth = 0;
+                    wmContentHeight = 0;
+                }
+
+                // Posicionamiento de la marca de agua
+                switch (adjustments.watermark.position) {
+                    case 'top-left':
+                        wmX = padding;
+                        wmY = padding;
+                        break;
+                    case 'top-center':
+                        wmX = (canvasWidth - wmContentWidth) / 2;
+                        wmY = padding;
+                        break;
+                    case 'top-right':
+                        wmX = canvasWidth - wmContentWidth - padding;
+                        wmY = padding;
+                        break;
+                    case 'center-left':
+                        wmX = padding;
+                        wmY = (canvasHeight - wmContentHeight) / 2;
+                        break;
+                    case 'center':
+                        wmX = (canvasWidth - wmContentWidth) / 2;
+                        wmY = (canvasHeight - wmContentHeight) / 2;
+                        break;
+                    case 'center-right':
+                        wmX = canvasWidth - wmContentWidth - padding;
+                        wmY = (canvasHeight - wmContentHeight) / 2;
+                        break;
+                    case 'bottom-left':
+                        wmX = padding;
+                        wmY = canvasHeight - wmContentHeight - padding;
+                        break;
+                    case 'bottom-center':
+                        wmX = (canvasWidth - wmContentWidth) / 2;
+                        wmY = canvasHeight - wmContentHeight - padding;
+                        break;
+                    case 'bottom-right':
+                        wmX = canvasWidth - wmContentWidth - padding;
+                        wmY = canvasHeight - wmContentHeight - padding;
+                        break;
+                    case 'tiled':
+                        // Para mosaico, dibujaremos en un bucle
+                        // No hay un solo punto central, así que salimos del switch
+                        break;
+                }
+
+                if (adjustments.watermark.type === 'text') {
+                    canvasContext.fillStyle = adjustments.watermark.textColor;
+                    canvasContext.font = `${adjustments.watermark.textSize * watermarkScale}px ${adjustments.text.fontFamily}`;
+                    canvasContext.textAlign = 'left'; // Alineación para texto en canvas
+                    canvasContext.textBaseline = 'top'; // Línea base para texto en canvas
+
+                    if (adjustments.watermark.position === 'tiled') {
+                        const textWidth = canvasContext.measureText(adjustments.watermark.text).width;
+                        const textHeight = adjustments.watermark.textSize * watermarkScale;
+                        const tileSpacingX = textWidth + 50; // Espacio entre textos
+                        const tileSpacingY = textHeight + 50;
+
+                        for (let y = 0; y < canvasHeight; y += tileSpacingY) {
+                            for (let x = 0; x < canvasWidth; x += tileSpacingX) {
+                                canvasContext.fillText(adjustments.watermark.text, x, y);
+                            }
+                        }
+                    } else {
+                        canvasContext.fillText(adjustments.watermark.text, wmX, wmY);
+                    }
+                } else if (adjustments.watermark.type === 'image' && adjustments.watermark.image) {
+                    const watermarkImg = new Image();
+                    watermarkImg.onload = () => {
+                        const imgWidth = watermarkImg.naturalWidth * watermarkScale;
+                        const imgHeight = watermarkImg.naturalHeight * watermarkScale;
+
+                        if (adjustments.watermark.position === 'tiled') {
+                            const tileSpacingX = imgWidth + 50;
+                            const tileSpacingY = imgHeight + 50;
+
+                            for (let y = 0; y < canvasHeight; y += tileSpacingY) {
+                                for (let x = 0; x < canvasWidth; x += tileSpacingX) {
+                                    canvasContext.drawImage(watermarkImg, x, y, imgWidth, imgHeight);
+                                }
+                            }
+                        } else {
+                            canvasContext.drawImage(watermarkImg, wmX, wmY, imgWidth, imgHeight);
+                        }
+                    };
+                    watermarkImg.src = adjustments.watermark.image;
+                }
+
+                canvasContext.restore(); // Restaura la opacidad global
+            }
+
+            // --- Funciones de Dibujo ---
+            function drawAllStrokes(canvasContext) {
+                drawingHistory.forEach(stroke => {
+                    canvasContext.save();
+                    canvasContext.strokeStyle = stroke.color;
+                    canvasContext.lineWidth = stroke.size;
+                    canvasContext.lineCap = 'round';
+                    canvasContext.lineJoin = 'round';
+                    if (stroke.mode === 'erase') {
+                        canvasContext.globalCompositeOperation = 'destination-out'; // Erase effect
+                    }
+
+                    canvasContext.beginPath();
+                    if (stroke.points.length > 0) {
+                        canvasContext.moveTo(stroke.points[0].x, stroke.points[0].y);
+                        for (let i = 1; i < stroke.points.length; i++) {
+                            canvasContext.lineTo(stroke.points[i].x, stroke.points[i].y);
+                        }
+                    }
+                    canvasContext.stroke();
+                    canvasContext.restore();
+                });
+            }
+
+            // --- Descarga de Imagen ---
+            downloadBtn.addEventListener('click', () => {
+                if (!imageLoaded) {
+                    showNotification('Por favor, carga una imagen primero.', 'error');
+                    return;
+                }
+
+                showLoading();
+
+                // Crear un canvas final para la descarga, aplicando todas las transformaciones
+                const finalCanvas = document.createElement('canvas');
+                const finalCtx = finalCanvas.getContext('2d');
+
+                // Dimensiones originales de la imagen para el canvas final
+                const originalImgWidth = originalImage.naturalWidth;
+                const originalImgHeight = originalImage.naturalHeight;
+
+                // Aplicar recorte al original
+                const croppedWidth = originalImgWidth * (adjustments.crop.width / 100);
+                const croppedHeight = originalImgHeight * (adjustments.crop.height / 100);
+                const croppedX = originalImgWidth * (adjustments.crop.x / 100);
+                const croppedY = originalImgHeight * (adjustments.crop.y / 100);
+
+                // Calcular el tamaño del canvas final después de la rotación y escala
+                let finalWidth = croppedWidth;
+                let finalHeight = croppedHeight;
+
+                if (adjustments.rotation % 180 !== 0) {
+                    [finalWidth, finalHeight] = [finalHeight, finalWidth];
+                }
+
+                finalWidth *= (adjustments.scale / 100);
+                finalHeight *= (adjustments.scale / 100);
+
+                finalCanvas.width = finalWidth;
+                finalCanvas.height = finalHeight;
+
+                finalCtx.save();
+                finalCtx.translate(finalCanvas.width / 2, finalCanvas.height / 2);
+                finalCtx.rotate(adjustments.rotation * Math.PI / 180);
+
+                // Dibuja la imagen original, recortada y con filtros al canvas final
+                finalCtx.filter = `brightness(${adjustments.brightness}%) ` +
+                                 `contrast(${adjustments.contrast}%) ` +
+                                 `saturate(${adjustments.saturation}%) ` +
+                                 `hue-rotate(${adjustments.temperature}deg) ` +
+                                 `grayscale(${adjustments.effect === 'grayscale' ? 100 : 0}%) ` +
+                                 `sepia(${adjustments.effect === 'sepia' ? 100 : 0}%) ` +
+                                 `invert(${adjustments.effect === 'invert' ? 100 : 0}%) ` +
+                                 `blur(${adjustments.effect === 'blur' ? adjustments.effectIntensity / 10 : 0}px) `;
+
+                // Aplicar filtros preestablecidos
+                switch (adjustments.effect) {
+                    case 'vintage':
+                        finalCtx.filter += `sepia(50%) saturate(150%) contrast(120%) brightness(90%) `;
+                        break;
+                    case 'cool':
+                        finalCtx.filter += `brightness(110%) contrast(110%) hue-rotate(200deg) saturate(150%) `;
+                        break;
+                    case 'warm':
+                        finalCtx.filter += `brightness(110%) contrast(110%) hue-rotate(-20deg) saturate(150%) `;
+                        break;
+                    case 'sharpen':
+                        finalCtx.filter += `contrast(105%) brightness(105%) `;
+                        break;
+                    case 'pixelate':
+                        // Se aplica después del drawImage
+                        break;
+                    case 'posterize':
+                        // Se aplica después del drawImage
+                        break;
+                    case 'clarendon': finalCtx.filter += 'contrast(1.2) saturate(1.35)'; break;
+                    case 'gingham': finalCtx.filter += 'brightness(1.05) hue-rotate(-10deg)'; break;
+                    case 'moon': finalCtx.filter += 'grayscale(1) contrast(1.1) brightness(1.1)'; break;
+                    case 'lark': finalCtx.filter += 'contrast(0.9) brightness(1.1) saturate(1.2)'; break;
+                    case 'reyes': finalCtx.filter += 'sepia(0.22) brightness(1.1) contrast(0.85) saturate(0.75)'; break;
+                    case 'juno': finalCtx.filter += 'contrast(1.2) saturate(1.8) hue-rotate(-15deg)'; break;
+                    case 'slumber': finalCtx.filter += 'brightness(1.05) saturate(0.65)'; break;
+                    case 'crema': finalCtx.filter += 'sepia(0.15) brightness(1.05) contrast(0.9) saturate(1.2)'; break;
+                    case 'ludwig': finalCtx.filter += 'brightness(1.05) contrast(1.2) saturate(1.05)'; break;
+                    case 'aden': finalCtx.filter += 'brightness(1.15) contrast(0.9) saturate(1.4)'; break;
+                    case 'perpetua': finalCtx.filter += 'brightness(1.05) contrast(1.1)'; break;
+                    case 'amaro': finalCtx.filter += 'brightness(1.1) contrast(0.9) saturate(1.5)'; break;
+                    default: break;
+                }
+
+                finalCtx.drawImage(originalImage, croppedX, croppedY, croppedWidth, croppedHeight,
+                                   -finalCanvas.width / (2 * (adjustments.scale / 100)),
+                                   -finalCanvas.height / (2 * (adjustments.scale / 100)),
+                                   finalCanvas.width / (adjustments.scale / 100),
+                                   finalCanvas.height / (adjustments.scale / 100));
+
+                finalCtx.restore(); // Restaura el contexto después de dibujar la imagen base
+
+                // Aplicar efectos de píxeles si son necesarios
+                if (adjustments.effect === 'pixelate') {
+                    applyPixelateEffect(finalCtx, finalCanvas.width, finalCanvas.height, adjustments.effectIntensity);
+                } else if (adjustments.effect === 'posterize') {
+                    applyPosterizeEffect(finalCtx, finalCanvas.width, finalCanvas.height, adjustments.effectIntensity);
+                }
+
+                // Aplicar Vibrance, Highlights, Shadows
+                applyVibranceHighlightsShadows(finalCtx, finalCanvas.width, finalCanvas.height, adjustments.vibrance, adjustments.highlights, adjustments.shadows);
+
+
+                // Dibuja el marco en el canvas final
+                drawFrameOnCanvas(finalCtx, finalCanvas.width, finalCanvas.height, adjustments.frame.type, adjustments.frame.color, adjustments.frame.width);
+
+                // Dibuja el texto encima del canvas
+                const textContent = adjustments.text.content;
+                if (textContent.trim() !== '') {
+                    finalCtx.save();
+                    finalCtx.font = `${adjustments.text.bold ? 'bold ' : ''}${adjustments.text.italic ? 'italic ' : ''}${adjustments.text.size}px ${adjustments.text.fontFamily}`;
+                    finalCtx.fillStyle = adjustments.text.color;
+                    finalCtx.globalAlpha = adjustments.text.opacity / 100;
+                    finalCtx.textAlign = adjustments.text.align;
+                    finalCtx.textBaseline = 'middle'; // Para alinear el texto correctamente
+
+                    // Calcular posición real del texto en el canvas final
+                    // El textOverlay div se posiciona con transform: translate(-50%, -50%),
+                    // por lo que sus coordenadas x,y son el centro del texto.
+                    // Necesitamos traducir las coordenadas relativas del div a coordenadas absolutas del canvas.
+                    // El textOverlay.style.left y .top son relativos al image-container (dropZone)
+                    // y adjustments.text.x/y son porcentajes de ese contenedor.
+                    // Para el canvas final, necesitamos coordenadas absolutas.
+
+                    // Convertir porcentajes de posición del texto a coordenadas de píxeles en el canvas final
+                    const textCanvasX = (adjustments.text.x / 100) * finalCanvas.width;
+                    const textCanvasY = (adjustments.text.y / 100) * finalCanvas.height;
+
+                    // Dibuja el fondo del texto si está activo
+                    if (adjustments.text.bgOpacity > 0) {
+                        const textMetrics = finalCtx.measureText(textContent);
+                        let textBgX = textCanvasX;
+                        let textBgWidth = textMetrics.width;
+                        const textBgHeight = adjustments.text.size * 1.2; // Aproximación
+
+                        // Ajustar la posición del fondo según la alineación del texto
+                        if (adjustments.text.align === 'center') {
+                            textBgX -= textBgWidth / 2;
+                        } else if (adjustments.text.align === 'right') {
+                            textBgX -= textBgWidth;
+                        }
+
+                        finalCtx.fillStyle = hexToRgba(adjustments.text.background, adjustments.text.bgOpacity / 100);
+                        finalCtx.fillRect(textBgX - 5, textCanvasY - textBgHeight / 2, textBgWidth + 10, textBgHeight);
+                    }
+
+                    if (adjustments.text.shadow) {
+                        finalCtx.shadowColor = 'rgba(0,0,0,0.5)';
+                        finalCtx.shadowBlur = 4;
+                        finalCtx.shadowOffsetX = 2;
+                        finalCtx.shadowOffsetY = 2;
+                    } else {
+                        finalCtx.shadowColor = 'transparent';
+                        finalCtx.shadowBlur = 0;
+                        finalCtx.shadowOffsetX = 0;
+                        finalCtx.shadowOffsetY = 0;
+                    }
+
+                    finalCtx.fillText(textContent, textCanvasX, textCanvasY);
+                    if (adjustments.text.underline) {
+                        finalCtx.beginPath();
+                        // Calcular puntos de inicio y fin para el subrayado
+                        let underlineStartX = textCanvasX;
+                        if (adjustments.text.align === 'center') {
+                            underlineStartX -= finalCtx.measureText(textContent).width / 2;
+                        } else if (adjustments.text.align === 'right') {
+                            underlineStartX -= finalCtx.measureText(textContent).width;
+                        }
+                        const underlineEndX = underlineStartX + finalCtx.measureText(textContent).width;
+                        const underlineY = textCanvasY + adjustments.text.size / 2 + 2; // Un poco debajo del texto
+                        
+                        finalCtx.moveTo(underlineStartX, underlineY);
+                        finalCtx.lineTo(underlineEndX, underlineY);
+                        finalCtx.strokeStyle = adjustments.text.color;
+                        finalCtx.lineWidth = 2;
+                        finalCtx.stroke();
+                    }
+                    finalCtx.restore();
+                }
+
+                // Dibuja la marca de agua en el canvas final
+                if (adjustments.watermark.active) {
+                    drawWatermarkOnCanvas(finalCtx, finalCanvas.width, finalCanvas.height);
+                }
+
+                // Dibuja los trazos de dibujo en el canvas final
+                drawAllStrokes(finalCtx);
+
+                const format = downloadFormat.value;
+                const quality = adjustments.imageQuality / 100; // Calidad para JPEG/WEBP
+
+                let dataURL;
+                if (format === 'jpeg') {
+                    dataURL = finalCanvas.toDataURL('image/jpeg', quality);
+                } else if (format === 'webp') {
+                    dataURL = finalCanvas.toDataURL('image/webp', quality);
+                } else { // Por defecto PNG
+                    dataURL = finalCanvas.toDataURL('image/png');
+                }
+
+                const a = document.createElement('a');
+                a.href = dataURL;
+                a.download = `edited_image.${format}`; // Nombre de archivo por defecto
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+
+                hideLoading();
+                showNotification(`Imagen descargada como .${format}`, 'success');
+            });
+
+            // --- Controladores de Eventos ---
+
+            // Carga de imagen
+            uploadBtn.addEventListener('click', () => imageUpload.click());
+            imageUpload.addEventListener('change', (e) => loadImage(e.target.files[0]));
+
+            // Arrastrar y soltar imagen
+            dropZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                dropZone.classList.add('drag-over');
+            });
+            dropZone.addEventListener('dragleave', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                dropZone.classList.remove('drag-over');
+            });
+            dropZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                dropZone.classList.remove('drag-over');
+                loadImage(e.dataTransfer.files[0]);
+            });
+
+            // Navegación de pestañas
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+
+                    button.classList.add('active');
+                    document.getElementById(button.dataset.tab).classList.add('active');
+                });
+            });
+
+            // Ajustes de imagen (sliders)
+            [brightnessSlider, contrastSlider, saturationSlider, vibranceSlider, exposureSlider, temperatureSlider, highlightsSlider, shadowsSlider, rotationSlider, scaleSlider].forEach(slider => {
+                slider.addEventListener('input', () => {
+                    adjustments[slider.id] = parseFloat(slider.value);
+                    updateSliderValue(slider, document.getElementById(`${slider.id}Value`), slider.id === 'rotation' || slider.id === 'temperature' || slider.id === 'highlights' || slider.id === 'shadows' ? '°' : '%');
+                    drawImage();
+                });
+                slider.addEventListener('change', saveState); // Guarda el estado al soltar el slider
+            });
+
+            // Marcos
+            frameOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    frameOptions.forEach(opt => opt.classList.remove('active'));
+                    option.classList.add('active');
+                    adjustments.frame.type = option.dataset.frame;
+                    drawImage();
+                    saveState();
+                });
+            });
+
+            frameColorInput.addEventListener('input', () => {
+                adjustments.frame.color = frameColorInput.value;
+                drawImage();
+            });
+            frameColorInput.addEventListener('change', saveState);
+
+            frameWidthSlider.addEventListener('input', () => {
+                adjustments.frame.width = parseInt(frameWidthSlider.value);
+                updateSliderValue(frameWidthSlider, frameWidthValue, 'px');
+                drawImage();
+            });
+            frameWidthSlider.addEventListener('change', saveState);
+
+            // Efectos/Filtros
+            effectButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    effectButtons.forEach(btn => btn.classList.remove('active'));
+                    filterPresets.forEach(preset => preset.classList.remove('active')); // Desactiva presets también
+                    button.classList.add('active');
+                    adjustments.effect = button.dataset.effect;
+                    drawImage();
+                    saveState();
+                });
+            });
+
+            filterPresets.forEach(preset => {
+                preset.addEventListener('click', () => {
+                    effectButtons.forEach(btn => btn.classList.remove('active')); // Desactiva efectos individuales
+                    filterPresets.forEach(p => p.classList.remove('active'));
+                    preset.classList.add('active');
+                    adjustments.effect = preset.dataset.preset;
+                    drawImage();
+                    saveState();
+                });
+            });
+
+            effectIntensitySlider.addEventListener('input', () => {
+                adjustments.effectIntensity = parseInt(effectIntensitySlider.value);
+                updateSliderValue(effectIntensitySlider, effectIntensityValue, '%');
+                drawImage();
+            });
+            effectIntensitySlider.addEventListener('change', saveState);
+
+            // Texto
+            textInput.addEventListener('input', () => {
+                adjustments.text.content = textInput.value;
+                textOverlay.textContent = textInput.value;
+                drawImage(); // Redibuja para actualizar el texto en el canvas
+            });
+            textInput.addEventListener('change', saveState);
+
+            fontFamilySelect.addEventListener('change', () => {
+                adjustments.text.fontFamily = fontFamilySelect.value;
+                textOverlay.style.fontFamily = fontFamilySelect.value;
+                drawImage();
+                saveState();
+            });
+
+            textColorInput.addEventListener('input', () => {
+                adjustments.text.color = textColorInput.value;
+                textOverlay.style.color = textColorInput.value;
+                drawImage();
+            });
+            textColorInput.addEventListener('change', saveState);
+
+            fontSizeSlider.addEventListener('input', () => {
+                adjustments.text.size = parseInt(fontSizeSlider.value);
+                textOverlay.style.fontSize = `${adjustments.text.size}px`;
+                updateSliderValue(fontSizeSlider, fontSizeValue, 'px');
+                drawImage();
+            });
+            fontSizeSlider.addEventListener('change', saveState);
+
+            textOpacitySlider.addEventListener('input', () => {
+                adjustments.text.opacity = parseInt(textOpacitySlider.value);
+                textOverlay.style.opacity = adjustments.text.opacity / 100;
+                updateSliderValue(textOpacitySlider, textOpacityValue, '%');
+                drawImage();
+            });
+            textOpacitySlider.addEventListener('change', saveState);
+
+            textAlignButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    textAlignButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    adjustments.text.align = button.dataset.align;
+                    textOverlay.style.textAlign = button.dataset.align;
+                    drawImage();
+                    saveState();
+                });
+            });
+
+            textStyleButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const style = button.dataset.style;
+                    adjustments.text[style] = !adjustments.text[style]; // Toggle boolean
+                    button.classList.toggle('active', adjustments.text[style]);
+
+                    if (style === 'bold') textOverlay.style.fontWeight = adjustments.text.bold ? 'bold' : 'normal';
+                    if (style === 'italic') textOverlay.style.fontStyle = adjustments.text.italic ? 'italic' : 'normal';
+                    if (style === 'underline') textOverlay.style.textDecoration = adjustments.text.underline ? 'underline' : 'none';
+                    if (style === 'shadow') textOverlay.style.textShadow = adjustments.text.shadow ? '2px 2px 4px rgba(0,0,0,0.5)' : 'none';
+                    
+                    drawImage();
+                    saveState();
+                });
+            });
+
+            textBackgroundInput.addEventListener('input', () => {
+                adjustments.text.background = textBackgroundInput.value;
+                const bgColor = hexToRgba(adjustments.text.background, adjustments.text.bgOpacity / 100);
+                textOverlay.style.backgroundColor = bgColor;
+                drawImage();
+            });
+            textBackgroundInput.addEventListener('change', saveState);
+
+            textBgOpacitySlider.addEventListener('input', () => {
+                adjustments.text.bgOpacity = parseInt(textBgOpacitySlider.value);
+                const bgColor = hexToRgba(adjustments.text.background, adjustments.text.bgOpacity / 100);
+                textOverlay.style.backgroundColor = bgColor;
+                updateSliderValue(textBgOpacitySlider, textBgOpacityValue, '%');
+                drawImage();
+            });
+            textBgOpacitySlider.addEventListener('change', saveState);
+
+
+            // Arrastrar texto
+            textOverlay.addEventListener('mousedown', (e) => {
+                if (e.target.id === 'textOverlay') {
+                    isDraggingText = true;
+                    const rect = textOverlay.getBoundingClientRect();
+                    textOffsetX = e.clientX - rect.left;
+                    textOffsetY = e.clientY - rect.top;
+                    textOverlay.style.cursor = 'grabbing';
+                }
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                if (isDraggingText) {
+                    const containerRect = dropZone.getBoundingClientRect();
+                    let newX = e.clientX - containerRect.left - textOffsetX;
+                    let newY = e.clientY - containerRect.top - textOffsetY;
+
+                    // Clamp to container boundaries
+                    newX = Math.max(0, Math.min(newX, containerRect.width - textOverlay.offsetWidth));
+                    newY = Math.max(0, Math.min(newY, containerRect.height - textOverlay.offsetHeight));
+
+                    textOverlay.style.left = `${newX}px`;
+                    textOverlay.style.top = `${newY}px`;
+
+                    // Update adjustments with relative position
+                    adjustments.text.x = ((newX + textOverlay.offsetWidth / 2) / containerRect.width) * 100;
+                    adjustments.text.y = ((newY + textOverlay.offsetHeight / 2) / containerRect.height) * 100;
+                }
+            });
+
+            document.addEventListener('mouseup', () => {
+                if (isDraggingText) {
+                    isDraggingText = false;
+                    textOverlay.style.cursor = 'grab';
+                    saveState();
+                }
+            });
+
+            // Drawing
+            brushColorInput.addEventListener('input', () => {
+                adjustments.drawing.brushColor = brushColorInput.value;
+            });
+            brushColorInput.addEventListener('change', saveState);
+
+            brushSizeSlider.addEventListener('input', () => {
+                adjustments.drawing.brushSize = parseInt(brushSizeSlider.value);
+                updateSliderValue(brushSizeSlider, brushSizeValue, 'px');
+            });
+            brushSizeSlider.addEventListener('change', saveState);
+
+            drawingModeButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    drawingModeButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    adjustments.drawing.mode = button.dataset.drawMode;
+                });
+            });
+
+            clearDrawingBtn.addEventListener('click', () => {
+                drawingHistory = [];
+                drawImage();
+                saveState();
+                showNotification('Dibujo limpiado.');
+            });
+
+            imageCanvas.addEventListener('mousedown', (e) => {
+                if (document.getElementById('draw').classList.contains('active') && imageLoaded) {
+                    isDrawing = true;
+                    const rect = imageCanvas.getBoundingClientRect();
+                    lastX = e.clientX - rect.left;
+                    lastY = e.clientY - rect.top;
+                    drawingHistory.push({
+                        color: adjustments.drawing.brushColor,
+                        size: adjustments.drawing.brushSize,
+                        mode: adjustments.drawing.mode,
+                        points: [{ x: lastX, y: lastY }]
+                    });
+                }
+            });
+
+            imageCanvas.addEventListener('mousemove', (e) => {
+                if (isDrawing && imageLoaded) {
+                    const rect = imageCanvas.getBoundingClientRect();
+                    const currentX = e.clientX - rect.left;
+                    const currentY = e.clientY - rect.top;
+
+                    const currentStroke = drawingHistory[drawingHistory.length - 1];
+                    currentStroke.points.push({ x: currentX, y: currentY });
+
+                    // Draw directly for immediate feedback
+                    ctx.save();
+                    ctx.strokeStyle = currentStroke.color;
+                    ctx.lineWidth = currentStroke.size;
+                    ctx.lineCap = 'round';
+                    ctx.lineJoin = 'round';
+                    if (currentStroke.mode === 'erase') {
+                        ctx.globalCompositeOperation = 'destination-out';
+                    }
+
+                    ctx.beginPath();
+                    ctx.moveTo(lastX, lastY);
+                    ctx.lineTo(currentX, currentY);
+                    ctx.stroke();
+                    ctx.restore();
+
+                    lastX = currentX;
+                    lastY = currentY;
+                }
+            });
+
+            imageCanvas.addEventListener('mouseup', () => {
+                if (isDrawing) {
+                    isDrawing = false;
+                    saveState(); // Save state after a stroke is complete
+                }
+            });
+
+            imageCanvas.addEventListener('mouseout', () => {
+                if (isDrawing) {
+                    isDrawing = false;
+                    saveState(); // Save state if mouse leaves canvas while drawing
+                }
+            });
+
+
+            // Recorte
+            [cropXSlider, cropYSlider, cropWidthSlider, cropHeightSlider].forEach(slider => {
+                slider.addEventListener('input', () => {
+                    adjustments.crop[slider.id.replace('crop', '').toLowerCase()] = parseFloat(slider.value);
+                    updateSliderValue(slider, document.getElementById(`${slider.id}Value`), '%');
+                    drawImage();
+                });
+                slider.addEventListener('change', saveState);
+            });
+
+            imageQualitySlider.addEventListener('input', () => {
+                adjustments.imageQuality = parseInt(imageQualitySlider.value);
+                updateSliderValue(imageQualitySlider, imageQualityValue, '%');
+            });
+            imageQualitySlider.addEventListener('change', saveState);
+
+
+            // Marca de agua
+            toggleWatermarkBtn.addEventListener('click', () => {
+                adjustments.watermark.active = !adjustments.watermark.active;
+                watermarkOptions.style.display = adjustments.watermark.active ? 'block' : 'none';
+                drawImage();
+                saveState();
+            });
+
+            watermarkTypeSelect.addEventListener('change', () => {
+                adjustments.watermark.type = watermarkTypeSelect.value;
+                watermarkTextControls.style.display = adjustments.watermark.type === 'text' ? 'block' : 'none';
+                watermarkImageControls.style.display = adjustments.watermark.type === 'image' ? 'block' : 'none';
+                drawImage(); // Re-draw to update watermark type
+                saveState();
+            });
+
+            [watermarkTextInput, watermarkTextColorInput, watermarkTextSizeSlider, watermarkOpacitySlider, watermarkScaleSlider, watermarkPositionSelect].forEach(control => {
+                control.addEventListener('input', () => {
+                    if (control.id === 'watermarkTextInput') adjustments.watermark.text = control.value;
+                    if (control.id === 'watermarkTextColorInput') adjustments.watermark.textColor = control.value;
+                    if (control.id === 'watermarkTextSizeSlider') {
+                        adjustments.watermark.textSize = parseInt(control.value);
+                        updateSliderValue(watermarkTextSizeSlider, watermarkTextSizeValue, 'px');
+                    }
+                    if (control.id === 'watermarkOpacitySlider') {
+                        adjustments.watermark.opacity = parseInt(control.value);
+                        updateSliderValue(watermarkOpacitySlider, watermarkOpacityValue, '%');
+                    }
+                    if (control.id === 'watermarkScaleSlider') {
+                        adjustments.watermark.scale = parseInt(control.value);
+                        updateSliderValue(watermarkScaleSlider, watermarkScaleValue, '%');
+                    }
+                    if (control.id === 'watermarkPositionSelect') adjustments.watermark.position = control.value;
+                    drawImage();
+                });
+                control.addEventListener('change', saveState);
+            });
+
+            uploadWatermarkBtn.addEventListener('click', () => watermarkImageUpload.click());
+            watermarkImageUpload.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file && file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        adjustments.watermark.image = event.target.result;
+                        watermarkPreview.style.backgroundImage = `url(${event.target.result})`;
+                        drawImage();
+                        saveState();
+                        showNotification('Marca de agua de imagen cargada.', 'success');
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    showNotification('Por favor, selecciona un archivo de imagen válido para la marca de agua.', 'error');
+                }
+            });
+
+            applyWatermarkBtn.addEventListener('click', () => {
+                // The watermark is applied on every drawImage, so just save state
+                saveState();
+                showNotification('Marca de agua aplicada.', 'success');
+            });
+
+            // Historial
+            undoBtn.addEventListener('click', () => {
+                if (historyIndex > 0) {
+                    loadState(historyIndex - 1);
+                }
+            });
+
+            redoBtn.addEventListener('click', () => {
+                if (historyIndex < history.length - 1) {
+                    loadState(historyIndex + 1);
+                }
+            });
+
+            resetBtn.addEventListener('click', () => {
+                if (confirm('¿Estás seguro de que quieres restablecer todos los ajustes? Esto no se puede deshacer.')) {
+                    // Reload the original image to truly reset
+                    if (currentImageBlob) {
+                        loadImage(new File([currentImageBlob], "original_image.png", { type: currentImageBlob.type }));
+                    } else {
+                        resetAdjustments(); // If no image loaded, just reset controls
+                    }
+                }
+            });
+
+            // Initial draw to show placeholder or default image
+            drawImage();
+            applyAllAdjustmentsToUI(); // Ensure UI matches initial adjustments state
+
+            // Generate filter preset thumbnails (simple placeholder for now)
+            filterPresets.forEach(preset => {
+                const thumbnailDiv = preset.querySelector('.preset-thumbnail');
+                if (thumbnailDiv) {
+                    // For a real app, you'd apply the filter to a small canvas or image
+                    // and then set the background-image of the thumbnailDiv to that result.
+                    // For now, we'll just apply a basic CSS filter for visual cue.
+                    switch (preset.dataset.preset) {
+                        case 'none': thumbnailDiv.style.filter = 'none'; break;
+                        case 'clarendon': thumbnailDiv.style.filter = 'contrast(1.2) saturate(1.35)'; break;
+                        case 'gingham': thumbnailDiv.style.filter = 'brightness(1.05) hue-rotate(-10deg)'; break;
+                        case 'moon': thumbnailDiv.style.filter = 'grayscale(1) contrast(1.1) brightness(1.1)'; break;
+                        case 'lark': thumbnailDiv.style.filter = 'contrast(0.9) brightness(1.1) saturate(1.2)'; break;
+                        case 'reyes': thumbnailDiv.style.filter = 'sepia(0.22) brightness(1.1) contrast(0.85) saturate(0.75)'; break;
+                        case 'juno': thumbnailDiv.style.filter = 'contrast(1.2) saturate(1.8) hue-rotate(-15deg)'; break;
+                        case 'slumber': thumbnailDiv.style.filter = 'brightness(1.05) saturate(0.65)'; break;
+                        case 'crema': thumbnailDiv.style.filter = 'sepia(0.15) brightness(1.05) contrast(0.9) saturate(1.2)'; break;
+                        case 'ludwig': thumbnailDiv.style.filter = 'brightness(1.05) contrast(1.2) saturate(1.05)'; break;
+                        case 'aden': thumbnailDiv.style.filter = 'brightness(1.15) contrast(0.9) saturate(1.4)'; break;
+                        case 'perpetua': thumbnailDiv.style.filter = 'brightness(1.05) contrast(1.1)'; break;
+                        case 'amaro': thumbnailDiv.style.filter = 'brightness(1.1) contrast(0.9) saturate(1.5)'; break;
+                        default: thumbnailDiv.style.filter = 'none'; break;
+                    }
+                    thumbnailDiv.style.backgroundImage = 'url(https://placehold.co/60x60/cccccc/333333?text=Preview)';
+                }
+            });
+
+            // Handle window resize to redraw canvas
+            window.addEventListener('resize', () => {
+                drawImage();
+            });
+        });
+    </script>
+</body>
+</html>

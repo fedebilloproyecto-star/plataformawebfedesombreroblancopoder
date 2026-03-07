@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Completa de Margen de Ganancia</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+                border-radius: 10px;
+   max-width: 1100px;
+  margin: 90px auto;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #2c3e50, #4a6491);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 12px 12px 0 0;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        
+        .calculator-section {
+            padding: 25px;
+        }
+        
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        
+        .formula-container {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            border-left: 4px solid #3498db;
+        }
+        
+        .formula {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .input-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .input-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .input-group {
+            margin-bottom: 15px;
+        }
+        
+        .input-group.full-width {
+            grid-column: 1 / -1;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 0.95rem;
+        }
+        
+        .symbol {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+        
+        input.calculated {
+            background-color: #e8f4fc;
+            border-color: #3498db;
+            font-weight: bold;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 12px;
+            margin: 25px 0;
+        }
+        
+        button {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-calculate {
+            background: linear-gradient(to right, #27ae60, #2ecc71);
+            color: white;
+        }
+        
+        .btn-reset {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-calculate:hover {
+            background: linear-gradient(to right, #229954, #27ae60);
+        }
+        
+        .btn-reset:hover {
+            background: #c0392b;
+        }
+        
+        .result-section {
+            margin-top: 20px;
+            padding: 20px;
+            background: linear-gradient(135deg, #e8f4fc, #d1ebff);
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .result-section h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+        }
+        
+        .result-item {
+            padding: 15px;
+            background: white;
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .result-label {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .result-value {
+            font-weight: bold;
+            color: #2980b9;
+            font-size: 1.2rem;
+        }
+        
+        .final-result {
+            background: linear-gradient(135deg, #2c3e50, #4a6491) !important;
+            color: white;
+            grid-column: 1 / -1;
+        }
+        
+        .final-result .result-label {
+            color: white;
+            font-size: 1rem;
+        }
+        
+        .final-result .result-value {
+            color: white;
+            font-size: 1.8rem;
+            margin-top: 5px;
+        }
+        
+        .total-section {
+            margin-top: 25px;
+            padding: 25px;
+            background: linear-gradient(135deg, #ffeaa7, #fab1a0);
+            border-radius: 10px;
+            border: 3px solid #e17055;
+        }
+        
+        .total-section h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.4rem;
+        }
+        
+        .total-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .total-item {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .total-label {
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+        
+        .total-value {
+            font-weight: bold;
+            color: #e17055;
+            font-size: 1.4rem;
+        }
+        
+        .total-highlight {
+            background: linear-gradient(135deg, #e17055, #d63031);
+            color: white;
+        }
+        
+        .total-highlight .total-label {
+            color: white;
+        }
+        
+        .total-highlight .total-value {
+            color: white;
+            font-size: 1.8rem;
+        }
+        
+        .instructions {
+            background: #fff9e6;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            border-left: 4px solid #f39c12;
+        }
+        
+        .instructions h4 {
+            color: #e67e22;
+            margin-bottom: 8px;
+        }
+        
+        .instructions p {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        .error-message {
+            background: #ffeaa7;
+            color: #d63031;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 10px 0;
+            border-left: 4px solid #e74c3c;
+            display: none;
+        }
+        
+        .success-message {
+            background: #55efc4;
+            color: #2c3e50;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 10px 0;
+            border-left: 4px solid #00b894;
+            display: none;
+        }
+        
+        .table-container {
+            padding: 25px;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+        
+        .comparison-table th {
+            background: linear-gradient(to right, #3498db, #2c3e50);
+            color: white;
+            padding: 15px 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .comparison-table td {
+            padding: 15px 12px;
+            border-bottom: 1px solid #eaeaea;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .symbol-table {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .explanation {
+            color: #555;
+            line-height: 1.4;
+        }
+        
+        .highlight {
+            background-color: #e8f4fc !important;
+            font-weight: bold;
+            border-left: 4px solid #3498db;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+            }
+            
+            header {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .calculator-section {
+                padding: 20px;
+            }
+            
+            .buttons {
+                flex-direction: column;
+            }
+            
+            .total-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+/* Solo estilos para el botón "Volver atrás" */
+.back-button {
+  display: inline-block;
+  padding: 10px 18px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 2px solid #333;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  user-select: none;
+}
+
+/* Efecto al pasar el ratón */
+.back-button:hover,
+.back-button:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+  text-decoration: none;
+  outline: none;
+}
+
+/* Efecto al hacer clic */
+.back-button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Calculadora Completa de Margen de Ganancia</h1>
+            <p class="subtitle">Calcula todo: costos, precios, ganancias y margen total</p>
+        </header>
+        <a href="principal.html" class="back-button" aria-label="Volver atrás">Volver atrás</a>
+        <div class="card calculator-section">
+            <h2>Calculadora Principal</h2>
+            
+            <div class="formula-container">
+                <div class="formula">Margen % = ((PV - C) / PV) × 100</div>
+                <p>Ingresa al menos dos valores para calcular automáticamente</p>
+            </div>
+            
+            <div class="instructions">
+                <h4>💡 ¿Cómo usar?</h4>
+                <p>Ingresa cualquier combinación de 2 valores y los demás se calcularán automáticamente. Los campos calculados aparecerán en azul.</p>
+            </div>
+            
+            <div class="error-message" id="errorMessage"></div>
+            <div class="success-message" id="successMessage"></div>
+            
+            <div class="input-grid">
+                <div class="input-group">
+                    <label><span class="symbol">C</span> - Costo del Producto ($)</label>
+                    <input type="number" id="costo" placeholder="Ej: 100" min="0" step="0.01">
+                </div>
+                
+                <div class="input-group">
+                    <label><span class="symbol">PV</span> - Precio de Venta ($)</label>
+                    <input type="number" id="precioVenta" placeholder="Ej: 150" min="0" step="0.01">
+                </div>
+                
+                <div class="input-group">
+                    <label><span class="symbol">PV - C</span> - Ganancia ($)</label>
+                    <input type="number" id="ganancia" placeholder="Se calculará" min="0" step="0.01" readonly>
+                </div>
+                
+                <div class="input-group">
+                    <label><span class="symbol">(PV - C) / PV</span> - Proporción</label>
+                    <input type="number" id="proporcion" placeholder="Se calculará" min="0" max="1" step="0.0001" readonly>
+                </div>
+                
+                <div class="input-group full-width">
+                    <label><span class="symbol">Margen %</span> - Margen de Ganancia</label>
+                    <input type="number" id="margen" placeholder="Se calculará" min="0" max="100" step="0.01" readonly>
+                </div>
+            </div>
+            
+            <div class="buttons">
+                <button class="btn-calculate" id="calcularBtn">Calcular Todo</button>
+                <button class="btn-reset" id="resetBtn">Limpiar Todo</button>
+            </div>
+            
+            <div class="result-section" id="resultSection">
+                <h3>Resultados Calculados</h3>
+                <div class="result-grid">
+                    <div class="result-item">
+                        <div class="result-label">COSTO (C)</div>
+                        <div class="result-value" id="resCosto">-</div>
+                    </div>
+                    
+                    <div class="result-item">
+                        <div class="result-label">PRECIO VENTA (PV)</div>
+                        <div class="result-value" id="resPrecioVenta">-</div>
+                    </div>
+                    
+                    <div class="result-item">
+                        <div class="result-label">GANANCIA (PV - C)</div>
+                        <div class="result-value" id="resGanancia">-</div>
+                    </div>
+                    
+                    <div class="result-item">
+                        <div class="result-label">PROPORCIÓN</div>
+                        <div class="result-value" id="resProporcion">-</div>
+                    </div>
+                    
+                    <div class="result-item final-result">
+                        <div class="result-label">MARGEN DE GANANCIA</div>
+                        <div class="result-value" id="resMargen">-</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NUEVA SECCIÓN DE TOTAL -->
+            <div class="total-section" id="totalSection" style="display: none;">
+                <h3>📊 RESUMEN TOTAL COMPLETO</h3>
+                <div class="total-grid">
+                    <div class="total-item">
+                        <div class="total-label">INVERSIÓN TOTAL</div>
+                        <div class="total-value" id="totalInversion">$0.00</div>
+                    </div>
+                    
+                    <div class="total-item">
+                        <div class="total-label">INGRESOS TOTALES</div>
+                        <div class="total-value" id="totalIngresos">$0.00</div>
+                    </div>
+                    
+                    <div class="total-item">
+                        <div class="total-label">GANANCIA TOTAL</div>
+                        <div class="total-value" id="totalGanancia">$0.00</div>
+                    </div>
+                    
+                    <div class="total-item total-highlight">
+                        <div class="total-label">MARGEN TOTAL</div>
+                        <div class="total-value" id="totalMargen">0%</div>
+                    </div>
+                    
+                    <div class="total-item">
+                        <div class="total-label">RELACIÓN GANANCIA/COSTO</div>
+                        <div class="total-value" id="relacionGananciaCosto">0%</div>
+                    </div>
+                    
+                    <div class="total-item">
+                        <div class="total-label">EFICIENCIA DE VENTA</div>
+                        <div class="total-value" id="eficienciaVenta">0%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="table-container">
+                <h2>Guía de Símbolos y Fórmulas</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Símbolo</th>
+                            <th>Significado</th>
+                            <th>Ejemplo</th>
+                            <th>Explicación</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="symbol-table">C</td>
+                            <td>Costo</td>
+                            <td>100</td>
+                            <td class="explanation">Costo de compra o producción del producto</td>
+                        </tr>
+                        <tr>
+                            <td class="symbol-table">PV</td>
+                            <td>Precio de Venta</td>
+                            <td>150</td>
+                            <td class="explanation">Precio al que se vende al cliente</td>
+                        </tr>
+                        <tr>
+                            <td class="symbol-table">PV - C</td>
+                            <td>Ganancia Bruta</td>
+                            <td>50</td>
+                            <td class="explanation">Diferencia entre precio de venta y costo</td>
+                        </tr>
+                        <tr>
+                            <td class="symbol-table">(PV - C) / PV</td>
+                            <td>Proporción</td>
+                            <td>0.3333</td>
+                            <td class="explanation">Porcentaje del precio que es ganancia (decimal)</td>
+                        </tr>
+                        <tr class="highlight">
+                            <td class="symbol-table">Margen %</td>
+                            <td>Margen de Ganancia</td>
+                            <td>33.33%</td>
+                            <td class="explanation">Porcentaje final de ganancia sobre el precio de venta</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+   
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elementos de entrada
+            const costoInput = document.getElementById('costo');
+            const precioVentaInput = document.getElementById('precioVenta');
+            const gananciaInput = document.getElementById('ganancia');
+            const proporcionInput = document.getElementById('proporcion');
+            const margenInput = document.getElementById('margen');
+            
+            // Elementos de resultado
+            const resCosto = document.getElementById('resCosto');
+            const resPrecioVenta = document.getElementById('resPrecioVenta');
+            const resGanancia = document.getElementById('resGanancia');
+            const resProporcion = document.getElementById('resProporcion');
+            const resMargen = document.getElementById('resMargen');
+            
+            // Elementos de total
+            const totalInversion = document.getElementById('totalInversion');
+            const totalIngresos = document.getElementById('totalIngresos');
+            const totalGanancia = document.getElementById('totalGanancia');
+            const totalMargen = document.getElementById('totalMargen');
+            const relacionGananciaCosto = document.getElementById('relacionGananciaCosto');
+            const eficienciaVenta = document.getElementById('eficienciaVenta');
+            
+            // Botones y mensajes
+            const calcularBtn = document.getElementById('calcularBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const errorMessage = document.getElementById('errorMessage');
+            const successMessage = document.getElementById('successMessage');
+            const resultSection = document.getElementById('resultSection');
+            const totalSection = document.getElementById('totalSection');
+            
+            // Función para mostrar mensaje de error
+            function mostrarError(mensaje) {
+                errorMessage.textContent = mensaje;
+                errorMessage.style.display = 'block';
+                successMessage.style.display = 'none';
+            }
+            
+            // Función para mostrar mensaje de éxito
+            function mostrarExito(mensaje) {
+                successMessage.textContent = mensaje;
+                successMessage.style.display = 'block';
+                errorMessage.style.display = 'none';
+            }
+            
+            // Función para ocultar mensajes
+            function ocultarMensajes() {
+                errorMessage.style.display = 'none';
+                successMessage.style.display = 'none';
+            }
+            
+            // Función para contar valores ingresados
+            function contarValoresIngresados() {
+                let count = 0;
+                const inputs = [costoInput, precioVentaInput, gananciaInput, proporcionInput, margenInput];
+                
+                inputs.forEach(input => {
+                    if (input.value && input.value !== '' && !isNaN(parseFloat(input.value))) {
+                        count++;
+                    }
+                });
+                return count;
+            }
+            
+            // Función para limpiar estilos de cálculo
+            function limpiarEstilos() {
+                const inputs = [costoInput, precioVentaInput, gananciaInput, proporcionInput, margenInput];
+                inputs.forEach(input => input.classList.remove('calculated'));
+            }
+
+            // Función para calcular y mostrar totales
+            function calcularTotales(costo, precioVenta, ganancia, proporcion, margen) {
+                // Calcular métricas adicionales
+                const relacionGananciaCostoVal = costo > 0 ? (ganancia / costo) * 100 : 0;
+                const eficienciaVentaVal = precioVenta > 0 ? (ganancia / precioVenta) * 100 : 0;
+                
+                // Actualizar elementos de total
+                totalInversion.textContent = `$${costo.toFixed(2)}`;
+                totalIngresos.textContent = `$${precioVenta.toFixed(2)}`;
+                totalGanancia.textContent = `$${ganancia.toFixed(2)}`;
+                totalMargen.textContent = `${margen.toFixed(2)}%`;
+                relacionGananciaCosto.textContent = `${relacionGananciaCostoVal.toFixed(2)}%`;
+                eficienciaVenta.textContent = `${eficienciaVentaVal.toFixed(2)}%`;
+                
+                // Mostrar sección de total
+                totalSection.style.display = 'block';
+            }
+
+            // Función principal de cálculo
+            function calcularTodo() {
+                ocultarMensajes();
+                limpiarEstilos();
+                
+                const valoresIngresados = contarValoresIngresados();
+                
+                if (valoresIngresados < 2) {
+                    mostrarError('❌ Ingresa al menos 2 valores para calcular los demás');
+                    resultSection.style.display = 'none';
+                    totalSection.style.display = 'none';
+                    return;
+                }
+                
+                // Obtener valores numéricos (null si están vacíos)
+                const costo = costoInput.value ? parseFloat(costoInput.value) : null;
+                const precioVenta = precioVentaInput.value ? parseFloat(precioVentaInput.value) : null;
+                const ganancia = gananciaInput.value ? parseFloat(gananciaInput.value) : null;
+                const proporcion = proporcionInput.value ? parseFloat(proporcionInput.value) : null;
+                const margen = margenInput.value ? parseFloat(margenInput.value) : null;
+                
+                let resultado = {};
+                let mensajeCalculo = '';
+                
+                try {
+                    // CASO 1: Tenemos Costo y Precio de Venta
+                    if (costo !== null && precioVenta !== null) {
+                        if (precioVenta <= costo) {
+                            throw new Error('El precio de venta debe ser mayor que el costo');
+                        }
+                        resultado.ganancia = precioVenta - costo;
+                        resultado.proporcion = resultado.ganancia / precioVenta;
+                        resultado.margen = resultado.proporcion * 100;
+                        mensajeCalculo = 'Cálculo desde Costo y Precio de Venta';
+                    }
+                    // CASO 2: Tenemos Costo y Ganancia
+                    else if (costo !== null && ganancia !== null) {
+                        resultado.precioVenta = costo + ganancia;
+                        resultado.proporcion = ganancia / resultado.precioVenta;
+                        resultado.margen = resultado.proporcion * 100;
+                        mensajeCalculo = 'Cálculo desde Costo y Ganancia';
+                    }
+                    // CASO 3: Tenemos Precio de Venta y Ganancia
+                    else if (precioVenta !== null && ganancia !== null) {
+                        resultado.costo = precioVenta - ganancia;
+                        resultado.proporcion = ganancia / precioVenta;
+                        resultado.margen = resultado.proporcion * 100;
+                        mensajeCalculo = 'Cálculo desde Precio de Venta y Ganancia';
+                    }
+                    // CASO 4: Tenemos Precio de Venta y Margen
+                    else if (precioVenta !== null && margen !== null) {
+                        resultado.proporcion = margen / 100;
+                        resultado.ganancia = precioVenta * resultado.proporcion;
+                        resultado.costo = precioVenta - resultado.ganancia;
+                        mensajeCalculo = 'Cálculo desde Precio de Venta y Margen';
+                    }
+                    // CASO 5: Tenemos Costo y Margen
+                    else if (costo !== null && margen !== null) {
+                        resultado.proporcion = margen / 100;
+                        resultado.precioVenta = costo / (1 - resultado.proporcion);
+                        resultado.ganancia = resultado.precioVenta - costo;
+                        mensajeCalculo = 'Cálculo desde Costo y Margen';
+                    }
+                    // CASO 6: Tenemos Ganancia y Margen
+                    else if (ganancia !== null && margen !== null) {
+                        resultado.proporcion = margen / 100;
+                        resultado.precioVenta = ganancia / resultado.proporcion;
+                        resultado.costo = resultado.precioVenta - ganancia;
+                        mensajeCalculo = 'Cálculo desde Ganancia y Margen';
+                    }
+                    
+                    // Validar resultados
+                    if (resultado.costo !== undefined && resultado.costo < 0) {
+                        throw new Error('El costo calculado no puede ser negativo');
+                    }
+                    if (resultado.ganancia !== undefined && resultado.ganancia < 0) {
+                        throw new Error('La ganancia calculada no puede ser negativa');
+                    }
+                    if (resultado.proporcion !== undefined && (resultado.proporcion < 0 || resultado.proporcion > 1)) {
+                        throw new Error('La proporción debe estar entre 0 y 1');
+                    }
+                    if (resultado.margen !== undefined && (resultado.margen < 0 || resultado.margen > 100)) {
+                        throw new Error('El margen debe estar entre 0% y 100%');
+                    }
+                    
+                    // Actualizar campos calculados
+                    if (resultado.costo !== undefined && costoInput.value === '') {
+                        costoInput.value = resultado.costo.toFixed(2);
+                        costoInput.classList.add('calculated');
+                    }
+                    if (resultado.precioVenta !== undefined && precioVentaInput.value === '') {
+                        precioVentaInput.value = resultado.precioVenta.toFixed(2);
+                        precioVentaInput.classList.add('calculated');
+                    }
+                    if (resultado.ganancia !== undefined && gananciaInput.value === '') {
+                        gananciaInput.value = resultado.ganancia.toFixed(2);
+                        gananciaInput.classList.add('calculated');
+                    }
+                    if (resultado.proporcion !== undefined && proporcionInput.value === '') {
+                        proporcionInput.value = resultado.proporcion.toFixed(4);
+                        proporcionInput.classList.add('calculated');
+                    }
+                    if (resultado.margen !== undefined && margenInput.value === '') {
+                        margenInput.value = resultado.margen.toFixed(2);
+                        margenInput.classList.add('calculated');
+                    }
+                    
+                    // Mostrar resultados finales
+                    const costoFinal = resultado.costo !== undefined ? resultado.costo : costo;
+                    const precioVentaFinal = resultado.precioVenta !== undefined ? resultado.precioVenta : precioVenta;
+                    const gananciaFinal = resultado.ganancia !== undefined ? resultado.ganancia : ganancia;
+                    const proporcionFinal = resultado.proporcion !== undefined ? resultado.proporcion : proporcion;
+                    const margenFinal = resultado.margen !== undefined ? resultado.margen : margen;
+                    
+                    resCosto.textContent = `$${costoFinal.toFixed(2)}`;
+                    resPrecioVenta.textContent = `$${precioVentaFinal.toFixed(2)}`;
+                    resGanancia.textContent = `$${gananciaFinal.toFixed(2)}`;
+                    resProporcion.textContent = proporcionFinal.toFixed(4);
+                    resMargen.textContent = `${margenFinal.toFixed(2)}%`;
+                    
+                    resultSection.style.display = 'block';
+                    
+                    // Calcular y mostrar totales
+                    calcularTotales(costoFinal, precioVentaFinal, gananciaFinal, proporcionFinal, margenFinal);
+                    
+                    mostrarExito(`✅ ${mensajeCalculo} - Cálculos completados correctamente`);
+                    
+                } catch (error) {
+                    mostrarError(`❌ Error en el cálculo: ${error.message}`);
+                    resultSection.style.display = 'none';
+                    totalSection.style.display = 'none';
+                }
+            }
+            
+            // Función para reiniciar todo
+            function reiniciarTodo() {
+                const inputs = [costoInput, precioVentaInput, gananciaInput, proporcionInput, margenInput];
+                inputs.forEach(input => {
+                    input.value = '';
+                    input.classList.remove('calculated');
+                });
+                
+                ocultarMensajes();
+                resultSection.style.display = 'none';
+                totalSection.style.display = 'none';
+            }
+            
+            // Event Listeners
+            calcularBtn.addEventListener('click', calcularTodo);
+            resetBtn.addEventListener('click', reiniciarTodo);
+            
+            // Calcular automáticamente al cambiar valores
+            [costoInput, precioVentaInput, gananciaInput, proporcionInput, margenInput].forEach(input => {
+                input.addEventListener('input', function() {
+                    // Usar timeout para evitar cálculos muy frecuentes
+                    clearTimeout(window.calculoTimeout);
+                    window.calculoTimeout = setTimeout(() => {
+                        if (contarValoresIngresados() >= 2) {
+                            calcularTodo();
+                        } else {
+                            ocultarMensajes();
+                            resultSection.style.display = 'none';
+                            totalSection.style.display = 'none';
+                        }
+                    }, 800);
+                });
+            });
+            
+            // Inicializar
+            reiniciarTodo();
+        });
+    </script>
+</body>
+</html>

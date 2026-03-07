@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portada Personalizable con Tamaño de Logo Ajustable</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+               border-radius: 10px;
+  max-width: 1200px;
+  margin: 90px auto;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        /* Portada */
+        .portada-container {
+            position: relative;
+            margin-bottom: 30px;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            background-color: white;
+        }
+
+        .portada {
+            padding: 70px 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 700px;
+            position: relative;
+            border: 1px solid #e0e0e0;
+            background-size: cover;
+            background-position: center;
+            z-index: 2;
+        }
+
+        .portada-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.85);
+            z-index: 1;
+        }
+
+        .titulo-principal {
+            font-size: 32px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 15px;
+            width: 80%;
+            z-index: 3;
+            position: relative;
+        }
+
+        .subtitulo {
+            font-size: 22px;
+            text-align: center;
+            margin-bottom: 70px;
+            color: #34495e;
+            font-style: italic;
+            font-weight: 500;
+            z-index: 3;
+            position: relative;
+        }
+
+        .info-container {
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 60px;
+            z-index: 3;
+            position: relative;
+        }
+
+        .info-item {
+            margin-bottom: 25px;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .info-label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+            font-size: 16px;
+            color: #7f8c8d;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .info-content {
+            font-size: 20px;
+            color: #2c3e50;
+            padding: 8px;
+            border-radius: 5px;
+            background-color: rgba(248, 249, 250, 0.8);
+        }
+
+        .fecha {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 18px;
+            color: #34495e;
+            padding: 10px 20px;
+            background-color: rgba(248, 249, 250, 0.8);
+            border-radius: 5px;
+            display: inline-block;
+            z-index: 3;
+            position: relative;
+        }
+
+        .logo {
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            border: 3px solid #2c3e50;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            font-size: 24px;
+            overflow: hidden;
+            z-index: 3;
+            transition: all 0.3s ease;
+        }
+        
+        /* Estilos específicos para el logo de imagen */
+        .logo.image-logo {
+            background: none;
+            border: none;
+            box-shadow: none;
+            padding: 0;
+        }
+        
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        /* Panel de personalización */
+        .personalizacion {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .personalizacion h2 {
+            margin-bottom: 25px;
+            color: #2c3e50;
+            text-align: center;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .form-columns {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .form-column {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #34495e;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        .colores {
+            display: flex;
+            gap: 12px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .color-option {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 3px solid #f1f1f1;
+        }
+
+        .color-option:hover {
+            transform: scale(1.1);
+        }
+
+        .color-selected {
+            border: 3px solid #2c3e50;
+            transform: scale(1.1);
+        }
+
+        .opacidad-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .opacidad-group input {
+            flex: 1;
+        }
+
+        .opacidad-group span {
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .tamano-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .tamano-group input {
+            width: 80px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: block;
+            margin: 30px auto 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .export-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .export-buttons button {
+            margin: 0;
+            padding: 14px 28px;
+        }
+        
+        .btn-pdf {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+        }
+
+        .btn-img {
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+        }
+
+        .btn-print {
+            background: linear-gradient(135deg, #7f8c8d 0%, #636e72 100%);
+        }
+
+        .instructions {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .instructions h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .instructions ul {
+            padding-left: 20px;
+        }
+
+        .instructions li {
+            margin-bottom: 10px;
+        }
+
+        .tamano-portada {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .tamano-portada input {
+            width: 80px;
+        }
+
+        @media (max-width: 768px) {
+            .form-columns {
+                flex-direction: column;
+            }
+
+            .portada {
+                padding: 40px 20px;
+            }
+
+            .titulo-principal {
+                font-size: 26px;
+            }
+
+            .subtitulo {
+                font-size: 18px;
+            }
+
+            .export-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .tamano-portada, .tamano-group {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .tamano-portada input, .tamano-group input {
+                width: 100%;
+            }
+        }
+.btn-volver {
+  background-color: #1e88e5;      /* Color de fondo */
+  color: white;                   /* Color del texto */
+  padding: 12px 24px;             /* Espacio interno */
+  border: 2px solid #0d47a1;      /* Marco */
+  border-radius: 10px;            /* Bordes redondeados */
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+}
+
+/* Cuando pasas el mouse */
+.btn-volver:hover {
+  background-color: #0d47a1;
+  border-color: #08306b;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+}
+
+/* Cuando haces clic */
+.btn-volver:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+}
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Portada Personalizable con Control de Tamaño de Logo</h1>
+            <p>Complete los datos y genere su portada profesional en PDF</p>
+        </header>
+
+        <div class="portada-container" id="portada-container">
+            <div class="portada" id="portada">
+                <div class="portada-overlay" id="portada-overlay"></div>
+                <div class="logo" id="logo">UTN</div>
+                
+                <h1 class="titulo-principal" id="titulo-principal">INFORME FINAL DE INVESTIGACIÓN</h1>
+                
+                <h2 class="subtitulo" id="subtitulo">Aplicación de Redes Neuronales en Medicina</h2>
+                
+                <div class="info-container">
+                    <div class="info-item">
+                        <span class="info-label">NOMBRE COMPLETO</span>
+                        <span class="info-content" id="nombre">María González López</span>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-label">INSTITUCIÓN/UNIVERSIDAD</span>
+                        <span class="info-content" id="institucion">Universidad Tecnológica Nacional</span>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-label">MATERIA/ASIGNATURA</span>
+                        <span class="info-content" id="asignatura">Inteligencia Artificial Avanzada</span>
+                    </div>
+                </div>
+                
+                <div class="fecha">
+                    <span class="info-label">FECHA</span>
+                    <span class="info-content" id="fecha">20 de Mayo de 2023</span>
+                </div>
+            </div>
+        </div>
+
+        <section class="personalizacion">
+            <h2>Personaliza tu portada</h2>
+            <div class="form-columns">
+                <div class="form-column">
+                    <div class="form-group">
+                        <label for="tituloInput">Título Principal</label>
+                        <input type="text" id="tituloInput" value="INFORME FINAL DE INVESTIGACIÓN">
+                    </div>
+                
+                    <div class="form-group">
+                        <label for="subtituloInput">Subtítulo</label>
+                        <input type="text" id="subtituloInput" value="Aplicación de Redes Neuronales en Medicina">
+                    </div>
+                
+                    <div class="form-group">
+                        <label for="nombreInput">Nombre Completo</label>
+                        <input type="text" id="nombreInput" value="María González López">
+                    </div>
+                </div>
+            
+                <div class="form-column">
+                    <div class="form-group">
+                        <label for="institucionInput">Institución/Universidad</label>
+                        <input type="text" id="institucionInput" value="Universidad Tecnológica Nacional">
+                    </div>
+                
+                    <div class="form-group">
+                        <label for="asignaturaInput">Materia/Asignatura</label>
+                        <input type="text" id="asignaturaInput" value="Inteligencia Artificial Avanzada">
+                    </div>
+                
+                    <div class="form-group">
+                        <label for="fechaInput">Fecha</label>
+                        <input type="date" id="fechaInput">
+                    </div>
+                </div>
+            
+                <div class="form-column">
+                    <div class="form-group">
+                        <label for="logoInput">Logo (Texto)</label>
+                        <input type="text" id="logoInput" value="UTN" maxlength="10">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="logoImageInput">Logo (Imagen)</label>
+                        <input type="file" id="logoImageInput" accept="image/*">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="backgroundImageInput">Imagen de Fondo</label>
+                        <input type="file" id="backgroundImageInput" accept="image/*">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="opacidadOverlay">Opacidad del fondo</label>
+                        <div class="opacidad-group">
+                            <input type="range" id="opacidadOverlay" min="0" max="100" value="85">
+                            <span id="opacidadValue">85%</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-column">
+                    <div class="form-group">
+                        <label>Tamaño de Portada</label>
+                        <div class="tamano-portada">
+                            <div>
+                                <label for="anchoInput">Ancho (px)</label>
+                                <input type="number" id="anchoInput" value="800" min="400" max="1200">
+                            </div>
+                            <div>
+                                <label for="altoInput">Alto (px)</label>
+                                <input type="number" id="altoInput" value="1000" min="500" max="1500">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Tamaño del Logo</label>
+                        <div class="tamano-group">
+                            <div>
+                                <label for="logoAnchoInput">Ancho (px)</label>
+                                <input type="number" id="logoAnchoInput" value="100" min="50" max="200">
+                            </div>
+                            <div>
+                                <label for="logoAltoInput">Alto (px)</label>
+                                <input type="number" id="logoAltoInput" value="100" min="50" max="200">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Color de superposición</label>
+                        <div class="colores">
+                            <div class="color-option color-selected" style="background-color: #ffffff;" data-color="#ffffff"></div>
+                            <div class="color-option" style="background-color: #f8f9fa;" data-color="#f8f9fa"></div>
+                            <div class="color-option" style="background-color: #e9ecef;" data-color="#e9ecef"></div>
+                            <div class="color-option" style="background-color: #fef9e7;" data-color="#fef9e7"></div>
+                            <div class="color-option" style="background-color: #eafaf1;" data-color="#eafaf1"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="estiloSelect">Estilo de título</label>
+                        <select id="estiloSelect">
+                            <option value="normal">Normal</option>
+                            <option value="mayusculas">Mayúsculas</option>
+                            <option value="negritas">Negritas</option>
+                            <option value="cursivas">Cursivas</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <button id="aplicarBtn">Aplicar cambios</button>
+            
+            <div class="export-buttons">
+                <button class="btn-pdf" id="btnPdf">Guardar como PDF</button>
+                <button class="btn-img" id="btnImg">Guardar como Imagen</button>
+                <button class="btn-print" id="btnPrint">Imprimir</button>
+    <button class="btn-volver" onclick="window.location.href='portadainiciopresentacion.html '">
+  ⬅ Volver atrás
+</button>
+
+
+            </div>
+        </section>
+
+        <div class="instructions">
+            <h3>Instrucciones:</h3>
+            <ul>
+                <li>Complete los campos con la información deseada.</li>
+                <li>Seleccione una imagen de fondo y ajuste su opacidad.</li>
+                <li>Personalice el tamaño de la portada y del logo según sus necesidades.</li>
+                <li>Haga clic en <strong>"Aplicar cambios"</strong> para actualizar la portada.</li>
+                <li>Use <strong>"Guardar como PDF"</strong> o <strong>"Guardar como Imagen"</strong> para exportar la portada.</li>
+                <li>Al exportar, solo se capturará el área de la portada, no toda la página.</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        const { jsPDF } = window.jspdf;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elementos de la portada
+            const portadaContainer = document.getElementById('portada-container');
+            const portada = document.getElementById('portada');
+            const portadaOverlay = document.getElementById('portada-overlay');
+            const tituloPrincipal = document.getElementById('titulo-principal');
+            const subtitulo = document.getElementById('subtitulo');
+            const nombre = document.getElementById('nombre');
+            const institucion = document.getElementById('institucion');
+            const asignatura = document.getElementById('asignatura');
+            const fecha = document.getElementById('fecha');
+            const logo = document.getElementById('logo');
+            
+            // Elementos del formulario
+            const tituloInput = document.getElementById('tituloInput');
+            const subtituloInput = document.getElementById('subtituloInput');
+            const nombreInput = document.getElementById('nombreInput');
+            const institucionInput = document.getElementById('institucionInput');
+            const asignaturaInput = document.getElementById('asignaturaInput');
+            const fechaInput = document.getElementById('fechaInput');
+            const estiloSelect = document.getElementById('estiloSelect');
+            const logoInput = document.getElementById('logoInput');
+            const logoImageInput = document.getElementById('logoImageInput');
+            const backgroundImageInput = document.getElementById('backgroundImageInput');
+            const opacidadOverlay = document.getElementById('opacidadOverlay');
+            const opacidadValue = document.getElementById('opacidadValue');
+            const anchoInput = document.getElementById('anchoInput');
+            const altoInput = document.getElementById('altoInput');
+            const logoAnchoInput = document.getElementById('logoAnchoInput');
+            const logoAltoInput = document.getElementById('logoAltoInput');
+            const aplicarBtn = document.getElementById('aplicarBtn');
+            const btnPdf = document.getElementById('btnPdf');
+            const btnImg = document.getElementById('btnImg');
+            const btnPrint = document.getElementById('btnPrint');
+            const colorOptions = document.querySelectorAll('.color-option');
+            
+            // Establecer fecha actual por defecto
+            const hoy = new Date();
+            fechaInput.value = hoy.toISOString().substr(0, 10);
+            actualizarFechaTexto(hoy);
+            
+            // Ajustar tamaño inicial de la portada y logo
+            actualizarTamanoPortada();
+            actualizarTamanoLogo();
+            
+            // Event listeners
+            aplicarBtn.addEventListener('click', aplicarCambios);
+            btnPrint.addEventListener('click', imprimirPortada);
+            btnPdf.addEventListener('click', guardarComoPdf);
+            btnImg.addEventListener('click', guardarComoImagen);
+            
+            // Cambiar opacidad
+            opacidadOverlay.addEventListener('input', function() {
+                opacidadValue.textContent = this.value + '%';
+                portadaOverlay.style.opacity = this.value / 100;
+            });
+            
+            // Cambiar color seleccionado
+            colorOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    colorOptions.forEach(opt => opt.classList.remove('color-selected'));
+                    this.classList.add('color-selected');
+                    portadaOverlay.style.backgroundColor = this.getAttribute('data-color');
+                });
+            });
+            
+            // Subir imagen de logo
+            logoImageInput.addEventListener('change', function() {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        logo.innerHTML = `<img src="${e.target.result}" alt="Logo">`;
+                        logo.classList.add('image-logo');
+                        logoInput.value = ''; // Limpiar el campo de texto del logo
+                        actualizarTamanoLogo();
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+            
+            // Subir imagen de fondo
+            backgroundImageInput.addEventListener('change', function() {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        portada.style.backgroundImage = `url('${e.target.result}')`;
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+            
+            // Cambiar tamaño de portada
+            anchoInput.addEventListener('change', actualizarTamanoPortada);
+            altoInput.addEventListener('change', actualizarTamanoPortada);
+            
+            // Cambiar tamaño del logo
+            logoAnchoInput.addEventListener('change', actualizarTamanoLogo);
+            logoAltoInput.addEventListener('change', actualizarTamanoLogo);
+            
+            // Función para actualizar el tamaño de la portada
+            function actualizarTamanoPortada() {
+                const ancho = anchoInput.value + 'px';
+                const alto = altoInput.value + 'px';
+                
+                portadaContainer.style.width = ancho;
+                portadaContainer.style.height = alto;
+                portada.style.width = ancho;
+                portada.style.height = alto;
+            }
+            
+            // Función para actualizar el tamaño del logo
+            function actualizarTamanoLogo() {
+                const ancho = logoAnchoInput.value + 'px';
+                const alto = logoAltoInput.value + 'px';
+                
+                logo.style.width = ancho;
+                logo.style.height = alto;
+                
+                // Ajustar tamaño de fuente si es un logo de texto
+                if (!logo.classList.contains('image-logo')) {
+                    const tamañoBase = Math.min(parseInt(logoAnchoInput.value), parseInt(logoAltoInput.value));
+                    logo.style.fontSize = Math.max(16, tamañoBase * 0.24) + 'px';
+                }
+            }
+            
+            // Función para aplicar cambios
+            function aplicarCambios() {
+                tituloPrincipal.textContent = tituloInput.value;
+                subtitulo.textContent = subtituloInput.value;
+                nombre.textContent = nombreInput.value;
+                institucion.textContent = institucionInput.value;
+                asignatura.textContent = asignaturaInput.value;
+            
+                if (fechaInput.value) {
+                    const fechaSeleccionada = new Date(fechaInput.value + 'T00:00:00');
+                    actualizarFechaTexto(fechaSeleccionada);
+                }
+            
+                aplicarEstiloTitulo();
+                aplicarLogo();
+                actualizarTamanoPortada();
+                actualizarTamanoLogo();
+            
+                alert('¡Cambios aplicados con éxito! 🎉');
+            }
+            
+            // Función para actualizar el texto de la fecha
+            function actualizarFechaTexto(fechaObj) {
+                const opciones = { year: 'numeric', month: 'long', day: 'numeric' };
+                fecha.textContent = fechaObj.toLocaleDateString('es-ES', opciones);
+            }
+            
+            // Función para aplicar estilo al título
+            function aplicarEstiloTitulo() {
+                tituloPrincipal.style.fontStyle = 'normal';
+                tituloPrincipal.style.fontWeight = 'normal';
+                tituloPrincipal.style.textTransform = 'none';
+            
+                switch(estiloSelect.value) {
+                    case 'mayusculas':
+                        tituloPrincipal.style.textTransform = 'uppercase';
+                        break;
+                    case 'negritas':
+                        tituloPrincipal.style.fontWeight = 'bold';
+                        break;
+                    case 'cursivas':
+                        tituloPrincipal.style.fontStyle = 'italic';
+                        break;
+                    default:
+                        tituloPrincipal.style.textTransform = 'uppercase';
+                        tituloPrincipal.style.fontWeight = 'bold';
+                        break;
+                }
+            }
+            
+            // Función para aplicar logo (texto o imagen)
+            function aplicarLogo() {
+                if (logoImageInput.files.length > 0) {
+                    // Si hay una imagen, no se modifica el logo
+                    return;
+                }
+            
+                if (logoInput.value) {
+                    logo.innerHTML = logoInput.value;
+                    logo.classList.remove('image-logo');
+                    logo.style.backgroundImage = 'linear-gradient(135deg, #3498db 0%, #2c3e50 100%)';
+                    actualizarTamanoLogo();
+                }
+            }
+            
+            // Función para imprimir
+            function imprimirPortada() {
+                const originalContents = document.body.innerHTML;
+                const printContents = portadaContainer.innerHTML;
+            
+                document.body.innerHTML = printContents;
+                window.print();
+                document.body.innerHTML = originalContents;
+                location.reload();
+            }
+            
+            // Función para guardar como PDF
+            function guardarComoPdf() {
+                html2canvas(portadaContainer, {
+                    scale: 2,
+                    width: portadaContainer.offsetWidth,
+                    height: portadaContainer.offsetHeight
+                }).then(canvas => {
+                    const imgData = canvas.toDataURL('image/png');
+                    const pdf = new jsPDF('p', 'px', [portadaContainer.offsetWidth, portadaContainer.offsetHeight]);
+                    
+                    pdf.addImage(imgData, 'PNG', 0, 0, portadaContainer.offsetWidth, portadaContainer.offsetHeight);
+                    pdf.save('Portada_Informe.pdf');
+                });
+            }
+            
+            // Función para guardar como imagen
+            function guardarComoImagen() {
+                html2canvas(portadaContainer, {
+                    scale: 2,
+                    width: portadaContainer.offsetWidth,
+                    height: portadaContainer.offsetHeight
+                }).then(canvas => {
+                    const link = document.createElement('a');
+                    link.download = 'Portada_Informe.png';
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                });
+            }
+        });
+    </script>
+</body>
+</html>

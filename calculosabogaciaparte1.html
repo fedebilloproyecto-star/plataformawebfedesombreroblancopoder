@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matemáticas Jurídicas | Herramientas Cuantitativas para Abogados</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #0a2540;
+            --secondary-color: #1d4e89;
+            --accent-color: #00b4d8;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --success-color: #2e7d32;
+            --warning-color: #f57c00;
+            --danger-color: #c62828;
+            --gray-light: #e9ecef;
+            --gray-medium: #6c757d;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --border-radius: 10px;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', 'Roboto', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            color: var(--dark-color);
+            background-color: var(--light-color);
+            font-weight: 400;
+                border-radius: 10px;
+  max-width: 900px;
+  margin: 90px auto;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1.2rem 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo-icon {
+            font-size: 1.8rem;
+            color: var(--accent-color);
+        }
+        
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .logo-text span {
+            color: var(--accent-color);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(10, 37, 64, 0.9) 0%, rgba(29, 78, 137, 0.85) 100%), url('https://images.unsplash.com/photo-1589391886645-d51941baf7fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 6rem 0;
+            text-align: center;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            box-shadow: 0 4px 10px rgba(0, 180, 216, 0.3);
+        }
+        
+        .btn:hover {
+            background-color: #0096c7;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 180, 216, 0.4);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid white;
+            box-shadow: none;
+        }
+        
+        .btn-outline:hover {
+            background-color: white;
+            color: var(--primary-color);
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        /* Navigation Buttons */
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .nav-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border: none;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            width: 160px;
+            height: 140px;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            color: var(--primary-color);
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            background: var(--accent-color);
+            color: white;
+        }
+        
+        .nav-btn.active {
+            background: var(--accent-color);
+            color: white;
+        }
+        
+        .nav-btn i {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .nav-btn span {
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        /* Main Content */
+        main {
+            padding: 3rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .section-title p {
+            font-size: 1.2rem;
+            color: var(--gray-medium);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+            margin: 1.5rem auto;
+            border-radius: 2px;
+        }
+        
+        .areas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 5rem;
+        }
+        
+        .area-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .area-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .card-icon {
+            font-size: 1.8rem;
+            color: var(--accent-color);
+        }
+        
+        .card-body {
+            padding: 2rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .formula {
+            background-color: #f1f9ff;
+            border-left: 4px solid var(--accent-color);
+            padding: 1.2rem;
+            margin: 1.2rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+        
+        .example {
+            background-color: #e8f4fd;
+            border-radius: var(--border-radius);
+            padding: 1.2rem;
+            margin: 1.2rem 0;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .example-title {
+            font-weight: 600;
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .calculator-section {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 3rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 5rem;
+        }
+        
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .calculator {
+            border: 1px solid var(--gray-light);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            transition: var(--transition);
+        }
+        
+        .calculator:hover {
+            border-color: var(--accent-color);
+            box-shadow: var(--shadow);
+        }
+        
+        .calculator h3 {
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.3rem;
+        }
+        
+        .calculator-icon {
+            color: var(--accent-color);
+            font-size: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.7rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid var(--gray-light);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(0, 180, 216, 0.1);
+        }
+        
+        .calculator-result {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #f1f9ff, #e1f5fe);
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            border-left: 4px solid var(--accent-color);
+        }
+        
+        .resources-section {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 3rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .resource-card {
+            border: 1px solid var(--gray-light);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            text-align: center;
+            transition: var(--transition);
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+            border-color: var(--accent-color);
+        }
+        
+        .resource-icon {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 1.5rem;
+        }
+        
+        .resource-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        /* Pension Calculator Styles */
+        .pension-calculator {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, #f8fbff, #f0f8ff);
+            border: 1px solid #d1e7ff;
+            border-radius: var(--border-radius);
+            padding: 3rem;
+            margin-top: 3rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .pension-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .pension-result {
+            background: linear-gradient(135deg, #e7f3ff, #d4ebff);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin-top: 2rem;
+            display: none;
+        }
+        
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #cce7ff;
+        }
+        
+        .result-total {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid var(--accent-color);
+        }
+        
+        .note {
+            font-size: 0.9rem;
+            color: var(--gray-medium);
+            margin-top: 1.5rem;
+            font-style: italic;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 1rem;
+            border-radius: var(--border-radius);
+        }
+        
+        /* Content Sections */
+        .content-section {
+            display: none;
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2.2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+            
+            .hero {
+                padding: 4rem 0;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+            
+            .nav-buttons {
+                gap: 0.5rem;
+            }
+            
+            .nav-btn {
+                width: 140px;
+                height: 120px;
+                padding: 1rem;
+            }
+            
+            .areas-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .calculator-section, .resources-section, .pension-calculator {
+                padding: 2rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+            
+            .nav-btn {
+                width: 120px;
+                height: 110px;
+            }
+            
+            .nav-btn i {
+                font-size: 2rem;
+            }
+            
+            .calculator-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .pension-form {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Additional Professional Elements */
+        .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+            vertical-align: super;
+        }
+        
+        .divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--gray-light), transparent);
+            margin: 2rem 0;
+        }
+        
+        .feature-list {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+        
+        .feature-list li {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        .feature-list li::before {
+            content: '✓';
+            color: var(--success-color);
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .stat-box {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .stat-box:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            font-size: 1rem;
+            color: var(--gray-medium);
+            font-weight: 500;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+/* Solo estilos para el botón "Volver atrás" */
+.back-button {
+  display: inline-block;
+  padding: 10px 18px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 2px solid #333;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  user-select: none;
+}
+
+/* Efecto al pasar el ratón */
+.back-button:hover,
+.back-button:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+  text-decoration: none;
+  outline: none;
+}
+
+/* Efecto al hacer clic */
+.back-button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <div class="logo-text">Matemáticas <span>Jurídicas</span></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                 <a href="aprendeprincipalconocimientosabogacia.html" class="back-button" aria-label="Volver atrás">Volver atrás</a>
+                <h1>Herramientas sobre ejercicio matematicos solo abogacia</h1>
+                <p>Domine las herramientas cuantitativas esenciales para la práctica jurídica moderna. Desde cálculo de indemnizaciones hasta análisis estadístico de evidencias.</p>
+                <div class="btn-group">
+                    <a href="#civil" class="btn" data-section="civil"><i class="fas fa-calculator"></i> Explorar Herramientas</a>
+                    <a href="#pension-calculator" class="btn btn-outline" data-section="civil"><i class="fas fa-child"></i> Calculadora de Pensiones</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="nav-buttons">
+            <button class="nav-btn active" data-section="civil">
+                <i class="fas fa-gavel"></i>
+                <span>Derecho Civil</span>
+            </button>
+            <button class="nav-btn" data-section="laboral">
+                <i class="fas fa-briefcase"></i>
+                <span>Laboral</span>
+            </button>
+            <button class="nav-btn" data-section="comercial">
+                <i class="fas fa-chart-line"></i>
+                <span>Comercial</span>
+            </button>
+            <button class="nav-btn" data-section="tributario">
+                <i class="fas fa-file-invoice-dollar"></i>
+                <span>Tributario</span>
+            </button>
+            <button class="nav-btn" data-section="penal">
+                <i class="fas fa-user-shield"></i>
+                <span>Penal</span>
+            </button>
+        </div>
+    </div>
+
+    <main class="container">
+        <!-- Sección Derecho Civil -->
+        <section id="civil" class="content-section active">
+            <div class="section-title">
+                <h2>Derecho Civil <span class="badge">Especialmente Daños y Perjuicios</span></h2>
+                <p>Área donde las matemáticas son más visibles y cruciales para la cuantificación de indemnizaciones y actualización de capitales.</p>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-number">95%</div>
+                    <div class="stat-label">de casos civiles requieren cálculos matemáticos</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">78%</div>
+                    <div class="stat-label">de abogados reportan mayor éxito con herramientas cuantitativas</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">63%</div>
+                    <div class="stat-label">de indemnizaciones se basan en proyecciones financieras</div>
+                </div>
+            </div>
+            
+            <div class="areas-grid">
+                <div class="area-card">
+                    <div class="card-header">
+                        <i class="fas fa-file-invoice-dollar card-icon"></i>
+                        <h3>Cálculo de Indemnizaciones</h3>
+                    </div>
+                    <div class="card-body">
+                        <h4>Fórmula Básica:</h4>
+                        <div class="formula">Indemnización Total = Daño Emergente + Lucro Cesante</div>
+                        
+                        <p><strong>Daño Emergente (D.E.):</strong> Gastos reales en los que se ha incurrido y los que se deberán incurrir a futuro.</p>
+                        <div class="example">
+                            <div class="example-title">
+                                <i class="fas fa-list-ul"></i> Ejemplo Práctico:
+                            </div>
+                            Gastos médicos, medicinas, reparación de bienes, etc.
+                        </div>
+                        
+                        <p><strong>Lucro Cesante (L.C.):</strong> Ganancias que se han dejado de percibir debido al hecho ilícito.</p>
+                        <div class="example">
+                            <div class="example-title">
+                                <i class="fas fa-list-ul"></i> Ejemplo Práctico:
+                            </div>
+                            Salario no percibido por incapacidad, pérdida de beneficios comerciales.
+                        </div>
+                        
+                        <h4>Fórmula Ampliada:</h4>
+                        <div class="formula">Indemnización Total = D.E. (Pasado) + D.E. (Futuro) + L.C. (Pasado) + L.C. (Futuro)</div>
+                    </div>
+                </div>
+                
+                <div class="area-card">
+                    <div class="card-header">
+                        <i class="fas fa-chart-line card-icon"></i>
+                        <h3>Actualización de Capitales</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Es vital saber calcular cuánto vale hoy un dinero que se debía en el pasado o que se recibirá en el futuro.</p>
+                        
+                        <h4>Interés Simple:</h4>
+                        <div class="formula">C_f = C_0 × (1 + (i × t))</div>
+                        <p>Donde:<br>
+                        C_f = Capital final<br>
+                        C_0 = Capital inicial<br>
+                        i = Tasa de interés (anual, mensual)<br>
+                        t = Tiempo (en años, meses)</p>
+                        <p><strong>Uso:</strong> Menos común, pero aparece en algunos cálculos legales específicos.</p>
+                        
+                        <h4>Interés Compuesto:</h4>
+                        <div class="formula">C_f = C_0 × (1 + i)^t</div>
+                        <p><strong>Uso:</strong> Es el más utilizado para calcular la actualización de deudas, indemnizaciones y para proyectar lucros cesantes futuros. Es la base de la "capitalización".</p>
+                        
+                        <h4>Actualización a Valor Presente (Descuento):</h4>
+                        <div class="formula">VP = VF / (1 + i)^t</div>
+                        <p>Donde:<br>
+                        VP = Valor Presente (cuánto vale hoy)<br>
+                        VF = Valor Futuro (cuánto se recibirá/pagará en el futuro)</p>
+                        <p><strong>Uso:</strong> Para calcular el valor actual de una pensión futura o de un lucro cesante proyectado a 20 años. Un tribunal no te dará el monto total futuro hoy, te dará su valor actual.</p>
+                    </div>
+                </div>
+                
+                <div class="area-card">
+                    <div class="card-header">
+                        <i class="fas fa-child card-icon"></i>
+                        <h3>Cálculo de Pensiones Alimenticias</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Suele ser un porcentaje de los ingresos del alimentante (ej., 30%, 40%), pero se debe ponderar con las necesidades del alimentario y las capacidades de ambas partes. Implica análisis de presupuestos y flujos de caja personales.</p>
+                        
+                        <h4>Fórmula Básica:</h4>
+                        <div class="formula">Pensión Alimenticia = (Ingresos del Alimentante × Porcentaje Legal) - Gastos Propios Necesarios</div>
+                        
+                        <h4>Factores a Considerar:</h4>
+                        <ul class="feature-list">
+                            <li>Número de hijos o personas a cargo</li>
+                            <li>Edad y necesidades específicas de cada alimentario</li>
+                            <li>Capacidad económica del alimentante</li>
+                            <li>Necesidades básicas del alimentario (educación, salud, vivienda, etc.)</li>
+                            <li>Capacidad económica del alimentario (si tiene ingresos propios)</li>
+                        </ul>
+                        
+                        <div class="example">
+                            <div class="example-title">
+                                <i class="fas fa-calculator"></i> Ejemplo de Cálculo:
+                            </div>
+                            Si el alimentante tiene un ingreso neto mensual de $3,000 y la ley establece un 30% para un hijo, la pensión base sería de $900. Sin embargo, este monto puede ajustarse según las necesidades específicas del hijo y la capacidad del alimentante.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Calculadora de Pensiones Alimenticias -->
+            <div class="pension-calculator" id="pension-calculator">
+                <h3><i class="fas fa-calculator calculator-icon"></i> Calculadora de Pensión Alimenticia</h3>
+                <p>Esta calculadora proporciona una estimación basada en parámetros comunes. Los resultados son referenciales y no constituyen asesoría legal.</p>
+                
+                <div class="pension-form">
+                    <div class="form-group">
+                        <label for="ingreso-alimentante"><i class="fas fa-money-bill-wave"></i> Ingreso Neto Mensual del Alimentante:</label>
+                        <input type="number" id="ingreso-alimentante" placeholder="Ej: 3000">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="numero-hijos"><i class="fas fa-users"></i> Número de Hijos:</label>
+                        <input type="number" id="numero-hijos" min="1" max="10" value="1">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="porcentaje-base"><i class="fas fa-percentage"></i> Porcentaje Base Sugerido (%):</label>
+                        <select id="porcentaje-base">
+                            <option value="30">30% (Un hijo)</option>
+                            <option value="40">40% (Dos hijos)</option>
+                            <option value="50">50% (Tres o más hijos)</option>
+                            <option value="custom">Personalizado</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group" id="custom-porcentaje-container" style="display: none;">
+                        <label for="custom-porcentaje"><i class="fas fa-sliders-h"></i> Porcentaje Personalizado (%):</label>
+                        <input type="number" id="custom-porcentaje" min="10" max="60" placeholder="Ej: 35">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="gastos-especiales"><i class="fas fa-stethoscope"></i> Gastos Especiales Mensuales (educación, salud, etc.):</label>
+                        <input type="number" id="gastos-especiales" placeholder="Ej: 200" value="0">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="capacidad-alimentario"><i class="fas fa-piggy-bank"></i> Capacidad Económica del Alimentario (ingresos propios):</label>
+                        <input type="number" id="capacidad-alimentario" placeholder="Ej: 500" value="0">
+                    </div>
+                </div>
+                
+                <button class="btn" onclick="calcularPensionAlimenticia()"><i class="fas fa-calculator"></i> Calcular Pensión</button>
+                
+                <div class="pension-result" id="resultado-pension">
+                    <h4><i class="fas fa-file-contract"></i> Estimación de Pensión Alimenticia</h4>
+                    <div class="result-item">
+                        <span>Porcentaje aplicado:</span>
+                        <span id="porcentaje-aplicado">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Pensión base:</span>
+                        <span id="pension-base">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Gastos especiales:</span>
+                        <span id="gastos-especiales-result">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Capacidad económica del alimentario:</span>
+                        <span id="capacidad-alimentario-result">-</span>
+                    </div>
+                    <div class="result-total">
+                        <span>Pensión mensual estimada:</span>
+                        <span id="pension-total">-</span>
+                    </div>
+                    <div class="note">
+                        <i class="fas fa-exclamation-circle"></i> Nota: Esta es una estimación. El monto final puede variar según la evaluación judicial de las circunstancias específicas del caso.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Derecho Laboral -->
+        <section id="laboral" class="content-section">
+            <div class="section-title">
+                <h2>Derecho Laboral</h2>
+                <p>Cálculos precisos para liquidaciones, indemnizaciones y prestaciones laborales.</p>
+            </div>
+            
+            <div class="areas-grid">
+                <div class="area-card">
+                    <div class="card-header">
+                        <i class="fas fa-calculator card-icon"></i>
+                        <h3>Cálculo de Liquidaciones Finales</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Es pura aritmética, pero debe ser precisa.</p>
+                        <div class="formula">Liquidación = Sueldos Pendientes + Vacaciones no Gozadas + Indemnización por Despido + Aguinaldo Proporcional + etc.</div>
+                        
+                        <h4>Fórmula de Indemnización por Despido (ejemplo simplificado):</h4>
+                        <div class="formula">Indemnización = Salario Mensual × Años de Servicio × (X meses por año)</div>
+                        <p>(Donde "X" lo determina la ley, ej., 1 mes por año de servicio).</p>
+                    </div>
+                </div>
+                
+                <div class="area-card">
+                    <div class="card-header">
+                        <i class="fas fa-money-bill-wave card-icon"></i>
+                        <h3>Cálculo de Prestaciones Sociales</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Incluye el cálculo de utilidades, vacaciones, bonificaciones y otras prestaciones establecidas en la ley.</p>
+                        
+                        <h4>Utilidades:</h4>
+                        <div class="formula">Utilidad por Día Trabajado = Utilidad Total / Días Laborables del Año</div>
+                        
+                        <h4>Vacaciones:</h4>
+                        <div class="formula">Días de Vacaciones = (Días Trabajados × Días de Vacaciones por Año) / 365</div>
+                        
+                        <div class="example">
+                            <div class="example-title">
+                                <i class="fas fa-calculator"></i> Ejemplo Práctico:
+                            </div>
+                            Un trabajador con 5 años de servicio y salario mensual de $1,500, despedido injustificadamente, podría recibir una indemnización de $7,500 (5 años × 1 mes × $1,500).
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Derecho Comercial -->
+        <section id="comercial" class="content-section">
+            <div class="section-title">
+                <h2>Derecho Comercial y Societario</h2>
+                <p>Matemáticas financieras aplicadas a contratos, sociedades y valoración de empresas.</p>
+            </div>
+            
+            <div class="areas-grid">
+                <div class="area-card">
+                    <div class="card-header">
+                        <i class="fas fa-chart-pie card-icon"></i>
+                        <h3>Reparto de Utilidades (Dividendos)</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="formula">Dividendo por Acción = Utilidades a Repartir / Número Total de Acciones</div>
+                        <p>Requiere entender estados financieros (Balance General, Estado de Resultados).</p>
+                    </div>
+                </div>
+                
+                <div class="area-card">
+                    <div class="card-header">
+                        <i class="fas fa-hand-holding-usd card-icon"></i>
+                        <h3>Cálculo de Intereses Moratorios en Contratos</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="formula">Interés Moratorio = Capital Atrasado × Tasa de Interés Moratorio × Tiempo de Atraso</div>
+                        <p>La tasa suele estar pactada en el contrato.</p>
+                    </div>
+                </div>
+                
+                <div class="area-card">
+                    <div class="card-header">
+                        <i class="fas fa-building card-icon"></i>
+                        <h3>Valoración de Empresas</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Aquí las matemáticas se vuelven más complejas. Los abogados deben entender los conceptos para discutir con peritos.</p>
+                        
+                        <h4>Método de Flujos de Caja Descontados (FCD):</h4>
+                        <p>Aplica la fórmula de Valor Presente a una serie de flujos de caja futuros proyectados para la empresa.</p>
+                        
+                        <h4>Métodos de Múltiplos:</h4>
+                        <p>Compara la empresa con otras similares usando ratios como Precio/Beneficio (P/E).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Derecho Tributario -->
+        <section id="tributario" class="content-section">
+            <div class="section-title">
+                <h2>Derecho Tributario y Fiscal</h2>
+                <p>Cálculos precisos de obligaciones fiscales, impuestos y cargas tributarias.</p>
+            </div>
+            
+            <div class="areas-grid">
+                <div class="area-card">
+                    <div class="card-header">
+                        <i class="fas fa-calculator card-icon"></i>
+                        <h3>Cálculo de Impuestos</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="formula">Impuesto a Pagar = Base Imponible × Tasa Impositiva - Deducciones - Créditos</div>
+                        <p>Un abogado tributario debe ser experto en calcular la base imponible, entender tasas progresivas y aplicar deducciones legales.</p>
+                        
+                        <h4>Ejemplo de cálculo con tasa progresiva:</h4>
+                        <div class="example">
+                            <div class="example-title">
+                                <i class="fas fa-calculator"></i> Ejemplo Práctico:
+                            </div>
+                            Para un ingreso de $50,000 con tramos impositivos: 0-10,000 (10%), 10,001-30,000 (15%), 30,001+ (20%).<br>
+                            Cálculo: (10,000×0.10) + (20,000×0.15) + (20,000×0.20) = $1,000 + $3,000 + $4,000 = $8,000
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Derecho Penal -->
+        <section id="penal" class="content-section">
+            <div class="section-title">
+                <h2>Derecho Penal</h2>
+                <p>Análisis estadístico y probabilístico aplicado a la valoración de evidencias y cálculo de penas.</p>
+            </div>
+            
+            <div class="areas-grid">
+                <div class="area-card">
+                    <div class="card-header">
+                        <i class="fas fa-dna card-icon"></i>
+                        <h3>Probabilística y Análisis de Evidencia Forense</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Es el área de las matemáticas más moderna en el derecho.</p>
+                        
+                        <h4>Teorema de Bayes:</h4>
+                        <p>Permite actualizar la probabilidad de una hipótesis (ej., "el acusado es culpable") a medida que se presenta nueva evidencia.</p>
+                        <p><strong>Uso fundamental:</strong> Para evaluar la fuerza de la evidencia científica (ADN, huellas dactilares). Un abogado debe entender qué significa realmente que "la probabilidad de una coincidencia de ADN sea de 1 en un millón" y cómo un fiscal o defensor puede presentar este dato de manera engañosa (Falacia del Fiscal).</p>
+                        
+                        <h4>Estadística Descriptiva:</h4>
+                        <ul class="feature-list">
+                            <li><strong>Media, Mediana, Moda:</strong> Para analizar datos en casos de fraude masivo, análisis de sentencias, etc.</li>
+                            <li><strong>Desviación Estándar:</strong> Para entender la dispersión de los datos.</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="area-card">
+                    <div class="card-header">
+                        <i class="fas fa-gavel card-icon"></i>
+                        <h3>Cálculo de Penas</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>En algunos sistemas, las penas se pueden calcular en base a una "unidad de medida" (días-multa). Es un cálculo proporcional.</p>
+                        
+                        <h4>Fórmula de cálculo de multas:</h4>
+                        <div class="formula">Multa Total = Días-Multa × Valor del Día-Multa</div>
+                        
+                        <div class="example">
+                            <div class="example-title">
+                                <i class="fas fa-calculator"></i> Ejemplo Práctico:
+                            </div>
+                            Una sentencia de 100 días-multa con valor de $50 por día resulta en una multa total de $5,000.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Calculadoras Legales -->
+        <section class="calculator-section">
+            <div class="section-title">
+                <h2>Calculadoras Legales Especializadas</h2>
+                <p>Herramientas interactivas para agilizar sus cálculos jurídicos con precisión y eficiencia.</p>
+            </div>
+            
+            <div class="calculator-grid">
+                <div class="calculator">
+                    <h3><i class="fas fa-chart-line calculator-icon"></i> Calculadora de Interés Compuesto</h3>
+                    <div class="form-group">
+                        <label for="capital">Capital Inicial (C₀):</label>
+                        <input type="number" id="capital" placeholder="Ej: 1000">
+                    </div>
+                    <div class="form-group">
+                        <label for="tasa">Tasa de Interés (%):</label>
+                        <input type="number" id="tasa" placeholder="Ej: 5">
+                    </div>
+                    <div class="form-group">
+                        <label for="tiempo">Tiempo (años):</label>
+                        <input type="number" id="tiempo" placeholder="Ej: 10">
+                    </div>
+                    <button class="btn" onclick="calcularInteresCompuesto()"><i class="fas fa-calculator"></i> Calcular</button>
+                    <div class="calculator-result" id="resultado-interes">
+                        Resultado aparecerá aquí
+                    </div>
+                </div>
+                
+                <div class="calculator">
+                    <h3><i class="fas fa-file-invoice-dollar calculator-icon"></i> Calculadora de Indemnización</h3>
+                    <div class="form-group">
+                        <label for="daño-emergente">Daño Emergente:</label>
+                        <input type="number" id="daño-emergente" placeholder="Ej: 5000">
+                    </div>
+                    <div class="form-group">
+                        <label for="lucro-cesante">Lucro Cesante:</label>
+                        <input type="number" id="lucro-cesante" placeholder="Ej: 3000">
+                    </div>
+                    <button class="btn" onclick="calcularIndemnizacion()"><i class="fas fa-calculator"></i> Calcular</button>
+                    <div class="calculator-result" id="resultado-indemnizacion">
+                        Resultado aparecerá aquí
+                    </div>
+                </div>
+                
+                <div class="calculator">
+                    <h3><i class="fas fa-coins calculator-icon"></i> Calculadora de Valor Presente</h3>
+                    <div class="form-group">
+                        <label for="valor-futuro">Valor Futuro (VF):</label>
+                        <input type="number" id="valor-futuro" placeholder="Ej: 50000">
+                    </div>
+                    <div class="form-group">
+                        <label for="tasa-vp">Tasa de Descuento (%):</label>
+                        <input type="number" id="tasa-vp" placeholder="Ej: 7">
+                    </div>
+                    <div class="form-group">
+                        <label for="periodos">Períodos (años):</label>
+                        <input type="number" id="periodos" placeholder="Ej: 5">
+                    </div>
+                    <button class="btn" onclick="calcularValorPresente()"><i class="fas fa-calculator"></i> Calcular</button>
+                    <div class="calculator-result" id="resultado-vp">
+                        Resultado aparecerá aquí
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Navegación por botones
+        document.addEventListener('DOMContentLoaded', function() {
+            const navButtons = document.querySelectorAll('.nav-btn');
+            const contentSections = document.querySelectorAll('.content-section');
+            
+            navButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const targetSection = this.getAttribute('data-section');
+                    
+                    // Remover clase active de todos los botones y secciones
+                    navButtons.forEach(btn => btn.classList.remove('active'));
+                    contentSections.forEach(section => section.classList.remove('active'));
+                    
+                    // Agregar clase active al botón clickeado y a la sección correspondiente
+                    this.classList.add('active');
+                    document.getElementById(targetSection).classList.add('active');
+                    
+                    // Scroll suave a la sección
+                    document.getElementById(targetSection).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+            
+            // También para los botones del hero
+            const heroButtons = document.querySelectorAll('.hero .btn');
+            heroButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetSection = this.getAttribute('data-section');
+                    
+                    // Remover clase active de todos los botones y secciones
+                    navButtons.forEach(btn => btn.classList.remove('active'));
+                    contentSections.forEach(section => section.classList.remove('active'));
+                    
+                    // Activar la sección correspondiente
+                    document.querySelector(`.nav-btn[data-section="${targetSection}"]`).classList.add('active');
+                    document.getElementById(targetSection).classList.add('active');
+                    
+                    // Scroll suave a la sección
+                    document.getElementById(targetSection).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+        
+        // Mostrar/ocultar campo de porcentaje personalizado
+        document.getElementById('porcentaje-base').addEventListener('change', function() {
+            const customContainer = document.getElementById('custom-porcentaje-container');
+            if (this.value === 'custom') {
+                customContainer.style.display = 'block';
+            } else {
+                customContainer.style.display = 'none';
+            }
+        });
+        
+        // Calculadora de Pensión Alimenticia
+        function calcularPensionAlimenticia() {
+            const ingresoAlimentante = parseFloat(document.getElementById('ingreso-alimentante').value);
+            const numeroHijos = parseInt(document.getElementById('numero-hijos').value);
+            const porcentajeBase = document.getElementById('porcentaje-base').value;
+            const customPorcentaje = parseFloat(document.getElementById('custom-porcentaje').value);
+            const gastosEspeciales = parseFloat(document.getElementById('gastos-especiales').value) || 0;
+            const capacidadAlimentario = parseFloat(document.getElementById('capacidad-alimentario').value) || 0;
+            
+            if (isNaN(ingresoAlimentante) || ingresoAlimentante <= 0) {
+                alert('Por favor, ingrese un ingreso válido para el alimentante.');
+                return;
+            }
+            
+            // Determinar el porcentaje a aplicar
+            let porcentajeAplicar;
+            if (porcentajeBase === 'custom') {
+                if (isNaN(customPorcentaje) || customPorcentaje < 10 || customPorcentaje > 60) {
+                    alert('Por favor, ingrese un porcentaje válido entre 10% y 60%.');
+                    return;
+                }
+                porcentajeAplicar = customPorcentaje;
+            } else {
+                porcentajeAplicar = parseFloat(porcentajeBase);
+            }
+            
+            // Calcular pensión base
+            const pensionBase = (ingresoAlimentante * porcentajeAplicar) / 100;
+            
+            // Ajustar por gastos especiales y capacidad del alimentario
+            const pensionTotal = Math.max(0, pensionBase + gastosEspeciales - capacidadAlimentario);
+            
+            // Mostrar resultados
+            document.getElementById('porcentaje-aplicado').textContent = porcentajeAplicar + '%';
+            document.getElementById('pension-base').textContent = '$' + pensionBase.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('gastos-especiales-result').textContent = '$' + gastosEspeciales.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('capacidad-alimentario-result').textContent = '$' + capacidadAlimentario.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('pension-total').textContent = '$' + pensionTotal.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            
+            document.getElementById('resultado-pension').style.display = 'block';
+        }
+        
+        // Calculadora de Interés Compuesto
+        function calcularInteresCompuesto() {
+            const capital = parseFloat(document.getElementById('capital').value);
+            const tasa = parseFloat(document.getElementById('tasa').value);
+            const tiempo = parseFloat(document.getElementById('tiempo').value);
+            
+            if (isNaN(capital) || isNaN(tasa) || isNaN(tiempo)) {
+                document.getElementById('resultado-interes').textContent = 'Por favor, complete todos los campos correctamente.';
+                return;
+            }
+            
+            const tasaDecimal = tasa / 100;
+            const capitalFinal = capital * Math.pow(1 + tasaDecimal, tiempo);
+            const intereses = capitalFinal - capital;
+            
+            document.getElementById('resultado-interes').innerHTML = `
+                <strong>Capital Final:</strong> $${capitalFinal.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}<br>
+                <strong>Intereses Generados:</strong> $${intereses.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
+            `;
+        }
+        
+        // Calculadora de Indemnización
+        function calcularIndemnizacion() {
+            const dañoEmergente = parseFloat(document.getElementById('daño-emergente').value);
+            const lucroCesante = parseFloat(document.getElementById('lucro-cesante').value);
+            
+            if (isNaN(dañoEmergente) || isNaN(lucroCesante)) {
+                document.getElementById('resultado-indemnizacion').textContent = 'Por favor, complete todos los campos correctamente.';
+                return;
+            }
+            
+            const indemnizacionTotal = dañoEmergente + lucroCesante;
+            
+            document.getElementById('resultado-indemnizacion').innerHTML = `
+                <strong>Indemnización Total:</strong> $${indemnizacionTotal.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}<br>
+                <strong>Desglose:</strong><br>
+                - Daño Emergente: $${dañoEmergente.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}<br>
+                - Lucro Cesante: $${lucroCesante.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
+            `;
+        }
+        
+        // Calculadora de Valor Presente
+        function calcularValorPresente() {
+            const valorFuturo = parseFloat(document.getElementById('valor-futuro').value);
+            const tasa = parseFloat(document.getElementById('tasa-vp').value);
+            const periodos = parseFloat(document.getElementById('periodos').value);
+            
+            if (isNaN(valorFuturo) || isNaN(tasa) || isNaN(periodos)) {
+                document.getElementById('resultado-vp').textContent = 'Por favor, complete todos los campos correctamente.';
+                return;
+            }
+            
+            const tasaDecimal = tasa / 100;
+            const valorPresente = valorFuturo / Math.pow(1 + tasaDecimal, periodos);
+            
+            document.getElementById('resultado-vp').innerHTML = `
+                <strong>Valor Presente:</strong> $${valorPresente.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}<br>
+                <strong>Descuento Aplicado:</strong> $${(valorFuturo - valorPresente).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
+            `;
+        }
+    </script>
+</body>
+</html>

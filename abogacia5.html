@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Normativas de Protección al Médico</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #2ecc71;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+                border-radius: 10px;
+  max-width: 900px;
+  margin: 90px auto;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .filter-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .filter-btn.active {
+            background-color: var(--secondary-color);
+            color: white;
+            border-color: var(--secondary-color);
+        }
+        
+        .table-container {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            position: sticky;
+            top: 0;
+        }
+        
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        tr:hover {
+            background-color: #f0f7ff;
+        }
+        
+        .normativa-cell {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .descripcion-cell {
+            max-width: 400px;
+        }
+        
+        .ejemplo-cell {
+            max-width: 400px;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+            }
+            
+            th, td {
+                padding: 0.75rem 0.5rem;
+                font-size: 0.9rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        .highlight {
+            background-color: #fff9c4;
+        }
+        /* Solo estilos para el botón "Volver atrás" */
+.back-button {
+  display: inline-block;
+  padding: 10px 18px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 2px solid #333;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  user-select: none;
+}
+
+/* Efecto al pasar el ratón */
+.back-button:hover,
+.back-button:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+  text-decoration: none;
+  outline: none;
+}
+
+/* Efecto al hacer clic */
+.back-button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Normativas de Protección al Médico</h1>
+        <p class="subtitle">Cuadro comparativo de leyes y reglamentaciones que protegen específicamente al personal médico en su ámbito laboral</p>
+     <a href="aprendeprincipalconocimientosabogacia.html" class="back-button" aria-label="Volver atrás">Volver atrás</a>
+  </header>
+    
+    <div class="container">
+        <div class="controls">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Buscar en normativas, descripciones o ejemplos...">
+            </div>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">Todas</button>
+                <button class="filter-btn" data-filter="seguridad">Seguridad</button>
+                <button class="filter-btn" data-filter="higiene">Higiene</button>
+                <button class="filter-btn" data-filter="procedimientos">Procedimientos</button>
+            </div>
+        </div>
+        
+        <div class="table-container">
+            <table id="normativasTable">
+                <thead>
+                    <tr>
+                        <th>N°</th>
+                        <th>Normativa</th>
+                        <th>Descripción</th>
+                        <th>Ejemplo Aplicación Médica</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- Las filas se generarán con JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+  
+
+    <script>
+        // Datos de las normativas
+        const normativas = [
+            {
+                id: 21,
+                normativa: "Decreto 351/79",
+                descripcion: "Reglamentario Ley 19.587 para industria y comercio",
+                ejemplo: "Aplica a clínicas privadas",
+                categoria: "seguridad"
+            },
+            {
+                id: 22,
+                normativa: "Decreto 911/96",
+                descripcion: "Higiene y seguridad en construcción",
+                ejemplo: "Obras en hospitales",
+                categoria: "seguridad"
+            },
+            {
+                id: 23,
+                normativa: "Decreto 617/97",
+                descripcion: "Seguridad en sector agropecuario",
+                ejemplo: "Médicos rurales",
+                categoria: "seguridad"
+            },
+            {
+                id: 24,
+                normativa: "Decreto 1338/96",
+                descripcion: "Complemento reglamentaciones varias",
+                ejemplo: "Actualizaciones de seguridad",
+                categoria: "procedimientos"
+            },
+            {
+                id: 25,
+                normativa: "Decreto 814/97",
+                descripcion: "Reglamentación Ley 24.557",
+                ejemplo: "Procedimientos ART para médicos",
+                categoria: "procedimientos"
+            },
+            {
+                id: 26,
+                normativa: "Decreto 738/95",
+                descripcion: "Ergonomía en el trabajo",
+                ejemplo: "Diseño de puestos de trabajo médico",
+                categoria: "higiene"
+            },
+            {
+                id: 27,
+                normativa: "Decreto 911/01",
+                descripcion: "Protocolos de emergencias laborales",
+                ejemplo: "Planes de emergencia en hospitales",
+                categoria: "procedimientos"
+            },
+            {
+                id: 28,
+                normativa: "Decreto 317/97",
+                descripcion: "Control de sustancias químicas",
+                ejemplo: "Farmacias y depósitos médicos",
+                categoria: "higiene"
+            },
+            {
+                id: 29,
+                normativa: "Decreto 814/99",
+                descripcion: "Protección contra agentes biológicos",
+                ejemplo: "Laboratorios de análisis clínicos",
+                categoria: "higiene"
+            },
+            {
+                id: 30,
+                normativa: "Decreto 626/2014",
+                descripcion: "Evaluación de riesgos laborales",
+                ejemplo: "Evaluación de riesgos en quirófanos",
+                categoria: "seguridad"
+            }
+        ];
+
+        // Función para renderizar la tabla
+        function renderTable(data) {
+            const tableBody = document.getElementById('tableBody');
+            tableBody.innerHTML = '';
+            
+            data.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.id}</td>
+                    <td class="normativa-cell">${item.normativa}</td>
+                    <td class="descripcion-cell">${item.descripcion}</td>
+                    <td class="ejemplo-cell">${item.ejemplo}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Función para filtrar por categoría
+        function filterByCategory(category) {
+            if (category === 'all') {
+                return normativas;
+            }
+            return normativas.filter(item => item.categoria === category);
+        }
+
+        // Función para buscar en los datos
+        function searchData(query) {
+            if (!query) return normativas;
+            
+            const lowerQuery = query.toLowerCase();
+            return normativas.filter(item => 
+                item.normativa.toLowerCase().includes(lowerQuery) ||
+                item.descripcion.toLowerCase().includes(lowerQuery) ||
+                item.ejemplo.toLowerCase().includes(lowerQuery)
+            );
+        }
+
+        // Función para resaltar texto en la tabla
+        function highlightText(text, query) {
+            if (!query) return text;
+            
+            const regex = new RegExp(`(${query})`, 'gi');
+            return text.replace(regex, '<span class="highlight">$1</span>');
+        }
+
+        // Inicializar la tabla
+        document.addEventListener('DOMContentLoaded', () => {
+            renderTable(normativas);
+            
+            // Manejar búsqueda
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('input', (e) => {
+                const query = e.target.value;
+                const filteredData = searchData(query);
+                renderTable(filteredData);
+                
+                // Resaltar texto si hay una búsqueda
+                if (query) {
+                    const cells = document.querySelectorAll('.normativa-cell, .descripcion-cell, .ejemplo-cell');
+                    cells.forEach(cell => {
+                        cell.innerHTML = highlightText(cell.textContent, query);
+                    });
+                }
+            });
+            
+            // Manejar filtros por categoría
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            filterButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    // Remover clase active de todos los botones
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // Agregar clase active al botón clickeado
+                    e.target.classList.add('active');
+                    
+                    const category = e.target.getAttribute('data-filter');
+                    const filteredData = filterByCategory(category);
+                    renderTable(filteredData);
+                    
+                    // Limpiar búsqueda al cambiar filtro
+                    searchInput.value = '';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Divisas Argentinas</title>
+    <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #2c3e50;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+                border-radius: 10px;
+   max-width: 1100px;
+  margin: 90px auto;
+        }
+        
+        .container {
+            max-width: 1100px;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            margin-top: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            color: var(--secondary);
+            margin-bottom: 10px;
+            font-size: 2.2rem;
+        }
+        
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+        
+        .calculator {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .calculator {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .input-section, .results-section {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .currency-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .currency-flag {
+            width: 30px;
+            height: 20px;
+            margin-right: 10px;
+            border-radius: 2px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        
+        .currency-name {
+            flex-grow: 1;
+            font-weight: 500;
+        }
+        
+        .currency-value {
+            font-weight: 600;
+            color: var(--secondary);
+        }
+        
+        .btn {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .exchange-rate-info {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+        
+        .rate-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        
+        .rate-group {
+            margin-bottom: 15px;
+        }
+        
+        .rate-label {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        
+        .flag {
+            display: inline-block;
+            width: 20px;
+            height: 15px;
+            margin-right: 5px;
+            border-radius: 2px;
+            vertical-align: middle;
+        }
+        
+        .flag-us {
+            background: linear-gradient(to bottom, #b22234 33%, white 33%, white 66%, #b22234 66%);
+            position: relative;
+        }
+        
+        .flag-us:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 40%;
+            height: 53%;
+            background-color: #3c3b6e;
+        }
+        
+        .flag-br {
+            background: linear-gradient(to bottom, #009c3b 33%, #ffdf00 33%, #ffdf00 66%, #002776 66%);
+        }
+        
+        .flag-eu {
+            background: #003399;
+            position: relative;
+        }
+        
+        .flag-eu:before {
+            content: "★";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #FFCC00;
+            font-size: 8px;
+        }
+        
+        .flag-uk {
+            background: #012169;
+            position: relative;
+        }
+        
+        .flag-uk:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(to bottom, transparent 40%, white 40%, white 60%, transparent 60%),
+                linear-gradient(to right, transparent 40%, white 40%, white 60%, transparent 60%);
+        }
+        
+        .flag-cl {
+            background: linear-gradient(to bottom, white 33%, #0039a6 33%, #0039a6 66%, #d52b1e 66%);
+        }
+        
+        .flag-uy {
+            background: linear-gradient(to bottom, white 25%, #0038a8 25%, #0038a8 75%, white 75%);
+            position: relative;
+        }
+        
+        .flag-uy:before {
+            content: "☀";
+            position: absolute;
+            top: 50%;
+            left: 20%;
+            transform: translateY(-50%);
+            color: #FFD100;
+            font-size: 8px;
+        }
+        
+        .instructions {
+            background-color: #e8f4fc;
+            border-left: 4px solid var(--primary);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .instructions h3 {
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+        
+        .instructions p {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+        
+        .explanation {
+            background-color: #fff8e1;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .explanation h3 {
+            color: var(--secondary);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .explanation p {
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+        
+        .formula-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 1.2rem;
+        }
+        
+        .formula-part {
+            padding: 8px 12px;
+            margin: 0 5px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        
+        .amount {
+            background-color: #e3f2fd;
+            color: #1565c0;
+        }
+        
+        .operator {
+            background-color: #f5f5f5;
+            color: #333;
+            font-size: 1.5rem;
+        }
+        
+        .rate {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .equals {
+            background-color: #f5f5f5;
+            color: #333;
+            font-size: 1.5rem;
+        }
+        
+        .result {
+            background-color: #fff3e0;
+            color: #ef6c00;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .comparison-table th {
+            background-color: var(--primary);
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        .comparison-table td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .comparison-table tr:hover {
+            background-color: #f1f1f1;
+        }
+        
+        .symbol-explanation {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f0f8ff;
+            border-radius: 8px;
+        }
+        
+        .symbol-explanation h4 {
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+        
+        .symbol-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .symbol {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background-color: #e3f2fd;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        .client-explanation {
+            background-color: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .client-explanation h3 {
+            color: var(--secondary);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .transaction-flow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .transaction-step {
+            text-align: center;
+            flex: 1;
+            padding: 10px;
+        }
+        
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-weight: bold;
+        }
+        
+        .step-arrow {
+            font-size: 24px;
+            color: var(--primary);
+            margin: 0 10px;
+        }
+        
+        .step-description {
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+        
+        .money-display {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .money-item {
+            padding: 15px;
+            border-radius: 8px;
+            background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            flex: 1;
+            margin: 0 10px;
+        }
+        
+        .money-amount {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .money-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .ars-money {
+            border-top: 4px solid #3498db;
+        }
+        
+        .foreign-money {
+            border-top: 4px solid #2ecc71;
+        }
+        
+        .conversion-process {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .process-title {
+            text-align: center;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+        
+        .examples-section {
+            background-color: #fff0f0;
+            border-left: 4px solid #e74c3c;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .examples-section h3 {
+            color: var(--secondary);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .example-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .example-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-left: 4px solid #e74c3c;
+        }
+        
+        .example-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #e74c3c;
+        }
+        
+        .example-formula {
+            font-family: monospace;
+            background: #f8f9fa;
+            padding: 8px;
+            border-radius: 4px;
+            margin: 8px 0;
+            text-align: center;
+        }
+        
+        .example-result {
+            font-weight: bold;
+            color: var(--secondary);
+            margin-top: 8px;
+        }
+        
+        .important-note {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            text-align: center;
+        }
+       /* Solo estilos para el botón "Volver atrás" */
+.back-button {
+  display: inline-block;
+  padding: 10px 18px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 2px solid #333;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  user-select: none;
+}
+
+/* Efecto al pasar el ratón */
+.back-button:hover,
+.back-button:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+  text-decoration: none;
+  outline: none;
+}
+
+/* Efecto al hacer clic */
+.back-button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+} 
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Calculadora de Divisas Argentinas</h1>
+            <p class="subtitle">Convierte pesos argentinos a las principales monedas del mundo</p>
+        </header>
+        <a href="principal.html" class="back-button" aria-label="Volver atrás">Volver atrás</a>
+        <div class="instructions">
+            <h3>Instrucciones de uso:</h3>
+            <p>1. Ingresa la cantidad en pesos argentinos que deseas convertir.</p>
+            <p>2. Establece manualmente las tasas de cambio actuales (ej: si 1 USD = 1500 ARS, ingresa 1500).</p>
+            <p>3. Haz clic en "Calcular Conversión" para ver los resultados.</p>
+        </div>
+        
+        <div class="calculator">
+            <div class="input-section">
+                <div class="form-group">
+                    <label for="amount">Cantidad en Pesos Argentinos (ARS)</label>
+                    <input type="number" id="amount" placeholder="Ingrese la cantidad" min="0" step="0.01" value="1000">
+                </div>
+                
+                <h3>Tasas de Cambio </h3>
+                
+                <div class="rate-inputs">
+                    <div class="rate-group">
+                        <div class="rate-label">
+                            <span class="flag flag-us"></span>
+                            <label for="rate-usd">Dólar (USD)</label>
+                        </div>
+                        <input type="number" id="rate-usd" placeholder="Ej: 1500" min="0" step="0.01" value="1500">
+                    </div>
+                    
+                    <div class="rate-group">
+                        <div class="rate-label">
+                            <span class="flag flag-eu"></span>
+                            <label for="rate-eur">Euro (EUR)</label>
+                        </div>
+                        <input type="number" id="rate-eur" placeholder="Ej: 1600" min="0" step="0.01" value="1600">
+                    </div>
+                    
+                    <div class="rate-group">
+                        <div class="rate-label">
+                            <span class="flag flag-br"></span>
+                            <label for="rate-brl">Real (BRL)</label>
+                        </div>
+                        <input type="number" id="rate-brl" placeholder="Ej: 300" min="0" step="0.01" value="300">
+                    </div>
+                    
+                    <div class="rate-group">
+                        <div class="rate-label">
+                            <span class="flag flag-uk"></span>
+                            <label for="rate-gbp">Libra (GBP)</label>
+                        </div>
+                        <input type="number" id="rate-gbp" placeholder="Ej: 1900" min="0" step="0.01" value="1900">
+                    </div>
+                    
+                    <div class="rate-group">
+                        <div class="rate-label">
+                            <span class="flag flag-cl"></span>
+                            <label for="rate-clp">Peso Chileno (CLP)</label>
+                        </div>
+                        <input type="number" id="rate-clp" placeholder="Ej: 1.5" min="0" step="0.01" value="1.5">
+                    </div>
+                    
+                    <div class="rate-group">
+                        <div class="rate-label">
+                            <span class="flag flag-uy"></span>
+                            <label for="rate-uyu">Peso Uruguayo (UYU)</label>
+                        </div>
+                        <input type="number" id="rate-uyu" placeholder="Ej: 40" min="0" step="0.01" value="40">
+                    </div>
+                </div>
+                
+                <button id="calculate" class="btn">Calcular Conversión</button>
+                
+                <div class="exchange-rate-info">
+                    <p>Las tasas de cambio deben actualizarse manualmente según el mercado.</p>
+                </div>
+            </div>
+            
+            <div class="results-section">
+                <h2>Resultados de Conversión</h2>
+                
+                <div class="currency-row">
+                    <span class="flag flag-us currency-flag"></span>
+                    <span class="currency-name">Dólar Estadounidense (USD)</span>
+                    <span class="currency-value" id="usd">-</span>
+                </div>
+                
+                <div class="currency-row">
+                    <span class="flag flag-eu currency-flag"></span>
+                    <span class="currency-name">Euro (EUR)</span>
+                    <span class="currency-value" id="eur">-</span>
+                </div>
+                
+                <div class="currency-row">
+                    <span class="flag flag-br currency-flag"></span>
+                    <span class="currency-name">Real Brasileño (BRL)</span>
+                    <span class="currency-value" id="brl">-</span>
+                </div>
+                
+                <div class="currency-row">
+                    <span class="flag flag-uk currency-flag"></span>
+                    <span class="currency-name">Libra Esterlina (GBP)</span>
+                    <span class="currency-value" id="gbp">-</span>
+                </div>
+                
+                <div class="currency-row">
+                    <span class="flag flag-cl currency-flag"></span>
+                    <span class="currency-name">Peso Chileno (CLP)</span>
+                    <span class="currency-value" id="clp">-</span>
+                </div>
+                
+                <div class="currency-row">
+                    <span class="flag flag-uy currency-flag"></span>
+                    <span class="currency-name">Peso Uruguayo (UYU)</span>
+                    <span class="currency-value" id="uyu">-</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="examples-section">
+            <h3>Ejemplos Prácticos con Tasa de 1500 ARS por 1 USD</h3>
+            
+            <div class="important-note">
+                <strong>¡ATENCIÓN!</strong> Estos ejemplos muestran cómo funciona la conversión cuando 1 Dólar vale 1500 Pesos Argentinos
+            </div>
+            
+            <div class="example-container">
+                <div class="example-card">
+                    <div class="example-title">Ejemplo 1: Cambio de $1,000 ARS</div>
+                    <div class="example-formula">1,000 ARS ÷ 1,500 = 0.67 USD</div>
+                    <div class="example-result">Resultado: Con $1,000 pesos obtienes $0.67 dólares</div>
+                    <p><em>Interpretación: Por cada 1,000 pesos argentinos, recibes menos de 1 dólar estadounidense.</em></p>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-title">Ejemplo 2: Cambio de $10,000 ARS</div>
+                    <div class="example-formula">10,000 ARS ÷ 1,500 = 6.67 USD</div>
+                    <div class="example-result">Resultado: Con $10,000 pesos obtienes $6.67 dólares</div>
+                    <p><em>Interpretación: Necesitas casi 10,000 pesos para obtener aproximadamente 7 dólares.</em></p>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-title">Ejemplo 3: Cambio de $100,000 ARS</div>
+                    <div class="example-formula">100,000 ARS ÷ 1,500 = 66.67 USD</div>
+                    <div class="example-result">Resultado: Con $100,000 pesos obtienes $66.67 dólares</div>
+                    <p><em>Interpretación: Con 100 mil pesos argentinos obtienes alrededor de 67 dólares.</em></p>
+                </div>
+                
+                <div class="example-card">
+                    <div class="example-title">Ejemplo 4: Cambio de $1,000,000 ARS</div>
+                    <div class="example-formula">1,000,000 ARS ÷ 1,500 = 666.67 USD</div>
+                    <div class="example-result">Resultado: Con $1,000,000 pesos obtienes $666.67 dólares</div>
+                    <p><em>Interpretación: Un millón de pesos argentinos equivale a aproximadamente 667 dólares.</em></p>
+                </div>
+            </div>
+            
+            <div class="conversion-process">
+                <h4 class="process-title">¿Por qué 1 USD = 1500 ARS?</h4>
+                <p><strong>Explicación:</strong> Cuando decimos que "1 Dólar vale 1500 Pesos", significa que necesitas 1500 pesos argentinos para comprar 1 dólar estadounidense.</p>
+                <p><strong>En la práctica:</strong> Si tienes pesos y quieres dólares, divides tu cantidad de pesos entre 1500 para saber cuántos dólares recibirás.</p>
+                <p><strong>Fórmula general:</strong> <strong>Pesos Argentinos ÷ 1500 = Dólares Estadounidenses</strong></p>
+            </div>
+        </div>
+        
+        <div class="client-explanation">
+            <h3>¿Qué Recibe el Cliente?</h3>
+            
+            <div class="transaction-flow">
+                <div class="transaction-step">
+                    <div class="step-number">1</div>
+                    <div>El cliente entrega</div>
+                    <div class="money-amount" id="client-gives">1000 ARS</div>
+                    <div class="step-description">Pesos Argentinos</div>
+                </div>
+                
+                <div class="step-arrow">→</div>
+                
+                <div class="transaction-step">
+                    <div class="step-number">2</div>
+                    <div>Se aplica tasa</div>
+                    <div class="money-amount" id="exchange-rate">1500 ARS/USD</div>
+                    <div class="step-description">Tasa de cambio</div>
+                </div>
+                
+                <div class="step-arrow">→</div>
+                
+                <div class="transaction-step">
+                    <div class="step-number">3</div>
+                    <div>El cliente recibe</div>
+                    <div class="money-amount" id="client-receives">0.67 USD</div>
+                    <div class="step-description">Moneda extranjera</div>
+                </div>
+            </div>
+            
+            <div class="money-display">
+                <div class="money-item ars-money">
+                    <div class="money-label">El cliente ENTREGA</div>
+                    <div class="money-amount" id="display-client-gives">$1,000 ARS</div>
+                    <div>Pesos Argentinos</div>
+                </div>
+                
+                <div class="money-item foreign-money">
+                    <div class="money-label">El cliente RECIBE</div>
+                    <div class="money-amount" id="display-client-receives">$0.67 USD</div>
+                    <div>Dólares Estadounidenses</div>
+                </div>
+            </div>
+            
+            <div class="conversion-process">
+                <h4 class="process-title">Proceso de Conversión</h4>
+                <p><strong>Función de la calculadora:</strong> Mostrar exactamente cuánto recibirá el cliente en moneda extranjera por el dinero local que entrega.</p>
+                <p><strong>Para el cliente:</strong> Le permite saber anticipadamente cuánto obtendrá antes de realizar la transacción.</p>
+                <p><strong>Para el negocio:</strong> Ayuda a establecer tasas competitivas y transparentes con los clientes.</p>
+            </div>
+        </div>
+        
+        <div class="explanation">
+            <h3>¿Cómo se calculan los valores?</h3>
+            <p>Para obtener el valor en cada moneda, utilizamos la siguiente fórmula:</p>
+            
+            <div class="formula-container">
+                <div class="formula-part amount">Dinero del Cliente (ARS)</div>
+                <div class="formula-part operator">÷</div>
+                <div class="formula-part rate">Tasa de Cambio</div>
+                <div class="formula-part equals">=</div>
+                <div class="formula-part result">Lo que Recibe el Cliente</div>
+            </div>
+            
+            <p><strong>Ejemplo con Dólar Estadounidense:</strong></p>
+            
+            <div class="formula-container">
+                <div class="formula-part amount">1000 ARS</div>
+                <div class="formula-part operator">÷</div>
+                <div class="formula-part rate">1500</div>
+                <div class="formula-part equals">=</div>
+                <div class="formula-part result">0.67 USD</div>
+            </div>
+            
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Elemento</th>
+                        <th>Definición</th>
+                        <th>Ejemplo</th>
+                        <th>Función</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Dinero del Cliente</strong></td>
+                        <td>El monto en pesos argentinos que el cliente entrega para cambiar</td>
+                        <td>1000 ARS</td>
+                        <td>Representa el valor que el cliente invierte en la transacción</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tasa de cambio</strong></td>
+                        <td>Cuántos pesos argentinos equivalen a 1 unidad de la moneda extranjera</td>
+                        <td>1500 (1 USD = 1500 ARS)</td>
+                        <td>Determina cuánto recibe el cliente por su dinero</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Lo que Recibe el Cliente</strong></td>
+                        <td>El resultado de la conversión a la moneda deseada</td>
+                        <td>0.67 USD</td>
+                        <td>Muestra cuánto obtiene el cliente en la moneda de destino</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="symbol-explanation">
+                <h4>Explicación de los símbolos:</h4>
+                <div class="symbol-item">
+                    <div class="symbol">÷</div>
+                    <span><strong>División:</strong> Separa el dinero del cliente de la tasa de cambio. Indica que debemos dividir el monto entregado entre la tasa.</span>
+                </div>
+                <div class="symbol-item">
+                    <div class="symbol">=</div>
+                    <span><strong>Igualdad:</strong> Muestra el resultado de la operación. Lo que está a la izquierda es equivalente a lo que está a la derecha.</span>
+                </div>
+            </div>
+            
+            <p><strong>Interpretación del resultado:</strong> El cliente entrega 1000 pesos argentinos y recibe 0.67 dólares estadounidenses, basado en una tasa de cambio de 1500 ARS por 1 USD.</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Función para formatear números como moneda
+            function formatCurrency(amount, currency) {
+                return new Intl.NumberFormat('es-AR', {
+                    style: 'currency',
+                    currency: currency
+                }).format(amount);
+            }
+            
+            // Función para realizar los cálculos
+            function calculateConversions() {
+                const amountInput = document.getElementById('amount');
+                const amount = parseFloat(amountInput.value);
+                
+                if (isNaN(amount) || amount <= 0) {
+                    alert('Por favor, ingrese una cantidad válida en pesos argentinos.');
+                    amountInput.focus();
+                    return;
+                }
+                
+                // Obtener tasas de cambio manuales
+                const rateUSD = parseFloat(document.getElementById('rate-usd').value);
+                const rateEUR = parseFloat(document.getElementById('rate-eur').value);
+                const rateBRL = parseFloat(document.getElementById('rate-brl').value);
+                const rateGBP = parseFloat(document.getElementById('rate-gbp').value);
+                const rateCLP = parseFloat(document.getElementById('rate-clp').value);
+                const rateUYU = parseFloat(document.getElementById('rate-uyu').value);
+                
+                // Validar tasas de cambio
+                if ([rateUSD, rateEUR, rateBRL, rateGBP, rateCLP, rateUYU].some(rate => isNaN(rate) || rate <= 0)) {
+                    alert('Por favor, ingrese tasas de cambio válidas (mayores a 0).');
+                    return;
+                }
+                
+                // Calcular conversiones (ARS / tasa = cantidad en moneda extranjera)
+                const usdAmount = amount / rateUSD;
+                const eurAmount = amount / rateEUR;
+                const brlAmount = amount / rateBRL;
+                const gbpAmount = amount / rateGBP;
+                const clpAmount = amount / rateCLP;
+                const uyuAmount = amount / rateUYU;
+                
+                // Mostrar resultados
+                document.getElementById('usd').textContent = formatCurrency(usdAmount, 'USD');
+                document.getElementById('eur').textContent = formatCurrency(eurAmount, 'EUR');
+                document.getElementById('brl').textContent = formatCurrency(brlAmount, 'BRL');
+                document.getElementById('gbp').textContent = formatCurrency(gbpAmount, 'GBP');
+                document.getElementById('clp').textContent = formatCurrency(clpAmount, 'CLP');
+                document.getElementById('uyu').textContent = formatCurrency(uyuAmount, 'UYU');
+                
+                // Actualizar ejemplo en la explicación
+                updateExplanationExample(amount, rateUSD, usdAmount);
+                
+                // Actualizar sección del cliente
+                updateClientSection(amount, rateUSD, usdAmount);
+            }
+            
+            // Función para actualizar el ejemplo en la explicación
+            function updateExplanationExample(amount, rate, result) {
+                const exampleElements = document.querySelectorAll('.amount, .rate, .result');
+                exampleElements[0].textContent = amount.toFixed(0) + ' ARS';
+                exampleElements[1].textContent = rate.toFixed(0);
+                exampleElements[2].textContent = result.toFixed(2) + ' USD';
+                
+                // Actualizar la tabla de comparación
+                document.querySelector('.comparison-table tbody tr:nth-child(1) td:nth-child(3)').textContent = amount.toFixed(0) + ' ARS';
+                document.querySelector('.comparison-table tbody tr:nth-child(2) td:nth-child(3)').textContent = rate.toFixed(0) + ' (1 USD = ' + rate.toFixed(0) + ' ARS)';
+                document.querySelector('.comparison-table tbody tr:nth-child(3) td:nth-child(3)').textContent = result.toFixed(2) + ' USD';
+                
+                // Actualizar la interpretación
+                document.querySelector('.explanation p:last-child').innerHTML = 
+                    `<strong>Interpretación del resultado:</strong> El cliente entrega ${amount.toFixed(0)} pesos argentinos y recibe ${result.toFixed(2)} dólares estadounidenses, basado en una tasa de cambio de ${rate.toFixed(0)} ARS por 1 USD.`;
+            }
+            
+            // Función para actualizar la sección del cliente
+            function updateClientSection(amount, rate, result) {
+                // Actualizar el flujo de transacción
+                document.getElementById('client-gives').textContent = amount.toFixed(0) + ' ARS';
+                document.getElementById('exchange-rate').textContent = rate.toFixed(0) + ' ARS/USD';
+                document.getElementById('client-receives').textContent = result.toFixed(2) + ' USD';
+                
+                // Actualizar el display de dinero
+                document.getElementById('display-client-gives').textContent = '$' + amount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + ' ARS';
+                document.getElementById('display-client-receives').textContent = '$' + result.toFixed(2) + ' USD';
+            }
+            
+            // Asignar evento al botón de calcular
+            document.getElementById('calculate').addEventListener('click', calculateConversions);
+            
+            // Permitir calcular al presionar Enter en cualquier campo
+            const inputs = document.querySelectorAll('input');
+            inputs.forEach(input => {
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        calculateConversions();
+                    }
+                });
+            });
+            
+            // Calcular automáticamente al cargar la página
+            calculateConversions();
+        });
+    </script>
+</body>
+</html>

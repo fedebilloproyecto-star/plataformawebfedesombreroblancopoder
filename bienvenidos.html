@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenidos - Conociendo las verdades de nuestra sociedad</title>
+      <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Variables CSS para facilitar mantenimiento */
+        :root {
+            --primary-color: #ffa500;
+            --secondary-color: #ffdab9;
+            --background-light: #f0f8ff;
+            --text-dark: #333;
+            --text-light: #fff;
+            --shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        /* Estilos generales */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, var(--background-light), #e6f7ff);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+            color: var(--text-dark);
+                border-radius: 10px;
+  max-width: 900px;
+  margin: 90px auto;
+        }
+.container {
+  width: 100%;
+  max-width: 390px;   /* tamaño real de celular */
+  height: 100vh;
+  margin: 0 auto;
+  border-radius: 12px;
+}
+
+        /* Contenedor principal */
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Encabezado */
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: #8b4513;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Tarjeta de contenido */
+        .content-card {
+            background-color: #fffacd;
+            box-shadow: var(--shadow);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            transition: var(--transition);
+            margin-bottom: 30px;
+            padding: 30px;
+        }
+
+        .content-card:hover {
+            transform: scale(1.02);
+        }
+
+        /* Mensaje principal */
+        .main-message {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            text-align: justify;
+        }
+
+        .main-message p {
+            margin-bottom: 15px;
+        }
+
+        /* Mensaje de agradecimiento */
+        .thank-you {
+            font-weight: bold;
+            color: #ff4500;
+            font-size: 1.3rem;
+            text-align: center;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+            padding: 15px;
+            border-top: 2px solid var(--primary-color);
+            margin-top: 20px;
+        }
+
+        /* Botones */
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 1rem;
+            border: none;
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #ff8c00;
+            transform: scale(1.05);
+        }
+
+        button.secondary {
+            background-color: #6c757d;
+        }
+
+        button.secondary:hover {
+            background-color: #5a6268;
+        }
+
+        /* Pie de página */
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .content-card {
+                padding: 20px;
+            }
+            
+            .main-message {
+                font-size: 1rem;
+            }
+            
+            .button-group {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            button {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.7rem;
+            }
+            
+            .content-card {
+                padding: 15px;
+            }
+        }
+          .btn-multicolor {
+            padding: 12px 24px;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            cursor: pointer;
+            background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+            background-size: 400% 100%;
+            animation: rainbow 4s linear infinite;
+            transition: transform 0.2s;
+        }
+
+        .btn-multicolor:hover {
+            transform: scale(1.05);
+        }
+
+        @keyframes rainbow {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 0%; }
+            100% { background-position: 0% 0%; }
+        }
+         /* Estilo de la imagen con bordes de colores */
+        .imagen-borde {
+            width: 400px; /* Ajusta el tamaño */
+            height: auto;
+            border: 5px solid red; /* Borde principal */
+            box-shadow:
+                0 0 0 10px orange,
+                0 0 0 15px yellow,
+                0 0 0 20px green;
+            display: block;
+            margin: 20px auto;
+        }
+
+        /* Estilo del texto */
+        h4 {
+            text-align: center;
+            color: #333;
+            font-family: Arial, sans-serif;
+        }
+
+.contenedor{
+  max-width: 600px;
+  margin: 100px auto;
+  padding: 30px;
+  text-align: center;
+  background: #f5f5f5;
+  border-radius: 15px;
+  border: 2px solid #333;
+  font-family: Arial, sans-serif;
+}
+
+.contenedor h2{
+  font-size: 20px;
+  margin-bottom: 25px;
+}
+
+.boton{
+  display: inline-block;
+  padding: 12px 25px;
+  background: #222;
+  color: white;
+  text-decoration: none;
+  border-radius: 10px;
+  border: 2px solid #000;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.boton:hover{
+  background: #444;
+  transform: scale(1.05);
+}
+
+    </style>
+</head>
+<body>
+      
+    <div class="container">
+        <header>
+
+            <h1>Bienvenidos</h1>
+            <p class="subtitle">Un espacio para conocer las verdades de nuestra sociedad</p>
+        </header>
+          <button class="btn-multicolor" onclick="location.href='index.html'">Volver atras</button>
+        <main>
+            <section class="content-card" id="contentCard">
+                <div class="main-message">
+                    <p>He creado este sitio web para que conozcas las verdades de nuestra sociedad y tengas acceso a información que muchas veces no se muestra. Aquí encontrarás datos y hechos sobre cómo funciona nuestro mundo, con la intención de que todos podamos comprender mejor la realidad que nos rodea y tomar decisiones más conscientes, basadas en conocimiento y comprensión, sin depender únicamente de lo que presentan los medios tradicionales.</p>
+                    
+                    <p>La soledad y la piedra representan, por un lado, la experiencia de estar desconectados o separados en la sociedad moderna y, por otro, la resistencia y la estabilidad frente a los desafíos que enfrentamos. A través de este sitio, queremos ofrecer una mirada más clara sobre estas realidades, ayudando a quienes nos visitan a comprender mejor su entorno y su propia experiencia.</p>
+                    
+                    <p>Las personas que participan en los sitio web no son esclavo ,no hay que imponer límites a nadie porque nadie te tiene manipular. Todos debemos poder expresarnos y compartir información respetando siempre la verdad sincera. Este sitio busca fomentar ese respeto y esa libertad, ofreciendo un espacio donde la información se comparte de manera abierta, auténtica y consciente.</p>
+                </div>
+               
+                <div class="thank-you" id="thankYouMessage">
+                    ¡Muchas gracias por visitar!
+                </div>
+                <h4>
+       El autor es escrito por federico billordo
+    </h4>   
+
+<div class="contenedor">
+  <h2>
+    La fuerza comienza en la mente; el conocimiento es poder. 
+    Cuando la mente es fuerte, el cuerpo no tiene límites. 
+    Ir al gimnasio es crecer físicamente y fortalecer el cuerpo.
+  </h2>
+
+  <a href="explicaciongimnasioytecnologia.html" class="boton">Información general (contenido personal):
+Te damos la bienvenida a la plataforma Sombrero Blanco. </a>
+</div>
+
+               <img src="imagenoriginal1.png" alt="Foto" class="imagen-borde">
+<img src="imagenoriginal2.png" alt="Foto" class="imagen-borde">
+
+            </section>
+            
+        </main>
+        
+       
+    </div>
+
+    <script>
+        // Elementos DOM
+        const contentCard = document.getElementById('contentCard');
+        const thankYouMessage = document.getElementById('thankYouMessage');
+        const changeColorBtn = document.getElementById('changeColorBtn');
+        const toggleMessageBtn = document.getElementById('toggleMessageBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        
+        // Colores disponibles
+        const colors = [
+            "#fffacd", "#e0ffff", "#ffe4e1", "#f5f5dc", "#fafad2",
+            "#f0fff0", "#f8f8ff", "#fff0f5", "#f5fffa", "#f0f8ff"
+        ];
+        
+        // Mensajes alternativos
+        const messages = [
+            "¡Muchas gracias por visitar!",
+            "Tu interés en conocer la verdad es valioso",
+            "Juntos podemos construir una sociedad más consciente",
+            "La información es poder cuando se usa con responsabilidad"
+        ];
+        
+        let currentMessageIndex = 0;
+        
+        // Función para cambiar el color de fondo
+        function changeBackgroundColor() {
+            const currentColor = contentCard.style.backgroundColor;
+            let newColor;
+            
+            do {
+                newColor = colors[Math.floor(Math.random() * colors.length)];
+            } while (newColor === currentColor);
+            
+            contentCard.style.backgroundColor = newColor;
+            
+            // Cambiar también el color del texto si el fondo es oscuro
+            const rgb = hexToRgb(newColor);
+            if (rgb && (rgb.r * 0.299 + rgb.g * 0.587 + rgb.b * 0.114) < 150) {
+                contentCard.style.color = "#fff";
+            } else {
+                contentCard.style.color = "#333";
+            }
+        }
+        
+        // Función para alternar mensajes
+        function toggleMessage() {
+            currentMessageIndex = (currentMessageIndex + 1) % messages.length;
+            thankYouMessage.textContent = messages[currentMessageIndex];
+        }
+        
+        // Función para restablecer
+        function resetAll() {
+            contentCard.style.backgroundColor = "#fffacd";
+            contentCard.style.color = "#333";
+            currentMessageIndex = 0;
+            thankYouMessage.textContent = messages[0];
+        }
+        
+        // Función auxiliar para convertir HEX a RGB
+        function hexToRgb(hex) {
+            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? {
+                r: parseInt(result[1], 16),
+                g: parseInt(result[2], 16),
+                b: parseInt(result[3], 16)
+            } : null;
+        }
+        
+        // Event listeners
+        changeColorBtn.addEventListener('click', changeBackgroundColor);
+        toggleMessageBtn.addEventListener('click', toggleMessage);
+        resetBtn.addEventListener('click', resetAll);
+        
+        // Efecto de escritura para el mensaje de agradecimiento
+        function typeWriter(element, text, speed = 50) {
+            let i = 0;
+            element.textContent = '';
+            
+            function type() {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            
+            type();
+        }
+        
+        // Inicializar efecto de escritura
+        window.addEventListener('load', () => {
+            typeWriter(thankYouMessage, messages[0]);
+        });
+
+
+
+
+
+      
+    </script>
+</body>
+</html>

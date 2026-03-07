@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculadora de Compras</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+          border-radius: 10px;
+  max-width: 900px;
+  margin: 90px auto;
+    }
+
+    .container {
+      background-color: white;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 800px;
+      padding: 30px;
+    }
+
+    h3 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+      font-size: 2rem;
+    }
+
+    .description {
+      text-align: center;
+      color: #555;
+      margin-bottom: 25px;
+      line-height: 1.5;
+      background: #f9f9f9;
+      padding: 10px;
+      border-radius: 10px;
+    }
+
+    .input-section {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    input {
+      flex: 1;
+      min-width: 200px;
+      padding: 10px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    button {
+      background: linear-gradient(to right, #6a11cb, #2575fc);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .products-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    .products-table th {
+      background: linear-gradient(to right, #6a11cb, #2575fc);
+      color: white;
+      padding: 10px;
+      text-align: left;
+    }
+
+    .products-table td {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .total-section {
+      display: flex;
+      justify-content: space-between;
+      background-color: #f8f9fa;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .calculate-btn {
+      background: linear-gradient(to right, #00b09b, #96c93d);
+    }
+
+    .img-btn {
+      background: linear-gradient(to right, #2193b0, #6dd5ed);
+    }
+
+    .delete-btn {
+      background: linear-gradient(to right, #ff416c, #ff4b2b);
+      border: none;
+      color: white;
+      border-radius: 8px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+
+    .empty-message {
+      text-align: center;
+      color: #999;
+      padding: 15px;
+    }
+    .info-section {
+    background-color: #f0f4ff;
+    padding: 20px 25px;
+    border-radius: 12px;
+    border: 2px solid #6a11cb;
+    margin-bottom: 25px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.info-section h2 {
+    color: #6a11cb;
+    margin-bottom: 10px;
+}
+
+.info-section ol, .info-section ul {
+    margin-left: 20px;
+    margin-bottom: 15px;
+}
+
+.info-section li {
+    margin-bottom: 10px;
+    color: #333;
+    line-height: 1.5;
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+      <h3>Calculadora de Compras 🛒</h3>
+    <p class="description">
+    Tu lista de compras, ordenada y lista para guardar
+    </p><button onclick="window.location.href='principal.html'" class="back-btn">⬅ Volver atras</button>
+
+
+<div class="container">
+  
+    
+    <!-- Sección explicativa profesional -->
+    <div class="info-section">
+        <h2>📌 Cómo funciona esta aplicación</h2>
+        <ol>
+            <li><strong>Agrega productos:</strong> Escribe el nombre y el precio de cada producto y presiona <em>“Agregar Producto”</em>.</li>
+            <li><strong>Calcula el total:</strong> Haz clic en <em>“Calcular Total”</em> para ver la suma completa.</li>
+            <li><strong>Descarga tu lista:</strong> Presiona <em>“Descargar foto”</em> para guardar tu lista en formato imagen (PNG). La foto se guardará automáticamente en tu carpeta de descargas, con bordes y colores atractivos.</li>
+        </ol>
+
+        <h2>💡 Qué hace esta aplicación</h2>
+        <ul>
+            <li>🛒 Crear una lista de productos con sus precios.</li>
+            <li>💰 Calcular automáticamente el total de tu compra.</li>
+            <li>📸 Descargar toda la información en una imagen con diseño elegante y colores modernos.</li>
+        </ul>
+    </div>
+
+    <p class="description">Agrega productos con sus precios para calcular el total de tu compra y descargar toda la lista como foto.</p>
+    
+    <!-- Resto del código sigue igual -->
+
+    <div class="input-section">
+      <input type="text" id="productName" placeholder="Nombre del producto" />
+      <input
+        type="number"
+        id="productPrice"
+        placeholder="Precio del producto"
+        step="0.01"
+        min="0"
+      />
+      <button id="addProduct">Agregar Producto</button>
+    </div>
+
+    <table class="products-table">
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Precio</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody id="productsList"></tbody>
+    </table>
+
+    <div class="total-section">
+      <div><strong>Total de la compra:</strong></div>
+      <div id="totalAmount">$0.00</div>
+    </div>
+
+    <div style="display: flex; justify-content: center; gap: 10px">
+      <button id="calculateTotal" class="calculate-btn">Calcular Total</button>
+      <button id="exportIMG" class="img-btn">Descargar Imagen</button>
+    </div>
+  </div>
+
+  <script>
+    const productNameInput = document.getElementById('productName');
+    const productPriceInput = document.getElementById('productPrice');
+    const addProductBtn = document.getElementById('addProduct');
+    const productsList = document.getElementById('productsList');
+    const totalAmount = document.getElementById('totalAmount');
+    const calculateTotalBtn = document.getElementById('calculateTotal');
+    const exportIMGBtn = document.getElementById('exportIMG');
+
+    let products = [];
+
+    function addProduct() {
+      const name = productNameInput.value.trim();
+      const price = parseFloat(productPriceInput.value);
+
+      if (!name) return alert('Por favor, escribe un nombre de producto.');
+      if (isNaN(price) || price <= 0) return alert('Ingresa un precio válido.');
+
+      products.push({ name, price });
+      productNameInput.value = '';
+      productPriceInput.value = '';
+      renderProducts();
+    }
+
+    function deleteProduct(i) {
+      products.splice(i, 1);
+      renderProducts();
+    }
+
+    function renderProducts() {
+      productsList.innerHTML = '';
+      if (products.length === 0) {
+        productsList.innerHTML =
+          '<tr><td colspan="3" class="empty-message">No hay productos agregados</td></tr>';
+        return;
+      }
+      products.forEach((p, i) => {
+        productsList.innerHTML += `
+          <tr>
+              <td>${p.name}</td>
+              <td>$${p.price.toFixed(2)}</td>
+              <td><button class="delete-btn" onclick="deleteProduct(${i})">Eliminar</button></td>
+          </tr>`;
+      });
+    }
+
+    function calculateTotal() {
+      if (products.length === 0) return alert('Agrega productos antes de calcular.');
+      const total = products.reduce((sum, p) => sum + p.price, 0);
+      totalAmount.textContent = `$${total.toFixed(2)}`;
+      alert('Total calculado correctamente.');
+    }
+
+    function exportIMG() {
+      if (products.length === 0)
+        return alert('Agrega productos antes de descargar.');
+
+      const styled = document.createElement('div');
+      styled.style.width = '210mm';
+      styled.style.background = 'white';
+      styled.style.border = '5px solid #6a11cb';
+      styled.style.borderRadius = '15px';
+      styled.style.padding = '20mm';
+      styled.style.textAlign = 'center';
+      styled.style.fontFamily = 'Segoe UI';
+      styled.style.color = '#333';
+
+      const title = document.createElement('h1');
+      title.textContent = '🛍️ Lista de Compras';
+      title.style.color = '#6a11cb';
+      styled.appendChild(title);
+
+      const date = document.createElement('p');
+      date.textContent = `📅 Fecha: ${new Date().toLocaleDateString()}`;
+      styled.appendChild(date);
+
+      const table = document.createElement('table');
+      table.style.width = '100%';
+      table.style.borderCollapse = 'collapse';
+      table.style.marginTop = '10px';
+      table.innerHTML =
+        '<tr style="background:#6a11cb; color:white;"><th style="padding:10px;text-align:left;">Producto</th><th style="padding:10px;text-align:right;">Precio</th></tr>';
+
+      products.forEach((p, i) => {
+        const row = document.createElement('tr');
+        row.style.background = i % 2 === 0 ? '#f9f9f9' : '#fff';
+        row.innerHTML = `<td style="padding:10px;border:1px solid #ddd;">${p.name}</td>
+                         <td style="padding:10px;border:1px solid #ddd;text-align:right;">$${p.price.toFixed(2)}</td>`;
+        table.appendChild(row);
+      });
+
+      styled.appendChild(table);
+
+      const total = products.reduce((sum, p) => sum + p.price, 0);
+      const totalDiv = document.createElement('div');
+      totalDiv.style.marginTop = '20px';
+      totalDiv.style.fontSize = '1.3rem';
+      totalDiv.innerHTML = `<strong>Total:</strong> <span style="color:#6a11cb;">$${total.toFixed(2)}</span>`;
+      styled.appendChild(totalDiv);
+
+      document.body.appendChild(styled);
+
+      html2canvas(styled, { scale: 2 }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'lista_de_compras.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        document.body.removeChild(styled);
+      });
+    }
+
+    addProductBtn.addEventListener('click', addProduct);
+    calculateTotalBtn.addEventListener('click', calculateTotal);
+    exportIMGBtn.addEventListener('click', exportIMG);
+  </script>
+</body>
+</html>

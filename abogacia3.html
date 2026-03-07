@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIP para Profesionales de la Salud - Argentina</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #27ae60;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+                border-radius: 10px;
+  max-width: 900px;
+  margin: 90px auto;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .intro {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 0.7rem 1.5rem;
+            background-color: white;
+            border: 2px solid var(--secondary-color);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .filter-btn:hover {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .filter-btn.active {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .search-box {
+            padding: 0.7rem 1rem;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 1rem;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: var(--shadow);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+        
+        .comparison-table th {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1.2rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .comparison-table td {
+            padding: 1.2rem;
+            border-bottom: 1px solid #eee;
+            vertical-align: top;
+        }
+        
+        .comparison-table tr:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .law-badge {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 0.3rem 0.7rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin: 0.2rem;
+        }
+        
+        .conclusion {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            margin-top: 2rem;
+        }
+        
+        .highlight {
+            background-color: rgba(52, 152, 219, 0.1);
+            padding: 0.3rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 3rem;
+        }
+        
+        @media (max-width: 768px) {
+            .comparison-table {
+                display: block;
+                overflow-x: auto;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .filter-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+        /* Solo estilos para el botón "Volver atrás" */
+.back-button {
+  display: inline-block;
+  padding: 10px 18px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 2px solid #333;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  user-select: none;
+}
+
+/* Efecto al pasar el ratón */
+.back-button:hover,
+.back-button:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+  text-decoration: none;
+  outline: none;
+}
+
+/* Efecto al hacer clic */
+.back-button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+               <a href="aprendeprincipalconocimientosabogacia.html" class="back-button" aria-label="Volver atrás">Volver atrás</a>
+            <h1>Acceso a la Información Pública (AIP)</h1>
+            <p class="subtitle">Herramienta esencial para los profesionales de la salud - Marco Legal Argentino</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <section class="intro">
+            <h2>El AIP en el Ejercicio Profesional de la Salud en Argentina</h2>
+            <p>El Acceso a la Información Pública (AIP) en Argentina está regulado por un marco legal específico que permite a los profesionales de la salud acceder a datos, estadísticas y protocolos oficiales necesarios para su labor.</p>
+        </section>
+        
+        <div class="controls">
+            <input type="text" class="search-box" placeholder="Buscar en la tabla..." id="searchInput">
+            <button class="filter-btn active" data-filter="all">Todos</button>
+            <button class="filter-btn" data-filter="enseñanza">Enseñanza</button>
+            <button class="filter-btn" data-filter="investigacion">Investigación</button>
+            <button class="filter-btn" data-filter="gestion">Gestión</button>
+        </div>
+        
+        <table class="comparison-table" id="comparisonTable">
+            <thead>
+                <tr>
+                    <th>Base Normativa/Concepto</th>
+                    <th>Ley/Régimen Argentino</th>
+                    <th>Fundamento Teórico-Constitucional</th>
+                    <th>Vinculación con el AIP</th>
+                    <th>Ejemplo Práctico</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-category="gestion">
+                    <td><strong>Forma Republicana de Gobierno</strong></td>
+                    <td>
+                        <span class="law-badge">Ley 27.275</span>
+                        <span class="law-badge">Decreto 206/2017</span>
+                        <span class="law-badge">Ley 24.240 (Defensa del Consumidor)</span>
+                    </td>
+                    <td>Principio de publicidad de los actos de gobierno. El Estado debe rendir cuentas, especialmente en áreas críticas como la salud.</td>
+                    <td>Permite el control ciudadano y profesional sobre la administración pública de la salud.</td>
+                    <td>Un colegio médico solicita al Ministerio de Salud los datos de adjudicación y distribución de una partida para equipos de tomografía, para verificar que se destinó a las zonas con mayor necesidad epidemiológica.</td>
+                </tr>
+                <tr data-category="investigacion">
+                    <td><strong>Libertad de Expresión (Art. 14 CN)</strong></td>
+                    <td>
+                        <span class="law-badge">Ley 27.275 (Art. 2)</span>
+                        <span class="law-badge">Ley 26.522 (Servicios de Comunicación Audiovisual)</span>
+                        <span class="law-badge">Ley 25.326 (Protección de Datos Personales)</span>
+                    </td>
+                    <td>Incluye el derecho a buscar, recibir y difundir información e ideas. Fundamental para la investigación científica.</td>
+                    <td>Garantiza que los profesionales puedan acceder a datos oficiales para formar una opinión técnica independiente y fundamentada.</td>
+                    <td>Una médica infectóloga solicita los reportes de vigilancia epidemiológica sobre una nueva vacuna para poder informar con precisión a la sociedad y a los medios de comunicación.</td>
+                </tr>
+                <tr data-category="gestion">
+                    <td><strong>Derecho a Peticionar a las Autoridades (Art. 14 CN)</strong></td>
+                    <td>
+                        <span class="law-badge">Ley 27.275 (Art. 6-10)</span>
+                        <span class="law-badge">Ley 24.240 (Defensa del Consumidor)</span>
+                       
+                    </td>
+                    <td>Derecho de todo ciudadano a realizar peticiones y a recibir una respuesta fundada.</td>
+                    <td>La solicitud de información sanitaria es una petición específica. La administración (hospitales, ministerios) está obligada a responderla.</td>
+                    <td>Médicos residentes presentan una petición a la dirección de su hospital para conocer el protocolo de reposición de Elementos de Protección Personal (EPPs), asegurando su derecho a trabajar en condiciones seguras.</td>
+                </tr>
+                <tr data-category="enseñanza">
+                    <td><strong>Derecho a Enseñar y Aprender (Art. 14 CN)</strong></td>
+                    <td>
+                        <span class="law-badge">Ley 27.275 (Art. 7)</span>
+                        <span class="law-badge">Ley 26.206 (Educación Nacional)</span>
+                        <span class="law-badge">Ley 17.132 (Ejercicio de la Medicina)</span>
+                        <span class="law-badge">Ley 24.521 (Educación Superior)</span>
+                    </td>
+                    <td>Garantiza la libertad de cátedra y la investigación científica. Es la base de la educación continua y el trabajo interdisciplinario en salud.</td>
+                    <td><strong>El AIP es la fuente de materia prima para la formación:</strong> proporciona datos, estadísticas y protocolos oficiales necesarios para educar y ser educado.</td>
+                    <td>
+                        <strong>Ejemplos de aplicación interdisciplinaria:</strong><br><br>
+                        • <strong>Medicina y Enfermería:</strong> Un toxicólogo usa reportes de intoxicaciones laborales (obtenidos vía AIP) para enseñar a estudiantes de Enfermería sobre riesgos químicos.<br><br>
+                        • <strong>Psicología y Trabajo Social:</strong> Una psicóloga accede a estadísticas de internaciones por adicciones para diseñar un taller para trabajadores sociales.<br><br>
+                        • <strong>Bioquímica y Farmacia:</strong> Un bioquímico investigador utiliza datos de resistencia antimicrobiana para enseñar en la universidad sobre el uso racional de antibióticos.
+                    </td>
+                </tr>
+                <tr data-category="investigacion gestion">
+                    <td><strong>Derechos Implícitos (Art. 33 CN) / Derechos Sociales (Salud, Art. 42 CN)</strong></td>
+                    <td>
+                        <span class="law-badge">Ley 27.275 (Art. 2)</span>
+                      
+                        <span class="law-badge">Ley 25.675 (General del Ambiente)</span>
+                        <span class="law-badge">Ley 26.061 (Protección de Niños, Niñas y Adolescentes)</span>
+                    </td>
+                    <td>Reconoce derechos no enumerados esenciales para la vida en sociedad. El derecho a la salud es un derecho social fundamental.</td>
+                    <td>El AIP es una herramienta de <strong>exigibilidad</strong> implícita, necesaria para monitorear y proteger el derecho a la salud y a un ambiente sano.</td>
+                    <td>Una médica clínica observa un aumento de afecciones respiratorias y solicita los reportes de controles de emisiones industriales de la zona, utilizando el AIP para defender la salud de su comunidad.</td>
+                </tr>
+                <tr data-category="gestion">
+                    <td><strong>Derecho a la Salud (Art. 42 CN)</strong></td>
+                    <td>
+                  
+                        <span class="law-badge">Ley 23.660 (Obras Sociales)</span>
+                        <span class="law-badge">Ley 23.661 (Sistema Nacional del Seguro de Salud)</span>
+                        <span class="law-badge">Ley 26.682 (Marco Regulatorio de Medicina Prepaga)</span>
+                    </td>
+                    <td>El derecho a la salud es un derecho social fundamental que incluye el acceso a información sobre servicios de salud.</td>
+                    <td>Permite a los profesionales verificar la calidad de los servicios y defender los derechos de los pacientes.</td>
+                    <td>Un médico solicita a una obra social los criterios de cobertura de tratamientos especializados para fundamentar el reclamo de un paciente.</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <section class="conclusion">
+            <h2>Conclusión</h2>
+            <p>El <span class="highlight">marco legal argentino</span>, con la <span class="law-badge">Ley 27.275</span> de Acceso a la Información Pública como eje central, respalda el <span class="highlight">Derecho a Enseñar y Aprender </span> de los profesionales de la salud a los pacientes que no sabe del tema no tiene conocimientos adecuado. Este derecho, potenciado por el AIP, trasciende la formación individual para convertirse en el <span class="highlight">pilar para la construcción de conocimiento colectivo y interdisciplinario</span>. La legislación argentina permite que médicos, enfermeros, psicólogos, bioquímicos y todos los profesionales de la salud se eduquen mutuamente con evidencia concreta, mejorando sus prácticas de manera coordinada y ofreciendo una atención integral y de calidad a la comunidad.</p>
+          
+        </section>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>Cuadro Comparativo: AIP para Profesionales de la Salud - Marco Legal Argentino</p>
+        </div>
+    </footer>
+
+    <script>
+        // Funcionalidad de filtrado
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const tableRows = document.querySelectorAll('#comparisonTable tbody tr');
+            const searchInput = document.getElementById('searchInput');
+            
+            // Filtrado por categoría
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const filter = this.getAttribute('data-filter');
+                    
+                    // Actualizar botones activos
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Filtrar filas
+                    tableRows.forEach(row => {
+                        if (filter === 'all' || row.getAttribute('data-category').includes(filter)) {
+                            row.style.display = '';
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            
+            // Búsqueda en tiempo real
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                
+                tableRows.forEach(row => {
+                    const rowText = row.textContent.toLowerCase();
+                    
+                    if (rowText.includes(searchTerm)) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Resaltar filas al pasar el mouse
+            tableRows.forEach(row => {
+                row.addEventListener('mouseenter', function() {
+                    this.style.backgroundColor = '#f0f8ff';
+                });
+                
+                row.addEventListener('mouseleave', function() {
+                    this.style.backgroundColor = '';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

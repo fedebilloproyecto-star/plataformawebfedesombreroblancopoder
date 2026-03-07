@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Profesional</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            padding: 20px;
+            color: #fff;
+                border-radius: 10px;
+   max-width: 1100px;
+  margin: 90px auto;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .content {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .calculator-section {
+            flex: 1;
+            min-width: 400px;
+        }
+
+        .instructions-section {
+            flex: 1;
+            min-width: 400px;
+            background-color: rgba(30, 30, 46, 0.8);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .calculator {
+            width: 100%;
+            background-color: #1e1e2e;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+
+        .display {
+            padding: 25px 20px;
+            background: linear-gradient(to right, #252a34, #2d3047);
+            color: white;
+            text-align: right;
+            border-bottom: 1px solid #3a3f5c;
+        }
+
+        .previous-operand {
+            font-size: 1.2rem;
+            color: #a9a9a9;
+            min-height: 1.5rem;
+            margin-bottom: 5px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .current-operand {
+            font-size: 2.5rem;
+            font-weight: 300;
+            min-height: 3rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background-color: #3a3f5c;
+        }
+
+        button {
+            border: none;
+            outline: none;
+            padding: 20px 10px;
+            font-size: 1.2rem;
+            background-color: #2d3047;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #3a3f5c;
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            background-color: #4a5078;
+            transform: scale(0.95);
+        }
+
+        .operator {
+            background-color: #ff9500;
+            color: white;
+        }
+
+        .operator:hover {
+            background-color: #ffaa33;
+        }
+
+        .equals {
+            background: linear-gradient(to right, #ff9500, #ff5e62);
+            grid-column: span 2;
+        }
+
+        .clear, .delete {
+            background-color: #a5a5a5;
+            color: #1e1e2e;
+        }
+
+        .clear:hover, .delete:hover {
+            background-color: #b8b8b8;
+        }
+
+        .zero {
+            grid-column: span 2;
+        }
+
+        .memory {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 20px;
+            background-color: #252a34;
+            border-bottom: 1px solid #3a3f5c;
+            color: #a9a9a9;
+            font-size: 0.9rem;
+        }
+
+        .memory span {
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.2s;
+        }
+
+        .memory span:hover {
+            background-color: #3a3f5c;
+            color: #ff9500;
+        }
+
+        .history {
+            max-height: 150px;
+            overflow-y: auto;
+            padding: 10px;
+            background-color: #252a34;
+            border-bottom: 1px solid #3a3f5c;
+            color: #a9a9a9;
+            font-size: 0.9rem;
+        }
+
+        .history-item {
+            padding: 5px 0;
+            border-bottom: 1px solid #3a3f5c;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .history-item:hover {
+            background-color: #3a3f5c;
+            color: #ff9500;
+        }
+
+        .history-item:last-child {
+            border-bottom: none;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            gap: 10px;
+        }
+
+        .action-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 25px;
+            background: linear-gradient(to right, #4a5078, #3a3f5c);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            border: none;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .action-button:hover {
+            background: linear-gradient(to right, #3a3f5c, #4a5078);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .action-button i {
+            margin-right: 8px;
+        }
+
+        .instructions-section h2 {
+            color: #ff9500;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .instructions-list {
+            list-style-type: none;
+        }
+
+        .instructions-list li {
+            margin-bottom: 15px;
+            padding-left: 10px;
+            border-left: 3px solid #ff9500;
+        }
+
+        .instructions-list h3 {
+            color: #ffaa33;
+            margin-bottom: 5px;
+        }
+
+        .instructions-list p {
+            color: #ddd;
+            font-size: 0.95rem;
+        }
+
+        .keyboard-shortcuts {
+            margin-top: 20px;
+            background-color: rgba(42, 42, 62, 0.7);
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .keyboard-shortcuts h3 {
+            color: #ffaa33;
+            margin-bottom: 10px;
+        }
+
+        .shortcut {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #3a3f5c;
+        }
+
+        .shortcut:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .key {
+            background-color: #2d3047;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-family: monospace;
+        }
+
+        .preview-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .preview-container h3 {
+            color: #ff9500;
+            margin-bottom: 10px;
+        }
+
+        #screenshot-preview {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            display: none;
+        }
+
+        @media (max-width: 900px) {
+            .content {
+                flex-direction: column;
+            }
+            
+            .calculator-section, .instructions-section {
+                min-width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .calculator {
+                max-width: 100%;
+            }
+            
+            button {
+                padding: 18px 5px;
+                font-size: 1.1rem;
+            }
+            
+            .current-operand {
+                font-size: 2rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .actions {
+                flex-direction: column;
+            }
+        }
+
+        /* Estilos para la barra de desplazamiento del historial */
+        .history::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .history::-webkit-scrollbar-track {
+            background: #1e1e2e;
+        }
+
+        .history::-webkit-scrollbar-thumb {
+            background: #ff9500;
+            border-radius: 4px;
+        }
+
+        .history::-webkit-scrollbar-thumb:hover {
+            background: #ffaa33;
+        }
+/* Solo estilos para el botón "Volver atrás" */
+.back-button {
+  display: inline-block;
+  padding: 10px 18px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 2px solid #333;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  user-select: none;
+}
+
+/* Efecto al pasar el ratón */
+.back-button:hover,
+.back-button:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+  text-decoration: none;
+  outline: none;
+}
+
+/* Efecto al hacer clic */
+.back-button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Calculadora Profesional</h1>
+            <p>Una calculadora completa con funciones avanzadas y captura de pantalla</p>
+        </div>
+        <a href="principal.html" class="back-button" aria-label="Volver atrás">Volver atrás</a>
+        <div class="content">
+            <div class="calculator-section">
+                <div class="calculator" id="calculator">
+                    <div class="memory">
+                        <span id="mc">MC</span>
+                        <span id="mr">MR</span>
+                        <span id="m-plus">M+</span>
+                        <span id="m-minus">M-</span>
+                        <span id="ms">MS</span>
+                    </div>
+                    <div class="display">
+                        <div class="previous-operand" id="previous-operand"></div>
+                        <div class="current-operand" id="current-operand">0</div>
+                    </div>
+                    <div class="history" id="history"></div>
+                    <div class="buttons">
+                        <button class="clear" id="clear">C</button>
+                        <button class="delete" id="delete">⌫</button>
+                        <button class="operator" id="percent">%</button>
+                        <button class="operator" id="divide">÷</button>
+                        
+                        <button class="number" id="seven">7</button>
+                        <button class="number" id="eight">8</button>
+                        <button class="number" id="nine">9</button>
+                        <button class="operator" id="multiply">×</button>
+                        
+                        <button class="number" id="four">4</button>
+                        <button class="number" id="five">5</button>
+                        <button class="number" id="six">6</button>
+                        <button class="operator" id="subtract">-</button>
+                        
+                        <button class="number" id="one">1</button>
+                        <button class="number" id="two">2</button>
+                        <button class="number" id="three">3</button>
+                        <button class="operator" id="add">+</button>
+                        
+                        <button class="number zero" id="zero">0</button>
+                        <button class="number" id="decimal">.</button>
+                        <button class="equals" id="equals">=</button>
+                    </div>
+                </div>
+                
+                <div class="actions">
+                    <button class="action-button" id="capture-button">
+                        <i class="fas fa-camera"></i> Tomar Captura
+                    </button>
+                    <a href="index.html" class="action-button">
+                        <i class="fas fa-arrow-left"></i> Volver Atrás
+                    </a>
+                </div>
+                
+                <div class="preview-container">
+                    <h3>Vista Previa de la Captura</h3>
+                    <img id="screenshot-preview" alt="Captura de la calculadora">
+                    <button class="action-button" id="download-button" style="display: none; margin-top: 10px;">
+                        <i class="fas fa-download"></i> Descargar Captura
+                    </button>
+                </div>
+            </div>
+            
+            <div class="instructions-section">
+                <h2>Instrucciones de Uso</h2>
+                <ul class="instructions-list">
+                    <li>
+                        <h3>Operaciones Básicas</h3>
+                        <p>Utiliza los botones numéricos (0-9) y los operadores (+, -, ×, ÷) para realizar cálculos básicos.</p>
+                    </li>
+                    <li>
+                        <h3>Memoria</h3>
+                        <p>
+                            <strong>MC</strong> - Borrar memoria<br>
+                            <strong>MR</strong> - Recuperar valor de memoria<br>
+                            <strong>M+</strong> - Sumar a memoria<br>
+                            <strong>M-</strong> - Restar de memoria<br>
+                            <strong>MS</strong> - Almacenar en memoria
+                        </p>
+                    </li>
+                    <li>
+                        <h3>Funciones Especiales</h3>
+                        <p>
+                            <strong>C</strong> - Borrar todo<br>
+                            <strong>⌫</strong> - Borrar último dígito<br>
+                            <strong>%</strong> - Calcular porcentaje<br>
+                            <strong>.</strong> - Agregar decimal
+                        </p>
+                    </li>
+                    <li>
+                        <h3>Historial</h3>
+                        <p>El historial muestra los últimos cálculos realizados. Haz clic en cualquier elemento del historial para reutilizar el resultado.</p>
+                    </li>
+                    <li>
+                        <h3>Captura de Pantalla</h3>
+                        <p>Utiliza el botón "Tomar Captura" para capturar una imagen de la calculadora. Luego podrás descargarla con el botón "Descargar Captura".</p>
+                    </li>
+                </ul>
+                
+                <div class="keyboard-shortcuts">
+                    <h3>Atajos de Teclado</h3>
+                    <div class="shortcut">
+                        <span>Números (0-9)</span>
+                        <span class="key">0-9</span>
+                    </div>
+                    <div class="shortcut">
+                        <span>Operadores</span>
+                        <span class="key">+ - * /</span>
+                    </div>
+                    <div class="shortcut">
+                        <span>Calcular</span>
+                        <span class="key">Enter o =</span>
+                    </div>
+                    <div class="shortcut">
+                        <span>Borrar</span>
+                        <span class="key">Escape o Delete</span>
+                    </div>
+                    <div class="shortcut">
+                        <span>Borrar último dígito</span>
+                        <span class="key">Backspace</span>
+                    </div>
+                    <div class="shortcut">
+                        <span>Punto decimal</span>
+                        <span class="key">.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Variables globales
+        let currentOperand = '0';
+        let previousOperand = '';
+        let operation = undefined;
+        let memory = 0;
+        let calculationHistory = [];
+
+        // Elementos del DOM
+        const currentOperandElement = document.getElementById('current-operand');
+        const previousOperandElement = document.getElementById('previous-operand');
+        const historyElement = document.getElementById('history');
+        const captureButton = document.getElementById('capture-button');
+        const downloadButton = document.getElementById('download-button');
+        const screenshotPreview = document.getElementById('screenshot-preview');
+
+        // Funciones de la calculadora
+        function updateDisplay() {
+            currentOperandElement.textContent = currentOperand;
+            previousOperandElement.textContent = previousOperand;
+        }
+
+        function appendNumber(number) {
+            if (number === '.' && currentOperand.includes('.')) return;
+            if (currentOperand === '0' && number !== '.') {
+                currentOperand = number;
+            } else {
+                currentOperand += number;
+            }
+        }
+
+        function chooseOperation(op) {
+            if (currentOperand === '') return;
+            if (previousOperand !== '') {
+                calculate();
+            }
+            operation = op;
+            previousOperand = `${currentOperand} ${getOperationSymbol(op)}`;
+            currentOperand = '';
+        }
+
+        function calculate() {
+            let computation;
+            const prev = parseFloat(previousOperand);
+            const current = parseFloat(currentOperand);
+            if (isNaN(prev) || isNaN(current)) return;
+            
+            switch (operation) {
+                case '+':
+                    computation = prev + current;
+                    break;
+                case '-':
+                    computation = prev - current;
+                    break;
+                case '*':
+                    computation = prev * current;
+                    break;
+                case '/':
+                    if (current === 0) {
+                        alert("No se puede dividir por cero");
+                        clear();
+                        return;
+                    }
+                    computation = prev / current;
+                    break;
+                case '%':
+                    computation = prev % current;
+                    break;
+                default:
+                    return;
+            }
+            
+            // Guardar en el historial
+            const historyItem = `${previousOperand} ${currentOperand} = ${computation}`;
+            calculationHistory.unshift(historyItem);
+            updateHistory();
+            
+            currentOperand = computation.toString();
+            operation = undefined;
+            previousOperand = '';
+        }
+
+        function clear() {
+            currentOperand = '0';
+            previousOperand = '';
+            operation = undefined;
+        }
+
+        function deleteLast() {
+            if (currentOperand.length === 1) {
+                currentOperand = '0';
+            } else {
+                currentOperand = currentOperand.slice(0, -1);
+            }
+        }
+
+        function getOperationSymbol(op) {
+            switch (op) {
+                case '+': return '+';
+                case '-': return '-';
+                case '*': return '×';
+                case '/': return '÷';
+                case '%': return '%';
+                default: return '';
+            }
+        }
+
+        function updateHistory() {
+            historyElement.innerHTML = '';
+            calculationHistory.slice(0, 5).forEach(item => {
+                const historyItem = document.createElement('div');
+                historyItem.className = 'history-item';
+                historyItem.textContent = item;
+                historyItem.addEventListener('click', () => {
+                    // Al hacer clic en un elemento del historial, lo usamos como entrada actual
+                    const parts = item.split(' = ');
+                    if (parts.length === 2) {
+                        currentOperand = parts[1];
+                        updateDisplay();
+                    }
+                });
+                historyElement.appendChild(historyItem);
+            });
+        }
+
+        // Funciones de memoria
+        function memoryClear() {
+            memory = 0;
+            alert('Memoria borrada');
+        }
+
+        function memoryRecall() {
+            currentOperand = memory.toString();
+            updateDisplay();
+        }
+
+        function memoryAdd() {
+            memory += parseFloat(currentOperand) || 0;
+            alert(`Valor agregado a memoria: ${memory}`);
+        }
+
+        function memorySubtract() {
+            memory -= parseFloat(currentOperand) || 0;
+            alert(`Valor restado de memoria: ${memory}`);
+        }
+
+        function memoryStore() {
+            memory = parseFloat(currentOperand) || 0;
+            alert(`Valor almacenado en memoria: ${memory}`);
+        }
+
+        // Función para capturar la calculadora
+        function captureCalculator() {
+            const calculator = document.getElementById('calculator');
+            
+            html2canvas(calculator, {
+                backgroundColor: null,
+                scale: 2, // Mayor resolución
+                useCORS: true,
+                logging: false
+            }).then(canvas => {
+                // Mostrar vista previa
+                screenshotPreview.src = canvas.toDataURL('image/png');
+                screenshotPreview.style.display = 'block';
+                
+                // Mostrar botón de descarga
+                downloadButton.style.display = 'inline-flex';
+                
+                // Configurar descarga
+                downloadButton.onclick = function() {
+                    const link = document.createElement('a');
+                    link.download = 'calculadora-captura.png';
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                };
+            });
+        }
+
+        // Event Listeners para los botones numéricos
+        document.querySelectorAll('.number').forEach(button => {
+            button.addEventListener('click', () => {
+                appendNumber(button.textContent);
+                updateDisplay();
+            });
+        });
+
+        // Event Listeners para los operadores
+        document.querySelectorAll('.operator').forEach(button => {
+            button.addEventListener('click', () => {
+                if (button.id === 'percent') {
+                    chooseOperation('%');
+                } else if (button.id === 'divide') {
+                    chooseOperation('/');
+                } else if (button.id === 'multiply') {
+                    chooseOperation('*');
+                } else if (button.id === 'subtract') {
+                    chooseOperation('-');
+                } else if (button.id === 'add') {
+                    chooseOperation('+');
+                }
+                updateDisplay();
+            });
+        });
+
+        // Event Listeners para otros botones
+        document.getElementById('equals').addEventListener('click', () => {
+            calculate();
+            updateDisplay();
+        });
+
+        document.getElementById('clear').addEventListener('click', () => {
+            clear();
+            updateDisplay();
+        });
+
+        document.getElementById('delete').addEventListener('click', () => {
+            deleteLast();
+            updateDisplay();
+        });
+
+        // Event Listeners para memoria
+        document.getElementById('mc').addEventListener('click', memoryClear);
+        document.getElementById('mr').addEventListener('click', memoryRecall);
+        document.getElementById('m-plus').addEventListener('click', memoryAdd);
+        document.getElementById('m-minus').addEventListener('click', memorySubtract);
+        document.getElementById('ms').addEventListener('click', memoryStore);
+
+        // Event Listener para captura
+        captureButton.addEventListener('click', captureCalculator);
+
+        // Manejo del teclado
+        document.addEventListener('keydown', (event) => {
+            if (event.key >= '0' && event.key <= '9') {
+                appendNumber(event.key);
+                updateDisplay();
+            } else if (event.key === '.') {
+                appendNumber('.');
+                updateDisplay();
+            } else if (event.key === '+' || event.key === '-' || event.key === '*' || event.key === '/') {
+                chooseOperation(event.key);
+                updateDisplay();
+            } else if (event.key === 'Enter' || event.key === '=') {
+                calculate();
+                updateDisplay();
+            } else if (event.key === 'Escape' || event.key === 'Delete') {
+                clear();
+                updateDisplay();
+            } else if (event.key === 'Backspace') {
+                deleteLast();
+                updateDisplay();
+            } else if (event.key === '%') {
+                chooseOperation('%');
+                updateDisplay();
+            }
+        });
+
+        // Inicializar la calculadora
+        updateDisplay();
+    </script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tabla con Borde Doble Dinámico</title>
+<style>
+    body {
+        background: linear-gradient(135deg, #a0eaff, #d5ffb3);
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 0;
+        padding: 20px;
+    }
+
+    .table-container {
+        width: 80%;
+        max-width: 900px;
+        max-height: 60vh;
+        overflow-y: auto;
+        margin-bottom: 20px;
+    }
+
+    table {
+        border-collapse: separate;
+        border-spacing: 0;
+        width: 100%;
+        background: #ffe0b3;
+        border: 6px double #000;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        transition: border-color 1s, transform 0.3s, box-shadow 0.3s;
+    }
+
+    td {
+        padding: 25px;
+        color: #000;
+        font-size: 16px;
+        line-height: 1.6;
+        text-align: justify;
+    }
+
+    table:hover {
+        transform: scale(1.02);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    }
+
+    .buttons {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        background-color: #4CAF50;
+        color: white;
+        transition: background-color 0.3s;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+</style>
+</head>
+<body>
+
+<div class="table-container">
+    <table id="dynamicTable">
+        <tr>
+            <td id="contenidoTabla">
+Todos los abogados y abogadas, ¿cómo son?
+Buscan el dinero; solo les importa el dinero, porque atienden a las personas que llaman clientes.
+Esos clientes pueden ser inocentes o culpables, pero eso les da igual. Hay mujeres adultas que, con gran habilidad, logran presentar denuncias falsas o inventar acusaciones contra hombres que no han cometido ningún delito. Aun así, ya sea que el cliente sea inocente o culpable, lo único que realmente importa es ganar el juicio. Ese juicio, que se gana dentro del poder judicial, también representa un interés financiero y económico: así es como los abogados y abogadas obtienen su dinero, tanto por lo que les paga el sistema como por lo que reciben de sus clientes.
+En definitiva, los abogados y abogadas ganan su plata gracias al pago de los clientes y al dinero que proviene del poder judicial. Todo eso lo ocultan, porque nunca van a contarle a nadie cómo realmente funciona el sistema legal. Además, también contratan a programadores y a personas honestas e inocentes para que colaboren en tareas de investigación y apoyo dentro de ese mismo sistema. Pero, por otra parte, algunos abogados y abogadas recurren a lo que se conoce como sombreros negros: personas que cometen delitos informáticos para espiar teléfonos móviles o computadoras y así obtener información sobre los clientes. Con esa información, consiguen las pruebas necesarias para defender a sus clientes. Así funciona, en gran parte, la abogacía.
+Los abogado y abogada se juntan separado entre el sombrero blanco y negro. Entonces se mezclan dos tipos de personas: las que actúan de forma legal (sombreros blancos) y las que cometen delitos (sombreros negros). Sin embargo, estos dos grupos no se llevan bien, ya que cada uno sigue su propio camino dentro del mismo entorno. Los sombreros blancos cuentan con la ayuda de profesionales de distintas áreas: biología, química, educación física, policía cibernética e incluso contabilidad. Muchos crean empresas legales que ayudan a la industria y colaboran para mantener lo legal.
+Todos los abogados y abogadas no les importa ni interesa la situación de otras familias o personas ajenas. Si un abogado o abogada es contratado por una mujer que presenta denuncias falsas o inventa hechos, ellos aceptan el caso y lo llevan adelante hasta que, en muchos casos, el hombre que no ha cometido ningún delito pueda ser condenado y enviado a la cárcel.
+A estos abogados y abogadas les gusta planear su estrategia, aprovechando toda la información que recopilan la policía, especialistas en cibercrimen y psicólogos, con el objetivo de lograr que la persona que no cometió ningún delito sea enviada a la cárcel.
+¿Por qué no le importa nada a ese abogado y abogada? Te doy un ejemplo: una abogada, Micaela, aceptó llevar el caso de Sebastián, quien fue denunciado por bullying, por delitos contra la integridad sexual, por ciberacoso digital y más, por tener algo ilegal en la notebook con sistema operativo Kali Linux por ser hacker negro, por pegar a su esposa y por robo de un celular y una tablet en su cartera en lo vecinal. Pero todo eso fue inventado: mentira de la mujer, Karla, que aceptó el caso del abogado Diego, quien defendió a su clienta por llevar esa falsa denuncia.
+Así está la sociedad en todos los países, regiones y provincias: cuando se llevan estos casos entre clientes, a la abogada Micaela no le importa ni le da interés el abogado Diego, y tampoco Diego le da interés a Micaela. Entre los dos no hay comunicación; hay como competencia sobre quién gana el juicio y toma la plata, el dinero del poder judicial.
+Por esta situación, la abogada Micaela oculta en secreto lo que dice su cliente, y el abogado Diego también oculta lo que dice el suyo. Entre los dos no hay ningún contacto ni comunicación, porque solo quieren plata y dinero; no les importa la vida ajena y no les interesa.
+Otro ejemplo: la abogada Agustina aceptó el caso de un hombre que fue denunciado por todo tipo de acoso familiar o por cuestiones de patrimonio, pero que resultó ser una falsa denuncia, mentira de la mujer que aceptó el caso del abogado Juan.
+Este hombre tenía formación en programación, educación física, administración empresarial, medicina, entre otras profesiones, y trabajó en todo eso entre sus clientes. La abogada defiende todo eso para salvar su carrera, su trabajo y su labor, pero al otro abogado no le importa nada, ni siquiera cuánto esfuerzo puso el cliente. El abogado Juan solo quiere plata y dinero; quiere ganar el juicio para obtener más dinero del poder judicial, que se lo dan los jueces y juezas.
+Así es en todas las provincias y países: a los abogados y abogadas no les interesa nada, solo buscan el dinero. Por eso, realmente te digo la verdad: vivimos en una sociedad con la enfermedad del dinero. Hay muchas leyes y artículos que están en los libros, en internet o en sitios web, pero todo se usa por dinero. 
+La abogacía defiende al culpable o al inocente, hombres o mujeres que hacen falsas denuncias; lo defiende todo por dinero, nomás. Así es la carrera de abogacía, y no hay que ocultar la sinceridad de la verdad.
+El abogado o la abogada también se puede llamar político o política. No son cosas diferentes, ya que conocen temas de leyes y artículos que se organizan en distintos grupos de personas, llamados partidos políticos.
+En un partido político existen grupos de profesionales como médicos, médicas, educadores físicos, biólogos, químicos, entre otros. Cada persona puede expresar la verdad sobre su profesión.
+Sin embargo, los políticos y políticas que también son abogados o abogadas suelen tener como principal interés el dinero. Incluso cuando alguien presenta una falsa denuncia y no comete ningún delito, ya sea inocente o culpable, hombre o mujer, estando en la cárcel, lo que a estos políticos y políticas abogados o abogadas realmente les importa es la ganancia económica. Para salir de la cárcel, muchas veces se debe pagar un monto considerable, y en Argentina esto puede implicar grandes sumas. No entraré en detalles, ya que esa información es confidencial y solo la conoce el poder judicial.
+
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div class="buttons">
+<button class="volver" onclick="window.location.href='aprendeprincipalconocimientosabogacia.html'">
+  Volver atras
+</button>
+
+    <button onclick="leerTexto()">Escuchar</button>
+    <button onclick="detenerLectura()">Detener</button>
+</div>
+
+<script>
+    // Animar el borde de la tabla
+    const table = document.getElementById("dynamicTable");
+    let hue = 0;
+
+    function animateBorder() {
+        hue = (hue + 1) % 360;
+        table.style.borderColor = `hsl(${hue}, 80%, 40%)`;
+        requestAnimationFrame(animateBorder);
+    }
+
+    animateBorder();
+
+    // Funciones de lectura de texto
+    let synth = window.speechSynthesis;
+    let utterance;
+
+    function leerTexto() {
+        const contenido = document.getElementById('contenidoTabla').innerText;
+        if (synth.speaking) {
+            synth.cancel(); // Detener cualquier lectura previa
+        }
+        utterance = new SpeechSynthesisUtterance(contenido);
+        utterance.lang = 'es-ES'; // Español
+        synth.speak(utterance);
+    }
+
+    function detenerLectura() {
+        if (synth.speaking) {
+            synth.cancel();
+        }
+    }
+</script>
+
+</body>
+</html>

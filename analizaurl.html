@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Analizador de URL → IP & Geo / ISP Mejorado</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  :root{
+    --bg:#0f1724;
+    --accent:#7c5cff;
+    --muted:#9aa4b2;
+    --glass:rgba(255,255,255,0.05);
+    --card:#0b1220;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    background:linear-gradient(180deg,#071028 0%,#081226 100%);
+    font-family:Inter,system-ui;
+    color:#e6eef8;
+    padding:32px;
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    min-height:100vh;
+  }
+  .container{
+    width:100%;
+    max-width:960px;
+    background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));
+    border-radius:14px;
+    padding:26px;
+    border:1px solid rgba(255,255,255,0.03);
+    box-shadow:0 10px 30px rgba(6,10,20,0.6);
+  }
+  header{display:flex;align-items:center;gap:16px;margin-bottom:18px}
+  .logo{width:56px;height:56px;border-radius:10px;
+    background:linear-gradient(135deg,var(--accent),#4fb3ff);
+    display:flex;align-items:center;justify-content:center;font-weight:700;
+  }
+  h1{font-size:18px;margin:0}
+  p.lead{margin:0;color:var(--muted);font-size:13px}
+  .form{display:flex;gap:12px;margin-top:18px}
+  .input{flex:1;display:flex;gap:8px;background:var(--glass);
+    padding:10px;border-radius:10px;align-items:center;border:1px solid rgba(255,255,255,0.02)}
+  .input input{background:transparent;border:0;color:inherit;outline:none;font-size:15px;width:100%}
+  .btn{
+    background:linear-gradient(90deg,var(--accent),#4fb3ff);
+    color:#042038;padding:10px 16px;border-radius:10px;border:0;
+    font-weight:600;cursor:pointer;
+    box-shadow:0 8px 24px rgba(79,179,255,0.12);
+    transition:all 0.3s ease;
+  }
+  .btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 12px 28px rgba(79,179,255,0.2);
+  }
+  .btn.secondary{background:transparent;border:1px solid rgba(255,255,255,0.04);
+    color:var(--muted);font-weight:500;}
+  .btn.secondary:hover{
+    background:rgba(255,255,255,0.05);
+  }
+  .results{display:grid;grid-template-columns:1fr 420px;gap:18px;margin-top:22px}
+  .card{background:var(--card);padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.05);}
+  .info-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px dashed rgba(255,255,255,0.05)}
+  .info-row:last-child{border-bottom:0}
+  .k{color:var(--muted);font-size:13px}
+  .v{font-weight:600;font-size:15px}
+  .ips-list{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+  .chip{padding:8px 10px;border-radius:10px;background:rgba(255,255,255,0.04);
+    display:flex;justify-content:space-between;align-items:center;font-weight:600}
+  .map{height:320px;border-radius:10px;border:1px solid rgba(255,255,255,0.05);
+    overflow:hidden;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.02)}
+  .error{color:#ff6b6b;padding:10px;border-radius:8px;background:rgba(255,107,107,0.06);}
+  .success{color:#2dd4bf;padding:10px;border-radius:8px;background:rgba(45,212,191,0.05);}
+  .warning{color:#ffa726;padding:10px;border-radius:8px;background:rgba(255,167,38,0.08);}
+  .download-box{
+    margin-top:20px;
+    padding:16px;
+    background:linear-gradient(135deg,rgba(124,92,255,0.1),rgba(79,179,255,0.1));
+    border:1px solid rgba(255,255,255,0.06);
+    border-radius:12px;
+    text-align:center;
+  }
+  .download-box h3{margin:0 0 10px;font-size:15px;color:#c9d5ff;}
+  .loading{display:inline-block;width:20px;height:20px;border:3px solid rgba(255,255,255,.3);border-radius:50%;border-top-color:#fff;animation:spin 1s ease-in-out infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  @media(max-width:900px){.results{grid-template-columns:1fr}.map{height:260px}}
+
+
+/* ===== BOTÓN VOLVER ===== */
+.back-btn {
+    display: inline-block;
+    margin-top: 120px;     /* 🔥 separación grande del header */
+    margin-left: 20px;
+    padding: 12px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+/* Ícono */
+.back-btn i {
+    margin-right: 8px;
+}
+
+/* Hover */
+.back-btn:hover {
+    background-color: #43a047;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .back-btn {
+        margin-top: 100px;
+        font-size: 15px;
+        padding: 10px 16px;
+    }
+}
+
+</style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">IP</div>
+      <div>
+    <h1>
+<span>  El Sombrero Blanco</span>
+    </h1> 
+        <p class="lead">Analiza cualquier URL y obtén información precisa de geolocalización</p>
+      </div>
+    </header>
+  <div class="hero-section">   <div class="back-container">
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                Volver Atrás
+            </a>
+        </div>
+    <div class="form">
+      <div class="input">
+        <input id="urlInput" type="text" placeholder="https://ejemplo.com o ejemplo.com" value="facebook.com">
+      </div>
+      <button id="analyzeBtn" class="btn">Analizar</button>
+    </div>
+
+    <div id="message"></div>
+
+    <div class="results">
+      <div class="card" id="leftCard">
+        <h3 style="margin-top:0">Información Detallada</h3>
+        <div id="summaryArea">
+          <div class="info-row"><div class="k">Host / Dominio</div><div class="v" id="hostV">—</div></div>
+          <div class="info-row"><div class="k">IP principal</div><div class="v" id="ipV">—</div></div>
+          <div class="info-row"><div class="k">Proveedor (ISP / Org)</div><div class="v" id="ispV">—</div></div>
+          <div class="info-row"><div class="k">País</div><div class="v" id="countryV">—</div></div>
+          <div class="info-row"><div class="k">Región / Provincia</div><div class="v" id="regionV">—</div></div>
+          <div class="info-row"><div class="k">Ciudad</div><div class="v" id="cityV">—</div></div>
+          <div class="info-row"><div class="k">Latitud / Longitud</div><div class="v" id="latlonV">—</div></div>
+          <div class="info-row"><div class="k">Zona Horaria</div><div class="v" id="timezoneV">—</div></div>
+          <div style="margin-top:12px;">
+            <div class="k">Todas las IPs encontradas</div>
+            <div class="ips-list" id="ipsList"></div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h3 style="margin-top:0">Ubicación en Mapa</h3>
+        <div class="map" id="mapArea">
+          <div style="color:var(--muted);text-align:center">Esperando análisis...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CUADRO DE DESCARGA -->
+    <div class="download-box">
+      <h3>Descargar informe completo</h3>
+      <button id="pdfBtn" class="btn">📄 Descargar PDF</button>
+      <button id="htmlBtn" class="btn secondary">🌐 Descargar HTML</button>
+    </div>
+
+  </div>
+
+<script>
+const { jsPDF } = window.jspdf;
+const urlInput = document.getElementById('urlInput');
+const analyzeBtn = document.getElementById('analyzeBtn');
+const pdfBtn = document.getElementById('pdfBtn');
+const htmlBtn = document.getElementById('htmlBtn');
+const message = document.getElementById('message');
+
+const hostV=document.getElementById('hostV'), ipV=document.getElementById('ipV'), ispV=document.getElementById('ispV'),
+countryV=document.getElementById('countryV'), regionV=document.getElementById('regionV'),
+cityV=document.getElementById('cityV'), latlonV=document.getElementById('latlonV'),
+timezoneV=document.getElementById('timezoneV'), ipsList=document.getElementById('ipsList'), 
+mapArea=document.getElementById('mapArea');
+
+// Función para mostrar mensajes
+function showMessage(text, type='info'){
+  message.innerHTML='';
+  const div=document.createElement('div');
+  div.textContent=text;
+  div.className = type === 'error' ? 'error' : 
+                  type === 'success' ? 'success' : 
+                  type === 'warning' ? 'warning' : '';
+  message.appendChild(div);
+}
+
+// Función para limpiar resultados
+function clearResults(){
+  [hostV,ipV,ispV,countryV,regionV,cityV,latlonV,timezoneV].forEach(e=>e.textContent='—');
+  ipsList.innerHTML='';
+  mapArea.innerHTML='<div style="color:var(--muted);text-align:center">Esperando análisis...</div>';
+}
+
+// Función para extraer el host de una URL
+function extractHost(input){
+  if(!input) return null;
+  input = input.trim();
+  
+  // Si ya es una IP, devolverla directamente
+  if(/^(?:\d{1,3}\.){3}\d{1,3}$/.test(input)) return input;
+  
+  // Añadir protocolo si no lo tiene
+  if(!/^https?:\/\//i.test(input)) input = 'https://' + input;
+  
+  try{
+    const url = new URL(input);
+    return url.hostname;
+  } catch(e){
+    return null;
+  }
+}
+
+// Función para resolver DNS usando múltiples métodos
+async function resolveDNS(host){
+  try {
+    // Método 1: Usando DNS sobre HTTPS de Google
+    const response = await fetch(`https://dns.google/resolve?name=${encodeURIComponent(host)}&type=A`);
+    const data = await response.json();
+    
+    if(data.Status === 0 && data.Answer && data.Answer.length > 0){
+      const ips = [...new Set(data.Answer.filter(a => a.type === 1).map(a => a.data))];
+      return ips;
+    }
+    
+    // Método 2: Usando Cloudflare DNS
+    const response2 = await fetch(`https://cloudflare-dns.com/dns-query?name=${encodeURIComponent(host)}&type=A`, {
+      headers: {'Accept': 'application/dns-json'}
+    });
+    const data2 = await response2.json();
+    
+    if(data2.Answer && data2.Answer.length > 0){
+      const ips = [...new Set(data2.Answer.filter(a => a.type === 1).map(a => a.data))];
+      return ips;
+    }
+    
+    throw new Error('No se pudieron resolver las direcciones IP del dominio');
+  } catch(error) {
+    throw new Error('Error en la resolución DNS: ' + error.message);
+  }
+}
+
+// Función mejorada para geolocalización con múltiples APIs de respaldo
+async function geoIP(ip){
+  try {
+    // Método 1: ipapi.co (más preciso para ubicaciones de servidores)
+    const response1 = await fetch(`https://ipapi.co/${ip}/json/`);
+    const data1 = await response1.json();
+    
+    if(!data1.error) {
+      return {
+        ip: ip,
+        isp: data1.org || data1.asn || '—',
+        country: data1.country_name || '—',
+        country_code: data1.country_code || '—',
+        region: data1.region || '—',
+        city: data1.city || '—',
+        latitude: data1.latitude || 0,
+        longitude: data1.longitude || 0,
+        timezone: data1.timezone || '—',
+        method: 'ipapi.co'
+      };
+    }
+  } catch(e) {
+    console.log('Error con ipapi.co:', e);
+  }
+  
+  try {
+    // Método 2: ip-api.com (respuesta alternativa)
+    const response2 = await fetch(`http://ip-api.com/json/${ip}`);
+    const data2 = await response2.json();
+    
+    if(data2.status === 'success') {
+      return {
+        ip: ip,
+        isp: data2.isp || data2.org || '—',
+        country: data2.country || '—',
+        country_code: data2.countryCode || '—',
+        region: data2.regionName || '—',
+        city: data2.city || '—',
+        latitude: data2.lat || 0,
+        longitude: data2.lon || 0,
+        timezone: data2.timezone || '—',
+        method: 'ip-api.com'
+      };
+    }
+  } catch(e) {
+    console.log('Error con ip-api.com:', e);
+  }
+  
+  throw new Error('No se pudo obtener información de geolocalización para esta IP');
+}
+
+// Función para renderizar el mapa
+function renderMap(lat, lon, city, country){
+  const src = `https://www.openstreetmap.org/export/embed.html?bbox=${lon-1}%2C${lat-1}%2C${lon+1}%2C${lat+1}&layer=mapnik&marker=${lat}%2C${lon}`;
+  mapArea.innerHTML = `
+    <iframe 
+      width="100%" 
+      height="100%" 
+      frameborder="0" 
+      src="${src}"
+      title="Mapa de ubicación de ${city}, ${country}"
+    ></iframe>
+  `;
+}
+
+// Función principal de análisis
+async function analyzeURL(){
+  clearResults();
+  const host = extractHost(urlInput.value);
+  
+  if(!host) {
+    showMessage('URL inválida. Por favor ingresa una URL válida.', 'error');
+    return;
+  }
+  
+  // Mostrar estado de carga
+  analyzeBtn.innerHTML = '<div class="loading"></div> Analizando...';
+  analyzeBtn.disabled = true;
+  
+  showMessage(`Analizando: ${host}`, 'info');
+  
+  try {
+    // Resolver DNS
+    const ips = await resolveDNS(host);
+    hostV.textContent = host;
+    
+    // Mostrar todas las IPs encontradas
+    ipsList.innerHTML = '';
+    ips.forEach(ip => {
+      const chip = document.createElement('div');
+      chip.className = 'chip';
+      chip.textContent = ip;
+      ipsList.appendChild(chip);
+    });
+    
+    // Usar la primera IP para geolocalización
+    const primaryIP = ips[0];
+    ipV.textContent = primaryIP;
+    
+    // Obtener información de geolocalización
+    const geoInfo = await geoIP(primaryIP);
+    
+    // Actualizar la interfaz con la información obtenida
+    ispV.textContent = geoInfo.isp;
+    countryV.textContent = `${geoInfo.country} (${geoInfo.country_code})`;
+    regionV.textContent = geoInfo.region;
+    cityV.textContent = geoInfo.city;
+    latlonV.textContent = `${geoInfo.latitude.toFixed(4)} / ${geoInfo.longitude.toFixed(4)}`;
+    timezoneV.textContent = geoInfo.timezone;
+    
+    // Renderizar el mapa
+    renderMap(geoInfo.latitude, geoInfo.longitude, geoInfo.city, geoInfo.country);
+    
+    // Mensaje de éxito
+    showMessage(`Análisis completado. Ubicación detectada: ${geoInfo.city}, ${geoInfo.region}, ${geoInfo.country}`, 'success');
+    
+  } catch(error) {
+    showMessage(`Error: ${error.message}`, 'error');
+    console.error('Error en el análisis:', error);
+  } finally {
+    // Restaurar el botón
+    analyzeBtn.innerHTML = 'Analizar';
+    analyzeBtn.disabled = false;
+  }
+}
+
+// Event Listeners
+analyzeBtn.addEventListener('click', analyzeURL);
+
+urlInput.addEventListener('keypress', (e) => {
+  if(e.key === 'Enter') {
+    analyzeURL();
+  }
+});
+
+pdfBtn.addEventListener('click', () => {
+  if(hostV.textContent === '—') {
+    showMessage('No hay datos para generar el informe PDF', 'warning');
+    return;
+  }
+  
+  const doc = new jsPDF();
+  doc.setFontSize(16);
+  doc.text('Informe de Análisis de URL / IP', 10, 15);
+  doc.setFontSize(12);
+  
+  const data = [
+    ['Host / Dominio', hostV.textContent],
+    ['IP principal', ipV.textContent],
+    ['Proveedor (ISP)', ispV.textContent],
+    ['País', countryV.textContent],
+    ['Región', regionV.textContent],
+    ['Ciudad', cityV.textContent],
+    ['Lat / Lon', latlonV.textContent],
+    ['Zona Horaria', timezoneV.textContent],
+    ['Todas las IPs', Array.from(ipsList.children).map(c => c.textContent).join(', ') || '—']
+  ];
+  
+  let y = 30;
+  data.forEach(([k, v]) => {
+    doc.text(`${k}:`, 10, y);
+    doc.text(v || '—', 70, y);
+    y += 8;
+  });
+  
+  doc.save(`informe_${hostV.textContent || 'sinhost'}.pdf`);
+  showMessage('Informe PDF generado correctamente', 'success');
+});
+
+htmlBtn.addEventListener('click', () => {
+  if(hostV.textContent === '—') {
+    showMessage('No hay datos para generar el informe HTML', 'warning');
+    return;
+  }
+  
+  const content = `
+  <!DOCTYPE html>
+  <html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <title>Informe de Análisis - ${hostV.textContent}</title>
+    <style>
+      body { font-family: Arial, sans-serif; background: #f3f4f6; padding: 20px; color: #333; }
+      h2 { color: #1e293b; }
+      table { border-collapse: collapse; width: 100%; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+      th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+      th { background-color: #4fb3ff; color: white; }
+      tr:nth-child(even) { background-color: #f9f9f9; }
+      .footer { color: #555; font-size: 13px; margin-top: 15px; }
+    </style>
+  </head>
+  <body>
+    <h2>Informe de Análisis de URL / IP</h2>
+    <table>
+      <tr><th>Campo</th><th>Valor</th></tr>
+      <tr><td>Host / Dominio</td><td>${hostV.textContent}</td></tr>
+      <tr><td>IP principal</td><td>${ipV.textContent}</td></tr>
+      <tr><td>Proveedor (ISP)</td><td>${ispV.textContent}</td></tr>
+      <tr><td>País</td><td>${countryV.textContent}</td></tr>
+      <tr><td>Región</td><td>${regionV.textContent}</td></tr>
+      <tr><td>Ciudad</td><td>${cityV.textContent}</td></tr>
+      <tr><td>Lat / Lon</td><td>${latlonV.textContent}</td></tr>
+      <tr><td>Zona Horaria</td><td>${timezoneV.textContent}</td></tr>
+      <tr><td>Todas las IPs encontradas</td><td>${Array.from(ipsList.children).map(c => c.textContent).join(', ') || '—'}</td></tr>
+    </table>
+    <p class="footer">Generado por Analizador de URL → IP · Geo · ISP</p>
+  </body>
+  </html>`;
+  
+  const blob = new Blob([content], {type: 'text/html;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `informe_${hostV.textContent || 'sinhost'}.html`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showMessage('Informe HTML generado correctamente', 'success');
+});
+
+// Inicialización
+clearResults();
+
+// Análisis automático al cargar la página (opcional)
+// setTimeout(() => analyzeURL(), 500);
+</script>
+</body>
+</html>

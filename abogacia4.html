@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Normativas de Protección al Trabajador de la Salud</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+                border-radius: 10px;
+  max-width: 900px;
+  margin: 90px auto;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #1a73e8 0%, #6c8ef5 100%);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 10px 15px;
+            background-color: #e9ecef;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn:hover {
+            background-color: #d4d8dd;
+        }
+        
+        .filter-btn.active {
+            background-color: #1a73e8;
+            color: white;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+        
+        th {
+            background-color: #1a73e8;
+            color: white;
+            text-align: left;
+            padding: 15px;
+            position: sticky;
+            top: 0;
+        }
+        
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e9ecef;
+            vertical-align: top;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        tr:hover {
+            background-color: #e3f2fd;
+        }
+        
+        .normativa-cell {
+            font-weight: 600;
+            color: #1a73e8;
+        }
+        
+        .disposiciones-list {
+            list-style-type: none;
+        }
+        
+        .disposiciones-list li {
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .disposiciones-list li:before {
+            content: "•";
+            color: #1a73e8;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+            }
+            
+            .search-box, .filter-buttons {
+                width: 100%;
+            }
+            
+            th, td {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+        
+        .highlight {
+            background-color: #fff3cd;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        /* Solo estilos para el botón "Volver atrás" */
+.back-button {
+  display: inline-block;
+  padding: 10px 18px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 2px solid #333;
+  background: #fff;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  user-select: none;
+}
+
+/* Efecto al pasar el ratón */
+.back-button:hover,
+.back-button:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+  text-decoration: none;
+  outline: none;
+}
+
+/* Efecto al hacer clic */
+.back-button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Normativas de Protección al Trabajador de la Salud</h1>
+            <p class="subtitle">Cuadro comparativo de leyes y resoluciones aplicables en Argentina</p>
+              <a href="aprendeprincipalconocimientosabogacia.html" class="back-button" aria-label="Volver atrás">Volver atrás</a>
+        </header>
+        
+        <div class="controls">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Buscar en normativas o descripciones...">
+            </div>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">Todas</button>
+                <button class="filter-btn" data-filter="ley">Leyes</button>
+                <button class="filter-btn" data-filter="resolucion">Resoluciones</button>
+                <button class="filter-btn" data-filter="decreto">Decretos</button>
+            </div>
+        </div>
+        
+        <div class="table-container">
+            <table id="normativasTable">
+                <thead>
+                    <tr>
+                        <th width="20%">Normativa</th>
+                        <th width="35%">Descripción y Ámbito de Aplicación</th>
+                        <th width="45%">Principales Disposiciones de Protección al Médico/Trabajador de Salud</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Las filas se generarán con JavaScript -->
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="footer">
+            <p>Información actualizada según normativa vigente en Argentina</p>
+        </div>
+    </div>
+
+    <script>
+        // Datos de las normativas
+        const normativas = [
+            {
+                tipo: "ley",
+                nombre: "Ley 27.348 (Modifica la LCT)",
+                descripcion: "Protección frente a Agentes Químicos Peligrosos. Aplica a todos los trabajadores expuestos, incluyendo personal de salud que manipula quimioterápicos, desinfectantes, etc.",
+                disposiciones: [
+                    "Obligación del empleador: Proveer Elementos de Protección Personal (EPP) específicos (guantes, barbijos, camisolines).",
+                    "Exámenes médicos: Realizar controles de salud periódicos y específicos para los agentes a los que está expuesto el trabajador."
+                ]
+            },
+            {
+                tipo: "resolucion",
+                nombre: "Resolución SRT 59/2011",
+                descripcion: "Prevención de Riesgos en Actividades Médicas y Sanitarias. Específica para el sector salud.",
+                disposiciones: [
+                    "Bioseguridad: Establece protocolos para prevenir accidentes con objetos punzocortantes (ej.: uso obligatorio de dispositivos de seguridad).",
+                    "Inmunizaciones: Obliga al empleador a proveer y garantizar las vacunas obligatorias y recomendadas (Hepatitis B, Gripe, etc.).",
+                    "Procedimiento ante exposición: Define el protocolo inmediato a seguir ante una exposición a fluidos corporales (profilaxis post-exposición)."
+                ]
+            },
+            {
+                tipo: "resolucion",
+                nombre: "Resolución SRT 901/2015",
+                descripcion: "Programa de Prevención de Enfermedades Profesionales en el Sector Salud.",
+                disposiciones: [
+                    "Listado de riesgos: Identifica riesgos específicos: biológicos, ergonómicos, por turnos, psicosociales.",
+                    "Evaluación de puestos: Obliga a evaluar cada puesto de trabajo para identificar los riesgos a los que está expuesto el personal.",
+                    "Plan de prevención: Exige la implementación de un plan para reducir los riesgos identificados."
+                ]
+            },
+            {
+                tipo: "ley",
+                nombre: "Ley 26.529 - Derechos del Paciente (y modificatorias)",
+                descripcion: "Derechos del Paciente en la Relación con la Salud. Incluye artículos que protegen al profesional.",
+                disposiciones: [
+                    "Consentimiento Informado: Establece la obligación de obtener el consentimiento del paciente, lo que protege al médico de posibles demandas.",
+                    "Historia Clínica: Regula su correcta elaboración y custodia, siendo un documento legal que protege al profesional."
+                ]
+            },
+            {
+                tipo: "ley",
+                nombre: "Ley 27.191 (Modif. Ley 26.529)",
+                descripcion: "Derechos del Personal de Salud frente a la Pandemia.",
+                disposiciones: [
+                    "Protección prioritaria: Declara al personal de salud como grupo de riesgo en contexto pandémico y prioritario para la asignación de recursos.",
+                    "Elementos de protección: Establece el derecho a recibir los EPP adecuados para las tareas que realiza."
+                ]
+            },
+            {
+                tipo: "ley",
+                nombre: "Ley 24.557 de Riesgos del Trabajo",
+                descripcion: "Cobertura de Accidentes y Enfermedades Profesionales. Aplica a todo el personal en relación de dependencia.",
+                disposiciones: [
+                    "Enfermedad Profesional: Si un médico contrae una enfermedad por su trabajo (ej.: tuberculosis, estrés postraumático), tiene derecho a cobertura médica y una indemnización a través de la ART.",
+                    "Accidente in itinere: Cubre los accidentes que ocurren en el trayecto al trabajo."
+                ]
+            },
+            {
+                tipo: "resolucion",
+                nombre: "Resolución 146/2020 (MSN)",
+                descripcion: "Recomendaciones de Bioseguridad para COVID-19. (Ejemplo de normativa específica)",
+                disposiciones: [
+                    "Uso de EPP: Especifica el tipo de protección requerido según el nivel de riesgo de atención (barbijo quirúrgico, N95, camisolín descartable).",
+                    "Capacitación: Obliga a las instituciones a capacitar al personal en el uso correcto de los EPP."
+                ]
+            },
+            {
+                tipo: "decreto",
+                nombre: "Decreto 814/99",
+                descripcion: "Protección contra Agentes Biológicos.",
+                disposiciones: [
+                    "Clasificación de riesgo: Establece los niveles de contención para laboratorios y áreas según el riesgo biológico.",
+                    "Vacunación y vigilancia: Impone la necesidad de programas de vigilancia de la salud para el personal expuesto a agentes biológicos."
+                ]
+            },
+            {
+                tipo: "ley",
+                nombre: "Ley de Ejercicio Profesional de cada Provincia (Ej.: Ley 17.132 para CABA y Nación)",
+                descripcion: "Regula las incumbencias y obligaciones de los profesionales de la medicina.",
+                disposiciones: [
+                    "Protección legal: Define el marco legal del acto médico, estableciendo los deberes y derechos del profesional.",
+                    "Cobertura de responsabilidad: Suelen establecer la obligatoriedad de contar con un seguro de responsabilidad profesional."
+                ]
+            }
+        ];
+
+        // Función para renderizar la tabla
+        function renderTable(data) {
+            const tbody = document.querySelector('#normativasTable tbody');
+            tbody.innerHTML = '';
+            
+            data.forEach(normativa => {
+                const row = document.createElement('tr');
+                row.setAttribute('data-type', normativa.tipo);
+                
+                // Celda de normativa
+                const normativaCell = document.createElement('td');
+                normativaCell.className = 'normativa-cell';
+                normativaCell.textContent = normativa.nombre;
+                
+                // Celda de descripción
+                const descripcionCell = document.createElement('td');
+                descripcionCell.textContent = normativa.descripcion;
+                
+                // Celda de disposiciones
+                const disposicionesCell = document.createElement('td');
+                const ul = document.createElement('ul');
+                ul.className = 'disposiciones-list';
+                
+                normativa.disposiciones.forEach(disposicion => {
+                    const li = document.createElement('li');
+                    li.textContent = disposicion;
+                    ul.appendChild(li);
+                });
+                
+                disposicionesCell.appendChild(ul);
+                
+                // Añadir celdas a la fila
+                row.appendChild(normativaCell);
+                row.appendChild(descripcionCell);
+                row.appendChild(disposicionesCell);
+                
+                // Añadir fila a la tabla
+                tbody.appendChild(row);
+            });
+        }
+
+        // Función para filtrar por tipo
+        function filterByType(type) {
+            if (type === 'all') {
+                return normativas;
+            }
+            return normativas.filter(normativa => normativa.tipo === type);
+        }
+
+        // Función para buscar en el contenido
+        function searchInContent(query) {
+            if (!query) {
+                return normativas;
+            }
+            
+            const lowerQuery = query.toLowerCase();
+            return normativas.filter(normativa => {
+                return normativa.nombre.toLowerCase().includes(lowerQuery) ||
+                       normativa.descripcion.toLowerCase().includes(lowerQuery) ||
+                       normativa.disposiciones.some(d => d.toLowerCase().includes(lowerQuery));
+            });
+        }
+
+        // Función para resaltar texto en las celdas
+        function highlightText(text, query) {
+            if (!query) return text;
+            
+            const regex = new RegExp(`(${query})`, 'gi');
+            return text.replace(regex, '<span class="highlight">$1</span>');
+        }
+
+        // Inicializar la tabla
+        document.addEventListener('DOMContentLoaded', function() {
+            renderTable(normativas);
+            
+            // Manejar filtros por tipo
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remover clase active de todos los botones
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Añadir clase active al botón clickeado
+                    this.classList.add('active');
+                    
+                    // Obtener el tipo de filtro
+                    const filterType = this.getAttribute('data-filter');
+                    
+                    // Aplicar filtro
+                    let filteredData = filterByType(filterType);
+                    
+                    // Aplicar búsqueda si hay texto en el buscador
+                    const searchQuery = document.getElementById('searchInput').value;
+                    if (searchQuery) {
+                        filteredData = searchInContent(searchQuery);
+                    }
+                    
+                    // Renderizar tabla filtrada
+                    renderTable(filteredData);
+                });
+            });
+            
+            // Manejar búsqueda
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('input', function() {
+                const query = this.value;
+                
+                // Obtener el tipo de filtro activo
+                const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
+                
+                // Filtrar por tipo primero
+                let filteredData = filterByType(activeFilter);
+                
+                // Aplicar búsqueda
+                if (query) {
+                    filteredData = searchInContent(query);
+                }
+                
+                // Renderizar tabla filtrada
+                renderTable(filteredData);
+            });
+        });
+    </script>
+</body>
+</html>
